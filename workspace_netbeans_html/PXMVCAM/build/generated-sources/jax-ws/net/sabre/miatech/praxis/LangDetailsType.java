@@ -1,0 +1,123 @@
+
+package net.sabre.miatech.praxis;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+
+/**
+ * <p>Java class for LangDetailsType complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="LangDetailsType">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="Data" type="{http://services.sabre.com/res/or/v1_4}LangDataType" minOccurs="0"/>
+ *         &lt;element name="MatchData" type="{http://services.sabre.com/res/or/v1_4}LangMatchDataType" minOccurs="0"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="lang" type="{http://www.w3.org/2001/XMLSchema}language" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "LangDetailsType", namespace = "http://services.sabre.com/res/or/v1_4", propOrder = {
+    "data",
+    "matchData"
+})
+public class LangDetailsType {
+
+    @XmlElement(name = "Data")
+    protected LangDataType data;
+    @XmlElement(name = "MatchData")
+    protected LangMatchDataType matchData;
+    @XmlAttribute(name = "lang")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "language")
+    protected String lang;
+
+    /**
+     * Gets the value of the data property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LangDataType }
+     *     
+     */
+    public LangDataType getData() {
+        return data;
+    }
+
+    /**
+     * Sets the value of the data property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LangDataType }
+     *     
+     */
+    public void setData(LangDataType value) {
+        this.data = value;
+    }
+
+    /**
+     * Gets the value of the matchData property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LangMatchDataType }
+     *     
+     */
+    public LangMatchDataType getMatchData() {
+        return matchData;
+    }
+
+    /**
+     * Sets the value of the matchData property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LangMatchDataType }
+     *     
+     */
+    public void setMatchData(LangMatchDataType value) {
+        this.matchData = value;
+    }
+
+    /**
+     * Gets the value of the lang property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLang() {
+        return lang;
+    }
+
+    /**
+     * Sets the value of the lang property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLang(String value) {
+        this.lang = value;
+    }
+
+}
