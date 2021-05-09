@@ -1,0 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package net.miatech.praxis.payment;
+
+/**
+ *
+ * @author jtorres
+ */
+public class A2358 {
+ 
+    public String CCUST = "" ;
+    public String APLIC = "" ;
+    public String INPNAME = "" ;
+    public String NETDIR = "" ;
+    public String INPEXTE = "" ;
+    public String INPDESC = "" ;
+    public String LIBNAME = "" ;
+    public String OUTNAME = "" ;
+    public String FECPROC = "" ;
+    public String STAT = "" ;
+    public String TABLA = "" ;
+    public String FASE = "" ;
+    public double QTYREG = 0 ;
+    
+    public String USCR = "" ;
+    public String FECR = "" ;
+    public String HOCR = "" ;
+    public String USUP = "" ;
+    public String FEUP = "" ;
+    public String HOUP = "" ;
+}
