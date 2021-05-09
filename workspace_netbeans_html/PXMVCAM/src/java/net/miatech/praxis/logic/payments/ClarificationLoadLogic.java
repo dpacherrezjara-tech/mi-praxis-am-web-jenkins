@@ -1,0 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.miatech.praxis.logic.payments;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.dao.payments.ClarificationLoadDAO;
+import net.miatech.praxis.payment.filter.A2331Filter;
+
+/**
+ *
+ * @author 
+ */
+public class ClarificationLoadLogic {
+
+    private final ClarificationLoadDAO ClarificationLoadDAO = new ClarificationLoadDAO();
+
+    public void setSession(IServerSession ss) {
+        ClarificationLoadDAO.setSession(ss);
+
+    }
+    
+   public String loadPX413SQP02535(String strBanco,String ruta) throws SQLException, IOException, Exception {
+        return ClarificationLoadDAO.loadPX413SQP02535(strBanco,ruta);
+    }
+   
+   public String loadPX413PRO10570(String strBanco, String strHora) throws SQLException, Exception {
+        return ClarificationLoadDAO.loadPX413PRO10570(strBanco, strHora);
+    }
+}

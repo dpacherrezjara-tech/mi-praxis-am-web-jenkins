@@ -1,0 +1,1067 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.miatech.praxis.dao.flown;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import net.miatech.beans.IMF140Filter;
+import net.miatech.beans.IMF141Filter;
+import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.utils.Functions;
+import org.apache.log4j.Logger;
+
+/**
+ *
+ * @author lmendoza
+ */
+public class ForecastDAO {
+
+    private IServerSession session;
+    private CallableStatement cs = null;
+    private ResultSet rst = null;
+    private Connection cnx = null;
+    private static final Logger logError = Logger.getLogger("errorLog");
+
+    public ForecastDAO() {
+    }
+
+    public static void pasarGarbageCollector() {
+        System.gc();
+        System.runFinalization();
+        System.gc();
+    }
+
+    public ForecastDAO(IServerSession ss) {
+        session = ss;
+    }
+
+    public void setSession(IServerSession ss) {
+        session = ss;
+    }
+
+    public List<IMF140Filter> loadPX551SQP03895(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        long QTYPAX = 0;
+        double VCPNUSD = 0, VPROUSD = 0, VCPNMXN = 0, VPROMXN = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03895(?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            /*cstmt.registerOutParameter(16, Types.INTEGER);
+             cstmt.registerOutParameter(17, Types.INTEGER);
+             cstmt.registerOutParameter(18, Types.INTEGER);
+             cstmt.registerOutParameter(19, Types.INTEGER);*/
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(4, filter.IN_TREG);
+
+            /*cstmt.setInt(16, filter.page.PAGNUM);
+             cstmt.setInt(17, filter.page.PAGROW);
+             cstmt.setInt(18, filter.page.TOTPAG);
+             cstmt.setInt(19, filter.page.TOTROW);*/
+            cstmt.execute();
+
+            /*filter.page.PAGNUM = cstmt.getInt(16);
+             filter.page.PAGROW = cstmt.getInt(17);
+             filter.page.TOTPAG = cstmt.getInt(18);
+             filter.page.TOTROW = cstmt.getInt(19);*/
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                QTYPAX = rst.getLong("QTYPAX");
+                VCPNUSD = rst.getDouble("VCPNUSD");
+                VPROUSD = rst.getDouble("VPROUSD");
+                VCPNMXN = rst.getDouble("VCPNMXN");
+                VPROMXN = rst.getDouble("VPROMXN");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF140Filter();
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    bean.IN_TREG = filter.IN_TREG.trim();
+
+                    bean.FCONT = rst.getString("FCONT").trim();
+                    bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                    bean.QTYPAX = rst.getInt("QTYPAX");
+                    bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                    bean.VPROUSD = rst.getDouble("VPROUSD");
+                    bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                    bean.VPROMXN = rst.getDouble("VPROMXN");
+
+                    bean.totQTYPAX = QTYPAX;
+                    bean.totVCPNUSD = VCPNUSD;
+                    bean.totVPROUSD = VPROUSD;
+                    bean.totVCPNMXN = VCPNMXN;
+                    bean.totVPROMXN = VPROMXN;
+
+                    /*bean.page.PAGNUM = filter.page.PAGNUM;
+                     bean.page.PAGROW = filter.page.PAGROW;
+                     bean.page.TOTPAG = filter.page.TOTPAG;
+                     bean.page.TOTROW = filter.page.TOTROW;*/
+                    lst.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<IMF141Filter> loadPX551SQP03896(IMF141Filter filter) throws SQLException, Exception {
+
+        List<IMF141Filter> lst = new ArrayList<IMF141Filter>(0);
+        IMF141Filter bean;
+        long totASI = 0, totCAM = 0, totCAN = 0, totCAR = 0, totEUR = 0, totFRO = 0, totLOC = 0, totPLA = 0, totSUD = 0, totUSA = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03896(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            //cstmt.setString(4, filter.IN_TYPEFLG);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                totASI = rst.getLong("ASI");
+                totCAM = rst.getLong("CAM");
+                totCAN = rst.getLong("CAN");
+                totCAR = rst.getLong("CAR");
+                totEUR = rst.getLong("EUR");
+                totFRO = rst.getLong("FRO");
+                totLOC = rst.getLong("LOC");
+                totPLA = rst.getLong("PLA");
+                totSUD = rst.getLong("SUD");
+                totUSA = rst.getLong("USA");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF141Filter();
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    //bean.IN_TYPEFLG = filter.IN_TYPEFLG.trim();
+
+                    bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                    bean.TOTAL = rst.getLong("TOTAL");
+                    bean.ASI = rst.getLong("ASI");
+                    bean.CAM = rst.getLong("CAM");
+                    bean.CAN = rst.getLong("CAN");
+                    bean.CAR = rst.getLong("CAR");
+                    bean.EUR = rst.getLong("EUR");
+                    bean.FRO = rst.getLong("FRO");
+                    bean.LOC = rst.getLong("LOC");
+                    bean.PLA = rst.getLong("PLA");
+                    bean.SUD = rst.getLong("SUD");
+                    bean.USA = rst.getLong("USA");
+
+                    bean.totZonas = (rst.getLong("ASI") + rst.getLong("CAM") + rst.getLong("CAN") + rst.getLong("CAR") + rst.getLong("EUR") + rst.getLong("FRO") + rst.getLong("LOC") + rst.getLong("PLA") + rst.getLong("SUD") + rst.getLong("USA"));
+
+                    bean.totASI = totASI;
+                    bean.totCAM = totCAM;
+                    bean.totCAN = totCAN;
+                    bean.totCAR = totCAR;
+                    bean.totEUR = totEUR;
+                    bean.totFRO = totFRO;
+                    bean.totLOC = totLOC;
+                    bean.totPLA = totPLA;
+                    bean.totSUD = totSUD;
+                    bean.totUSA = totUSA;
+
+                    /*bean.page.PAGNUM = filter.page.PAGNUM;
+                     bean.page.PAGROW = filter.page.PAGROW;
+                     bean.page.TOTPAG = filter.page.TOTPAG;
+                     bean.page.TOTROW = filter.page.TOTROW;*/
+                    lst.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<IMF140Filter> loadPX551SQP03897(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        long QTYPAX = 0;
+        double VCPNUSD = 0, VPROUSD = 0, VCPNMXN = 0, VPROMXN = 0;
+        int totalRegistros = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03897(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            /*cstmt.registerOutParameter(16, Types.INTEGER);
+             cstmt.registerOutParameter(17, Types.INTEGER);
+             cstmt.registerOutParameter(18, Types.INTEGER);
+             cstmt.registerOutParameter(19, Types.INTEGER);*/
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            /*cstmt.setInt(16, filter.page.PAGNUM);
+             cstmt.setInt(17, filter.page.PAGROW);
+             cstmt.setInt(18, filter.page.TOTPAG);
+             cstmt.setInt(19, filter.page.TOTROW);*/
+            cstmt.execute();
+
+            /*filter.page.PAGNUM = cstmt.getInt(16);
+             filter.page.PAGROW = cstmt.getInt(17);
+             filter.page.TOTPAG = cstmt.getInt(18);
+             filter.page.TOTROW = cstmt.getInt(19);*/
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                QTYPAX = rst.getLong("QTYPAX");
+                VCPNUSD = rst.getDouble("VCPNUSD");
+                VPROUSD = rst.getDouble("VPROUSD");
+                VCPNMXN = rst.getDouble("VCPNMXN");
+                VPROMXN = rst.getDouble("VPROMXN");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF140Filter();
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    bean.IN_TREG = filter.IN_TREG.trim();
+
+                    //bean.FCONT = rst.getString("FCONT").trim();
+                    bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                    bean.QTYPAX = rst.getInt("QTYPAX");
+                    bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                    bean.VPROUSD = rst.getDouble("VPROUSD");
+                    bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                    bean.VPROMXN = rst.getDouble("VPROMXN");
+                    bean.TREG = rst.getString("TREG").trim();
+                    bean.DWEEK = rst.getString("DWEEK").trim();
+
+                    if (bean.TREG.equals("0")) {
+//                        objRtn.strImagen1 = "assets/icons/16x16/greenP.png";
+                        bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
+
+                    } else if (bean.TREG.equals("2")) {
+//                        objRtn.strImagen1 = "assets/icons/16x16/redP.png";
+                        bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+
+                    bean.totQTYPAX = QTYPAX;
+                    bean.totVCPNUSD = VCPNUSD;
+                    bean.totVPROUSD = VPROUSD;
+                    bean.totVCPNMXN = VCPNMXN;
+                    bean.totVPROMXN = VPROMXN;
+
+                    /*bean.page.PAGNUM = filter.page.PAGNUM;
+                     bean.page.PAGROW = filter.page.PAGROW;
+                     bean.page.TOTPAG = filter.page.TOTPAG;
+                     bean.page.TOTROW = filter.page.TOTROW;*/
+                    lst.add(bean);
+                    if (bean.VCPNMXN > 0) {
+                        totalRegistros++;
+                    }
+                }
+            }
+            for (int i = 0; i < lst.size(); i++) {
+                if (lst.get(i).VCPNMXN > 0) {
+                    lst.get(i).AVRG_VCPNMXN = ((lst.get(i).VCPNMXN - (lst.get(i).totVCPNMXN / totalRegistros)) / (lst.get(i).totVCPNMXN / totalRegistros)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN >= 20) {
+                        lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN < 20 && lst.get(i).AVRG_VCPNMXN >= -25) {
+                        lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN < -25) {
+                        lst.get(i).strImagen2 = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+
+                    lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<IMF140Filter> loadPX551SQP03898(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+
+        int totalRegistros = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03898(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            /*cstmt.registerOutParameter(16, Types.INTEGER);
+             cstmt.registerOutParameter(17, Types.INTEGER);
+             cstmt.registerOutParameter(18, Types.INTEGER);
+             cstmt.registerOutParameter(19, Types.INTEGER);*/
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            /*cstmt.setInt(16, filter.page.PAGNUM);
+             cstmt.setInt(17, filter.page.PAGROW);
+             cstmt.setInt(18, filter.page.TOTPAG);
+             cstmt.setInt(19, filter.page.TOTROW);*/
+            cstmt.execute();
+
+            /*filter.page.PAGNUM = cstmt.getInt(16);
+             filter.page.PAGROW = cstmt.getInt(17);
+             filter.page.TOTPAG = cstmt.getInt(18);
+             filter.page.TOTROW = cstmt.getInt(19);*/
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new IMF140Filter();
+                bean.DWEEK = rst.getString("DWEEK").trim();
+                bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+
+                bean.percentageASI = rst.getDouble("ASI");
+                bean.percentageCAM = rst.getDouble("CAM");
+                bean.percentageCAN = rst.getDouble("CAN");
+                bean.percentageCAR = rst.getDouble("CAR");
+                bean.percentageEUR = rst.getDouble("EUR");
+                bean.percentageFRO = rst.getDouble("FRO");
+                bean.percentageLOC = rst.getDouble("LOC");
+                bean.percentagePLA = rst.getDouble("PLA");
+                bean.percentageSUD = rst.getDouble("SUD");
+                bean.percentageUSA = rst.getDouble("USA");
+                bean.totalRegistros = rst.getDouble("TOTAL_REGISTROS");
+                lst.add(bean);
+            }
+            rst.close();
+
+            /*for (int i = 0; i < lst.size(); i++) {
+             if (lst.get(i).VCPNMXN > 0) {
+             lst.get(i).AVRG_VCPNMXN = ((lst.get(i).VCPNMXN - (lst.get(i).totVCPNMXN / totalRegistros)) / (lst.get(i).totVCPNMXN / totalRegistros)) * 100;
+             lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+             }
+             }*/
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<IMF140Filter> loadPX551SQP03936(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+
+        double TOTPAXASI = 0;
+        double TOTPAXCAM = 0;
+        double TOTPAXCAN = 0;
+        double TOTPAXCAR = 0;
+        double TOTPAXEUR = 0;
+        double TOTPAXFRO = 0;
+        double TOTPAXLOC = 0;
+        double TOTPAXPLA = 0;
+        double TOTPAXSUD = 0;
+        double TOTPAXUSA = 0;
+
+        double TOTVCPNUSDASI = 0;
+        double TOTVCPNUSDCAM = 0;
+        double TOTVCPNUSDCAN = 0;
+        double TOTVCPNUSDCAR = 0;
+        double TOTVCPNUSDEUR = 0;
+        double TOTVCPNUSDFRO = 0;
+        double TOTVCPNUSDLOC = 0;
+        double TOTVCPNUSDPLA = 0;
+        double TOTVCPNUSDSUD = 0;
+        double TOTVCPNUSDUSA = 0;
+
+        double TOTVPROUSDASI = 0;
+        double TOTVPROUSDCAM = 0;
+        double TOTVPROUSDCAN = 0;
+        double TOTVPROUSDCAR = 0;
+        double TOTVPROUSDEUR = 0;
+        double TOTVPROUSDFRO = 0;
+        double TOTVPROUSDLOC = 0;
+        double TOTVPROUSDPLA = 0;
+        double TOTVPROUSDSUD = 0;
+        double TOTVPROUSDUSA = 0;
+
+        double TOTVCPNMXNASI = 0;
+        double TOTVCPNMXNCAM = 0;
+        double TOTVCPNMXNCAN = 0;
+        double TOTVCPNMXNCAR = 0;
+        double TOTVCPNMXNEUR = 0;
+        double TOTVCPNMXNFRO = 0;
+        double TOTVCPNMXNLOC = 0;
+        double TOTVCPNMXNPLA = 0;
+        double TOTVCPNMXNSUD = 0;
+        double TOTVCPNMXNUSA = 0;
+
+        int totalRegistrosASI = 0;
+        int totalRegistrosCAM = 0;
+        int totalRegistrosCAN = 0;
+        int totalRegistrosCAR = 0;
+        int totalRegistrosEUR = 0;
+        int totalRegistrosFRO = 0;
+        int totalRegistrosLOC = 0;
+        int totalRegistrosPLA = 0;
+        int totalRegistrosSUD = 0;
+        int totalRegistrosUSA = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03936(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            /*cstmt.registerOutParameter(16, Types.INTEGER);
+             cstmt.registerOutParameter(17, Types.INTEGER);
+             cstmt.registerOutParameter(18, Types.INTEGER);
+             cstmt.registerOutParameter(19, Types.INTEGER);*/
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            /*cstmt.setInt(16, filter.page.PAGNUM);
+             cstmt.setInt(17, filter.page.PAGROW);
+             cstmt.setInt(18, filter.page.TOTPAG);
+             cstmt.setInt(19, filter.page.TOTROW);*/
+            cstmt.execute();
+
+            /*filter.page.PAGNUM = cstmt.getInt(16);
+             filter.page.PAGROW = cstmt.getInt(17);
+             filter.page.TOTPAG = cstmt.getInt(18);
+             filter.page.TOTROW = cstmt.getInt(19);*/
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                TOTPAXASI = rst.getDouble("TOTPAXASI");
+                TOTPAXCAM = rst.getDouble("TOTPAXCAM");
+                TOTPAXCAN = rst.getDouble("TOTPAXCAN");
+                TOTPAXCAR = rst.getDouble("TOTPAXCAR");
+                TOTPAXEUR = rst.getDouble("TOTPAXEUR");
+                TOTPAXFRO = rst.getDouble("TOTPAXFRO");
+                TOTPAXLOC = rst.getDouble("TOTPAXLOC");
+                TOTPAXPLA = rst.getDouble("TOTPAXPLA");
+                TOTPAXSUD = rst.getDouble("TOTPAXSUD");
+                TOTPAXUSA = rst.getDouble("TOTPAXUSA");
+
+                TOTVCPNUSDASI = rst.getDouble("TOTVCPNUSDASI");
+                TOTVCPNUSDCAM = rst.getDouble("TOTVCPNUSDCAM");
+                TOTVCPNUSDCAN = rst.getDouble("TOTVCPNUSDCAN");
+                TOTVCPNUSDCAR = rst.getDouble("TOTVCPNUSDCAR");
+                TOTVCPNUSDEUR = rst.getDouble("TOTVCPNUSDEUR");
+                TOTVCPNUSDFRO = rst.getDouble("TOTVCPNUSDFRO");
+                TOTVCPNUSDLOC = rst.getDouble("TOTVCPNUSDLOC");
+                TOTVCPNUSDPLA = rst.getDouble("TOTVCPNUSDPLA");
+                TOTVCPNUSDSUD = rst.getDouble("TOTVCPNUSDSUD");
+                TOTVCPNUSDUSA = rst.getDouble("TOTVCPNUSDUSA");
+
+                if (rst.getDouble("TOTPAXASI") != 0) {
+                    TOTVPROUSDASI = rst.getDouble("TOTVCPNUSDASI") / rst.getDouble("TOTPAXASI");
+                }
+
+                if (rst.getDouble("TOTPAXCAM") != 0) {
+                    TOTVPROUSDCAM = rst.getDouble("TOTVCPNUSDCAM") / rst.getDouble("TOTPAXCAM");
+                }
+
+                if (rst.getDouble("TOTPAXCAN") != 0) {
+                    TOTVPROUSDCAN = rst.getDouble("TOTVCPNUSDCAN") / rst.getDouble("TOTPAXCAN");
+                }
+
+                if (rst.getDouble("TOTPAXCAR") != 0) {
+                    TOTVPROUSDCAR = rst.getDouble("TOTVCPNUSDCAR") / rst.getDouble("TOTPAXCAR");
+                }
+
+                if (rst.getDouble("TOTPAXEUR") != 0) {
+                    TOTVPROUSDEUR = rst.getDouble("TOTVCPNUSDEUR") / rst.getDouble("TOTPAXEUR");
+                }
+
+                if (rst.getDouble("TOTPAXFRO") != 0) {
+                    TOTVPROUSDFRO = rst.getDouble("TOTVCPNUSDFRO") / rst.getDouble("TOTPAXFRO");
+                }
+
+                if (rst.getDouble("TOTPAXLOC") != 0) {
+                    TOTVPROUSDLOC = rst.getDouble("TOTVCPNUSDLOC") / rst.getDouble("TOTPAXLOC");
+                }
+
+                if (rst.getDouble("TOTPAXPLA") != 0) {
+                    TOTVPROUSDPLA = rst.getDouble("TOTVCPNUSDPLA") / rst.getDouble("TOTPAXPLA");
+                }
+
+                if (rst.getDouble("TOTPAXSUD") != 0) {
+                    TOTVPROUSDSUD = rst.getDouble("TOTVCPNUSDSUD") / rst.getDouble("TOTPAXSUD");
+                }
+
+                if (rst.getDouble("TOTPAXUSA") != 0) {
+                    TOTVPROUSDUSA = rst.getDouble("TOTVCPNUSDUSA") / rst.getDouble("TOTPAXUSA");
+                }
+
+                TOTVCPNMXNASI = rst.getDouble("TOTVCPNMXNASI");
+                TOTVCPNMXNCAM = rst.getDouble("TOTVCPNMXNCAM");
+                TOTVCPNMXNCAN = rst.getDouble("TOTVCPNMXNCAN");
+                TOTVCPNMXNCAR = rst.getDouble("TOTVCPNMXNCAR");
+                TOTVCPNMXNEUR = rst.getDouble("TOTVCPNMXNEUR");
+                TOTVCPNMXNFRO = rst.getDouble("TOTVCPNMXNFRO");
+                TOTVCPNMXNLOC = rst.getDouble("TOTVCPNMXNLOC");
+                TOTVCPNMXNPLA = rst.getDouble("TOTVCPNMXNPLA");
+                TOTVCPNMXNSUD = rst.getDouble("TOTVCPNMXNSUD");
+                TOTVCPNMXNUSA = rst.getDouble("TOTVCPNMXNUSA");
+            }
+
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    bean = new IMF140Filter();
+                    bean.DWEEK = rst.getString("DWEEK").trim();
+                    bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                    bean.TREG = rst.getString("TREG").trim();
+
+                    if (bean.TREG.equals("0")) {
+                        bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
+
+                    } else if (bean.TREG.equals("2")) {
+                        bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+
+                    //ASI
+                    bean.PAXASI = rst.getDouble("PAXASI");
+                    if (rst.getDouble("PAXASI") != 0) {
+                        bean.VPROUSDASI = rst.getDouble("VCPNUSDASI") / rst.getDouble("PAXASI");
+                    }
+                    bean.VCPNUSDASI = rst.getDouble("VCPNUSDASI");
+                    bean.VCPNMXNASI = rst.getDouble("VCPNMXNASI");
+
+                    //CAM
+                    bean.PAXCAM = rst.getDouble("PAXCAM");
+                    if (rst.getDouble("PAXCAM") != 0) {
+                        bean.VPROUSDCAM = rst.getDouble("VCPNUSDCAM") / rst.getDouble("PAXCAM");
+                    }
+                    bean.VCPNUSDCAM = rst.getDouble("VCPNUSDCAM");
+                    bean.VCPNMXNCAM = rst.getDouble("VCPNMXNCAM");
+                    //CAN                
+                    bean.PAXCAN = rst.getDouble("PAXCAN");
+                    if (rst.getDouble("PAXCAN") != 0) {
+                        bean.VPROUSDCAN = rst.getDouble("VCPNUSDCAN") / rst.getDouble("PAXCAN");
+                    }
+                    bean.VCPNUSDCAN = rst.getDouble("VCPNUSDCAN");
+                    bean.VCPNMXNCAN = rst.getDouble("VCPNMXNCAN");
+                    //CAR                
+                    bean.PAXCAR = rst.getDouble("PAXCAR");
+                    if (rst.getDouble("PAXCAR") != 0) {
+                        bean.VPROUSDCAR = rst.getDouble("VCPNUSDCAR") / rst.getDouble("PAXCAR");
+                    }
+                    bean.VCPNUSDCAR = rst.getDouble("VCPNUSDCAR");
+                    bean.VCPNMXNCAR = rst.getDouble("VCPNMXNCAR");
+                    //EUR                
+                    bean.PAXEUR = rst.getDouble("PAXEUR");
+                    if (rst.getDouble("PAXEUR") != 0) {
+                        bean.VPROUSDEUR = rst.getDouble("VCPNUSDEUR") / rst.getDouble("PAXEUR");
+                    }
+                    bean.VCPNUSDEUR = rst.getDouble("VCPNUSDEUR");
+                    bean.VCPNMXNEUR = rst.getDouble("VCPNMXNEUR");
+                    //FRO                
+                    bean.PAXFRO = rst.getDouble("PAXFRO");
+                    if (rst.getDouble("PAXASI") != 0) {
+                        bean.VPROUSDFRO = rst.getDouble("VCPNUSDASI") / rst.getDouble("PAXASI");
+                    }
+                    bean.VCPNUSDFRO = rst.getDouble("VCPNUSDFRO");
+                    bean.VCPNMXNFRO = rst.getDouble("VCPNMXNFRO");
+                    //LOC                
+                    bean.PAXLOC = rst.getDouble("PAXLOC");
+                    if (rst.getDouble("PAXASI") != 0) {
+                        bean.VPROUSDLOC = rst.getDouble("VCPNUSDASI") / rst.getDouble("PAXASI");
+                    }
+                    bean.VCPNUSDLOC = rst.getDouble("VCPNUSDLOC");
+                    bean.VCPNMXNLOC = rst.getDouble("VCPNMXNLOC");
+                    //PLA                
+                    bean.PAXPLA = rst.getDouble("PAXPLA");
+                    if (rst.getDouble("PAXPLA") != 0) {
+                        bean.VPROUSDPLA = rst.getDouble("VCPNUSDPLA") / rst.getDouble("PAXPLA");
+                    }
+                    bean.VCPNUSDPLA = rst.getDouble("VCPNUSDPLA");
+                    bean.VCPNMXNPLA = rst.getDouble("VCPNMXNPLA");
+                    //SUD                
+                    bean.PAXSUD = rst.getDouble("PAXSUD");
+                    if (rst.getDouble("PAXSUD") != 0) {
+                        bean.VPROUSDSUD = rst.getDouble("VCPNUSDSUD") / rst.getDouble("PAXSUD");
+                    }
+                    bean.VCPNUSDSUD = rst.getDouble("VCPNUSDSUD");
+                    bean.VCPNMXNSUD = rst.getDouble("VCPNMXNSUD");
+                    //USA                
+                    bean.PAXUSA = rst.getDouble("PAXUSA");
+                    if (rst.getDouble("PAXUSA") != 0) {
+                        bean.VPROUSDUSA = rst.getDouble("VCPNUSDUSA") / rst.getDouble("PAXUSA");
+                    }
+                    bean.VCPNUSDUSA = rst.getDouble("VCPNUSDUSA");
+                    bean.VCPNMXNUSA = rst.getDouble("VCPNMXNUSA");
+
+                    lst.add(bean);
+                    
+                    if(bean.VCPNMXNASI > 0){
+                        totalRegistrosASI++;
+                    }
+                    if(bean.VCPNMXNCAM > 0){
+                        totalRegistrosCAM++;
+                    }
+                    if(bean.VCPNMXNCAN > 0){
+                        totalRegistrosCAN++;
+                    }
+                    if(bean.VCPNMXNCAR > 0){
+                        totalRegistrosCAR++;
+                    }
+                    if(bean.VCPNMXNEUR > 0){
+                        totalRegistrosEUR++;
+                    }
+                    if(bean.VCPNMXNFRO > 0){
+                        totalRegistrosFRO++;
+                    }
+                    if(bean.VCPNMXNLOC > 0){
+                        totalRegistrosLOC++;
+                    }
+                    if(bean.VCPNMXNPLA > 0){
+                        totalRegistrosPLA++;
+                    }
+                    if(bean.VCPNMXNSUD > 0){
+                        totalRegistrosSUD++;
+                    }
+                    if(bean.VCPNMXNUSA > 0){
+                        totalRegistrosUSA++;
+                    }
+                    
+                    //Totales
+                    bean.TOTPAXASI = TOTPAXASI;
+                    bean.TOTPAXCAM = TOTPAXCAM;
+                    bean.TOTPAXCAN = TOTPAXCAN;
+                    bean.TOTPAXCAR = TOTPAXCAR;
+                    bean.TOTPAXEUR = TOTPAXEUR;
+                    bean.TOTPAXFRO = TOTPAXFRO;
+                    bean.TOTPAXLOC = TOTPAXLOC;
+                    bean.TOTPAXPLA = TOTPAXPLA;
+                    bean.TOTPAXSUD = TOTPAXSUD;
+                    bean.TOTPAXUSA = TOTPAXUSA;
+                    
+                    bean.TOTVCPNUSDASI = TOTVCPNUSDASI;
+                    bean.TOTVCPNUSDCAM = TOTVCPNUSDCAM;
+                    bean.TOTVCPNUSDCAN = TOTVCPNUSDCAN;
+                    bean.TOTVCPNUSDCAR = TOTVCPNUSDCAR;
+                    bean.TOTVCPNUSDEUR = TOTVCPNUSDEUR;
+                    bean.TOTVCPNUSDFRO = TOTVCPNUSDFRO;
+                    bean.TOTVCPNUSDLOC = TOTVCPNUSDLOC;
+                    bean.TOTVCPNUSDPLA = TOTVCPNUSDPLA;
+                    bean.TOTVCPNUSDSUD = TOTVCPNUSDSUD;
+                    bean.TOTVCPNUSDUSA = TOTVCPNUSDUSA;
+                    
+                    bean.TOTVPROUSDASI = TOTVPROUSDASI;
+                    bean.TOTVPROUSDCAM = TOTVPROUSDCAM;
+                    bean.TOTVPROUSDCAN = TOTVPROUSDCAN;
+                    bean.TOTVPROUSDCAR = TOTVPROUSDCAR;
+                    bean.TOTVPROUSDEUR = TOTVPROUSDEUR;
+                    bean.TOTVPROUSDFRO = TOTVPROUSDFRO;
+                    bean.TOTVPROUSDLOC = TOTVPROUSDLOC;
+                    bean.TOTVPROUSDPLA = TOTVPROUSDPLA;
+                    bean.TOTVPROUSDSUD = TOTVPROUSDSUD;
+                    bean.TOTVPROUSDUSA = TOTVPROUSDUSA;
+                    
+                    bean.TOTVCPNMXNASI = TOTVCPNMXNASI;
+                    bean.TOTVCPNMXNCAM = TOTVCPNMXNCAM;
+                    bean.TOTVCPNMXNCAN = TOTVCPNMXNCAN;
+                    bean.TOTVCPNMXNCAR = TOTVCPNMXNCAR;
+                    bean.TOTVCPNMXNEUR = TOTVCPNMXNEUR;
+                    bean.TOTVCPNMXNFRO = TOTVCPNMXNFRO;
+                    bean.TOTVCPNMXNLOC = TOTVCPNMXNLOC;
+                    bean.TOTVCPNMXNPLA = TOTVCPNMXNPLA;
+                    bean.TOTVCPNMXNSUD = TOTVCPNMXNSUD;
+                    bean.TOTVCPNMXNUSA = TOTVCPNMXNUSA;
+                         
+                }
+
+            }
+
+            rst.close();
+   
+            for (int i = 0; i < lst.size(); i++) {
+                //ASI
+                if (lst.get(i).VCPNMXNASI > 0) {
+                    lst.get(i).AVRG_VCPNMXN_ASI = ((lst.get(i).VCPNMXNASI - (TOTVCPNMXNASI / totalRegistrosASI)) / (TOTVCPNMXNASI / totalRegistrosASI)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_ASI >= 20) {
+                        lst.get(i).strImagen_ASI = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_ASI < 20 && lst.get(i).AVRG_VCPNMXN_ASI >= -25) {
+                        lst.get(i).strImagen_ASI = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_ASI < -25) {
+                        lst.get(i).strImagen_ASI = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //CAM
+                if (lst.get(i).VCPNMXNCAM > 0) {
+                    lst.get(i).AVRG_VCPNMXN_CAM = ((lst.get(i).VCPNMXNCAM - (TOTVCPNMXNCAM / totalRegistrosCAM)) / (TOTVCPNMXNCAM / totalRegistrosCAM)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_CAM >= 20) {
+                        lst.get(i).strImagen_CAM = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_CAM < 20 && lst.get(i).AVRG_VCPNMXN_CAM >= -25) {
+                        lst.get(i).strImagen_CAM = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_CAM < -25) {
+                        lst.get(i).strImagen_CAM = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //CAN
+                if (lst.get(i).VCPNMXNCAN > 0) {
+                    lst.get(i).AVRG_VCPNMXN_CAN = ((lst.get(i).VCPNMXNCAN - (TOTVCPNMXNCAN / totalRegistrosCAN)) / (TOTVCPNMXNCAN / totalRegistrosCAN)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_CAN >= 20) {
+                        lst.get(i).strImagen_CAN = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_CAN < 20 && lst.get(i).AVRG_VCPNMXN_CAN >= -25) {
+                        lst.get(i).strImagen_CAN = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_CAN < -25) {
+                        lst.get(i).strImagen_CAN = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //CAR
+                if (lst.get(i).VCPNMXNCAR > 0) {
+                    lst.get(i).AVRG_VCPNMXN_CAR = ((lst.get(i).VCPNMXNCAR - (TOTVCPNMXNCAR / totalRegistrosCAR)) / (TOTVCPNMXNCAR / totalRegistrosCAR)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_CAR >= 20) {
+                        lst.get(i).strImagen_CAR = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_CAR < 20 && lst.get(i).AVRG_VCPNMXN_CAR >= -25) {
+                        lst.get(i).strImagen_CAR = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_CAR < -25) {
+                        lst.get(i).strImagen_CAR = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //EUR
+                if (lst.get(i).VCPNMXNEUR > 0) {
+                    lst.get(i).AVRG_VCPNMXN_EUR = ((lst.get(i).VCPNMXNEUR - (TOTVCPNMXNEUR / totalRegistrosEUR)) / (TOTVCPNMXNEUR / totalRegistrosEUR)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_EUR >= 20) {
+                        lst.get(i).strImagen_EUR = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_EUR < 20 && lst.get(i).AVRG_VCPNMXN_EUR >= -25) {
+                        lst.get(i).strImagen_EUR = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_EUR < -25) {
+                        lst.get(i).strImagen_EUR = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //FRO
+                if (lst.get(i).VCPNMXNFRO > 0) {
+                    lst.get(i).AVRG_VCPNMXN_FRO = ((lst.get(i).VCPNMXNFRO - (TOTVCPNMXNFRO / totalRegistrosFRO)) / (TOTVCPNMXNFRO / totalRegistrosFRO)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_FRO >= 20) {
+                        lst.get(i).strImagen_FRO = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_FRO < 20 && lst.get(i).AVRG_VCPNMXN_FRO >= -25) {
+                        lst.get(i).strImagen_FRO = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_FRO < -25) {
+                        lst.get(i).strImagen_FRO = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //LOC
+                if (lst.get(i).VCPNMXNLOC > 0) {
+                    lst.get(i).AVRG_VCPNMXN_LOC = ((lst.get(i).VCPNMXNLOC - (TOTVCPNMXNLOC / totalRegistrosLOC)) / (TOTVCPNMXNLOC / totalRegistrosLOC)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_LOC >= 20) {
+                        lst.get(i).strImagen_LOC = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_LOC < 20 && lst.get(i).AVRG_VCPNMXN_LOC >= -25) {
+                        lst.get(i).strImagen_LOC = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_LOC < -25) {
+                        lst.get(i).strImagen_LOC = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //PLA
+                if (lst.get(i).VCPNMXNPLA > 0) {
+                    lst.get(i).AVRG_VCPNMXN_PLA = ((lst.get(i).VCPNMXNPLA - (TOTVCPNMXNPLA / totalRegistrosPLA)) / (TOTVCPNMXNPLA / totalRegistrosPLA)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_PLA >= 20) {
+                        lst.get(i).strImagen_PLA = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_PLA < 20 && lst.get(i).AVRG_VCPNMXN_PLA >= -25) {
+                        lst.get(i).strImagen_PLA = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_PLA < -25) {
+                        lst.get(i).strImagen_PLA = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //SUD
+                if (lst.get(i).VCPNMXNSUD > 0) {
+                    lst.get(i).AVRG_VCPNMXN_SUD = ((lst.get(i).VCPNMXNSUD - (TOTVCPNMXNSUD / totalRegistrosSUD)) / (TOTVCPNMXNSUD / totalRegistrosSUD)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_SUD >= 20) {
+                        lst.get(i).strImagen_SUD = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_SUD < 20 && lst.get(i).AVRG_VCPNMXN_SUD >= -25) {
+                        lst.get(i).strImagen_SUD = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_SUD < -25) {
+                        lst.get(i).strImagen_SUD = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                //USA
+                if (lst.get(i).VCPNMXNUSA > 0) {
+                    lst.get(i).AVRG_VCPNMXN_USA = ((lst.get(i).VCPNMXNUSA - (TOTVCPNMXNUSA / totalRegistrosUSA)) / (TOTVCPNMXNUSA / totalRegistrosUSA)) * 100;
+
+                    if (lst.get(i).AVRG_VCPNMXN_USA >= 20) {
+                        lst.get(i).strImagen_USA = "resources/img/icon/16x16/circle_red.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_USA < 20 && lst.get(i).AVRG_VCPNMXN_USA >= -25) {
+                        lst.get(i).strImagen_USA = "resources/img/icon/16x16/circle_green.png";
+                    }
+                    if (lst.get(i).AVRG_VCPNMXN_USA < -25) {
+                        lst.get(i).strImagen_USA = "resources/img/icon/16x16/Circle_Yellow.png";
+                    }
+                    //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+                
+            }
+            
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+    
+    public List<IMF140Filter> loadPX551SQP03937(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        long QTYPAX = 0;
+        double VCPNUSD = 0, VPROUSD = 0, VCPNMXN = 0, VPROMXN = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03937(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                VCPNMXN = rst.getDouble("VCPNMXN");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF140Filter();
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    bean.IN_TREG = filter.IN_TREG.trim();
+
+                    bean.ZONA = rst.getString("ZONA").trim();                    
+                    bean.VCPNMXN = rst.getDouble("VCPNMXN");
+
+                    bean.totVCPNMXN = VCPNMXN;
+
+                    lst.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+}

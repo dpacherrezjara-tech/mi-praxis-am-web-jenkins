@@ -1,0 +1,94 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package net.miatech.praxis.classes;
+ 
+import java.util.Map;
+import net.miatech.beans.spring.ServerSession;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+/**
+ *
+ * @author rmayta
+ */
+@Component
+@Scope("session")
+public class CurrentSession {
+    
+    public String CCUST = "";
+    public String CUSER = "";
+    public String ACUST = "";
+    public String PUSER = "";
+    public String DEFAULT_CUSER = "";
+    
+    public Map<String,Object> propertySession;
+    public ServerSession serverSession;
+    public String appRoot = "";
+
+    public String getAppRoot() {
+        return appRoot;
+    }
+
+    public void setAppRoot(String appRoot) {
+        this.appRoot = appRoot;
+    }
+    
+    public ServerSession getServerSession() {
+        return serverSession;
+    }
+
+    public void setServerSession(ServerSession serverSession) {
+        this.serverSession = serverSession;
+    }
+
+    public String getCCUST() {
+        return CCUST;
+    }
+
+    public void setCCUST(String CCUST) {
+        this.CCUST = CCUST;
+    }
+
+    public String getCUSER() {
+        return CUSER;
+    }
+
+    public void setCUSER(String CUSER) {
+        this.CUSER = CUSER;
+    }
+
+    public String getACUST() {
+        return ACUST;
+    }
+
+    public void setACUST(String ACUST) {
+        this.ACUST = ACUST;
+    }
+
+    public String getPUSER() {
+        return PUSER;
+    }
+
+    public void setPUSER(String PUSER) {
+        this.PUSER = PUSER;
+    }
+
+    public String getDEFAULT_CUSER() {
+        return DEFAULT_CUSER;
+    }
+
+    public void setDEFAULT_CUSER(String DEFAULT_CUSER) {
+        this.DEFAULT_CUSER = DEFAULT_CUSER;
+    }
+
+    public Map<String,Object> getPropertySession() {
+        return propertySession;
+    }
+
+    public void setPropertySession(Map<String,Object> propertySession) {
+        this.propertySession = propertySession;
+    }
+}

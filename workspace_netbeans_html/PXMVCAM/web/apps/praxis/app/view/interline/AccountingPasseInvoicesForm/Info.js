@@ -1,0 +1,509 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.' + prototype.id + '-info',
+    layout: 'border',
+    align: 'center',
+    bodyStyle: 'background-color: #E3EAEF;',
+    defaults: {
+        bodyStyle: 'background: transparent;',
+        border: false
+    },
+    style: 'margin: 1px;',
+    items: [
+        {
+            region: 'center',
+            id: prototype.id + '-regionCenterGrid01',
+            //width: 1550,
+            layout: {
+                type: 'vbox',
+                align: 'center'
+            },
+            defaults: {
+                bodyStyle: 'background: transparent;',
+                border: false,
+                align: 'center'
+            },
+            items: [
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-panelMain',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    padding: '1',
+                    margin: '1',
+                    width: '100%',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridData',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '1',
+                            margin: '1',
+                            width: '100%',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center'
+                            },
+                            items: [
+                                // --------------------------   PANEL MAIN DATA---------------------
+                                //-----------------------------------------------------------------
+                                {
+                                    xtype: 'panel',
+//                                    id: prototype.id + '-panelGridData',
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    padding: '1',
+                                    margin: '0 0 0 70',
+                                    //width: 100,    
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            id: prototype.id + '-labelTitle1',
+                                            text: 'Interline Receivables',
+                                            labelAlign: 'center',
+                                            labelStyle: 'color:#231223',
+                                            align: 'center',
+                                            margin: '10 0 0 0',
+                                            hide: true
+                                        },
+                                        {
+        //                                    xtype: 'grid',
+                                            xtype: 'treepanel',
+                                            padding: '20 0 0 0',
+                                            id: prototype.id + '-gridData',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            height: 570,
+                                            width: 855,
+                                            columnLines: true,
+                                            resizable: false,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }
+                                            ],
+                                            rootVisible: false,
+                                            plugins: {
+                                                ptype: 'cellediting',
+                                                clicksToEdit: 1
+                                            },
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    resizable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {xtype: 'treecolumn', text: 'Accounting<br>Date', width: 120, dataIndex: 'A1964FCONT',
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
+                                                            return '<b>' + value + '<b>';
+                                                        },
+        //                                                listeners: {
+        //                                                    click: 'onViewDataDetailSFI30'
+        //                                                }
+                                                    },
+                                                    {text: 'Source',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Cod', width: 70, dataIndex: 'A1964TUSO',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                },
+                                                            },
+                                                            {text: 'Description', width: 300, dataIndex: 'DES_SOURCOD',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:left;';
+                                                                    return value;
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Currency', width: 70, dataIndex: 'A1964CUR',
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if(record.data.children !== null) {
+                                                                return '<b>' + value + '<b>';
+                                                            }else{
+                                                                return value;
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Active', width: 120, dataIndex: 'QTY_ACTIV',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+        //                                                            if(rowIndex === 0) {
+                                                                    if(record.data.children !== null) {
+                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                    }else{
+                                                                        return Ext.util.Format.number(value, '0,000.00');
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Passive', width: 120, dataIndex: 'QTY_PASIV',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+        //                                                            if(rowIndex === 0) {
+                                                                    if(record.data.children !== null) {
+                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                    }else{
+                                                                        return Ext.util.Format.number(value, '0,000.00');
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        width: 40,
+                                                        text: '',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-excel',
+                                                                tooltip: 'Download Excel',
+                                                                handler: 'onDownLoad'
+                                                            }
+                                                        ],
+                                                        renderer: function(a, b , c) {
+        //                                                    console.log(a);
+        //                                                    console.log(b);
+        //                                                    console.log(c.childNodes);
+                                                            return a;
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-SummaryGridData',
+                                            width: 855,
+                                            align: 'left',
+                                            margin: '0 0 0 0 ',
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'center'
+                                            },
+                                            defaults: {
+                                                xtype: 'label',
+                                                align: 'center',
+                                                html: '' + '&nbsp',
+                                                height: 25,
+                                                padding: '5 5 5 0',
+                                                style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                            },
+                                            items: [
+                                                {width: 120},
+                                                {width: 70},
+                                                {width: 300},
+                                                {width: 70},
+                                                {width: 120, id: prototype.id + '-idActive'},
+                                                {width: 120, id: prototype.id + '-idPassive'},
+                                                {width: 51}
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {xtype: 'tbspacer', width: 50},
+                                {
+                                    xtype: 'panel',
+//                                    id: prototype.id + '-panelGridData',
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    padding: '1',
+                                    margin: '1',
+                                    //width: 100,    
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            id: prototype.id + '-labelTitle1xPagar',
+                                            text: 'Interline Payable',
+                                            labelAlign: 'center',
+                                            labelStyle: 'color:#231223',
+                                            align: 'center',
+                                            margin: '10 0 0 0',
+                                            hide: true
+                                        },
+                                        {
+        //                                    xtype: 'grid',
+                                            xtype: 'treepanel',
+                                            padding: '20 0 0 0',
+                                            id: prototype.id + '-gridDataxPagar',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            height: 570,
+                                            width: 855,
+                                            columnLines: true,
+                                            resizable: false,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }
+                                            ],
+                                            rootVisible: false,
+                                            plugins: {
+                                                ptype: 'cellediting',
+                                                clicksToEdit: 1
+                                            },
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    resizable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {xtype: 'treecolumn', text: 'Accounting<br>Date', width: 120, dataIndex: 'A1965FCONT',
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
+                                                            return '<b>' + value + '<b>';
+                                                        },
+        //                                                listeners: {
+        //                                                    click: 'onViewDataDetailSFI30'
+        //                                                }
+                                                    },
+                                                    {text: 'Source',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Cod', width: 70, dataIndex: 'A1965TUSO',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                },
+                                                            },
+                                                            {text: 'Description', width: 300, dataIndex: 'DES_SOURCOD',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:left;';
+                                                                    return value;
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Currency', width: 70, dataIndex: 'A1965CUR',
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if(record.data.children !== null) {
+                                                                return '<b>' + value + '<b>';
+                                                            }else{
+                                                                return value;
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Active', width: 120, dataIndex: 'QTY_ACTIV',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+        //                                                            if(rowIndex === 0) {
+                                                                    if(record.data.children !== null) {
+                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                    }else{
+                                                                        return Ext.util.Format.number(value, '0,000.00');
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Passive', width: 120, dataIndex: 'QTY_PASIV',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+        //                                                            if(rowIndex === 0) {
+                                                                    if(record.data.children !== null) {
+                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                    }else{
+                                                                        return Ext.util.Format.number(value, '0,000.00');
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        width: 40,
+                                                        text: '',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-excel',
+                                                                tooltip: 'Download Excel',
+                                                            }
+                                                        ],
+                                                        renderer: function(a, b , c) {
+        //                                                    console.log(a);
+        //                                                    console.log(b);
+        //                                                    console.log(c.childNodes);
+                                                            return a;
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-SummaryGridDataxPagar',
+                                            width: 855,
+                                            align: 'left',
+                                            margin: '0 0 0 0 ',
+                                            layout: {
+                                                type: 'hbox',
+                                                align: 'center'
+                                            },
+                                            defaults: {
+                                                xtype: 'label',
+                                                align: 'center',
+                                                html: '' + '&nbsp',
+                                                height: 25,
+                                                padding: '5 5 5 0',
+                                                style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                            },
+                                            items: [
+                                                {width: 120},
+                                                {width: 70},
+                                                {width: 300},
+                                                {width: 70},
+                                                {width: 120, id: prototype.id + '-idActivexPagar'},
+                                                {width: 120, id: prototype.id + '-idPassivexPagar'},
+                                                {width: 51}
+                                            ]
+                                        }
+                                    ]
+                                },
+                            ]
+                        }
+                    ]
+                },
+                /** PAGINATION LABELS*/
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-pie',
+                    layout: {
+                        type: 'hbox',
+                        pack: 'center'
+                    },
+                    border: true,
+                    height: 25,
+                    hidden: true,
+                    bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
+                    defaults: {
+                        border: true,
+                        padding: '0px 1px 0px 1px'
+                    },
+                    padding: '1px 1px 1px 1px',
+                    items: [
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelPie',
+                            width: 780,
+                            height: 25,
+                            layout: {
+                                type: 'hbox',
+                                pack: 'center'
+                            },
+                            defaults: {
+                                xtype: 'label',
+                                margin: '3px 0px 0px 5px'
+                            },
+                            items: [
+                                {
+                                    text: 'Page',
+                                    width: 50
+                                },
+                                {
+                                    id: prototype.id + '-lbl-currentPage',
+                                    text: '1',
+                                    width: 50
+                                },
+                                {
+                                    text: 'Of',
+                                    width: 50
+                                },
+                                {
+                                    id: prototype.id + '-lbl-pageCount',
+                                    text: '0',
+                                    width: 50
+                                },
+                                {xtype: 'tbspacer', width: 100},
+                                {
+                                    text: 'Total found',
+                                    width: 80
+                                },
+                                {
+                                    id: prototype.id + '-lbl-total',
+                                    text: '0',
+                                    width: 50
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            region: 'south',
+            layout: 'border',
+            height: 0,
+            defaults: {
+                style: 'margin: 2px;',
+                bodyStyle: 'background: transparent;',
+                border: false
+            },
+            items: [
+            ]
+        }
+    ]
+}
+);
+
