@@ -3182,13 +3182,17 @@ public class BankReconciliationDAO {
         List<A2309AFilter> lst_settlement_2 = new ArrayList<A2309AFilter>(0);
         A2309AFilter bean;
         A2309AFilter beanSet1 = new A2309AFilter();
-        A2309AFilter beanSet2 = new A2309AFilter();
+        A2309AFilter beanSet2;
+        String lista_batchs = "";
+        int row_count = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
         Connection cnx = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03940(?,?,?)}";
+        String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP03940_TV_REG_P(?,?)}";
+        String SQLCLL03 = "{CALL " + session.getMainLibrary() + ".SQP03940_TV_REG_P_INFO(?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -3212,6 +3216,7 @@ public class BankReconciliationDAO {
                 bean.MERCHN = rst.getString("MERCHN").trim();
                 bean.SETTLD = rst.getString("SETTLD").trim();
                 bean.NBATCH = rst.getString("NBATCH").trim();
+                lista_batchs = lista_batchs + "'" + rst.getString("NBATCH").trim() + "',";
                 bean.TREGI = rst.getString("TREGI");
                 bean.SDATE = rst.getString("SDATE").trim();
                 bean.FLAG_CARD = rst.getInt("FLAG_CARD");
@@ -3236,12 +3241,56 @@ public class BankReconciliationDAO {
             beanSet1.SAUTHOC_PREV = filter.SAUTHOC_PREV.trim();
             beanSet1.SCURRENCY_PREV = filter.SCURRENCY_PREV.trim();
             beanSet1.SVFOP_PREV = filter.SVFOP_PREV.trim();
-            
+
             lst_settlement_1.add(beanSet1);
 
             hmResultado.put("BATCH", lst);
             hmResultado.put("SETTLEMENT_1", lst_settlement_1);
-            
+
+            //Vamos al A2309C a buscar si existen registros P en los Batchs
+            if (lista_batchs.length() > 0) {
+                lista_batchs = lista_batchs.substring(0, lista_batchs.length() - 1);
+
+                cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+                cstmt = cnx.prepareCall(SQLCLL02);
+                cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                cstmt.setString(2, lista_batchs);
+                cstmt.execute();
+
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    row_count++;
+                }
+
+                if (row_count > 0) {
+                    cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+                    cstmt = cnx.prepareCall(SQLCLL03);
+                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                    cstmt.setString(2, filter.IN_SDATE.trim());
+                    cstmt.setString(3, filter.IN_EPAAMEDATA.trim());
+                    cstmt.execute();
+
+                    rst = cstmt.getResultSet();
+
+                    while (rst.next()) {
+                        beanSet2 = new A2309AFilter();
+
+                        beanSet2.FTE_PREV = filter.FTE_PREV.trim();
+                        beanSet2.SCARCOD_PREV = filter.SCARCOD_PREV.trim();
+                        beanSet2.SEQNUM_PREV = filter.SEQNUM_PREV.trim();
+                        beanSet2.SORIG_PREV = filter.SORIG_PREV.trim();
+                        beanSet2.MERCHN_PREV = filter.MERCHN_PREV.trim();
+
+                        beanSet2.SCARDN_PREV = rst.getString("CMNO").trim();
+                        beanSet2.SAUTHOC_PREV = rst.getString("AUTHCD").trim();
+                        beanSet2.SCURRENCY_PREV = rst.getString("CURRENPAY").trim();
+                        beanSet2.SVFOP_PREV = rst.getString("TOTALCHRG").trim();
+                        
+                        lst_settlement_1.add(beanSet2);
+                    }
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
