@@ -1707,11 +1707,11 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                             metaData.style = "text-align:center;";
                                                             var data = record.data;
                                                             metaData.tdAttr = 'data-qtip="' + data.strDescripcion + '"';
-                                                            if(data.SCARCOD == 'AX' && data.SCOUNTRY == 'MX'){
+                                                            if (data.SCARCOD == 'AX' && data.SCOUNTRY == 'MX') {
                                                                 return '<a href="#payments-bank-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             } else {
                                                                 return value;
-                                                            }                                                            
+                                                            }
                                                         }
                                                     },
                                                     {
@@ -1767,7 +1767,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataPrevSettlement',
                                     width: 610,
-                                    columnLines: true,                                    
+                                    columnLines: true,
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -1795,7 +1795,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                     {
                                                         text: 'Number', dataIndex: 'SCARDN_PREV', width: 120, align: 'center', menuDisabled: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            metaData.style = "text-align:left;";
                                                             return value;
                                                         }
                                                     },
@@ -1809,17 +1809,10 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                     {
                                                         text: 'Bank', dataIndex: 'SORIG_PREV', width: 80, align: 'center', menuDisabled: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:left;background-color:#d5f4d5;";
+                                                            metaData.style = "text-align:center;background-color:#d5f4d5;";
                                                             return value;
                                                         }
                                                     },
-                                                    {
-                                                        text: 'Type', dataIndex: 'TYPE', width: 80, align: 'center', menuDisabled: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:left;background-color:#d5f4d5;";
-                                                            return value;
-                                                        }
-                                                    }
                                                 ]
                                             },
                                             {
@@ -1848,11 +1841,18 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
+                                            },
+                                            {
+                                                text: 'Type', dataIndex: 'TYPE', width: 80, align: 'center', menuDisabled: true,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;background-color:#d5f4d5;";
+                                                    return value;
+                                                }
                                             }
                                         ]
                                     }
                                 },
-                                {xtype: 'tbspacer', height: 10},
+                                {xtype: 'tbspacer',id: prototype.id + '-tbspacerSettlement', height: 40},
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataDet',
