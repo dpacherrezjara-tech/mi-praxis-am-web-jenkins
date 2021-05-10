@@ -54,6 +54,9 @@ public class BankReconciliationDAO {
     //**************************************************************************
     public List<A2290Filter> loadPX269SQP00698(A2290Filter filter) throws SQLException, Exception {
 
+        
+        
+        
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
         A2290Filter beanTkt;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0;//Transacciones
