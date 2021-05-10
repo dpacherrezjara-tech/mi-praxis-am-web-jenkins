@@ -1766,7 +1766,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataPrevSettlement',
-                                    width: 530,
+                                    width: 610,
                                     columnLines: true,                                    
                                     columns: {
                                         defaults: {
@@ -1808,6 +1808,13 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Bank', dataIndex: 'SORIG_PREV', width: 80, align: 'center', menuDisabled: true,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;background-color:#d5f4d5;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Type', dataIndex: 'TYPE', width: 80, align: 'center', menuDisabled: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#d5f4d5;";
                                                             return value;
