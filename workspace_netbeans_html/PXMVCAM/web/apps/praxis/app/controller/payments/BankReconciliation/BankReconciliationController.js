@@ -1352,6 +1352,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                     Ext.getCmp(prototype.id + '-gridDataPrevSettlement').bindStore(storeSettlData1);
                 } else {
                     Ext.getCmp(prototype.id + '-gridDataPrevSettlement').setVisible(false);
+                    Ext.getCmp(prototype.id + '-tbspacerSettlement').setVisible(false);                    
                 }
 
                 Ext.getCmp(prototype.id + '-gridDataDet').bindStore(storeData);
