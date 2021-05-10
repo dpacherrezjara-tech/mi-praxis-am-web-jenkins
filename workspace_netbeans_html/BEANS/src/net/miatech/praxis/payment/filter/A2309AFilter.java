@@ -40,6 +40,7 @@ public class A2309AFilter extends A2309A {
     public String SAUTHOC_PREV = "";
     public String SCURRENCY_PREV = "";
     public String SVFOP_PREV = "";
+    public String TYPE = "";
     
     public Pagination page = new Pagination();
 }
