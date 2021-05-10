@@ -1342,13 +1342,18 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                     data: res.data,
                     autoLoad: true
                 });
-                
-                var storeSettlData1 = Ext.create('Ext.data.Store', {
-                    data: res.settl1,
-                    autoLoad: true
-                });
 
-                Ext.getCmp(prototype.id + '-gridDataPrevSettlement').bindStore(storeSettlData1);
+                if (res.settl1.length > 1) {
+                    var storeSettlData1 = Ext.create('Ext.data.Store', {
+                        data: res.settl1,
+                        autoLoad: true
+                    });
+
+                    Ext.getCmp(prototype.id + '-gridDataPrevSettlement').bindStore(storeSettlData1);
+                } else {
+                    Ext.getCmp(prototype.id + '-gridDataPrevSettlement').setVisible(false);
+                }
+
                 Ext.getCmp(prototype.id + '-gridDataDet').bindStore(storeData);
             }
         })
