@@ -3241,6 +3241,7 @@ public class BankReconciliationDAO {
             beanSet1.SAUTHOC_PREV = filter.SAUTHOC_PREV.trim();
             beanSet1.SCURRENCY_PREV = filter.SCURRENCY_PREV.trim();
             beanSet1.SVFOP_PREV = filter.SVFOP_PREV.trim();
+            beanSet1.TYPE = "Liquidación";
 
             lst_settlement_1.add(beanSet1);
 
@@ -3286,6 +3287,7 @@ public class BankReconciliationDAO {
                         beanSet2.SAUTHOC_PREV = rst.getString("AUTHCD").trim();
                         beanSet2.SCURRENCY_PREV = rst.getString("CURRENPAY").trim();
                         beanSet2.SVFOP_PREV = rst.getString("TOTALCHRG").trim();
+                        beanSet2.TYPE = "Settlement";
                         
                         lst_settlement_1.add(beanSet2);
                     }
