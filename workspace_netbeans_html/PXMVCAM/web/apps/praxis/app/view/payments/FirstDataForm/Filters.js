@@ -23,12 +23,28 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
             },
             items: [
                 {
-                    xtype: 'label',
-                    html: '<strong style="color:#000;">Presentation Date</strong>',
-                    align: 'left',
-                    fieldStyle: 'text-align: left;',
-                    padding: '8px 30px 0px 5px',
-                    hidden: false
+                    xtype: 'combo',
+                    id: prototype.id + '-cmbFecFiltro',
+                    fieldStyle: 'text-align:left;',
+                    queryMode: 'local',
+                    editable: false,
+                    triggerAction: 'all',
+                    autoSelect: false,
+                    enableKeyEvents: true,
+                    caseSensitive: true,
+                    hidden: false,
+                    valueField: 'code', displayField: 'name',
+                    value: "FPRESENT",
+                    store: new Ext.data.SimpleStore({
+                        fields: ['code', 'name'],
+                        data: [
+                            ["FPRESENT", "Presentation Date"], ["SDATE", "Sale Date"]
+                        ]
+                    }),
+                    labelWidth: 100,
+                    width: 120,
+                    anchor: '100%',
+                    margin: '0 0 0 86'
                 },
                 {
                     xtype: 'combo',
@@ -189,9 +205,9 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                     maxLength: 4,
                     width: 65,
                     enableKeyEvents: true,
-                    listeners: {
+                    /*listeners: {
                         keypress: 'buscarCard_keyDownHandler'
-                    }
+                    }*/
                 },
             ]
         }
