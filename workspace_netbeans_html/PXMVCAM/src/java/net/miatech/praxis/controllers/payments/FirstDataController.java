@@ -63,6 +63,58 @@ public class FirstDataController extends BaseController {
         return "sales/FirstData/form_index";
     }
 
+    @RequestMapping(value = "searchByMonths")
+    public @ResponseBody
+    String searchByMonths(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- FirstData : searchByMonths-------------");
+
+        map.put("success", true);
+        List<A2338Filter> lst = this.getListByMonths(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A2338Filter> getListByMonths(HttpServletRequest request, Boolean bExcel) {
+
+        List<A2338Filter> lst = new ArrayList<>(0);
+        A2338Filter filter = new A2338Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new FirstDataLogic();
+
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2338Filter.class);
+
+            // Paginacion
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            //--------------------
+            lst = logic.loadPX554SQP03911_TV_2(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
     @RequestMapping(value = "search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
@@ -85,7 +137,7 @@ public class FirstDataController extends BaseController {
 
         try {
             logic = new FirstDataLogic();
-            
+
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
