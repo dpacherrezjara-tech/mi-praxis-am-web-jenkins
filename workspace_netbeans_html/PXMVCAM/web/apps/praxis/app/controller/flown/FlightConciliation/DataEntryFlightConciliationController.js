@@ -171,7 +171,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(bean) {
-        if (this.STVAL !== "") {cmbFSTAFI
+        if (this.STVAL !== "") {
             Ext.getCmp(prototype.id+'-cmbSTVAL').setValue(this.STVAL);
         } else {
             Ext.getCmp(prototype.id+"-cmbSTVAL").setValue(bean.STVAL);
