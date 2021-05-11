@@ -65,6 +65,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                         items: [
                                             {
                                                 text: 'Presentation',
+                                                id: prototype.id + '-adgTitFecha',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -72,8 +73,8 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'FPRESENT', width: 140
-                                                    },
+                                                        text: 'Date', dataIndex: 'TIPOFEC', width: 140
+                                                    }
                                                 ]
                                             },
                                             {
@@ -145,7 +146,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                             id: prototype.id + '-panelGridData',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1505,
+                            width: 1495,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -155,7 +156,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1505,
+                                    width: 1495,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -171,26 +172,16 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                         items: [
                                             {
                                                 text: 'Presentation',
+                                                id: prototype.id + '-adgTitFecha2',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Date', dataIndex: 'FPRESENT', width: 90
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                text: 'Sale',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Date', dataIndex: 'SDATE', width: 90
-                                                    },
+                                                    {
+                                                        text: 'Date', dataIndex: 'TIPOFEC', width: 90
+                                                    }
                                                 ]
                                             },
                                             {
@@ -396,7 +387,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                             id: prototype.id + '-panelGridDataBySettlement',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1562,
+                            width: 1555,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -406,7 +397,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMainBySettlement',
-                                    width: 1559,
+                                    width: 1555,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -422,26 +413,16 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                         items: [
                                             {
                                                 text: 'Presentation',
+                                                id: prototype.id + '-adgTitFecha3',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Date', dataIndex: 'FPRESENT', width: 90
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                text: 'Sale',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Date', dataIndex: 'SDATE', width: 90
-                                                    },
+                                                    {
+                                                        text: 'Date', dataIndex: 'TIPOFEC', width: 90
+                                                    }
                                                 ]
                                             },
                                             {
