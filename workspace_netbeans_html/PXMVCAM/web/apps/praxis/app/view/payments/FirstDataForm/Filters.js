@@ -145,6 +145,54 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                     maskRe: /[0-9]/,
                     width: 100,
                 },
+                {xtype: 'tbspacer', width: 30},
+                {
+                    xtype: 'label',
+                    text: 'Card Number:',
+                    padding: '3 0',
+                    width: 102,
+                    autoEl: {
+                        tag: 'label',
+                        'data-qtip': 'Credit Card Number'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    id: prototype.id + '-txtCard1',
+                    fieldStyle: 'text-align:center',
+                    enforceMaxLength: true,
+                    maskRe: /[0-9]/,
+                    maxLength: 6,
+                    width: 85,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keyup: 'tarjeta_keyDownHandler'
+                    }
+                },
+                {xtype: 'tbspacer', width: 5},
+                {
+                    xtype: 'label',
+                    text: '*****(*)',
+                    padding: '3 0',
+                    width: 65,
+                    autoEl: {
+                        tag: 'label',
+                        'data-qtip': '5 encrypted characters for AMEX and 6 characters for the rest.'
+                    }
+                },
+                {
+                    xtype: 'textfield',
+                    id: prototype.id + '-txtCard2',
+                    fieldStyle: 'text-align:center',
+                    enforceMaxLength: true,
+                    maskRe: /[0-9]/,
+                    maxLength: 4,
+                    width: 65,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: 'buscarCard_keyDownHandler'
+                    }
+                },
             ]
         }
     ]
