@@ -31,4 +31,9 @@ public class FirstDataLogic {
     public List<A2338Filter> loadPX554SQP03911_TV(A2338Filter filter) throws SQLException, Exception {
         return FirstDataDAO.loadPX554SQP03911_TV(filter);
     }
+    
+    public List<A2338Filter> loadPX554SQP03911_TV_2(A2338Filter filter) throws SQLException, Exception {
+        return FirstDataDAO.loadPX554SQP03911_TV_2(filter);
+        
+    }
 }
