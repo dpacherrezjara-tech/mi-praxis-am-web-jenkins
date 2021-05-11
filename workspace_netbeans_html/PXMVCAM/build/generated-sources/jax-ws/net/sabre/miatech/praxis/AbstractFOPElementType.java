@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlSeeAlso({
     PaymentCardType.class
-})
+}) 
 public abstract class AbstractFOPElementType {
 
     @XmlElement(name = "PaymentType")
