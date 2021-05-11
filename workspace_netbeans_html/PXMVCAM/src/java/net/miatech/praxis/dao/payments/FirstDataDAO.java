@@ -60,33 +60,36 @@ public class FirstDataDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_1(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_1(?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(5, Types.INTEGER);
-            cstmt.registerOutParameter(6, Types.INTEGER);
-            cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.IN_FPRESENT);
-            cstmt.setString(3, filter.IN_MERCHNP);
-            cstmt.setString(4, filter.IN_SCURRENCY);
+            cstmt.setString(2, filter.IN_TIPOFEC);
+            cstmt.setString(3, filter.IN_DATE);
+            cstmt.setString(4, filter.IN_MERCHNP);
+            cstmt.setString(5, filter.IN_SCURRENCY);
+            cstmt.setString(6, filter.IN_CARDN1);
+            cstmt.setString(7, filter.IN_CARDN2);
 
-            cstmt.setInt(5, filter.page.PAGNUM);
-            cstmt.setInt(6, filter.page.PAGROW);
-            cstmt.setInt(7, filter.page.TOTPAG);
-            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.setInt(8, filter.page.PAGNUM);
+            cstmt.setInt(9, filter.page.PAGROW);
+            cstmt.setInt(10, filter.page.TOTPAG);
+            cstmt.setInt(11, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(5);
-            filter.page.PAGROW = cstmt.getInt(6);
-            filter.page.TOTPAG = cstmt.getInt(7);
-            filter.page.TOTROW = cstmt.getInt(8);
+            filter.page.PAGNUM = cstmt.getInt(8);
+            filter.page.PAGROW = cstmt.getInt(9);
+            filter.page.TOTPAG = cstmt.getInt(10);
+            filter.page.TOTROW = cstmt.getInt(11);
 
             rst = cstmt.getResultSet();
 
@@ -112,7 +115,7 @@ public class FirstDataDAO {
                     bean = new A2338Filter();
                     bean.RN = rst.getLong("RN");
 
-                    bean.FPRESENT = rst.getString("FPRESENT").trim();
+                    bean.TIPOFEC = rst.getString(filter.IN_TIPOFEC).trim();
                     bean.MERCHNP = rst.getString("MERCHNP").trim();
                     bean.NUMLIQUI = rst.getString("NUMLIQUI").trim();
                     bean.SCURRENCY = rst.getString("SCURRENCY").trim();
@@ -128,7 +131,7 @@ public class FirstDataDAO {
                     bean.IVACTASD = rst.getDouble("IVACTASD");
                     bean.TOTDESC = rst.getDouble("TOTDESC");
                     bean.NETO = rst.getDouble("NETO");
-                    bean.SDATE = rst.getString("SDATE");
+                    //bean.SDATE = rst.getString("SDATE");
                     bean.STPAGO = rst.getString("STPAGO");
 
                     if (rst.getString("STVAL").trim().equals("1")) {
@@ -207,36 +210,37 @@ public class FirstDataDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_TV(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_TV(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(9, Types.INTEGER);
             cstmt.registerOutParameter(10, Types.INTEGER);
             cstmt.registerOutParameter(11, Types.INTEGER);
             cstmt.registerOutParameter(12, Types.INTEGER);
+            cstmt.registerOutParameter(13, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_NUMLIQUI);
             cstmt.setString(3, filter.IN_SCURRENCY);
-            cstmt.setString(4, filter.IN_FPRESENT);
-            cstmt.setString(5, filter.IN_MERCHNP);
-            cstmt.setString(6, filter.IN_CARDN1.trim());
-            cstmt.setString(7, filter.IN_CARDN2.trim());
-            cstmt.setString(8, filter.IN_SDATE.trim());
-            cstmt.setInt(9, filter.page.PAGNUM);
-            cstmt.setInt(10, filter.page.PAGROW);
-            cstmt.setInt(11, filter.page.TOTPAG);
-            cstmt.setInt(12, filter.page.TOTROW);
+            cstmt.setString(4, filter.IN_TIPOFEC);
+            cstmt.setString(5, filter.IN_DATE);
+            cstmt.setString(6, filter.IN_MERCHNP);
+            cstmt.setString(7, filter.IN_CARDN1.trim());
+            cstmt.setString(8, filter.IN_CARDN2.trim());
+            cstmt.setString(9, filter.IN_SDATE.trim());
+            cstmt.setInt(10, filter.page.PAGNUM);
+            cstmt.setInt(11, filter.page.PAGROW);
+            cstmt.setInt(12, filter.page.TOTPAG);
+            cstmt.setInt(13, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(9);
-            filter.page.PAGROW = cstmt.getInt(10);
-            filter.page.TOTPAG = cstmt.getInt(11);
-            filter.page.TOTROW = cstmt.getInt(12);
+            filter.page.PAGNUM = cstmt.getInt(10);
+            filter.page.PAGROW = cstmt.getInt(11);
+            filter.page.TOTPAG = cstmt.getInt(12);
+            filter.page.TOTROW = cstmt.getInt(13);
 
             rst = cstmt.getResultSet();
 
@@ -264,7 +268,7 @@ public class FirstDataDAO {
                     bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
                     bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
 
-                    bean.FPRESENT = rst.getString("FPRESENT").trim();
+                    bean.TIPOFEC = rst.getString(filter.IN_TIPOFEC).trim();
                     bean.MERCHNP = rst.getString("MERCHNP").trim();
                     bean.NUMLIQUI = rst.getString("NUMLIQUI").trim();
                     bean.SCURRENCY = rst.getString("SCURRENCY").trim();
@@ -278,7 +282,7 @@ public class FirstDataDAO {
                     bean.IVAARANC = rst.getDouble("IVAARANC");
                     bean.IMPORTCF = rst.getDouble("IMPORTCF");
                     bean.DESC_MERCHANT = rst.getString("DESC_MERCHANT");
-                    bean.SDATE = rst.getString("SDATE");
+                    //bean.SDATE = rst.getString("SDATE");
                     bean.STPAGO = rst.getString("STPAGO");
 
                     bean.IVACFINA = rst.getDouble("IVACFINA");
@@ -360,34 +364,37 @@ public class FirstDataDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
         Connection cnx = null;
-        
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_TV_2(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_TV_2(?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(4, Types.INTEGER);
-            cstmt.registerOutParameter(5, Types.INTEGER);
-            cstmt.registerOutParameter(6, Types.INTEGER);
-            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.IN_FECHA_FROM);
-            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(2, filter.IN_TIPOFEC);
+            cstmt.setString(3, filter.IN_FECHA_FROM);
+            cstmt.setString(4, filter.IN_FECHA_TO);
+            cstmt.setString(5, filter.IN_MERCHNP);
+            cstmt.setString(6, filter.IN_CARDN1);
+            cstmt.setString(7, filter.IN_CARDN2);
 
-            cstmt.setInt(4, filter.page.PAGNUM);
-            cstmt.setInt(5, filter.page.PAGROW);
-            cstmt.setInt(6, filter.page.TOTPAG);
-            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.setInt(8, filter.page.PAGNUM);
+            cstmt.setInt(9, filter.page.PAGROW);
+            cstmt.setInt(10, filter.page.TOTPAG);
+            cstmt.setInt(11, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(4);
-            filter.page.PAGROW = cstmt.getInt(5);
-            filter.page.TOTPAG = cstmt.getInt(6);
-            filter.page.TOTROW = cstmt.getInt(7);
+            filter.page.PAGNUM = cstmt.getInt(8);
+            filter.page.PAGROW = cstmt.getInt(9);
+            filter.page.TOTPAG = cstmt.getInt(10);
+            filter.page.TOTROW = cstmt.getInt(11);
 
             rst = cstmt.getResultSet();
 
@@ -407,7 +414,7 @@ public class FirstDataDAO {
                     bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
                     bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
 
-                    bean.FPRESENT = rst.getString("FPRESENT").trim();
+                    bean.TIPOFEC = rst.getString(filter.IN_TIPOFEC).trim();
                     bean.QtySETTLEMENT = rst.getInt("QtySETTLEMENT");
                     bean.SCURRENCY = rst.getString("SCURRENCY");
                     bean.IMPORTOT = rst.getDouble("IMPORTOT");
