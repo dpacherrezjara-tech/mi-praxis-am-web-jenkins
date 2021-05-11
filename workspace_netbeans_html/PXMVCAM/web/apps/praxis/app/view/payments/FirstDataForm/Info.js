@@ -76,10 +76,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                         text: 'Date', dataIndex: 'TIPOFEC', width: 140
                                                     }
                                                 ]
-                                            },
-                                            {
-                                                text: 'Currency', dataIndex: 'SCURRENCY', width: 140
-                                            },
+                                            },                                            
                                             {
                                                 text: 'Settlement', dataIndex: 'QtySETTLEMENT', width: 140,
                                                 listeners: {
@@ -95,6 +92,9 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.TOT_QtySETTLEMENT, '0,000') + '<b>';
                                                 }
+                                            },
+                                            {
+                                                text: 'Currency', dataIndex: 'SCURRENCY', width: 140
                                             },
                                             {
                                                 text: 'Total <br> Amount', dataIndex: 'IMPORTOT', width: 140,
@@ -363,7 +363,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'STPAGO', dataIndex: 'STPAGO', width: 80,
+                                                text: 'Payment <br> Status', dataIndex: 'STPAGO', width: 80,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -593,7 +593,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'STPAGO', dataIndex: 'STPAGO', width: 80,
+                                                text: 'Payment <br> Status', dataIndex: 'STPAGO', width: 80,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
