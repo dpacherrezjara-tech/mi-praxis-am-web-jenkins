@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                             id: prototype.id + '-panelGridByMonth',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1415,
+                            width: 843,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -49,7 +49,113 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataByMonth',
-                                    width: 1415,
+                                    width: 843,
+                                    //height: 600,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Presentation',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'FPRESENT', width: 140
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Currency', dataIndex: 'SCURRENCY', width: 140
+                                            },
+                                            {
+                                                text: 'Settlement', dataIndex: 'QtySETTLEMENT', width: 140,
+                                                listeners: {
+                                                    click: 'onGridDataMain'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return '<a href="#payments-first-data-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataByMonth').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_QtySETTLEMENT, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Total <br> Amount', dataIndex: 'IMPORTOT', width: 140,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataByMonth').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_IMPORTOT, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Total <br> Discount ', dataIndex: 'TOTDESC', width: 140,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataByMonth').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_TOTDESC, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Net to <br> Receive ', dataIndex: 'NETO', width: 140,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataByMonth').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOT_NETO, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        //Panel por días
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridData',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            width: 1505,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataMain',
+                                    width: 1505,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -76,95 +182,14 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Settlement', dataIndex: 'NUMLIQUI', width: 80,                                                
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return '<a href="#payments-first-data-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                }
-                                            },                                            
-                                            {
-                                                text: 'Total <br> Amount', dataIndex: 'IMPORTOT', width: 90,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#34c6eb";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataMain').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.TOT_IMPORTOT, '0,000.00') + '<b>';
-                                                }
-                                            },                                            
-                                            {
-                                                text: 'Total <br> Discount ', dataIndex: 'TOTDESC', width: 90,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#34c6eb";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataMain').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.TOT_TOTDESC, '0,000.00') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'Net to <br> Receive ', dataIndex: 'NETO', width: 90,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#34c6eb";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataMain').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.TOT_NETO, '0,000.00') + '<b>';
-                                                }
-                                            },                                           
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        //Panel por días
-                        {
-                            xtype: 'panel',
-                            id: prototype.id + '-panelGridData',
-                            bodyStyle: 'background-color: #E3EAEF;',
-                            border: true,
-                            width: 1415,
-                            margin: '0 0 0 0 ',
-                            layout: {
-                                type: 'vbox',
-                                align: 'center'
-                            },
-                            items: [
-                                {
-                                    xtype: 'grid',
-                                    id: prototype.id + '-gridDataMain',
-                                    width: 1415,
-                                    //height: 600,
-                                    columnLines: true,
-                                    features: [{
-                                            ftype: 'summary',
-                                            dock: 'bottom'
-                                        }],
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
-                                        },
-                                        items: [
-                                            {
-                                                text: 'Presentation',
+                                                text: 'Sale',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Date', dataIndex: 'FPRESENT', width: 90
+                                                    {text: 'Date', dataIndex: 'SDATE', width: 90
                                                     },
                                                 ]
                                             },
@@ -347,6 +372,13 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 }
                                             },
                                             {
+                                                text: 'STPAGO', dataIndex: 'STPAGO', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
                                                 text: 'Sales Source', dataIndex: 'FTE', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
@@ -364,7 +396,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                             id: prototype.id + '-panelGridDataBySettlement',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1469,
+                            width: 1562,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -374,7 +406,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMainBySettlement',
-                                    width: 1469,
+                                    width: 1559,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -397,6 +429,18 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Date', dataIndex: 'FPRESENT', width: 90
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Sale',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'SDATE', width: 90
                                                     },
                                                 ]
                                             },
@@ -562,6 +606,13 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                             },
                                             {
                                                 text: 'Status', dataIndex: 'STVAL', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'STPAGO', dataIndex: 'STPAGO', width: 80,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
