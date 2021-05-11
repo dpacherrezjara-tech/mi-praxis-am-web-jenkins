@@ -60,35 +60,33 @@ public class FirstDataDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_1(?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
+            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
-            cstmt.registerOutParameter(9, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.IN_FECHA_FROM);
-            cstmt.setString(3, filter.IN_FECHA_TO);
-            cstmt.setString(4, filter.IN_MERCHNP);
-            cstmt.setString(5, filter.IN_SCURRENCY);
-            
-            
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setString(2, filter.IN_FPRESENT);
+            cstmt.setString(3, filter.IN_MERCHNP);
+            cstmt.setString(4, filter.IN_SCURRENCY);
+
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
 
             rst = cstmt.getResultSet();
 
@@ -105,7 +103,6 @@ public class FirstDataDAO {
                 TOT_NETO = rst.getDouble("TOT_NETO");
                 TOT_IMPORFIN = rst.getDouble("TOT_IMPORFIN");
 
-
             }
             rst.close();
             if (cstmt.getMoreResults()) {
@@ -114,10 +111,7 @@ public class FirstDataDAO {
                 while (rst.next()) {
                     bean = new A2338Filter();
                     bean.RN = rst.getLong("RN");
-                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
-                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
 
-                    
                     bean.FPRESENT = rst.getString("FPRESENT").trim();
                     bean.MERCHNP = rst.getString("MERCHNP").trim();
                     bean.NUMLIQUI = rst.getString("NUMLIQUI").trim();
@@ -128,12 +122,14 @@ public class FirstDataDAO {
                     bean.IMPARANC = rst.getDouble("IMPARANC");
                     bean.IVAARANC = rst.getDouble("IVAARANC");
                     bean.IMPORTCF = rst.getDouble("IMPORTCF");
-                    
+
                     bean.IVACFINA = rst.getDouble("IVACFINA");
                     bean.IMPCTASD = rst.getDouble("IMPCTASD");
                     bean.IVACTASD = rst.getDouble("IVACTASD");
                     bean.TOTDESC = rst.getDouble("TOTDESC");
                     bean.NETO = rst.getDouble("NETO");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.STPAGO = rst.getString("STPAGO");
 
                     if (rst.getString("STVAL").trim().equals("1")) {
                         bean.STVAL = "MATCH";
@@ -161,7 +157,7 @@ public class FirstDataDAO {
                     bean.TOT_IMPCTASD = TOT_IMPCTASD;
                     bean.TOT_IVACTASD = TOT_IVACTASD;
                     bean.TOT_TOTDESC = TOT_TOTDESC;
-                    bean.TOT_NETO = TOT_NETO;                    
+                    bean.TOT_NETO = TOT_NETO;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
@@ -195,7 +191,7 @@ public class FirstDataDAO {
 
         return lst;
     }
-    
+
     public List<A2338Filter> loadPX554SQP03911_TV(A2338Filter filter) throws SQLException, Exception {
 
         List<A2338Filter> lst = new ArrayList<A2338Filter>(0);
@@ -211,34 +207,36 @@ public class FirstDataDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_TV(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_TV(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(6, Types.INTEGER);
-            cstmt.registerOutParameter(7, Types.INTEGER);
-            cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
+            cstmt.registerOutParameter(12, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_NUMLIQUI);
             cstmt.setString(3, filter.IN_SCURRENCY);
             cstmt.setString(4, filter.IN_FPRESENT);
             cstmt.setString(5, filter.IN_MERCHNP);
-            
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setString(6, filter.IN_CARDN1.trim());
+            cstmt.setString(7, filter.IN_CARDN2.trim());
+            cstmt.setString(8, filter.IN_SDATE.trim());
+            cstmt.setInt(9, filter.page.PAGNUM);
+            cstmt.setInt(10, filter.page.PAGROW);
+            cstmt.setInt(11, filter.page.TOTPAG);
+            cstmt.setInt(12, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(9);
+            filter.page.PAGROW = cstmt.getInt(10);
+            filter.page.TOTPAG = cstmt.getInt(11);
+            filter.page.TOTROW = cstmt.getInt(12);
 
             rst = cstmt.getResultSet();
 
@@ -254,7 +252,6 @@ public class FirstDataDAO {
                 TOT_TOTDESC = rst.getDouble("TOT_TOTDESC");
                 TOT_NETO = rst.getDouble("TOT_NETO");
                 TOT_IMPORFIN = rst.getDouble("TOT_IMPORFIN");
-
 
             }
             rst.close();
@@ -280,7 +277,10 @@ public class FirstDataDAO {
                     bean.IMPARANC = rst.getDouble("IMPARANC");
                     bean.IVAARANC = rst.getDouble("IVAARANC");
                     bean.IMPORTCF = rst.getDouble("IMPORTCF");
-                    
+                    bean.DESC_MERCHANT = rst.getString("DESC_MERCHANT");
+                    bean.SDATE = rst.getString("SDATE");
+                    bean.STPAGO = rst.getString("STPAGO");
+
                     bean.IVACFINA = rst.getDouble("IVACFINA");
                     bean.IMPCTASD = rst.getDouble("IMPCTASD");
                     bean.IVACTASD = rst.getDouble("IVACTASD");
@@ -313,7 +313,111 @@ public class FirstDataDAO {
                     bean.TOT_IMPCTASD = TOT_IMPCTASD;
                     bean.TOT_IVACTASD = TOT_IVACTASD;
                     bean.TOT_TOTDESC = TOT_TOTDESC;
-                    bean.TOT_NETO = TOT_NETO;                    
+                    bean.TOT_NETO = TOT_NETO;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+
+                    lst.add(bean);
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<A2338Filter> loadPX554SQP03911_TV_2(A2338Filter filter) throws SQLException, Exception {
+
+        List<A2338Filter> lst = new ArrayList<A2338Filter>(0);
+        A2338Filter bean;
+        double TOT_IMPORTOT = 0.0;
+        double TOT_TOTDESC = 0.0;
+        double TOT_NETO = 0.0;
+        Integer TOT_QtySETTLEMENT = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+        
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03911_TV_2(?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                TOT_IMPORTOT = rst.getDouble("TOT_IMPORTOT");
+                TOT_TOTDESC = rst.getDouble("TOT_TOTDESC");
+                TOT_NETO = rst.getDouble("TOT_NETO");
+                TOT_QtySETTLEMENT = rst.getInt("TOT_QtySETTLEMENT");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new A2338Filter();
+                    bean.RN = rst.getLong("RN");
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+
+                    bean.FPRESENT = rst.getString("FPRESENT").trim();
+                    bean.QtySETTLEMENT = rst.getInt("QtySETTLEMENT");
+                    bean.SCURRENCY = rst.getString("SCURRENCY");
+                    bean.IMPORTOT = rst.getDouble("IMPORTOT");
+                    bean.TOTDESC = rst.getDouble("TOTDESC");
+                    bean.NETO = rst.getDouble("NETO");
+
+                    bean.TOT_IMPORTOT = TOT_IMPORTOT;
+                    bean.TOT_TOTDESC = TOT_TOTDESC;
+                    bean.TOT_NETO = TOT_NETO;
+                    bean.TOT_QtySETTLEMENT = TOT_QtySETTLEMENT;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
