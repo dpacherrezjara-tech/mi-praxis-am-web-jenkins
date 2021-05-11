@@ -199,6 +199,9 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
                         }
 
                         Ext.getCmp(prototype.id + '-adgTitFecha2').setText(titIN_DATE);
+                        
+                        Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">' + titIN_DATE + ' Date: ' + data.TIPOFEC.substring(0, 6) + '</center>');
+                        
                     }
                     me.setWidthPie();
                 }
