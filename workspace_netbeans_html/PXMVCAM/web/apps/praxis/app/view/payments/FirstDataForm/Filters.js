@@ -134,7 +134,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                     caseSensitive: false,
                     autoSelect: true,
                     editable: false,
-                    value: "",
+                    value: "ARS",
                     fieldLabel: 'Currency',
                     labelWidth: 111,
                     labelAlign: 'right',
