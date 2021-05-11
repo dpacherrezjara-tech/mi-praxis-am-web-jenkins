@@ -118,7 +118,7 @@ public class SpdrspcrControlController extends BaseController{
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-
+            //novito
             SpdrspcrControlLogic logic = new SpdrspcrControlLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A3540Filter> listaData = logic.SearchDetail(filter);
