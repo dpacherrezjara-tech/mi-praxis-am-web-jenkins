@@ -25,6 +25,7 @@ import net.miatech.praxis.flown.A1419;
 import net.miatech.praxis.flown.A1687;
 import net.miatech.praxis.flown.A1688;
 import net.miatech.praxis.flown.A1689;
+import net.miatech.praxis.interline.filter.A1413Filter;
 import net.miatech.praxis.logic.flown.InputsControlLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -230,6 +231,45 @@ public class InputsControlController extends BaseController {
             filter.strFormatDate4 = request.getParameter("strFormatDate4");
 
             lst = logic.loadPX077S02A1686(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchErrorVCRJ")
+    public @ResponseBody
+    String searchErrorVCRJ(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- InputsControl : searchErrorVCRJ-------------");
+        map.put("success", true);
+        List<A1413Filter> lst = this.getListErrorVCRJ(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1413Filter> getListErrorVCRJ(HttpServletRequest request, Boolean bExcel) {
+
+        logic = new InputsControlLogic();
+
+        List<A1413Filter> lst = new ArrayList<>(0);
+        A1686Filter filter = new A1686Filter();
+
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+
+        try {
+
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.FECHA = request.getParameter("FECHA");
+            filter.FUENTE = request.getParameter("FUENTE");
+
+            lst = logic.loadPX077SQP03979(filter);
 
         } catch (Exception e) {
             throw new SpringException(e);

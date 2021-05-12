@@ -25,6 +25,7 @@ import net.miatech.praxis.flown.A1419;
 import net.miatech.praxis.flown.A1687;
 import net.miatech.praxis.flown.A1688;
 import net.miatech.praxis.flown.A1689;
+import net.miatech.praxis.interline.filter.A1413Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -299,6 +300,77 @@ public class InputsControlDAO {
                     lstRtn.add(objRtn);
                 }
             }
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+    public List<A1413Filter> loadPX077SQP03979(A1686Filter filter) throws SQLException, Exception {
+
+        List<A1413Filter> lstRtn = new ArrayList<>(0);
+        A1413Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        try {
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03979(?,?,?)}";
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.FECHA.trim());
+            cstmt01.setString(3, filter.FUENTE.trim());
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            int pos = 0;
+            while (rs01.next()) {
+                pos++;
+                objRtn = new A1413Filter();
+                objRtn.RN = pos;
+                objRtn.A1413DATE = rs01.getString("A1413DATE").trim();
+                objRtn.A1413SEC = rs01.getString("A1413SEC").trim();
+                objRtn.A1413DATA = rs01.getString("A1413DATA").trim();
+                objRtn.A1413CIA = rs01.getString("A1413CIA").trim();
+                objRtn.A1413FORSE = rs01.getString("A1413FORSE").trim();
+                objRtn.A1413CUPON = rs01.getString("A1413CUPON").trim();
+                objRtn.A1413FROM = rs01.getString("A1413FROM").trim();
+                objRtn.A1413TO = rs01.getString("A1413TO").trim();
+//                objRtn.strFormatDate4 = Functions.getMonthConvert(objRtn.FECHA);
+//                objRtn.FECR = rs01.getString("FECR").trim();
+//                objRtn.strFormatDate = Functions.getMonthConvert(objRtn.FECR);
+//                objRtn.HOCR = Functions.ConvertedTime(rs01.getString("HOCR").trim());
+//                objRtn.USCR = rs01.getString("USCR").trim();
+//                objRtn.DPRDA = rs01.getString("DPRDA").trim();
+//                objRtn.strFormatDate2 = Functions.getMonthConvert(objRtn.DPRDA);
+//                objRtn.DTRANS = rs01.getString("DTRANS").trim();
+//                objRtn.strFormatDate3 = Functions.getMonthConvert(objRtn.DTRANS);
+//                objRtn.FUENTE = rs01.getString("FUENTE").trim();
+//                objRtn.MENSA = rs01.getString("SDATA").trim();
+//                objRtn.IN_TIPOFECHA = filter.IN_TIPOFECHA;
+                lstRtn.add(objRtn);
+            }
+
         } catch (Exception e) {
             e.getMessage();
         } finally {
