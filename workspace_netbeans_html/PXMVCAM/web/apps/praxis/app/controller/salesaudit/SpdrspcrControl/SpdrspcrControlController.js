@@ -304,7 +304,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.SpdrspcrControl.SpdrspcrControlCont
         });
     },
     onExcelClick: function(obj, e) {
-        this.imgSearch_clickHandler(true);
+        this.exportExcel(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(this.bean2)));
+        //this.imgSearch_clickHandler(true);
     },
     onFilterClick: function() {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
