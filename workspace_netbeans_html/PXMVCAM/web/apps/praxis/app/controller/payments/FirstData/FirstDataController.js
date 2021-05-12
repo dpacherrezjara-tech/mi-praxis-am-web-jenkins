@@ -200,7 +200,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
 
                         Ext.getCmp(prototype.id + '-adgTitFecha2').setText(titIN_DATE);
                         
-                        Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">' + titIN_DATE + ' Date: ' + data.TIPOFEC.substring(0, 6) + '</center>');
+                        Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">' + titIN_DATE + ' Date: ' + data.strFormatDate + '</center>');
                         
                     }
                     me.setWidthPie();
@@ -345,6 +345,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         if (rowData.data.QtySETTLEMENT !== '') {
 
             this.beanDet.IN_DATE = rowData.data.TIPOFEC;
+            this.beanDet.strFormatDate = rowData.data.strFormatDate;
             this.beanDet.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbFindByCurrency').getValue();
             this.beanDet.IN_MERCHNP = Ext.getCmp(prototype.id + '-txtMerch').getValue()
             this.beanDet.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
@@ -941,6 +942,10 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             case  '-panelGridDataBySettlement':
                 this.setFormatParameterBySettlement()
                 global.getFile(prototype.url + '/getXLSXBySettlement?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridByMonth':
+                this.setFormatParameterBySettlement()
+                global.getFile(prototype.url + '/getXLSXByMonth?beanString=' + searchParams.beanString);
                 break;
         }
     },
