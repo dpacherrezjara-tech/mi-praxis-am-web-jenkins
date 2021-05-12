@@ -28,6 +28,7 @@ public class A2338Filter extends A2338{
     public String IN_TIPOFEC = "";
     public String IN_DATE = "";
     public String TIPOFEC = "";
+    public String strFormatDate = "";
     
     public double totIMPORTE = 0.00;
     public double totNETO = 0.00;

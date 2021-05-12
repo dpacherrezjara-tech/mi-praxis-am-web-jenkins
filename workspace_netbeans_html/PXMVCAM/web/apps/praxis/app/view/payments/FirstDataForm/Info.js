@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'TIPOFEC', width: 140
+                                                        text: 'Date', dataIndex: 'strFormatDate', width: 140
                                                     }
                                                 ]
                                             },                                            
