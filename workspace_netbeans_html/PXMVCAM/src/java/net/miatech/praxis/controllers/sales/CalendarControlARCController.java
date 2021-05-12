@@ -4,7 +4,6 @@ package net.miatech.praxis.controllers.sales;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,12 +14,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX036S01A1527Filter;
-import net.miatech.beans.PX111S01A1528Filter;
 import net.miatech.beans.SQP00146Filter;
-import net.miatech.beans.SQP00152Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
-import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.sales.CalendarControlARCLogic;
 import net.miatech.utils.Functions;
@@ -39,7 +35,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 // </editor-fold>
@@ -496,47 +491,65 @@ public class CalendarControlARCController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    String Style(Integer cant, Integer cantSale, Integer error) {
-        String style = "";
-        if (cant == 0) {
-            style = "#FF0000";
-        } else {
-            switch (cant) {
-                case 1:
-                    if (cantSale == 1) {
-                        style = "#CC6600";
-                    } else {
-                        style = "#CC9900";
-                    }
-                    break;
-                case 2:
-                    if (cantSale == 1) {
-                        style = "#CC6600";
-                    } else if (cantSale == 2) {
-                        style = "#CC9900";
-                    } else {
-                        style = "#CC9900";
-                    }
-                    break;
-                case 3:
-                    if (cantSale == 1) {
-                        style = "#CC6600";
-                    } else if (cantSale == 2) {
-                        style = "#CC9900";
-                    } else if (cantSale == 3) {
-                        style = "#FFCC00";
-                    } else {
-                        if (error == 0) {
-                            style = "#339900";
-                        } else {
-                            style = "#CC9900";
-                        }
-                    }
-                    break;
+    String Style(Integer cant,Integer cantSale,Integer error){
+        String style = "#FF0000";
+        if(cant == 1){
+            if(cantSale > 0){
+                style = "#FFCC00";
+            }else{
+                if(error == 0){
+                    style = "#339900";
+                }else{
+                    style = "#CC9900";
+                }
             }
         }
         return style;
-    }
+    }    
+    
+//    String Style(Integer cant, Integer cantSale, Integer error) {
+//        String style = "";
+//        if (cant == 0) {
+//            style = "#FF0000";
+//        } else {
+//            switch (cant) {
+//                case 1:
+//                    if (cantSale == 1) {
+//                        style = "#CC6600";                        
+//                    } else {
+//                        style = "#CC9900";
+//                        style = "#CC9900";
+//                    }
+//                    break;
+//                case 2:
+//                    if (cantSale == 1) {
+//                        style = "#CC6600";
+//                    } else if (cantSale == 2) {
+//                        style = "#CC9900";
+//                    } else {
+//                        style = "#CC9900";
+//                    }
+//                    break;
+//                case 3:
+//                    if (cantSale == 1) {
+//                        style = "#CC6600";
+//                    } else if (cantSale == 2) {
+//                        style = "#CC9900";
+//                        style = "#CC9900";
+//                    } else if (cantSale == 3) {
+//                        style = "#FFCC00";
+//                    } else {
+//                        if (error == 0) {
+//                            style = "#339900";
+//                        } else {
+//                            style = "#CC9900";
+//                        }
+//                    }
+//                    break;
+//            }
+//        }
+//        return style;
+//    }
 
     @RequestMapping(value = "/updateObservation")
     public @ResponseBody
