@@ -1,7 +1,7 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+  To change this license header, choose License Headers in Project Properties.
+  To change this template file, choose Tools | Templates
+  and open the template in the editor.
  */
 
 Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', {
@@ -318,6 +318,15 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         global.Msg({
                             msg: 'Data not found.'
                         });
+                    }else{
+                        var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                        console.log(fuente);
+                        
+                        if(fuente === 'ODS'){
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Duplicate');
+                        }else{
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Error');
+                        }
                     }
                 }
             }
@@ -422,11 +431,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     },
     setGridDataA1686Formateados: function(dv, record, item, index, e) {
         var data = dv.dataSource.data.items[item].data;
+        console.log(data.QRECERR);
         params = {
             IN_TIPOFECHA: data.IN_TIPOFECHA,
             FECHA: data.FECHA,
             FUENTE: data.FUENTE,
-            HOCR: data.HOCR
+            HOCR: data.HOCR,
+            QRECERR: data.QRECERR
         };
 
         this.hideAllGrid();
@@ -447,6 +458,16 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         global.Msg({
                             msg: 'Data not found.'
                         });
+                    }else{
+                        
+                        var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                        console.log(fuente);
+                        
+                        if(fuente === 'ODS'){
+                            Ext.getCmp(prototype.id + '-id_error').setText('Duplicate');
+                        }else{
+                            Ext.getCmp(prototype.id + '-id_error').setText('Error');
+                        }
                     }
                 }
             }
@@ -499,12 +520,17 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     
     setErrores: function(dv, record, item, index, e) {
         
-        var data = dv.dataSource.data.items[item].data;
-        
-        if(data.FUENTE === 'VCRJ'){
-            this.setErroresVCRJ(data.FECHA, data.FUENTE);
+        var src = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+        if(src === 'ODS' || src === 'SSIM' || src === 'EMD'){
+            console.log('...');
         }else{
-            this.setGridDataA1696Errores(data.FECHA, data.HOCR, data.FUENTE);
+            var data = dv.dataSource.data.items[item].data;
+
+            if(data.FUENTE === 'VCRJ'){
+                this.setErroresVCRJ(data.FECHA, data.FUENTE);
+            }else{
+                this.setGridDataA1696Errores(data.FECHA, data.HOCR, data.FUENTE);
+            }
         }
     },
     
@@ -807,19 +833,19 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     var data = obj.data.items[0].data;
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
-                    var header1;
-                    var header2;
-                    var strGrupos;
-                    if (data.GrupoMin.trim() !== '') {
-                        strGrupos = 'Grupos del ' + data.GrupoMin + '  al  ' + data.GrupoMax;
-                    }
+//                    var header1;
+//                    var header2;
+//                    var strGrupos;
+//                    if (data.GrupoMin.trim() !== '') {
+//                        strGrupos = 'Grupos del ' + data.GrupoMin + '  al  ' + data.GrupoMax;
+//                    }
+//
+//                    header1 = strGrupos + '<pre style="display:inline">&#09;&#09;</pre>' + ' Total  OCR  ' + data.totOCR + '<pre style="display:inline">&#09;&#09;</pre>AM : ' + data.totAM + '   OAL :  ' + data.totOAL;
+//                    header2 = 'Total  IxC  <pre style="display:inline">&#09;</pre>' + data.totIXC;
 
-                    header1 = strGrupos + '<pre style="display:inline">&#09;&#09;</pre>' + ' Total  OCR  ' + data.totOCR + '<pre style="display:inline">&#09;&#09;</pre>AM : ' + data.totAM + '   OAL :  ' + data.totOAL;
-                    header2 = 'Total  IxC  <pre style="display:inline">&#09;</pre>' + data.totIXC;
 
-
-                    Ext.getCmp(prototype.id + '-gridDataA1690-header').setText(header1);
-                    Ext.getCmp(prototype.id + '-gridDataA1690-header2').setText(header2);
+//                    Ext.getCmp(prototype.id + '-gridDataA1690-header').setText(header1);
+//                    Ext.getCmp(prototype.id + '-gridDataA1690-header2').setText(header2);
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(pagData.currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pagData.pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(pagData.total);
@@ -938,12 +964,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var colorFlag;
 
         console.log("Aplicando estilos genericos");
-        
-        for (var m = 1; m <= 12; m++) {
-            var panelmes = Ext.getCmp(prototype.id +'panel'+ (m < 10 ? '0' : '') + m);
-            panelmes.removeAll(true);
-        }
-        console.log('comienza cracion');
+
         for (var i = 1; i <= 12; i++) {
             if (i < 10) {
                 mes = '0' + i;
@@ -955,41 +976,20 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             init = dias[dt2.getUTCDay()];
             fin = parseInt(totalDays) + parseInt(init);
             day = 1;
-            
-            var panelmes = Ext.getCmp(prototype.id +'panel'+ (i < 10 ? '0' : '') + i);
             for (var n = init; n < fin; n++) {
-//                if (n % 7 === 1) {
-//                    colorFlag = '#D6D6D6';
-//                } else {
-//                    if (i % 2 !== 0) {
-//                        colorFlag = '#65C3E5';
-//                    } else {
-//                        colorFlag = '#2e6bf4';
-//                    }
-//                }
-//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
-//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
-//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
-//                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
-                
-                    
-                    
-                    if(n === init){
-                        for (var c = 1; c < init; c++) {
-                            var v_label2 = new Ext.form.Label({text: '',backgroundColor:'#D6D6D6'});
-                            panelmes.add( v_label2);
-                        }
-                        
+                if (n % 7 === 1) {
+                    colorFlag = '#D6D6D6';
+                } else {
+                    if (i % 2 !== 0) {
+                        colorFlag = '#65C3E5';
+                    } else {
+                        colorFlag = '#2e6bf4';
                     }
-                    
-                    var fday = (day < 10 ? '0' : '') + day;
-                    var v_id = 'lbl'+anio+''+mes+''+ fday ;
-                    var v_label = new Ext.form.Label({
-                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000',backgroundColor:colorFlag
-                                    });
-                    panelmes.add( v_label);
-                
-                
+                }
+                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
+                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
+                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
+                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
                 day++;
             }
         }
@@ -1008,50 +1008,41 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         
         Ext.getCmp(prototype.id + '-lbl-year').setText(anio);
 
-        Ext.Ajax.request({
-            url: prototype.url + '/searchCalendar',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getBody().mask('Loading...'),
-            params: {
-                tipoFecha: '1',
-                dateFrom: anio,
-                source: source
-            },
-            success: function(response, options) {
-                if (aux) {
-                    var res = Ext.JSON.decode(response.responseText);
-                    res = res.data;
-                    var dato = 0;
-                    var dias = ["7", "1", "2", "3", "4", "5", "6"];
-                    var colorFlag;
-                    var dia, mes, anio, mesf;
-
-
-                    for (var i = 0; i < res.length; i++) {
-                        dia = res[i].fecha.substring(6, 8);
-                        mes = res[i].fecha.substring(4, 6);
-                        anio = res[i].fecha.substring(0, 4);
-                        mesf = (new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00').getMonth() + 1).toString();
-
-                        var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
-                        var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
-
-
-                        if (mesf % 2 !== 0) {
-                            colorFlag = '#65C3E5';
-                        } else {
-                            colorFlag = '#2e6bf4';
-                        }
-                        
-                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
-                        
-//                        if(mes ==='01'){
-                            Ext.getCmp('lbl' + res[i].fecha).setStyle('backgroundColor', color);
-                            Ext.getCmp('lbl' + res[i].fecha).setStyle('color', '#000000');
+//        Ext.Ajax.request({
+//            url: prototype.url + '/searchCalendar',
+//            method: 'POST',
+//            timeout: 60000000,
+//            beforerequest: Ext.getBody().mask('Loading...'),
+//            params: {
+//                tipoFecha: '1',
+//                dateFrom: anio,
+//                source: source
+//            },
+//            success: function(response, options) {
+//                if (aux) {
+//                    var res = Ext.JSON.decode(response.responseText);
+//                    res = res.data;
+//                    var dato = 0;
+//                    var dias = ["7", "1", "2", "3", "4", "5", "6"];
+//                    var colorFlag;
+//                    var dia, mes, anio, mesf;
+//
+//
+//                    for (var i = 0; i < res.length; i++) {
+//                        dia = res[i].fecha.substring(6, 8);
+//                        mes = res[i].fecha.substring(4, 6);
+//                        anio = res[i].fecha.substring(0, 4);
+//                        mesf = (new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00').getMonth() + 1).toString();
+//
+//                        var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
+//                        var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
+//
+//
+//                        if (mesf % 2 !== 0) {
+//                            colorFlag = '#65C3E5';
+//                        } else {
+//                            colorFlag = '#2e6bf4';
 //                        }
-                        
-//                        Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
 //                        if (dia === '01') {
 //                            dato = dias[dt.getUTCDay()];
 //
@@ -1060,42 +1051,35 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setStyle('color', '#000000');
 //                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
 //
-//                            
-////                            console.log('if** -->' + prototype.id + '-lblDay_' + dato + ' = ' + dia);
-//
-//                        } else{
-//                            
+//                        } else
+//                        {
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setText(dia);
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', color);
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('color', '#000000');
 //                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', colorFlag);
 //
-////                            console.log('else -->'+ ' dato :'+ dato + ' dia : ' + dia + ' == ' + prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1) + ' = ' + dia);
 //                        }
-
-                        
-
-
-                    }
-                    aux = false;
-                }
-                Ext.getBody().unmask();
-            }
-        });
-        console.log("Salimos de SetCalendar");
+//
+//                    }
+//                    aux = false;
+//                }
+//                Ext.getBody().unmask();
+//            }
+//        });
+//        console.log("Salimos de SetCalendar");
 
     }
     ,
     setClearCalendar: function() {
-//        for (var i = 1; i <= 42; i++) {
-//            for (var j = 1; j <= 12; j++) {
-//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).Aplicando estilos genericossetText('.');
-//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
-//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('color', '#E5ECEF');
-//                Ext.getCmp(prototype.id + 'gdiFlag_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
-//
-//            }
-//        }
+        for (var i = 1; i <= 42; i++) {
+            for (var j = 1; j <= 12; j++) {
+                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setText('.');
+                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
+                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('color', '#E5ECEF');
+                Ext.getCmp(prototype.id + 'gdiFlag_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
+
+            }
+        }
     }
     ,
     btnClear_click: function(obj, e) {
