@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A2338Filter;
+import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
 /**
@@ -116,6 +117,7 @@ public class FirstDataDAO {
                     bean.RN = rst.getLong("RN");
 
                     bean.TIPOFEC = rst.getString(filter.IN_TIPOFEC).trim();
+                    bean.strFormatDate = filter.strFormatDate;
                     bean.MERCHNP = rst.getString("MERCHNP").trim();
                     bean.NUMLIQUI = rst.getString("NUMLIQUI").trim();
                     bean.SCURRENCY = rst.getString("SCURRENCY").trim();
@@ -275,6 +277,7 @@ public class FirstDataDAO {
                     bean.SCARDN = rst.getString("SCARDN").trim();
                     bean.SAUTHOC = rst.getString("SAUTHOC").trim();
                     bean.CUOPLAN = rst.getString("CUOPLAN").trim();
+                    //PLAZOPAG
                     bean.IMPORTOT = rst.getDouble("IMPORTOT");
                     bean.IMPORSDE = rst.getDouble("IMPORSDE");
                     bean.PORDESCU = rst.getDouble("PORDESCU");
@@ -416,6 +419,7 @@ public class FirstDataDAO {
                     bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
 
                     bean.TIPOFEC = rst.getString(filter.IN_TIPOFEC).trim();
+                    bean.strFormatDate = Functions.getMonthConvert(bean.TIPOFEC);
                     bean.QtySETTLEMENT = rst.getInt("QtySETTLEMENT");
                     bean.SCURRENCY = rst.getString("SCURRENCY");
                     bean.IMPORTOT = rst.getDouble("IMPORTOT");
