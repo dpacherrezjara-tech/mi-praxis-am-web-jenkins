@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
 
                                 ]
                             },
-                            {text: 'User <br> Create', width: 100, dataIndex: 'USCR'},
+                            {text: 'Userrrrrrrrr <br> Create', width: 100, dataIndex: 'USCR'},
                             {text: 'Generation <br> Date', width: 100, dataIndex: 'strFormatDate4',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-decoration:underline; color:#008FE3; ';
@@ -158,7 +158,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                             return  '<a href="#flown-inputs-control-form" style="color:#008FE3">' + Ext.util.Format.number(value, '0,000') + '</a>';
                                         },
                                         listeners: {
-                                            click: 'setGridDataA1696Errores'
+                                            click: 'setErrores'
                                         }
                                     }
                                 ]
@@ -170,6 +170,33 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                 /**
                  *      A1696 FORMATEADOS - ERORRES
                  * */
+                {
+                    xtype: 'grid',
+                    id: prototype.id + '-gridDataErrorVCRJ',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    labelAlign: 'left',
+                    height: 550,
+                    width: 960,
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: true,
+                            align: 'center'
+                        },
+                        items: [
+                            {text: 'Nbr', width: 60, dataIndex: 'RN'},
+                            {text: 'A1413DATE ', width: 100, dataIndex: 'A1413DATE'},
+                            {text: 'A1413SEC ', width: 100, dataIndex: 'A1413SEC'},
+                            {text: 'Details Data', width: 600, align: 'left', dataIndex: 'A1413DATA'},
+                            {text: 'Cia', width: 100, dataIndex: 'A1413CIA'},
+                            {text: 'A1413FORSE', width: 100, dataIndex: 'A1413FORSE'},
+                            {text: 'Cupon', width: 100, dataIndex: 'A1413CUPON'},
+                            {text: 'From', width: 100, dataIndex: 'A1413FROM'},
+                            {text: 'To', width: 100, dataIndex: 'A1413TO'},
+                        ]
+                    }
+                },
                 {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataA1696Errores',
