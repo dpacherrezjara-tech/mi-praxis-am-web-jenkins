@@ -156,10 +156,9 @@ public class InputsControlDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         String SQLCLL01 = "";
-        
-        
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX077S03A1686(?,?,?,?,?)}";
-            
+
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX077S03A1686(?,?,?,?,?)}";
+
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -206,7 +205,13 @@ public class InputsControlDAO {
                     objRtn.MENSA = rs01.getString("MENSA");
                     objRtn.QRECOR = rs01.getInt("QRECOR");
                     objRtn.QRECORG = rs01.getInt("QRECORG");
-                    objRtn.QRECERR = rs01.getInt("QRECERR");
+
+                    if (filter.FUENTE.trim().equals("SSIM") || filter.FUENTE.trim().equals("EMD")) {
+                        objRtn.QRECERR = filter.QRECERR;
+                    } else {
+                        objRtn.QRECERR = rs01.getInt("QRECERR");
+                    }
+
                     objRtn.IN_TIPOFECHA = filter.IN_TIPOFECHA;
                     objRtn.QRECORG2 = filter.QRECORG;
                     objRtn.totQRECOR = totQRECOR;
@@ -238,7 +243,6 @@ public class InputsControlDAO {
 
         return lstRtn;
     }
-
 
     public List<A1686Filter> loadPX077S02A1686(A1686Filter filter) throws SQLException, Exception {
 
@@ -323,7 +327,7 @@ public class InputsControlDAO {
 
         return lstRtn;
     }
-    
+
     public List<A1413Filter> loadPX077SQP03979(A1686Filter filter) throws SQLException, Exception {
 
         List<A1413Filter> lstRtn = new ArrayList<>(0);
@@ -645,7 +649,7 @@ public class InputsControlDAO {
                 pos++;
                 //FUENTE,MENSA
                 objRtn = new A1689();
-                objRtn.extrafields.Nbr = rs01.getInt("RN");
+                objRtn.RN = rs01.getInt("RN");
                 objRtn.DFLIGHT = rs01.getString("DFLIGHT").trim();
                 objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DFLIGHT);
                 objRtn.TRNN = rs01.getInt("TRNN");
@@ -758,7 +762,7 @@ public class InputsControlDAO {
 
         return lstRtn;
     }
-    
+
     public List<A1419> loadPX077S11A1419(A1686Filter filter) throws SQLException, Exception {
 
         List<A1419> lstRtn = new ArrayList<A1419>(0);
@@ -924,6 +928,58 @@ public class InputsControlDAO {
             filter.page.TOTROW = cstmt01.getInt(6);
 
             rs01 = cstmt01.getResultSet();
+            int pos = 0;
+            String fec;
+            while (rs01.next()) {
+                pos++;
+                //FUENTE,MENSA
+                objRtn = new A1690Filter();
+                //objRtn.extrafields.Nbr = rs01.getInt("RN");
+                objRtn.RN = rs01.getInt("RN");
+                //objRtn.PRDA = rs01.getString("PRDA");
+                objRtn.DFLIGHC = rs01.getString("DFLIGHC");
+                objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DFLIGHC);
+                //objRtn.extrafields.strFormatDate = Functions.getMonthConvert(objRtn.DFLIGHC);
+                //objRtn.TREG = rs01.getString("TREG");
+                objRtn.CUPON = rs01.getString("CUPON");
+                objRtn.CCIA = rs01.getString("CCIA");
+                objRtn.FORMA = rs01.getString("FORMA");
+                objRtn.SERIE = rs01.getString("SERIE");
+                //objRtn.extrafields.strTicket = objRtn.CCIA + " " + objRtn.FORMA + objRtn.SERIE + " " + objRtn.CUPON;
+                objRtn.strTicket = objRtn.CCIA + " " + objRtn.FORMA + objRtn.SERIE + " " + objRtn.CUPON;
+                //objRtn.DCHEQ = rs01.getString("DCHEQ");
+                //objRtn.BOX = rs01.getString("BOX");
+                //objRtn.RFER = rs01.getString("RFER");
+                objRtn.NFLIGHT = rs01.getString("NFLIGHT");
+                objRtn.CDEPART = rs01.getString("CDEPART");
+//                objRtn.strCDEPART = rs01.getString("DESCDEPART");
+                objRtn.CARRIVA = rs01.getString("CARRIVA");
+//                objRtn.strCARRIVA = rs01.getString("DESCARRIVA");
+                objRtn.DFLIGHT = rs01.getString("DFLIGHT");
+                fec = objRtn.DFLIGHT.replace("-", "");
+
+                objRtn.NROPRT = rs01.getString("NROPRT");
+                objRtn.GRUPO = rs01.getString("GRUPO");
+                objRtn.totIXC = tot1280;
+                objRtn.totOCR = tot1690;
+                objRtn.totOAL = totOAL;
+                objRtn.totAM = totAM;
+                objRtn.FLAG = (rs01.getString("FLAG").equals("NF") ? "" : "Y");
+                objRtn.GrupoMin = gmin;
+                objRtn.GrupoMax = gmax;
+
+                objRtn.strFormatDate2 = Functions.getMonthConvert(fec);
+                objRtn.strFormatDate3 = Functions.getMonthConvert(filter.FECHA.trim());
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
+
+                lstRtn.add(objRtn);
+            }
+
+            /*
+            rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 gmin = rs01.getString("G_MIN");
                 gmax = rs01.getString("G_MAX");
@@ -992,6 +1048,8 @@ public class InputsControlDAO {
                 }
 
             }
+            
+             */
         } catch (Exception e) {
             e.getMessage();
         } finally {
@@ -1175,7 +1233,7 @@ public class InputsControlDAO {
             }
 
         } catch (Exception e) {
-            System.out.println("--> "+e.getMessage());
+            System.out.println("--> " + e.getMessage());
             e.getMessage();
         } finally {
             try {
@@ -1200,7 +1258,7 @@ public class InputsControlDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
-          System.out.println("DAOOOOOOOOOO FINNN");
+        System.out.println("DAOOOOOOOOOO FINNN");
         return lista;
 
     }

@@ -122,6 +122,7 @@ public class FirstDataController extends BaseController {
         String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
+            String date_type = "";
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A2338Filter> listaData = this.getListByMonths(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
@@ -156,9 +157,14 @@ public class FirstDataController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+            if (listaData.get(vi).IN_TIPOFEC.equals("FPRESENT")) {
+                date_type = "Presentation";
+            } else if (listaData.get(vi).IN_TIPOFEC.equals("SDATE")) {
+                date_type = "Sale";
+            }
              // ====== CREANDO TITULOS ======================================
 
-             // ======  Nivel 1 ==========
+            // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
             Cell CH1_0 = row1.createCell(0);
             Cell CH1_1 = row1.createCell(1);
@@ -167,12 +173,12 @@ public class FirstDataController extends BaseController {
             Cell CH1_4 = row1.createCell(4);
             Cell CH1_5 = row1.createCell(5);
 
-            CH1_0.setCellValue("");
-            CH1_1.setCellValue("");
-            CH1_2.setCellValue("");
-            CH1_3.setCellValue("");
-            CH1_4.setCellValue("");
-            CH1_5.setCellValue("");
+            CH1_0.setCellValue(date_type + " Date");
+            CH1_1.setCellValue("Settlement");
+            CH1_2.setCellValue("Currency");
+            CH1_3.setCellValue("Total Amount");
+            CH1_4.setCellValue("Total Discount");
+            CH1_5.setCellValue("Net to Receive");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -182,7 +188,7 @@ public class FirstDataController extends BaseController {
             CH1_5.setCellStyle(headerStyle);
 
             ++vj;
-             //============================================
+            //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -211,7 +217,7 @@ public class FirstDataController extends BaseController {
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
 
-             //============================================
+            //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
@@ -287,6 +293,7 @@ public class FirstDataController extends BaseController {
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A2338Filter> listaData = this.getList(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            String date_type = "";
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
@@ -318,9 +325,14 @@ public class FirstDataController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+            if (listaData.get(vi).IN_TIPOFEC.equals("FPRESENT")) {
+                date_type = "Presentation";
+            } else if (listaData.get(vi).IN_TIPOFEC.equals("SDATE")) {
+                date_type = "Sale";
+            }
              // ====== CREANDO TITULOS ======================================
 
-            // ======  Nivel 1 ==========
+             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
             Cell CH1_0 = row1.createCell(0);
             Cell CH1_1 = row1.createCell(1);
@@ -340,15 +352,16 @@ public class FirstDataController extends BaseController {
             Cell CH1_15 = row1.createCell(15);
             Cell CH1_16 = row1.createCell(16);
             Cell CH1_17 = row1.createCell(17);
+            Cell CH1_18 = row1.createCell(18);
 
-            CH1_0.setCellValue("Presentation Date");
+            CH1_0.setCellValue(date_type + " Date");
             CH1_1.setCellValue("Merchant");
             CH1_2.setCellValue("Settlement");
             CH1_3.setCellValue("Currency");
             CH1_4.setCellValue("Total Amount");
-            CH1_5.setCellValue("Amount w/o Discount");
+            CH1_5.setCellValue("Amount w/o discount");
             CH1_6.setCellValue("Final Amount");
-            CH1_7.setCellValue(" % Discount");
+            CH1_7.setCellValue("% Discount");
             CH1_8.setCellValue("Tariff Amount");
             CH1_9.setCellValue("Tariff IVA");
             CH1_10.setCellValue("Financial Cost Amount");
@@ -358,7 +371,8 @@ public class FirstDataController extends BaseController {
             CH1_14.setCellValue("Total Discount");
             CH1_15.setCellValue("Net to Receive");
             CH1_16.setCellValue("Status");
-            CH1_17.setCellValue("Sales Source");
+            CH1_17.setCellValue("Payment Status");
+            CH1_18.setCellValue("Sales Source");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -378,9 +392,10 @@ public class FirstDataController extends BaseController {
             CH1_15.setCellStyle(headerStyle);
             CH1_16.setCellStyle(headerStyle);
             CH1_17.setCellStyle(headerStyle);
+            CH1_18.setCellStyle(headerStyle);
 
             ++vj;
-            //============================================
+             //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -402,8 +417,9 @@ public class FirstDataController extends BaseController {
                 Cell rcell15 = row1.createCell(15);
                 Cell rcell16 = row1.createCell(16);
                 Cell rcell17 = row1.createCell(17);
+                Cell rcell18 = row1.createCell(18);
 
-                rcell0.setCellValue(listaData.get(vi).FPRESENT);
+                rcell0.setCellValue(listaData.get(vi).TIPOFEC);
                 rcell1.setCellValue(listaData.get(vi).MERCHNP);
                 rcell2.setCellValue(listaData.get(vi).NUMLIQUI);
                 rcell3.setCellValue(listaData.get(vi).SCURRENCY);
@@ -420,7 +436,8 @@ public class FirstDataController extends BaseController {
                 rcell14.setCellValue(listaData.get(vi).TOTDESC);
                 rcell15.setCellValue(listaData.get(vi).NETO);
                 rcell16.setCellValue(listaData.get(vi).STVAL);
-                rcell17.setCellValue(listaData.get(vi).FTE);
+                rcell17.setCellValue(listaData.get(vi).STPAGO);
+                rcell18.setCellValue(listaData.get(vi).FTE);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -444,8 +461,9 @@ public class FirstDataController extends BaseController {
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
+            sheet.autoSizeColumn(18, true);
 
-            //============================================
+             //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 

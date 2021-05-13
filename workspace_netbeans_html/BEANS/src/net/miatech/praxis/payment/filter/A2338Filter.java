@@ -56,6 +56,10 @@ public class A2338Filter extends A2338{
     public double TOT_TOTDESC = 0.00;
     public double TOT_NETO = 0.00;
     public double TOT_IMPORFIN = 0.00;
+    public double TOT_AIMPARAN = 0.00;
+    public double TOT_AIVAARAN = 0.00;
+    public double TOT_AIMPORCF = 0.00;
+    public double TOT_AIVACFIN = 0.00;
     
     public Integer QtySETTLEMENT = 0;
     public Integer TOT_QtySETTLEMENT = 0;

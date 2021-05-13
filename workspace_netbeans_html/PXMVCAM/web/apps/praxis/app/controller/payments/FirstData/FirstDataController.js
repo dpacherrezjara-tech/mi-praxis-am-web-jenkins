@@ -144,6 +144,25 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             bean: me.bean
         };
     },
+    setFormatParameterForExcelGridDataMain: function() {
+        me.bean = {};
+        var grid = Ext.getCmp(prototype.id + '-gridDataMain').getStore().data.items[0]
+        
+        me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbFindByCurrency').getValue();
+        me.bean.IN_MERCHNP = Ext.getCmp(prototype.id + '-txtMerch').getValue()
+        me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
+        me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
+        me.bean.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        me.bean.IN_DATE = grid.get("TIPOFEC").substring(0,6);
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+    },
     setFormatParameterBySettlement: function() {
         me.bean = {};
         var grid = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().data.items[0]
@@ -159,6 +178,10 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             beanString: beanString,
             bean: me.bean
         };
+    },
+    cmbfiltro_clickHandler: function(){
+        this.setFormatParameter();
+        this.setGridDataByMonth();
     },
     btnSearch_click: function(obj, e) {
         this.setFormatParameter();
@@ -913,7 +936,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-txtCard1').setValue('');
         Ext.getCmp(prototype.id + '-txtCard2').setValue('');
-        Ext.getCmp(prototype.id + '-cmbFindByCurrency').setValue('');
+        Ext.getCmp(prototype.id + '-cmbFindByCurrency').setValue('ARS');
         Ext.getCmp(prototype.id + '-txtMerch').setValue('');
     },
     btnExcel_click: function(obj, e) {
@@ -936,15 +959,15 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
-                this.setFormatParameter();
+                this.setFormatParameterForExcelGridDataMain();
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
             case  '-panelGridDataBySettlement':
-                this.setFormatParameterBySettlement()
+                this.setFormatParameterForExcelBySettlement()
                 global.getFile(prototype.url + '/getXLSXBySettlement?beanString=' + searchParams.beanString);
                 break;
             case  '-panelGridByMonth':
-                this.setFormatParameterBySettlement()
+                this.setFormatParameter()
                 global.getFile(prototype.url + '/getXLSXByMonth?beanString=' + searchParams.beanString);
                 break;
         }

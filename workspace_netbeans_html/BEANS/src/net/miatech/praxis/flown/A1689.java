@@ -18,6 +18,7 @@ public class A1689 extends ExtraFields{
     public String  CCIA ="";
     //NFORMATION EMD  
     public String  EMDDATA ="";
+    public int  RN = 0;
     
     public ExtraFields extrafields = new ExtraFields();
     

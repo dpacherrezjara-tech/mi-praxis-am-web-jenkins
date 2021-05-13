@@ -187,6 +187,7 @@ public class InputsControlController extends BaseController {
             filter.FECHA = request.getParameter("FECHA");
             filter.FUENTE = request.getParameter("FUENTE");
             filter.HOCR = request.getParameter("HOCR");
+            filter.QRECERR = Integer.parseInt(request.getParameter("QRECERR"));
 
             lst = logic.loadPX077S03A1686(filter);
 
