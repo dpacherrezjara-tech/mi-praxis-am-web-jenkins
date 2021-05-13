@@ -332,7 +332,7 @@ public class FirstDataController extends BaseController {
             }
              // ====== CREANDO TITULOS ======================================
 
-             // ======  Nivel 1 ==========
+            // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
             Cell CH1_0 = row1.createCell(0);
             Cell CH1_1 = row1.createCell(1);
@@ -395,7 +395,7 @@ public class FirstDataController extends BaseController {
             CH1_18.setCellStyle(headerStyle);
 
             ++vj;
-             //============================================
+            //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -463,7 +463,7 @@ public class FirstDataController extends BaseController {
             sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true);
 
-             //============================================
+            //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
@@ -532,13 +532,14 @@ public class FirstDataController extends BaseController {
     public @ResponseBody
     void getXLSXBySettlement(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXBySettlement");
-        String fileNameDownload = String.format("Report First Data Detail  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A2338Filter> listaData = this.getListBySettlement(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
+            String date_type = "";
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
@@ -569,9 +570,14 @@ public class FirstDataController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
+            if (listaData.get(vi).IN_TIPOFEC.equals("FPRESENT")) {
+                date_type = "Presentation";
+            } else if (listaData.get(vi).IN_TIPOFEC.equals("SDATE")) {
+                date_type = "Sale";
+            }
              // ====== CREANDO TITULOS ======================================
 
-            // ======  Nivel 1 ==========
+             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
             Cell CH1_0 = row1.createCell(0);
             Cell CH1_1 = row1.createCell(1);
@@ -591,25 +597,51 @@ public class FirstDataController extends BaseController {
             Cell CH1_15 = row1.createCell(15);
             Cell CH1_16 = row1.createCell(16);
             Cell CH1_17 = row1.createCell(17);
+            Cell CH1_18 = row1.createCell(18);
+            Cell CH1_19 = row1.createCell(19);
+            Cell CH1_20 = row1.createCell(20);
+            Cell CH1_21 = row1.createCell(21);
+            Cell CH1_22 = row1.createCell(22);
+            Cell CH1_23 = row1.createCell(23);
+            Cell CH1_24 = row1.createCell(24);
+            Cell CH1_25 = row1.createCell(25);
+            Cell CH1_26 = row1.createCell(26);
+            Cell CH1_27 = row1.createCell(27);
+            Cell CH1_28 = row1.createCell(28);
+            Cell CH1_29 = row1.createCell(29);
+            Cell CH1_30 = row1.createCell(30);
 
-            CH1_0.setCellValue("Presentation Date");
-            CH1_1.setCellValue("Card Number");
-            CH1_2.setCellValue("Authorization code");
-            CH1_3.setCellValue("Installment Plan");
-            CH1_4.setCellValue("Total Amount");
-            CH1_5.setCellValue("Amount w/o Discount");
-            CH1_6.setCellValue("Final Amount");
-            CH1_7.setCellValue(" % Discount");
-            CH1_8.setCellValue("Tariff Amount");
-            CH1_9.setCellValue("Tariff IVA");
-            CH1_10.setCellValue("Financial Cost Amount");
-            CH1_11.setCellValue("IVA Financial Cost");
-            CH1_12.setCellValue("Direct Rate Cost Amount");
-            CH1_13.setCellValue("Direct Rate Cost IVA");
-            CH1_14.setCellValue("Total Discount");
-            CH1_15.setCellValue("Net to Receive");
-            CH1_16.setCellValue("Status");
-            CH1_17.setCellValue("Sales Source");
+            CH1_0.setCellValue(date_type);
+            CH1_1.setCellValue("Expiration");
+            CH1_2.setCellValue("Card");
+            CH1_3.setCellValue("Authorization");
+            CH1_4.setCellValue("Installment");
+            CH1_5.setCellValue("Payment Deadline");
+            CH1_6.setCellValue("Total");
+            CH1_7.setCellValue("Amount w/o");
+            CH1_8.setCellValue("Final");
+            CH1_9.setCellValue("%");
+            CH1_10.setCellValue("Tariff");
+            CH1_11.setCellValue("Tariff");
+            CH1_12.setCellValue("Financial");
+            CH1_13.setCellValue("IVA");
+            CH1_14.setCellValue("Direct Rate");
+            CH1_15.setCellValue("Direct Rate");
+            CH1_16.setCellValue("Total");
+            CH1_17.setCellValue("Net to");
+            CH1_18.setCellValue("Status");
+            CH1_19.setCellValue("Payment");
+            CH1_20.setCellValue("Sales");
+            CH1_21.setCellValue("Audit Status");
+            CH1_22.setCellValue("");
+            CH1_23.setCellValue("");
+            CH1_24.setCellValue("");
+            CH1_25.setCellValue("");
+            CH1_26.setCellValue("Audit Values");
+            CH1_27.setCellValue("");
+            CH1_28.setCellValue("");
+            CH1_29.setCellValue("");
+            CH1_30.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -629,9 +661,128 @@ public class FirstDataController extends BaseController {
             CH1_15.setCellStyle(headerStyle);
             CH1_16.setCellStyle(headerStyle);
             CH1_17.setCellStyle(headerStyle);
+            CH1_18.setCellStyle(headerStyle);
+            CH1_19.setCellStyle(headerStyle);
+            CH1_20.setCellStyle(headerStyle);
+            CH1_21.setCellStyle(headerStyle);
+            CH1_22.setCellStyle(headerStyle);
+            CH1_23.setCellStyle(headerStyle);
+            CH1_24.setCellStyle(headerStyle);
+            CH1_25.setCellStyle(headerStyle);
+            CH1_26.setCellStyle(headerStyle);
+            CH1_27.setCellStyle(headerStyle);
+            CH1_28.setCellStyle(headerStyle);
+            CH1_29.setCellStyle(headerStyle);
+            CH1_30.setCellStyle(headerStyle);
 
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 25));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 26, 30));
             ++vj;
-            //============================================
+             //============================================
+
+             // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+            Cell CH2_6 = row2.createCell(6);
+            Cell CH2_7 = row2.createCell(7);
+            Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+            Cell CH2_12 = row2.createCell(12);
+            Cell CH2_13 = row2.createCell(13);
+            Cell CH2_14 = row2.createCell(14);
+            Cell CH2_15 = row2.createCell(15);
+            Cell CH2_16 = row2.createCell(16);
+            Cell CH2_17 = row2.createCell(17);
+            Cell CH2_18 = row2.createCell(18);
+            Cell CH2_19 = row2.createCell(19);
+            Cell CH2_20 = row2.createCell(20);
+            Cell CH2_21 = row2.createCell(21);
+            Cell CH2_22 = row2.createCell(22);
+            Cell CH2_23 = row2.createCell(23);
+            Cell CH2_24 = row2.createCell(24);
+            Cell CH2_25 = row2.createCell(25);
+            Cell CH2_26 = row2.createCell(26);
+            Cell CH2_27 = row2.createCell(27);
+            Cell CH2_28 = row2.createCell(28);
+            Cell CH2_29 = row2.createCell(29);
+            Cell CH2_30 = row2.createCell(30);
+
+            CH2_0.setCellValue("Date");
+            CH2_1.setCellValue("Date");
+            CH2_2.setCellValue("Number");
+            CH2_3.setCellValue("Code");
+            CH2_4.setCellValue("Plan");
+            CH2_5.setCellValue("Deadline");
+            CH2_6.setCellValue("Amount");
+            CH2_7.setCellValue("Discount");
+            CH2_8.setCellValue("Amount");
+            CH2_9.setCellValue("Discount");
+            CH2_10.setCellValue("Amount");
+            CH2_11.setCellValue("IVA");
+            CH2_12.setCellValue("Cost Amount");
+            CH2_13.setCellValue("Financial Cost");
+            CH2_14.setCellValue("Cost Amount");
+            CH2_15.setCellValue("Cost IVA");
+            CH2_16.setCellValue("Discount");
+            CH2_17.setCellValue("Receive");
+            CH2_18.setCellValue("");
+            CH2_19.setCellValue("Status");
+            CH2_20.setCellValue("Source");
+            CH2_21.setCellValue("Status Tariff Amount");
+            CH2_22.setCellValue("Status Tariff IVA");
+            CH2_23.setCellValue("Status Financial Cost Amount");
+            CH2_24.setCellValue("Status IVA Financial Cost");
+            CH2_25.setCellValue("Status Payment Deadline");
+            CH2_26.setCellValue("Tariff Amount");
+            CH2_27.setCellValue("Tariff IVA");
+            CH2_28.setCellValue("Financial Cost Amount");
+            CH2_29.setCellValue("IVA Financial Cost");
+            CH2_30.setCellValue("Payment Deadline");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+            CH2_6.setCellStyle(headerStyle);
+            CH2_7.setCellStyle(headerStyle);
+            CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_12.setCellStyle(headerStyle);
+            CH2_13.setCellStyle(headerStyle);
+            CH2_14.setCellStyle(headerStyle);
+            CH2_15.setCellStyle(headerStyle);
+            CH2_16.setCellStyle(headerStyle);
+            CH2_17.setCellStyle(headerStyle);
+            CH2_18.setCellStyle(headerStyle);
+            CH2_19.setCellStyle(headerStyle);
+            CH2_20.setCellStyle(headerStyle);
+            CH2_21.setCellStyle(headerStyle);
+            CH2_22.setCellStyle(headerStyle);
+            CH2_23.setCellStyle(headerStyle);
+            CH2_24.setCellStyle(headerStyle);
+            CH2_25.setCellStyle(headerStyle);
+            CH2_26.setCellStyle(headerStyle);
+            CH2_27.setCellStyle(headerStyle);
+            CH2_28.setCellStyle(headerStyle);
+            CH2_29.setCellStyle(headerStyle);
+            CH2_30.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            ++vj;
+             //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -653,25 +804,51 @@ public class FirstDataController extends BaseController {
                 Cell rcell15 = row1.createCell(15);
                 Cell rcell16 = row1.createCell(16);
                 Cell rcell17 = row1.createCell(17);
+                Cell rcell18 = row1.createCell(18);
+                Cell rcell19 = row1.createCell(19);
+                Cell rcell20 = row1.createCell(20);
+                Cell rcell21 = row1.createCell(21);
+                Cell rcell22 = row1.createCell(22);
+                Cell rcell23 = row1.createCell(23);
+                Cell rcell24 = row1.createCell(24);
+                Cell rcell25 = row1.createCell(25);
+                Cell rcell26 = row1.createCell(26);
+                Cell rcell27 = row1.createCell(27);
+                Cell rcell28 = row1.createCell(28);
+                Cell rcell29 = row1.createCell(29);
+                Cell rcell30 = row1.createCell(30);
 
-                rcell0.setCellValue(listaData.get(vi).FPRESENT);
-                rcell1.setCellValue(listaData.get(vi).SCARDN);
-                rcell2.setCellValue(listaData.get(vi).SAUTHOC);
-                rcell3.setCellValue(listaData.get(vi).CUOPLAN);
-                rcell4.setCellValue(listaData.get(vi).IMPORTOT);
-                rcell5.setCellValue(listaData.get(vi).IMPORSDE);
-                rcell6.setCellValue(listaData.get(vi).IMPORFIN);
-                rcell7.setCellValue(listaData.get(vi).PORDESCU);
-                rcell8.setCellValue(listaData.get(vi).IMPARANC);
-                rcell9.setCellValue(listaData.get(vi).IVAARANC);
-                rcell10.setCellValue(listaData.get(vi).IMPORTCF);
-                rcell11.setCellValue(listaData.get(vi).IVACFINA);
-                rcell12.setCellValue(listaData.get(vi).IMPCTASD);
-                rcell13.setCellValue(listaData.get(vi).IVACTASD);
-                rcell14.setCellValue(listaData.get(vi).TOTDESC);
-                rcell15.setCellValue(listaData.get(vi).NETO);
-                rcell16.setCellValue(listaData.get(vi).STVAL);
-                rcell17.setCellValue(listaData.get(vi).FTE);
+                rcell0.setCellValue(listaData.get(vi).TIPOFEC);
+                rcell1.setCellValue(listaData.get(vi).FVCLEAR);
+                rcell2.setCellValue(listaData.get(vi).SCARDN);
+                rcell3.setCellValue(listaData.get(vi).SAUTHOC);
+                rcell4.setCellValue(listaData.get(vi).CUOPLAN);
+                rcell5.setCellValue(listaData.get(vi).PLAZOPAG);
+                rcell6.setCellValue(listaData.get(vi).IMPORTOT);
+                rcell7.setCellValue(listaData.get(vi).IMPORSDE);
+                rcell8.setCellValue(listaData.get(vi).IMPORFIN);
+                rcell9.setCellValue(listaData.get(vi).PORDESCU);
+                rcell10.setCellValue(listaData.get(vi).IMPARANC);
+                rcell11.setCellValue(listaData.get(vi).IVAARANC);
+                rcell12.setCellValue(listaData.get(vi).IMPORTCF);
+                rcell13.setCellValue(listaData.get(vi).IVACFINA);
+                rcell14.setCellValue(listaData.get(vi).IMPCTASD);
+                rcell15.setCellValue(listaData.get(vi).IVACTASD);
+                rcell16.setCellValue(listaData.get(vi).TOTDESC);
+                rcell17.setCellValue(listaData.get(vi).NETO);
+                rcell18.setCellValue(listaData.get(vi).STVAL);
+                rcell19.setCellValue(listaData.get(vi).STPAGO);
+                rcell20.setCellValue(listaData.get(vi).FTE);
+                rcell21.setCellValue(listaData.get(vi).STIMPARA);
+                rcell22.setCellValue(listaData.get(vi).STIVAARA);
+                rcell23.setCellValue(listaData.get(vi).STIMPOCF);
+                rcell24.setCellValue(listaData.get(vi).STIVACFI);
+                rcell25.setCellValue(listaData.get(vi).STFECPAG);
+                rcell26.setCellValue(listaData.get(vi).AIMPARAN);
+                rcell27.setCellValue(listaData.get(vi).AIVAARAN);
+                rcell28.setCellValue(listaData.get(vi).AIMPORCF);
+                rcell29.setCellValue(listaData.get(vi).AIVACFIN);
+                rcell30.setCellValue(listaData.get(vi).APLAZOPA);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -695,8 +872,21 @@ public class FirstDataController extends BaseController {
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
+            sheet.autoSizeColumn(18, true);
+            sheet.autoSizeColumn(19, true);
+            sheet.autoSizeColumn(20, true);
+            sheet.autoSizeColumn(21, true);
+            sheet.autoSizeColumn(22, true);
+            sheet.autoSizeColumn(23, true);
+            sheet.autoSizeColumn(24, true);
+            sheet.autoSizeColumn(25, true);
+            sheet.autoSizeColumn(26, true);
+            sheet.autoSizeColumn(27, true);
+            sheet.autoSizeColumn(28, true);
+            sheet.autoSizeColumn(29, true);
+            sheet.autoSizeColumn(30, true);
 
-            //============================================
+             //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
