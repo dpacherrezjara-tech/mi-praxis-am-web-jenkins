@@ -161,6 +161,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
         var day = new Date().getDate()-4;
         //console.log('---->>' + day);
         if(day < 10) day = "0"+day;
+        
         Ext.getCmp(prototype.id+'-cmbDateFromDay').setValue(day);
         Ext.getCmp(prototype.id+'-cmbDateToDay').setValue(day);
 //        Ext.getCmp(prototype.id+'-cmbDateFromMonth').setValue('01');
