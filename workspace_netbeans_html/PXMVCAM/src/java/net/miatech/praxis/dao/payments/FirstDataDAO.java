@@ -135,6 +135,7 @@ public class FirstDataDAO {
                     bean.NETO = rst.getDouble("NETO");
                     //bean.SDATE = rst.getString("SDATE");
                     bean.STPAGO = rst.getString("STPAGO");
+                    bean.IN_TIPOFEC = filter.IN_TIPOFEC;
 
                     if (rst.getString("STVAL").trim().equals("1")) {
                         bean.STVAL = "MATCH";
@@ -207,6 +208,10 @@ public class FirstDataDAO {
         double TOT_TOTDESC = 0.0;
         double TOT_NETO = 0.0;
         double TOT_IMPORFIN = 0.0;
+        double TOT_AIMPARAN = 0.00;
+        double TOT_AIVAARAN = 0.00;
+        double TOT_AIMPORCF = 0.00;
+        double TOT_AIVACFIN = 0.00;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -258,6 +263,10 @@ public class FirstDataDAO {
                 TOT_TOTDESC = rst.getDouble("TOT_TOTDESC");
                 TOT_NETO = rst.getDouble("TOT_NETO");
                 TOT_IMPORFIN = rst.getDouble("TOT_IMPORFIN");
+                TOT_AIMPARAN = rst.getDouble("TOT_AIMPARAN");
+                TOT_AIVAARAN = rst.getDouble("TOT_AIVAARAN");
+                TOT_AIMPORCF = rst.getDouble("TOT_AIMPORCF");
+                TOT_AIVACFIN = rst.getDouble("TOT_AIVACFIN");               
 
             }
             rst.close();
@@ -272,12 +281,13 @@ public class FirstDataDAO {
 
                     bean.TIPOFEC = rst.getString(filter.IN_TIPOFEC).trim();
                     bean.MERCHNP = rst.getString("MERCHNP").trim();
+                    bean.FVCLEAR = rst.getString("FVCLEAR").trim();
                     bean.NUMLIQUI = rst.getString("NUMLIQUI").trim();
                     bean.SCURRENCY = rst.getString("SCURRENCY").trim();
                     bean.SCARDN = rst.getString("SCARDN").trim();
                     bean.SAUTHOC = rst.getString("SAUTHOC").trim();
                     bean.CUOPLAN = rst.getString("CUOPLAN").trim();
-                    //PLAZOPAG
+                    bean.PLAZOPAG = rst.getInt("PLAZOPAG");
                     bean.IMPORTOT = rst.getDouble("IMPORTOT");
                     bean.IMPORSDE = rst.getDouble("IMPORSDE");
                     bean.PORDESCU = rst.getDouble("PORDESCU");
@@ -293,6 +303,7 @@ public class FirstDataDAO {
                     bean.IVACTASD = rst.getDouble("IVACTASD");
                     bean.TOTDESC = rst.getDouble("TOTDESC");
                     bean.NETO = rst.getDouble("NETO");
+                    bean.IN_TIPOFEC = filter.IN_TIPOFEC;
 
                     if (rst.getString("STVAL").trim().equals("1")) {
                         bean.STVAL = "MATCH";
@@ -309,6 +320,18 @@ public class FirstDataDAO {
                     } else {
                         bean.FTE = rst.getString("FTE").trim();
                     }
+                    //Status de auditoria
+                    bean.STIMPARA = rst.getString("STIMPARA").trim();
+                    bean.STIVAARA = rst.getString("STIVAARA").trim();
+                    bean.STIMPOCF = rst.getString("STIMPOCF").trim();
+                    bean.STIVACFI = rst.getString("STIVACFI").trim();
+                    bean.STFECPAG = rst.getString("STFECPAG").trim();
+                    //Campos calculados de auditoria
+                    bean.AIMPARAN = rst.getDouble("AIMPARAN");
+                    bean.AIVAARAN = rst.getDouble("AIVAARAN");
+                    bean.AIMPORCF = rst.getDouble("AIMPORCF");
+                    bean.AIVACFIN = rst.getDouble("AIVACFIN");
+                    bean.APLAZOPA = rst.getInt("APLAZOPA");
 
                     bean.TOT_IMPORTOT = TOT_IMPORTOT;
                     bean.TOT_IMPORSDE = TOT_IMPORSDE;
@@ -321,6 +344,10 @@ public class FirstDataDAO {
                     bean.TOT_IVACTASD = TOT_IVACTASD;
                     bean.TOT_TOTDESC = TOT_TOTDESC;
                     bean.TOT_NETO = TOT_NETO;
+                    bean.TOT_AIMPARAN = TOT_AIMPARAN;
+                    bean.TOT_AIVAARAN = TOT_AIVAARAN;
+                    bean.TOT_AIMPORCF = TOT_AIMPORCF;
+                    bean.TOT_AIVACFIN = TOT_AIVACFIN;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
@@ -425,6 +452,7 @@ public class FirstDataDAO {
                     bean.IMPORTOT = rst.getDouble("IMPORTOT");
                     bean.TOTDESC = rst.getDouble("TOTDESC");
                     bean.NETO = rst.getDouble("NETO");
+                    bean.IN_TIPOFEC = filter.IN_TIPOFEC;
 
                     bean.TOT_IMPORTOT = TOT_IMPORTOT;
                     bean.TOT_TOTDESC = TOT_TOTDESC;
