@@ -159,6 +159,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
         Ext.getCmp(prototype.id+'-cmbDateFromMonth').setValue(mes);
         Ext.getCmp(prototype.id+'-cmbDateToMonth').setValue(mes);
         var day = new Date().getDate()-4;
+        //console.log('---->>' + day);
+        if(day < 10) day = "0"+day;
         Ext.getCmp(prototype.id+'-cmbDateFromDay').setValue(day);
         Ext.getCmp(prototype.id+'-cmbDateToDay').setValue(day);
 //        Ext.getCmp(prototype.id+'-cmbDateFromMonth').setValue('01');
@@ -249,13 +251,16 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
                 filter.yearFrom = win.getValue('cmbDateFromYear');
                 filter.monthFrom = win.getValue('cmbDateFromMonth');
                 filter.dayFrom = win.getValue('cmbDateFromDay');
+                if (filter.dayFrom === null) filter.dayFrom = '';
                 filter.yearTo = win.getValue('cmbDateToYear');
                 filter.monthTo = win.getValue('cmbDateToMonth');
                 filter.dayTo = win.getValue('cmbDateToDay');
+                if (filter.dayTo === null) filter.dayTo = '';
 
                 filter.IN_FREPOR_FROM = filter.yearFrom + filter.monthFrom + filter.dayFrom;
                 filter.IN_FREPOR_TO = filter.yearTo + filter.monthTo + filter.dayTo;
-                
+                this.bean_by_amount_excel.IN_FREPOR_FROM = filter.IN_FREPOR_FROM;
+                this.bean_by_amount_excel.IN_FREPOR_TO =  filter.IN_FREPOR_TO;                
                 var gridDataPXF051 = Ext.getCmp(prototype.id+'-gridTransactions').getStore().data;
                 
                 if (gridDataPXF051.length > 0 && this.gloGridTransactionsSelectedIndex > -1) {
@@ -356,7 +361,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
                     this.bean.dayFrom = win.getValue('cmbDateFromDay');
                     this.bean.yearTo = win.getValue('cmbDateToYear');
                     this.bean.monthTo = win.getValue('cmbDateToMonth');
-                    this.bean.dayTo = win.getValue('cmbDateToDay');
+                    this.bean.dayTo = win.getValue('cmbDateToDay');                    
                     this.bean.WKSTAT = win.getValue('txtWorkstation');
                     this.bean.PSTATE = this.getPSTATE(win.getValue('cmbProcessState'));
                     this.bean.ST = win.getValue('cmbSt');
