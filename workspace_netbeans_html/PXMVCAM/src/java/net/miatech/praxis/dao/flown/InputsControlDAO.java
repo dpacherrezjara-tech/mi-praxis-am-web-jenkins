@@ -729,7 +729,7 @@ public class InputsControlDAO {
                 pos++;
                 //FUENTE,MENSA
                 objRtn = new A1689();
-                objRtn.extrafields.Nbr = rs01.getInt("RN");
+                objRtn.RN = rs01.getInt("RN");
                 objRtn.EMDDATA = rs01.getString("A1413DATA").trim();
                 objRtn.strFormatDate3 = Functions.getMonthConvert(filter.FECHA.trim());
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
