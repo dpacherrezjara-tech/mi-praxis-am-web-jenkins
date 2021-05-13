@@ -93,11 +93,9 @@ public class ViewTicketAccountingController extends BaseController {
 
         List<PX0241S01A720Filter> lst = new ArrayList<>(0);
         PX0241S01A720Filter filter = new PX0241S01A720Filter();
-
 //        filter.page.TOTROW = -1;
 //        filter.page.START = 0;
 //        filter.page.LIMIT = 0;
-
         try {
 
             logic.setSession(this.serverSession.getServerSession());
