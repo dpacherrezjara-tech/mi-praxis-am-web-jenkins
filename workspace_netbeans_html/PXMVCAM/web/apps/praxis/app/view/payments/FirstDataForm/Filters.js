@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                     caseSensitive: true,
                     hidden: false,
                     valueField: 'code', displayField: 'name',
-                    value: "FPRESENT",
+                    value: "SDATE",
                     store: new Ext.data.SimpleStore({
                         fields: ['code', 'name'],
                         data: [
@@ -44,7 +44,10 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                     labelWidth: 100,
                     width: 120,
                     anchor: '100%',
-                    margin: '0 0 0 86'
+                    margin: '0 0 0 86',
+                    listeners: {
+                        change: 'cmbfiltro_clickHandler'
+                    }
                 },
                 {
                     xtype: 'combo',
@@ -206,8 +209,8 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                     width: 65,
                     enableKeyEvents: true,
                     /*listeners: {
-                        keypress: 'buscarCard_keyDownHandler'
-                    }*/
+                     keypress: 'buscarCard_keyDownHandler'
+                     }*/
                 },
             ]
         }
