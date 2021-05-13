@@ -19,6 +19,7 @@ public class A3951Filter extends A3951{
     public String IN_OPTION = "";
     public String IN_IATA = "";
     public String IN_COUNTRY = "";
+    public String IN_TYPE = "";
 
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();
