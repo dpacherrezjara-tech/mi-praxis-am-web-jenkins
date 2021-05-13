@@ -2441,7 +2441,7 @@ public class InputsControlController extends BaseController {
             Cell CH0_03 = row0.createCell(3);
             Cell CH0_04 = row0.createCell(4);
             Cell CH0_05 = row0.createCell(5);
-            Cell CH0_06 = row0.createCell(6);
+            //Cell CH0_06 = row0.createCell(6);
 //            Cell CH0_07 = row0.createCell(7);
 //            Cell CH0_08 = row0.createCell(8);
 //            Cell CH0_09 = row0.createCell(9);
@@ -2456,7 +2456,7 @@ public class InputsControlController extends BaseController {
             CH0_00.setCellValue("");
 //            CH0_07.setCellValue("");
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
 //            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 9));
 
             CH0_00.setCellStyle(headerStyle);
@@ -2465,7 +2465,7 @@ public class InputsControlController extends BaseController {
             CH0_03.setCellStyle(headerStyle);
             CH0_04.setCellStyle(headerStyle);
             CH0_05.setCellStyle(headerStyle);
-            CH0_06.setCellStyle(headerStyle);
+            //CH0_06.setCellStyle(headerStyle);
 //            CH0_07.setCellStyle(headerStyle);
 //            CH0_08.setCellStyle(headerStyle);
 //            CH0_09.setCellStyle(headerStyle);
@@ -2476,19 +2476,19 @@ public class InputsControlController extends BaseController {
 
             Cell CH1_00 = row.createCell(0);
             Cell CH1_01 = row.createCell(1);
+            //Cell CH1_02 = row.createCell(2);
             Cell CH1_02 = row.createCell(2);
             Cell CH1_03 = row.createCell(3);
             Cell CH1_04 = row.createCell(4);
             Cell CH1_05 = row.createCell(5);
-            Cell CH1_06 = row.createCell(6);
 //            Cell CH1_07 = row.createCell(7);
 //            Cell CH1_08 = row.createCell(8);
 //            Cell CH1_09 = row.createCell(9);
 
             CH1_00.setCellValue("Nbr");
             CH1_01.setCellValue("Ticket");
-            CH1_02.setCellValue("Flight Date Control");
-            CH1_03.setCellValue("Flight Information");
+            //CH1_02.setCellValue("Flight Date Control");
+            CH1_02.setCellValue("Flight Information");
 //            CH1_07.setCellValue("Flag");
 //            CH1_08.setCellValue("Prorate Nbr");
 //            CH1_09.setCellValue("Grupo");
@@ -2496,19 +2496,19 @@ public class InputsControlController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 6));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 5));
+            //sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 6));
 //            sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
 //            sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
 //            sheet.addMergedRegion(new CellRangeAddress(1, 2, 9, 9));
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
+            //CH1_02.setCellStyle(headerStyle);
             CH1_02.setCellStyle(headerStyle);
             CH1_03.setCellStyle(headerStyle);
             CH1_04.setCellStyle(headerStyle);
             CH1_05.setCellStyle(headerStyle);
-            CH1_06.setCellStyle(headerStyle);
 //            CH1_07.setCellStyle(headerStyle);
 //            CH1_08.setCellStyle(headerStyle);
 //            CH1_09.setCellStyle(headerStyle);
@@ -2518,27 +2518,27 @@ public class InputsControlController extends BaseController {
             Row row2 = sheet.createRow(vj);
             Cell CH2_00 = row2.createCell(0);
             Cell CH2_01 = row2.createCell(1);
+            //Cell CH2_02 = row2.createCell(2);
             Cell CH2_02 = row2.createCell(2);
             Cell CH2_03 = row2.createCell(3);
             Cell CH2_04 = row2.createCell(4);
             Cell CH2_05 = row2.createCell(5);
-            Cell CH2_06 = row2.createCell(6);
 //            Cell CH2_07 = row2.createCell(7);
 //            Cell CH2_08 = row2.createCell(8);
 //            Cell CH2_09 = row2.createCell(9);
 
-            CH2_03.setCellValue("Number");
-            CH2_04.setCellValue("Orig");
-            CH2_05.setCellValue("Dest");
-            CH2_06.setCellValue("Date");
+            CH2_02.setCellValue("Number");
+            CH2_03.setCellValue("Orig");
+            CH2_04.setCellValue("Dest");
+            CH2_05.setCellValue("Date");
 
             CH2_00.setCellStyle(headerStyle);
             CH2_01.setCellStyle(headerStyle);
+            //CH2_02.setCellStyle(headerStyle);
             CH2_02.setCellStyle(headerStyle);
             CH2_03.setCellStyle(headerStyle);
             CH2_04.setCellStyle(headerStyle);
             CH2_05.setCellStyle(headerStyle);
-            CH2_06.setCellStyle(headerStyle);
 //            CH2_07.setCellStyle(headerStyle);
 //            CH2_08.setCellStyle(headerStyle);
 //            CH2_09.setCellStyle(headerStyle);
@@ -2550,33 +2550,33 @@ public class InputsControlController extends BaseController {
                 row = sheet.createRow(vj);
                 Cell rcell0 = row.createCell(0);
                 Cell rcell1 = row.createCell(1);
+                //Cell rcell2 = row.createCell(2);
                 Cell rcell2 = row.createCell(2);
                 Cell rcell3 = row.createCell(3);
                 Cell rcell4 = row.createCell(4);
                 Cell rcell5 = row.createCell(5);
-                Cell rcell6 = row.createCell(6);
 //                Cell rcell7 = row.createCell(7);
 //                Cell rcell8 = row.createCell(8);
 //                Cell rcell9 = row.createCell(9);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).strTicket);
-                rcell2.setCellValue(listaData.get(vi).strFormatDate);
-                rcell3.setCellValue(listaData.get(vi).NFLIGHT);
-                rcell4.setCellValue(listaData.get(vi).CDEPART);
-                rcell5.setCellValue(listaData.get(vi).CARRIVA);
-                rcell6.setCellValue(listaData.get(vi).strFormatDate2);
+                //rcell2.setCellValue(listaData.get(vi).strFormatDate);
+                rcell2.setCellValue(listaData.get(vi).NFLIGHT);
+                rcell3.setCellValue(listaData.get(vi).CDEPART);
+                rcell4.setCellValue(listaData.get(vi).CARRIVA);
+                rcell5.setCellValue(listaData.get(vi).strFormatDate2);
 //                rcell7.setCellValue(listaData.get(vi).FLAG);
 //                rcell8.setCellValue(listaData.get(vi).NROPRT);
 //                rcell9.setCellValue(listaData.get(vi).GRUPO);
 
                 rcell0.setCellStyle(bodyStyle);
                 rcell1.setCellStyle(bodyStyle);
+                //rcell2.setCellStyle(bodyStyle);
                 rcell2.setCellStyle(bodyStyle);
                 rcell3.setCellStyle(bodyStyle);
                 rcell4.setCellStyle(bodyStyle);
                 rcell5.setCellStyle(bodyStyle);
-                rcell6.setCellStyle(bodyStyle);
 //                rcell7.setCellStyle(bodyStyle);
 //                rcell8.setCellStyle(bodyStyle);
 //                rcell9.setCellStyle(bodyStyle);
@@ -2588,10 +2588,11 @@ public class InputsControlController extends BaseController {
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
+            //sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(5, true);
 //            sheet.autoSizeColumn(7, true);
 //            sheet.autoSizeColumn(8, true);
 //            sheet.autoSizeColumn(9, true);
