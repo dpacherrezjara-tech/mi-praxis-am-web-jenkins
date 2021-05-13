@@ -963,8 +963,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var init, totalDays, fin, day;
         var colorFlag;
 
-        console.log("Aplicando estilos genericos");
 
+        for (var m = 1; m <= 12; m++) {
+//                    console.log('mex: ' + m );
+            var panelmes = Ext.getCmp(prototype.id +'panel'+ (m < 10 ? '0' : '') + m);
+            panelmes.removeAll(true);
+        }
+        console.log('comienza cracion');
         for (var i = 1; i <= 12; i++) {
             if (i < 10) {
                 mes = '0' + i;
@@ -976,20 +981,41 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             init = dias[dt2.getUTCDay()];
             fin = parseInt(totalDays) + parseInt(init);
             day = 1;
+            
+            var panelmes = Ext.getCmp(prototype.id +'panel'+ (i < 10 ? '0' : '') + i);
             for (var n = init; n < fin; n++) {
-                if (n % 7 === 1) {
-                    colorFlag = '#D6D6D6';
-                } else {
-                    if (i % 2 !== 0) {
-                        colorFlag = '#65C3E5';
-                    } else {
-                        colorFlag = '#2e6bf4';
+//                if (n % 7 === 1) {
+//                    colorFlag = '#D6D6D6';
+//                } else {
+//                    if (i % 2 !== 0) {
+//                        colorFlag = '#65C3E5';
+//                    } else {
+//                        colorFlag = '#2e6bf4';
+//                    }
+//                }
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
+//                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
+                
+                    
+                    
+                    if(n === init){
+                        for (var c = 1; c < init; c++) {
+                            var v_label2 = new Ext.form.Label({text: '',backgroundColor:'#D6D6D6'});
+                            panelmes.add( v_label2);
+                        }
+                        
                     }
-                }
-                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
-                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
-                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
-                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
+                    
+                    var fday = (day < 10 ? '0' : '') + day;
+                    var v_id = 'lbl'+anio+''+mes+''+ fday ;
+                    var v_label = new Ext.form.Label({
+                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000',backgroundColor:colorFlag
+                                    });
+                    panelmes.add( v_label);
+                
+//                    console.log('mex: ' + i + ' dia : ' + n);
                 day++;
             }
         }
@@ -1008,41 +1034,50 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         
         Ext.getCmp(prototype.id + '-lbl-year').setText(anio);
 
-//        Ext.Ajax.request({
-//            url: prototype.url + '/searchCalendar',
-//            method: 'POST',
-//            timeout: 60000000,
-//            beforerequest: Ext.getBody().mask('Loading...'),
-//            params: {
-//                tipoFecha: '1',
-//                dateFrom: anio,
-//                source: source
-//            },
-//            success: function(response, options) {
-//                if (aux) {
-//                    var res = Ext.JSON.decode(response.responseText);
-//                    res = res.data;
-//                    var dato = 0;
-//                    var dias = ["7", "1", "2", "3", "4", "5", "6"];
-//                    var colorFlag;
-//                    var dia, mes, anio, mesf;
-//
-//
-//                    for (var i = 0; i < res.length; i++) {
-//                        dia = res[i].fecha.substring(6, 8);
-//                        mes = res[i].fecha.substring(4, 6);
-//                        anio = res[i].fecha.substring(0, 4);
-//                        mesf = (new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00').getMonth() + 1).toString();
-//
-//                        var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
-//                        var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
-//
-//
-//                        if (mesf % 2 !== 0) {
-//                            colorFlag = '#65C3E5';
-//                        } else {
-//                            colorFlag = '#2e6bf4';
+        Ext.Ajax.request({
+            url: prototype.url + '/searchCalendar',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {
+                tipoFecha: '1',
+                dateFrom: anio,
+                source: source
+            },
+            success: function(response, options) {
+                if (aux) {
+                    var res = Ext.JSON.decode(response.responseText);
+                    res = res.data;
+                    var dato = 0;
+                    var dias = ["7", "1", "2", "3", "4", "5", "6"];
+                    var colorFlag;
+                    var dia, mes, anio, mesf;
+
+
+                    for (var i = 0; i < res.length; i++) {
+                        dia = res[i].fecha.substring(6, 8);
+                        mes = res[i].fecha.substring(4, 6);
+                        anio = res[i].fecha.substring(0, 4);
+                        mesf = (new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00').getMonth() + 1).toString();
+
+                        var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
+                        var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
+
+
+                        if (mesf % 2 !== 0) {
+                            colorFlag = '#65C3E5';
+                        } else {
+                            colorFlag = '#2e6bf4';
+                        }
+                        
+                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
+                        
+//                        if(mes ==='01'){
+                            Ext.getCmp('lbl' + res[i].fecha).setStyle('backgroundColor', color);
+                            Ext.getCmp('lbl' + res[i].fecha).setStyle('color', '#000000');
 //                        }
+                        
+//                        Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
 //                        if (dia === '01') {
 //                            dato = dias[dt.getUTCDay()];
 //
@@ -1051,35 +1086,42 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setStyle('color', '#000000');
 //                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
 //
-//                        } else
-//                        {
+//                            
+////                            console.log('if** -->' + prototype.id + '-lblDay_' + dato + ' = ' + dia);
+//
+//                        } else{
+//                            
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setText(dia);
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', color);
 //                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('color', '#000000');
 //                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', colorFlag);
 //
+////                            console.log('else -->'+ ' dato :'+ dato + ' dia : ' + dia + ' == ' + prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1) + ' = ' + dia);
 //                        }
-//
-//                    }
-//                    aux = false;
-//                }
-//                Ext.getBody().unmask();
-//            }
-//        });
-//        console.log("Salimos de SetCalendar");
+
+                        
+
+
+                    }
+                    aux = false;
+                }
+                Ext.getBody().unmask();
+            }
+        });
+        console.log("Salimos de SetCalendar");
 
     }
     ,
     setClearCalendar: function() {
-        for (var i = 1; i <= 42; i++) {
-            for (var j = 1; j <= 12; j++) {
-                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setText('.');
-                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
-                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('color', '#E5ECEF');
-                Ext.getCmp(prototype.id + 'gdiFlag_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
-
-            }
-        }
+//        for (var i = 1; i <= 42; i++) {
+//            for (var j = 1; j <= 12; j++) {
+//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).Aplicando estilos genericossetText('.');
+//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
+//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('color', '#E5ECEF');
+//                Ext.getCmp(prototype.id + 'gdiFlag_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
+//
+//            }
+//        }
     }
     ,
     btnClear_click: function(obj, e) {
