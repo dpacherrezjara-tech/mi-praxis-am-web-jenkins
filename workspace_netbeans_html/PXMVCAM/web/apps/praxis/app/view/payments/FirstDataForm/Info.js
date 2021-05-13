@@ -76,7 +76,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                         text: 'Date', dataIndex: 'strFormatDate', width: 140
                                                     }
                                                 ]
-                                            },                                            
+                                            },
                                             {
                                                 text: 'Settlement', dataIndex: 'QtySETTLEMENT', width: 140,
                                                 listeners: {
@@ -387,7 +387,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                             id: prototype.id + '-panelGridDataBySettlement',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1555,
+                            width: 1562,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -397,7 +397,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMainBySettlement',
-                                    width: 1555,
+                                    width: 1562,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -426,6 +426,19 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Expiration',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'FVCLEAR', width: 90
+                                                    }
+                                                ]
+                                            },
+                                            {
                                                 text: 'Card <br> Number', dataIndex: 'SCARDN', width: 110
                                             },
                                             {
@@ -433,6 +446,15 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                             },
                                             {
                                                 text: 'Installment <br> Plan', dataIndex: 'CUOPLAN', width: 90
+                                            },
+                                            {
+                                                text: 'Payment <br> Deadline', dataIndex: 'PLAZOPAG', width: 90,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    if (record.data.STFECPAG == "1") {
+                                                        metaData.style = "color:#eb3434";
+                                                    }
+                                                    return value;
+                                                },
                                             },
                                             {
                                                 text: 'Total <br> Amount', dataIndex: 'IMPORTOT', width: 90,
@@ -485,6 +507,10 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 text: 'Tariff <br> Amount', dataIndex: 'IMPARANC', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    if (record.data.STIMPARA == "1") {
+                                                        metaData.style = "text-align:right;background-color:#d5f4d5;color:#eb3434";
+                                                    }
+
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
@@ -498,6 +524,9 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 text: 'Tariff <br> IVA', dataIndex: 'IVAARANC', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    if (record.data.STIVAARA == "1") {
+                                                        metaData.style = "text-align:right;background-color:#d5f4d5;color:#eb3434";
+                                                    }
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
@@ -511,6 +540,9 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 text: 'Financial <br> Cost Amount', dataIndex: 'IMPORTCF', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    if (record.data.STIMPOCF == "1") {
+                                                        metaData.style = "text-align:right;background-color:#d5f4d5;color:#eb3434";
+                                                    }
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
@@ -524,6 +556,9 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 text: 'IVA <br> Financial Cost', dataIndex: 'IVACFINA', width: 95,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#d5f4d5";
+                                                    if (record.data.STIVACFI == "1") {
+                                                        metaData.style = "text-align:right;background-color:#d5f4d5;color:#eb3434";
+                                                    }
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
@@ -605,6 +640,146 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
+                                            },
+                                            {
+                                                text: 'Audit Status',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Status Tariff <br> Amount', dataIndex: 'STIMPARA', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            if (value == "0") {
+                                                                value = "<img src='resources/img/icon/16x16/check.png'>";
+                                                            } else if (value == "1") {
+                                                                value = "<img src='resources/img/icon/delete.png'>";
+                                                            }
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Status Tariff <br> IVA', dataIndex: 'STIVAARA', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            if (value == "0") {
+                                                                value = "<img src='resources/img/icon/16x16/check.png'>";
+                                                            } else if (value == "1") {
+                                                                value = "<img src='resources/img/icon/delete.png'>";
+                                                            }
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Status Financial <br> Cost Amount', dataIndex: 'STIMPOCF', width: 110,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            if (value == "0") {
+                                                                value = "<img src='resources/img/icon/16x16/check.png'>";
+                                                            } else if (value == "1") {
+                                                                value = "<img src='resources/img/icon/delete.png'>";
+                                                            }
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Status IVA <br> Financial Cost', dataIndex: 'STIVACFI', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            if (value == "0") {
+                                                                value = "<img src='resources/img/icon/16x16/check.png'>";
+                                                            } else if (value == "1") {
+                                                                value = "<img src='resources/img/icon/delete.png'>";
+                                                            }
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Status Payment <br> Deadline', dataIndex: 'STFECPAG', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            if (value == "0") {
+                                                                value = "<img src='resources/img/icon/16x16/check.png'>";
+                                                            } else if (value == "1") {
+                                                                value = "<img src='resources/img/icon/delete.png'>";
+                                                            }
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Audit Values',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Tariff <br> Amount', dataIndex: 'AIMPARAN', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_AIMPARAN, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Tariff <br> IVA', dataIndex: 'AIVAARAN', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_AIVAARAN, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Financial <br> Cost Amount', dataIndex: 'AIMPORCF', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_AIMPORCF, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'IVA <br> Financial Cost', dataIndex: 'AIVACFIN', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOT_AIVACFIN, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Payment <br> Deadline', dataIndex: 'APLAZOPA', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
                                             },
                                         ]
                                     }
