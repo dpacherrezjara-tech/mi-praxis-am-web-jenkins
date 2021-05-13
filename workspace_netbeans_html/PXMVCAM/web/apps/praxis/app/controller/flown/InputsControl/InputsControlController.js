@@ -520,25 +520,31 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     
     setErrores: function(dv, record, item, index, e) {
         
-        var src = Ext.getCmp(prototype.id + '-cmbSource').getValue();
-        if(src === 'ODS' || src === 'SSIM' || src === 'EMD'){
-            console.log('...');
-        }else{
-            var data = dv.dataSource.data.items[item].data;
-
-            if(data.FUENTE === 'VCRJ'){
-                this.setErroresVCRJ(data.FECHA, data.FUENTE);
+        
+        var data = dv.dataSource.data.items[item].data;
+        
+        if(data.QRECERR > 0){
+        
+            var src = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+            if(src === 'ODS' || src === 'SSIM' || src === 'EMD'){
+                console.log('...');
             }else{
-                this.setGridDataA1696Errores(data.FECHA, data.HOCR, data.FUENTE);
+                if(data.FUENTE === 'VCRJ'){
+                    this.setErroresVCRJ(data.FECHA, data.FUENTE, data.DPRDA, data.DTRANS);
+                }else{
+                    this.setGridDataA1696Errores(data.FECHA, data.HOCR, data.FUENTE);
+                }
             }
         }
     },
     
-    setErroresVCRJ: function(FECHA, FUENTE) {
+    setErroresVCRJ: function(FECHA, FUENTE, DPRDA, DTRANS) {
         
         params = {
             FECHA: FECHA,
-            FUENTE: FUENTE
+            FUENTE: FUENTE,
+            DPRDA: DPRDA,
+            DTRANS: DTRANS
         };
         
         console.log(params);
@@ -954,7 +960,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 break;
         }
 
-    },
+    },    
     initCalendar: function() {
         var anio = Ext.getCmp(prototype.id + '-cmbYear').getValue();
         var dias = ["7", "1", "2", "3", "4", "5", "6"];
@@ -1019,9 +1025,8 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 day++;
             }
         }
-    }
-
-    ,
+    },
+    
     setCalendar: function() {
         console.log("Estamos en SetCalendar");
         this.setClearCalendar();
@@ -1169,6 +1174,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var boxA1686Formateados = Ext.getCmp(prototype.id + '-gridDataA1686Formateados');
         var boxA1686ProcDateData = Ext.getCmp(prototype.id + '-panelGridProcDateData');
         var boxA1696Errores = Ext.getCmp(prototype.id + '-gridDataA1696Errores');
+        var boxAErrorVCRJ = Ext.getCmp(prototype.id + '-gridDataErrorVCRJ');
         var boxA1690 = Ext.getCmp(prototype.id + '-panelGridDataA1690');
         var boxA2735 = Ext.getCmp(prototype.id + '-gridDataA2735');
 
@@ -1205,6 +1211,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     + '&HOCR=' + params.HOCR
                     + '&FUENTE=' + params.FUENTE);
         }
+        if (!boxAErrorVCRJ.hidden) {
+            global.getFile(prototype.url + '/GetXLSX6ErrorVCRJ?FECHA=' + params.FECHA
+                    + '&FUENTE=' + params.FUENTE
+                    + '&DPRDA=' + params.DPRDA
+                    + '&DTRANS=' + params.DTRANS
+            );
+        }
         if (!boxA1688.hidden) {
             global.getFile(prototype.url + '/GetXLSA1688?FECHA=' + params.FECHA);
         }
@@ -1214,7 +1227,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         }
 
         if (!boxA1413.hidden) {
-            global.getFile(prototype.url + '/GetXLSA1413?FECHA=' + params.FECHA);
+            global.getFile(prototype.url + '/GetXLSA1413?FECHA=' + params.FECHA
+                    + '&FECR=' + params.FECR
+                    + '&HOCR=' + params.HOCR
+                    + '&FUENTE=' + params.FUENTE
+                    + '&strFormatDate4=' + params.strFormatDate4
+                    + '&strFormatDate=' + params.strFormatDate
+            );
         }
         if (!boxA1419.hidden) {
             global.getFile(prototype.url + '/GetXLSA1419?FECHA=' + params.FECHA);
