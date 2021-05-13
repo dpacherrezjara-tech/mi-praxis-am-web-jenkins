@@ -482,7 +482,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Nbr', width: 35, dataIndex: 'Nbr'},
+                                    {text: 'Nbr', width: 35, dataIndex: 'RN'},
                                     {text: 'VCR Information', width: 800, dataIndex: 'EMDDATA',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align :left ; margin-left : 1px ";
