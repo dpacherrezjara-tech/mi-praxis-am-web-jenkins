@@ -5,8 +5,6 @@
  */
 package net.miatech.praxis.controllers.flown;
 
-
-//
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -240,7 +238,7 @@ public class InputsControlController extends BaseController {
         }
         return lst;
     }
-
+    
     @RequestMapping(value = "searchErrorVCRJ")
     public @ResponseBody
     String searchErrorVCRJ(ModelMap map, HttpServletRequest request) {
@@ -271,6 +269,8 @@ public class InputsControlController extends BaseController {
 
             filter.FECHA = request.getParameter("FECHA");
             filter.FUENTE = request.getParameter("FUENTE");
+            filter.DPRDA = request.getParameter("DPRDA");
+            filter.DTRANS = request.getParameter("DTRANS");
 
             lst = logic.loadPX077SQP03979(filter);
 
@@ -2099,6 +2099,169 @@ public class InputsControlController extends BaseController {
         }
 
     }
+    
+    @RequestMapping(value = "GetXLSX6ErrorVCRJ")
+    public @ResponseBody
+    void GetXLSX6ErrorVCRJ(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Input Control : GetXLSX6ErrorVCRJ");
+        String fileNameDownload = String.format("Input Control - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+
+        try {
+
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<A1413Filter> listaData = this.getListErrorVCRJ(request, true);
+
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+
+            workbook = new XSSFWorkbook();
+
+            Sheet sheet = workbook.createSheet("InputControl");
+
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+
+            Row row = sheet.createRow(vj);
+
+            Cell CH1_00 = row.createCell(0);
+            Cell CH1_01 = row.createCell(1);
+            Cell CH1_02 = row.createCell(2);
+            Cell CH1_03 = row.createCell(3);
+            Cell CH1_04 = row.createCell(4);
+            Cell CH1_05 = row.createCell(5);
+            Cell CH1_06 = row.createCell(6);
+            Cell CH1_07 = row.createCell(7);
+            Cell CH1_08 = row.createCell(8);
+
+            CH1_00.setCellValue("Nbr");
+            CH1_01.setCellValue("A1413DATE");
+            CH1_02.setCellValue("A1413SEC");
+            CH1_03.setCellValue("Detail Data");
+            CH1_04.setCellValue("Cia");
+            CH1_05.setCellValue("A1413FORSE");
+            CH1_06.setCellValue("Cupon");
+            CH1_07.setCellValue("From");
+            CH1_08.setCellValue("To");
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+
+            CH1_00.setCellStyle(headerStyle);
+            CH1_01.setCellStyle(headerStyle);
+            CH1_02.setCellStyle(headerStyle);
+            CH1_03.setCellStyle(headerStyle);
+            CH1_04.setCellStyle(headerStyle);
+            CH1_05.setCellStyle(headerStyle);
+            CH1_06.setCellStyle(headerStyle);
+            CH1_07.setCellStyle(headerStyle);
+            CH1_08.setCellStyle(headerStyle);
+
+            //*******************
+
+            //          ========================================================
+            ++vj;
+            while (iter.hasNext()) {
+
+                row = sheet.createRow(vj);
+                Cell rcell0 = row.createCell(0);
+                Cell rcell1 = row.createCell(1);
+                Cell rcell2 = row.createCell(2);
+                Cell rcell3 = row.createCell(3);
+                Cell rcell4 = row.createCell(4);
+                Cell rcell5 = row.createCell(5);
+                Cell rcell6 = row.createCell(6);
+                Cell rcell7 = row.createCell(7);
+                Cell rcell8 = row.createCell(8);
+
+                rcell0.setCellValue(listaData.get(vi).RN);
+                rcell1.setCellValue(listaData.get(vi).A1413DATE);
+                rcell2.setCellValue(listaData.get(vi).A1413SEC);
+                rcell3.setCellValue(listaData.get(vi).A1413DATA);
+                rcell4.setCellValue(listaData.get(vi).A1413CIA);
+                rcell5.setCellValue(listaData.get(vi).A1413FORSE);
+                rcell6.setCellValue(listaData.get(vi).A1413CUPON);
+                rcell7.setCellValue(listaData.get(vi).A1413FROM);
+                rcell8.setCellValue(listaData.get(vi).A1413TO);
+
+                rcell0.setCellStyle(bodyStyle);
+                rcell1.setCellStyle(bodyStyle);
+                rcell2.setCellStyle(bodyStyle);
+                rcell3.setCellStyle(bodyStyle);
+                rcell4.setCellStyle(bodyStyle);
+                rcell5.setCellStyle(bodyStyle);
+                rcell6.setCellStyle(bodyStyle);
+                rcell7.setCellStyle(bodyStyle);
+                rcell8.setCellStyle(bodyStyle);
+
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+
+            /**
+             * fileNameDownload = Nombre de descarga
+             */
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            System.out.println(" ---> " + e.getMessage());
+            throw new SpringException(e);
+        }
+
+    }
 
     @RequestMapping(value = "GetXLSXMain1690")
     public @ResponseBody
@@ -2278,7 +2441,7 @@ public class InputsControlController extends BaseController {
             Cell CH0_03 = row0.createCell(3);
             Cell CH0_04 = row0.createCell(4);
             Cell CH0_05 = row0.createCell(5);
-            //Cell CH0_06 = row0.createCell(6);
+            Cell CH0_06 = row0.createCell(6);
 //            Cell CH0_07 = row0.createCell(7);
 //            Cell CH0_08 = row0.createCell(8);
 //            Cell CH0_09 = row0.createCell(9);
@@ -2293,7 +2456,7 @@ public class InputsControlController extends BaseController {
             CH0_00.setCellValue("");
 //            CH0_07.setCellValue("");
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
 //            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 9));
 
             CH0_00.setCellStyle(headerStyle);
@@ -2302,7 +2465,7 @@ public class InputsControlController extends BaseController {
             CH0_03.setCellStyle(headerStyle);
             CH0_04.setCellStyle(headerStyle);
             CH0_05.setCellStyle(headerStyle);
-            //CH0_06.setCellStyle(headerStyle);
+            CH0_06.setCellStyle(headerStyle);
 //            CH0_07.setCellStyle(headerStyle);
 //            CH0_08.setCellStyle(headerStyle);
 //            CH0_09.setCellStyle(headerStyle);
@@ -2313,19 +2476,19 @@ public class InputsControlController extends BaseController {
 
             Cell CH1_00 = row.createCell(0);
             Cell CH1_01 = row.createCell(1);
-            //Cell CH1_02 = row.createCell(2);
             Cell CH1_02 = row.createCell(2);
             Cell CH1_03 = row.createCell(3);
             Cell CH1_04 = row.createCell(4);
             Cell CH1_05 = row.createCell(5);
+            Cell CH1_06 = row.createCell(6);
 //            Cell CH1_07 = row.createCell(7);
 //            Cell CH1_08 = row.createCell(8);
 //            Cell CH1_09 = row.createCell(9);
 
             CH1_00.setCellValue("Nbr");
             CH1_01.setCellValue("Ticket");
-            //CH1_02.setCellValue("Flight Date Control");
-            CH1_02.setCellValue("Flight Information");
+            CH1_02.setCellValue("Flight Date Control");
+            CH1_03.setCellValue("Flight Information");
 //            CH1_07.setCellValue("Flag");
 //            CH1_08.setCellValue("Prorate Nbr");
 //            CH1_09.setCellValue("Grupo");
@@ -2333,19 +2496,19 @@ public class InputsControlController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 5));
-            //sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 6));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 6));
 //            sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
 //            sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
 //            sheet.addMergedRegion(new CellRangeAddress(1, 2, 9, 9));
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
-            //CH1_02.setCellStyle(headerStyle);
             CH1_02.setCellStyle(headerStyle);
             CH1_03.setCellStyle(headerStyle);
             CH1_04.setCellStyle(headerStyle);
             CH1_05.setCellStyle(headerStyle);
+            CH1_06.setCellStyle(headerStyle);
 //            CH1_07.setCellStyle(headerStyle);
 //            CH1_08.setCellStyle(headerStyle);
 //            CH1_09.setCellStyle(headerStyle);
@@ -2355,198 +2518,31 @@ public class InputsControlController extends BaseController {
             Row row2 = sheet.createRow(vj);
             Cell CH2_00 = row2.createCell(0);
             Cell CH2_01 = row2.createCell(1);
-            //Cell CH2_02 = row2.createCell(2);
             Cell CH2_02 = row2.createCell(2);
             Cell CH2_03 = row2.createCell(3);
             Cell CH2_04 = row2.createCell(4);
             Cell CH2_05 = row2.createCell(5);
+            Cell CH2_06 = row2.createCell(6);
 //            Cell CH2_07 = row2.createCell(7);
 //            Cell CH2_08 = row2.createCell(8);
 //            Cell CH2_09 = row2.createCell(9);
 
-            CH2_02.setCellValue("Number");
-            CH2_03.setCellValue("Orig");
-            CH2_04.setCellValue("Dest");
-            CH2_05.setCellValue("Date");
+            CH2_03.setCellValue("Number");
+            CH2_04.setCellValue("Orig");
+            CH2_05.setCellValue("Dest");
+            CH2_06.setCellValue("Date");
 
             CH2_00.setCellStyle(headerStyle);
             CH2_01.setCellStyle(headerStyle);
-            //CH2_02.setCellStyle(headerStyle);
             CH2_02.setCellStyle(headerStyle);
             CH2_03.setCellStyle(headerStyle);
             CH2_04.setCellStyle(headerStyle);
             CH2_05.setCellStyle(headerStyle);
+            CH2_06.setCellStyle(headerStyle);
 //            CH2_07.setCellStyle(headerStyle);
 //            CH2_08.setCellStyle(headerStyle);
 //            CH2_09.setCellStyle(headerStyle);
 
-            //          ========================================================
-            ++vj;
-            while (iter.hasNext()) {
-
-                row = sheet.createRow(vj);
-                Cell rcell0 = row.createCell(0);
-                Cell rcell1 = row.createCell(1);
-                //Cell rcell2 = row.createCell(2);
-                Cell rcell2 = row.createCell(2);
-                Cell rcell3 = row.createCell(3);
-                Cell rcell4 = row.createCell(4);
-                Cell rcell5 = row.createCell(5);
-//                Cell rcell7 = row.createCell(7);
-//                Cell rcell8 = row.createCell(8);
-//                Cell rcell9 = row.createCell(9);
-
-                rcell0.setCellValue(listaData.get(vi).RN);
-                rcell1.setCellValue(listaData.get(vi).strTicket);
-                //rcell2.setCellValue(listaData.get(vi).strFormatDate);
-                rcell2.setCellValue(listaData.get(vi).NFLIGHT);
-                rcell3.setCellValue(listaData.get(vi).CDEPART);
-                rcell4.setCellValue(listaData.get(vi).CARRIVA);
-                rcell5.setCellValue(listaData.get(vi).strFormatDate2);
-//                rcell7.setCellValue(listaData.get(vi).FLAG);
-//                rcell8.setCellValue(listaData.get(vi).NROPRT);
-//                rcell9.setCellValue(listaData.get(vi).GRUPO);
-
-                rcell0.setCellStyle(bodyStyle);
-                rcell1.setCellStyle(bodyStyle);
-                //rcell2.setCellStyle(bodyStyle);
-                rcell2.setCellStyle(bodyStyle);
-                rcell3.setCellStyle(bodyStyle);
-                rcell4.setCellStyle(bodyStyle);
-                rcell5.setCellStyle(bodyStyle);
-//                rcell7.setCellStyle(bodyStyle);
-//                rcell8.setCellStyle(bodyStyle);
-//                rcell9.setCellStyle(bodyStyle);
-
-                iter.next();
-                ++vi;
-                ++vj;
-            }
-
-            sheet.autoSizeColumn(0, true);
-            sheet.autoSizeColumn(1, true);
-            //sheet.autoSizeColumn(2, true);
-            sheet.autoSizeColumn(2, true);
-            sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-//            sheet.autoSizeColumn(7, true);
-//            sheet.autoSizeColumn(8, true);
-//            sheet.autoSizeColumn(9, true);
-
-            /**
-             * fileNameDownload = Nombre de descarga
-             */
-            response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-
-            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-            workbook.write(response.getOutputStream());
-            fos.close();
-
-        } catch (IOException e) {
-            System.out.println(" ---> " + e.getMessage());
-            throw new SpringException(e);
-        }
-
-    }
-
-    @RequestMapping(value = "GetXLSX6ErrorVCRJ")
-    public @ResponseBody
-    void GetXLSX6ErrorVCRJ(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Input Control : GetXLSX6ErrorVCRJ");
-
-        String fileNameDownload = String.format("Input Control - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-
-        try {
-
-            Workbook workbook;
-            File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A1413Filter> listaData = this.getListErrorVCRJ(request, true);
-
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-
-            workbook = new XSSFWorkbook();
-
-            Sheet sheet = workbook.createSheet("InputControl");
-
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
-
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            Integer vi = 0;
-            Integer vj = 0; //Almacena el numero de fila
-            Iterator iter = listaData.iterator();
-
-            Row row = sheet.createRow(vj);
-
-            Cell CH1_00 = row.createCell(0);
-            Cell CH1_01 = row.createCell(1);
-            Cell CH1_02 = row.createCell(2);
-            Cell CH1_03 = row.createCell(3);
-            Cell CH1_04 = row.createCell(4);
-            Cell CH1_05 = row.createCell(5);
-            Cell CH1_06 = row.createCell(6);
-            Cell CH1_07 = row.createCell(7);
-            Cell CH1_08 = row.createCell(8);
-
-            CH1_00.setCellValue("Nbr");
-            CH1_01.setCellValue("A1413DATE");
-            CH1_02.setCellValue("A1413SEC");
-            CH1_03.setCellValue("Detail Data");
-            CH1_04.setCellValue("Cia");
-            CH1_05.setCellValue("A1413FORSE");
-            CH1_06.setCellValue("Cupon");
-            CH1_07.setCellValue("From");
-            CH1_08.setCellValue("To");
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
-
-            CH1_00.setCellStyle(headerStyle);
-            CH1_01.setCellStyle(headerStyle);
-            CH1_02.setCellStyle(headerStyle);
-            CH1_03.setCellStyle(headerStyle);
-            CH1_04.setCellStyle(headerStyle);
-            CH1_05.setCellStyle(headerStyle);
-            CH1_06.setCellStyle(headerStyle);
-            CH1_07.setCellStyle(headerStyle);
-            CH1_08.setCellStyle(headerStyle);
-
-            //*******************
             //          ========================================================
             ++vj;
             while (iter.hasNext()) {
@@ -2559,18 +2555,20 @@ public class InputsControlController extends BaseController {
                 Cell rcell4 = row.createCell(4);
                 Cell rcell5 = row.createCell(5);
                 Cell rcell6 = row.createCell(6);
-                Cell rcell7 = row.createCell(7);
-                Cell rcell8 = row.createCell(8);
+//                Cell rcell7 = row.createCell(7);
+//                Cell rcell8 = row.createCell(8);
+//                Cell rcell9 = row.createCell(9);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
-                rcell1.setCellValue(listaData.get(vi).A1413DATE);
-                rcell2.setCellValue(listaData.get(vi).A1413SEC);
-                rcell3.setCellValue(listaData.get(vi).A1413DATA);
-                rcell4.setCellValue(listaData.get(vi).A1413CIA);
-                rcell5.setCellValue(listaData.get(vi).A1413FORSE);
-                rcell6.setCellValue(listaData.get(vi).A1413CUPON);
-                rcell7.setCellValue(listaData.get(vi).A1413FROM);
-                rcell8.setCellValue(listaData.get(vi).A1413TO);
+                rcell1.setCellValue(listaData.get(vi).strTicket);
+                rcell2.setCellValue(listaData.get(vi).strFormatDate);
+                rcell3.setCellValue(listaData.get(vi).NFLIGHT);
+                rcell4.setCellValue(listaData.get(vi).CDEPART);
+                rcell5.setCellValue(listaData.get(vi).CARRIVA);
+                rcell6.setCellValue(listaData.get(vi).strFormatDate2);
+//                rcell7.setCellValue(listaData.get(vi).FLAG);
+//                rcell8.setCellValue(listaData.get(vi).NROPRT);
+//                rcell9.setCellValue(listaData.get(vi).GRUPO);
 
                 rcell0.setCellStyle(bodyStyle);
                 rcell1.setCellStyle(bodyStyle);
@@ -2579,8 +2577,9 @@ public class InputsControlController extends BaseController {
                 rcell4.setCellStyle(bodyStyle);
                 rcell5.setCellStyle(bodyStyle);
                 rcell6.setCellStyle(bodyStyle);
-                rcell7.setCellStyle(bodyStyle);
-                rcell8.setCellStyle(bodyStyle);
+//                rcell7.setCellStyle(bodyStyle);
+//                rcell8.setCellStyle(bodyStyle);
+//                rcell9.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
@@ -2592,10 +2591,10 @@ public class InputsControlController extends BaseController {
             sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-            sheet.autoSizeColumn(7, true);
-            sheet.autoSizeColumn(8, true);
-            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(6, true);
+//            sheet.autoSizeColumn(7, true);
+//            sheet.autoSizeColumn(8, true);
+//            sheet.autoSizeColumn(9, true);
 
             /**
              * fileNameDownload = Nombre de descarga
