@@ -163,6 +163,24 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             bean: me.bean
         };
     },
+    setFormatParameterForExcelBySettlement: function() {
+        me.bean = {};
+        var grid = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().data.items[0]
+        
+        me.bean.IN_SCURRENCY = grid.get("SCURRENCY");
+        me.bean.IN_MERCHNP = grid.get("MERCHNP");
+        me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
+        me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
+        me.bean.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        me.bean.IN_DATE = grid.get("TIPOFEC");
+        me.bean.IN_NUMLIQUI = grid.get("NUMLIQUI");
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+    },
     setFormatParameterBySettlement: function() {
         me.bean = {};
         var grid = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().data.items[0]
