@@ -462,6 +462,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         
                         var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
                         console.log(fuente);
+                        console.log(obj.data);
                         
                         if(fuente === 'ODS'){
                             Ext.getCmp(prototype.id + '-id_error').setText('Duplicate');
@@ -929,35 +930,41 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataByFlightDate: function(dv, record, item, index, e) {
-        this.hideAllGrid();
+        
         var data = dv.dataSource.data.items[item].data;
-        params = {
-            FUENTE: data.FUENTE
-        };
-        switch (params.FUENTE) {
-            case 'SSIM':
-                this.setGridDataA1687(dv, record, item, index, e);
-                break;
+        
+        if(data.QRECORG > 0){
+        
+            this.hideAllGrid();
 
-            case 'ODS':
-                this.setGridDataA1688(dv, record, item, index, e);
-                break;
+            params = {
+                FUENTE: data.FUENTE
+            };
+            switch (params.FUENTE) {
+                case 'SSIM':
+                    this.setGridDataA1687(dv, record, item, index, e);
+                    break;
 
-            case 'EMD':
-                this.setGridDataA1689(dv, record, item, index, e);
-                break;
+                case 'ODS':
+                    this.setGridDataA1688(dv, record, item, index, e);
+                    break;
 
-            case 'VCR':
-                this.setGridDataA1413(dv, record, item, index, e);
-                break;
-            
-            case 'VCRJ':
-                this.setGridDataA1413(dv, record, item, index, e);
-                break;
-                
-            case 'ISR':
-                this.setGridDataA1419(dv, record, item, index, e);
-                break;
+                case 'EMD':
+                    this.setGridDataA1689(dv, record, item, index, e);
+                    break;
+
+                case 'VCR':
+                    this.setGridDataA1413(dv, record, item, index, e);
+                    break;
+
+                case 'VCRJ':
+                    this.setGridDataA1413(dv, record, item, index, e);
+                    break;
+
+                case 'ISR':
+                    this.setGridDataA1419(dv, record, item, index, e);
+                    break;
+            }
         }
 
     },    
