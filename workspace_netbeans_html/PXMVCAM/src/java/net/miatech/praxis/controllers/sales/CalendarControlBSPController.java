@@ -266,9 +266,9 @@ public class CalendarControlBSPController extends BaseController {
                         vl_sunday_cant = oList.get(i).A1698_TAPES;
                         vl_sunday_error = oList.get(i).A1698_ERRORS;
                         vl_sunday_cantSale = oList.get(i).A1698_SALEWO;
-//                        if(Integer.parseInt(oList.get(i).A1529PRDA)<=Integer.parseInt(fechaActual)){
+                        if(Integer.parseInt(oList.get(i).A1529PRDA)<=Integer.parseInt(fechaActual)){
                             vl_sunday_St = Style(oList.get(i).A1698_TAPES,oList.get(i).A1698_SALEWO,oList.get(i).A1698_ERRORS);
-//                        }
+                        }
                         b = true;
 //                        if (vl_from.length()>0 && vl_monday.length()>0) {
 //                            if (Integer.parseInt(vl_monday) > Integer.parseInt(vl_from)) {
