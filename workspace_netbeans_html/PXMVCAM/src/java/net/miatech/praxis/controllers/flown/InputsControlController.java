@@ -271,6 +271,8 @@ public class InputsControlController extends BaseController {
             filter.FUENTE = request.getParameter("FUENTE");
             filter.DPRDA = request.getParameter("DPRDA");
             filter.DTRANS = request.getParameter("DTRANS");
+            filter.FECR = request.getParameter("FECR");
+            filter.HOCR = request.getParameter("HOCR");
 
             lst = logic.loadPX077SQP03979(filter);
 
