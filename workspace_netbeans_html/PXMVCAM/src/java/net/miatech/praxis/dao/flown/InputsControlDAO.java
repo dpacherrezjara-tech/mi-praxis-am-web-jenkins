@@ -337,13 +337,15 @@ public class InputsControlDAO {
         ResultSet rs01 = null;
 
         try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03979(?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03979(?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.FECHA.trim());
             cstmt01.setString(3, filter.FUENTE.trim());
+            cstmt01.setString(4, filter.DPRDA.trim());
+            cstmt01.setString(5, filter.DTRANS.trim());
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();
@@ -729,7 +731,7 @@ public class InputsControlDAO {
                 pos++;
                 //FUENTE,MENSA
                 objRtn = new A1689();
-                objRtn.extrafields.Nbr = rs01.getInt("RN");
+                objRtn.RN = rs01.getInt("RN");
                 objRtn.EMDDATA = rs01.getString("A1413DATA").trim();
                 objRtn.strFormatDate3 = Functions.getMonthConvert(filter.FECHA.trim());
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
