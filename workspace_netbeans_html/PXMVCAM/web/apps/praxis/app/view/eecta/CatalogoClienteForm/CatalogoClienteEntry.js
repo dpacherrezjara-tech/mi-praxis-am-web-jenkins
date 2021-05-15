@@ -805,6 +805,12 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                     border: true,
                                     items: [
                                         {
+                                            xtype: 'checkboxfield',
+                                            id: prototype.id + '-A3953STSDV',                                            
+                                            padding: '0px 0px 0px 10px',
+                                            boxLabel: 'Generar Reporte venta por Identificador'
+                                        },
+                                        {
                                             xtype: 'panel',
                                             layout: 'column',
                                             margin: '1 0 1 0',
@@ -813,7 +819,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                 {
                                                     xtype: 'combo',
                                                     id: prototype.id + '-A3953INDPL',
-                                                    fieldLabel: 'Listado Venta', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                                    fieldLabel: 'Reporte Venta', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 95,
                                                     width: 190,
                                                     store: new Ext.data.SimpleStore({
                                                         fields: ['code', 'name'],
@@ -862,7 +868,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                 {
                                                     xtype: 'combo',
                                                     id: prototype.id + '-A3953INDPE',
-                                                    fieldLabel: 'Edo. Cta.', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                                    fieldLabel: 'Edo. Cta.', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 95,
                                                     width: 190,
                                                     store: new Ext.data.SimpleStore({
                                                         fields: ['code', 'name'],
@@ -892,6 +898,13 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                         //keypress: 'onTextKeypress',
                                                         //change: 'cmbfiltro_clickHandler'
                                                     }// 
+                                                },
+                                                {
+                                                    xtype: 'textfield',
+                                                    readOnly: true,
+                                                    id: prototype.id + '-A3962CONT1_E',
+                                                    fieldLabel: 'Correlat.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
+                                                    width: 130
                                                 }
                                             ]
                                         },
@@ -904,7 +917,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                 {
                                                     xtype: 'combo',
                                                     id: prototype.id + '-A3953INDPP',
-                                                    fieldLabel: 'Compl. Pagos', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                                    fieldLabel: 'Compl. Pagos', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 95,
                                                     width: 190,
                                                     store: new Ext.data.SimpleStore({
                                                         fields: ['code', 'name'],
@@ -963,7 +976,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                 {
                                                     xtype: 'numberfield',
                                                     id: prototype.id + '-A3953PLZCR',
-                                                    fieldLabel: 'Plazo Credito', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                                    fieldLabel: 'Plazo Credito', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 95,
                                                     allowDecimals: false,
                                                     width: 150,
                                                     enableKeyEvents: true,

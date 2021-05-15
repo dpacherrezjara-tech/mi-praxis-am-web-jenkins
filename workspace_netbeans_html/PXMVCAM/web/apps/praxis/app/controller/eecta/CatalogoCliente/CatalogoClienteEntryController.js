@@ -94,7 +94,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         if (data.A3953ARCFX === 'S')
             Ext.getCmp(prototype.id + '-A3953ARCFX').setValue(true);
         Ext.getCmp(prototype.id + '-A3962CONT1').setValue(data.A3962CONT1);
-
+        Ext.getCmp(prototype.id + '-A3962CONT1_E').setValue(data.A3962CONT1_E);
+        
         //console.log('data.A3953LOGO: ' + data.A3953LOGO);
         Ext.getCmp(prototype.id + '-A3953LOGO').setValue(data.A3953LOGO);
         if (data.A3953LOGO.trim() !== '')
@@ -102,6 +103,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
 
         if (data.A3953STSID.trim() === 'S')
             Ext.getCmp(prototype.id + '-A3953STSID').setValue(true);
+        if (data.A3953STSDV.trim() === 'S')
+            Ext.getCmp(prototype.id + '-A3953STSDV').setValue(true);
 
         //load detalle Nbr TARJETA UATPs
         //setTimeout( this.search_uatp(), 500);
@@ -162,6 +165,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         var VL_A3953STSID = 'N';
         if (Ext.getCmp(prototype.id + '-A3953STSID').getValue())
             VL_A3953STSID = 'S';
+        
+        var VL_A3953STSDV = 'N';
+        if (Ext.getCmp(prototype.id + '-A3953STSDV').getValue())
+            VL_A3953STSDV = 'S';
+        
 
         return {
             VP_ACTION: VP_ACTION,
@@ -202,7 +210,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             A3953ARCFZ: VL_A3953ARCFZ,
             A3953ARCFX: VL_A3953ARCFX,
             A3953LOGO: VL_A3953LOGO,
-            A3953STSID: VL_A3953STSID
+            A3953STSID: VL_A3953STSID,
+            A3953STSDV: VL_A3953STSDV
         };
     },
     getDataEntry_det_identif: function () {
@@ -499,10 +508,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                 Ext.getCmp(prototype.id + '-panel-contenedor-grid-detalles').setActiveTab(1);
                 return mensaje;
             }
-            if (Count1 < 2) {
-                mensaje = 'INGRESE AL MENOS 2 REGISTROS DE IDENTIFICADOR';
-                return mensaje;
-            }
+//            if (Count1 < 2) {
+//                mensaje = 'INGRESE AL MENOS 2 REGISTROS DE IDENTIFICADOR';
+//                return mensaje;
+//            }
         }
 
         return mensaje;
@@ -545,7 +554,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         Ext.getCmp(prototype.id + '-A3953ARCTX').setValue(false);
         Ext.getCmp(prototype.id + '-A3953ARCEC').setValue(false);
         Ext.getCmp(prototype.id + '-A3953ARCFZ').setValue(false);
-        Ext.getCmp(prototype.id + '-A3953ARCFX').setValue(false);
+        Ext.getCmp(prototype.id + '-A3953ARCFX').setValue(false);        
     },
     /*
      * Upload file logo

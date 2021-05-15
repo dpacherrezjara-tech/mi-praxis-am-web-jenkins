@@ -49,7 +49,9 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentEntryController', {
         var VL_A3959NRRPT = Ext.getCmp(prototype.id + '-A3958NRRPT').getValue();
         var VL_A3959CDCLI = Ext.getCmp(prototype.id + '-A3958CDCLI').getValue();
         var VL_A3959BANCO = Ext.getCmp(prototype.id + '-A3959BANCO').getValue();
-        var VL_A3959CTABC = Ext.getCmp(prototype.id + '-A3959CTABC').getValue();        
+        var VL_A3959CTABC = Ext.getCmp(prototype.id + '-A3959CTABC').getValue();  
+        var VL_CAPL       = Ext.getCmp(prototype.id + '-criterio_apl').getValue();  
+        
         return {
             VP_ACTION:VP_ACTION,
             A3959REFPG:VL_A3959REFPG,
@@ -60,7 +62,8 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentEntryController', {
             A3959NRRPT:VL_A3959NRRPT,
             A3959CDCLI:VL_A3959CDCLI,
             A3959BANCO:VL_A3959BANCO,
-            A3959CTABC:VL_A3959CTABC            
+            A3959CTABC:VL_A3959CTABC,
+            VP_CAPL:VL_CAPL
         };
     },
     onSaveClick: function (btn) {
