@@ -125,6 +125,7 @@ public class CatalogoClienteDAO {
                 objRtn.A3953ARCFX = rs01.getString("A3953ARCFX");
                 objRtn.A3953LOGO = rs01.getString("A3953LOGO").trim();
                 objRtn.A3953STSID = rs01.getString("A3953STSID");
+                objRtn.A3953STSDV = rs01.getString("A3953STSDV");
                 objRtn.A3953REGIS = rs01.getString("A3953REGIS");
                 objRtn.A3953FREGI = rs01.getString("A3953FREGI");
                 objRtn.A3953HREGI = rs01.getString("A3953HREGI");
@@ -134,6 +135,8 @@ public class CatalogoClienteDAO {
                 //adicionales (CORRELATIVO LISTA VENTA)
                 objRtn.A3962CONT1 = rs01.getInt("A3962CONT1");
                 objRtn.A3962CONT2 = rs01.getInt("A3962CONT2");
+                objRtn.A3962CONT1_E = rs01.getInt("A3962CONT1_E");
+                
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -167,14 +170,14 @@ public class CatalogoClienteDAO {
 
     public SQP03879Filter setSQP03879Filter(SQP03879Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP03879(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP03879(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(41, Types.VARCHAR);
             cstmt.registerOutParameter(42, Types.VARCHAR);
             cstmt.registerOutParameter(43, Types.VARCHAR);
+            cstmt.registerOutParameter(44, Types.VARCHAR);
 
             cstmt.setString(1, filter.VP_ACTION);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -216,10 +219,11 @@ public class CatalogoClienteDAO {
             cstmt.setString(38, filter.A3953ARCFX);
             cstmt.setString(39, filter.A3953LOGO.trim());
             cstmt.setString(40, filter.A3953STSID);
+            cstmt.setString(41, filter.A3953STSDV);
             cstmt.execute();
-            filter.dbException.SQLCODE = cstmt.getString(41);
-            filter.dbException.MESSAGE = cstmt.getString(42);
-            filter.OU_A3953CDCLI = cstmt.getString(43);
+            filter.dbException.SQLCODE = cstmt.getString(42);
+            filter.dbException.MESSAGE = cstmt.getString(43);
+            filter.OU_A3953CDCLI = cstmt.getString(44);
             
         } finally {
             if (cstmt != null) {

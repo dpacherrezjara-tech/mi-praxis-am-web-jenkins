@@ -406,13 +406,13 @@ public class AplPaymentDAO {
     }
      public SQP03943Filter setSQP03943Filter(SQP03943Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP03943(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP03943(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(12, Types.VARCHAR);
-            cstmt.registerOutParameter(13, Types.VARCHAR);            
+            cstmt.registerOutParameter(13, Types.VARCHAR);
+            cstmt.registerOutParameter(14, Types.VARCHAR);            
             cstmt.setString(1, filter.VP_ACTION);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(3, filter.A3959REFPG);
@@ -423,10 +423,12 @@ public class AplPaymentDAO {
             cstmt.setString(8, filter.A3959NRRPT);
             cstmt.setString(9, filter.A3959CDCLI);
             cstmt.setString(10, filter.A3959BANCO.trim());
-            cstmt.setString(11, filter.A3959CTABC.trim());            
+            cstmt.setString(11, filter.A3959CTABC.trim()); 
+            cstmt.setString(12, filter.VP_CAPL); 
+            
             cstmt.execute();
-            filter.dbException.SQLCODE = cstmt.getString(12);
-            filter.dbException.MESSAGE = cstmt.getString(13);
+            filter.dbException.SQLCODE = cstmt.getString(13);
+            filter.dbException.MESSAGE = cstmt.getString(14);
                         
         } finally {
             if (cstmt != null) {
