@@ -58,4 +58,5 @@ public class A3953 {
     public String A3953HREVI = "";    
     public Blob LOGO = null;
     public String A3953STSID = "";
+    public String A3953STSDV = "";
 }
