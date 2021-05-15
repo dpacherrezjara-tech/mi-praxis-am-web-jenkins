@@ -13,5 +13,6 @@ import net.miatech.beans.DBException;
  */
 public class SQP03943Filter extends A3959 {
     public String VP_ACTION  = "";
+    public String VP_CAPL ="";
     public DBException dbException = new DBException();	
 }
