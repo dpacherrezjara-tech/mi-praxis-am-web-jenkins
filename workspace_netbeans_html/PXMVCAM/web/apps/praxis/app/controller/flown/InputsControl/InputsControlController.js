@@ -523,6 +523,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         
         
         var data = dv.dataSource.data.items[item].data;
+        console.log(data);
         
         if(data.QRECERR > 0){
         
@@ -531,7 +532,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 console.log('...');
             }else{
                 if(data.FUENTE === 'VCRJ'){
-                    this.setErroresVCRJ(data.FECHA, data.FUENTE, data.DPRDA, data.DTRANS);
+                    this.setErroresVCRJ(data.FECHA, data.FUENTE, data.DPRDA, data.DTRANS, data.FECR, data.HOCR);
                 }else{
                     this.setGridDataA1696Errores(data.FECHA, data.HOCR, data.FUENTE);
                 }
@@ -539,13 +540,15 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         }
     },
     
-    setErroresVCRJ: function(FECHA, FUENTE, DPRDA, DTRANS) {
+    setErroresVCRJ: function(FECHA, FUENTE, DPRDA, DTRANS, FECR, HOCR) {
         
         params = {
             FECHA: FECHA,
             FUENTE: FUENTE,
             DPRDA: DPRDA,
-            DTRANS: DTRANS
+            DTRANS: DTRANS,
+            FECR: FECR,
+            HOCR: HOCR
         };
         
         console.log(params);
@@ -1223,6 +1226,8 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     + '&FUENTE=' + params.FUENTE
                     + '&DPRDA=' + params.DPRDA
                     + '&DTRANS=' + params.DTRANS
+                    + '&FECR=' + params.FECR
+                    + '&HOCR=' + params.HOCR
             );
         }
         if (!boxA1688.hidden) {
