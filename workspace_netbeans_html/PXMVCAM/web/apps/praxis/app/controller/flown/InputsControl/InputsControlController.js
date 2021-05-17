@@ -25,8 +25,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             // -------------------Eventos Genericos --------------------
             '#InputsControlForm-xpanel': {
                 afterrender: this.xpanel_afterrender
-            }
-            ,
+            },
             '#InputsControlForm-btnSearch': {
                 click: this.btnSearch_click
             },
