@@ -288,7 +288,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.NocomparativeReportForm.Nocomparati
             me.bean.pexcel = Ext.getCmp(prototype.idnocompara + '-pagination').getValue() ? 0 : 1;
         } else {
             me.bean.IN_TYPE = '0';
-            me.bean.pexcel = 0;
+            me.bean.pexcel = 1;
         }
         me.SearchReport(me.bean, obj === true ? obj : false);
     },
