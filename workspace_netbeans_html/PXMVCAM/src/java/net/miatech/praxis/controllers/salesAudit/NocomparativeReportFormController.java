@@ -69,6 +69,7 @@ public class NocomparativeReportFormController extends BaseController {
             filter.IN_DATETO = request.getParameter("IN_DATETO").toString().trim();
             filter.IN_IATA = request.getParameter("IN_IATA").toString().trim();
             filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
+            filter.IN_TYPE = request.getParameter("IN_TYPE").toString().trim();
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
