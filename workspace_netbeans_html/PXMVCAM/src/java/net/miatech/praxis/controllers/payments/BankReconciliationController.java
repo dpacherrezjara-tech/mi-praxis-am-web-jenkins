@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.JavaToFlexResponse;
 import net.miatech.beans.spring.UserView;
+import net.miatech.praxis.classes.ExportUtil;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -72,7 +73,7 @@ public class BankReconciliationController extends BaseController {
         System.out.println("-------------- BankReconciliation : search-------------");
 
         map.put("success", true);
-        
+
         List<A2290Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
@@ -86,7 +87,6 @@ public class BankReconciliationController extends BaseController {
         A2290Filter filter = new A2290Filter();
         Gson gson = new Gson();
         String beanString = "";
-        
 
         try {
             logic = new BankReconciliationLogic();
@@ -231,9 +231,9 @@ public class BankReconciliationController extends BaseController {
         HashMap<String, List<A2309AFilter>> lst = this.getListDet(request, false);
         List<A2309AFilter> listaData = lst.get("BATCH");
         List<A2309AFilter> listaSettlement1 = lst.get("SETTLEMENT_1");
-        
+
         System.out.println("Total : " + lst.size());
-        
+
         map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
         map.put("data", listaData);
         map.put("settl1", listaSettlement1);
@@ -276,7 +276,7 @@ public class BankReconciliationController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchDetByBatch")
     public @ResponseBody
     String searchDetByBatch(ModelMap map, HttpServletRequest request) {
@@ -348,6 +348,7 @@ public class BankReconciliationController extends BaseController {
 //
 //        return resp;
 //    }
+
     @RequestMapping(value = "searchDetCardNumber")
     public @ResponseBody
     String searchDetCardNumber(ModelMap map, HttpServletRequest request) {
@@ -786,6 +787,211 @@ public class BankReconciliationController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
+    }
+
+    @RequestMapping(value = "searchDetCardCodeByStvalWithErrorsList")
+    public @ResponseBody
+    String searchDetCardCodeByStvalWithErrorsList(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- BankReconciliation : searchDetCardCodeByStvalWithErrorsList-------------");
+
+        map.put("success", true);
+        List<A2290Filter> lst = this.getListDetCardCodeByStvalWithErrorsList(request, false);
+        List<A2290Filter> lstError = this.getListErrorCountryByStval(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        map.put("lstDetError", lstError);
+        return new Gson().toJson(map);
+    }
+
+    public List<A2290Filter> getListDetCardCodeByStvalWithErrorsList(HttpServletRequest request, Boolean bExcel) {
+
+        List<A2290Filter> lst = new ArrayList<>(0);
+        A2290Filter filter = new A2290Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new BankReconciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2290Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX269SQP03983(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchDetCountryByStval")
+    public @ResponseBody
+    String searchDetCountryByStval(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- BankReconciliation : searchDetCountryByStval-------------");
+
+        map.put("success", true);
+        List<A2290Filter> lst = this.getListDetCountryByStval(request, false);
+        List<A2290Filter> lstError = this.getListErrorCountryByStval(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        map.put("lstDetError", lstError);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "searchDetCountryByStval_1")
+    public @ResponseBody
+    String searchDetCountryByStval_1(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- BankReconciliation : searchDetCountryByStval_1-------------");
+
+        map.put("success", true);
+        List<A2290Filter> lst = this.getListDetCountryByStval(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A2290Filter> getListDetCountryByStval(HttpServletRequest request, Boolean bExcel) {
+
+        List<A2290Filter> lst = new ArrayList<>(0);
+        A2290Filter filter = new A2290Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new BankReconciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2290Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX269SQP00869_TV(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    public List<A2290Filter> getListErrorCountryByStval(HttpServletRequest request, Boolean bExcel) {
+
+        List<A2290Filter> lst = new ArrayList<>(0);
+        A2290Filter filter = new A2290Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new BankReconciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2290Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX269SQP00869_TV_ERRORS(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "/searchDetDayByStvalWithErrorsList")
+    public @ResponseBody
+    String searchDetDayByStvalWithErrorsList(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<A2290Filter> listaError = new ArrayList<A2290Filter>();
+        A2290Filter filter = new A2290Filter();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            
+            BankReconciliationLogic logic = new BankReconciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A2290Filter> listaData = logic.loadPX269SQP03984(filter);
+            
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, listaData);
+//                map.put("nameExcel", nameExcel);
+            } else {
+                if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
+                    listaError = logic.loadPX269SQP00869_TV_ERRORS(filter);
+                }
+
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+                map.put("lstDetError", listaError);
+            }
+            
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return (dw_excel)?null:(new Gson().toJson(map));
     }
 
 //    public JavaToFlexResponse searchDetCardCodeByStval(A2290Filter filter) {

@@ -61,6 +61,22 @@ public class BankReconciliationLogic {
     public List<A2290Filter> loadPX269SQP00869(A2290Filter filter) throws SQLException, Exception {
         return bankReconciliationDAO.loadPX269SQP00869(filter);
     }
+    
+    public List<A2290Filter> loadPX269SQP00869_TV(A2290Filter filter) throws SQLException, Exception {
+        return bankReconciliationDAO.loadPX269SQP00869_TV(filter);
+    }
+    
+    public List<A2290Filter> loadPX269SQP00869_TV_ERRORS(A2290Filter filter) throws SQLException, Exception {
+        return bankReconciliationDAO.loadPX269SQP00869_TV_ERRORS(filter);
+    }
+    
+    public List<A2290Filter> loadPX269SQP03983(A2290Filter filter) throws SQLException, Exception {
+        return bankReconciliationDAO.loadPX269SQP03983(filter);
+    }
+    
+    public List<A2290Filter> loadPX269SQP03984(A2290Filter filter) throws SQLException, Exception {
+        return bankReconciliationDAO.loadPX269SQP03984(filter);
+    }
 
     public List<A2290Filter> loadPX269SQP00870(A2290Filter filter) throws SQLException, Exception {
         return bankReconciliationDAO.loadPX269SQP00870(filter);
