@@ -101,7 +101,16 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                 {
                                     xtype: 'button',
                                     id: prototype.idnocompara + '-btn-excel',
-                                    iconCls: 'prx-icon-excel',
+                                    iconCls: 'prx-icon-excel', hidden: true,
+                                    tooltip: 'Export to Excel',
+                                    listeners: {
+                                        click: 'imgExcel_clickHandler'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idnocompara + '-btn-excel2',
+                                    iconCls: 'prx-icon-excel', hidden: true,
                                     tooltip: 'Export to Excel',
                                     listeners: {
                                         click: 'onExcelClick'
@@ -114,6 +123,16 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                     tooltip: 'Clear Options',
                                     listeners: {
                                         click: 'onClearClick'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    iconCls: 'prx-icon-back',
+                                    id: prototype.idnocompara + '-btn-back',
+                                    tooltip: 'Back',
+                                    hidden: true,
+                                    listeners: {
+                                        click: 'onBackClick'
                                     }
                                 }
                             ]
@@ -328,6 +347,20 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                                 specialkey: 'onSearchkey',
                                                 change: 'onchange'
                                             }
+                                        },
+                                        {
+                                            xtype: 'fieldcontainer',
+                                            defaultType: 'checkboxfield',
+                                            items: [
+                                                {
+                                                    boxLabel: 'Detail',
+                                                    name: 'Detail',
+                                                    id: prototype.idnocompara + '-checkDetail',
+                                                    listeners: {
+                                                        change: 'onChkChangeDetail'
+                                                    }
+                                                }
+                                            ]
                                         }
 
 
@@ -355,7 +388,89 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                         {
                             xtype: 'grid',
                             id: prototype.idnocompara + '-gridData',
-                            // flex: 1,
+                            columnLines: true,
+                            autoScroll: true,
+                            width: 600,
+                            height: 600,
+                            features: [{
+                                    //id: 'group',
+                                    ftype: 'groupingsummary',
+                                    groupHeaderTpl: '{name}',
+                                    hideGroupedHeader: false,
+                                    enableGroupingMenu: false
+                                }, {
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {text: 'System <br> date', dataIndex: 'A3951FREGI', width: 100, sortable: true, align: 'center'},
+                                    {text: 'Country', dataIndex: 'A3951PAIS', width: 80, align: 'center', renderer: 'onRendererColumnOnPais'},
+                                    {text: 'Total', dataIndex: 'A3951CANTI', width: 120, align: 'right',
+                                        cls: 'column_header_double',
+                                        summaryType: 'sum',
+                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                            return 'Total ' + value;
+                                        }, field: {
+                                            xtype: 'numberfield'
+                                        }
+                                    },
+                                    {text: 'Status', dataIndex: 'A3951FLAG', width: 200, sortable: false, align: 'right'},
+                                    {
+                                        text: '',
+                                        dataIndex: '',
+                                        width: 60,
+                                        renderer: 'onRendererColumnOnTime'
+                                    }
+
+                                ]
+                            }
+                        }, {
+                            xtype: 'grid',
+                            id: prototype.idnocompara + '-gridDetalle',
+                             hidden: true,
+                            width: prototype.widthWindow,
+                            height: 480,
+                            columnLines: true,
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {text: 'System </br>date', dataIndex: 'A3951FREGI', width: 75},
+                                    {text: 'Period', dataIndex: 'A3951PERIO', width: 75},
+                                    {text: 'Country', dataIndex: 'A3951PAIS', width: 80, align: 'center'},
+                                    {text: 'Agent<br>Code', dataIndex: 'A3951IATA', width: 70, align: 'center'},
+                                    {text: 'Agent Name', dataIndex: 'A3951IATANAME', width: 200, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Sales<br> Type', dataIndex: 'A3951TVTA', width: 80},
+                                    {text: 'Cur.', dataIndex: 'A3951MDA', width: 40},
+                                    {text: 'Cash', dataIndex: 'A3951CASH', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Credit <br> turned cash', dataIndex: 'A3951CTUC', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'MS Cash', dataIndex: 'A3951CAMS', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Payment <br>card', dataIndex: 'A3951CCAD', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'MS <br>Credit', dataIndex: 'A3951CCMS', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'EasyPay', dataIndex: 'A3951EPAY', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Total', dataIndex: 'A3951NETO', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Estatus', dataIndex: 'A3951FLAG', width: 180}
+
+                                ]
+                            }, viewConfig: {
+                                //trackOver: false,
+                                stripeRows: true,
+                                enableTextSelection: true
+                            }
+                        },
+                        {
+                            xtype: 'grid',
+                            id: prototype.idnocompara + '-gridDetalle2',
+                              hidden: true,
                             width: prototype.widthWindow,
                             height: 480,
                             columnLines: true,
@@ -445,6 +560,19 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                     id: prototype.idnocompara + '-lbl-total',
                                     text: '0',
                                     width: 50
+                                },
+                                {
+                                    id: prototype.idnocompara + '-lbl-totalDeta',
+                                    text: '0',
+                                    width: 50
+
+                                },
+                                {
+                                    id: prototype.idnocompara + '-lbl-totalDeta2',
+                                    text: '0',
+                                    width: 50,
+                                    hidden: true
+
                                 }
                             ]
                         }
