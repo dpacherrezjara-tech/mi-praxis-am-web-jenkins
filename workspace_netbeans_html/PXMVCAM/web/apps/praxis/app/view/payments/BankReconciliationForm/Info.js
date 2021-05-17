@@ -2602,16 +2602,16 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                         columns: [
                                                             {
                                                                 text: 'Error', dataIndex: 'strDescripcion', width: 250, id: prototype.id + '-verQuery', hidden: true,
-                                                                /*listeners: {
+                                                                listeners: {
                                                                  click: 'openQuery'
-                                                                 },*/
+                                                                 },
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     //color color:#057ECB
-                                                                    metaData.style = "text-align:left;font-weight:bold;";
+                                                                    metaData.style = "text-align:left;font-weight:bold;color:#057ECB";
                                                                     metaData.tdAttr = 'data-qtip="' + data.strDescripcion + '"';
-                                                                    //return '<a href="#payments-bank-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                                    return value;
+                                                                    return '<a href="#payments-bank-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                    //return value;
                                                                 }
                                                             },
                                                             {
