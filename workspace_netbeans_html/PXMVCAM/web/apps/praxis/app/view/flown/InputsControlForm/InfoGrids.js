@@ -23,7 +23,6 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                 /*
                  *          MAIN-A1686
                  ***/
-
                 {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataMainA1686',
