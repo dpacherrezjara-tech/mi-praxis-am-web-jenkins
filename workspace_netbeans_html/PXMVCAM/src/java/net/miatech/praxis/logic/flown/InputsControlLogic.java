@@ -87,4 +87,6 @@ public class InputsControlLogic {
     public List<A1693Filter> loadPX077S10A1686(A1691Filter filter) throws SQLException , Exception{
         return inputsControlDAO.loadPX077S10A1686_PRUEBA(filter);
     }
+
+
 }
