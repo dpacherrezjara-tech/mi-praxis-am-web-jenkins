@@ -664,9 +664,11 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     setGridDataA1688: function(dv, record, item, index, e) {
         var data = dv.dataSource.data.items[item].data;
         params = {
-            FECHA: data.FECHA
+            FECHA: data.FECHA,
+            HOCR: data.HOCR
         };
-
+        
+        console.log(params);
 
         var storeDataA1688 = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
             proxy: {
