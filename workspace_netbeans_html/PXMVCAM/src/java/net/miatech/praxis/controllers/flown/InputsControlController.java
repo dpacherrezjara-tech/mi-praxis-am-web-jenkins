@@ -90,7 +90,6 @@ public class InputsControlController extends BaseController {
         A1691Filter filter = new A1691Filter();
 
         try {
-
             logic.setSession(this.serverSession.getServerSession());
 
             filter.IN_TIPOFECHA = Integer.parseInt(request.getParameter("tipoFecha"));
