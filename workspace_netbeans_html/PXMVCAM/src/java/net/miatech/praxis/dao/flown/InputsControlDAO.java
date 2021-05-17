@@ -1262,7 +1262,6 @@ public class InputsControlDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
-        System.out.println("DAOOOOOOOOOO FINNN");
         return lista;
 
     }
