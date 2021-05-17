@@ -661,7 +661,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                             for (var q = 0; q < cbxDetErrorAC.length; q++) {
                                 objER = cbxDetErrorAC[q];
                             }
-                            if (objER.IN_STVAL === '4') {
+                            if (objER.IN_STVAL === '5') {
                                 Ext.getCmp(prototype.id + '-con').show();
                                 Ext.getCmp(prototype.id + '-verQuery').show();
                                 Ext.getCmp(prototype.id + '-sin').hide();
