@@ -137,6 +137,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
         me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
         me.bean.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        me.bean.IN_NUMLIQUI = Ext.getCmp(prototype.id + '-txtSettlement').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -156,6 +157,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
         me.bean.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
         me.bean.IN_DATE = grid.get("TIPOFEC").substring(0,6);
+        me.bean.IN_NUMLIQUI = Ext.getCmp(prototype.id + '-txtSettlement').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -392,6 +394,8 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             this.beanDet.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
             this.beanDet.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
             this.beanDet.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+            this.beanDet.IN_NUMLIQUI = Ext.getCmp(prototype.id + '-txtSettlement').getValue();
+            
             console.log(this.beanDet);
             me.paramsDetail.beanString = JSON.stringify(this.beanDet);
             this.setGridData();
@@ -956,6 +960,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         Ext.getCmp(prototype.id + '-txtCard2').setValue('');
         Ext.getCmp(prototype.id + '-cmbFindByCurrency').setValue('ARS');
         Ext.getCmp(prototype.id + '-txtMerch').setValue('');
+        Ext.getCmp(prototype.id + '-txtSettlement').setValue('');
     },
     btnExcel_click: function(obj, e) {
 
