@@ -3556,31 +3556,47 @@ public class PassengerInvoicesIpController extends BaseController {
             Cell CH1_19 = row1.createCell(19);
             Cell CH1_20 = row1.createCell(20);
             Cell CH1_21 = row1.createCell(21);
+            Cell CH1_22 = row1.createCell(22);
+            Cell CH1_23 = row1.createCell(23);
+            Cell CH1_24 = row1.createCell(24);
+            Cell CH1_25 = row1.createCell(25);
+            Cell CH1_26 = row1.createCell(26);
+            Cell CH1_27 = row1.createCell(27);
+            Cell CH1_28 = row1.createCell(28);
+            Cell CH1_29 = row1.createCell(29);
 
-            CH1_0.setCellValue("Billing Date");
-            CH1_1.setCellValue("Period Number");
+            CH1_0.setCellValue("Billing Date");                 //BDATE
+            CH1_1.setCellValue("Period Number");                //PERNUM
             
-            CH1_2.setCellValue("Billing Airline");
-            CH1_3.setCellValue("Invoice Number");
-            CH1_4.setCellValue("Issuing Airline");
-            CH1_5.setCellValue("Coupon Number");
-            CH1_6.setCellValue("Ticket Number");
-            CH1_7.setCellValue("Listing to Billing Rate");
-            CH1_8.setCellValue("Source Code");
-            CH1_9.setCellValue("Coupon Gross Value");
-            CH1_10.setCellValue("Coupon Tax Amount");
-            CH1_11.setCellValue("Flight Number");
-            CH1_12.setCellValue("Flight Date");
-            CH1_13.setCellValue("From Airport");
-            CH1_14.setCellValue("To Airport");
-            CH1_15.setCellValue("Handling Fee Type");
-            CH1_16.setCellValue("Handling fees");
-            CH1_17.setCellValue("VAT Amount");
-            CH1_18.setCellValue("UATP Amount");
-            CH1_19.setCellValue("ISC Amount");
-            CH1_20.setCellValue("Other Commission Amount");
-            CH1_21.setCellValue("Coupon Total Amount");
-            
+            CH1_2.setCellValue("Billing Airline");              //BAIR
+            CH1_3.setCellValue("Invoice Number");               //BNUMBER
+            CH1_4.setCellValue("Issuing Airline");              //BDAIR
+            CH1_5.setCellValue("Coupon Number");                //CPNNUM
+            CH1_6.setCellValue("Ticket Number");                //TKTNUM
+            CH1_7.setCellValue("Listing to Billing Rate");      //LBRATE
+            CH1_8.setCellValue("Source Code");                  //SOURCOD
+            CH1_9.setCellValue("Coupon Gross Value");           //GROSS
+            CH1_10.setCellValue("Coupon Gross Sign");           //GROSSSG
+            CH1_11.setCellValue("Coupon Tax Amount");           //TAX
+            CH1_12.setCellValue("Coupon Tax Sign");             //TAXSG
+            CH1_13.setCellValue("Flight Number");               //FLIGHTN
+            CH1_14.setCellValue("Flight Date");                 //FLIGHTD
+            CH1_15.setCellValue("From Airport");                //FROMCPN
+            CH1_16.setCellValue("To Airport");                  //TOCPN
+            CH1_17.setCellValue("Handling Fee Type");           //HFEETYPE
+            CH1_18.setCellValue("Handling fees");               //HFEEAM
+            CH1_19.setCellValue("Handling fees Sign");          //HFEEAMSG
+            CH1_20.setCellValue("VAT Amount");                  //VATAMT
+            CH1_21.setCellValue("VAT Amount Sign");             //VATAMTSG
+            CH1_22.setCellValue("UATP Amount");                 //UATPAMT
+            CH1_23.setCellValue("UATP Amount Sign");            //UATPAMTSG
+            CH1_24.setCellValue("ISC Amount");                  //ISCAMT
+            CH1_25.setCellValue("ISC Amount Sign");             //ISCAMTSG
+            CH1_26.setCellValue("Other Commission Amount");     //OTHCOMAM
+            CH1_27.setCellValue("Other Commission Amount Sign");//OTHCOMASG
+            CH1_28.setCellValue("Coupon Total Amount");         //CPNTAM
+            CH1_29.setCellValue("Coupon Total Amount Sign");    //CPNTAMSG
+                
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
             CH1_2.setCellStyle(headerStyle);
@@ -3603,6 +3619,14 @@ public class PassengerInvoicesIpController extends BaseController {
             CH1_19.setCellStyle(headerStyle);
             CH1_20.setCellStyle(headerStyle);
             CH1_21.setCellStyle(headerStyle);
+            CH1_22.setCellStyle(headerStyle);
+            CH1_23.setCellStyle(headerStyle);
+            CH1_24.setCellStyle(headerStyle);
+            CH1_25.setCellStyle(headerStyle);
+            CH1_26.setCellStyle(headerStyle);
+            CH1_27.setCellStyle(headerStyle);
+            CH1_28.setCellStyle(headerStyle);
+            CH1_29.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
@@ -3627,6 +3651,14 @@ public class PassengerInvoicesIpController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 20));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 25, 25));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 26, 26));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 27, 27));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 28, 28));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 29, 29));
             ++vj;
             //============================================
 
@@ -3654,6 +3686,14 @@ public class PassengerInvoicesIpController extends BaseController {
                 Cell rcell19 = row1.createCell(19);
                 Cell rcell20 = row1.createCell(20);
                 Cell rcell21 = row1.createCell(21);
+                Cell rcell22 = row1.createCell(22);
+                Cell rcell23 = row1.createCell(23);
+                Cell rcell24 = row1.createCell(24);
+                Cell rcell25 = row1.createCell(25);
+                Cell rcell26 = row1.createCell(26);
+                Cell rcell27 = row1.createCell(27);
+                Cell rcell28 = row1.createCell(28);
+                Cell rcell29 = row1.createCell(29);
 
                 rcell0.setCellValue(listaData.get(vi).BDATE);
                 rcell1.setCellValue(listaData.get(vi).PERNUM);
@@ -3665,20 +3705,28 @@ public class PassengerInvoicesIpController extends BaseController {
                 rcell7.setCellValue(df_2.format(listaData.get(vi).LBRATE));
                 rcell8.setCellValue(listaData.get(vi).SOURCOD);
                 rcell9.setCellValue(listaData.get(vi).GROSS);
-                rcell10.setCellValue(listaData.get(vi).TAX);
-                rcell11.setCellValue(listaData.get(vi).FLIGHTN);
-                rcell12.setCellValue(listaData.get(vi).FLIGHTD);
-                rcell13.setCellValue(listaData.get(vi).FROMCPN);
-                rcell14.setCellValue(listaData.get(vi).TOCPN);
+                rcell10.setCellValue(listaData.get(vi).GROSSSG);
+                rcell11.setCellValue(listaData.get(vi).TAX);
+                rcell12.setCellValue(listaData.get(vi).TAXSG);
+                rcell13.setCellValue(listaData.get(vi).FLIGHTN);
+                rcell14.setCellValue(listaData.get(vi).FLIGHTD);
+                rcell15.setCellValue(listaData.get(vi).FROMCPN);
+                rcell16.setCellValue(listaData.get(vi).TOCPN);
                 
-                rcell15.setCellValue(listaData.get(vi).HFEETYPE);
-                rcell16.setCellValue(listaData.get(vi).HFEEAM);
-                rcell17.setCellValue(listaData.get(vi).VATAMT);
+                rcell17.setCellValue(listaData.get(vi).HFEETYPE);
+                rcell18.setCellValue(listaData.get(vi).HFEEAM);
+                rcell19.setCellValue(listaData.get(vi).HFEEAMSG);
+                rcell20.setCellValue(listaData.get(vi).VATAMT);
+                rcell21.setCellValue(listaData.get(vi).VATAMTSG);
                 
-                rcell18.setCellValue(listaData.get(vi).UATPAMT);
-                rcell19.setCellValue(listaData.get(vi).ISCAMT);
-                rcell20.setCellValue(listaData.get(vi).OTHCOMAM);
-                rcell21.setCellValue(listaData.get(vi).CPNTAM);
+                rcell22.setCellValue(listaData.get(vi).UATPAMT);
+                rcell23.setCellValue(listaData.get(vi).UATPAMTSG);
+                rcell24.setCellValue(listaData.get(vi).ISCAMT);
+                rcell25.setCellValue(listaData.get(vi).ISCAMTSG);
+                rcell26.setCellValue(listaData.get(vi).OTHCOMAM);
+                rcell27.setCellValue(listaData.get(vi).OTHCOMASG);
+                rcell28.setCellValue(listaData.get(vi).CPNTAM);
+                rcell29.setCellValue(listaData.get(vi).CPNTAMSG);
          
                 iter.next();
                 ++vi;
@@ -3707,6 +3755,14 @@ public class PassengerInvoicesIpController extends BaseController {
             sheet.autoSizeColumn(19, true);
             sheet.autoSizeColumn(20, true);
             sheet.autoSizeColumn(21, true);
+            sheet.autoSizeColumn(22, true);
+            sheet.autoSizeColumn(23, true);
+            sheet.autoSizeColumn(24, true);
+            sheet.autoSizeColumn(25, true);
+            sheet.autoSizeColumn(26, true);
+            sheet.autoSizeColumn(27, true);
+            sheet.autoSizeColumn(28, true);
+            sheet.autoSizeColumn(29, true);
 
             //============================================
             /*response.setContentType("application/vnd.openxml");

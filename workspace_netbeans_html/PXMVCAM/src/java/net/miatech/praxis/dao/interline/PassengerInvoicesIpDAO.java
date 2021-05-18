@@ -2925,6 +2925,15 @@ public class PassengerInvoicesIpDAO {
                 objRtn.BNUMBER = rs01.getString("BNUMBER");
                 objRtn.UATPAMT = rs01.getDouble("UATPAMT");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
+                objRtn.GROSSSG = rs01.getString("GROSSSG");
+                objRtn.TAXSG = rs01.getString("TAXSG");
+                objRtn.HFEEAMSG = rs01.getString("HFEEAMSG");
+                objRtn.VATAMTSG = rs01.getString("VATAMTSG");
+                objRtn.ISCAMTSG = rs01.getString("ISCAMTSG");
+                objRtn.OTHCOMASG = rs01.getString("OTHCOMASG");
+                objRtn.CPNTAMSG = rs01.getString("CPNTAMSG");
+                objRtn.UATPAMTSG = rs01.getString("UATPAMTSG");
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
