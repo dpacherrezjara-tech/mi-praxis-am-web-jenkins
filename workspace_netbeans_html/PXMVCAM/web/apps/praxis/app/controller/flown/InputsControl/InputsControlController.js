@@ -860,7 +860,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(pagData.currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pagData.pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(pagData.total);
-                    Ext.getCmp(prototype.id + '-titleA1690').setHtml("<strong style=\"color:#000;\">Processing Date " + data.strFormatDate3 + "</strong> ");
+                    Ext.getCmp(prototype.id + '-titleA1690').setHtml("<strong style=\"color:#000;text-align:center\">Processing Date " + data.strFormatDate3 + "</strong> ");
 
                     if (obj.data.length === 0) {
                         global.Msg({

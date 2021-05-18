@@ -587,6 +587,15 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
         }
 
     },
+    openQuery: function (column, e, row, column, x, rowData) {
+
+        var beanQuery = rowData.data;
+        var BankReconciliation = Ext.create('Ext.Praxis.view.program.ProBankReconciliationTktForm', {id: 'ProBankReconciliationTktForm'});
+        var controller = BankReconciliation.getController();
+        controller.bean = beanQuery;
+        controller.startDisplay();
+        BankReconciliation.show();
+    },
     setGridDataDetCardS: function(data) {
         win.lblUser_toolTip("Estructura: A2291");
         me.setWidthPie();
@@ -661,7 +670,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                             for (var q = 0; q < cbxDetErrorAC.length; q++) {
                                 objER = cbxDetErrorAC[q];
                             }
-                            if (objER.IN_STVAL === '5') {
+                            if (objER.IN_STVAL === '4' || objER.IN_STVAL === '5') {
                                 Ext.getCmp(prototype.id + '-con').show();
                                 Ext.getCmp(prototype.id + '-verQuery').show();
                                 Ext.getCmp(prototype.id + '-sin').hide();
