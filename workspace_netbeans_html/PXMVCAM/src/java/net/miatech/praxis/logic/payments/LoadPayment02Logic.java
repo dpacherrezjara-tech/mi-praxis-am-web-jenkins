@@ -63,6 +63,10 @@ public class LoadPayment02Logic {
     public List<A2290Filter> loadSQP00903(A2290Filter filter) throws SQLException, Exception {
         return loadPayment02DAO.loadSQP00903(filter);
     }
+    
+    public List<A2290Filter> loadSQP03985(A2290Filter filter) throws SQLException, Exception {
+        return loadPayment02DAO.loadSQP03985(filter);
+    }
 
     public String loadSQP00906(A2290Filter filter) throws SQLException, Exception {
         return loadPayment02DAO.loadSQP00906(filter);
