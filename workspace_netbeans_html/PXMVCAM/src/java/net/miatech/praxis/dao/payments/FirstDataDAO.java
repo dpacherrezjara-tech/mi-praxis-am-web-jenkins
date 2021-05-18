@@ -287,6 +287,7 @@ public class FirstDataDAO {
                     bean.SCARDN = rst.getString("SCARDN").trim();
                     bean.SAUTHOC = rst.getString("SAUTHOC").trim();
                     bean.CUOPLAN = rst.getString("CUOPLAN").trim();
+                    bean.TPLAZOPA = rst.getString("TPLAZOPA").trim();
                     bean.PLAZOPAG = rst.getInt("PLAZOPAG");
                     bean.IMPORTOT = rst.getDouble("IMPORTOT");
                     bean.IMPORSDE = rst.getDouble("IMPORSDE");
@@ -320,6 +321,17 @@ public class FirstDataDAO {
                     } else {
                         bean.FTE = rst.getString("FTE").trim();
                     }
+                    
+                    if (rst.getString("TPLAZOPA").trim().equals("C")) {
+                        bean.TPLAZOPA = "Corridos";
+                    } else if (rst.getString("TPLAZOPA").trim().equals("H")) {
+                        bean.TPLAZOPA = "Hábiles";
+                    } else if (rst.getString("TPLAZOPA").trim().equals("U")) {
+                        bean.TPLAZOPA = "Unificados";
+                    } else {
+                        bean.TPLAZOPA = rst.getString("TPLAZOPA").trim();
+                    }
+                                                           
                     //Status de auditoria
                     bean.STIMPARA = rst.getString("STIMPARA").trim();
                     bean.STIVAARA = rst.getString("STIVAARA").trim();
