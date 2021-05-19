@@ -5127,6 +5127,10 @@ public class LoadInterlineDAO {
                 objRtn.AMOUNT_YR = rs01.getDouble("AMOUNT_YR");
                 
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
+                objRtn.SIGN_TAX = rs01.getString("SIGN_TAX");
+                objRtn.SIGN_YQ = rs01.getString("SIGN_YQ");
+                objRtn.SIGN_YR = rs01.getString("SIGN_YR");
 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
