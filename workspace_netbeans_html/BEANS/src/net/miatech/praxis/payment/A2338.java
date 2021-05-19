@@ -35,6 +35,7 @@ public class A2338 {
     public String NUMLIQUI = "";
     public String FVCLEAR = "";
     public int PLAZOPAG = 0;
+    public String TPLAZOPA = "";
     public double BRUTO = 0.00;
     public double COMISB = 0.00;
     public double IVA = 0.00;

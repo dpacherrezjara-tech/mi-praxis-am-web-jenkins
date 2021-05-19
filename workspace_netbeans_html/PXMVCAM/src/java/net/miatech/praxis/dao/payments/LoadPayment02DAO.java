@@ -28,11 +28,11 @@ public class LoadPayment02DAO {
 
     private IServerSession session;
     private static final Logger logError = Logger.getLogger("errorLog");
-    
+
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public LoadPayment02DAO() {
     }
 
@@ -2023,7 +2023,6 @@ public class LoadPayment02DAO {
 //
 //        return lstTkts;
 //    }
-
     public List<A2290Filter> loadSQP00903(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkt = new ArrayList<A2290Filter>(0);
@@ -2516,7 +2515,7 @@ public class LoadPayment02DAO {
 
         return lstTkt;
     }
-    
+
     public List<A2290Filter> loadSQP03985(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkt = new ArrayList<A2290Filter>(0);
@@ -2760,9 +2759,9 @@ public class LoadPayment02DAO {
                         beanTkt.strPEM = "SALES";
                     }
                     /*beanTkt.TRNCU = rst.getString("TRNCU").trim();
-                    if (!rst.getString("TRNCU").trim().isEmpty()) {
-                        beanTkt.strCampo = rst.getString("TRNCU").trim().substring(0, 1);
-                    }*/
+                     if (!rst.getString("TRNCU").trim().isEmpty()) {
+                     beanTkt.strCampo = rst.getString("TRNCU").trim().substring(0, 1);
+                     }*/
                     //beanTkt.CCIA = rst.getString("CCIA").trim();
                     //beanTkt.FORMA = rst.getString("FORMA").trim();
                     //beanTkt.SERIE = rst.getString("SERIE").trim();
@@ -2891,9 +2890,9 @@ public class LoadPayment02DAO {
                     //beanTkt.SERIE = rst.getString("SERIE").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
                     /*beanTkt.TRNCU = rst.getString("TRNCU").trim();
-                    if (!rst.getString("TRNCU").trim().isEmpty()) {
-                        beanTkt.strCampo = rst.getString("TRNCU").trim().substring(0, 1);
-                    }*/
+                     if (!rst.getString("TRNCU").trim().isEmpty()) {
+                     beanTkt.strCampo = rst.getString("TRNCU").trim().substring(0, 1);
+                     }*/
                     //beanTkt.SEQ = rst.getString("SEQ").trim();
                     beanTkt.STVAL = rst.getString("STVAL").trim();
                     if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
@@ -2988,6 +2987,8 @@ public class LoadPayment02DAO {
                 }
             }
 
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
         } finally {
             if (rst != null) {
                 try {

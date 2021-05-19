@@ -164,12 +164,31 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                     maskRe: /[0-9]/,
                     width: 100,
                 },
-                {xtype: 'tbspacer', width: 30},
+                {xtype: 'tbspacer', width: 15},
+                {
+                    xtype: 'label',
+                    id: prototype.id + '-lblSettlement',
+                    text: 'Settlement: ',
+                    width: 80,
+                    style: 'text-align: right;',
+                    padding: '10 0 0 0'
+                },
+                {
+                    xtype: 'textfield',
+                    id: prototype.id + '-txtSettlement',
+                    fieldStyle: 'text-align:center;',
+                    enableKeyEvents: true,
+                    enforceMaxLength: true,
+                    maskRe: /[0-9]/,
+                    width: 100,
+                },
+                {xtype: 'tbspacer', width: 15},
                 {
                     xtype: 'label',
                     text: 'Card Number:',
-                    padding: '3 0',
-                    width: 102,
+                    padding: '10 0 0 0',
+                    style: 'text-align: right;',
+                    width: 80,
                     autoEl: {
                         tag: 'label',
                         'data-qtip': 'Credit Card Number'
@@ -192,7 +211,8 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Filters', {
                 {
                     xtype: 'label',
                     text: '*****(*)',
-                    padding: '3 0',
+                    padding: '10 0 0 0',
+                    style: 'text-align: center;',
                     width: 65,
                     autoEl: {
                         tag: 'label',
