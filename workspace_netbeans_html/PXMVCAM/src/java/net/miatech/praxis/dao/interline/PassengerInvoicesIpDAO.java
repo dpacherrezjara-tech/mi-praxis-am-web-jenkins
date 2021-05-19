@@ -3148,6 +3148,15 @@ public class PassengerInvoicesIpDAO {
                 objRtn.UAD = rs01.getDouble("UAD");
                 objRtn.NRA = rs01.getDouble("NRA");
                 objRtn.SOURCOD = rs01.getString("SOURCOD");
+                
+                objRtn.TGROSSBSG = rs01.getString("TGROSSBSG");
+                objRtn.TGROSSDSG = rs01.getString("TGROSSDSG");
+                objRtn.TISCDSG = rs01.getString("TISCDSG");
+                objRtn.TTAXDSG = rs01.getString("TTAXDSG");
+                objRtn.TOTHCDSG = rs01.getString("TOTHCDSG");
+                objRtn.THDFDSG = rs01.getString("THDFDSG");
+                objRtn.TUATPDSG = rs01.getString("TUATPDSG");
+                objRtn.TNETRSG = rs01.getString("TNETRSG");
 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
