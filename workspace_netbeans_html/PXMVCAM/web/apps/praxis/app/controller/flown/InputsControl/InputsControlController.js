@@ -1232,7 +1232,9 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             );
         }
         if (!boxA1688.hidden) {
-            global.getFile(prototype.url + '/GetXLSA1688?FECHA=' + params.FECHA);
+            global.getFile(prototype.url + '/GetXLSA1688?FECHA=' + params.FECHA
+                    + '&HOCR=' + params.HOCR
+            );
         }
 
         if (!boxA1689.hidden) {

@@ -2371,7 +2371,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDetCardS',
                                                             bodyStyle: 'background: transparent;',
-                                                            width: 650,
+                                                            width: 750,
                                                             minHeight: 200,
                                                             titleAlign: 'center',
                                                             columnLines: true,
@@ -2406,7 +2406,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                                 }
                                                                             },
                                                                             {
-                                                                                text: 'Description', dataIndex: 'strDescCard', flex: 1, //width: 200,
+                                                                                text: 'Description', dataIndex: 'strDescCard', width: 300, //flex: 1, 
                                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                     var data = record.data;
                                                                                     metaData.style = "text-align:left;background-color:#d5f4d5;";
