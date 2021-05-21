@@ -23,6 +23,8 @@ public class AuditFilter {
     public String IN_CCUST = "";
     public String IN_MODULE = "";
     public String IN_PROC_DATE = "";
+    public String IN_FROM_DATE = "";
+    public String IN_TO_DATE = "";
     public String IN_ACCION = "";
     public String IN_SEQ = "";
     public int IN_STATUS = 0;
