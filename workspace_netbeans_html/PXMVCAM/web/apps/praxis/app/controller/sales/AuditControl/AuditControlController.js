@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.controller.sales.AuditControl.AuditControlController', {
 
         this.loadCombo();
         Ext.getCmp(prototype.id+'-cboModulo').setValue("");
-        //Ext.getCmp(prototype.id + '-txtDateFrom').hide();
+        //Ext.getCmp(prototype.id + '-txtDateProc').hide();
         //Ext.getCmp(prototype.id + '-txtDateTo').hide();
         this.setStoreData();
        // this.btnSearch_click();
@@ -119,10 +119,10 @@ Ext.define('Ext.Praxis.controller.sales.AuditControl.AuditControlController', {
     onChangeModule: function() {
         /*var opt = Ext.getCmp(prototype.id + '-cboModulo').getValue();
         if (opt === '') {
-            Ext.getCmp(prototype.id + '-txtDateFrom').hide();
+            Ext.getCmp(prototype.id + '-txtDateProc').hide();
             Ext.getCmp(prototype.id + '-txtDateTo').hide();
         } else {
-            Ext.getCmp(prototype.id + '-txtDateFrom').show();
+            Ext.getCmp(prototype.id + '-txtDateProc').show();
             Ext.getCmp(prototype.id + '-txtDateTo').show();
         }*/
 
@@ -135,24 +135,36 @@ Ext.define('Ext.Praxis.controller.sales.AuditControl.AuditControlController', {
         var IN_MODULO = Ext.getCmp(prototype.id + '-cboModulo').getValue();
         var IN_SEQ = Ext.getCmp(prototype.id + '-txtSEQ').getValue();
         var IN_STATUS = Ext.getCmp(prototype.id + '-cboEstado').getValue();
-        var IN_FINI = Ext.getCmp(prototype.id + '-txtDateFrom').getValue();
-        var IN_PROC_DATE_FROM = '';
-        IN_FINI = Ext.util.Format.date(IN_FINI, 'Ymd');
+        var IN_DATEPROC = Ext.getCmp(prototype.id + '-txtDateProc').getValue();
+        var IN_DATEFROM = Ext.getCmp(prototype.id + '-txtDateFrom').getValue();
+        var IN_DATETO = Ext.getCmp(prototype.id + '-txtDateTo').getValue();
+        var IN_PROC_DATE = '';
+        var IN_FROM_DATE = '';
+        var IN_TO_DATE = '';
+        IN_DATEPROC = Ext.util.Format.date(IN_DATEPROC, 'Ymd');
+        IN_DATEFROM = Ext.util.Format.date(IN_DATEFROM, 'Ymd');
+        IN_DATETO = Ext.util.Format.date(IN_DATETO, 'Ymd');
         
-        IN_PROC_DATE_FROM = IN_FINI;
+        IN_PROC_DATE = IN_DATEPROC;
+        IN_FROM_DATE = IN_DATEFROM;
+        IN_TO_DATE = IN_DATETO;
         
 
         searchParams = {
             IN_MODULO: IN_MODULO,
             IN_SEQ: IN_SEQ,
             IN_STATUS: IN_STATUS,
-            IN_PROC_DATE_FROM: IN_PROC_DATE_FROM
+            IN_PROC_DATE: IN_PROC_DATE,
+            IN_FROM_DATE: IN_FROM_DATE,
+            IN_TO_DATE: IN_TO_DATE
         };
         console.log("-------------Parametros enviados-----------");
         console.log("IN_MODULO : " + searchParams.IN_MODULO);
         console.log("IN_SEQ : " + searchParams.IN_SEQ);
         console.log("IN_STATUS : " + searchParams.IN_STATUS);
-        console.log("IN_PROC_DATE_FROM : " + searchParams.IN_PROC_DATE_FROM);
+        console.log("IN_PROC_DATE : " + searchParams.IN_PROC_DATE);
+        console.log("IN_FROM_DATE : " + searchParams.IN_FROM_DATE);
+        console.log("IN_TO_DATE : " + searchParams.IN_TO_DATE);
         console.log("-------------------------------------------");
     },
     setGridData: function(obj, val) {
@@ -184,6 +196,7 @@ Ext.define('Ext.Praxis.controller.sales.AuditControl.AuditControlController', {
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     btnClear_click: function(obj, e) {
+        Ext.getCmp(prototype.id + '-txtDateProc').setValue('');
         Ext.getCmp(prototype.id + '-txtDateFrom').setValue('');
         Ext.getCmp(prototype.id + '-txtDateTo').setValue('');
         Ext.getCmp(prototype.id + '-cboModulo').setValue('');
@@ -209,7 +222,9 @@ Ext.define('Ext.Praxis.controller.sales.AuditControl.AuditControlController', {
         global.getFile(prototype.url + '/getXLSX?IN_MODULO=' + searchParams.IN_MODULO
                 + '&IN_STATUS=' + searchParams.IN_STATUS
                 + '&IN_SEQ=' + searchParams.IN_SEQ
-                + '&IN_PROC_DATE_FROM=' + searchParams.IN_PROC_DATE_FROM
+                + '&IN_PROC_DATE=' + searchParams.IN_PROC_DATE
+                + '&IN_FROM_DATE=' + searchParams.IN_FROM_DATE
+                + '&IN_TO_DATE=' + searchParams.IN_TO_DATE
                 );
     }
     ,

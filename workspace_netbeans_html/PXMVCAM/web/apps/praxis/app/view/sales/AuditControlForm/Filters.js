@@ -84,12 +84,37 @@ Ext.define('Ext.Praxis.view.sales.AuditControlForm.Filters', {
                             format: 'Y/m/d',
                             fieldLabel: '<b>Proc. Date</b>',
                             anchor: '100%',
-                            id: prototype.id + '-txtDateFrom',
+                            id: prototype.id + '-txtDateProc',
                             fieldStyle: 'text-align:center',
                             maskRe: /[0-9/]/,
                             enforceMaxLength: true,
                             width: 180,
                             labelWidth: 80
+                        },
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype: 'datefield',
+                            format: 'Y/m/d',
+                            fieldLabel: '<b>From</b>',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateFrom',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 140,
+                            labelWidth: 40
+                        },
+                        {
+                            xtype: 'datefield',
+                            format: 'Y/m/d',
+                            fieldLabel: '<b>To</b>',
+                            anchor: '100%',
+                            id: prototype.id + '-txtDateTo',
+                            fieldStyle: 'text-align:center',
+                            maskRe: /[0-9/]/,
+                            enforceMaxLength: true,
+                            width: 140,
+                            labelWidth: 30
                         },
                         {
                             xtype: 'combo',
