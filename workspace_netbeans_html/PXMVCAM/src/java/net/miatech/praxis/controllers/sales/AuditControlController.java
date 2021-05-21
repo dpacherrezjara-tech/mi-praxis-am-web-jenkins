@@ -71,7 +71,9 @@ public class AuditControlController extends BaseController {
         filter.page.LIMIT = 0;
         try {
             filter.IN_MODULE = request.getParameter("IN_MODULO").trim();
-            filter.IN_PROC_DATE = request.getParameter("IN_PROC_DATE_FROM").trim();
+            filter.IN_PROC_DATE = request.getParameter("IN_PROC_DATE").trim();
+            filter.IN_FROM_DATE = request.getParameter("IN_FROM_DATE").trim();
+            filter.IN_TO_DATE = request.getParameter("IN_TO_DATE").trim();
             filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
             filter.IN_STATUS = Integer.parseInt(request.getParameter("IN_STATUS").trim());
             
@@ -188,21 +190,30 @@ public class AuditControlController extends BaseController {
             Cell CH1_02 = row.createCell(2);
             Cell CH1_03 = row.createCell(3);
             Cell CH1_04 = row.createCell(4);
-            Cell CH1_05 = row.createCell(5);
+            Cell CH1_05 = row.createCell(5);            
+            Cell CH1_06 = row.createCell(6);
+            Cell CH1_07 = row.createCell(7);
+            Cell CH1_08 = row.createCell(8);
 
             CH1_00.setCellValue("MODULE");
             CH1_01.setCellValue("SEQ");
             CH1_02.setCellValue("PROC. DATE");
             CH1_03.setCellValue("CREATION DATE");
-            CH1_04.setCellValue("STATUS");
-            CH1_05.setCellValue("TOTAL");
+            CH1_04.setCellValue("CREATION USER");
+            CH1_05.setCellValue("UPDATE DATE");
+            CH1_06.setCellValue("UPDATE USER");
+            CH1_07.setCellValue("STATUS");
+            CH1_08.setCellValue("TOTAL");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
             CH1_02.setCellStyle(headerStyle);
             CH1_03.setCellStyle(headerStyle);
             CH1_04.setCellStyle(headerStyle);
-            CH1_05.setCellStyle(headerStyle);        
+            CH1_05.setCellStyle(headerStyle);
+            CH1_06.setCellStyle(headerStyle);
+            CH1_07.setCellStyle(headerStyle);
+            CH1_08.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -215,13 +226,19 @@ public class AuditControlController extends BaseController {
                 Cell rcell3 = row.createCell(3);
                 Cell rcell4 = row.createCell(4);
                 Cell rcell5 = row.createCell(5);
+                Cell rcell6 = row.createCell(6);
+                Cell rcell7 = row.createCell(7);
+                Cell rcell8 = row.createCell(8);
 
                 rcell0.setCellValue(listaData.get(vi).SUB_MODULE);
                 rcell1.setCellValue(listaData.get(vi).SEQ);
                 rcell2.setCellValue(listaData.get(vi).PROC_DATE);
                 rcell3.setCellValue(listaData.get(vi).DATE_CREATE);
-                rcell4.setCellValue(listaData.get(vi).STATUS_LABEL);
-                rcell5.setCellValue(listaData.get(vi).TOTAL);
+                rcell4.setCellValue(listaData.get(vi).USRIN);
+                rcell5.setCellValue(listaData.get(vi).FECIN);
+                rcell6.setCellValue(listaData.get(vi).USRAC);
+                rcell7.setCellValue(listaData.get(vi).STATUS_LABEL);
+                rcell8.setCellValue(listaData.get(vi).TOTAL);
 
                 rcell0.setCellStyle(bodyStyle);
                 rcell1.setCellStyle(bodyStyle);
@@ -229,6 +246,9 @@ public class AuditControlController extends BaseController {
                 rcell3.setCellStyle(bodyStyle);
                 rcell4.setCellStyle(bodyStyle);
                 rcell5.setCellStyle(bodyStyle);
+                rcell6.setCellStyle(bodyStyle);
+                rcell7.setCellStyle(bodyStyle);
+                rcell8.setCellStyle(bodyStyle);
                 
 
                 iter.next();
@@ -276,7 +296,9 @@ public class AuditControlController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             filter.IN_MODULE = request.getParameter("IN_MODULO").trim();
-            filter.IN_PROC_DATE = request.getParameter("IN_PROC_DATE_FROM").trim();
+            filter.IN_PROC_DATE = request.getParameter("IN_PROC_DATE").trim();
+            filter.IN_FROM_DATE = request.getParameter("IN_FROM_DATE").trim();
+            filter.IN_TO_DATE = request.getParameter("IN_TO_DATE").trim();
             filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
             filter.IN_STATUS = Integer.parseInt(request.getParameter("IN_STATUS").trim());
            
@@ -289,15 +311,9 @@ public class AuditControlController extends BaseController {
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
 
-            /*if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {*/
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            //}
-
+            filter.page.PAGROW = -1;
+            filter.page.PAGNUM = 1;
+            
             lst = logic.USP_BI_REPORTE_SEL(filter);
 
         } catch (Exception e) {

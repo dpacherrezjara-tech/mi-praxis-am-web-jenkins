@@ -45,7 +45,7 @@ public class AuditControlDAO {
         AuditFilter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
 
-        strSQL = "{CALL dbo.USP_BI_REPORTE_SEL(?,?,?,?,?,?,?,?)}";
+        strSQL = "{CALL dbo.USP_BI_REPORTE_SEL(?,?,?,?,?,?,?,?,?,?)}";
         //ResultSet rs = null;
         try {
             cnx = session.getCNXIBMDB2().getSQLConnection41(session);
@@ -64,6 +64,8 @@ public class AuditControlDAO {
             cs.setString(2, filter.IN_MODULE);
             cs.setString(3, filter.IN_PROC_DATE);
             cs.setInt(4, filter.IN_STATUS);
+            cs.setString(5, filter.IN_FROM_DATE);
+            cs.setString(6, filter.IN_TO_DATE);
             
             cs.setInt("IO_PAGNUM", PAGINIT);
             cs.setInt("IO_PAGROW", totRowsPag);     
