@@ -119,7 +119,11 @@ public class AccountingMasterTAXDAO {
                     objRtn.A1741TIPO_00 = "Multicurrency";
                 } else if (objRtn.A1741TIPO.equals("C")) {
                     objRtn.A1741TIPO_00 = "Expired";
-                }
+                } else if (objRtn.A1741TIPO.equals("R")) {
+                    objRtn.A1741TIPO_00 = "RAC";
+                } else if (objRtn.A1741TIPO.equals("N")) {
+                    objRtn.A1741TIPO_00 = "No Show";
+                } 
 
                 objRtn.A1741PAIS = rst.getString("A1741PAIS").trim();
                 objRtn.A1741CODE = rst.getString("A1741CODE").trim();
@@ -213,7 +217,11 @@ public class AccountingMasterTAXDAO {
                     objRtn.A1741TIPO_00 = "Multicurrency";
                 } else if (objRtn.A1741TIPO.equals("C")) {
                     objRtn.A1741TIPO_00 = "Expired";
-                }
+                } else if (objRtn.A1741TIPO.equals("R")) {
+                    objRtn.A1741TIPO_00 = "RAC";
+                } else if (objRtn.A1741TIPO.equals("N")) {
+                    objRtn.A1741TIPO_00 = "No Show";
+                } 
 
                 objRtn.A1741PAIS = rs01.getString("A1741PAIS").trim();
                 objRtn.A1741CODE = rs01.getString("A1741CODE").trim();
