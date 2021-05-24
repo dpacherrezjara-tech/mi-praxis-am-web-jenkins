@@ -3749,28 +3749,17 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_11 = row1.createCell(11);
            
 
-//            CH1_0.setCellValue("Standar Mess.PB");      //SMI
-//            CH1_1.setCellValue("Rec-Seq.Number");       //RSN
-//            CH1_2.setCellValue("Stand-Field-Id");       //SFI
             CH1_0.setCellValue("Billing Airline");      //BAIR
             CH1_1.setCellValue("Billed Airline");       //BDAIR
-//            CH1_5.setCellValue("Billing Code");         //BCODE
             CH1_2.setCellValue("Invoice Number");       //BNUMBER
-//            CH1_7.setCellValue("Batch Seq-Numb");       //BATSEQ
-//            CH1_8.setCellValue("B-Rec Seq-Numb");       //RECSEQ
             CH1_3.setCellValue("Bill-Date");            //BDATE
             CH1_4.setCellValue("Currency List");       //LCURREN
             CH1_5.setCellValue("Currency Bill");       //BCURREN
             CH1_6.setCellValue("Period");              //PERNUM
-//            CH1_13.setCellValue("Settle. Method");      //SETMETH
-//            CH1_14.setCellValue("Dig. Sig. Flag");      //DSFLAG
             CH1_7.setCellValue("Inv-Date");            //IDATE
             CH1_8.setCellValue("List. Bill. Rat");     //LBRATE
             CH1_9.setCellValue("Prov. Bill. Mon");     //PBMONTH
-//            CH1_18.setCellValue("NIL Form Indic.");     //NILFORM
             CH1_10.setCellValue("Susp. Inv. Flag");     //SINVFLAG
-//            CH1_20.setCellValue("Bill. Air. Loct 1");   //BAIRLOC1
-//            CH1_21.setCellValue("Bill. Air. Loct 2");   //BAIRLOC2
             CH1_11.setCellValue("Invoice Type");        //BTYPE
 
             CH1_0.setCellStyle(headerStyle);
