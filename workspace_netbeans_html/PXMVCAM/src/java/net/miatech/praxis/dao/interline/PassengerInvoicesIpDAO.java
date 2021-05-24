@@ -3250,10 +3250,10 @@ public class PassengerInvoicesIpDAO {
                 objRtn.DCHEQ = rs01.getString("DCHEQ");
                 objRtn.FROMCPN = rs01.getString("FROMCPN");
                 objRtn.TOCPN = rs01.getString("TOCPN");
-                objRtn.TGROSSB = rs01.getDouble("TGROSSB");
                 objRtn.BDATE = rs01.getString("BDATE");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
                 objRtn.TGROSSB = rs01.getDouble("TGROSSB");
                 objRtn.TTAXB = rs01.getDouble("TTAXB");
                 objRtn.TISC = rs01.getDouble("TISC");
@@ -3262,6 +3262,14 @@ public class PassengerInvoicesIpDAO {
                 objRtn.NET = rs01.getDouble("NET");
                 objRtn.SOURCOD = rs01.getString("SOURCOD");
                 objRtn.TVAT = rs01.getDouble("TVAT");
+                
+                objRtn.TGROSSBSG = rs01.getString("TGROSSBSG");
+                objRtn.TTAXBSG = rs01.getString("TTAXBSG");
+                objRtn.TISCSG = rs01.getString("TISCSG");
+                objRtn.TOTHCSG = rs01.getString("TOTHCSG");
+                objRtn.HFEEAMSG = rs01.getString("HFEEAMSG");
+                objRtn.NETSG = rs01.getString("NETSG");
+                objRtn.TVATSG = rs01.getString("TVATSG");
 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
@@ -3360,6 +3368,10 @@ public class PassengerInvoicesIpDAO {
                 objRtn.AMOUNT_YR = rs01.getDouble("AMOUNT_YR");
                 
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
+                objRtn.SIGN_TAX = rs01.getString("SIGN_TAX");
+                objRtn.SIGN_YQ = rs01.getString("SIGN_YQ");
+                objRtn.SIGN_YR = rs01.getString("SIGN_YR");
 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
@@ -3398,4 +3410,5 @@ public class PassengerInvoicesIpDAO {
 
         return lstRtn;
     }
+
 }
