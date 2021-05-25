@@ -11,6 +11,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.interline.PassengerInvoicesIpDAO;
 import net.miatech.praxis.interline.SFI010;
 import net.miatech.praxis.interline.SFI021;
+import net.miatech.praxis.interline.SFI022;
 import net.miatech.praxis.interline.SFI030;
 import net.miatech.praxis.interline.SFI031;
 import net.miatech.praxis.interline.SFI032;
@@ -153,7 +154,13 @@ public class PassengerInvoicesIpLogic {
         return passengerInvoicesDAO.loadPX538_register_33(filter);
     }
     
+    // ------------------------------- SFI 41 ------------------------------------------------------   
     public List<SFI041> loadPX538_register_41(SFI020Filter filter) throws Exception {
         return passengerInvoicesDAO.loadPX538_register_41(filter);
+    }
+    
+    // ------------------------------- SFI 22 ------------------------------------------------------   
+    public List<SFI022> loadPX538_register_22(SFI020Filter filter) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_22(filter);
     }
 }

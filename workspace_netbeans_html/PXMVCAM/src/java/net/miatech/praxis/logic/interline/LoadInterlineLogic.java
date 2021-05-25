@@ -10,6 +10,7 @@ import net.miatech.libcust.A051;
 import net.miatech.praxis.dao.interline.LoadInterlineDAO;
 import net.miatech.praxis.interline.SFI010;
 import net.miatech.praxis.interline.SFI021;
+import net.miatech.praxis.interline.SFI022;
 import net.miatech.praxis.interline.SFI030;
 import net.miatech.praxis.interline.SFI031;
 import net.miatech.praxis.interline.SFI032;
@@ -190,6 +191,11 @@ public class LoadInterlineLogic {
     
     public List<SFI032> loadPX538_register_32(SFI020Filter filter) throws Exception {
         return loadInterlineDAO.loadPX538_register_32(filter);
+    }
+    
+    // ------------------------------- SFI 22 ------------------------------------------------------   
+    public List<SFI022> loadPX538_register_22(SFI020Filter filter) throws Exception {
+        return loadInterlineDAO.loadPX538_register_22(filter);
     }
     
     
