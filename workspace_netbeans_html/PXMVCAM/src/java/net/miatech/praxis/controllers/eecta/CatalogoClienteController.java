@@ -29,6 +29,7 @@ import net.miatech.praxis.eecta.SQP03887Filter;
 import net.miatech.praxis.eecta.SQP03888Filter;
 import net.miatech.praxis.eecta.SQP03959Filter;
 import net.miatech.praxis.eecta.SQP03960Filter;
+import net.miatech.praxis.eecta.SQP04006Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CatalogoClienteLogic;
 import org.springframework.context.annotation.Scope;
@@ -373,5 +374,37 @@ public class CatalogoClienteController extends BaseController {
         return new Gson().toJson(map);
 
     }
-
+    
+    @RequestMapping(value = "/search_calendario")
+    public @ResponseBody
+    String search_calendario(ModelMap map, HttpServletRequest request) {
+        List<SQP04006Filter> listaData;
+        SQP04006Filter filter;
+        filter = new SQP04006Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_A3965CDCLI = request.getParameter("VP_A3965CDCLI");
+            filter.VP_A3965PERIO = request.getParameter("VP_A3965PERIO");
+            filter.VP_A3965FEJEC = request.getParameter("VP_A3965FEJEC");            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new CatalogoClienteLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04006Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
 }
