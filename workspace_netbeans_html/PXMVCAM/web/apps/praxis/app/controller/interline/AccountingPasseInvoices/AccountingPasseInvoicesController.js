@@ -128,30 +128,34 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue("");
 
 
-//        var cmbSource = Ext.getCmp(prototype.id + '-cmbSource');
-//        cmbSource.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["01", "01"],
-//                ["02", "02"],
-//                ["03", "03"],
-//                ["04", "04"],
-//                ["04", "04"],
-//                ["04", "04"],
-//                ["04", "04"],
-//                ["04", "04"],
-//            ]
-//        }));
-//        cmbSource.setValue("");
+        var cmbTTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN');
+        cmbTTRAN.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["OB", "IXC"],
+                ["IB", "IXP"]
+            ]
+        }));
+        cmbTTRAN.setValue("OB");
+        
+        var cmbPEREST = Ext.getCmp(prototype.id + '-cmbPEREST');
+        cmbPEREST.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["03", "03"],
+                ["04", "04"]
+            ]
+        }));
+        cmbPEREST.setValue("03");
 
         this.btnSearch_click();
 
     },
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
-        this.setGridData();
+        this.setGrid();
 
     },
     setFormatParameter: function () {
@@ -171,7 +175,8 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         me.bean.IN_FECHA_FROM = '' + yearFrom + monthFrom;
         me.bean.IN_FECHA_TO = '' + yearTo + monthTo;
 
-        me.bean.IN_A1964TUSO = Ext.getCmp(prototype.id + '-txtSource').getValue();
+        me.bean.IN_TTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN').getValue();
+        me.bean.IN_PEREST = Ext.getCmp(prototype.id + '-cmbPEREST').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -179,6 +184,48 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         };
         console.log(searchParams);
     },
+    // <editor-fold defaultstate="collapsed" desc="setGridData">
+
+    setGrid: function () {
+        win.lblUser_toolTip("Estructura: SFI100");
+        me.setWidthPie();
+        me.panelActual = '-panelGridData';
+        me.drillDown.push(me.panelActual);
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/search'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+//                    if (res.success) {
+//                        if (obj.data.length === 0) {
+//                            global.Msg({
+//                                msg: 'Data not found.'
+//                            });
+//                        } else {
+//                            
+//                        }
+//                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+
+    },
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
     setGridData: function () {
@@ -1523,8 +1570,8 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     },
     findSource: function (obj, e, eOpts) {
         
-        var txtSource = Ext.getCmp(prototype.id + '-txtSource').getValue();
-        if(txtSource !== ''){
+        var cmbPEREST = Ext.getCmp(prototype.id + '-cmbPEREST').getValue();
+        if(cmbPEREST !== ''){
             switch (e.getKey()) {
                 case 13:
                     this.btnSearch_click();
