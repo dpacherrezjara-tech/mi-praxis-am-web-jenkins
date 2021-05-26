@@ -111,6 +111,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         this.search_uatp();
         this.search_identif();
         this.onbtn_searchImage();
+        this.search_calendario();
     },
     getDataEntryValues: function (strOption) {
         var VP_ACTION = strOption;
@@ -473,6 +474,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             Ext.getCmp(prototype.id + '-A3953RFC').focus();
             return mensaje;
         }
+        if (params.A3953TCLIN === '' || params.A3953TCLIN === null ) {
+            mensaje = 'SELECCIONE TIPO CLIENTE';
+            Ext.getCmp(prototype.id + '-A3953TCLIN').focus();
+            return mensaje;
+        }
         if (params.A3953PLZCR === 0) {
             mensaje = 'INGRESE DIAS PLAZO CREDITO';
             Ext.getCmp(prototype.id + '-A3953PLZCR').focus();
@@ -800,7 +806,49 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             }
         });
     },
-
+    
+    search_calendario: function () {
+        var bean = {};
+        bean.VP_OPCION = "1";
+        bean.VP_A3965CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
+        bean.VP_A3965PERIO = "";
+        bean.VP_A3965FEJEC = "2021";
+        bean.limit = "-1";
+        bean.page = "-1";
+        //cambiar STORE ***OJO
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataIdentif', {
+            proxy: {
+                url: prototype.url + '/search_calendario'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, obj2, success, obj4, obj5) {
+                    //win.lblUser_toolTip("Estructura: A3009");
+                    // <editor-fold defaultstate="collapsed" desc="paggin">
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var pagData = pag.getPageData();
+//                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
+//                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
+//                    var total = Ext.util.Format.number(pagData.total, '0,000');
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
+                    // </editor-fold>
+//                    if (obj.data.length === 0) {
+//                        global.Msg({
+//                            msg: 'Data not found uatp'
+//                        });
+//                    }
+                    global.clear();
+                }
+            }
+        });        
+        Ext.getCmp(prototype.id + '-gridData-GridCalendario').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData-GridCalendario').getStore().reload();
+    },
+    
     /*
      * 
      * @param {type} objGrid

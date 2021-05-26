@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.EmisionEdoCtaController', 
                 break;
             case '4':                
                 Ext.getCmp(prototype.id+'-BoxFilter04').show();
-                Ext.getCmp(prototype.id+'-NRRPT').focus();
+                Ext.getCmp(prototype.id+'-NREDO').focus();
                 break;
         }
     },
@@ -179,10 +179,22 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.EmisionEdoCtaController', 
         bean.VP_A3981CDCLI = this.gridData.get('A3981CDCLI');        
         this.exportPdf(prototype.url + '/pdf_EstadoCuenta/?beanString=' + encodeURI(JSON.stringify(bean)) );
     },
+    onReportEdoCtaDet: function ( grid, rowIndex, colIndex ) {
+        if (Ext.getCmp(prototype.id + '-gridData')) {
+            var grid = Ext.getCmp(prototype.id + '-gridData');
+            var store = grid.getStore();
+            var rec = store.getAt(rowIndex);            
+            this.gridData = rec;
+        }
+        var bean = {};
+        bean.VP_NROEDO = this.gridData.get('A3981NREDO');
+        bean.VP_CDCLI = this.gridData.get('A3981CDCLI');        
+        this.exportPdf(prototype.url + '/pdf_EstadoCuenta_det/?beanString=' + encodeURI(JSON.stringify(bean)) );
+    },
     exportPdf: function (_path) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download edo. cta. ?',
+            msg: 'Download report ?',
             buttons: Ext.MessageBox.OKCANCEL,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
