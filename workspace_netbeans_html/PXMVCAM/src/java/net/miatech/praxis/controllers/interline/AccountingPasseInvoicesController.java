@@ -23,6 +23,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.interline.filter.SFI020Filter;
+import net.miatech.praxis.interline.filter.SFI100Filter;
 import net.miatech.praxis.logic.interline.AccountingPasseInvoicesLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -64,7 +65,59 @@ public class AccountingPasseInvoicesController extends BaseController {
         map.put("vp_serverTime", Functions.getHoraActual());
         return "sales/AccountingPasseInvoices/form_index";
     }
+    
+    @RequestMapping(value = "search")
+    public @ResponseBody
+    String search(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- AccountingPasseInvoices : Search-------------");
+        map.put("success", true);
 
+        List<SFI100Filter> lst = this.getList(request, false);
+
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<SFI100Filter> getList(HttpServletRequest request, Boolean bExcel) {
+
+        List<SFI100Filter> lst = new ArrayList<>(0);
+        SFI100Filter filter = new SFI100Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new AccountingPasseInvoicesLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, SFI100Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+//            if (!bExcel) {
+//                filter.page.PAGROW = 20;
+//                start = (start != 0 ? start : 0);
+//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            } else {
+            filter.page.PAGROW = -1;
+            filter.page.PAGNUM = 1;
+//            }
+
+            lst = logic.SQP04008(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    /*
+        
     @RequestMapping(value = "search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
@@ -116,6 +169,8 @@ public class AccountingPasseInvoicesController extends BaseController {
         }
         return lst;
     }
+    
+    */
 
     public List<A1965Filter> getListXpagar(HttpServletRequest request, Boolean bExcel) {
 
