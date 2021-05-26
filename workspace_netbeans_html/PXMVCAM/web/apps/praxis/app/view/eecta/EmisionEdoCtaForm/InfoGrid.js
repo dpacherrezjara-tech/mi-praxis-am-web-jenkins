@@ -146,6 +146,11 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGrid', {
                                                 iconCls: 'prx-icon-pdf',
                                                 tooltip: 'Report for PDF',
                                                 handler: 'onReportEdoCta'
+                                            },
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Report for PDF Detalle',
+                                                handler: 'onReportEdoCtaDet'
                                             }
                                         ]
                                     }

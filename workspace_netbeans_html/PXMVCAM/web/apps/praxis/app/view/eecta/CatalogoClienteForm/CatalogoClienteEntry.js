@@ -11,7 +11,8 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
     requires: [
         'Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryController',
         'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridUatp',
-        'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridIdentif'
+        'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridIdentif',
+        'Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridCalendario'        
     ],
     title: 'Mantenimiento Cliente',
     header: true,
@@ -530,7 +531,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                 data: [
                                                     ["C", "CREDITO"],
                                                     ["I", "INTERCAMBIO"],
-                                                    ["P", "PRE-COMPRA"]
+                                                    ["P", "PRE-COMPRA"]                                                    
                                                 ]
                                             }),
                                             queryMode: 'local',
@@ -1050,8 +1051,15 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                     xtype: 'checkboxfield'
                                 },
                                 {
+                                    xtype: 'panel',
+                                    width: '100%',
                                     title: 'Calendario',
-                                    xtype: 'checkboxfield'
+                                    id: prototype.id + '-contenedor-grid-GridCalendario',
+                                    items: [
+                                        {
+                                            xtype: prototype.id + '-info-GridCalendario'
+                                        }
+                                    ]
                                 }
                             ]
                         }
