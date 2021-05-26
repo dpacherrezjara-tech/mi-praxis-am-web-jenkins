@@ -31,6 +31,7 @@ public class A3958 {
     public String A3958FPROC = "";
     public String A3958FUENT = "";
     public String A3958TRNCU = "";
+    public String A3958PNR = "";    
     public String A3958TDOC = "";
     public String A3958RFIC = "";
     public String A3958RFIS = "";
@@ -39,6 +40,7 @@ public class A3958 {
     public String A3958PAX = "";
     public String A3958RUTA = "";
     public String A3958ICNJ = "";
+    public String A3958MDLOC = "";
     public double A3958FARE = 0.0;
     public double A3958IVA = 0.0;
     public double A3958TUA = 0.0;
