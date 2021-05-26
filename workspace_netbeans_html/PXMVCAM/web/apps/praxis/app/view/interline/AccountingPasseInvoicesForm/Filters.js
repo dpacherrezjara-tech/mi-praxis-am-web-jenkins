@@ -118,6 +118,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Filters', {
                             maxLength: 3,
                             enforceMaxLength: true
                         },
+                        {xtype: 'tbspacer', width: 30},
 //                        {
 //                            xtype: 'combo',
 //                            id: prototype.id + '-cmbSource',
@@ -132,40 +133,35 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Filters', {
 //                            valueField: 'code',
 //                            displayField: 'name'
 //                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbTTRAN',
+                            fieldStyle: 'text-align: center;',
+                            disabled: false,
+                            fieldLabel: 'Transaction',
+                            width: 150,
+                            labelWidth: 90,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
+                        },
                         {xtype: 'tbspacer', width: 30},
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtSource',
-//                            hidden:true,
-//                            required: true,
-                            readOnly: false,
-                            fieldLabel: 'Source',
-                            width: 130,
-                            labelWidth: 60,
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbPEREST',
                             fieldStyle: 'text-align: center;',
-                            enableKeyEvents: true,
-                            enforceMaxLength: true,
-                            labelAlign: 'left',
-                            maxLength: 2,
-                            maskRe: /[0-9]/,
-                            listeners: {
-                                keypress: 'findSource'
-                            }
+                            disabled: false,
+                            fieldLabel: 'Per. Estimated',
+                            width: 145,
+                            labelWidth: 90,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
                         },
-//                        {
-//                            xtype: 'combo',
-//                            id: prototype.id + '-cmbAerolinea',
-//                            fieldStyle: 'text-align: left;',
-//                            disabled: false,
-//                            fieldLabel: 'Airline',
-//                            width: 300,
-//                            labelWidth: 60,
-//                            labelAlign: 'right',
-//                            queryMode: 'local',
-//                            triggerAction: 'all',
-//                            valueField: 'A005KEY',
-//                            displayField: 'A005KEY2'
-//                        },
 //                        {
 //                            xtype: 'combo',
 //                            id: prototype.id + '-cmbPMI',
