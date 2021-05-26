@@ -11,6 +11,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.eecta.EmisionEdoCtaDAO;
 import net.miatech.praxis.eecta.SQP03976Filter;
 import net.miatech.praxis.eecta.SQP03977Filter;
+import net.miatech.praxis.eecta.SQP04001Filter;
 
 /**
  *
@@ -30,4 +31,8 @@ public class EmisionEdoCtaLogic {
     public List<SQP03976Filter> getSQP03976Filter(SQP03976Filter filter) throws SQLException, Exception {
         return objDAO.getSQP03976Filter(filter);
     }
+    public List<SQP04001Filter> getSQP04001(SQP04001Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04001(filter);
+    }
+    
 }
