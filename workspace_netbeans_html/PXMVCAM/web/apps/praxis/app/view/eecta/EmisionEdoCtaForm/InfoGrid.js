@@ -56,76 +56,18 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGrid', {
                             ],
                             columns: {
                                 items: [
-                                    {text: 'Nbr EdoCta', dataIndex: 'A3981NREDO', width: 85, align: 'left'},
-                                    {text: 'Client Id', dataIndex: 'A3981CDCLI', align: 'left', width: 85},
-                                    {text: 'Client', dataIndex: 'A3953RSOCI', align: 'left', flex: 1},                                    
+                                    {text: 'Nº Edo. Cta.', dataIndex: 'A3981NREDO', width: 85, align: 'center'},
+                                    {text: 'Client Id', dataIndex: 'A3981CDCLI', align: 'center', width: 85},
+                                    {text: 'Client', dataIndex: 'A3953RSOCI', align: 'left', flex: 1},   
+                                    {text: 'Fecha<br>Emisión', dataIndex: 'A3981FEDOC', align: 'center', width: 80},                                       
+                                    {
+                                        text: 'Periodo',
+                                        columns: [
+                                            {text: 'Desde', dataIndex: 'A3981INIPR', width: 70, align: 'center'},
+                                            {text: 'Hasta', dataIndex: 'A3981FINPR', width: 70, align: 'center'}
+                                        ]
+                                    },
                                     {text: 'Curr.', dataIndex: 'A3981MDLOC', width: 50, align: 'center'},
-//                                    {text: 'Fare', dataIndex: 'A3957FARE', width: 90, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        }
-//                                    },
-//                                    {text: 'IVA', dataIndex: 'A3957IVA', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000');
-//                                        }
-//                                    },
-//                                    {
-//                                        text: 'TUA', dataIndex: 'A3957TUA', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            if (record.get('IS_TOTAL'))
-//                                                metaData.tdStyle = 'font-weight: bold;';
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-////                                            var grid = Ext.getCmp(prototype.id + '-gridData72');
-////                                            var store = grid.getStore();
-////                                            var val_AVG = 0.0;
-////                                            var val_NET = 0;
-////                                            var val_BN = 0;
-////                                            store.each(function (value, index) {
-////                                                //if ( Ext.String.trim(value.get('DESCRIPTION').toUpperCase()) != 'OVERCHARGE' ){
-////                                                val_NET += parseFloat(value.get('NET'));
-////                                                val_BN += parseFloat(value.get('BN'));
-////                                                //}
-////                                            });
-////                                            //console.log('val_NET', val_NET);
-////                                            //console.log('val_BN', val_BN);                                    
-////                                            if (val_BN > 0)
-////                                                val_AVG = parseFloat(val_NET / val_BN);
-//                                            return Ext.util.Format.number(val_AVG, '0,000.00');
-//
-//                                        }
-//                                    },
-//                                    {
-//                                        text: 'YR', dataIndex: 'A3957YR', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        }
-//                                    },
-//                                    {
-//                                        text: 'Other', dataIndex: 'A3957OTR', width: 90, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        }
-//                                    },
                                     {
                                         text: 'Total', dataIndex: 'A3981TOT', width: 90, align: 'right',
                                         summaryType: 'sum',
