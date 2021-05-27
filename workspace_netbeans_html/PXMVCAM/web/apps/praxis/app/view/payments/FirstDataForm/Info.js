@@ -387,7 +387,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                             id: prototype.id + '-panelGridDataBySettlement',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1562,
+                            width: 1572,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -397,7 +397,7 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMainBySettlement',
-                                    width: 1562,
+                                    width: 1572,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -439,16 +439,19 @@ Ext.define('Ext.Praxis.view.payments.FirstDataForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Card <br> Number', dataIndex: 'SCARDN', width: 110
+                                                text: 'Card <br> Number', dataIndex: 'SCARDN', width: 120
                                             },
                                             {
                                                 text: 'Authorizacion <br> Code', dataIndex: 'SAUTHOC', width: 90
                                             },
                                             {
-                                                text: 'Installment <br> Plan', dataIndex: 'CUOPLAN', width: 90
+                                                text: 'Installment <br> Plan', dataIndex: 'CUOPLAN', width: 80
                                             },
                                             {
-                                                text: 'Payment <br> Deadline', dataIndex: 'PLAZOPAG', width: 90,
+                                                text: 'Type of Payment <br> Deadline', dataIndex: 'TPLAZOPA', width: 110
+                                            },
+                                            {
+                                                text: 'Payment <br> Deadline', dataIndex: 'PLAZOPAG', width: 80,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.STFECPAG == "1") {
                                                         metaData.style = "color:#eb3434";

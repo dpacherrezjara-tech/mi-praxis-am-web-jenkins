@@ -17,6 +17,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import static net.miatech.praxis.dao.interline.LoadInterlineDAO.pasarGarbageCollector;
 import net.miatech.praxis.interline.SFI010;
 import net.miatech.praxis.interline.SFI021;
+import net.miatech.praxis.interline.SFI022;
 import net.miatech.praxis.interline.SFI030;
 import net.miatech.praxis.interline.SFI031;
 import net.miatech.praxis.interline.SFI032;
@@ -2925,6 +2926,46 @@ public class PassengerInvoicesIpDAO {
                 objRtn.BNUMBER = rs01.getString("BNUMBER");
                 objRtn.UATPAMT = rs01.getDouble("UATPAMT");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
+                objRtn.GROSSSG = rs01.getString("GROSSSG");
+                if(objRtn.GROSSSG.trim().equals("M")){
+                   objRtn.GROSS = objRtn.GROSS*-1;
+                }
+                
+                objRtn.TAXSG = rs01.getString("TAXSG");
+                if(objRtn.TAXSG.trim().equals("M")){
+                   objRtn.TAX = objRtn.TAX*-1;
+                }
+                
+                objRtn.HFEEAMSG = rs01.getString("HFEEAMSG");
+                if(objRtn.HFEEAMSG.trim().equals("M")){
+                   objRtn.HFEEAM = objRtn.HFEEAM*-1;
+                }
+                
+                objRtn.VATAMTSG = rs01.getString("VATAMTSG");
+                if(objRtn.VATAMTSG.trim().equals("M")){
+                   objRtn.VATAMT = objRtn.VATAMT*-1;
+                }
+                
+                objRtn.ISCAMTSG = rs01.getString("ISCAMTSG");
+                if(objRtn.ISCAMTSG.trim().equals("M")){
+                   objRtn.ISCAMT = rs01.getDouble("ISCAMT")*-1;
+                }
+                
+                objRtn.OTHCOMASG = rs01.getString("OTHCOMASG");
+                if(objRtn.OTHCOMASG.trim().equals("M")){
+                   objRtn.OTHCOMAM = rs01.getDouble("OTHCOMAM")*-1;
+                }
+                
+                objRtn.CPNTAMSG = rs01.getString("CPNTAMSG");
+                if(objRtn.CPNTAMSG.trim().equals("M")){
+                   objRtn.CPNTAM = rs01.getDouble("CPNTAM")*-1;
+                }
+                
+                objRtn.UATPAMTSG = rs01.getString("UATPAMTSG");
+                if(objRtn.UATPAMTSG.trim().equals("M")){
+                   objRtn.UATPAMT = rs01.getDouble("UATPAMT")*-1;
+                }
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -3023,12 +3064,25 @@ public class PassengerInvoicesIpDAO {
                 objRtn.YREJNUM = rs01.getString("YREJNUM");
                 objRtn.FBCNUM = rs01.getString("FBCNUM");
                 objRtn.FIMCPNUM = rs01.getString("FIMCPNUM");
+                
                 objRtn.TGROSSB = rs01.getDouble("TGROSSB");
                 objRtn.TGROSSBSG = rs01.getString("TGROSSBSG");
+                if(objRtn.TGROSSBSG.trim().equals("M")){
+                    objRtn.TGROSSB = objRtn.TGROSSB * -1;
+                }
+                
                 objRtn.TGROSSA = rs01.getDouble("TGROSSA");
                 objRtn.TGROSSASG = rs01.getString("TGROSSASG");
+                if(objRtn.TGROSSASG.trim().equals("M")){
+                    objRtn.TGROSSA = objRtn.TGROSSA * -1;
+                }
+                
                 objRtn.TGROSSD = rs01.getDouble("TGROSSD");
                 objRtn.TGROSSDSG = rs01.getString("TGROSSDSG");
+                if(objRtn.TGROSSDSG.trim().equals("M")){
+                    objRtn.TGROSSD = objRtn.TGROSSD * -1;
+                }
+                
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.BDATE = rs01.getString("BDATE");
                 
@@ -3131,6 +3185,7 @@ public class PassengerInvoicesIpDAO {
                 objRtn.BDATE = rs01.getString("BDATE");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
                 objRtn.GAD = rs01.getDouble("GAD");
                 objRtn.IAD = rs01.getDouble("IAD");
                 objRtn.TAD = rs01.getDouble("TAD");
@@ -3139,6 +3194,46 @@ public class PassengerInvoicesIpDAO {
                 objRtn.UAD = rs01.getDouble("UAD");
                 objRtn.NRA = rs01.getDouble("NRA");
                 objRtn.SOURCOD = rs01.getString("SOURCOD");
+                
+                objRtn.TGROSSBSG = rs01.getString("TGROSSBSG");
+                if(objRtn.TGROSSBSG.trim().equals("M")){
+                    objRtn.TGROSSB = objRtn.TGROSSB * -1;
+                }
+                
+                objRtn.TGROSSDSG = rs01.getString("TGROSSDSG");
+                if(objRtn.TGROSSDSG.trim().equals("M")){
+                    objRtn.GAD = objRtn.GAD * -1;
+                }
+                
+                objRtn.TISCDSG = rs01.getString("TISCDSG");
+                if(objRtn.TISCDSG.trim().equals("M")){
+                    objRtn.IAD = objRtn.IAD * -1;
+                }
+                
+                objRtn.TTAXDSG = rs01.getString("TTAXDSG");
+                if(objRtn.TTAXDSG.trim().equals("M")){
+                    objRtn.TAD = objRtn.TAD * -1;
+                }
+                
+                objRtn.TOTHCDSG = rs01.getString("TOTHCDSG");
+                if(objRtn.TOTHCDSG.trim().equals("M")){
+                    objRtn.OCDA = objRtn.OCDA * -1;
+                }
+                
+                objRtn.THDFDSG = rs01.getString("THDFDSG");
+                if(objRtn.THDFDSG.trim().equals("M")){
+                    objRtn.HFAD = objRtn.HFAD * -1;
+                }
+                
+                objRtn.TUATPDSG = rs01.getString("TUATPDSG");
+                if(objRtn.TUATPDSG.trim().equals("M")){
+                    objRtn.UAD = objRtn.UAD * -1;
+                }
+                
+                objRtn.TNETRSG = rs01.getString("TNETRSG");
+                if(objRtn.TNETRSG.trim().equals("M")){
+                    objRtn.NRA = objRtn.NRA * -1;
+                }
 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
@@ -3232,10 +3327,10 @@ public class PassengerInvoicesIpDAO {
                 objRtn.DCHEQ = rs01.getString("DCHEQ");
                 objRtn.FROMCPN = rs01.getString("FROMCPN");
                 objRtn.TOCPN = rs01.getString("TOCPN");
-                objRtn.TGROSSB = rs01.getDouble("TGROSSB");
                 objRtn.BDATE = rs01.getString("BDATE");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
                 objRtn.TGROSSB = rs01.getDouble("TGROSSB");
                 objRtn.TTAXB = rs01.getDouble("TTAXB");
                 objRtn.TISC = rs01.getDouble("TISC");
@@ -3244,6 +3339,41 @@ public class PassengerInvoicesIpDAO {
                 objRtn.NET = rs01.getDouble("NET");
                 objRtn.SOURCOD = rs01.getString("SOURCOD");
                 objRtn.TVAT = rs01.getDouble("TVAT");
+                
+                objRtn.TGROSSBSG = rs01.getString("TGROSSBSG");
+                if(objRtn.TGROSSBSG.trim().equals("M")){
+                    objRtn.TGROSSB = objRtn.TGROSSB * -1;
+                }
+                
+                objRtn.TTAXBSG = rs01.getString("TTAXBSG");
+                if(objRtn.TTAXBSG.trim().equals("M")){
+                    objRtn.TTAXB = objRtn.TTAXB * -1;
+                }
+                
+                objRtn.TISCSG = rs01.getString("TISCSG");
+                if(objRtn.TISCSG.trim().equals("M")){
+                    objRtn.TISC = objRtn.TISC * -1;
+                }
+                
+                objRtn.TOTHCSG = rs01.getString("TOTHCSG");
+                if(objRtn.TOTHCSG.trim().equals("M")){
+                    objRtn.TOTHC = objRtn.TOTHC * -1;
+                }
+                
+                objRtn.HFEEAMSG = rs01.getString("HFEEAMSG");
+                if(objRtn.HFEEAMSG.trim().equals("M")){
+                    objRtn.HFEEAM = objRtn.HFEEAM * -1;
+                }
+                
+                objRtn.NETSG = rs01.getString("NETSG");
+                if(objRtn.NETSG.trim().equals("M")){
+                    objRtn.NET = objRtn.NET * -1;
+                }
+                
+                objRtn.TVATSG = rs01.getString("TVATSG");
+                if(objRtn.TVATSG.trim().equals("M")){
+                    objRtn.TVAT = objRtn.TVAT * -1;
+                }
 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
@@ -3342,6 +3472,22 @@ public class PassengerInvoicesIpDAO {
                 objRtn.AMOUNT_YR = rs01.getDouble("AMOUNT_YR");
                 
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
+                objRtn.SIGN_TAX = rs01.getString("SIGN_TAX");
+                if(objRtn.SIGN_TAX.trim().equals("M")){
+                    objRtn.TAXBILED1 = objRtn.TAXBILED1 * -1;
+                }
+                
+                objRtn.SIGN_YQ = rs01.getString("SIGN_YQ");
+                if(objRtn.SIGN_YQ.trim().equals("M")){
+                    objRtn.AMOUNT_YQ = objRtn.AMOUNT_YQ * -1;
+                }
+                
+                objRtn.SIGN_YR = rs01.getString("SIGN_YR");
+                if(objRtn.SIGN_YR.trim().equals("M")){
+                    objRtn.AMOUNT_YR = objRtn.AMOUNT_YR * -1;
+                }
+                
 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
@@ -3380,4 +3526,158 @@ public class PassengerInvoicesIpDAO {
 
         return lstRtn;
     }
+    
+    
+    // ------------------------------- SFI 22 ------------------------------------------------------
+    public List<SFI022> loadPX538_register_22(SFI020Filter filter) throws SQLException, Exception {
+        List<SFI022> lstRtn = new ArrayList<SFI022>(0);
+        SFI022 objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04003(?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(4, Types.INTEGER);
+            cstmt01.registerOutParameter(5, Types.INTEGER);
+            cstmt01.registerOutParameter(6, Types.INTEGER);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.BDATE);
+            cstmt01.setString(3, filter.PERNUM);
+
+            cstmt01.setInt(4, filter.page.PAGNUM);
+            cstmt01.setInt(5, filter.page.PAGROW);
+            cstmt01.setInt(6, filter.page.TOTPAG);
+            cstmt01.setInt(7, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(4);
+            filter.page.PAGROW = cstmt01.getInt(5);
+            filter.page.TOTPAG = cstmt01.getInt(6);
+            filter.page.TOTROW = cstmt01.getInt(7);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                objRtn = new SFI022();
+
+                objRtn.NAID = rs01.getLong("NAID");
+                objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.STCONS = rs01.getString("STCONS");
+                objRtn.SMI = rs01.getString("SMI");
+                objRtn.RSN = rs01.getString("RSN");
+                objRtn.SFI = rs01.getString("SFI");
+                objRtn.BAIR = rs01.getString("BAIR");
+                objRtn.BDAIR = rs01.getString("BDAIR");
+                objRtn.BCODE = rs01.getInt("BCODE");
+                
+                objRtn.BNUMBER = rs01.getString("BNUMBER");
+                objRtn.BATSEQ = rs01.getInt("BATSEQ");
+                objRtn.RECSEQ = rs01.getInt("RECSEQ");
+                objRtn.SOURCOD = rs01.getString("SOURCOD");
+                objRtn.BCMNUM = rs01.getString("BCMNUM");
+                objRtn.REASCOD = rs01.getString("REASCOD");
+                objRtn.OURREF = rs01.getString("OURREF");
+                objRtn.REFNUM = rs01.getString("REFNUM");
+                objRtn.FIMNUM = rs01.getString("FIMNUM");
+                objRtn.FIMCPNUM = rs01.getString("FIMCPNUM");
+                objRtn.YBNUMBER = rs01.getString("YBNUMBER");
+                objRtn.YBDATE = rs01.getString("YBDATE");
+                objRtn.PERNUM = rs01.getString("PERNUM");
+                objRtn.LBRATE = rs01.getDouble("LBRATE");
+                
+                objRtn.TGROSS = rs01.getDouble("TGROSS");
+                objRtn.TTAX = rs01.getDouble("TTAX");
+                objRtn.TISC = rs01.getDouble("TISC");
+                objRtn.TOHCOM = rs01.getDouble("TOHCOM");
+                objRtn.HFEEAM = rs01.getDouble("HFEEAM");
+                objRtn.TUATP = rs01.getDouble("TUATP");
+                objRtn.TVAT = rs01.getDouble("TVAT");
+                objRtn.NET = rs01.getDouble("NET");
+                
+                objRtn.TGROSSG = rs01.getString("TGROSSG");
+                if(objRtn.TGROSSG.trim().equals("M")){
+                    objRtn.TGROSS = objRtn.TGROSS * -1;
+                }
+                
+                objRtn.TTAXSG = rs01.getString("TTAXSG");
+                if(objRtn.TTAXSG.trim().equals("M")){
+                    objRtn.TTAX = objRtn.TTAX * -1;
+                }
+                
+                objRtn.TISCSG = rs01.getString("TISCSG");
+                if(objRtn.TISCSG.trim().equals("M")){
+                    objRtn.TISC = objRtn.TISC * -1;
+                }
+                
+                objRtn.TOHCOMSG = rs01.getString("TOHCOMSG");
+                if(objRtn.TOHCOMSG.trim().equals("M")){
+                    objRtn.TOHCOM = objRtn.TOHCOM * -1;
+                }
+                
+                objRtn.HFEEAMSG = rs01.getString("HFEEAMSG");
+                if(objRtn.HFEEAMSG.trim().equals("M")){
+                    objRtn.HFEEAM = objRtn.HFEEAM * -1;
+                }
+                
+                objRtn.TUATPSG = rs01.getString("TUATPSG");
+                if(objRtn.TUATPSG.trim().equals("M")){
+                    objRtn.TUATP = objRtn.TUATP * -1;
+                }
+                
+                objRtn.TVATSG = rs01.getString("TVATSG");
+                if(objRtn.TVATSG.trim().equals("M")){
+                    objRtn.TVAT = objRtn.TVAT * -1;
+                }
+                
+                objRtn.NETSG = rs01.getString("NETSG");
+                if(objRtn.NETSG.trim().equals("M")){
+                    objRtn.NET = objRtn.NET * -1;
+                }
+
+//                objRtn.page.PAGNUM = filter.page.PAGNUM;
+//                objRtn.page.PAGROW = filter.page.PAGROW;
+//                objRtn.page.TOTPAG = filter.page.TOTPAG;
+//                objRtn.page.TOTROW = filter.page.TOTROW;
+                lstRtn.add(objRtn);
+
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //  System.out.println( e.getMessage());
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+
 }

@@ -58,22 +58,34 @@ public class AccountingMasterFlownDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.registerOutParameter(4, Types.INTEGER);
+            /*cs.registerOutParameter(4, Types.INTEGER);
             cs.registerOutParameter(5, Types.INTEGER);
             cs.registerOutParameter(6, Types.INTEGER);
-            cs.registerOutParameter(7, Types.INTEGER);
+            cs.registerOutParameter(7, Types.INTEGER);*/
+            
+            cs.registerOutParameter("IO_PAGNUM", Types.INTEGER);
+            cs.registerOutParameter("IO_PAGROW", Types.INTEGER);
+            cs.registerOutParameter("IO_TOTPAG", Types.INTEGER);
+            cs.registerOutParameter("IO_TOTROW", Types.INTEGER);
 
             cs.setString(1, filter.IN_A1740TITRA);
             cs.setString(2, filter.IN_A1740TIPO);
             cs.setString(3, filter.IN_A1740CATEG);
-            cs.setInt(4, filter.page.PAGNUM);
+            
+            
+            /*cs.setInt(4, filter.page.PAGNUM);
             cs.setInt(5, filter.page.PAGROW);
             cs.setInt(6, filter.page.TOTPAG);
-            cs.setInt(7, filter.page.TOTROW);
+            cs.setInt(7, filter.page.TOTROW);*/
+            
+            cs.setInt("IO_PAGNUM", PAGINIT);
+            cs.setInt("IO_PAGROW", totRowsPag);     
+            cs.setInt("IO_TOTPAG", totRows);     
+            cs.setInt("IO_TOTROW", filter.page.TOTROW); 
 
             cs.execute();
 
-//            filter.page.PAGNUM = cs.getInt(4);//1
+            /*filter.page.PAGNUM = cs.getInt(4);//1
             filter.page.PAGROW = cs.getInt(5);//20
             filter.page.TOTPAG = cs.getInt(6);//17
             filter.page.TOTROW = cs.getInt(7);//340
@@ -98,6 +110,32 @@ public class AccountingMasterFlownDAO {
                 }
             }
 
+            filter.page.TOTPAG = totPAGS;*/
+            
+            filter.page.PAGNUM = cs.getInt("IO_PAGNUM");
+            filter.page.PAGROW = cs.getInt("IO_PAGROW");
+            filter.page.TOTPAG = cs.getInt("IO_TOTPAG");
+            filter.page.TOTROW = cs.getInt("IO_TOTROW");
+            
+            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cs.getInt("IO_PAGROW")) {
+               totRows = filter.page.TOTROW;
+               totPAGS = filter.page.TOTPAG;
+            } else {
+               try {
+                   totRows = cs.getInt("IO_TOTROW");
+                   int total =  (int)(totRows / totRowsPag);                                                                    
+                   int resto =  (totRows % totRowsPag);                    
+
+                   if(resto>0)
+                       totPAGS = total + 1;
+                   else
+                       totPAGS = total;
+
+               } catch (Exception e) {
+                   totPAGS = totRows / totRowsPag;
+               }
+            }        
+             
             filter.page.TOTPAG = totPAGS;
 
             rst = cs.getResultSet();

@@ -11,6 +11,7 @@ import net.miatech.beans.A1965Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.interline.AccountingPasseInvoicesDAO;
 import net.miatech.praxis.interline.filter.SFI020Filter;
+import net.miatech.praxis.interline.filter.SFI100Filter;
 
 /**
  *
@@ -24,6 +25,16 @@ public class AccountingPasseInvoicesLogic {
         passengerInvoicesDAO.setSession(ss);
 
     }
+    
+    public List<SFI100Filter> SQP04008(SFI100Filter filter) throws Exception {
+        return passengerInvoicesDAO.SQP04008(filter);
+    }
+    
+    
+    
+    
+    
+    // --------------------------------------------------------------------------------------------------------------------------
     
     public List<A1964Filter> loadPX538(A1964Filter filter) throws Exception {
         return passengerInvoicesDAO.loadPX538(filter);

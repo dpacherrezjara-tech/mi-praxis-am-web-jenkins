@@ -61,7 +61,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                                     ["", "- Select -"],
                                     ["M", "Multicurrency"],
                                     ["O", "Origin"],
-                                    ["C", "Expired"]
+                                    ["C", "Expired"],
+                                    ["R", "RAC"],
+                                    ["N", "No Show"]
                                 ]
                             }),
                             queryMode: 'local',

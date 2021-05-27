@@ -54,7 +54,237 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                             },
                             items: [
                                 // --------------------------   PANEL MAIN DATA---------------------
-                                //-----------------------------------------------------------------
+                                // -----------------------------------------------------------------
+                                 
+                                {
+                                    xtype: 'panel',
+//                                    id: prototype.id + '-panelGridData',
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    padding: '1',
+                                    margin: '0 0 0 330',
+                                    //width: 100,    
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+//                                            xtype: 'treepanel',
+                                            padding: '20 0 0 0',
+                                            id: prototype.id + '-gridData',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            height: 570,
+                                            width: 1225,
+                                            columnLines: true,
+                                            resizable: false,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }
+                                            ],
+//                                            rootVisible: false,
+//                                            plugins: {
+//                                                ptype: 'cellediting',
+//                                                clicksToEdit: 1
+//                                            },
+                                            features: [{
+                                                ftype: 'summary',
+                                                dock: 'bottom'
+                                            }],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    resizable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+//                                                    {text: 'Accounting<br>Date', width: 120, dataIndex: 'A1964FCONT',
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
+//                                                            return '<b>' + value + '<b>';
+//                                                        },
+//        //                                                listeners: {
+//        //                                                    click: 'onViewDataDetailSFI30'
+//        //                                                }
+//                                                    },
+                                                    {text: 'Source',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Cod', width: 70, dataIndex: 'SOURCOD',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Description', width: 300, dataIndex: 'SOURDES',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:left;';
+                                                                    return value;
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'GROSS', width: 120, dataIndex: 'TGROSS',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTGROSS, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'ISC', width: 120, dataIndex: 'TISC',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTISC, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'TAX', width: 120, dataIndex: 'TTAX',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTTAX, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Other', width: 120, dataIndex: 'TOHCOM',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTOHCOM, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'FEE', width: 120, dataIndex: 'HFEEAM',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totHFEEAM, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'UATP', width: 120, dataIndex: 'TUATP',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTUATP, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'NET', width: 120, dataIndex: 'TNET',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTNET, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }, 
+                                 
+                                //-----------------------------------------------------------------                             
+                                //-----------------------------------------------------------------                             
+                                /*
                                 {
                                     xtype: 'panel',
 //                                    id: prototype.id + '-panelGridData',
@@ -421,6 +651,8 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                         }
                                     ]
                                 },
+                                
+                                */
                             ]
                         }
                     ]

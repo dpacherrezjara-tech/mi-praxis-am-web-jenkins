@@ -28,6 +28,7 @@ public class A3951 {
     public String A3951REVIS;
     public String A3951FREVI;
     public String A3951HREVI;
+    public String A3951STATO;
 
     public double A3951CASH;
     public double A3951CTUC;
@@ -38,7 +39,33 @@ public class A3951 {
     public double A3951NETO;
     public double A3951PROCE;
     public int A3951PC;
+    public int A3951CANTI;
+    public int A3951TOTAL;
 
+    public String getA3951STATO() {
+        return A3951STATO;
+    }
+
+    public void setA3951STATO(String A3951STATO) {
+        this.A3951STATO = A3951STATO;
+    }
+
+    public int getA3951CANTI() {
+        return A3951CANTI;
+    }
+
+    public void setA3951CANTI(int A3951CANTI) {
+        this.A3951CANTI = A3951CANTI;
+    }
+
+    public int getA3951TOTAL() {
+        return A3951TOTAL;
+    }
+
+    public void setA3951TOTAL(int A3951TOTAL) {
+        this.A3951TOTAL = A3951TOTAL;
+    }
+       
     public String getA3951CCUST() {
         return A3951CCUST;
     }

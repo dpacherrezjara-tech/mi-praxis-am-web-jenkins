@@ -25,8 +25,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             // -------------------Eventos Genericos --------------------
             '#InputsControlForm-xpanel': {
                 afterrender: this.xpanel_afterrender
-            }
-            ,
+            },
             '#InputsControlForm-btnSearch': {
                 click: this.btnSearch_click
             },
@@ -665,9 +664,11 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     setGridDataA1688: function(dv, record, item, index, e) {
         var data = dv.dataSource.data.items[item].data;
         params = {
-            FECHA: data.FECHA
+            FECHA: data.FECHA,
+            HOCR: data.HOCR
         };
-
+        
+        console.log(params);
 
         var storeDataA1688 = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
             proxy: {
@@ -859,7 +860,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(pagData.currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pagData.pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(pagData.total);
-                    Ext.getCmp(prototype.id + '-titleA1690').setHtml("<strong style=\"color:#000;\">Processing Date " + data.strFormatDate3 + "</strong> ");
+                    Ext.getCmp(prototype.id + '-titleA1690').setHtml("<strong style=\"color:#000;text-align:center\">Processing Date " + data.strFormatDate3 + "</strong> ");
 
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -1231,7 +1232,9 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             );
         }
         if (!boxA1688.hidden) {
-            global.getFile(prototype.url + '/GetXLSA1688?FECHA=' + params.FECHA);
+            global.getFile(prototype.url + '/GetXLSA1688?FECHA=' + params.FECHA
+                    + '&HOCR=' + params.HOCR
+            );
         }
 
         if (!boxA1689.hidden) {

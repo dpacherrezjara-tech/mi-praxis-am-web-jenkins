@@ -23,6 +23,7 @@ import net.miatech.praxis.interline.filter.SFI021Filter;
 import net.miatech.praxis.interline.filter.SFI022Filter;
 import net.miatech.praxis.interline.filter.SFI030Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
+import net.miatech.praxis.interline.filter.SFI100Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -54,6 +55,125 @@ public class AccountingPasseInvoicesDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
+    
+    public List<SFI100Filter> SQP04008(SFI100Filter filter) throws SQLException, Exception {
+        List<SFI100Filter> lstRtn = new ArrayList<SFI100Filter>(0);
+        SFI100Filter objRtn;
+        double totTGROSS = 0, totTISC = 0, totTTAX = 0, totTOHCOM = 0, totHFEEAM = 0, totTUATP = 0, totTNET = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04008(?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(6, Types.INTEGER);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_TTRAN);
+            cstmt01.setString(5, filter.IN_PEREST);
+
+            cstmt01.setInt(6, filter.page.PAGNUM);
+            cstmt01.setInt(7, filter.page.PAGROW);
+            cstmt01.setInt(8, filter.page.TOTPAG);
+            cstmt01.setInt(9, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(6);
+            filter.page.PAGROW = cstmt01.getInt(7);
+            filter.page.TOTPAG = cstmt01.getInt(8);
+            filter.page.TOTROW = cstmt01.getInt(9);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                totTGROSS += rs01.getDouble("TGROSS");
+                totTISC += rs01.getDouble("TISC");
+                totTTAX += rs01.getDouble("TTAX");
+                totTOHCOM += rs01.getDouble("TOHCOM");
+                totHFEEAM += rs01.getDouble("HFEEAM");
+                totTUATP += rs01.getDouble("TUATP");
+                totTNET += rs01.getDouble("TNET");
+
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new SFI100Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_TTRAN = filter.IN_TTRAN;
+                    objRtn.IN_PEREST = filter.IN_PEREST;
+                    
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.FCONT = rs01.getString("FCONT");
+                    objRtn.BDATE = rs01.getString("BDATE");
+                    objRtn.SOURCOD = rs01.getString("SOURCOD");
+                    objRtn.SOURDES = rs01.getString("SOURDES");
+                    
+                    objRtn.TGROSS = rs01.getDouble("TGROSS");
+                    objRtn.TISC = rs01.getDouble("TISC");
+                    objRtn.TTAX = rs01.getDouble("TTAX");
+                    objRtn.TOHCOM = rs01.getDouble("TOHCOM");
+                    objRtn.HFEEAM = rs01.getDouble("HFEEAM");
+                    objRtn.TUATP = rs01.getDouble("TUATP");
+                    objRtn.TNET = rs01.getDouble("TNET");
+                   
+                    objRtn.totTGROSS = totTGROSS;
+                    objRtn.totTISC = totTISC;
+                    objRtn.totTTAX = totTTAX;
+                    objRtn.totTOHCOM = totTOHCOM;
+                    objRtn.totHFEEAM = totHFEEAM;
+                    objRtn.totTUATP = totTUATP;
+                    objRtn.totTNET = totTNET;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //  System.out.println( e.getMessage());
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+    
+    // --------------------------------------------------------------------------------------------------------------------------
     
     public List<A1964Filter> loadPX538(A1964Filter filter) throws SQLException, Exception {
         List<A1964Filter> lstRtn = new ArrayList<A1964Filter>(0);

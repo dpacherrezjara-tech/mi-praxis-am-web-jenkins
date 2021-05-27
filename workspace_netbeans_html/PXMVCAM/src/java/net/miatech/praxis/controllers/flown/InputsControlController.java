@@ -90,7 +90,6 @@ public class InputsControlController extends BaseController {
         A1691Filter filter = new A1691Filter();
 
         try {
-
             logic.setSession(this.serverSession.getServerSession());
 
             filter.IN_TIPOFECHA = Integer.parseInt(request.getParameter("tipoFecha"));
@@ -401,6 +400,7 @@ public class InputsControlController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             filter.FECHA = request.getParameter("FECHA");
+            filter.HOCR = request.getParameter("HOCR");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());

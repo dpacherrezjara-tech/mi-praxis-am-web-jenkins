@@ -23,7 +23,6 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                 /*
                  *          MAIN-A1686
                  ***/
-
                 {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataMainA1686',
@@ -592,7 +591,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                             labelAlign: 'center',
                             labelStyle: 'color:#231223',
                             align: 'center',
-                            margin: '10 5 10 350'
+                            margin: '10 5 10 180'
                         },
                         {
                             xtype: 'grid',
