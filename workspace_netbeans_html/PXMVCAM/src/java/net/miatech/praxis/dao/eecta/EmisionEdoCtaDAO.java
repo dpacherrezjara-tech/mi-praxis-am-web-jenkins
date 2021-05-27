@@ -87,8 +87,8 @@ public class EmisionEdoCtaDAO {
                 objRtn.A3953RSOCI = rs01.getString("A3953RSOCI");
                 objRtn.A3981CONTR = rs01.getString("A3981CONTR");
                 objRtn.A3981FEDOC = rs01.getString("A3981FEDOC");
-//                objRtn.A3957INIPR = rs01.getString("A3957INIPR"); //falta
-//                objRtn.A3957FINPR = rs01.getString("A3957FINPR"); //falta
+                objRtn.A3981INIPR = rs01.getString("A3981INIPR"); //falta
+                objRtn.A3981FINPR = rs01.getString("A3981FINPR"); //falta
 //                objRtn.A3957REFBC = rs01.getString("A3957REFBC"); //falta                
                 objRtn.A3981MDLOC = rs01.getString("A3981MDLOC");                
                 objRtn.A3981TOT = rs01.getDouble("A3981TOT");

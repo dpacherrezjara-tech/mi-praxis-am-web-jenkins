@@ -395,7 +395,14 @@ public class ReportEdoCta {
             
             PYi = PYi - 14;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total estado de cuenta anterior* ", NORMAL)), PosX1, PYi, 0);            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("0.00", NORMAL)), 700, PYi, 0);
+            //ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("0.00" , NORMAL)), 700, PYi, 0);            
+//            Double VL_EECTA_ANT = 0.0;
+            for (int i = 4; i < Data.size(); i++) {
+                if( Data.get(i).rpteDet.A3982TREG.equals("00")){ 
+                    ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(i).rpteDet.A3982TOT) , NORMAL)), 700, PYi, 0);
+//                    VL_EECTA_ANT=VL_EECTA_ANT+Data.get(i).rpteDet.A3982TOT;
+                }
+            }
             
             ////
             //VENTAS
@@ -472,7 +479,7 @@ public class ReportEdoCta {
             colorRectangle(under, new GrayColor(0.825f), 15, PYi + 9, 700, -40); //68
             Double total_sub_totales = Subtotal_ventas + Subtotal_pagos;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("GRAN TOTAL:", subFontT)), 560, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(total_sub_totales), subFontT)), 700, PYi, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(0).rpteCab.A3981TOT /*total_sub_totales*/ ), subFontT)), 700, PYi, 0);            
             //TOTAL EN LETRAS
             //PYi = PYi - 18;
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 540, PYi, 0);
