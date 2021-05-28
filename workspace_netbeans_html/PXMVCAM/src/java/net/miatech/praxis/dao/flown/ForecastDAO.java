@@ -661,6 +661,7 @@ public class ForecastDAO {
                     bean.PAXASI = rst.getDouble("PAXASI");
                     if (rst.getDouble("PAXASI") != 0) {
                         bean.VPROUSDASI = rst.getDouble("VCPNUSDASI") / rst.getDouble("PAXASI");
+                        bean.VPROUSDASI = Functions.redondear(bean.VPROUSDASI, 2);
                     }
                     bean.VCPNUSDASI = rst.getDouble("VCPNUSDASI");
                     bean.VCPNMXNASI = rst.getDouble("VCPNMXNASI");
@@ -669,6 +670,7 @@ public class ForecastDAO {
                     bean.PAXCAM = rst.getDouble("PAXCAM");
                     if (rst.getDouble("PAXCAM") != 0) {
                         bean.VPROUSDCAM = rst.getDouble("VCPNUSDCAM") / rst.getDouble("PAXCAM");
+                        bean.VPROUSDCAM = Functions.redondear(bean.VPROUSDCAM, 2);
                     }
                     bean.VCPNUSDCAM = rst.getDouble("VCPNUSDCAM");
                     bean.VCPNMXNCAM = rst.getDouble("VCPNMXNCAM");
@@ -676,6 +678,7 @@ public class ForecastDAO {
                     bean.PAXCAN = rst.getDouble("PAXCAN");
                     if (rst.getDouble("PAXCAN") != 0) {
                         bean.VPROUSDCAN = rst.getDouble("VCPNUSDCAN") / rst.getDouble("PAXCAN");
+                        bean.VPROUSDCAN = Functions.redondear(bean.VPROUSDCAN, 2);
                     }
                     bean.VCPNUSDCAN = rst.getDouble("VCPNUSDCAN");
                     bean.VCPNMXNCAN = rst.getDouble("VCPNMXNCAN");
@@ -683,6 +686,7 @@ public class ForecastDAO {
                     bean.PAXCAR = rst.getDouble("PAXCAR");
                     if (rst.getDouble("PAXCAR") != 0) {
                         bean.VPROUSDCAR = rst.getDouble("VCPNUSDCAR") / rst.getDouble("PAXCAR");
+                        bean.VPROUSDCAR = Functions.redondear(bean.VPROUSDCAR, 2);
                     }
                     bean.VCPNUSDCAR = rst.getDouble("VCPNUSDCAR");
                     bean.VCPNMXNCAR = rst.getDouble("VCPNMXNCAR");
@@ -690,6 +694,7 @@ public class ForecastDAO {
                     bean.PAXEUR = rst.getDouble("PAXEUR");
                     if (rst.getDouble("PAXEUR") != 0) {
                         bean.VPROUSDEUR = rst.getDouble("VCPNUSDEUR") / rst.getDouble("PAXEUR");
+                        bean.VPROUSDEUR = Functions.redondear(bean.VPROUSDEUR, 2);
                     }
                     bean.VCPNUSDEUR = rst.getDouble("VCPNUSDEUR");
                     bean.VCPNMXNEUR = rst.getDouble("VCPNMXNEUR");
@@ -697,6 +702,7 @@ public class ForecastDAO {
                     bean.PAXFRO = rst.getDouble("PAXFRO");
                     if (rst.getDouble("PAXFRO") != 0) {
                         bean.VPROUSDFRO = rst.getDouble("VCPNUSDFRO") / rst.getDouble("PAXFRO");
+                        bean.VPROUSDFRO = Functions.redondear(bean.VPROUSDFRO, 2);
                     }
                     bean.VCPNUSDFRO = rst.getDouble("VCPNUSDFRO");
                     bean.VCPNMXNFRO = rst.getDouble("VCPNMXNFRO");
@@ -704,6 +710,7 @@ public class ForecastDAO {
                     bean.PAXLOC = rst.getDouble("PAXLOC");
                     if (rst.getDouble("PAXLOC") != 0) {
                         bean.VPROUSDLOC = rst.getDouble("VCPNUSDLOC") / rst.getDouble("PAXLOC");
+                        bean.VPROUSDLOC = Functions.redondear(bean.VPROUSDLOC, 2);
                     }
                     bean.VCPNUSDLOC = rst.getDouble("VCPNUSDLOC");
                     bean.VCPNMXNLOC = rst.getDouble("VCPNMXNLOC");
@@ -711,6 +718,7 @@ public class ForecastDAO {
                     bean.PAXPLA = rst.getDouble("PAXPLA");
                     if (rst.getDouble("PAXPLA") != 0) {
                         bean.VPROUSDPLA = rst.getDouble("VCPNUSDPLA") / rst.getDouble("PAXPLA");
+                        bean.VPROUSDPLA = Functions.redondear(bean.VPROUSDPLA, 2);
                     }
                     bean.VCPNUSDPLA = rst.getDouble("VCPNUSDPLA");
                     bean.VCPNMXNPLA = rst.getDouble("VCPNMXNPLA");
@@ -718,6 +726,7 @@ public class ForecastDAO {
                     bean.PAXSUD = rst.getDouble("PAXSUD");
                     if (rst.getDouble("PAXSUD") != 0) {
                         bean.VPROUSDSUD = rst.getDouble("VCPNUSDSUD") / rst.getDouble("PAXSUD");
+                        bean.VPROUSDSUD = Functions.redondear(bean.VPROUSDSUD, 2);
                     }
                     bean.VCPNUSDSUD = rst.getDouble("VCPNUSDSUD");
                     bean.VCPNMXNSUD = rst.getDouble("VCPNMXNSUD");
@@ -725,6 +734,7 @@ public class ForecastDAO {
                     bean.PAXUSA = rst.getDouble("PAXUSA");
                     if (rst.getDouble("PAXUSA") != 0) {
                         bean.VPROUSDUSA = rst.getDouble("VCPNUSDUSA") / rst.getDouble("PAXUSA");
+                        bean.VPROUSDUSA = Functions.redondear(bean.VPROUSDUSA, 2);
                     }
                     bean.VCPNUSDUSA = rst.getDouble("VCPNUSDUSA");
                     bean.VCPNMXNUSA = rst.getDouble("VCPNMXNUSA");
