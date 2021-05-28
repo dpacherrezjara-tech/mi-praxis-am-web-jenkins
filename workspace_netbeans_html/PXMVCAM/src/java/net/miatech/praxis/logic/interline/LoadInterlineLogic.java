@@ -198,5 +198,10 @@ public class LoadInterlineLogic {
         return loadInterlineDAO.loadPX538_register_22(filter);
     }
     
+    // ------------------------------- SFI 30 ------------------------------------------------------   
+    public List<SFI030> loadPX538_register_30(SFI030Filter filter) throws Exception {
+        return loadInterlineDAO.loadPX538_register_30(filter);
+    }
+    
     
 }
