@@ -61,7 +61,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                     id: prototype.id + '-panelGrid',
                                     bodyStyle: 'background-color: #E3EAF9;',
                                     padding: '1',
-                                    margin: '0 0 0 140',
+                                    margin: '0 0 0 30',
                                     //width: 100,    
                                     layout: {
                                         type: 'vbox',
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                             id: prototype.id + '-gridData',
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             height: 570,
-                                            width: 1595,
+                                            width: 1795,
                                             columnLines: true,
                                             resizable: false,
                                             features: [{
@@ -313,6 +313,12 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                                 }
                                                             }
                                                         ]
+                                                    },
+                                                    {text: 'Accounting <br> ID', width: 200, dataIndex: 'IDCON',
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
                                                     },
                                                     {text: 'Date',
                                                         defaults: {
