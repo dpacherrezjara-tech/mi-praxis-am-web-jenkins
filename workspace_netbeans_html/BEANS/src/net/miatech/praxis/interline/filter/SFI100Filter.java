@@ -18,8 +18,10 @@ public class SFI100Filter extends SFI100{
     public long RN=0;
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String IN_TFECHA = "";
     public String IN_TTRAN = "";
     public String IN_PEREST = "";
+    public String strFormatDate = "";
     
     
     public double totTGROSS = 0;
