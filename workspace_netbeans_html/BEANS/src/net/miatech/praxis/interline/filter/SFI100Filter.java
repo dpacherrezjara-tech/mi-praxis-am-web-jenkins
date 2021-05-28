@@ -32,5 +32,11 @@ public class SFI100Filter extends SFI100{
     public double totTUATP = 0;
     public double totTNET = 0;
     
+    //Datos del Summary
+    public String SOURCECODE = "";
+    public String CONCEPTO = "";
+    public double SCREAL = 0;
+    public double totSCREAL = 0;
+    
     public Pagination page = new Pagination();
 }
