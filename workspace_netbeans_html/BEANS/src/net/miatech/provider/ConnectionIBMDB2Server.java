@@ -268,12 +268,12 @@ public class ConnectionIBMDB2Server {
     public Connection getSQLConnection41(net.miatech.beans.spring.implement.IServerSession serverSession) {
 
         try {
-            getDataSource().setServerName((String)serverSession.getPropertySession().get("SQLConnector.Server"));
-            getDataSource().setPortNumber(Integer.parseInt((String)serverSession.getPropertySession().get("SQLConnector.Port")));
-            getDataSource().setInstanceName((String)serverSession.getPropertySession().get("SQLConnector.Instance"));
-            getDataSource().setDatabaseName((String)serverSession.getPropertySession().get("SQLConnector.Database"));
-            getDataSource().setUser((String)serverSession.getPropertySession().get("SQLConnector.User"));
-            getDataSource().setPassword((String)serverSession.getPropertySession().get("SQLConnector.Password"));
+            getDataSource().setServerName((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_HOST"));
+            getDataSource().setPortNumber(Integer.parseInt((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_PORT")));
+            getDataSource().setInstanceName((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_INSTANCE"));
+            getDataSource().setDatabaseName((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_DATABASE"));
+            getDataSource().setUser((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_USER"));
+            getDataSource().setPassword((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_PASSWORD"));
 
             conexion41 = getDataSource().getConnection();
         } catch (Exception ex) {

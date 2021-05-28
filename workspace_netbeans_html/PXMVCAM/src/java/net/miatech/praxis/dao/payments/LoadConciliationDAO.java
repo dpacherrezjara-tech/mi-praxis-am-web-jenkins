@@ -28,7 +28,7 @@ public class LoadConciliationDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     /**
      * *************************** PX263
      * ***************************************
@@ -209,7 +209,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2370Filter> loadPX263SQP00899(A2290Filter filter) throws SQLException, Exception {
 
         List<A2370Filter> lstTkts = new ArrayList<A2370Filter>(0);
@@ -306,7 +306,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public HashMap<String, List<A2290Filter>> loadPX263SQP01960(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -848,7 +848,7 @@ public class LoadConciliationDAO {
 
         return hmResultado;
     }
-    
+
     public HashMap<String, List<A2290Filter>> loadPX263SQP01828(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -1885,7 +1885,7 @@ public class LoadConciliationDAO {
 
         return hmResultado;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00655(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -2055,7 +2055,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00656(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -2217,7 +2217,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00657(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -2380,7 +2380,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00658(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -2984,7 +2984,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00900(A2370Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -3089,7 +3089,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00901(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -3195,7 +3195,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public A2290Filter loadPX263SQP00659(A2290Filter filter) throws SQLException, Exception {
 
         A2290Filter beanTkt = new A2290Filter();
@@ -3380,7 +3380,7 @@ public class LoadConciliationDAO {
 
         return beanTkt;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00817(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -3653,7 +3653,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00676(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -3812,7 +3812,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-	
+
     public List<A2290Filter> loadPX263SQP00894(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -3908,7 +3908,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00677(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -4003,7 +4003,7 @@ public class LoadConciliationDAO {
                     beanTkt.CERROR = filter.CERROR.trim();
                     beanTkt.IN_AUTHNBR = filter.IN_AUTHNBR.trim();
                     beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
-                    
+
                     if (rst.getString("CARD").trim().isEmpty()) {
                         beanTkt.SCARCOD = "**";
                         beanTkt.strDescCard = "(Sales without ACCB)";
@@ -4069,7 +4069,7 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX263SQP00678(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -4225,7 +4225,108 @@ public class LoadConciliationDAO {
 
         return lstTkts;
     }
-    
+
+    public List<A2290Filter> loadPX263SQP03986(A2290Filter filter) throws SQLException, Exception {
+        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
+        A2290Filter beanTkt;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        String tipFecha = "Sales";
+        if (filter.IN_TDOC.trim().equals("R")) {
+            tipFecha = "Refund";
+        }
+
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("1", "Match");
+        hmDescEstados.put("2", tipFecha + " without ACCB");
+        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03986(?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_PNR.trim());
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A2290Filter();
+
+                beanTkt.CCUST = rst.getString("CCUST").trim();
+                beanTkt.SDATE = rst.getString("SDATE").trim();
+                beanTkt.SPNR = rst.getString("SPNR").trim();
+                beanTkt.TICKET = rst.getString("CCIA").trim() + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
+                beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
+                beanTkt.SCARDN = rst.getString("ACARDN");
+                beanTkt.SAUTHOC = rst.getString("AAUTHOC");
+                //beanTkt.TDOC = rst.getString("TDOC");
+                if (rst.getString("TDOC").trim().equals("R")) {
+                    beanTkt.TDOC = "REFUND";
+                } else {
+                    beanTkt.TDOC = "SALES";
+                }
+                beanTkt.SEQ = rst.getString("SEQ");
+                //beanTkt.STVAL = rst.getString("STVAL");
+                if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
+                    beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                } else {
+                    beanTkt.STVAL = rst.getString("STVAL").trim();
+                }
+                beanTkt.FTE = rst.getString("FTE").trim();
+                if (rst.getString("FTE").trim().equals("A")) {
+                    beanTkt.FTE = "ARC";
+                } else if (rst.getString("FTE").trim().equals("B")) {
+                    beanTkt.FTE = "BSP";
+                } else if (rst.getString("FTE").trim().equals("S")) {
+                    beanTkt.FTE = "ASR";
+                } else if (rst.getString("FTE").trim().equals("M")) {
+                    beanTkt.FTE = "Manual";
+                }
+                beanTkt.SAGENT = rst.getString("SAGENT");
+                beanTkt.TVENTA = rst.getString("TVENTA");
+                beanTkt.SPAYMENT = rst.getString("SPAYMENT");
+                beanTkt.SCARCOD = rst.getString("SCARCOD");
+                beanTkt.SVFOP = rst.getDouble("SVFOP");
+                beanTkt.SVFOPUSD = rst.getDouble("SVFOPUSD");
+
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+
     public HashMap<String, List<A2290Filter>> loadPX263SQP00715(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -4834,7 +4935,7 @@ public class LoadConciliationDAO {
 
         return hmResultado;
     }
-    
+
     public static void pasarGarbageCollector() {
         System.gc();
         System.runFinalization();

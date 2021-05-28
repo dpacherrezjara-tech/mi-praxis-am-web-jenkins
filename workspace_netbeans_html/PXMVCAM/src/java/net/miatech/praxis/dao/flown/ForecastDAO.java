@@ -695,15 +695,15 @@ public class ForecastDAO {
                     bean.VCPNMXNEUR = rst.getDouble("VCPNMXNEUR");
                     //FRO                
                     bean.PAXFRO = rst.getDouble("PAXFRO");
-                    if (rst.getDouble("PAXASI") != 0) {
-                        bean.VPROUSDFRO = rst.getDouble("VCPNUSDASI") / rst.getDouble("PAXASI");
+                    if (rst.getDouble("PAXFRO") != 0) {
+                        bean.VPROUSDFRO = rst.getDouble("VCPNUSDFRO") / rst.getDouble("PAXFRO");
                     }
                     bean.VCPNUSDFRO = rst.getDouble("VCPNUSDFRO");
                     bean.VCPNMXNFRO = rst.getDouble("VCPNMXNFRO");
                     //LOC                
                     bean.PAXLOC = rst.getDouble("PAXLOC");
-                    if (rst.getDouble("PAXASI") != 0) {
-                        bean.VPROUSDLOC = rst.getDouble("VCPNUSDASI") / rst.getDouble("PAXASI");
+                    if (rst.getDouble("PAXLOC") != 0) {
+                        bean.VPROUSDLOC = rst.getDouble("VCPNUSDLOC") / rst.getDouble("PAXLOC");
                     }
                     bean.VCPNUSDLOC = rst.getDouble("VCPNUSDLOC");
                     bean.VCPNMXNLOC = rst.getDouble("VCPNMXNLOC");
