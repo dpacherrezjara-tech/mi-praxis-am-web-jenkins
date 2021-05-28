@@ -16,6 +16,7 @@ public class SFI100 {
     public String SOURCOD = "";
     public String SOURDES = "";
     public String PERNUM = "";
+    public String IDCON = "";
     
     public double TGROSS = 0;
     public String TGROSSG = "";
