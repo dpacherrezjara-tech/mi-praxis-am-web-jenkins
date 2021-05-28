@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.classes.ReportEdoCta;
+import net.miatech.praxis.classes.ReportEdoCtaDet;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP03976Filter;
 import net.miatech.praxis.eecta.SQP03977Filter;
+import net.miatech.praxis.eecta.SQP04001Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.EmisionEdoCtaLogic;
 import org.springframework.context.annotation.Scope;
@@ -107,4 +109,41 @@ public class EmisionEdoCtaController extends BaseController {
         }
 
     }
+    
+    @RequestMapping(value = "pdf_EstadoCuenta_det")
+    void pdf_EstadoCuenta_det(HttpServletRequest request, HttpServletResponse response) {
+        
+        try {
+            logic = new EmisionEdoCtaLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04001Filter filter;
+            List<SQP04001Filter> listaData;
+            filter = new SQP04001Filter();
+            //Datos cabecera    
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+            listaData = logic.getSQP04001(filter);
+            ReportEdoCtaDet reportEdoCtaDet = new ReportEdoCtaDet();
+            File archivo = reportEdoCtaDet.createReport(listaData);
+            response.setHeader("Expires", "0");
+            response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            response.setHeader("Pragma", "public");
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + archivo.getName() + "\"");
+            //response.setContentLength(baos.size());
+            ServletOutputStream sos = null;
+            FileInputStream fis = null;
+            fis = new FileInputStream(new File(archivo.getAbsolutePath()));
+            byte[] bytes = org.apache.commons.io.IOUtils.toByteArray(fis);
+            sos = response.getOutputStream();
+            sos.write(bytes);
+            sos.flush();
+            sos.close();
+        } catch (Exception e) {
+            throw new SpringException(e);
+            //response.("mensaje", "ERROR AL GENERAR EL PDF");
+        }
+
+    }
+    
 }
