@@ -136,6 +136,8 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.HFEEAM = rs01.getDouble("HFEEAM");
                     objRtn.TUATP = rs01.getDouble("TUATP");
                     objRtn.TNET = rs01.getDouble("TNET");
+                    
+                    objRtn.IDCON = rs01.getString("IDCON");
 
                     objRtn.totTGROSS = totTGROSS;
                     objRtn.totTISC = totTISC;
