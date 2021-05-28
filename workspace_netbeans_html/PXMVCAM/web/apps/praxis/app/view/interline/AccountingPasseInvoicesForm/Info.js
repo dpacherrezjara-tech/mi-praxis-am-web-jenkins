@@ -58,10 +58,10 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                  
                                 {
                                     xtype: 'panel',
-//                                    id: prototype.id + '-panelGridData',
+                                    id: prototype.id + '-panelGrid',
                                     bodyStyle: 'background-color: #E3EAF9;',
                                     padding: '1',
-                                    margin: '0 0 0 330',
+                                    margin: '0 0 0 140',
                                     //width: 100,    
                                     layout: {
                                         type: 'vbox',
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                             id: prototype.id + '-gridData',
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             height: 570,
-                                            width: 1225,
+                                            width: 1595,
                                             columnLines: true,
                                             resizable: false,
                                             features: [{
@@ -108,6 +108,51 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
 //        //                                                    click: 'onViewDataDetailSFI30'
 //        //                                                }
 //                                                    },
+                                                    {text: 'Date',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Accounting', width: 100, dataIndex: 'FCONT',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Date',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Bill.', width: 100, dataIndex: 'strFormatDate',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Period',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Number', width: 70, dataIndex: 'PERNUM',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
                                                     {text: 'Source',
                                                         defaults: {
                                                             menuDisabled: true,
@@ -272,6 +317,103 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                                     var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.totTNET, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Date',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Creation', width: 100, dataIndex: 'FECR',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelGridSummary',
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    padding: '1',
+                                    margin: '0 0 0 140',
+                                    //width: 100,    
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+//                                            xtype: 'treepanel',
+                                            padding: '20 0 0 0',
+                                            id: prototype.id + '-gridDataSummary',
+                                            bodyStyle: 'background-color: #E3EAEF;',
+                                            height: 570,
+                                            width: 1595,
+                                            columnLines: true,
+                                            resizable: false,
+                                            features: [{
+                                                ftype: 'summary',
+                                                dock: 'bottom'
+                                            }],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    resizable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Source',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Cod', width: 70, dataIndex: 'SOURCOD',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    return '<b>' + value + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Description', width: 300, dataIndex: 'SOURDES',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:left;';
+                                                                    return value;
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'GROSS', width: 120, dataIndex: 'TGROSS',
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTGROSS, '0,000.00') + '<b>';
                                                                 }
                                                             }
                                                         ]
