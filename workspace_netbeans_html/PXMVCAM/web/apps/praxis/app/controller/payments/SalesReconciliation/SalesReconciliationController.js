@@ -297,11 +297,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
     BuscarPNR_keyDownHandler: function(obj, e, eOpts) {
         switch (e.getKey()) {
             case 13:
-                if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length > 0) {
+                if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6) {
                     this.searchByPNR();
                 } else {
                     global.Msg({
-                        msg: 'PNR must not be empty.'
+                        msg: 'PNR must contain 6 characters.'
                     });
                 }
                 break;
@@ -553,7 +553,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
     //<editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
         if (win.getValue('txtTicket').trim() !== '' || win.getValue('txtMERCHN').trim() !== '' || win.getValue('txtAUTHNBR').trim() !== ''
-                || win.getValue('txtCard1').trim() !== '' || win.getValue('txtCard2').trim() !== '') {
+                || win.getValue('txtCard1').trim() !== '' || win.getValue('txtCard2').trim() !== '' || win.getValue('txtPNR').trim() !== '') {
             if (win.getValue('txtTicket').trim() !== '') {
                 if (win.getValue('txtTicket').trim().length === 13) {
                     var selectedValues = win.getValue('rbgType').rbgType;
@@ -571,7 +571,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
                     win.setValue('txtTicket', '');
                     global.Msg({msg: 'Ticket number must contain 13 digits.'});
                 }
-            } else if (win.getValue('txtCard1').trim() !== '' || win.getValue('txtCard2').trim() !== '') {
+            } 
+            else if (win.getValue('txtPNR').trim() !== '') {                
+                if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6) {
+                    this.searchByPNR();
+                } else {
+                    global.Msg({
+                        msg: 'PNR must contain 6 characters.'
+                    });
+                }
+            }
+            else if (win.getValue('txtCard1').trim() !== '' || win.getValue('txtCard2').trim() !== '') {
 
 
                 if (win.getValue('txtCard1').trim().length === 6 && win.getValue('txtCard2').trim().length === 4) {
