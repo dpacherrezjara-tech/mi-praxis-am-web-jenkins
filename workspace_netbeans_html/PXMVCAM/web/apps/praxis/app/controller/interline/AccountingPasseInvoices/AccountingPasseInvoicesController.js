@@ -170,12 +170,14 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         if (value) {
             Ext.getCmp(prototype.id + '-panelGrid').hide();
             Ext.getCmp(prototype.id + '-panelGridSummary').show();
+            this.setFormatParameter();
+            this.setGridSummary();
         } else {
             Ext.getCmp(prototype.id + '-panelGridSummary').hide();
             Ext.getCmp(prototype.id + '-panelGrid').show();
+            this.btnSearch_click();
         }
-        
-//        this.btnSearch_click();
+                       
     },
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
@@ -248,6 +250,41 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+
+    },
+    setGridSummary: function () {
+        win.lblUser_toolTip("Estructura: SFI100");
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchBySummary'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataSummary').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataSummary').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
     // </editor-fold>
