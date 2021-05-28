@@ -63,34 +63,35 @@ public class AccountingPasseInvoicesDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04008(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04008(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_FECHA_FROM);
             cstmt01.setString(3, filter.IN_FECHA_TO);
-            cstmt01.setString(4, filter.IN_TTRAN);
-            cstmt01.setString(5, filter.IN_PEREST);
+            cstmt01.setString(4, filter.IN_TFECHA.trim());
+            cstmt01.setString(5, filter.IN_TTRAN);
+            cstmt01.setString(6, filter.IN_PEREST);
 
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -121,8 +122,12 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.RN = rs01.getLong("RN");
                     objRtn.FCONT = rs01.getString("FCONT");
                     objRtn.BDATE = rs01.getString("BDATE");
+                    objRtn.strFormatDate = Functions.getMonthConvert2(objRtn.BDATE);
+//                    objRtn.strFormatDate = Functions.getMonthConvert3(objRtn.BDATE);//YYMMDD
                     objRtn.SOURCOD = rs01.getString("SOURCOD");
                     objRtn.SOURDES = rs01.getString("SOURDES");
+                    objRtn.PERNUM = rs01.getString("PERNUM");
+                    objRtn.FECR = rs01.getString("FECR");
                     
                     objRtn.TGROSS = rs01.getDouble("TGROSS");
                     objRtn.TISC = rs01.getDouble("TISC");
