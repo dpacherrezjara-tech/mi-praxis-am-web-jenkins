@@ -832,6 +832,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
         win.setValue('cmbCardType', '');
         win.setValue('txtTicket', '');
         win.setValue('cmbSource', '');
+        win.setValue('txtPNR', '');
     },
 //    btnQuery_click: function (obj, e) {
 //        var beanQuery = {};

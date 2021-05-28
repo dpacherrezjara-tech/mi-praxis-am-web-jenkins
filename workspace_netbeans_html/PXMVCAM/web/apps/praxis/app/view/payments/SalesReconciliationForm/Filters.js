@@ -466,18 +466,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Filters', {
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 60},
-                        {
-                            xtype: 'checkboxfield',
-                            id: prototype.id+'-chkADYEN',
-                            boxLabel: '<b>ADYEN</b>',
-                            checked: false,
-                            width: 90,
-                            listeners:{
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 25},
                         {
                             xtype: 'label',
                             text: 'PNR: ',
@@ -494,13 +483,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Filters', {
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,     
                             maskRe: /[0-9a-zA-Z]/,
-                            maxLength: 10,
+                            maxLength: 6,
                             width: 70,
                             enableKeyEvents: true,
                             listeners:{
                                 keypress: 'BuscarPNR_keyDownHandler'
                             }
                         },
+                        {xtype: 'tbspacer', width: 40},
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id+'-chkADYEN',
+                            boxLabel: '<b>ADYEN</b>',
+                            checked: false,
+                            width: 90,
+                            listeners:{
+                                change: 'btnSearch_click'
+                            }
+                        },                        
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'radiogroup',
