@@ -4261,7 +4261,7 @@ public class LoadConciliationDAO {
             while (rst.next()) {
 
                 beanTkt = new A2290Filter();
-                
+
                 beanTkt.CCUST = rst.getString("CCUST").trim();
                 beanTkt.SDATE = rst.getString("SDATE").trim();
                 beanTkt.SPNR = rst.getString("SPNR").trim();
@@ -4269,17 +4269,36 @@ public class LoadConciliationDAO {
                 beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                 beanTkt.SCARDN = rst.getString("ACARDN");
                 beanTkt.SAUTHOC = rst.getString("AAUTHOC");
-                beanTkt.TDOC = rst.getString("TDOC");
+                //beanTkt.TDOC = rst.getString("TDOC");
+                if (rst.getString("TDOC").trim().equals("R")) {
+                    beanTkt.TDOC = "REFUND";
+                } else {
+                    beanTkt.TDOC = "SALES";
+                }
                 beanTkt.SEQ = rst.getString("SEQ");
-                beanTkt.STVAL = rst.getString("STVAL");
-                beanTkt.FTE = rst.getString("FTE");
-                beanTkt.SAGENT = rst.getString("SAGENT");               
+                //beanTkt.STVAL = rst.getString("STVAL");
+                if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
+                    beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                } else {
+                    beanTkt.STVAL = rst.getString("STVAL").trim();
+                }
+                beanTkt.FTE = rst.getString("FTE").trim();
+                if (rst.getString("FTE").trim().equals("A")) {
+                    beanTkt.FTE = "ARC";
+                } else if (rst.getString("FTE").trim().equals("B")) {
+                    beanTkt.FTE = "BSP";
+                } else if (rst.getString("FTE").trim().equals("S")) {
+                    beanTkt.FTE = "ASR";
+                } else if (rst.getString("FTE").trim().equals("M")) {
+                    beanTkt.FTE = "Manual";
+                }
+                beanTkt.SAGENT = rst.getString("SAGENT");
                 beanTkt.TVENTA = rst.getString("TVENTA");
                 beanTkt.SPAYMENT = rst.getString("SPAYMENT");
                 beanTkt.SCARCOD = rst.getString("SCARCOD");
                 beanTkt.SVFOP = rst.getDouble("SVFOP");
                 beanTkt.SVFOPUSD = rst.getDouble("SVFOPUSD");
-                
+
                 lstTkts.add(beanTkt);
             }
             rst.close();
