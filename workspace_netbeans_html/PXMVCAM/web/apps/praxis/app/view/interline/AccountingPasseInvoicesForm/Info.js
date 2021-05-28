@@ -99,15 +99,6 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                     align: 'center'
                                                 },
                                                 items: [
-//                                                    {text: 'Accounting<br>Date', width: 120, dataIndex: 'A1964FCONT',
-//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-//                                                            metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
-//                                                            return '<b>' + value + '<b>';
-//                                                        },
-//        //                                                listeners: {
-//        //                                                    click: 'onViewDataDetailSFI30'
-//        //                                                }
-//                                                    },
                                                     {text: 'Date',
                                                         defaults: {
                                                             menuDisabled: true,
@@ -148,7 +139,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                         columns: [
                                                             {text: 'Number', width: 70, dataIndex: 'PERNUM',
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = 'background-color:#ECF6CE;';
+                                                                    metaData.style = 'background-color:#e0f5ff;';
                                                                     return '<b>' + value + '<b>';
                                                                 }
                                                             }
@@ -164,13 +155,13 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                         columns: [
                                                             {text: 'Cod', width: 70, dataIndex: 'SOURCOD',
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#e0f5ff;";
+                                                                    metaData.style = "text-align:center;background-color:#ECF6CE;";
                                                                     return '<b>' + value + '<b>';
                                                                 }
                                                             },
                                                             {text: 'Description', width: 300, dataIndex: 'SOURDES',
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:left;background-color:#e0f5ff;";
+                                                                    metaData.style = "text-align:left;";
                                                                     return value;
                                                                 }
                                                             }
