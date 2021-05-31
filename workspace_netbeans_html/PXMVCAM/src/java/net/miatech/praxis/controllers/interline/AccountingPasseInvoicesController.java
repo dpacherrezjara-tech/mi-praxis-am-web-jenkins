@@ -166,15 +166,15 @@ public class AccountingPasseInvoicesController extends BaseController {
         return lst;
     }
 
-    /*
+    
         
-    @RequestMapping(value = "search")
+    @RequestMapping(value = "searchX")
     public @ResponseBody
-    String search(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- AccountingPasseInvoices : Search-------------");
+    String searchX(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- AccountingPasseInvoices : searchX-------------");
         map.put("success", true);
 
-        List<A1964Filter> lst = this.getList(request, false);
+        List<A1964Filter> lst = this.getListX(request, false);
         List<A1965Filter> lstXpagar = this.getListXpagar(request, false);
 
         System.out.println("Total : " + lst.size());
@@ -184,7 +184,7 @@ public class AccountingPasseInvoicesController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    public List<A1964Filter> getList(HttpServletRequest request, Boolean bExcel) {
+    public List<A1964Filter> getListX(HttpServletRequest request, Boolean bExcel) {
 
         List<A1964Filter> lst = new ArrayList<>(0);
         A1964Filter filter = new A1964Filter();
@@ -220,8 +220,7 @@ public class AccountingPasseInvoicesController extends BaseController {
         return lst;
     }
     
-    */
-
+    
     public List<A1965Filter> getListXpagar(HttpServletRequest request, Boolean bExcel) {
 
         List<A1965Filter> lst = new ArrayList<>(0);
