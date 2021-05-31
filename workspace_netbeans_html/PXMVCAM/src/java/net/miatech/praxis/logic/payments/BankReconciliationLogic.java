@@ -130,4 +130,8 @@ public class BankReconciliationLogic {
     public List<A2309AFilter> loadPX269SQP03940_TV(A2309AFilter filter) throws SQLException, Exception {
         return bankReconciliationDAO.loadPX269SQP03940_TV(filter);
     }
+    
+    public List<A2290Filter> loadPX269SQP03988(A2290Filter filter) throws SQLException, Exception {
+        return bankReconciliationDAO.loadPX269SQP03988(filter);
+    }    
 }
