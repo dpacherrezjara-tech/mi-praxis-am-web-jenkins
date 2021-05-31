@@ -2603,8 +2603,8 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                             {
                                                                 text: 'Error', dataIndex: 'strDescripcion', width: 250, id: prototype.id + '-verQuery', hidden: true,
                                                                 listeners: {
-                                                                 click: 'openQuery'
-                                                                 },
+                                                                    click: 'openQuery'
+                                                                },
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     //color color:#057ECB
@@ -2960,8 +2960,8 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                             {
                                                                 text: 'Day', dataIndex: 'SDATE', width: 140,
                                                                 /*listeners: {
-                                                                    click: 'gridDetTicketS_clickHandler'
-                                                                },*/
+                                                                 click: 'gridDetTicketS_clickHandler'
+                                                                 },*/
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     //metaData.style = "text-align:center;color:#057ECB;font-weight:bold;background-color:#d5f4d5;";
                                                                     metaData.style = "text-align:center";
@@ -3017,29 +3017,29 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                         ]
                                                     },
                                                     /*{
-                                                        text: 'ACCB',
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: false,
-                                                            align: 'center'
-                                                        },
-                                                        columns: [
-                                                            {
-                                                                text: 'Amount', dataIndex: 'AVFOP', width: 120,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    var data = record.data;
-                                                                    var color = Number(data.SVFOP) !== Number(data.AVFOP) ? "#c22428" : "#244066";
-                                                                    metaData.style = "text-align:right;color:" + color + ";";
-                                                                    return win.formatDblNumber(value);
-                                                                },
-                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                    metaData.style = "text-align:right;";
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDetDayS').getStore().getData().items[0].data;
-                                                                    return win.formatDblNumber(data.dblTotAVFOP);
-                                                                }
-                                                            }
-                                                        ]
-                                                    }*/
+                                                     text: 'ACCB',
+                                                     defaults: {
+                                                     menuDisabled: true,
+                                                     sortable: false,
+                                                     align: 'center'
+                                                     },
+                                                     columns: [
+                                                     {
+                                                     text: 'Amount', dataIndex: 'AVFOP', width: 120,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     var data = record.data;
+                                                     var color = Number(data.SVFOP) !== Number(data.AVFOP) ? "#c22428" : "#244066";
+                                                     metaData.style = "text-align:right;color:" + color + ";";
+                                                     return win.formatDblNumber(value);
+                                                     },
+                                                     summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                     metaData.style = "text-align:right;";
+                                                     var data = Ext.getCmp(prototype.id + '-gridDetDayS').getStore().getData().items[0].data;
+                                                     return win.formatDblNumber(data.dblTotAVFOP);
+                                                     }
+                                                     }
+                                                     ]
+                                                     }*/
                                                 ]
                                             }
                                         },
@@ -3104,6 +3104,148 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                         }
                                         //</editor-fold>
                                     ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-boxDetByPNR',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            height: 'auto',
+                            width: 1133,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDetByPNR',
+                                    width: 1133,
+                                    columnLines: true,
+                                    /*features: [{
+                                            ftype: 'summary'
+                                        }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Sale <br> Date', dataIndex: 'SDATE', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'SPNR', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Currency', dataIndex: 'SCURRENCY', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Merchant', dataIndex: 'MERCHN', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Credit Card',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    resizable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Type', dataIndex: 'TIPOTAR', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            return value;
+                                                        }
+                                                    },
+                                                    /*{
+                                                        text: 'Bank', dataIndex: 'CODEBANK', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            return value;
+                                                        }
+                                                    },*/
+                                                    {
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Auth. Code', dataIndex: 'SAUTHOC', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Sale <br> Amount', dataIndex: 'SVFOP', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                }
+                                            },                                            
+                                            {
+                                                text: 'Type', dataIndex: 'TDOC', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Status', dataIndex: 'strDescStatus', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Src', dataIndex: 'strDescFTE', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Agent <br> Code', dataIndex: 'SAGENT', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },
+                                            /*{
+                                                text: 'FADYEN', dataIndex: 'FADYEN', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return value;
+                                                }
+                                            },*/
+                                        ]
+                                    }
                                 }
                             ]
                         },

@@ -90,7 +90,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
                 {"code": "C", "name": "INCONSISTENCY WITH THE ROBOT"},
                 {"code": "Y", "name": "PENDING"},
                 {"code": "R", "name": "REJECTED"},
-                {"code": "X", "name": "REMOVED"}
+                {"code": "X", "name": "REMOVED"},
+                {"code": "Z", "name": "UNDER INVESTIGATION"}
 
             ]
         }));
@@ -435,6 +436,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
             case 'E':
                 color = '#F2A60D';
                 value = 'ERROR IN THE PROCESS';
+                break;
+            case 'Z':
+                color = '#CCFF00';
+                value = 'UNDER INVESTIGATION';
                 break;
         }
 

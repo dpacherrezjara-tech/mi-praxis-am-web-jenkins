@@ -287,23 +287,36 @@ public class ReportEdoCtaDet {
             Phrase txtAMInfo3 = new Phrase(new Paragraph( "RFC: " +  Data.get(1).tbl_misl.A3961COME2, NORMAL));  //Clave CITA AM           
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT,  txtAMInfo3, 120, PYi, 0);
 
-            int px1 = 500; //580
+            int px1 = 480; //500
             //LOGO CLIENTE   
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
             }
             img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
-            img.setAbsolutePosition(px1, 530);
-            //img.scaleToFit(190, 40);
-            img.scaleToFit(245, 42);
+            img.setAbsolutePosition(px1, 520);
+            img.scaleToFit(280, 60);
             document.add(new Paragraph(String.format("", Data.get(0).tbl_client.A3953LOGO/*RESOURCES[0]*/, img.getClass().getName())));
             document.add(img);            
             writer.setCompressionLevel(0);
             
             //datos CLIENTE
             PYi = py0;
-            Phrase RSOCI = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);
+            String A3953RSOCI_part1 = "";
+            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+            int length = A3953RSOCI.length(); 
+            if(length > 44 ){
+               A3953RSOCI = A3953RSOCI.substring(1, 44);
+               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
+            }
+            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
+            if (!A3953RSOCI_part1.trim().equals("")){
+                PYi = PYi - Hlng;
+                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
+            }
+//            Phrase RSOCI = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
+//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);
             PYi = PYi - Hlng;
             Phrase DIRE1 = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953DIRE1, NORMAL)); //"AV. MARINA NACIONAL Nº. 329 INT C3 "
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, DIRE1, px1, PYi, 0);
@@ -323,20 +336,19 @@ public class ReportEdoCtaDet {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CP, px1, PYi, 0);
                     
             //datos  Contrato
-            PYi = PYi + 10;
-            PYi = PYi - Hlng;
-            
-            //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi+10, 400, 0); //LINEA 
-                        
+            int PYi_c = 454;
+//            PYi = PYi + 10;
+//            PYi = PYi - Hlng;            
+            //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi+10, 400, 0); //LINEA                         
             Phrase CONTR = new Phrase(new Paragraph("Contrato Nº: " + Data.get(0).rpteCab.A3981CONTR, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CONTR, PosX1, PYi, 0);
-            PYi = PYi - Hlng;            
-            int Py_c = PYi;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CONTR, PosX1, PYi_c, 0);
+            PYi_c = PYi_c - Hlng;            
+            int Py_c = PYi_c;
             Phrase NRRPT = new Phrase(new Paragraph("Edo. Cuenta Nº: " + Data.get(0).rpteCab.A3981NREDO, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, NRRPT, PosX1, PYi, 0);
-            PYi = PYi - Hlng;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, NRRPT, PosX1, PYi_c, 0);
+            PYi_c = PYi_c - Hlng;
             Phrase FEECC = new Phrase(new Paragraph("Fecha Emisión: " + Data.get(0).rpteCab.A3981FEDOC, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, FEECC, PosX1, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, FEECC, PosX1, PYi_c, 0);
             
             //Py_c; //vuelve a la altura de "REPORTE Nº:"
             int PosX1_ = 180;            
@@ -357,6 +369,7 @@ public class ReportEdoCtaDet {
 //            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, TXTNACIONAL, PosX1_+28, Py_c+4, 0);
                         
             //Titulos
+            PYi = PYi_c;
             this.setTitle(15, PYi-40, writer );            
             //Double VL_A3958TOT = 0.0;            
             PYi = PYi - (Hlng + 30); //8
@@ -409,16 +422,13 @@ public class ReportEdoCtaDet {
                 }
             }
 
-            // TOTALES                                    
-            int PosTotal_label = 630;
-            PYi = PYi - 18;
-            int posRemark = PYi;
+            // TOTALES                                                
+            PYi = PYi - 18;            
             colorRectangle(under, new GrayColor(0.825f), 15, PYi + 9, 750, -25); 
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO TOTAL: ", NORMAL)), PosTotal_label, PYi, 0);
-            int PosTotal = PosTotal_label + 120;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3981TOT), NORMAL)), PosTotal, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO TOTAL: ", NORMAL)), 580, PYi, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3981TOT), NORMAL)), 720, PYi, 0);
             //TOTAL EN LETRAS            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 100, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 80, PYi, 0);
 
 //            //REMARK            
 //            String TextRemark = Data.get(2).tbl_misl.A3961DESC1.replaceAll("}", Data.get(0).tbl_client.A3953PLZCR + " DIAS ");

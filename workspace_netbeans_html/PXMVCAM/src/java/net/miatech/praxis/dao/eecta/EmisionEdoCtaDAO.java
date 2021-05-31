@@ -211,12 +211,14 @@ public class EmisionEdoCtaDAO {
                 rs03 = cstmt01.getResultSet();
                 while (rs03.next()) {
                     objRtn = new SQP03976Filter();
-                    objRtn.ICORRIENTE = rs03.getDouble("ICORRIENTE");
-                    objRtn.I1_30 = rs03.getDouble("I1_30");
-                    objRtn.I31_60 = rs03.getDouble("I31_60");
-                    objRtn.I61_90 = rs03.getDouble("I61_90");
-                    objRtn.I91_120 = rs03.getDouble("I91_120");
-                    objRtn.I121_MAS = rs03.getDouble("I121_MAS");
+                    objRtn.tbl_saldos.A3990TOT  = rs03.getDouble("A3990TOT");
+                    objRtn.tbl_saldos.A3990TTLS0 = rs03.getDouble("A3990TTLS0");
+                    objRtn.tbl_saldos.A3990TTLS1 = rs03.getDouble("A3990TTLS1");
+                    objRtn.tbl_saldos.A3990TTLS2 = rs03.getDouble("A3990TTLS2");
+                    objRtn.tbl_saldos.A3990TTLS3 = rs03.getDouble("A3990TTLS3");
+                    objRtn.tbl_saldos.A3990TTLS4 = rs03.getDouble("A3990TTLS4");
+                    objRtn.tbl_saldos.A3990TTLS5 = rs03.getDouble("A3990TTLS5");
+                    objRtn.tbl_saldos.A3990TTLS6 = rs03.getDouble("A3990TTLS6");
                     lstRtn.add(objRtn);                    
                 }
             }

@@ -51,7 +51,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 Ext.getCmp(prototype.id + '-txtUser').setValue(Ext.String.trim(res.user.USR));
-                if (Ext.String.trim(res.user.USR) === 'XEILIANA') {
+                if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'SAP26') {
                     Ext.getCmp(prototype.id + '-txtUser').setReadOnly(false);
                 }
                 me.onSearchClickInitial();
@@ -96,7 +96,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
                 {"code": "R", "name": "REJECTED"},
                 {"code": "D", "name": "REEMBOLSABLE"},
                 {"code": "G", "name": "NO REEMBOLSABLE"},
-                {"code": "X", "name": "REMOVED"}
+                {"code": "X", "name": "REMOVED"},
+                {"code": "Z", "name": "UNDER INVESTIGATION"}
             ]
         }));
     },
@@ -407,17 +408,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
 
     onRendererColumnAgency: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnPassenger: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnReason: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -471,11 +472,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
                 color = '#F2A60D';
                 value = 'ERROR IN THE PROCESS';
                 break;
+            case 'Z':
+                color = '#CCFF00';
+                value = 'UNDER INVESTIGATION';
+                break;
         }
 
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
-        return value
+        return value;
     },
 
     onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
