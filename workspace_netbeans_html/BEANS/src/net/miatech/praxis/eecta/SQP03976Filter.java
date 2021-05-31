@@ -17,14 +17,7 @@ public class SQP03976Filter  {
     public A3981 rpteCab = new A3981();
     public A3982 rpteDet = new A3982();
     public A3961 tbl_misl= new A3961();
-    public A3953 tbl_client = new A3953();
-    
+    public A3953 tbl_client = new A3953();    
     //info antigueda de saldos
-    public double ICORRIENTE = 0.00; 
-    public double I1_30 = 0.00; 
-    public double I31_60 = 0.00; 
-    public double I61_90 = 0.00; 
-    public double I91_120 = 0.00; 
-    public double I121_MAS = 0.00; 
-    
+    public A3990 tbl_saldos = new A3990(); 
 }
