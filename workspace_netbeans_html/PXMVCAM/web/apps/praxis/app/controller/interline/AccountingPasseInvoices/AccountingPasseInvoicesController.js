@@ -182,6 +182,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         this.setGrid();
+        this.setGridData();
 
     },
     setFormatParameter: function () {
@@ -214,7 +215,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     // <editor-fold defaultstate="collapsed" desc="setGrid">
 
     setGrid: function () {
-        win.lblUser_toolTip("Estructura: SFI100");
+        win.lblUser_toolTip("Estructura: SFI100/A1964/A1965");
         me.setWidthPie();
         me.panelActual = '-panelGridData';
         me.drillDown.push(me.panelActual);
@@ -293,7 +294,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
     setGridData: function () {
-        win.lblUser_toolTip("Estructura: A1964/A1965");
+//        win.lblUser_toolTip("Estructura: A1964/A1965");
         me.setWidthPie();
         me.panelActual = '-panelGridData';
         me.drillDown.push(me.panelActual);
@@ -301,14 +302,14 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
             proxy: {
-                url: prototype.url + '/search'
+                url: prototype.url + '/searchX'
             }, listeners: {
                 beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
-                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    Ext.getCmp(prototype.id + '-panelGrid2').mask('Loading...');
                 },
                 load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    Ext.getCmp(prototype.id + '-panelGrid2').unmask();
                     
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
@@ -382,7 +383,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
                                 root: dataRoot
                             });
 
-                            Ext.getCmp(prototype.id + '-gridData').setStore(storeTree);
+                            Ext.getCmp(prototype.id + '-gridDataX').setStore(storeTree);
 
                             // ---------------------------------------------------------------------
                             
