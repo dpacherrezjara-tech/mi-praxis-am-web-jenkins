@@ -1209,7 +1209,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetByPNR',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1265,
+                                                    width: 1285,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -1237,9 +1237,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Ticket', dataIndex: 'TICKET', width: 100,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    return value;
+                                                                text: 'Ticket', dataIndex: 'TICKET', width: 120,
+                                                                listeners: {
+                                                                    click: 'viewMasterTkt2'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                                    metaData.style = "background-color:#d5f4d5;";
+                                                                    value = '<b>' + value + '</b>';
+                                                                    return '<a href="#payments-sales-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                                 }
                                                             },
                                                             {
