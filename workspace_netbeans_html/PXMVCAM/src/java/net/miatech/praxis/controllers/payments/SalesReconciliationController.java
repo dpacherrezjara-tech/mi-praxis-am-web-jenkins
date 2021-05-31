@@ -25,15 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author gsanchez
  */
-
 @Controller
 @Scope("request")
 @RequestMapping("/SalesReconciliation")
 public class SalesReconciliationController extends BaseController {
-    
+
     @RequestMapping(value = "/search")
     public @ResponseBody
-    String search(ModelMap map, HttpServletRequest request,HttpServletResponse response) {
+    String search(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A2290Filter filter = new A2290Filter();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
@@ -53,11 +52,11 @@ public class SalesReconciliationController extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaDataSales = logic.loadPX263SQP00652(filter);
-            
+
             map.put("success", true);
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaDataSales);
@@ -74,9 +73,9 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return (dw_excel)?null:(new Gson().toJson(map));
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     @RequestMapping(value = "/searchDetCountry")
     public @ResponseBody
     String searchDetCountry(ModelMap map, HttpServletRequest request) {
@@ -93,11 +92,11 @@ public class SalesReconciliationController extends BaseController {
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00655(filter);
-            
+
             map.put("success", true);
             map.put("data", listaData);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -110,7 +109,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchDetCardCode")
     public @ResponseBody
     String searchDetCardCode(ModelMap map, HttpServletRequest request) {
@@ -127,11 +126,11 @@ public class SalesReconciliationController extends BaseController {
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00656(filter);
-            
+
             map.put("success", true);
             map.put("data", listaData);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -144,7 +143,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchDetDay")
     public @ResponseBody
     String searchDetDay(ModelMap map, HttpServletRequest request) {
@@ -161,11 +160,11 @@ public class SalesReconciliationController extends BaseController {
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00657(filter);
-            
+
             map.put("success", true);
             map.put("data", listaData);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -178,7 +177,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchDetTicket")
     public @ResponseBody
     String searchDetTicket(ModelMap map, HttpServletRequest request) {
@@ -195,11 +194,11 @@ public class SalesReconciliationController extends BaseController {
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00658(filter);
-            
+
             map.put("success", true);
             map.put("data", listaData);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -212,7 +211,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchCashMonth")
     public @ResponseBody
     String searchCashMonth(ModelMap map, HttpServletRequest request) {
@@ -224,7 +223,7 @@ public class SalesReconciliationController extends BaseController {
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2370Filter> listaDataCash = logic.loadPX263SQP00899(filter);
-            
+
             map.put("success", true);
             map.put("data", listaDataCash);
         } catch (SQLException e) {
@@ -236,7 +235,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchCashCountry")
     public @ResponseBody
     String searchCashCountry(ModelMap map, HttpServletRequest request) {
@@ -248,7 +247,7 @@ public class SalesReconciliationController extends BaseController {
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaDataCash = logic.loadPX263SQP00900(filter);
-            
+
             map.put("success", true);
             map.put("data", listaDataCash);
         } catch (SQLException e) {
@@ -260,7 +259,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchCashDay")
     public @ResponseBody
     String searchCashDay(ModelMap map, HttpServletRequest request) {
@@ -272,7 +271,7 @@ public class SalesReconciliationController extends BaseController {
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaDataCash = logic.loadPX263SQP00901(filter);
-            
+
             map.put("success", true);
             map.put("data", listaDataCash);
         } catch (SQLException e) {
@@ -284,7 +283,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchDetTICKET")
     public @ResponseBody
     String searchDetTICKET(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -297,8 +296,8 @@ public class SalesReconciliationController extends BaseController {
 
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX263SQP01960(filter);    
-            
+            hmResultado = logic.loadPX263SQP01960(filter);
+
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
@@ -317,10 +316,10 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        
-        return (dw_excel)?null:(new Gson().toJson(map));
+
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     @RequestMapping(value = "/searchBean")
     public @ResponseBody
     String searchBean(ModelMap map, HttpServletRequest request) {
@@ -332,7 +331,7 @@ public class SalesReconciliationController extends BaseController {
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             A2290Filter bean = logic.loadPX263SQP00659(filter);
-            
+
             map.put("success", true);
             map.put("beanCons", bean);
         } catch (SQLException e) {
@@ -344,7 +343,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     //Drill Down por Estado ****************************************************
     @RequestMapping(value = "/searchDetCountryByStval")
     public @ResponseBody
@@ -369,11 +368,11 @@ public class SalesReconciliationController extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00676(filter);
-            
+
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
@@ -393,13 +392,13 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return (dw_excel)?null:(new Gson().toJson(map));
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
-     //Drill Down por Estado ****************************************************
+
+    //Drill Down por Estado ****************************************************
     @RequestMapping(value = "/searchDetCountryByStval_1")
     public @ResponseBody
-    String searchDetCountryByStval_1(ModelMap map, HttpServletRequest request) {       
+    String searchDetCountryByStval_1(ModelMap map, HttpServletRequest request) {
         A2290Filter filter = new A2290Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -413,15 +412,15 @@ public class SalesReconciliationController extends BaseController {
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00676(filter);      
-                        
+            List<A2290Filter> listaData = logic.loadPX263SQP00676(filter);
+
             map.put("success", true);
             map.put("data", listaData);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
-          
+
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -431,7 +430,7 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     //Drill Down por Estado ****************************************************
     @RequestMapping(value = "/searchDetCardCodeByStval")
     public @ResponseBody
@@ -456,11 +455,11 @@ public class SalesReconciliationController extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00677(filter);
-            
+
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
@@ -481,11 +480,10 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return (dw_excel)?null:(new Gson().toJson(map));
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     //searchDetCardCodeByStval_Pay
-    
     //Drill Down por Estado ****************************************************
     @RequestMapping(value = "/searchDetDayByStval")
     public @ResponseBody
@@ -510,11 +508,11 @@ public class SalesReconciliationController extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00678(filter);
-            
+
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
@@ -528,7 +526,7 @@ public class SalesReconciliationController extends BaseController {
                 map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
                 map.put("lstDetError", listaError);
             }
-            
+
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -536,11 +534,10 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return (dw_excel)?null:(new Gson().toJson(map));
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     //searchDetDayByStval_Pay
-    
     @RequestMapping(value = "/searchDetTktByStval")
     public @ResponseBody
     String searchDetTktByStval(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -565,11 +562,11 @@ public class SalesReconciliationController extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             hmResultado = logic.loadPX263SQP00715(filter);
-            
+
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
@@ -582,7 +579,7 @@ public class SalesReconciliationController extends BaseController {
                 map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
                 map.put("lstError", listaError);
             }
-            
+
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -590,9 +587,33 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return (dw_excel)?null:(new Gson().toJson(map));
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
+    @RequestMapping(value = "/searchByPNR")
+    public @ResponseBody
+    String searchByPNR(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        A2290Filter filter = new A2290Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            LoadConciliationLogic logic = new LoadConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A2290Filter> listaData = logic.loadPX263SQP03986(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+
     @RequestMapping(value = "/searchWarnTkts")
     public @ResponseBody
     String searchWarnTkts(ModelMap map, HttpServletRequest request) {
@@ -604,7 +625,7 @@ public class SalesReconciliationController extends BaseController {
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2290Filter> listaData = logic.loadPX263SQP00817(filter);
-            
+
             map.put("success", true);
             map.put("lstWarnTkt", listaData);
         } catch (SQLException e) {
@@ -616,10 +637,10 @@ public class SalesReconciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "/searchDetTARJETA")
     public @ResponseBody
-    String searchDetTARJETA(ModelMap map, HttpServletRequest request,HttpServletResponse response) {
+    String searchDetTARJETA(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         A2290Filter filter = new A2290Filter();
         HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
@@ -641,12 +662,11 @@ public class SalesReconciliationController extends BaseController {
                 filter.page.PAGROW = -1;
                 filter.page.PAGNUM = 1;
             }
-            
+
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             hmResultado = logic.loadPX263SQP01828(filter);
-            
-            
+
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
@@ -659,12 +679,10 @@ public class SalesReconciliationController extends BaseController {
                 map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
                 map.put("lstError", listaError);
             }
-            
+
 //            map.put("success", true);
 //            map.put("lstDetTkyByStval", listaData);
 //            map.put("lstError", listaError);
-            
-            
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -672,9 +690,9 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return (dw_excel)?null:(new Gson().toJson(map));
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
     @RequestMapping(value = "/searchDetMERCHAT")
     public @ResponseBody
     String searchDetMERCHAT(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -688,7 +706,7 @@ public class SalesReconciliationController extends BaseController {
             LoadConciliationLogic logic = new LoadConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             hmResultado = logic.loadPX263SQP01976(filter);
-            
+
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
@@ -707,9 +725,9 @@ public class SalesReconciliationController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
-        return (dw_excel)?null:(new Gson().toJson(map));
+        return (dw_excel) ? null : (new Gson().toJson(map));
     }
-    
+
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody
 //    void getXLSX(HttpServletRequest request, HttpServletResponse response) {

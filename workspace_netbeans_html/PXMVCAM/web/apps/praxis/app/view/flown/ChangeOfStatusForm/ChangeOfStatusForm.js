@@ -411,6 +411,23 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                                 specialkey: 'onSearchkey',
                                                 //change: 'onchange'
                                             }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-CmbType',
+                                            fieldLabel: 'Type',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 200,
+                                            labelWidth: 50,
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender'
+                                            }
                                         }
                                     ]
                                 }
@@ -543,7 +560,13 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         text: 'Hour',
                                         dataIndex: 'A3676HRECE',
                                         width: 50
+                                    },
+                                    {
+                                        text: 'Type',
+                                        dataIndex: 'A3676TIDOC',
+                                        width: 50
                                     }
+                                    
                                    
                                 ],
                                 defaults: {

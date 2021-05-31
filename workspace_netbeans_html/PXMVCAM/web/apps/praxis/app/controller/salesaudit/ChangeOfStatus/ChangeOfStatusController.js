@@ -40,6 +40,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
         var cmbStatusFin = Ext.getCmp(prototype.id + '-CmbStatusFin');
         var cmbOrigen = Ext.getCmp(prototype.id + '-CmbOrigen');
         var cmbStatus = Ext.getCmp(prototype.id + '-CmbStatus');
+         var CmbType = Ext.getCmp(prototype.id + '-CmbType');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -103,6 +104,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
                 {"code": "E", "name": "SENT TO THE ROBOT"},
                 {"code": "S", "name": "NOT ACTION SABRE"},
                 {"code": "F", "name": "NOT APPLICABLE RULE"}
+
+            ]
+        }));
+        CmbType.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "1", "name": "TKT"},
+                {"code": "2", "name": "CPN"}
 
             ]
         }));
@@ -245,6 +254,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ChangeOfStatus.ChangeOfStatusContro
         me.beanTMP.IN_LOTE = Ext.String.trim(Ext.getCmp(prototype.id + '-txtLote').getValue());
         me.beanTMP.IN_DATEFROM = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
         me.beanTMP.IN_DATETO = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
+        me.beanTMP.IN_TYPE = Ext.getCmp(prototype.id + '-CmbType').getValue();
         me.beanTMP.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
 
         store.loadPage(1, {

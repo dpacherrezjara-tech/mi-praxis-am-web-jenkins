@@ -240,11 +240,66 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
         });
     },
     //</editor-fold>
+    BuscarPNR_keyDownHandler: function(obj, e, eOpts) {
+        switch (e.getKey()) {
+            case 13:
+                if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6) {
+                    this.searchByPNR();
+                } else {
+                    global.Msg({
+                        msg: 'PNR must contain 6 characters.'
+                    });
+                }
+                break;
+        }
+    },
+    searchByPNR: function() {
+        var bean = {};
+        bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue()
+        me.panelActual = '-boxDetByPNR'; //boxDetByPNRpanelGridData
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByPNR'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    win.lblUser_toolTip("Estructura: A2291Y");
 
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        if (obj.data.length > 0) {
 
+                        } else {
+                            global.Msg({msg: 'Data not found'});
+                        }
+                    } else
+                        global.Msg({msg: res.sesion});
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetByPNR').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
+    },
     btnSearch_click: function(obj, e) {
-        this.setFormatParameter();
-        this.setGridData(obj, e);
+        if (win.getValue('txtPNR').trim() !== '') {
+            if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6) {
+                this.searchByPNR();
+            } else {
+                global.Msg({
+                    msg: 'PNR must contain 6 characters.'
+                });
+            }
+        } else {
+            this.setFormatParameter();
+            this.setGridData(obj, e);
+        }
     },
     cmbTranType_changeHandler: function() {
         var selectedValue = Ext.getCmp(prototype.id + '-rbgType').getValue().rbgType;
@@ -587,7 +642,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
         }
 
     },
-    openQuery: function (column, e, row, column, x, rowData) {
+    openQuery: function(column, e, row, column, x, rowData) {
 
         var beanQuery = rowData.data;
         var BankReconciliation = Ext.create('Ext.Praxis.view.program.ProBankReconciliationTktForm', {id: 'ProBankReconciliationTktForm'});
@@ -830,7 +885,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
         Ext.getCmp(prototype.id + '-gridDetCardS').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
     },
-    gridDetDayS_clickHandler: function (column, e, row, column, x, rowData) {
+    gridDetDayS_clickHandler: function(column, e, row, column, x, rowData) {
         var beanDet = x.record.data;
         //win.selectedChild('vskMain', 'boxDetDayS');
 
@@ -1763,6 +1818,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
         Ext.getCmp(prototype.id + '-txtMERCHN').setValue('');
         Ext.getCmp(prototype.id + '-txtSAGENT').setValue('');
         Ext.getCmp(prototype.id + '-cmbFTE').setValue('');
+        Ext.getCmp(prototype.id + '-txtPNR').setValue('');
 
     },
     btnExcel_click: function(obj, e) {

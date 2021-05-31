@@ -445,7 +445,8 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                 },
                                 items: [
                                     {text: 'System </br>date', dataIndex: 'A3951FREGI', width: 75},
-                                    {text: 'Period', dataIndex: 'A3951PERIO', width: 75},
+                                    {text: 'Period', dataIndex: 'A3951PER', width: 75},
+                                    {text: 'Detail', dataIndex: 'A3951PERIO', width: 75},
                                     {text: 'Country', dataIndex: 'A3951PAIS', width: 80, align: 'center'},
                                     {text: 'Agent<br>Code', dataIndex: 'A3951IATA', width: 70, align: 'center'},
                                     {text: 'Agent Name', dataIndex: 'A3951IATANAME', width: 200, renderer: 'onRendererColumnAttr'},
@@ -482,7 +483,8 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                 },
                                 items: [
                                     {text: 'System </br>date', dataIndex: 'A3951FREGI', width: 75},
-                                    {text: 'Period', dataIndex: 'A3951PERIO', width: 75},
+                                    {text: 'Period', dataIndex: 'A3951PER', width: 75},
+                                    {text: 'Detail', dataIndex: 'A3951PERIO', width: 75},
                                     {text: 'Country', dataIndex: 'A3951PAIS', width: 80, align: 'center'},
                                     {text: 'Agent<br>Code', dataIndex: 'A3951IATA', width: 70, align: 'center'},
                                     {text: 'Agent Name', dataIndex: 'A3951IATANAME', width: 200, renderer: 'onRendererColumnAttr'},

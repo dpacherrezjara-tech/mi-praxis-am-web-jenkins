@@ -55,7 +55,7 @@ public class AccountingPasseInvoicesDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<SFI100Filter> SQP04008(SFI100Filter filter) throws SQLException, Exception {
         List<SFI100Filter> lstRtn = new ArrayList<SFI100Filter>(0);
         SFI100Filter objRtn;
@@ -63,34 +63,35 @@ public class AccountingPasseInvoicesDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04008(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04008(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_FECHA_FROM);
             cstmt01.setString(3, filter.IN_FECHA_TO);
-            cstmt01.setString(4, filter.IN_TTRAN);
-            cstmt01.setString(5, filter.IN_PEREST);
+            cstmt01.setString(4, filter.IN_TFECHA.trim());
+            cstmt01.setString(5, filter.IN_TTRAN);
+            cstmt01.setString(6, filter.IN_PEREST);
 
-            cstmt01.setInt(6, filter.page.PAGNUM);
-            cstmt01.setInt(7, filter.page.PAGROW);
-            cstmt01.setInt(8, filter.page.TOTPAG);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -117,13 +118,17 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
                     objRtn.IN_TTRAN = filter.IN_TTRAN;
                     objRtn.IN_PEREST = filter.IN_PEREST;
-                    
+
                     objRtn.RN = rs01.getLong("RN");
                     objRtn.FCONT = rs01.getString("FCONT");
                     objRtn.BDATE = rs01.getString("BDATE");
+                    objRtn.strFormatDate = Functions.getMonthConvert2(objRtn.BDATE);
+//                    objRtn.strFormatDate = Functions.getMonthConvert3(objRtn.BDATE);//YYMMDD
                     objRtn.SOURCOD = rs01.getString("SOURCOD");
                     objRtn.SOURDES = rs01.getString("SOURDES");
-                    
+                    objRtn.PERNUM = rs01.getString("PERNUM");
+                    objRtn.FECR = rs01.getString("FECR");
+
                     objRtn.TGROSS = rs01.getDouble("TGROSS");
                     objRtn.TISC = rs01.getDouble("TISC");
                     objRtn.TTAX = rs01.getDouble("TTAX");
@@ -131,7 +136,9 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.HFEEAM = rs01.getDouble("HFEEAM");
                     objRtn.TUATP = rs01.getDouble("TUATP");
                     objRtn.TNET = rs01.getDouble("TNET");
-                   
+                    
+                    objRtn.IDCON = rs01.getString("IDCON");
+
                     objRtn.totTGROSS = totTGROSS;
                     objRtn.totTISC = totTISC;
                     objRtn.totTTAX = totTTAX;
@@ -171,10 +178,95 @@ public class AccountingPasseInvoicesDAO {
 
         return lstRtn;
     }
-    
-    
+
+    public List<SFI100Filter> SQP03987(SFI100Filter filter) throws SQLException, Exception {
+        List<SFI100Filter> lstRtn = new ArrayList<SFI100Filter>(0);
+        SFI100Filter objRtn;
+        double totSCREAL = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03987(?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_TFECHA.trim());
+            cstmt01.setString(5, filter.IN_TTRAN);
+            cstmt01.setString(6, filter.IN_PEREST);
+
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new SFI100Filter();
+                objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                objRtn.IN_TTRAN = filter.IN_TTRAN;
+                objRtn.IN_PEREST = filter.IN_PEREST;
+
+                objRtn.RN = rs01.getLong("RN");
+                objRtn.SOURCECODE = rs01.getString("SOURCECODE");
+                objRtn.CONCEPTO = rs01.getString("CONCEPTO");
+                objRtn.SCREAL = rs01.getDouble("SCREAL");
+                
+                totSCREAL = totSCREAL + objRtn.SCREAL;
+
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
+                lstRtn.add(objRtn);
+            }
+            for (int i = 0; i < lstRtn.size(); i++) {
+                lstRtn.get(i).totSCREAL = totSCREAL;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //  System.out.println( e.getMessage());
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+
     // --------------------------------------------------------------------------------------------------------------------------
-    
     public List<A1964Filter> loadPX538(A1964Filter filter) throws SQLException, Exception {
         List<A1964Filter> lstRtn = new ArrayList<A1964Filter>(0);
         A1964Filter objRtn;
@@ -230,7 +322,7 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
                     objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
                     objRtn.IN_A1964TUSO = filter.IN_A1964TUSO;
-                    
+
                     objRtn.RN = rs01.getLong("RN");
                     objRtn.A1964FCONT = rs01.getString("A1964FCONT");
                     objRtn.A1964TUSO = rs01.getString("A1964TUSO");
@@ -239,7 +331,7 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.QTY_ACTIV = rs01.getDouble("QTY_ACTIV");
                     objRtn.QTY_PASIV = rs01.getDouble("QTY_PASIV");
                     objRtn.TOTAL = rs01.getDouble("TOTAL");
-                   
+
                     objRtn.tot_TOTAL = tot_TOTAL;
                     objRtn.tot_QTY_ACTIV = tot_QTY_ACTIV;
                     objRtn.tot_QTY_PASIV = tot_QTY_PASIV;
@@ -275,7 +367,7 @@ public class AccountingPasseInvoicesDAO {
 
         return lstRtn;
     }
-    
+
     public List<A1965Filter> loadPX538_Xpagar(A1964Filter filter) throws SQLException, Exception {
         List<A1965Filter> lstRtn = new ArrayList<A1965Filter>(0);
         A1965Filter objRtn;
@@ -331,7 +423,7 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
                     objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
                     objRtn.IN_A1965TUSO = filter.IN_A1964TUSO;
-                    
+
                     objRtn.RN = rs01.getLong("RN");
                     objRtn.A1965FCONT = rs01.getString("A1965FCONT");
                     objRtn.A1965TUSO = rs01.getString("A1965TUSO");
@@ -340,7 +432,7 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.QTY_ACTIV = rs01.getDouble("QTY_ACTIV");
                     objRtn.QTY_PASIV = rs01.getDouble("QTY_PASIV");
                     objRtn.TOTAL = rs01.getDouble("TOTAL");
-                   
+
                     objRtn.tot_TOTAL = tot_TOTAL;
                     objRtn.tot_QTY_ACTIV = tot_QTY_ACTIV;
                     objRtn.tot_QTY_PASIV = tot_QTY_PASIV;
@@ -376,7 +468,7 @@ public class AccountingPasseInvoicesDAO {
 
         return lstRtn;
     }
-    
+
     public List<SFI020Filter> loadPX538_excel(SFI020Filter filter) throws SQLException, Exception {
         List<SFI020Filter> lstRtn = new ArrayList<SFI020Filter>(0);
         SFI020Filter objRtn;
@@ -438,7 +530,6 @@ public class AccountingPasseInvoicesDAO {
                 objRtn.UATPAMT = rs01.getDouble("UATP_AMOUNT");
                 objRtn.CPNTAM = rs01.getDouble("CPNTAM");
 
-
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -451,7 +542,7 @@ public class AccountingPasseInvoicesDAO {
             } catch (SQLException e) {
                 logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             //  System.out.println( e.getMessage());
@@ -476,5 +567,5 @@ public class AccountingPasseInvoicesDAO {
 
         return lstRtn;
     }
-    
+
 }

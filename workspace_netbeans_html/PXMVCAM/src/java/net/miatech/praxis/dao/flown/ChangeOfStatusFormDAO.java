@@ -53,7 +53,7 @@ public class ChangeOfStatusFormDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PRAXIS.SQP03120(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP03120(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -87,6 +87,7 @@ public class ChangeOfStatusFormDAO {
             cstmt01.setInt(20, filter.page.PAGROW);
             cstmt01.setInt(21, filter.page.TOTPAG);
             cstmt01.setInt(22, filter.page.TOTROW);
+            cstmt01.setString(23, filter.IN_TYPE);
 
             cstmt01.execute();
 
@@ -122,6 +123,7 @@ public class ChangeOfStatusFormDAO {
                 objRtn.A3676REFRB = rs01.getString("A3676REFRB");
                 objRtn.A3676STINI = rs01.getString("A3676STINI");
                 objRtn.A3676STFIN = rs01.getString("A3676STFIN");
+                objRtn.A3676TIDOC = rs01.getString("A3676TIDOC");
 
                 objRtn.A3676DESCR = rs01.getString("A3676DESCR");
                 objRtn.A3676RESUL = rs01.getString("A3676RESUL");

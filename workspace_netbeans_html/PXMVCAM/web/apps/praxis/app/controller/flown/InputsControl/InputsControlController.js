@@ -430,12 +430,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     },
     setGridDataA1686Formateados: function(dv, record, item, index, e) {
         var data = dv.dataSource.data.items[item].data;
-        console.log(data.QRECERR);
+        console.log(data);
         params = {
             IN_TIPOFECHA: data.IN_TIPOFECHA,
             FECHA: data.FECHA,
             FUENTE: data.FUENTE,
             HOCR: data.HOCR,
+            QRECOR: data.QRECOR,
             QRECERR: data.QRECERR
         };
 

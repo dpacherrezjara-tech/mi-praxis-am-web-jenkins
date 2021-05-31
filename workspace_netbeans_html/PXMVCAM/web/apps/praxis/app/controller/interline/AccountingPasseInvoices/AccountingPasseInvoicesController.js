@@ -126,7 +126,17 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue("");
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue("");
-
+        
+        var cmbTfecha = Ext.getCmp(prototype.id + '-cmbTfecha');
+        cmbTfecha.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["AD", "Accounting Date"],
+                ["CD", "Creation Date"]
+            ]
+        }));
+        cmbTfecha.setValue("AD");
 
         var cmbTTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN');
         cmbTTRAN.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -153,6 +163,22 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         this.btnSearch_click();
 
     },
+    showSummary: function (obj, value, old_value) {
+        
+        console.log(value);
+        console.log(old_value);
+        if (value) {
+            Ext.getCmp(prototype.id + '-panelGrid').hide();
+            Ext.getCmp(prototype.id + '-panelGridSummary').show();
+            this.setFormatParameter();
+            this.setGridSummary();
+        } else {
+            Ext.getCmp(prototype.id + '-panelGridSummary').hide();
+            Ext.getCmp(prototype.id + '-panelGrid').show();
+            this.btnSearch_click();
+        }
+                       
+    },
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         this.setGrid();
@@ -175,6 +201,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         me.bean.IN_FECHA_FROM = '' + yearFrom + monthFrom;
         me.bean.IN_FECHA_TO = '' + yearTo + monthTo;
 
+        me.bean.IN_TFECHA = Ext.getCmp(prototype.id + '-cmbTfecha').getValue();
         me.bean.IN_TTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN').getValue();
         me.bean.IN_PEREST = Ext.getCmp(prototype.id + '-cmbPEREST').getValue();
 
@@ -184,7 +211,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         };
         console.log(searchParams);
     },
-    // <editor-fold defaultstate="collapsed" desc="setGridData">
+    // <editor-fold defaultstate="collapsed" desc="setGrid">
 
     setGrid: function () {
         win.lblUser_toolTip("Estructura: SFI100");
@@ -207,15 +234,15 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
                     
-//                    if (res.success) {
-//                        if (obj.data.length === 0) {
-//                            global.Msg({
-//                                msg: 'Data not found.'
-//                            });
-//                        } else {
-//                            
-//                        }
-//                    }
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
                 }
             }
         });
@@ -225,7 +252,44 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
+    setGridSummary: function () {
+        win.lblUser_toolTip("Estructura: SFI100");
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchBySummary'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataSummary').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataSummary').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+
+    },
     // </editor-fold>
+     
+     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
     setGridData: function () {

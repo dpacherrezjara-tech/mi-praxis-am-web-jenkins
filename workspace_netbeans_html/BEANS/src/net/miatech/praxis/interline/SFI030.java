@@ -53,6 +53,10 @@ public class SFI030 {
     public String SOURDES = "";
     public String FILLER6 = "";
     public String PERNUM = "";
+    public double LBRATE = 0.00;
+    
+    
+    
     public String USCR = "";
     public String FECR = "";
     public String HOCR = "";

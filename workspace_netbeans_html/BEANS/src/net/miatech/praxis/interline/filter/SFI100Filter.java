@@ -18,8 +18,10 @@ public class SFI100Filter extends SFI100{
     public long RN=0;
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String IN_TFECHA = "";
     public String IN_TTRAN = "";
     public String IN_PEREST = "";
+    public String strFormatDate = "";
     
     
     public double totTGROSS = 0;
@@ -29,6 +31,12 @@ public class SFI100Filter extends SFI100{
     public double totHFEEAM = 0;
     public double totTUATP = 0;
     public double totTNET = 0;
+    
+    //Datos del Summary
+    public String SOURCECODE = "";
+    public String CONCEPTO = "";
+    public double SCREAL = 0;
+    public double totSCREAL = 0;
     
     public Pagination page = new Pagination();
 }

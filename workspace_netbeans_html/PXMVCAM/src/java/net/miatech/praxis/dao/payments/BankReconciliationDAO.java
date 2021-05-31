@@ -232,6 +232,119 @@ public class BankReconciliationDAO {
         return lstTkts;
     }
 
+    public List<A2290Filter> loadPX269SQP03988(A2290Filter filter) throws SQLException, Exception {
+
+        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
+        A2290Filter beanTkt;
+        HashMap<String, String> hmDescEstadosSTVAL = new HashMap<String, String>();
+        hmDescEstadosSTVAL.put("1", "Match");
+        hmDescEstadosSTVAL.put("2", "Settlement w/o Paying");
+        hmDescEstadosSTVAL.put("3", "Paying w/o Settlement");
+        hmDescEstadosSTVAL.put("4", "Match Manual");
+        hmDescEstadosSTVAL.put("5", "Match with Difference");
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03988(?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_PNR);
+
+            cstmt.setInt(3, filter.page.PAGNUM);
+            cstmt.setInt(4, filter.page.PAGROW);
+            cstmt.setInt(5, filter.page.TOTPAG);
+            cstmt.setInt(6, filter.page.TOTROW);
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(3);
+            filter.page.PAGROW = cstmt.getInt(4);
+            filter.page.TOTPAG = cstmt.getInt(5);
+            filter.page.TOTROW = cstmt.getInt(6);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanTkt = new A2290Filter();
+                beanTkt.CCUST = rst.getString("CCUST").trim();
+                beanTkt.SDATE = rst.getString("SDATE").trim(); //
+                beanTkt.TDOC = rst.getString("TDOC").trim();//
+                beanTkt.STVAL = rst.getString("STVAL").trim();
+                if (hmDescEstadosSTVAL.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
+                    beanTkt.strDescStatus = hmDescEstadosSTVAL.get(rst.getString("STVAL").trim()).toString();
+                }
+                beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();//
+                beanTkt.TRNXCODE = rst.getString("TRNXCODE").trim();
+                beanTkt.FTE = rst.getString("FTE").trim();
+                if (rst.getString("FTE").trim().equals("S")) {
+                    beanTkt.strDescFTE = "ASR";
+                } else if (rst.getString("FTE").trim().equals("A")) {
+                    beanTkt.strDescFTE = "ARC";
+                } else if (rst.getString("FTE").trim().equals("B")) {
+                    beanTkt.strDescFTE = "BSP";
+                } else {
+                    beanTkt.strDescFTE = rst.getString("FTE").trim();
+                }
+                beanTkt.NUMREF = rst.getString("NUMREF").trim();
+                beanTkt.SPNR = rst.getString("SPNR").trim(); //
+                beanTkt.MERCHN = rst.getString("MERCHN").trim();//
+                beanTkt.SCARDN = rst.getString("SCARDN").trim();//
+                beanTkt.SCARCOD = rst.getString("SCARCOD").trim();//
+                beanTkt.TIPOTAR = rst.getString("TIPOTAR").trim();//
+                beanTkt.CODEBANK = rst.getString("CODEBANK").trim();//
+                beanTkt.FCONC = rst.getString("FCONC").trim();
+                beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();//
+                beanTkt.SVFOP = rst.getDouble("SVFOP");//
+                beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim(); //
+                beanTkt.SAGENT = rst.getString("SAGENT").trim();//
+                beanTkt.SORIG = rst.getString("SORIG").trim();
+                beanTkt.FADYEN = rst.getString("FADYEN").trim();
+
+                beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                beanTkt.page.PAGROW = filter.page.PAGROW;
+                beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                beanTkt.page.TOTROW = filter.page.TOTROW;
+
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+
     public List<A2290Filter> loadPX269SQP00699(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
@@ -1839,7 +1952,7 @@ public class BankReconciliationDAO {
                     beanTkt.CERROR = filter.CERROR.trim();
                     beanTkt.IN_AUTHNBR = filter.IN_AUTHNBR.trim();
                     beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
-                    
+
                     if (rst.getString("CARD").trim().isEmpty()) {
                         beanTkt.SCARCOD = "**";
                         beanTkt.strDescCard = "(Sales without ACCB)";
@@ -1905,7 +2018,7 @@ public class BankReconciliationDAO {
 
         return lstTkts;
     }
-    
+
     public List<A2290Filter> loadPX269SQP03984(A2290Filter filter) throws SQLException, Exception {
 
         List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);

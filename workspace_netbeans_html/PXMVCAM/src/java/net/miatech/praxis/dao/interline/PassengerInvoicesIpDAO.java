@@ -2799,27 +2799,59 @@ public class PassengerInvoicesIpDAO {
 
                 objRtn = new SFI030();
 
-                objRtn.SMI = rs01.getString("SMI");
-                objRtn.RSN = rs01.getInt("RSN");
-                objRtn.SFI = rs01.getString("SFI");
+                objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.PERNUM = rs01.getString("PERNUM");
+                objRtn.LBRATE = rs01.getDouble("LBRATE");
                 objRtn.BAIR = rs01.getString("BAIR");
                 objRtn.BDAIR = rs01.getString("BDAIR");
-                objRtn.BCODE = rs01.getInt("BCODE");
                 objRtn.BNUMBER = rs01.getString("BNUMBER");
-                objRtn.BATSEQ = rs01.getInt("BATSEQ");
-                objRtn.RECSEQ = rs01.getInt("RECSEQ");
-                objRtn.TISCSG = rs01.getString("TISCSG");
+                objRtn.NUMBILL = rs01.getInt("NUMBILL");
+                objRtn.BCODE = rs01.getInt("BCODE");
+                objRtn.SOURCOD = rs01.getString("SOURCOD");
+                
                 objRtn.TGROSS = rs01.getDouble("TGROSS");
                 objRtn.TISC = rs01.getDouble("TISC");
                 objRtn.TTAX = rs01.getDouble("TTAX");
+                objRtn.TOHCOM = rs01.getDouble("TOHCOM");
+                objRtn.HFEEAM = rs01.getDouble("HFEEAM");
+                objRtn.TUATP = rs01.getDouble("TUATP");
                 objRtn.TNET = rs01.getDouble("TNET");
-                objRtn.NUMBILL = rs01.getInt("NUMBILL");
-                objRtn.SOURCOD = rs01.getString("SOURCOD");
+                
                 objRtn.TGROSSG = rs01.getString("TGROSSG");
+                if(objRtn.TGROSSG.trim().equals("M")){
+                    objRtn.TGROSS = objRtn.TGROSS * -1;
+                }
+                
+                objRtn.TISCSG = rs01.getString("TISCSG");
+                if(objRtn.TISCSG.trim().equals("M")){
+                    objRtn.TISC = objRtn.TISC * -1;
+                }
+                
                 objRtn.TTAXSG = rs01.getString("TTAXSG");
+                if(objRtn.TTAXSG.trim().equals("M")){
+                    objRtn.TTAX = objRtn.TTAX * -1;
+                }
+                
+                objRtn.TOHCOMSG = rs01.getString("TOHCOMSG");
+                if(objRtn.TOHCOMSG.trim().equals("M")){
+                    objRtn.TOHCOM = objRtn.TOHCOM * -1;
+                }
+                
+                objRtn.HFEEAMSG = rs01.getString("HFEEAMSG");
+                if(objRtn.HFEEAMSG.trim().equals("M")){
+                    objRtn.HFEEAM = objRtn.HFEEAM * -1;
+                }
+                
+                objRtn.TUATPSG = rs01.getString("TUATPSG");
+                if(objRtn.TUATPSG.trim().equals("M")){
+                    objRtn.TUATP = objRtn.TUATP * -1;
+                }
+                
                 objRtn.NETSG = rs01.getString("NETSG");
-                objRtn.PERNUM = rs01.getString("PERNUM");
-                objRtn.BDATE = rs01.getString("BDATE");
+                if(objRtn.NETSG.trim().equals("M")){
+                    objRtn.TNET = objRtn.TNET * -1;
+                }
+                
 
                 lstRtn.add(objRtn);
 

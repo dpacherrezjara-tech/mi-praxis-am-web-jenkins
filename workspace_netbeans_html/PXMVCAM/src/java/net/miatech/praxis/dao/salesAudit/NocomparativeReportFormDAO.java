@@ -98,6 +98,7 @@ public class NocomparativeReportFormDAO {
                     objRtn.A3951MDA = rs01.getString("A3951MDA");
 
                     objRtn.A3951PERIO = rs01.getString("A3951PERIO");
+                    objRtn.A3951PER = rs01.getString("A3951PER");
                     objRtn.A3951STAT = rs01.getString("A3951STAT");
                     objRtn.A3951FLAG = rs01.getString("A3951FLAG");
                     objRtn.A3951REGIS = rs01.getString("A3951REGIS");
@@ -153,6 +154,7 @@ public class NocomparativeReportFormDAO {
                         objRtn.A3951CCMS = rs01.getDouble("A3951CCMS");
                         objRtn.A3951NETO = rs01.getDouble("A3951NETO");
                         objRtn.A3951PROCE = rs01.getDouble("A3951PROCE");
+                        objRtn.A3951PER = rs01.getString("A3951PER");
                         objRtn.A3951PC = rs01.getInt("A3951PC");
                         objRtn.A3951TOTAL = rs01.getInt("TOTAL");
                     }

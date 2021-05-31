@@ -203,12 +203,14 @@ public class InputsControlDAO {
                     objRtn.strFormatDate3 = Functions.getMonthConvert(objRtn.DTRANS);
                     objRtn.FUENTE = rs01.getString("FUENTE").trim();
                     objRtn.MENSA = rs01.getString("MENSA");
-                    objRtn.QRECOR = rs01.getInt("QRECOR");
+//                    objRtn.QRECOR = rs01.getInt("QRECOR");
                     objRtn.QRECORG = rs01.getInt("QRECORG");
 
                     if (filter.FUENTE.trim().equals("SSIM") || filter.FUENTE.trim().equals("EMD")) {
+                        objRtn.QRECOR = filter.QRECOR;
                         objRtn.QRECERR = filter.QRECERR;
                     } else {
+                        objRtn.QRECOR = rs01.getInt("QRECOR");
                         objRtn.QRECERR = rs01.getInt("QRECERR");
                     }
 

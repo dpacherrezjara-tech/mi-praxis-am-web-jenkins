@@ -30,8 +30,9 @@ public class AccountingPasseInvoicesLogic {
         return passengerInvoicesDAO.SQP04008(filter);
     }
     
-    
-    
+    public List<SFI100Filter> SQP03987(SFI100Filter filter) throws Exception {
+        return passengerInvoicesDAO.SQP03987(filter);
+    }
     
     
     // --------------------------------------------------------------------------------------------------------------------------
