@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -104,7 +105,7 @@ public class IatasBSPFormController extends BaseController {
         String fileNameDownload = String.format("BspLink_Iatas - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
 
         try {
-            Workbook workbook = null;
+            //Workbook workbook = null;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
 
             String beanString = request.getParameter("beanString");
@@ -114,7 +115,9 @@ public class IatasBSPFormController extends BaseController {
             listaData = logic.SearchBspIATAS(filter);
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
-            workbook = new XSSFWorkbook();
+            //workbook = new XSSFWorkbook();
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
             Sheet sheet = workbook.createSheet("BspLink IATAS");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
 //            CellStyle headerStyle = workbook.createCellStyle();
