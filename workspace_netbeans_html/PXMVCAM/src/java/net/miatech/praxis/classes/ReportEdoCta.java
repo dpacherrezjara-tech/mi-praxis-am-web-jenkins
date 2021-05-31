@@ -315,23 +315,36 @@ public class ReportEdoCta {
             Phrase txtAMInfo3 = new Phrase(new Paragraph( "RFC: " +  Data.get(1).tbl_misl.A3961COME2, NORMAL));  //Clave CITA AM           
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT,  txtAMInfo3, 120, PYi, 0);
 
-            int px1 = 500; //580
+            int px1 = 480; //500
             //LOGO CLIENTE   
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
             }
             img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
-            img.setAbsolutePosition(px1, 530);
-            //img.scaleToFit(190, 40);
-            img.scaleToFit(245, 42);
+            img.setAbsolutePosition(px1, 520);                        
+            img.scaleToFit(280, 60);  
             document.add(new Paragraph(String.format("", Data.get(0).tbl_client.A3953LOGO/*RESOURCES[0]*/, img.getClass().getName())));
             document.add(img);            
             writer.setCompressionLevel(0);
             
             //datos CLIENTE
             PYi = py0;
-            Phrase RSOCI = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);
+            String A3953RSOCI_part1 = "";
+            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+            int length = A3953RSOCI.length(); 
+            if(length > 44 ){
+               A3953RSOCI = A3953RSOCI.substring(1, 44);
+               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
+            }
+            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
+            if (!A3953RSOCI_part1.trim().equals("")){
+                PYi = PYi - Hlng;
+                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
+            }
+            //Phrase RSOCI = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
+            //ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);
             PYi = PYi - Hlng;
             Phrase DIRE1 = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953DIRE1, NORMAL)); //"AV. MARINA NACIONAL Nº. 329 INT C3 "
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, DIRE1, px1, PYi, 0);
@@ -351,20 +364,21 @@ public class ReportEdoCta {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CP, px1, PYi, 0);
                     
             //datos  Contrato
-            PYi = PYi + 10;
-            PYi = PYi - Hlng;
+            int PYi_c = 461;
+//            PYi = PYi + 10;
+//            PYi = PYi - Hlng;
             
             //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi+10, 400, 0); //LINEA 
                         
             Phrase CONTR = new Phrase(new Paragraph("Contrato Nº: " + Data.get(0).rpteCab.A3981CONTR, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CONTR, PosX1, PYi, 0);
-            PYi = PYi - Hlng;            
-            int Py_c = PYi;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CONTR, PosX1, PYi_c, 0);
+            PYi_c = PYi_c - Hlng;            
+            int Py_c = PYi_c;
             Phrase NRRPT = new Phrase(new Paragraph("Edo. Cuenta Nº: " + Data.get(0).rpteCab.A3981NREDO, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, NRRPT, PosX1, PYi, 0);
-            PYi = PYi - Hlng;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, NRRPT, PosX1, PYi_c, 0);
+            PYi_c = PYi_c - Hlng;
             Phrase FEECC = new Phrase(new Paragraph("Fecha Emisión: " + Data.get(0).rpteCab.A3981FEDOC, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, FEECC, PosX1, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, FEECC, PosX1, PYi_c, 0);
             
             //Py_c; //vuelve a la altura de "REPORTE Nº:"
             int PosX1_ = 180;            
@@ -380,21 +394,22 @@ public class ReportEdoCta {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtPERIODO, PosX1_, Py_c, 0);                                    
             //Py_c = Py_c - Hlng;  
             PosX1_ = 330; 
-            colorRectangle(under, new GrayColor(0.825f), PosX1_-5, PYi, 120, 15);
+            colorRectangle(under, new GrayColor(0.825f), PosX1_-5, PYi_c, 120, 15);
             Phrase TXTNACIONAL = new Phrase(new Paragraph( Data.get(0).tbl_client.A3953TORGN , NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, TXTNACIONAL, PosX1_+28, Py_c+4, 0);
             
             ////
             //SALDO
             ////
+            PYi = PYi_c;
             PYi = PYi - 25;
             PosX1 = PosX1+1;            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("ESTADO CUENTA ANTERIOR", subFontT)), PosX1, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO ANTERIOR", subFontT)), PosX1, PYi, 0);
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFontT)), 670, PYi, 0);            
             colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 700, 0); //LINEA 
             
             PYi = PYi - 14;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total estado de cuenta anterior* ", NORMAL)), PosX1, PYi, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total saldo anterior* ", NORMAL)), PosX1, PYi, 0);            
             //ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("0.00" , NORMAL)), 700, PYi, 0);            
 //            Double VL_EECTA_ANT = 0.0;
             for (int i = 4; i < Data.size(); i++) {
@@ -508,13 +523,13 @@ public class ReportEdoCta {
             //data          
             posRemark = posRemark - 15;
             colorRectangle(under, GrayColor.GRAYWHITE, 15, posRemark-7, 700, 20);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(total_sub_totales) , NORMAL)), 90, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).ICORRIENTE), NORMAL)), 160, posRemark, 0);            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).I1_30), NORMAL)), 255, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).I31_60), NORMAL)), 360, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).I61_90), NORMAL)), 460, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).I91_120), NORMAL)), 565, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).I121_MAS), NORMAL)), 658, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TOT) , NORMAL)), 90, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS0), NORMAL)), 160, posRemark, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS1), NORMAL)), 255, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS2), NORMAL)), 360, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS3), NORMAL)), 460, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS4), NORMAL)), 565, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS5 + Data.get(3).tbl_saldos.A3990TTLS6 ), NORMAL)), 658, posRemark, 0);
             
             // genera Data en txt
             //PrintStream out = new PrintStream(new FileOutputStream(fileTmp02));
