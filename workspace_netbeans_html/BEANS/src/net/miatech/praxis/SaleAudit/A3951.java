@@ -29,6 +29,7 @@ public class A3951 {
     public String A3951FREVI;
     public String A3951HREVI;
     public String A3951STATO;
+    public String A3951PER;
 
     public double A3951CASH;
     public double A3951CTUC;
@@ -42,6 +43,14 @@ public class A3951 {
     public int A3951CANTI;
     public int A3951TOTAL;
 
+    public String getA3951PER() {
+        return A3951PER;
+    }
+
+    public void setA3951PER(String A3951PER) {
+        this.A3951PER = A3951PER;
+    }
+    
     public String getA3951STATO() {
         return A3951STATO;
     }
