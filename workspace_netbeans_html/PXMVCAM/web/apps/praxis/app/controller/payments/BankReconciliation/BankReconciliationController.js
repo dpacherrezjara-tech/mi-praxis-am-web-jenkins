@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
     beanDetDayByS: {},
     beanDetCardNbrByS: {},
     beanDetTicket: {},
+    beanboxDetTktS2: {},
     paginActual: '',
     drillDown: [],
     gridActual: '',
@@ -1804,6 +1805,123 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
             //Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
         }
     },
+    gridDetTicketS_clickHandler: function(column, e, row, column, x, rowData) {
+        var beanDetE = x.record.data;
+
+        console.log(this.strSTVAL);
+        if (this.strSTVAL === 'SETT') {
+            console.log("win.selectedChild('vskMain', 'boxDetTktS_P');");
+            console.log("this.searchDetTktByStval_Pay(beanDetE);");
+            //            win.selectedChild('vskMain', 'boxDetTktS_P');
+            //            this.searchDetTktByStval_Pay(beanDetE);
+        } else {
+            if (beanDetE.CERROR !== "") {
+                beanDetE.IN_CERROR = beanDetE.CERROR;
+            } else {
+                beanDetE.IN_CERROR = "";
+            }
+            //win.selectedChild('vskMain', 'boxDetTicket');
+            me.drillDown.push(me.panelActual);
+            me.panelActual = '-boxDetTktS';
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+            this.searchDetTktByStval(beanDetE);
+        }
+    },
+    searchDetTktByStval: function(beanDetE) {
+        //me.f_boxDetTktS = '2';
+        me.beanboxDetTktS2 = beanDetE;        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetTktByStval'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = {beanString: JSON.stringify(me.beanboxDetTktS2)};
+                },
+                load: function(obj, obj2, success, response, obj5) {
+
+//                    me.selectedChild('vskMain', 'boxDetTktMatch');
+                    win.lblUser_toolTip("Estructura: A2291");
+
+                    var res = Ext.JSON.decode(response._response.responseText);
+
+
+                    if (res.success) {
+                        var gridDetTktSAC = res.data;
+                        if (gridDetTktSAC.length > 0) {
+                            var obj = {};
+                            for (var l = 0; l < gridDetTktSAC.length; l++) {
+                                obj = gridDetTktSAC[l];
+                                if (obj.IN_STVAL === "4") {
+                                    if (obj.strPEM === "ACCB") {
+                                        break;
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
+                            if (obj !== null) {
+
+                                if (obj.IN_STVAL === '1') {
+                                    win.setTitle('gridDetTktMatch', obj.strTitulo);
+                                    //                                var storeGridDatas = Ext.create("Ext.Praxis.store.payments.GridData", {data: gridDetTktSAC});
+//                                   Ext.getCmp(prototype.id + '-gridDetTktMatch').bindStore(storeGridDatas);
+//                                   Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
+                                    //me.selectedChild('boxDetTicket', 'boxDetTktMatch');
+                                    Ext.getCmp(prototype.id + '-cmbError').hide();
+                                } else {
+                                    //                                Ext.getCmp(prototype.id + '-gridDetTktByStval').bindStore(
+                                    //                                        Ext.create("Ext.Praxis.store.payments.GridData", {data: gridDetTktSAC})
+                                    //                                        );
+//                                   Ext.getCmp(prototype.id + '-gridDetTktByStval').bindStore(storeGridDatas);
+//                                   Ext.getCmp(prototype.id + '-paggin10').bindStore(storeGridDatas);
+
+                                    var pag = Ext.getCmp(prototype.id + '-paggin13');
+                                    var pagData = pag.getPageData();
+                                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                                    
+                                    Ext.getCmp(prototype.id + '-cmbError').show();
+                                    //me.selectedChild('panelMain', 'boxDetTktS');
+                                    win.setText('lblTitDetTktByStval', obj.strTitulo);
+                                    if (obj.IN_TDOC === 'R') {
+                                        win.setText('hcDetTktS', 'Refund');
+                                    } else {
+                                        win.setText('hcDetTktS', 'Sales');
+                                    }
+                                }
+                            }
+                            // Colocando los Errores ==============================================
+                            var lstError = res.lstError;
+                            var errors = new Array();
+                            errors.push(['', 'All']);
+                            lstError.forEach(function callback(currentValue, index, array) {
+                                errors.push([currentValue.CERROR, currentValue.strDescripcion]);
+                            });
+                            var store = Ext.create('Ext.data.ArrayStore', {
+                                storeId: 'errors', autoLoad: true, data: errors, fields: ['code', 'name']
+                            });
+                            Ext.getCmp(prototype.id + '-cmbError').bindStore(store);
+                            win.setValue('cmbError', '');
+                            me.setWidthPie();
+                            // ====================================================================
+                        } else {
+                            win.setTitle('gridDetTktMatch', '');
+                            win.setText('lblTitDetTktByStval', '');
+                            global.Msg({msg: 'Data not found'});
+                        }
+                    } else
+                        global.Msg({msg: res.sesion});
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetTktMatch').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetTktByStval').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin13').bindStore(storeGridDatas);
+    },
     btnClear_click: function(obj, e) {
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
@@ -1935,6 +2053,9 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                 break;
             case '-boxDetDayS':
                 me.pagginActual = '-paggin12';
+                break;
+            case '-boxDetTktS':
+                me.pagginActual = '-paggin13';
                 break;
         }
     },
