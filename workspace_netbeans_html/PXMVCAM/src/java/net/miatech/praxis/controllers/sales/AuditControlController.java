@@ -198,13 +198,13 @@ public class AuditControlController extends BaseController {
             CH1_00.setCellValue("MODULE");
             CH1_01.setCellValue("SEQ");
             CH1_02.setCellValue("PROC. DATE");
-            CH1_03.setCellValue("CREATION DATE");
-            CH1_04.setCellValue("CREATION USER");
-            CH1_05.setCellValue("UPDATE DATE");
-            CH1_06.setCellValue("UPDATE USER");
-            CH1_07.setCellValue("STATUS");
-            CH1_08.setCellValue("TOTAL");
-
+            CH1_03.setCellValue("STATUS");
+            CH1_04.setCellValue("TOTAL");
+            CH1_05.setCellValue("CREATION DATE");
+            CH1_06.setCellValue("CREATION USER");
+            CH1_07.setCellValue("UPDATE DATE");
+            CH1_08.setCellValue("UPDATE USER");
+            
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
             CH1_02.setCellStyle(headerStyle);
@@ -233,13 +233,13 @@ public class AuditControlController extends BaseController {
                 rcell0.setCellValue(listaData.get(vi).SUB_MODULE);
                 rcell1.setCellValue(listaData.get(vi).SEQ);
                 rcell2.setCellValue(listaData.get(vi).PROC_DATE);
-                rcell3.setCellValue(listaData.get(vi).DATE_CREATE);
-                rcell4.setCellValue(listaData.get(vi).USRIN);
-                rcell5.setCellValue(listaData.get(vi).FECIN);
-                rcell6.setCellValue(listaData.get(vi).USRAC);
-                rcell7.setCellValue(listaData.get(vi).STATUS_LABEL);
-                rcell8.setCellValue(listaData.get(vi).TOTAL);
-
+                rcell3.setCellValue(listaData.get(vi).STATUS_LABEL);
+                rcell4.setCellValue(listaData.get(vi).TOTAL);
+                rcell5.setCellValue(listaData.get(vi).DATE_CREATE);
+                rcell6.setCellValue(listaData.get(vi).USRIN);
+                rcell7.setCellValue(listaData.get(vi).FECAC.equals("1900-01-01 00:00:00.0") ? "" : listaData.get(vi).FECAC);
+                rcell8.setCellValue(listaData.get(vi).USRAC);
+                
                 rcell0.setCellStyle(bodyStyle);
                 rcell1.setCellStyle(bodyStyle);
                 rcell2.setCellStyle(bodyStyle);
@@ -262,6 +262,9 @@ public class AuditControlController extends BaseController {
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
             
 
             /**
