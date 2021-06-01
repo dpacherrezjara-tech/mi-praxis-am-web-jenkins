@@ -1304,6 +1304,7 @@ public class BankReconciliationDAO {
                 beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
                 //beanTkt.strDescCard = rst.getString("NAMECAR").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
+                beanTkt.SPNR = rst.getString("SPNR").trim();
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
                 //beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), "");
                 beanTkt.IN_CARDN1 = rst.getString("SCARDN").trim().substring(0, 6);
