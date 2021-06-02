@@ -386,7 +386,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                             },
                                                             {text: 'Cuenta', width: 350, dataIndex: 'CUENTA',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#e0f5ff;";
+                                                                    metaData.style = "text-align:left;background-color:#e0f5ff;";
                                                                     return value;
                                                                 }
                                                             },
@@ -467,7 +467,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                             },
                                                             {text: 'Cuenta', width: 350, dataIndex: 'CUENTA',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#e0f5ff;";
+                                                                    metaData.style = "text-align:left;background-color:#e0f5ff;";
                                                                     return value;
                                                                 }
                                                             },
