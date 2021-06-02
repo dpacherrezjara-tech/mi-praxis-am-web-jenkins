@@ -3020,7 +3020,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTktByStval',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1250,
+                                                    width: 1280,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -3047,19 +3047,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                 },
                                                                 columns: [
                                                                     {
-                                                                        text: 'Number', flex: 1, /*width: 120,*/ dataIndex: 'strTicket',
-//                                                                        listeners: {
-////                                                                            click: 'gridData_act1_clickHandler'
-//                                                                        },
-                                                                        editor: {
-                                                                            xtype: 'textfield',
-                                                                            editable: true,
-                                                                            enableKeyEvents: true,
-                                                                            listeners: {
-                                                                                keypress: 'eventKeyTKT',
-                                                                                specialkey: 'eventKeyTKT'
-                                                                            }
+                                                                        text: 'Number', flex: 1, /*width: 120,*/ dataIndex: 'strTicket', //enableTextSelection :true,
+                                                                        listeners: {
+                                                                            click: 'gridData_act1_clickHandler'
                                                                         },
+//                                                                        editor: {
+//                                                                            xtype: 'textfield',
+//                                                                            editable: true,
+//                                                                            enableKeyEvents: true,
+//                                                                            listeners: {
+//                                                                                keypress: 'eventKeyTKT',
+//                                                                                specialkey: 'eventKeyTKT'
+//                                                                            }
+//                                                                        },
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
                                                                             metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;background-color:#d5f4d5;';
@@ -3205,7 +3205,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Amount', dataIndex: 'SVFOP', width: 75,
+                                                                text: 'Amount', dataIndex: 'SVFOP', width: 105,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
@@ -3298,7 +3298,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                 }
                                                             }
                                                         ]
-                                                    }
+                                                    },
+//                                                    viewConfig: {
+//                                                        stripeRows: true,
+//                                                        enableTextSelection: true,
+//                                                        markDirty: false,
+//                                                        getRowClass: function (record, rowIndex, rowParams, store) {
+//                                                            if (rowIndex % 2 === 0)
+//                                                                return 'rowA';
+//                                                        }
+//                                                    },
+//                                                    trackMouseOver: true,
+//                                                    scope: this,
+//                                                    listeners: {
+//                                                        scope: this,
+//                                                        afterrender: function (obj) {
+//
+//                                                        }
+//                                                    }
                                                 }
                                                 //</editor-fold>
                                             ]
@@ -3324,7 +3341,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTktMatch',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1230,
+                                                    width: 1260,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -3354,19 +3371,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                 },
                                                                 columns: [
                                                                     {
-                                                                        text: 'Number', flex: 1, /*width: 120,*/ dataIndex: 'strTicket',
-//                                                                        listeners: {
-//                                                                            click: 'gridData_act1_clickHandler'
-//                                                                        },
-                                                                        editor: {
-                                                                            xtype: 'textfield',
-                                                                            editable: true,
-                                                                            enableKeyEvents: true,
-                                                                            listeners: {
-                                                                                keypress: 'eventKeyTKT',
-                                                                                specialkey: 'eventKeyTKT'
-                                                                            }
+                                                                        text: 'Number', flex: 1, /*width: 120,*/ dataIndex: 'strTicket', //enableTextSelection :true,
+                                                                        listeners: {
+                                                                            click: 'gridData_act1_clickHandler'
                                                                         },
+//                                                                        editor: {
+//                                                                            xtype: 'textfield',
+//                                                                            editable: true,
+//                                                                            enableKeyEvents: true,
+//                                                                            listeners: {
+//                                                                                keypress: 'eventKeyTKT',
+//                                                                                specialkey: 'eventKeyTKT'
+//                                                                            }
+//                                                                        },
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
                                                                             metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;background-color:#d5f4d5;';
@@ -3451,7 +3468,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Amount', dataIndex: 'SVFOP', width: 65,
+                                                                text: 'Amount', dataIndex: 'SVFOP', width: 95,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
@@ -3598,7 +3615,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationForm.Info', {
                                                                 }
                                                             }
                                                         ]
-                                                    }
+                                                    },
+//                                                    viewConfig: {
+//                                                        stripeRows: true,
+//                                                        enableTextSelection: true,
+//                                                        markDirty: false,
+//                                                        getRowClass: function (record, rowIndex, rowParams, store) {
+//                                                            if (rowIndex % 2 === 0)
+//                                                                return 'rowA';
+//                                                        }
+//                                                    },
+//                                                    trackMouseOver: true,
+//                                                    scope: this,
+//                                                    listeners: {
+//                                                        scope: this,
+//                                                        afterrender: function (obj) {
+//
+//                                                        }
+//                                                    }
                                                 }
                                                 //</editor-fold>
                                             ]
