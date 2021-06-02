@@ -349,7 +349,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    //                                    id: prototype.id + '-panelGridData',
+                                                    id: prototype.id + '-panelIXC',
                                                     bodyStyle: 'background-color: #E3EAF9;',
                                                     border: false,
                                                     height: 620,
@@ -533,7 +533,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                 {xtype: 'tbspacer', width: 50},
                                                 {
                                                     xtype: 'panel',
-                                                    //                                    id: prototype.id + '-panelGridData',
+                                                    id: prototype.id + '-panelIXP',
                                                     bodyStyle: 'background-color: #E3EAF9;',
                                                     border: false,
                                                     height: 620,
