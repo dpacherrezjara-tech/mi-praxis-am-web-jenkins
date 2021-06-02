@@ -173,9 +173,19 @@ public class AccountingPasseInvoicesController extends BaseController {
     String searchX(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- AccountingPasseInvoices : searchX-------------");
         map.put("success", true);
-
-        List<A1964Filter> lst = this.getListX(request, false);
-        List<A1965Filter> lstXpagar = this.getListXpagar(request, false);
+        
+        A1964Filter filter = new A1964Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+        
+        beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A1964Filter.class);
+        
+//        if(filter.IN_TTRAN.equals("OB")){
+            List<A1964Filter> lst = this.getListX(request, false);
+//        }else{
+            List<A1965Filter> lstXpagar = this.getListXpagar(request, false);
+//        }
 
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
