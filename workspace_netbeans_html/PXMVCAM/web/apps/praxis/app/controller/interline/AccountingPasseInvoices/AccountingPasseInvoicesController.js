@@ -182,6 +182,15 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         this.setGrid();
+        
+        var TTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN').getValue();
+        if(TTRAN === 'OB'){
+            Ext.getCmp(prototype.id + '-panelIXP').hide();
+            Ext.getCmp(prototype.id + '-panelIXC').show();
+        }else{
+            Ext.getCmp(prototype.id + '-panelIXC').hide();
+            Ext.getCmp(prototype.id + '-panelIXP').show();
+        }
         this.setGridData();
 
     },
