@@ -692,6 +692,26 @@ Ext.define('Ext.Praxis.controller.flown.PassengerConciliation.PassengerConciliat
     /*     
      * Funciones para la paginacion     
      */
+    showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        console.log('RowData');
+        console.log(rowData.data);
+        me.viewMasterTkt(rowData.data);
+    },
+    viewMasterTkt: function(data) {
+
+        prototypeProgram.view = 'flown-passenger-conciliation-form';
+        prototypeProgram.nprog = 'PX00000095';
+        prototypeProgram.title = 'Passenger Conciliation';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        beanProMasterTicket.IN_CIA = data.CCIA;
+        beanProMasterTicket.IN_FORMA = data.FORMA;
+        beanProMasterTicket.IN_SERIE = data.SERIE;
+        beanProMasterTicket.IN_SEQ = data.SEQRO;
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
     getPaggin: function() {
         switch (me.gridActual) {
             case  '-gridData':

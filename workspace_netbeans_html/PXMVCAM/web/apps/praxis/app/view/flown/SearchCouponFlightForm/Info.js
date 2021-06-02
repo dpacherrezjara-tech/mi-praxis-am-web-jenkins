@@ -45,7 +45,15 @@ Ext.define('Ext.Praxis.view.flown.SearchCouponFlightForm.Info', {
 
                         },
                         items: [
-                            {text: 'Ticket', width: 130, dataIndex: 'strTicket'},
+                            {text: 'Ticket', width: 130, dataIndex: 'strTicket',
+                            listeners: {
+                                    click: 'showTicket'
+                                },
+                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                metaData.style = 'text-decoration:none; color:#008FE3; ';
+                                return '<a href="#flown-search-coupon-flight-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
+                                }
+                            },
                             {text: 'Type', width: 40, dataIndex: 'TDOC'},
                             {text: 'Sales',
                                 defaults: {

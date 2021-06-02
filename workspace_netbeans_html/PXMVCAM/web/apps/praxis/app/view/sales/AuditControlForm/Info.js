@@ -48,7 +48,15 @@ Ext.define('Ext.Praxis.view.sales.AuditControlForm.Info', {
                             {text: 'Proc. Date', width: 100, dataIndex: 'PROC_DATE'},
                             {text: 'Date Create', width: 160, dataIndex: 'DATE_CREATE', hidden: true},
                             {text: 'StatusCode', width: 100, dataIndex: 'STATUS', hidden: true},
-                            {text: 'Status', width: 100, dataIndex: 'STATUS_LABEL'},
+                            {text: 'Status', width: 100, dataIndex: 'STATUS_LABEL',
+                            renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                var data = record.data;
+                                    var color = (data.STATUS === '1') ? '#009933' : 
+                                                (data.STATUS === '2') ? '#ffff00' :'#cc3300';
+                                    metaData.style = "text-align:center;color:"+color+";font-size:11;";
+                                    return value;
+                                }
+                            },
                             {text: 'Total', width: 100, dataIndex: 'TOTAL'},
                             {text: 'Creation Date', width: 160, dataIndex: 'DATE_CREATE'},
                             {text: 'Creation User', width: 100, dataIndex: 'USRIN'},

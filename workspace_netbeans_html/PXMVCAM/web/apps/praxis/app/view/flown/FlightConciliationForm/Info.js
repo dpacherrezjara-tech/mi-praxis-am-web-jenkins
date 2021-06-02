@@ -1474,9 +1474,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                                }
 
                                                     text: 'Ticket', dataIndex: 'strTicket', width: 110,
-                                                    editor: {
+                                                    listeners: {
+
+                                                            click: 'showTicket'
+                                                            
+                                                    },
+                                                    /*editor: {
                                                         xtype: 'textfield',
-                                                        editable: true,
+                                                        editable: false,
                                                         enableKeyEvents: true,
                                                         listeners: {
 //                                                            keypress: 'eventKey2',
@@ -1493,14 +1498,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                     me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
                                                                  }
                                                             }
+                                                            click: function() {
+                                                                me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
+                                                            }
                                                         }
-                                                    },
+                                                    }, */
                                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                         var data = record.data;
-                                                        metaData.style = "color:#057ECB;background-color:#FFFFFF;";
+                                                        metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
                                                         metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
                                                         return '<b>' + value + '<b>';
-                                                    }
+                                                    }                                                
                                             },
                                             {
                                                 text: 'Accounting',
@@ -1762,7 +1770,10 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                                    return value;
 //                                                }
                                                     text: 'Ticket', dataIndex: 'strTicket', width: 110,
-                                                    editor: {
+                                                    listeners: {
+                                                        click: 'showTicket'                                                            
+                                                    },
+                                                    /*editor: {
                                                         xtype: 'textfield',
                                                         editable: true,
                                                         enableKeyEvents: true,
@@ -1781,14 +1792,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                     me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
                                                                  }
                                                             }
-                                                        }
-                                                    },
+                                                    },*/
                                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                         var data = record.data;
-                                                        metaData.style = "color:#057ECB;background-color:#FFFFFF;";
+                                                        metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
                                                         metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
                                                         return '<b>' + value + '<b>';
-                                                    }
+                                                    }                                                
                                             },
                                             {
                                                 text: 'Accounting',

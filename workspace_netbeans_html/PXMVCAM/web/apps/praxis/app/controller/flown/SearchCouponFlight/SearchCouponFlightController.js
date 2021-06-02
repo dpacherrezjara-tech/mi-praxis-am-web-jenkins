@@ -246,6 +246,26 @@ Ext.define('Ext.Praxis.controller.flown.SearchCouponFlight.SearchCouponFlightCon
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
+    showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        console.log('RowData');
+        console.log(rowData.data);
+        me.viewMasterTkt(rowData.data);
+    },
+    viewMasterTkt: function(data) {
+
+        prototypeProgram.view = 'flown-search-coupon-flight-form';
+        prototypeProgram.nprog = 'PX00000095';
+        prototypeProgram.title = 'Search Coupon flight';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        beanProMasterTicket.IN_CIA = data.CCIA;
+        beanProMasterTicket.IN_FORMA = data.FORMA;
+        beanProMasterTicket.IN_SERIE = data.SERIE;
+        beanProMasterTicket.IN_SEQ = data.SEQRO;
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },    
     eventKey: function(e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();

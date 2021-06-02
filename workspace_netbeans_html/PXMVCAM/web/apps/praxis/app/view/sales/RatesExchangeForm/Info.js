@@ -193,7 +193,7 @@ Ext.define('Ext.Praxis.view.sales.RatesExchangeForm.Info', {
                             {text: 'Rate', width: 200, dataIndex: 'A1526RATE',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align :right ; margin-right : 5px ";
-                                    return Ext.util.Format.number(value, '0.000000');
+                                    return Ext.util.Format.number(value, '0.000000000');
                                 }
 
                             },
