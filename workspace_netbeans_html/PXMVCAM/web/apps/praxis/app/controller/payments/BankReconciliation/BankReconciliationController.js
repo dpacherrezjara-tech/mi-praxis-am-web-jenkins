@@ -1805,6 +1805,8 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
     },
     gridDetTicketS_clickHandler: function(column, e, row, column, x, rowData) {
         var beanDetE = x.record.data;
+        
+        beanDetE.IN_SDATE = beanDetE.SDATE;
 
         console.log(this.strSTVAL);
         if (this.strSTVAL === 'SETT') {
