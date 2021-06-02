@@ -30,6 +30,7 @@ public class A1964Filter extends A1964{
     public String IN_FECINI = "";
     public String IN_FECFIN = "";
     public String IN_TIPO = "";
+    public String IN_TTRAN = "";
     
     public String IDCON = "";
     public String MESCON = "";
