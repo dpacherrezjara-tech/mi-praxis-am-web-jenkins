@@ -331,396 +331,562 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                                 }
                                                             }
                                                         ]
-                                                    },
+                                                    }
                                                 ]
                                             }
                                         },
-                                        {   
+                                        {
                                             xtype: 'panel',
-                                            id: prototype.id + '-panelGrid2',
+                                            id: prototype.id + '-panelContaIXC',
                                             bodyStyle: 'background-color: #E3EAF9;',
-//                                            padding: '1',
-                                            border: false,
-                                            //width: 100,    
+                                            margin: '20 0 0 600',
+//                                            height: 472, 
                                             layout: {
-                                                type: 'hbox',
+                                                type: 'vbox',
                                                 align: 'center'
                                             },
                                             items: [
                                                 {
-                                                    xtype: 'panel',
-                                                    id: prototype.id + '-panelIXC',
-                                                    bodyStyle: 'background-color: #E3EAF9;',
-                                                    border: false,
-                                                    height: 620,
-                                                    layout: {
-                                                        type: 'vbox',
-                                                        align: 'center'
-                                                    },
-                                                    items: [
-                                                        {
-                                                            xtype: 'label',
-                                                            id: prototype.id + '-labelTitle1',
+                                                    xtype: 'label',
+                                                    id: prototype.id + '-labelTitleIXC',
 //                                                            text: 'Interline Receivables',
-                                                            html: '<strong style="color:#000;">Interline Receivables</strong>',
-                                                            labelAlign: 'center',
-                                                            labelStyle: 'color:#231223',
-                                                            align: 'center',
-                                                            margin: '10 0 0 0',
-                                                            hide: true
-                                                        },
-                                                        {
-                                                            //xtype: 'grid',
-                                                            xtype: 'treepanel',
-                                                            padding: '20 0 0 0',
-                                                            id: prototype.id + '-gridDataX',
-                                                            bodyStyle: 'background-color: #E3EAEF;',
-                                                            height: 400,
-                                                            width: 855,
-                                                            columnLines: true,
-                                                            resizable: false,
-                                                            features: [{
-                                                                    ftype: 'summary'
-                                                                }
-                                                            ],
-                                                            rootVisible: false,
-                                                            plugins: {
-                                                                ptype: 'cellediting',
-                                                                clicksToEdit: 1
-                                                            },
-                                                            columns: {
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: true,
-                                                                    resizable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                items: [
-                                                                    {xtype: 'treecolumn', text: 'Accounting<br>Date', width: 120, dataIndex: 'A1964FCONT',
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
-                                                                            return '<b>' + value + '<b>';
-                                                                        },
-                                                                        //                                                listeners: {
-                                                                        //                                                    click: 'onViewDataDetailSFI30'
-                                                                        //                                                }
-                                                                    },
-                                                                    {text: 'Source',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: true,
-                                                                            align: 'center',
-                                                                            border: true
-                                                                        },
-                                                                        columns: [
-                                                                            {text: 'Cod', width: 70, dataIndex: 'A1964TUSO',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    return '<b>' + value + '<b>';
-                                                                                },
-                                                                            },
-                                                                            {text: 'Description', width: 300, dataIndex: 'DES_SOURCOD',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = 'text-align:left;';
-                                                                                    return value;
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {text: 'Currency', width: 70, dataIndex: 'A1964CUR',
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            if (record.data.children !== null) {
-                                                                                return '<b>' + value + '<b>';
-                                                                            } else {
-                                                                                return value;
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {text: 'Total',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: true,
-                                                                            align: 'center',
-                                                                            border: true
-                                                                        },
-                                                                        columns: [
-                                                                            {text: 'Active', width: 120, dataIndex: 'QTY_ACTIV',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = 'text-align:right;';
-                                                                                    //                                                            if(rowIndex === 0) {
-                                                                                    if (record.data.children !== null) {
-                                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
-                                                                                    } else {
-                                                                                        return Ext.util.Format.number(value, '0,000.00');
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {text: 'Total',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: true,
-                                                                            align: 'center',
-                                                                            border: true
-                                                                        },
-                                                                        columns: [
-                                                                            {text: 'Passive', width: 120, dataIndex: 'QTY_PASIV',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = 'text-align:right;';
-                                                                                    //                                                            if(rowIndex === 0) {
-                                                                                    if (record.data.children !== null) {
-                                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
-                                                                                    } else {
-                                                                                        return Ext.util.Format.number(value, '0,000.00');
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        sortable: false,
-                                                                        xtype: 'actioncolumn',
-                                                                        width: 40,
-                                                                        text: '',
-                                                                        align: 'center',
-                                                                        items: [
-                                                                            {
-                                                                                iconCls: 'prx-icon-excel',
-                                                                                tooltip: 'Download Excel',
-                                                                                handler: 'onDownLoad'
-                                                                            }
-                                                                        ],
-                                                                        renderer: function (a, b, c) {
-                                                                            //                                                    console.log(a);
-                                                                            //                                                    console.log(b);
-                                                                            //                                                    console.log(c.childNodes);
-                                                                            return a;
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            xtype: 'panel',
-                                                            id: prototype.id + '-SummaryGridDataX',
-                                                            width: 855,
-                                                            align: 'left',
-                                                            margin: '0 0 0 0 ',
-                                                            layout: {
-                                                                type: 'hbox',
-                                                                align: 'center'
-                                                            },
-                                                            defaults: {
-                                                                xtype: 'label',
-                                                                align: 'center',
-                                                                html: '' + '&nbsp',
-                                                                height: 25,
-                                                                padding: '5 5 5 0',
-                                                                style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
-                                                            },
-                                                            items: [
-                                                                {width: 120},
-                                                                {width: 70},
-                                                                {width: 300},
-                                                                {width: 70},
-                                                                {width: 120, id: prototype.id + '-idActive'},
-                                                                {width: 120, id: prototype.id + '-idPassive'},
-                                                                {width: 51}
-                                                            ]
-                                                        }
-                                                    ]
+                                                    html: '<strong style="color:#000;">Interline Receivables</strong>',
+                                                    labelAlign: 'center',
+                                                    labelStyle: 'color:#231223',
+                                                    align: 'center',
+                                                    margin: '10 0 10 0',
+                                                    hide: true
                                                 },
-                                                {xtype: 'tbspacer', width: 50},
                                                 {
-                                                    xtype: 'panel',
-                                                    id: prototype.id + '-panelIXP',
-                                                    bodyStyle: 'background-color: #E3EAF9;',
-                                                    border: false,
-                                                    height: 620,
-                                                    //width: 100,    
-                                                    layout: {
-                                                        type: 'vbox',
-                                                        align: 'center'
-                                                    },
-                                                    items: [
-                                                        {
-                                                            xtype: 'label',
-                                                            id: prototype.id + '-labelTitle1xPagar',
-//                                                            text: 'Interline Payable',
-                                                            html: '<strong style="color:#000;">Interline Payable</strong>',
-//                                                            labelAlign: 'center',
-//                                                            labelStyle : 'font-weight:bold;',
-                                                            align: 'center',
-                                                            margin: '10 0 0 0',
-                                                            hide: true,
-                                                            style : {
-                                                                //background : '#6699FF',
-                                                                color : 'black',
-                                                                textAlign: 'center'
-                                                            }
-                                                        },
-                                                        {
-                                                            //                                    xtype: 'grid',
-                                                            xtype: 'treepanel',
-                                                            padding: '20 0 0 0',
-                                                            id: prototype.id + '-gridDataxPagar',
-                                                            bodyStyle: 'background-color: #E3EAEF;',
-                                                            height: 400,
-                                                            width: 855,
-                                                            columnLines: true,
+                                                    xtype: 'grid',
+//                                                    padding: '0 0 0 0',
+                                                    id: prototype.id + '-gridContaIXC',
+                                                    bodyStyle: 'background-color: #E3EAEF;',
+                                                    height: 252,
+                                                    width: 944,
+                                                    columnLines: true,
+                                                    resizable: false,
+                                                    features: [{
+                                                            ftype: 'summary',
+                                                            dock: 'bottom'
+                                                        }],
+                                                    columns: {
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
                                                             resizable: false,
-                                                            features: [{
-                                                                    ftype: 'summary'
-                                                                }
-                                                            ],
-                                                            rootVisible: false,
-                                                            plugins: {
-                                                                ptype: 'cellediting',
-                                                                clicksToEdit: 1
-                                                            },
-                                                            columns: {
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: true,
-                                                                    resizable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                items: [
-                                                                    {xtype: 'treecolumn', text: 'Accounting<br>Date', width: 120, dataIndex: 'A1965FCONT',
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
-                                                                            return '<b>' + value + '<b>';
-                                                                        },
-                                                                        //                                                listeners: {
-                                                                        //                                                    click: 'onViewDataDetailSFI30'
-                                                                        //                                                }
-                                                                    },
-                                                                    {text: 'Source',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: true,
-                                                                            align: 'center',
-                                                                            border: true
-                                                                        },
-                                                                        columns: [
-                                                                            {text: 'Cod', width: 70, dataIndex: 'A1965TUSO',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    return '<b>' + value + '<b>';
-                                                                                },
-                                                                            },
-                                                                            {text: 'Description', width: 300, dataIndex: 'DES_SOURCOD',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = 'text-align:left;';
-                                                                                    return value;
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {text: 'Currency', width: 70, dataIndex: 'A1965CUR',
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            if (record.data.children !== null) {
-                                                                                return '<b>' + value + '<b>';
-                                                                            } else {
-                                                                                return value;
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    {text: 'Total',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: true,
-                                                                            align: 'center',
-                                                                            border: true
-                                                                        },
-                                                                        columns: [
-                                                                            {text: 'Active', width: 120, dataIndex: 'QTY_ACTIV',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = 'text-align:right;';
-                                                                                    //                                                            if(rowIndex === 0) {
-                                                                                    if (record.data.children !== null) {
-                                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
-                                                                                    } else {
-                                                                                        return Ext.util.Format.number(value, '0,000.00');
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {text: 'Total',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: true,
-                                                                            align: 'center',
-                                                                            border: true
-                                                                        },
-                                                                        columns: [
-                                                                            {text: 'Passive', width: 120, dataIndex: 'QTY_PASIV',
-                                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = 'text-align:right;';
-                                                                                    //                                                            if(rowIndex === 0) {
-                                                                                    if (record.data.children !== null) {
-                                                                                        return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
-                                                                                    } else {
-                                                                                        return Ext.util.Format.number(value, '0,000.00');
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        sortable: false,
-                                                                        xtype: 'actioncolumn',
-                                                                        width: 40,
-                                                                        text: '',
-                                                                        align: 'center',
-                                                                        items: [
-                                                                            {
-                                                                                iconCls: 'prx-icon-excel',
-                                                                                tooltip: 'Download Excel',
-                                                                            }
-                                                                        ],
-                                                                        renderer: function (a, b, c) {
-                                                                            //                                                    console.log(a);
-                                                                            //                                                    console.log(b);
-                                                                            //                                                    console.log(c.childNodes);
-                                                                            return a;
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
+                                                            align: 'center'
                                                         },
-                                                        {
-                                                            xtype: 'panel',
-                                                            id: prototype.id + '-SummaryGridDataxPagar',
-                                                            width: 855,
-                                                            align: 'left',
-                                                            margin: '0 0 0 0 ',
-                                                            layout: {
-                                                                type: 'hbox',
-                                                                align: 'center'
+                                                        items: [
+                                                            {text: 'Concepto', width: 300, dataIndex: 'A1964TITU',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:left;background-color:#e0f5ff;";
+                                                                    return value;
+                                                                }
                                                             },
-                                                            defaults: {
-                                                                xtype: 'label',
-                                                                align: 'center',
-                                                                html: '' + '&nbsp',
-                                                                height: 25,
-                                                                padding: '5 5 5 0',
-                                                                style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                                            {text: 'Cuenta', width: 350, dataIndex: 'CUENTA',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#e0f5ff;";
+                                                                    return value;
+                                                                }
                                                             },
-                                                            items: [
-                                                                {width: 120},
-                                                                {width: 70},
-                                                                {width: 300},
-                                                                {width: 70},
-                                                                {width: 120, id: prototype.id + '-idActivexPagar'},
-                                                                {width: 120, id: prototype.id + '-idPassivexPagar'},
-                                                                {width: 51}
-                                                            ]
-                                                        }
-                                                    ]
+                                                            {text: 'Cargo', width: 140, dataIndex: 'A1964ACTIV',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background-color:#d5f4d5;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridContaIXC').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totACTIVO, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Abono', width: 140, dataIndex: 'A1964PASIV',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background-color:#d5f4d5;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridContaIXC').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totPASIVO, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]},
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-panelContaIXP',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            margin: '20 0 0 600',
+//                                            height: 472, 
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'label',
+                                                    id: prototype.id + '-labelTitleIXP',
+//                                                            text: 'Interline Receivables',
+                                                    html: '<strong style="color:#000;">Interline Payable</strong>',
+                                                    labelAlign: 'center',
+                                                    labelStyle: 'color:#231223',
+                                                    align: 'center',
+                                                    margin: '10 0 10 0',
+                                                    hide: true
                                                 },
-                                            ]
-                                        }
+                                                {
+                                                    xtype: 'grid',
+//                                                    padding: '0 0 0 0',
+                                                    id: prototype.id + '-gridContaIXP',
+                                                    bodyStyle: 'background-color: #E3EAEF;',
+                                                    height: 252,
+                                                    width: 944,
+                                                    columnLines: true,
+                                                    resizable: false,
+                                                    features: [{
+                                                            ftype: 'summary',
+                                                            dock: 'bottom'
+                                                        }],
+                                                    columns: {
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            resizable: false,
+                                                            align: 'center'
+                                                        },
+                                                        items: [
+                                                            {text: 'Concepto', width: 300, dataIndex: 'A1965TITU',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:left;background-color:#e0f5ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {text: 'Cuenta', width: 350, dataIndex: 'CUENTA',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#e0f5ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {text: 'Cargo', width: 140, dataIndex: 'A1965ACTIV',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background-color:#d5f4d5;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridContaIXP').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totACTIVO, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Abono', width: 140, dataIndex: 'A1965PASIV',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = 'text-align:right;background-color:#d5f4d5;';
+                                                                    return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridContaIXP').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totPASIVO, '0,000.00') + '<b>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]},
+                                        
+                                        
+                                         /*
+                                                 {
+                                                 xtype: 'panel',
+                                                 id: prototype.id + '-panelGrid2',
+                                                 bodyStyle: 'background-color: #E3EAF9;',
+                                                 //                                            padding: '1',
+                                                 border: false,
+                                                 //width: 100,    
+                                                 layout: {
+                                                 type: 'hbox',
+                                                 align: 'center'
+                                                 },
+                                                 items: [
+                                                 {
+                                                 xtype: 'panel',
+                                                 id: prototype.id + '-panelIXC',
+                                                 bodyStyle: 'background-color: #E3EAF9;',
+                                                 border: false,
+                                                 height: 620,
+                                                 layout: {
+                                                 type: 'vbox',
+                                                 align: 'center'
+                                                 },
+                                                 items: [
+                                                 {
+                                                 xtype: 'label',
+                                                 id: prototype.id + '-labelTitle1',
+                                                 //                                                            text: 'Interline Receivables',
+                                                 html: '<strong style="color:#000;">Interline Receivables</strong>',
+                                                 labelAlign: 'center',
+                                                 labelStyle: 'color:#231223',
+                                                 align: 'center',
+                                                 margin: '10 0 0 0',
+                                                 hide: true
+                                                 },
+                                                 {
+                                                 //xtype: 'grid',
+                                                 xtype: 'treepanel',
+                                                 padding: '20 0 0 0',
+                                                 id: prototype.id + '-gridDataX',
+                                                 bodyStyle: 'background-color: #E3EAEF;',
+                                                 height: 400,
+                                                 width: 855,
+                                                 columnLines: true,
+                                                 resizable: false,
+                                                 features: [{
+                                                 ftype: 'summary'
+                                                 }
+                                                 ],
+                                                 rootVisible: false,
+                                                 plugins: {
+                                                 ptype: 'cellediting',
+                                                 clicksToEdit: 1
+                                                 },
+                                                 columns: {
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 resizable: false,
+                                                 align: 'center'
+                                                 },
+                                                 items: [
+                                                 {xtype: 'treecolumn', text: 'Accounting<br>Date', width: 120, dataIndex: 'A1964FCONT',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
+                                                 return '<b>' + value + '<b>';
+                                                 },
+                                                 //                                                listeners: {
+                                                 //                                                    click: 'onViewDataDetailSFI30'
+                                                 //                                                }
+                                                 },
+                                                 {text: 'Source',
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 align: 'center',
+                                                 border: true
+                                                 },
+                                                 columns: [
+                                                 {text: 'Cod', width: 70, dataIndex: 'A1964TUSO',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 return '<b>' + value + '<b>';
+                                                 },
+                                                 },
+                                                 {text: 'Description', width: 300, dataIndex: 'DES_SOURCOD',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = 'text-align:left;';
+                                                 return value;
+                                                 }
+                                                 }
+                                                 ]
+                                                 },
+                                                 {text: 'Currency', width: 70, dataIndex: 'A1964CUR',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 if (record.data.children !== null) {
+                                                 return '<b>' + value + '<b>';
+                                                 } else {
+                                                 return value;
+                                                 }
+                                                 }
+                                                 },
+                                                 {text: 'Total',
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 align: 'center',
+                                                 border: true
+                                                 },
+                                                 columns: [
+                                                 {text: 'Active', width: 120, dataIndex: 'QTY_ACTIV',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = 'text-align:right;';
+                                                 //                                                            if(rowIndex === 0) {
+                                                 if (record.data.children !== null) {
+                                                 return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                 } else {
+                                                 return Ext.util.Format.number(value, '0,000.00');
+                                                 }
+                                                 }
+                                                 }
+                                                 ]
+                                                 },
+                                                 {text: 'Total',
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 align: 'center',
+                                                 border: true
+                                                 },
+                                                 columns: [
+                                                 {text: 'Passive', width: 120, dataIndex: 'QTY_PASIV',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = 'text-align:right;';
+                                                 //                                                            if(rowIndex === 0) {
+                                                 if (record.data.children !== null) {
+                                                 return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                 } else {
+                                                 return Ext.util.Format.number(value, '0,000.00');
+                                                 }
+                                                 }
+                                                 }
+                                                 ]
+                                                 },
+                                                 {
+                                                 sortable: false,
+                                                 xtype: 'actioncolumn',
+                                                 width: 40,
+                                                 text: '',
+                                                 align: 'center',
+                                                 items: [
+                                                 {
+                                                 iconCls: 'prx-icon-excel',
+                                                 tooltip: 'Download Excel',
+                                                 handler: 'onDownLoad'
+                                                 }
+                                                 ],
+                                                 renderer: function (a, b, c) {
+                                                 //                                                    console.log(a);
+                                                 //                                                    console.log(b);
+                                                 //                                                    console.log(c.childNodes);
+                                                 return a;
+                                                 }
+                                                 }
+                                                 ]
+                                                 }
+                                                 },
+                                                 {
+                                                 xtype: 'panel',
+                                                 id: prototype.id + '-SummaryGridDataX',
+                                                 width: 855,
+                                                 align: 'left',
+                                                 margin: '0 0 0 0 ',
+                                                 layout: {
+                                                 type: 'hbox',
+                                                 align: 'center'
+                                                 },
+                                                 defaults: {
+                                                 xtype: 'label',
+                                                 align: 'center',
+                                                 html: '' + '&nbsp',
+                                                 height: 25,
+                                                 padding: '5 5 5 0',
+                                                 style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                                 },
+                                                 items: [
+                                                 {width: 120},
+                                                 {width: 70},
+                                                 {width: 300},
+                                                 {width: 70},
+                                                 {width: 120, id: prototype.id + '-idActive'},
+                                                 {width: 120, id: prototype.id + '-idPassive'},
+                                                 {width: 51}
+                                                 ]
+                                                 }
+                                                 ]
+                                                 },
+                                                 {xtype: 'tbspacer', width: 50},
+                                                 {
+                                                 xtype: 'panel',
+                                                 id: prototype.id + '-panelIXP',
+                                                 bodyStyle: 'background-color: #E3EAF9;',
+                                                 border: false,
+                                                 height: 620,
+                                                 //width: 100,    
+                                                 layout: {
+                                                 type: 'vbox',
+                                                 align: 'center'
+                                                 },
+                                                 items: [
+                                                 {
+                                                 xtype: 'label',
+                                                 id: prototype.id + '-labelTitle1xPagar',
+                                                 //                                                            text: 'Interline Payable',
+                                                 html: '<strong style="color:#000;">Interline Payable</strong>',
+                                                 //                                                            labelAlign: 'center',
+                                                 //                                                            labelStyle : 'font-weight:bold;',
+                                                 align: 'center',
+                                                 margin: '10 0 0 0',
+                                                 hide: true,
+                                                 style: {
+                                                 //background : '#6699FF',
+                                                 color: 'black',
+                                                 textAlign: 'center'
+                                                 }
+                                                 },
+                                                 {
+                                                 //                                    xtype: 'grid',
+                                                 xtype: 'treepanel',
+                                                 padding: '20 0 0 0',
+                                                 id: prototype.id + '-gridDataxPagar',
+                                                 bodyStyle: 'background-color: #E3EAEF;',
+                                                 height: 400,
+                                                 width: 855,
+                                                 columnLines: true,
+                                                 resizable: false,
+                                                 features: [{
+                                                 ftype: 'summary'
+                                                 }
+                                                 ],
+                                                 rootVisible: false,
+                                                 plugins: {
+                                                 ptype: 'cellediting',
+                                                 clicksToEdit: 1
+                                                 },
+                                                 columns: {
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 resizable: false,
+                                                 align: 'center'
+                                                 },
+                                                 items: [
+                                                 {xtype: 'treecolumn', text: 'Accounting<br>Date', width: 120, dataIndex: 'A1965FCONT',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = ' color:#008FE3;text-align:left;text-decoration:none;';
+                                                 return '<b>' + value + '<b>';
+                                                 },
+                                                 //                                                listeners: {
+                                                 //                                                    click: 'onViewDataDetailSFI30'
+                                                 //                                                }
+                                                 },
+                                                 {text: 'Source',
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 align: 'center',
+                                                 border: true
+                                                 },
+                                                 columns: [
+                                                 {text: 'Cod', width: 70, dataIndex: 'A1965TUSO',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 return '<b>' + value + '<b>';
+                                                 },
+                                                 },
+                                                 {text: 'Description', width: 300, dataIndex: 'DES_SOURCOD',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = 'text-align:left;';
+                                                 return value;
+                                                 }
+                                                 }
+                                                 ]
+                                                 },
+                                                 {text: 'Currency', width: 70, dataIndex: 'A1965CUR',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 if (record.data.children !== null) {
+                                                 return '<b>' + value + '<b>';
+                                                 } else {
+                                                 return value;
+                                                 }
+                                                 }
+                                                 },
+                                                 {text: 'Total',
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 align: 'center',
+                                                 border: true
+                                                 },
+                                                 columns: [
+                                                 {text: 'Active', width: 120, dataIndex: 'QTY_ACTIV',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = 'text-align:right;';
+                                                 //                                                            if(rowIndex === 0) {
+                                                 if (record.data.children !== null) {
+                                                 return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                 } else {
+                                                 return Ext.util.Format.number(value, '0,000.00');
+                                                 }
+                                                 }
+                                                 }
+                                                 ]
+                                                 },
+                                                 {text: 'Total',
+                                                 defaults: {
+                                                 menuDisabled: true,
+                                                 sortable: true,
+                                                 align: 'center',
+                                                 border: true
+                                                 },
+                                                 columns: [
+                                                 {text: 'Passive', width: 120, dataIndex: 'QTY_PASIV',
+                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                 metaData.style = 'text-align:right;';
+                                                 //                                                            if(rowIndex === 0) {
+                                                 if (record.data.children !== null) {
+                                                 return '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                 } else {
+                                                 return Ext.util.Format.number(value, '0,000.00');
+                                                 }
+                                                 }
+                                                 }
+                                                 ]
+                                                 },
+                                                 {
+                                                 sortable: false,
+                                                 xtype: 'actioncolumn',
+                                                 width: 40,
+                                                 text: '',
+                                                 align: 'center',
+                                                 items: [
+                                                 {
+                                                 iconCls: 'prx-icon-excel',
+                                                 tooltip: 'Download Excel',
+                                                 }
+                                                 ],
+                                                 renderer: function (a, b, c) {
+                                                 //                                                    console.log(a);
+                                                 //                                                    console.log(b);
+                                                 //                                                    console.log(c.childNodes);
+                                                 return a;
+                                                 }
+                                                 }
+                                                 ]
+                                                 }
+                                                 },
+                                                 {
+                                                 xtype: 'panel',
+                                                 id: prototype.id + '-SummaryGridDataxPagar',
+                                                 width: 855,
+                                                 align: 'left',
+                                                 margin: '0 0 0 0 ',
+                                                 layout: {
+                                                 type: 'hbox',
+                                                 align: 'center'
+                                                 },
+                                                 defaults: {
+                                                 xtype: 'label',
+                                                 align: 'center',
+                                                 html: '' + '&nbsp',
+                                                 height: 25,
+                                                 padding: '5 5 5 0',
+                                                 style: 'background:#A0BFD3;color:#244066;text-align:right;font-weight:bold;border: 0.3px #4A6371 solid;font-size:10px'
+                                                 },
+                                                 items: [
+                                                 {width: 120},
+                                                 {width: 70},
+                                                 {width: 300},
+                                                 {width: 70},
+                                                 {width: 120, id: prototype.id + '-idActivexPagar'},
+                                                 {width: 120, id: prototype.id + '-idPassivexPagar'},
+                                                 {width: 51}
+                                                 ]
+                                                 }
+                                                 ]
+                                                 },
+                                                 ]
+                                                 }
+                                                 */
                                     ]
                                 },
                                 {
@@ -804,8 +970,8 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                             }
                                         }
                                     ]},
-                                //-----------------------------------------------------------------                             
-                                //-----------------------------------------------------------------                             
+                                        //-----------------------------------------------------------------                             
+                                        //-----------------------------------------------------------------                             
                             ]
                         }
                     ]
