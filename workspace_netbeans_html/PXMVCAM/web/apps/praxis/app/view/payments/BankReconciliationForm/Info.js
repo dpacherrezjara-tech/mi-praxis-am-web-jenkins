@@ -3338,13 +3338,14 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                     id: prototype.id + '-gridDetTktByStval',
                                     bodyStyle: 'background: transparent;',
                                     width: 1250,
+                                    minHeight: 200,
                                     titleAlign: 'center',
                                     columnLines: true,
                                     enableColumnMove: false,
-                                    plugins: {
+                                    /*plugins: {
                                         ptype: 'cellediting',
                                         clicksToEdit: 1
-                                    },
+                                    },*/
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -3368,7 +3369,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
 //                                                                        listeners: {
 ////                                                                            click: 'gridData_act1_clickHandler'
 //                                                                        },
-                                                        editor: {
+                                                        /*editor: {
                                                             xtype: 'textfield',
                                                             editable: true,
                                                             enableKeyEvents: true,
@@ -3376,7 +3377,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                                 keypress: 'eventKeyTKT',
                                                                 specialkey: 'eventKeyTKT'
                                                             }
-                                                        },
+                                                        },*/
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;background-color:#d5f4d5;';
