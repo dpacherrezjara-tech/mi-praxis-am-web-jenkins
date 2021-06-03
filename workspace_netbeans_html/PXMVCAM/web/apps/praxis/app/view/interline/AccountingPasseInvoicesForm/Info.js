@@ -362,8 +362,8 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
 //                                                    padding: '0 0 0 0',
                                                     id: prototype.id + '-gridContaIXC',
                                                     bodyStyle: 'background-color: #E3EAEF;',
-                                                    height: 252,
-                                                    width: 944,
+                                                    height: 210,
+                                                    width: 1024,
                                                     columnLines: true,
                                                     resizable: false,
                                                     features: [{
@@ -378,15 +378,21 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            {text: 'Concepto', width: 300, dataIndex: 'A1964TITU',
+                                                            {text: 'Concept', width: 300, dataIndex: 'A1964TITU',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:left;background-color:#e0f5ff;";
                                                                     return value;
                                                                 }
                                                             },
-                                                            {text: 'Cuenta', width: 350, dataIndex: 'CUENTA',
+                                                            {text: 'Account', width: 350, dataIndex: 'CUENTA',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:left;background-color:#e0f5ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {text: 'Currency', width: 80, dataIndex: 'A1964CUR',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#e0f5ff;";
                                                                     return value;
                                                                 }
                                                             },
@@ -443,8 +449,8 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
 //                                                    padding: '0 0 0 0',
                                                     id: prototype.id + '-gridContaIXP',
                                                     bodyStyle: 'background-color: #E3EAEF;',
-                                                    height: 252,
-                                                    width: 944,
+                                                    height: 210,
+                                                    width: 1024,
                                                     columnLines: true,
                                                     resizable: false,
                                                     features: [{
@@ -468,6 +474,12 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                             {text: 'Cuenta', width: 350, dataIndex: 'CUENTA',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:left;background-color:#e0f5ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {text: 'Currency', width: 80, dataIndex: 'A1965CUR',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#e0f5ff;";
                                                                     return value;
                                                                 }
                                                             },
