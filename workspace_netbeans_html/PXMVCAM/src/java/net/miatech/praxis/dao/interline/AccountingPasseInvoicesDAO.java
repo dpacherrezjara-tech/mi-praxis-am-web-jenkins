@@ -240,6 +240,7 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.RN = rs01.getLong("RN");
                     objRtn.A1964TITU = rs01.getString("A1964TITU");
                     objRtn.CUENTA = rs01.getString("CUENTA");
+                    objRtn.A1964CUR = rs01.getString("A1964CUR");
                    
 
                     objRtn.A1964ACTIV = rs01.getDouble("A1964ACTIV");
@@ -341,7 +342,7 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.RN = rs01.getLong("RN");
                     objRtn.A1965TITU = rs01.getString("A1965TITU");
                     objRtn.CUENTA = rs01.getString("CUENTA");
-                   
+                    objRtn.A1965CUR = rs01.getString("A1965CUR");
 
                     objRtn.A1965ACTIV = rs01.getDouble("A1965ACTIV");
                     objRtn.A1965PASIV = rs01.getDouble("A1965PASIV");
