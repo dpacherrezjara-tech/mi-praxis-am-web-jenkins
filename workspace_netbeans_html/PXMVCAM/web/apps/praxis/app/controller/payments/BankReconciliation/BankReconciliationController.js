@@ -1829,7 +1829,8 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
     },
     searchDetTktByStval: function(beanDetE) {
         //me.f_boxDetTktS = '2';
-        me.beanboxDetTktS2 = beanDetE;        
+        me.beanboxDetTktS2 = beanDetE;
+        me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktByStval'
@@ -1904,7 +1905,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                             });
                             Ext.getCmp(prototype.id + '-cmbError').bindStore(store);
                             win.setValue('cmbError', '');
-                            me.setWidthPie();
+                            
                             // ====================================================================
                         } else {
                             win.setTitle('gridDetTktMatch', '');
