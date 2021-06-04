@@ -305,7 +305,7 @@ public class ReportEdoCtaDet {
             String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
             int length = A3953RSOCI.length(); 
             if(length > 44 ){
-               A3953RSOCI = A3953RSOCI.substring(1, 44);
+               A3953RSOCI = A3953RSOCI.substring(0, 44);
                A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
             }
             Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
