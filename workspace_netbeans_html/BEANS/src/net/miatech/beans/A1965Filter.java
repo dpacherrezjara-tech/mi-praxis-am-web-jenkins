@@ -60,6 +60,8 @@ public class A1965Filter extends A1965{
     
     public Double TOTAL = 0.0;
     public Double tot_TOTAL = 0.0;
+    public Double totACTIVO = 0.0;
+    public Double totPASIVO = 0.0;
     
     public Pagination page = new Pagination();
 }

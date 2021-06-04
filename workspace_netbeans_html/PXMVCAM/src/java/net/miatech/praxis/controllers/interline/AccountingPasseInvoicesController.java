@@ -116,6 +116,106 @@ public class AccountingPasseInvoicesController extends BaseController {
         return lst;
     }
     
+    @RequestMapping(value = "searchA1964")
+    public @ResponseBody
+    String searchA1964(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- AccountingPasseInvoices : searchA1964-------------");
+        map.put("success", true);
+
+        List<A1964Filter> lst = this.getListContaIXC(request, false);
+
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A1964Filter> getListContaIXC(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1964Filter> lst = new ArrayList<>(0);
+        SFI100Filter filter = new SFI100Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new AccountingPasseInvoicesLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, SFI100Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+//            if (!bExcel) {
+//                filter.page.PAGROW = 20;
+//                start = (start != 0 ? start : 0);
+//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            } else {
+            filter.page.PAGROW = -1;
+            filter.page.PAGNUM = 1;
+//            }
+
+            lst = logic.SQP04010(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchA1965")
+    public @ResponseBody
+    String searchA1965(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- AccountingPasseInvoices : searchA1965-------------");
+        map.put("success", true);
+
+        List<A1965Filter> lst = this.getListContaIXP(request, false);
+
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A1965Filter> getListContaIXP(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1965Filter> lst = new ArrayList<>(0);
+        SFI100Filter filter = new SFI100Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new AccountingPasseInvoicesLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, SFI100Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+//            if (!bExcel) {
+//                filter.page.PAGROW = 20;
+//                start = (start != 0 ? start : 0);
+//                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            } else {
+            filter.page.PAGROW = -1;
+            filter.page.PAGNUM = 1;
+//            }
+
+            lst = logic.SQP04011(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
     @RequestMapping(value = "searchBySummary")
     public @ResponseBody
     String searchBySummary(ModelMap map, HttpServletRequest request) {
@@ -166,16 +266,26 @@ public class AccountingPasseInvoicesController extends BaseController {
         return lst;
     }
 
-    /*
+    
         
-    @RequestMapping(value = "search")
+    @RequestMapping(value = "searchX")
     public @ResponseBody
-    String search(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- AccountingPasseInvoices : Search-------------");
+    String searchX(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- AccountingPasseInvoices : searchX-------------");
         map.put("success", true);
-
-        List<A1964Filter> lst = this.getList(request, false);
-        List<A1965Filter> lstXpagar = this.getListXpagar(request, false);
+        
+        A1964Filter filter = new A1964Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+        
+        beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A1964Filter.class);
+        
+//        if(filter.IN_TTRAN.equals("OB")){
+            List<A1964Filter> lst = this.getListX(request, false);
+//        }else{
+            List<A1965Filter> lstXpagar = this.getListXpagar(request, false);
+//        }
 
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
@@ -184,7 +294,7 @@ public class AccountingPasseInvoicesController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    public List<A1964Filter> getList(HttpServletRequest request, Boolean bExcel) {
+    public List<A1964Filter> getListX(HttpServletRequest request, Boolean bExcel) {
 
         List<A1964Filter> lst = new ArrayList<>(0);
         A1964Filter filter = new A1964Filter();
@@ -220,8 +330,7 @@ public class AccountingPasseInvoicesController extends BaseController {
         return lst;
     }
     
-    */
-
+    
     public List<A1965Filter> getListXpagar(HttpServletRequest request, Boolean bExcel) {
 
         List<A1965Filter> lst = new ArrayList<>(0);

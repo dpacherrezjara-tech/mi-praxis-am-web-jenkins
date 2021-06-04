@@ -165,8 +165,6 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     },
     showSummary: function (obj, value, old_value) {
         
-        console.log(value);
-        console.log(old_value);
         if (value) {
             Ext.getCmp(prototype.id + '-panelGrid').hide();
             Ext.getCmp(prototype.id + '-panelGridSummary').show();
@@ -182,6 +180,18 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         this.setGrid();
+        
+        var TTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN').getValue();
+        if(TTRAN === 'OB'){
+            Ext.getCmp(prototype.id + '-panelContaIXP').hide();
+            Ext.getCmp(prototype.id + '-panelContaIXC').show();
+            this.setGridContaIXC();
+        }else{
+            Ext.getCmp(prototype.id + '-panelContaIXC').hide();
+            Ext.getCmp(prototype.id + '-panelContaIXP').show();
+            this.setGridContaIXP();
+        }
+//        this.setGridData();
 
     },
     setFormatParameter: function () {
@@ -214,7 +224,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     // <editor-fold defaultstate="collapsed" desc="setGrid">
 
     setGrid: function () {
-        win.lblUser_toolTip("Estructura: SFI100");
+        win.lblUser_toolTip("Estructura: SFI100/A1964/A1965");
         me.setWidthPie();
         me.panelActual = '-panelGridData';
         me.drillDown.push(me.panelActual);
@@ -226,10 +236,10 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
             }, listeners: {
                 beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
-                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                 },
                 load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
                     
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
@@ -252,6 +262,80 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
+    setGridContaIXC: function () {
+        me.setWidthPie();
+        me.panelActual = '-panelGridData';
+        me.drillDown.push(me.panelActual);
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchA1964'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+//                    Ext.getCmp(prototype.id + '-panelContaIXC').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+//                    Ext.getCmp(prototype.id + '-panelContaIXC').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridContaIXC').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridContaIXC').setStore(storeGridDatas);
+
+    },
+    setGridContaIXP: function () {
+        me.setWidthPie();
+        me.panelActual = '-panelGridData';
+        me.drillDown.push(me.panelActual);
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchA1965'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-panelContaIXC').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-panelContaIXC').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridContaIXP').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridContaIXP').setStore(storeGridDatas);
+
+    },
     setGridSummary: function () {
         win.lblUser_toolTip("Estructura: SFI100");
 
@@ -261,10 +345,10 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
             }, listeners: {
                 beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
-                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                 },
                 load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
                     
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
@@ -293,7 +377,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
     setGridData: function () {
-        win.lblUser_toolTip("Estructura: A1964/A1965");
+//        win.lblUser_toolTip("Estructura: A1964/A1965");
         me.setWidthPie();
         me.panelActual = '-panelGridData';
         me.drillDown.push(me.panelActual);
@@ -301,14 +385,14 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
             proxy: {
-                url: prototype.url + '/search'
+                url: prototype.url + '/searchX'
             }, listeners: {
                 beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
-                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    Ext.getCmp(prototype.id + '-panelGrid2').mask('Loading...');
                 },
                 load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    Ext.getCmp(prototype.id + '-panelGrid2').unmask();
                     
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
@@ -382,7 +466,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
                                 root: dataRoot
                             });
 
-                            Ext.getCmp(prototype.id + '-gridData').setStore(storeTree);
+                            Ext.getCmp(prototype.id + '-gridDataX').setStore(storeTree);
 
                             // ---------------------------------------------------------------------
                             

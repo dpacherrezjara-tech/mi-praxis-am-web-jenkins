@@ -178,6 +178,209 @@ public class AccountingPasseInvoicesDAO {
 
         return lstRtn;
     }
+    
+    public List<A1964Filter> SQP04010(SFI100Filter filter) throws SQLException, Exception {
+        List<A1964Filter> lstRtn = new ArrayList<A1964Filter>(0);
+        A1964Filter objRtn;
+        double totActivo = 0, totPasivo = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04010(?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_TFECHA.trim());
+            cstmt01.setString(5, filter.IN_TTRAN);
+            cstmt01.setString(6, filter.IN_PEREST);
+
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                totActivo += rs01.getDouble("A1964ACTIV");
+                totPasivo += rs01.getDouble("A1964PASIV");
+
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A1964Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_TTRAN = filter.IN_TTRAN;
+                    objRtn.IN_PEREST = filter.IN_PEREST;
+
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.A1964TITU = rs01.getString("A1964TITU");
+                    objRtn.CUENTA = rs01.getString("CUENTA");
+                    objRtn.A1964CUR = rs01.getString("A1964CUR");
+                   
+
+                    objRtn.A1964ACTIV = rs01.getDouble("A1964ACTIV");
+                    objRtn.A1964PASIV = rs01.getDouble("A1964PASIV");
+                    
+                    objRtn.totACTIVO = totActivo;
+                    objRtn.totPASIVO = totPasivo;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //  System.out.println( e.getMessage());
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+    public List<A1965Filter> SQP04011(SFI100Filter filter) throws SQLException, Exception {
+        List<A1965Filter> lstRtn = new ArrayList<A1965Filter>(0);
+        A1965Filter objRtn;
+        double totActivo = 0, totPasivo = 0;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04011(?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_TFECHA.trim());
+            cstmt01.setString(5, filter.IN_TTRAN);
+            cstmt01.setString(6, filter.IN_PEREST);
+
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                totActivo += rs01.getDouble("A1965ACTIV");
+                totPasivo += rs01.getDouble("A1965PASIV");
+
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A1965Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+//                    objRtn.IN_TTRAN = filter.IN_TTRAN;
+//                    objRtn.IN_PEREST = filter.IN_PEREST;
+
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.A1965TITU = rs01.getString("A1965TITU");
+                    objRtn.CUENTA = rs01.getString("CUENTA");
+                    objRtn.A1965CUR = rs01.getString("A1965CUR");
+
+                    objRtn.A1965ACTIV = rs01.getDouble("A1965ACTIV");
+                    objRtn.A1965PASIV = rs01.getDouble("A1965PASIV");
+                    
+                    objRtn.totACTIVO = totActivo;
+                    objRtn.totPASIVO = totPasivo;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            //  System.out.println( e.getMessage());
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
 
     public List<SFI100Filter> SQP03987(SFI100Filter filter) throws SQLException, Exception {
         List<SFI100Filter> lstRtn = new ArrayList<SFI100Filter>(0);

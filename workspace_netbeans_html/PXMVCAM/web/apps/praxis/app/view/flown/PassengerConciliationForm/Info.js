@@ -469,9 +469,10 @@ Ext.define('Ext.Praxis.view.flown.PassengerConciliationForm.Info', {
                         },
                         items: [
                             {text: 'Ticket', width: 120, dataIndex: 'strTicket',
-//                                listeners: {
-//                                    click: 'onFacsimilClick'
-//                                },
+                                listeners: {
+                                    //click: 'onFacsimilClick'
+                                    click: 'showTicket'
+                                },
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = 'text-decoration:none; color:#008FE3; ';
                                     return '<a href="#flown-passenger-conciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';

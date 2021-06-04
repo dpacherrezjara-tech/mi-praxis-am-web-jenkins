@@ -1138,6 +1138,59 @@ public class BankReconciliationController extends BaseController {
 //        return resp;
 //    }
 
+    
+    @RequestMapping(value = "/searchDetTktByStval")
+    public @ResponseBody
+    String searchDetTktByStval(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<A2290Filter> listaError = new ArrayList<A2290Filter>();
+        A2290Filter filter = new A2290Filter();
+        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            BankReconciliationLogic logic = new BankReconciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            hmResultado = logic.loadPX263SQP03989(filter);
+
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
+//                map.put("nameExcel", nameExcel);
+            } else {
+                List<A2290Filter> listaData = hmResultado.get("TKT");
+                listaError = hmResultado.get("ERROR");
+
+                map.put("success", true);
+                map.put("data", listaData);
+                map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+                map.put("lstError", listaError);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return (dw_excel) ? null : (new Gson().toJson(map));
+    }
+    
     @RequestMapping(value = "searchDetCardNbrByStval")
     public @ResponseBody
     String searchDetCardNbrByStval(ModelMap map, HttpServletRequest request) {

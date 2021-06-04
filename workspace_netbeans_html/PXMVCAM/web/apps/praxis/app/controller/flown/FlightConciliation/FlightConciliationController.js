@@ -1402,7 +1402,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     // </editor-fold>
 
-    showTicket: function(data, row) {
+    /*showTicket: function(data, row) {
 
         console.log(data);
         if (data.CCIA === '139') {
@@ -1412,6 +1412,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             me.viewProrate(data);
         }
 
+    },*/
+    showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        console.log('RowData');
+        console.log(rowData.data);
+        me.viewMasterTkt(rowData.data);
     },
     viewMasterTkt: function(data) {
 

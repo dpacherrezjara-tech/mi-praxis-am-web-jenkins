@@ -2039,6 +2039,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliation.SalesReconciliati
             }
         });
     },
+    viewMasterTkt2: function (column, e, row, column, x, rowData) {
+        
+        var data = x.record.data;
+        var strTkt = data.TICKET;
+        
+        this.beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        this.beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        this.beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+//        this.beanProMasterTicket.IN_SEQ = '00';
+
+        console.log(this.beanProMasterTicket);
+        win.displayProMasterTicket(this, 'ViewConciliation', this.beanProMasterTicket);
+    },
     habilitarFiltros: function() {
         win.enabled('cmbDateFromYear', true);
         win.enabled('cmbDateFromMonth', true);
