@@ -539,12 +539,12 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                 cant = rowData.data.lngQMATCH;
                 break;
             case 2:
-                rowData.data.IN_STVAL = '4';
+                rowData.data.IN_STVAL = '5';
                 rowData.data.IN_BSTVAL = '';
                 cant = rowData.data.lngQMANUAL;
                 break;
             case 3:
-                rowData.data.IN_STVAL = '5';
+                rowData.data.IN_STVAL = '4';
                 rowData.data.IN_BSTVAL = '';
                 cant = rowData.data.lngQDIFF;
                 break;
@@ -854,7 +854,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                             for (var q = 0; q < cbxDetErrorCCAC.length; q++) {
                                 objER = cbxDetErrorCCAC[q];
                             }
-                            if (objER.IN_STVAL === '4') {
+                            if (objER.IN_STVAL === '4' || objER.IN_STVAL === '5') {
                                 Ext.getCmp(prototype.id + '-con1').show();
                                 Ext.getCmp(prototype.id + '-sin1').hide();
                             } else {
@@ -1491,7 +1491,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                     var beanCons = res.result;
 //                    console.log(beanCons.STVAL);
                     if (beanCons !== null && beanCons.SCARDN !== '') {
-                        if (beanCons.STVAL !== '1' && beanCons.STVAL !== '4') {
+                        if (beanCons.STVAL !== '1' && beanCons.STVAL !== '5') {
                             me.winDataEntry('U', beanCons);
                         }
                         else {
@@ -1853,7 +1853,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.BankReconciliation
                             var obj = {};
                             for (var l = 0; l < gridDetTktSAC.length; l++) {
                                 obj = gridDetTktSAC[l];
-                                if (obj.IN_STVAL === "4") {
+                                if (obj.IN_STVAL === "5") {
                                     if (obj.strPEM === "ACCB") {
                                         break;
                                     }

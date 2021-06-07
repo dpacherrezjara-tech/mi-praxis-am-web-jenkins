@@ -512,7 +512,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 fields: ['code', 'name'],
                                                 data: [
                                                     ["", "All"], //["1", "Match"], ["2", "Sales Without ACCB"], ["3", "ACCB Without Sales"],
-                                                    ["4", "Match Manual"], ["5", "Match Difference"]
+                                                    ["5", "Match Manual"], ["4", "Match Difference"]
                                                 ]
                                             }),
                                             queryMode: 'local',
