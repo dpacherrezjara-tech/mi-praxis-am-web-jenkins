@@ -241,8 +241,8 @@ public class BankReconciliationDAO {
         hmDescEstadosSTVAL.put("1", "Match");
         hmDescEstadosSTVAL.put("2", "Settlement w/o Paying");
         hmDescEstadosSTVAL.put("3", "Paying w/o Settlement");
-        hmDescEstadosSTVAL.put("4", "Match Manual");
-        hmDescEstadosSTVAL.put("5", "Match with Difference");
+        hmDescEstadosSTVAL.put("4", "Match with Difference");
+        hmDescEstadosSTVAL.put("5", "Match Manual");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -632,6 +632,7 @@ public class BankReconciliationDAO {
                     beanTkt.lngQTOTWS = rst.getLong("QWSAL");
                     beanTkt.lngTotQMATCH = lngTotQMATCH;
                     beanTkt.lngTotQMANUAL = lngTotQMANUAL;
+                    beanTkt.lngTotQDIFF = lngTotQDIFF;
                     beanTkt.lngTotQTEF = lngTotQTEF;
                     beanTkt.lngTotQPAS48 = lngTotQPAS48;
                     beanTkt.lngTotQACEP = lngTotQACEP;
@@ -691,7 +692,8 @@ public class BankReconciliationDAO {
         hmDescEstadosSTVAL.put("1", "Match");
         hmDescEstadosSTVAL.put("2", "Settlement w/o Paying");
         hmDescEstadosSTVAL.put("3", "Paying w/o Settlement");
-        hmDescEstadosSTVAL.put("4", "Match Manual");
+        hmDescEstadosSTVAL.put("4", "Match with Difference");
+        hmDescEstadosSTVAL.put("5", "Match Manual");
 
         HashMap<String, String> hmDescOrigen = new HashMap<String, String>();
         hmDescOrigen.put("B", "Banamex");
@@ -922,7 +924,7 @@ public class BankReconciliationDAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without ACCB");
         hmDescEstados.put("3", "ACCB without " + tipFecha);
-        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("4", "Match with Difference");
         hmDescEstados.put("5", "Match Manual");
 
         CallableStatement cstmt = null;
@@ -1261,7 +1263,8 @@ public class BankReconciliationDAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Settlement w/o Paying");
         hmDescEstados.put("3", "Paying w/o Settlement");
-        hmDescEstados.put("4", "Match Manual");
+        hmDescEstados.put("4", "Match with Difference");
+        hmDescEstados.put("5", "Match Manual");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1604,6 +1607,8 @@ public class BankReconciliationDAO {
                     } else if (filter.IN_STVAL.trim().equals("3")) {
                         estado = "Paying w/o Settlement";
                     } else if (filter.IN_STVAL.trim().equals("4")) {
+                        estado = "Match with Difference";
+                    } else if (filter.IN_STVAL.trim().equals("5")) {
                         estado = "Match Manual";
                     }
 
@@ -1671,8 +1676,8 @@ public class BankReconciliationDAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without ACCB");
         hmDescEstados.put("3", "ACCB without " + tipFecha);
-        hmDescEstados.put("4", "Match Manual");
-        hmDescEstados.put("5", "Match with Differences");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
         //Sales Reconciliation
 
         /*HashMap<String, String> hmDescEstados = new HashMap<String, String>();
@@ -1857,8 +1862,8 @@ public class BankReconciliationDAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without ACCB");
         hmDescEstados.put("3", "ACCB without " + tipFecha);
-        hmDescEstados.put("4", "Match Manual");
-        hmDescEstados.put("5", "Match with Differences");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
         //Sales Reconciliation
 
         /*HashMap<String, String> hmDescEstados = new HashMap<String, String>();
@@ -2039,8 +2044,8 @@ public class BankReconciliationDAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without ACCB");
         hmDescEstados.put("3", "ACCB without " + tipFecha);
-        hmDescEstados.put("4", "Match Manual");
-        hmDescEstados.put("5", "Match with Differences");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
         //Sales Reconciliation
 
         /*HashMap<String, String> hmDescEstados = new HashMap<String, String>();
@@ -2641,6 +2646,8 @@ public class BankReconciliationDAO {
                     } else if (filter.IN_STVAL.trim().equals("3")) {
                         estado = "Paying w/o Settlement";
                     } else if (filter.IN_STVAL.trim().equals("4")) {
+                        estado = "Match with Differences";
+                    } else if (filter.IN_STVAL.trim().equals("5")) {
                         estado = "Match Manual";
                     }
 
@@ -3464,7 +3471,8 @@ public class BankReconciliationDAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Settlement w/o Paying");
         hmDescEstados.put("3", "Paying w/o Settlement");
-        hmDescEstados.put("4", "Match Manual");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -4166,8 +4174,8 @@ public class BankReconciliationDAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without ACCB");
         hmDescEstados.put("3", "ACCB without " + tipFecha);
-        hmDescEstados.put("5", "Match with Differences");
-        hmDescEstados.put("4", "Match Manual");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
 
         HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
 
