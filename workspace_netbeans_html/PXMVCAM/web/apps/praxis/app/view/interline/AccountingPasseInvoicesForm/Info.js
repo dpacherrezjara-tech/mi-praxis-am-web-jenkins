@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Info', {
                                                             border: true
                                                         },
                                                         columns: [
-                                                            {text: 'Accounting', width: 100, dataIndex: 'FCONT',
+                                                            {text: 'Accounting', width: 100, dataIndex: 'typeDate', id: prototype.id + '-typeDate',
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     return '<b>' + value + '<b>';
                                                                 }
