@@ -5204,7 +5204,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_7.setCellValue("Source Code");              //SOURCOD
             
             CH1_8.setCellValue("Total Gross Value");        //TGROSS
-            CH1_9.setCellValue("Total ISC Amount");        //TISC
+            CH1_9.setCellValue("Total ISC Amount");         //TISC
             CH1_10.setCellValue("Total TAX Amount");        //TTAX
             CH1_11.setCellValue("Total VAT Amount");        //TVAT
             CH1_12.setCellValue("Total Other Comm.");       //TOHCOM
