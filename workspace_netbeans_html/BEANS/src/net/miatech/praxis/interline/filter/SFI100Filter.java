@@ -22,6 +22,7 @@ public class SFI100Filter extends SFI100{
     public String IN_TTRAN = "";
     public String IN_PEREST = "";
     public String strFormatDate = "";
+    public String typeDate = "";
     
     
     public double totTGROSS = 0;

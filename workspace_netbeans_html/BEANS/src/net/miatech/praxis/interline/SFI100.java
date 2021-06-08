@@ -12,6 +12,7 @@ package net.miatech.praxis.interline;
 public class SFI100 {
     
     public String FCONT = "";
+    public String DATEPROV = "";
     public String BDATE = "";
     public String SOURCOD = "";
     public String SOURDES = "";
