@@ -5185,7 +5185,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_12 = row1.createCell(12);
             Cell CH1_13 = row1.createCell(13);
             Cell CH1_14 = row1.createCell(14);
-//            Cell CH1_15 = row1.createCell(15);
+            Cell CH1_15 = row1.createCell(15);
 //            Cell CH1_16 = row1.createCell(16);
 //            Cell CH1_17 = row1.createCell(17);
 //            Cell CH1_18 = row1.createCell(18);
@@ -5206,10 +5206,11 @@ public class PassengerInvoicesController extends BaseController {
             CH1_8.setCellValue("Total Gross Value");        //TGROSS
             CH1_9.setCellValue("Total ISC Amount");        //TISC
             CH1_10.setCellValue("Total TAX Amount");        //TTAX
-            CH1_11.setCellValue("Total Other Comm.");       //TOHCOM
-            CH1_12.setCellValue("Total Handling Fee");      //HFEEAM
-            CH1_13.setCellValue("Total UATP Amount");       //TUATP
-            CH1_14.setCellValue("Total NET");               //TNET
+            CH1_11.setCellValue("Total VAT Amount");        //TVAT
+            CH1_12.setCellValue("Total Other Comm.");       //TOHCOM
+            CH1_13.setCellValue("Total Handling Fee");      //HFEEAM
+            CH1_14.setCellValue("Total UATP Amount");       //TUATP
+            CH1_15.setCellValue("Total NET");               //TNET
             
 //            CH1_16.setCellValue("Total Gross Sign'");       //TGROSSG
 //            CH1_17.setCellValue("Total ISC Sign");          //TISCSG
@@ -5234,7 +5235,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
             CH1_14.setCellStyle(headerStyle);
-//            CH1_15.setCellStyle(headerStyle);
+            CH1_15.setCellStyle(headerStyle);
 //            CH1_16.setCellStyle(headerStyle);
 //            CH1_17.setCellStyle(headerStyle);
 //            CH1_18.setCellStyle(headerStyle);
@@ -5259,7 +5260,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
 //            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
 //            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
 //            sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 18));
@@ -5287,7 +5288,7 @@ public class PassengerInvoicesController extends BaseController {
                 Cell rcell12 = row1.createCell(12);
                 Cell rcell13 = row1.createCell(13);
                 Cell rcell14 = row1.createCell(14);
-//                Cell rcell15 = row1.createCell(15);
+                Cell rcell15 = row1.createCell(15);
 //                Cell rcell16 = row1.createCell(16);
 //                Cell rcell17 = row1.createCell(17);
 //                Cell rcell18 = row1.createCell(18);
@@ -5308,10 +5309,11 @@ public class PassengerInvoicesController extends BaseController {
                 rcell8.setCellValue(listaData.get(vi).TGROSS);
                 rcell9.setCellValue(listaData.get(vi).TISC);
                 rcell10.setCellValue(listaData.get(vi).TTAX);
-                rcell11.setCellValue(listaData.get(vi).TOHCOM);
-                rcell12.setCellValue(listaData.get(vi).HFEEAM);
-                rcell13.setCellValue(listaData.get(vi).TUATP);
-                rcell14.setCellValue(listaData.get(vi).TNET);
+                rcell11.setCellValue(listaData.get(vi).TVAT);
+                rcell12.setCellValue(listaData.get(vi).TOHCOM);
+                rcell13.setCellValue(listaData.get(vi).HFEEAM);
+                rcell14.setCellValue(listaData.get(vi).TUATP);
+                rcell15.setCellValue(listaData.get(vi).TNET);
                 
 //                rcell16.setCellValue(listaData.get(vi).TGROSSG);
 //                rcell17.setCellValue(listaData.get(vi).TISCSG);
@@ -5340,7 +5342,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
             sheet.autoSizeColumn(14, true);
-//            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(15, true);
 //            sheet.autoSizeColumn(16, true);
 //            sheet.autoSizeColumn(17, true);
 //            sheet.autoSizeColumn(18, true);

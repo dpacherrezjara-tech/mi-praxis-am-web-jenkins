@@ -5876,6 +5876,7 @@ public class LoadInterlineDAO {
                 objRtn.TGROSS = rs01.getDouble("TGROSS");
                 objRtn.TISC = rs01.getDouble("TISC");
                 objRtn.TTAX = rs01.getDouble("TTAX");
+                objRtn.TVAT = rs01.getDouble("TVAT");
                 objRtn.TOHCOM = rs01.getDouble("TOHCOM");
                 objRtn.HFEEAM = rs01.getDouble("HFEEAM");
                 objRtn.TUATP = rs01.getDouble("TUATP");
