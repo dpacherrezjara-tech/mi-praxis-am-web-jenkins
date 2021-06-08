@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
     controller: 'ProBankReconciliationTktController',
     title: 'CCMP',
     header: true,
-    width: 1220,
+    width: 1350,
     height: 920,
     border: false,
     resizable: false,
@@ -1870,7 +1870,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 {
                                                     xtype: 'grid',
                                                     id: prototype.MatchTkt.id + '-gridDetTicket',
-                                                    width: 1185,
+                                                    width: 1265,
                                                     height: 520,
                                                     columnLines: true,
                                                     columns: {
@@ -1958,7 +1958,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Status', dataIndex: 'strDescStatus', width: 80,
+                                                                text: 'Status', dataIndex: 'strDescStatus', width: 150,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
@@ -2035,7 +2035,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                                 },
                                                                 columns: [
                                                                     {
-                                                                        text: 'Code C-1', dataIndex: 'SCARCOD1', width: 60,
+                                                                        text: 'Code C-1', dataIndex: 'SCARCOD1', width: 80,
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
                                                                             var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
