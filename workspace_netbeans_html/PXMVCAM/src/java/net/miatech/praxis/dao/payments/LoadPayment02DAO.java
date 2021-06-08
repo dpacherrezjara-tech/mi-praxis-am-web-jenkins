@@ -2524,8 +2524,8 @@ public class LoadPayment02DAO {
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales without ACCB");
         hmDescEstados.put("3", "ACCB without Sales");
-        hmDescEstados.put("5", "Match with Differences");
-        hmDescEstados.put("4", "Match Manual");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
