@@ -4240,7 +4240,6 @@ public class BankReconciliationDAO {
                         //MATCH CON DIFERENCIAS
                     //REGISTRO CON DATOS DE LA VENTA =======================
                     beanTkt = new A2290Filter();
-                    //beanTkt.TRNCU = rst.getString("TRNCU");
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                     beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -4249,58 +4248,67 @@ public class BankReconciliationDAO {
                     beanTkt.IN_CARDN = filter.IN_CARDN.trim();
                     beanTkt.IN_CARDC = filter.IN_CARDC.trim();
                     beanTkt.IN_FTE = filter.IN_FTE.trim();
-                    beanTkt.IN_AFTE = filter.IN_AFTE.trim();
                     beanTkt.IN_STVAL = filter.IN_STVAL.trim();
                     beanTkt.IN_COUNTRY = filter.IN_COUNTRY.trim();
-                    beanTkt.IN_AUTHNBR = filter.IN_AUTHNBR.trim();
-                    beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
-                        //beanTkt.strDescCard = filter.strDescCard.trim();
-                    //beanTkt.strDescCountry = filter.strDescCountry.trim();
+                    beanTkt.strDescCard = filter.strDescCard.trim();
                     beanTkt.IN_TICKET = filter.IN_TICKET.trim();
                     beanTkt.IN_MERCHN = filter.IN_MERCHN.trim();
-                    beanTkt.IN_CERROR = filter.IN_CERROR.trim();
                     beanTkt.strMoneda = filter.strMoneda.trim();
-                    //beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
+                    beanTkt.strTicket = "";//rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                     if (rst.getString("TDOC").trim().equals("R")) {
                         beanTkt.strPEM = "REFUND";
                     } else {
                         beanTkt.strPEM = "SALES";
                     }
+                    /*beanTkt.TRNCU = rst.getString("TRNCU").trim();
+                     if (!rst.getString("TRNCU").trim().isEmpty()) {
+                     beanTkt.strCampo = rst.getString("TRNCU").trim().substring(0, 1);
+                     }*/
                     //beanTkt.CCIA = rst.getString("CCIA").trim();
                     //beanTkt.FORMA = rst.getString("FORMA").trim();
                     //beanTkt.SERIE = rst.getString("SERIE").trim();
                     beanTkt.TDOC = rst.getString("TDOC").trim();
                     //beanTkt.SEQ = rst.getString("SEQ").trim();
+                    beanTkt.STVAL = rst.getString("STVAL").trim();
                     if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
-                        beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
-                    } else {
-                        beanTkt.STVAL = rst.getString("STVAL").trim();
+                        beanTkt.strDescStatus = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                     }
-                    if (!rst.getString("ERROR").trim().isEmpty()) {
+                    /*if (hmDescError.containsKey(rst.getString("CERROR").trim().toUpperCase())) {
+                     beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + hmDescError.get(rst.getString("CERROR").trim()).toString();
+                     } else {
+                     beanTkt.CERROR = rst.getString("CERROR").trim();
+                     }*/
+                    /*if (!rst.getString("ERROR").trim().isEmpty()) {
                         beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
                     } else {
                         beanTkt.CERROR = rst.getString("CERROR").trim();
-                    }
-
-                    beanTkt.FTE = rst.getString("FTE").trim();
-                    if (rst.getString("FTE").trim().equals("A")) {
+                    }*/
+                    //beanTkt.FTE = rst.getString("FTE").trim();
+                    /*if (rst.getString("FTE").trim().equals("A")) {
                         beanTkt.strSORIG = "ARC";
                     } else if (rst.getString("FTE").trim().equals("B")) {
                         beanTkt.strSORIG = "BSP";
                     } else if (rst.getString("FTE").trim().equals("S")) {
                         beanTkt.strSORIG = "ASR";
-                    } else if (rst.getString("FTE").trim().equals("M")) {
-                        beanTkt.strSORIG = "Manual";
-                    }
+                    }*/
                     //beanTkt.SDATEL = rst.getString("SDATEL").trim();
-                    //beanTkt.SFLOAD = rst.getString("SFLOAD").trim();
                     beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
-                    beanTkt.strDescCountry = rst.getString("NAMES").trim();
-                    beanTkt.SAGENT = rst.getString("SAGENT").trim();
+                    /*if (hmPaises.containsKey(beanTkt.SCOUNTRY.trim())) {
+                     beanTkt.strDescCountry = hmPaises.get(beanTkt.SCOUNTRY.trim()).toString();
+                     }*/
+                    /*if (!rst.getString("NCOUNTRYS").trim().isEmpty()) {
+                        beanTkt.strDescCountry = rst.getString("NCOUNTRYS").trim();
+                    }*/
+                    //beanTkt.SAGENT = rst.getString("SAGENT").trim();
                     beanTkt.SDATE = rst.getString("SDATE").trim();
                     //beanTkt.SPAYMENT = rst.getString("SPAYMENT").trim();
                     beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
-                    beanTkt.strDescCard = rst.getString("NAMECARS").trim();
+                    /*if (hmDescCard.containsKey(rst.getString("SCARCOD").trim().toUpperCase())) {
+                     beanTkt.strDescCard = hmDescCard.get(rst.getString("SCARCOD").trim()).toString();
+                     }*/
+                    /*if (!rst.getString("NCARDS").trim().isEmpty()) {
+                        beanTkt.strDescCard = rst.getString("NCARDS").trim();
+                    }*/
                     //beanTkt.STCNTR = rst.getString("STCNTR").trim();
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                     beanTkt.SVFOP = rst.getDouble("SVFOP");
@@ -4311,66 +4319,47 @@ public class BankReconciliationDAO {
                     //beanTkt.SINVN = rst.getString("SINVN").trim();
                     //beanTkt.SIDATE = rst.getString("SIDATE").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
+                    
+                    beanTkt.TDATE = rst.getString("TDATE").trim();
+                    beanTkt.DATEF = rst.getString("DATEF").trim();
+                    beanTkt.SAUTHOC1 = rst.getString("SAUTHOC1").trim();
+                    beanTkt.SCARCOD1 = rst.getString("SCARCOD1").trim();
+                    beanTkt.NUMREF = rst.getString("NUMREF").trim();
                     //beanTkt.SPNRSP = rst.getString("SPNRSP").trim();
-                    /*if (beanTkt.SFLOAD.trim().equals("M")) {
-                        beanTkt.SFLOAD = "Manual";
-                    }*/
-                    beanTkt.MERCHN = rst.getString("MERCHN").trim();
-                    beanTkt.SEQNUM = rst.getString("SEQNUM").trim();
+                    //beanTkt.MERCHN = rst.getString("MERCHN").trim();
+                    //beanTkt.SEQNUM = rst.getString("SEQNUM").trim();
                     //beanTkt.SEQCOUNT = rst.getString("SEQCOUNT").trim();
                     //Banks
                     //beanTkt.BDATEL = rst.getString("BDATEL").trim();
-                    beanTkt.BSTVAL = rst.getString("BSTVAL").trim();
+                    /*beanTkt.BSTVAL = rst.getString("BSTVAL").trim();
                     if (beanTkt.BSTVAL.trim().equals("1")) {
                         beanTkt.BSTVAL = "Accepted";
                     } else if (beanTkt.BSTVAL.trim().equals("2")) {
                         beanTkt.BSTVAL = "Rejected";
                     } else if (beanTkt.BSTVAL.trim().equals("3")) {
                         beanTkt.BSTVAL = "Suspect";
-                    }
+                    }*/
                     //beanTkt.GRUPO = rst.getString("GRUPO").trim();
                     //beanTkt.IDFIL = rst.getString("IDFIL").trim();
 
-                    beanTkt.lngTotQACCB = lngTotCant;
-                    beanTkt.dblTotSVFOP = dblTotSVFOP;
-                    //beanTkt.dblTotAVFOP = dblTotAVFOP;
-                    beanTkt.BDATEP = rst.getString("BDATEP").trim();
-                    //TEF
-                    beanTkt.TDATE = rst.getString("TDATE").trim();
-
+                    /*beanTkt.BDATEP = rst.getString("BDATEP").trim();
                     try {
-                        if (!beanTkt.BDATEP.trim().equals("") && !beanTkt.SDATE.trim().equals("")) {
+                        if (!rst.getString("BDATEP").trim().equals("")) {
                             beanTkt.lngDays = Functions.diferenciaDias(beanTkt.SDATE, beanTkt.BDATEP);
-
-                        } else if (!beanTkt.TDATE.trim().equals("") && !beanTkt.SDATE.trim().equals("")) {
-                            beanTkt.lngDays = Functions.diferenciaDias(beanTkt.SDATE, beanTkt.TDATE);
-
                         } else if (!beanTkt.SDATE.trim().equals("")) {
                             beanTkt.lngDays = Functions.diferenciaDiasEntreSistema(beanTkt.SDATE);
                         }
                     } catch (Exception e) {
-                    }
-
-                    beanTkt.lngQOBS = rst.getLong("QOB");
+                    }*/
                     //Armando Título del Detalle
                     if (beanTkt.strFecFiltro.equals("DATEC")) {
-                        beanTkt.strTitulo = "Conciliation Date : ";
+                        beanTkt.strTitulo = "Conciliation Date : " + beanTkt.SDATE;
                     } else {
                         if (beanTkt.IN_TDOC.equals("R")) {
-                            beanTkt.strTitulo = "Refund Date : ";
+                            beanTkt.strTitulo = "Refund Date : " + beanTkt.SDATE;
                         } else {
-                            beanTkt.strTitulo = "Sales Date : ";
+                            beanTkt.strTitulo = "Sales Date : " + beanTkt.SDATE;
                         }
-                    }
-                    beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
-                            + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";
-
-                    /*if (rst.getString("TKVOID").trim().equals("V")) {
-                        beanTkt.strFlagStat = "Void";
-
-                    } else */
-                    if (rst.getString("FLAGC").trim().equals("C")) {
-                        beanTkt.strFlagStat = "CNJ";
                     }
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
@@ -4378,152 +4367,6 @@ public class BankReconciliationDAO {
                     beanTkt.page.TOTPAG = filter.page.TOTPAG;
                     beanTkt.page.TOTROW = filter.page.TOTROW;
 
-                    lstTkts.add(beanTkt);
-                    //REGISTRO CON DATOS DEL ACCB ==============================
-                    beanTkt = new A2290Filter();
-                    beanTkt.strFecFiltro = filter.strFecFiltro.trim();
-                    beanTkt.strFormatDate = filter.strFormatDate.trim();
-                    beanTkt.IN_SDATE = filter.IN_SDATE.trim();
-                    beanTkt.IN_TDOC = filter.IN_TDOC.trim();
-                    beanTkt.IN_PAYMENT = filter.IN_PAYMENT.trim();
-                    beanTkt.IN_CARDN = filter.IN_CARDN.trim();
-                    beanTkt.IN_CARDC = filter.IN_CARDC.trim();
-                    beanTkt.IN_FTE = filter.IN_FTE.trim();
-                    beanTkt.IN_AFTE = filter.IN_AFTE.trim();
-                    beanTkt.IN_STVAL = filter.IN_STVAL.trim();
-                    beanTkt.IN_COUNTRY = filter.IN_COUNTRY.trim();
-                    beanTkt.IN_AUTHNBR = filter.IN_AUTHNBR.trim();
-                    beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
-                        //beanTkt.strDescCard = filter.strDescCard.trim();
-                    //beanTkt.strDescCountry = filter.strDescCountry.trim();
-                    beanTkt.IN_TICKET = filter.IN_TICKET.trim();
-                    beanTkt.IN_MERCHN = filter.IN_MERCHN.trim();
-                    beanTkt.IN_CERROR = filter.IN_CERROR.trim();
-                    beanTkt.strMoneda = filter.strMoneda.trim();
-                    /*if (rst.getString("AFTE").trim().equals("X")) {
-                        beanTkt.strPEM = "ACCB BSP";
-                    } else if (rst.getString("AFTE").trim().equals("A")) {
-                        beanTkt.strPEM = "ACCB ARC";
-                    } else if (rst.getString("AFTE").trim().equals("B")) {
-                        beanTkt.strPEM = "ACCB ASR";
-                    } else if (rst.getString("AFTE").trim().equals("N")) {
-                        beanTkt.strPEM = "ACCB ASR";
-                    } else if (rst.getString("AFTE").trim().equals("L")) {
-                        beanTkt.strPEM = "ACCB ASR";
-                    } else {
-                        beanTkt.strPEM = "ACCB";
-                    }*/
-                    //beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
-                    /*beanTkt.CCIA = rst.getString("CCIA").trim();
-                    beanTkt.FORMA = rst.getString("FORMA").trim();
-                    beanTkt.SERIE = rst.getString("SERIE").trim();*/
-                    beanTkt.TDOC = rst.getString("TDOC").trim();
-                    //beanTkt.SEQ = rst.getString("SEQ").trim();
-                    if (hmDescEstados.containsKey(rst.getString("STVAL").trim().toUpperCase())) {
-                        beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
-                    } else {
-                        beanTkt.STVAL = rst.getString("STVAL").trim();
-                    }
-                    if (!rst.getString("ERROR").trim().isEmpty()) {
-                        beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
-                    } else {
-                        beanTkt.CERROR = rst.getString("CERROR").trim();
-                    }
-                    beanTkt.FTE = rst.getString("FTE").trim();
-                    if (rst.getString("FTE").trim().equals("A")) {
-                        beanTkt.strSORIG = "ARC";
-                    } else if (rst.getString("FTE").trim().equals("B")) {
-                        beanTkt.strSORIG = "BSP";
-                    } else if (rst.getString("FTE").trim().equals("S")) {
-                        beanTkt.strSORIG = "ASR";
-                    } else if (rst.getString("FTE").trim().equals("M")) {
-                        beanTkt.strSORIG = "Manual";
-                    }
-
-                    //beanTkt.SDATEL = rst.getString("ADATEL").trim();
-                    //beanTkt.SFLOAD = rst.getString("AFLOAD").trim();
-                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
-                    //beanTkt.strDescCountry = rst.getString("NAMEA").trim();
-                    //beanTkt.SAGENT = rst.getString("AAGENT").trim();
-                    //beanTkt.SDATE = rst.getString("ADATE").trim();
-                    //beanTkt.SPAYMENT = rst.getString("APAYMENT").trim();
-                    //beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
-                    //beanTkt.strDescCard = rst.getString("NAMECARA").trim();
-                    //beanTkt.STCNTR = rst.getString("ATCNTR").trim();
-                    //beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                    //beanTkt.SVFOP = rst.getDouble("AVFOP");
-                    //beanTkt.SCARDN = rst.getString("ACARDN").trim();
-                    //beanTkt.strSCARDN = rst.getString("ACARDN").trim();
-                    //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
-                    //beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
-                    //beanTkt.SINVN = rst.getString("AINVN").trim();
-                    //beanTkt.SIDATE = rst.getString("AIDATE").trim();
-                    //beanTkt.SPNR = rst.getString("APNR").trim();
-                    //beanTkt.SPNRSP = rst.getString("APNRSP").trim();
-                    if (beanTkt.SFLOAD.trim().equals("M")) {
-                        beanTkt.SFLOAD = "Manual";
-                    }
-                    beanTkt.MERCHN = rst.getString("MERCHN").trim();
-                    beanTkt.SEQNUM = rst.getString("SEQNUM").trim();
-                    //beanTkt.SEQCOUNT = rst.getString("SEQCOUNT").trim();
-                    //Banks
-                    //beanTkt.BDATEL = rst.getString("BDATEL").trim();
-                    beanTkt.BSTVAL = rst.getString("BSTVAL").trim();
-                    if (beanTkt.BSTVAL.trim().equals("1")) {
-                        beanTkt.BSTVAL = "Accepted";
-                    } else if (beanTkt.BSTVAL.trim().equals("2")) {
-                        beanTkt.BSTVAL = "Rejected";
-                    } else if (beanTkt.BSTVAL.trim().equals("3")) {
-                        beanTkt.BSTVAL = "Suspect";
-                    }
-                    //beanTkt.GRUPO = rst.getString("GRUPO").trim();
-                    //beanTkt.IDFIL = rst.getString("IDFIL").trim();
-
-                    beanTkt.lngTotQACCB = lngTotCant;
-                    beanTkt.dblTotSVFOP = dblTotSVFOP;
-                    beanTkt.dblTotAVFOP = dblTotAVFOP;
-                    beanTkt.BDATEP = rst.getString("BDATEP").trim();
-                    //TEF
-                    beanTkt.TDATE = rst.getString("TDATE").trim();
-
-                    try {
-                        if (!beanTkt.BDATEP.trim().equals("") && !beanTkt.SDATE.trim().equals("")) {
-                            beanTkt.lngDays = Functions.diferenciaDias(beanTkt.SDATE, beanTkt.BDATEP);
-
-                        } else if (!beanTkt.TDATE.trim().equals("") && !beanTkt.SDATE.trim().equals("")) {
-                            beanTkt.lngDays = Functions.diferenciaDias(beanTkt.SDATE, beanTkt.TDATE);
-
-                        } else if (!beanTkt.SDATE.trim().equals("")) {
-                            beanTkt.lngDays = Functions.diferenciaDiasEntreSistema(beanTkt.SDATE);
-                        }
-                    } catch (Exception e) {
-                    }
-                    beanTkt.lngQOBS = rst.getLong("QOB");
-                    //Armando Título del Detalle
-                    if (beanTkt.strFecFiltro.equals("DATEC")) {
-                        beanTkt.strTitulo = "Conciliation Date : ";
-                    } else {
-                        if (beanTkt.IN_TDOC.equals("R")) {
-                            beanTkt.strTitulo = "Refund Date : ";
-                        } else {
-                            beanTkt.strTitulo = "Sales Date : ";
-                        }
-                    }
-                    beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
-                            + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";
-
-                    /*if (rst.getString("TKVOID").trim().equals("V")) {
-                        beanTkt.strFlagStat = "Void";
-
-                    } else */
-                    if (rst.getString("FLAGC").trim().equals("C")) {
-                        beanTkt.strFlagStat = "CNJ";
-                    }
-
-                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
-                    beanTkt.page.PAGROW = filter.page.PAGROW;
-                    beanTkt.page.TOTPAG = filter.page.TOTPAG;
-                    beanTkt.page.TOTROW = filter.page.TOTROW;
                     lstTkts.add(beanTkt);
                 }
                 rst.close();
