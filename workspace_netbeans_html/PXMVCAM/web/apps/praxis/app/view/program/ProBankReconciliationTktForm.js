@@ -1,6 +1,6 @@
 prototype.MatchTkt = {
     id: 'ProBankReconciliationTktForm',
-    url: CONTEXTPATH+'/ProBankReconciliationTkt',
+    url: CONTEXTPATH + '/ProBankReconciliationTkt',
     widthContenedor: 1220
 };
 Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 {xtype: 'tbspacer', width: 7},
                                                 {
                                                     xtype: 'label',
-                                                    id: prototype.MatchTkt.id+'-lblSalesDate',
+                                                    id: prototype.MatchTkt.id + '-lblSalesDate',
                                                     text: 'Sale Date',
                                                     padding: '7 0',
                                                     width: 80
@@ -95,7 +95,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 {xtype: 'tbspacer', width: 4},
                                                 {
                                                     xtype: 'combo',
-                                                    id: prototype.MatchTkt.id+'-cmbDateYear',
+                                                    id: prototype.MatchTkt.id + '-cmbDateYear',
                                                     queryMode: 'local',
                                                     triggerAction: 'all',
                                                     allowBlank: false,
@@ -111,17 +111,17 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     listConfig: {maxHeight: 111},
                                                     inputAttrTpl: "data-qtip='Select Year'",
                                                     listeners: {
-        //                                                focus: function (combo) {
-        //                                                    combo.expand();
-        //                                                },
-        //                                                change: 'onYearChange',
+                                                        //                                                focus: function (combo) {
+                                                        //                                                    combo.expand();
+                                                        //                                                },
+                                                        //                                                change: 'onYearChange',
                                                         keypress: 'onTextKeypress'
                                                     }
                                                 },
                                                 {xtype: 'tbspacer', width: 4},
                                                 {
                                                     xtype: 'combo',
-                                                    id: prototype.MatchTkt.id+'-cmbDateMonth',
+                                                    id: prototype.MatchTkt.id + '-cmbDateMonth',
                                                     labelAlign: 'right',
                                                     queryMode: 'local',
                                                     triggerAction: 'all',
@@ -150,7 +150,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 },
                                                 {
                                                     xtype: 'combo',
-                                                    id: prototype.MatchTkt.id+'-cmbDateFromDay',
+                                                    id: prototype.MatchTkt.id + '-cmbDateFromDay',
                                                     labelAlign: 'right',
                                                     queryMode: 'local',
                                                     triggerAction: 'all',
@@ -163,20 +163,20 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     valueField: 'code', displayField: 'name',
                                                     typeAhead: true,
                                                     emptyText: 'All',
-        //                                            labelWidth: 0,
+                                                    //                                            labelWidth: 0,
                                                     width: 60,
                                                     anchor: '100%',
                                                     listConfig: {maxHeight: 111},
                                                     inputAttrTpl: "data-qtip='Select Day From'",
                                                     listeners: {
-        //                                                focus: function (combo) {
-        //                                                    combo.expand();
-        //                                                },
-        //                                                blur: function (combo, event, eOpts) {
-        //                                                    if (combo.getValue() === null) {
-        //                                                        combo.setValue("");
-        //                                                    }
-        //                                                },
+                                                        //                                                focus: function (combo) {
+                                                        //                                                    combo.expand();
+                                                        //                                                },
+                                                        //                                                blur: function (combo, event, eOpts) {
+                                                        //                                                    if (combo.getValue() === null) {
+                                                        //                                                        combo.setValue("");
+                                                        //                                                    }
+                                                        //                                                },
                                                         keypress: 'onTextKeypress',
                                                         change: 'cbxDateFromDay_changeHandler',
                                                     }
@@ -191,7 +191,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 },
                                                 {
                                                     xtype: 'combo',
-                                                    id: prototype.MatchTkt.id+'-cmbDateToDay',
+                                                    id: prototype.MatchTkt.id + '-cmbDateToDay',
                                                     labelAlign: 'right',
                                                     queryMode: 'local',
                                                     triggerAction: 'all',
@@ -211,14 +211,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     listConfig: {maxHeight: 111},
                                                     inputAttrTpl: "data-qtip='Select Day To'",
                                                     listeners: {
-        //                                                focus: function (combo) {
-        //                                                    combo.expand();
-        //                                                },
-        //                                                blur: function (combo, event, eOpts) {
-        //                                                    if (combo.getValue() === null) {
-        //                                                        combo.setValue("");
-        //                                                    }
-        //                                                },
+                                                        //                                                focus: function (combo) {
+                                                        //                                                    combo.expand();
+                                                        //                                                },
+                                                        //                                                blur: function (combo, event, eOpts) {
+                                                        //                                                    if (combo.getValue() === null) {
+                                                        //                                                        combo.setValue("");
+                                                        //                                                    }
+                                                        //                                                },
                                                         keypress: 'onTextKeypress'
                                                     }
                                                 },
@@ -232,7 +232,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 },
                                                 {
                                                     xtype: 'combo',
-                                                    id: prototype.MatchTkt.id+'-cmbTranType',
+                                                    id: prototype.MatchTkt.id + '-cmbTranType',
                                                     store: new Ext.data.SimpleStore({
                                                         fields: ['code', 'name'],
                                                         data: [
@@ -254,35 +254,35 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     width: 80
                                                 },
                                                 /*{xtype: 'tbspacer', width: 10},
-                                                {
-                                                    xtype: 'label',
-                                                    text: 'FOP:',
-                                                    padding: '7 0',
-                                                    width: 45
-                                                },
-                                                {
-                                                    xtype: 'combo',
-                                                    id: prototype.MatchTkt.id+'-cmbFOP',
-                                                    store: new Ext.data.SimpleStore({
-                                                        fields: ['code', 'name'],
-                                                        data: [
-                                                            ["", "All"], ["CC", "Credit Card"], ["CA", "Cash"]
-                                                        ]
-                                                    }),
-                                                    queryMode: 'local',
-                                                    triggerAction: 'all',
-                                                    allowBlank: false,
-                                                    autoSelect: true,
-                                                    enableKeyEvents: true,
-                                                    forceSelection: true,
-                                                    caseSensitive: false,
-                                                    editable: true,
-                                                    value: "",
-                                                    valueField: 'code', displayField: 'name',
-                                                    typeAhead: true,
-                                                    emptyText: 'All',
-                                                    width: 100
-                                                }*/
+                                                 {
+                                                 xtype: 'label',
+                                                 text: 'FOP:',
+                                                 padding: '7 0',
+                                                 width: 45
+                                                 },
+                                                 {
+                                                 xtype: 'combo',
+                                                 id: prototype.MatchTkt.id+'-cmbFOP',
+                                                 store: new Ext.data.SimpleStore({
+                                                 fields: ['code', 'name'],
+                                                 data: [
+                                                 ["", "All"], ["CC", "Credit Card"], ["CA", "Cash"]
+                                                 ]
+                                                 }),
+                                                 queryMode: 'local',
+                                                 triggerAction: 'all',
+                                                 allowBlank: false,
+                                                 autoSelect: true,
+                                                 enableKeyEvents: true,
+                                                 forceSelection: true,
+                                                 caseSensitive: false,
+                                                 editable: true,
+                                                 value: "",
+                                                 valueField: 'code', displayField: 'name',
+                                                 typeAhead: true,
+                                                 emptyText: 'All',
+                                                 width: 100
+                                                 }*/
                                             ]
                                         },
                                         //</editor-fold>
@@ -290,7 +290,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                         //<editor-fold defaultstate="collapsed" desc="boxPaginacion">
                                         {
                                             xtype: 'panel',
-                                            id: prototype.MatchTkt.id+'-boxPaginacion',
+                                            id: prototype.MatchTkt.id + '-boxPaginacion',
                                             hidden: true,
                                             width: 100,
                                             border: false,
@@ -298,10 +298,10 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 {
                                                     xtype: 'toolbar',
                                                     cls: 'x-toolbar-pag',
-                                                    items:[
+                                                    items: [
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btn-pag-first',
+                                                            id: prototype.MatchTkt.id + '-btn-pag-first',
                                                             iconCls: 'prx-icon-pagination-first',
                                                             tooltip: 'First Page',
                                                             listeners: {
@@ -310,7 +310,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btn-pag-previous',
+                                                            id: prototype.MatchTkt.id + '-btn-pag-previous',
                                                             iconCls: 'prx-icon-pagination-previous',
                                                             tooltip: 'Previous Page',
                                                             listeners: {
@@ -319,7 +319,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btn-pag-next',
+                                                            id: prototype.MatchTkt.id + '-btn-pag-next',
                                                             iconCls: 'prx-icon-pagination-next',
                                                             tooltip: 'Next Page',
                                                             listeners: {
@@ -328,7 +328,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btn-pag-last',
+                                                            id: prototype.MatchTkt.id + '-btn-pag-last',
                                                             iconCls: 'prx-icon-pagination-last',
                                                             tooltip: 'Last Page',
                                                             listeners: {
@@ -337,66 +337,66 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         },
                                                         {
                                                             xtype: 'pagingtoolbar',
-                                                            id: prototype.MatchTkt.id+'-paggin',
+                                                            id: prototype.MatchTkt.id + '-paggin',
                                                             pageSize: 10,
                                                             border: false,
                                                             displayInfo: false,
                                                             hidden: true
                                                         }
-        //                                                ,
-        //                                                {
-        //                                                    xtype: 'pagingtoolbar',
-        //                                                    id: prototype.MatchTkt.id+'-paggin2',
-        //                                                    pageSize: 10,
-        //                                                    border: false,
-        //                                                    displayInfo: false,
-        //                                                    hidden: true
-        //                                                }
-        //                                                ,
-        //                                                {
-        //                                                    xtype: 'pagingtoolbar',
-        //                                                    id: prototype.MatchTkt.id+'-paggin3',
-        //                                                    pageSize: 10,
-        //                                                    border: false,
-        //                                                    displayInfo: false,
-        //                                                    hidden: true
-        //                                                }
-        //                                                ,
-        //                                                {
-        //                                                    xtype: 'pagingtoolbar',
-        //                                                    id: prototype.MatchTkt.id+'-paggin4',
-        //                                                    pageSize: 10,
-        //                                                    border: false,
-        //                                                    displayInfo: false,
-        //                                                    hidden: true
-        //                                                }
-        //                                                ,
-        //                                                {
-        //                                                    xtype: 'pagingtoolbar',
-        //                                                    id: prototype.MatchTkt.id+'-paggin5',
-        //                                                    pageSize: 10,
-        //                                                    border: false,
-        //                                                    displayInfo: false,
-        //                                                    hidden: true
-        //                                                }
-        //                                                ,
-        //                                                {
-        //                                                    xtype: 'pagingtoolbar',
-        //                                                    id: prototype.MatchTkt.id+'-paggin6',
-        //                                                    pageSize: 10,
-        //                                                    border: false,
-        //                                                    displayInfo: false,
-        //                                                    hidden: true
-        //                                                }
-        //                                                ,
-        //                                                {
-        //                                                    xtype: 'pagingtoolbar',
-        //                                                    id: prototype.MatchTkt.id+'-paggin7',
-        //                                                    pageSize: 10,
-        //                                                    border: false,
-        //                                                    displayInfo: false,
-        //                                                    hidden: true
-        //                                                }
+                                                        //                                                ,
+                                                        //                                                {
+                                                        //                                                    xtype: 'pagingtoolbar',
+                                                        //                                                    id: prototype.MatchTkt.id+'-paggin2',
+                                                        //                                                    pageSize: 10,
+                                                        //                                                    border: false,
+                                                        //                                                    displayInfo: false,
+                                                        //                                                    hidden: true
+                                                        //                                                }
+                                                        //                                                ,
+                                                        //                                                {
+                                                        //                                                    xtype: 'pagingtoolbar',
+                                                        //                                                    id: prototype.MatchTkt.id+'-paggin3',
+                                                        //                                                    pageSize: 10,
+                                                        //                                                    border: false,
+                                                        //                                                    displayInfo: false,
+                                                        //                                                    hidden: true
+                                                        //                                                }
+                                                        //                                                ,
+                                                        //                                                {
+                                                        //                                                    xtype: 'pagingtoolbar',
+                                                        //                                                    id: prototype.MatchTkt.id+'-paggin4',
+                                                        //                                                    pageSize: 10,
+                                                        //                                                    border: false,
+                                                        //                                                    displayInfo: false,
+                                                        //                                                    hidden: true
+                                                        //                                                }
+                                                        //                                                ,
+                                                        //                                                {
+                                                        //                                                    xtype: 'pagingtoolbar',
+                                                        //                                                    id: prototype.MatchTkt.id+'-paggin5',
+                                                        //                                                    pageSize: 10,
+                                                        //                                                    border: false,
+                                                        //                                                    displayInfo: false,
+                                                        //                                                    hidden: true
+                                                        //                                                }
+                                                        //                                                ,
+                                                        //                                                {
+                                                        //                                                    xtype: 'pagingtoolbar',
+                                                        //                                                    id: prototype.MatchTkt.id+'-paggin6',
+                                                        //                                                    pageSize: 10,
+                                                        //                                                    border: false,
+                                                        //                                                    displayInfo: false,
+                                                        //                                                    hidden: true
+                                                        //                                                }
+                                                        //                                                ,
+                                                        //                                                {
+                                                        //                                                    xtype: 'pagingtoolbar',
+                                                        //                                                    id: prototype.MatchTkt.id+'-paggin7',
+                                                        //                                                    pageSize: 10,
+                                                        //                                                    border: false,
+                                                        //                                                    displayInfo: false,
+                                                        //                                                    hidden: true
+                                                        //                                                }
                                                     ]
                                                 }
                                             ]
@@ -413,7 +413,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     items: [
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btnSearch',
+                                                            id: prototype.MatchTkt.id + '-btnSearch',
                                                             iconCls: 'prx-icon-search',
                                                             tooltip: 'Search',
                                                             listeners: {
@@ -422,7 +422,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btnFilter',
+                                                            id: prototype.MatchTkt.id + '-btnFilter',
                                                             iconCls: 'prx-icon-filter',
                                                             tooltip: 'Display filter',
                                                             listeners: {
@@ -431,7 +431,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btnExcel',
+                                                            id: prototype.MatchTkt.id + '-btnExcel',
                                                             iconCls: 'prx-icon-excel',
                                                             tooltip: 'Export to Excel',
                                                             listeners: {
@@ -440,7 +440,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         },
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-btnClear',
+                                                            id: prototype.MatchTkt.id + '-btnClear',
                                                             iconCls: 'prx-icon-clear',
                                                             tooltip: 'Clear Options',
                                                             listeners: {
@@ -448,23 +448,23 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             }
                                                         },
                                                         {
-                                                            xtype:'button',
-                                                            id: prototype.MatchTkt.id+'-imgMatch',
+                                                            xtype: 'button',
+                                                            id: prototype.MatchTkt.id + '-imgMatch',
                                                             icon: 'resources/img/botones/Change.png',
                                                             tooltip: 'Apply Manual Match',
                                                             listeners: {
                                                                 click: 'imgMatch_clickHandler'
                                                             }
                                                         }
-        //                                                ,{
-        //                                                    xtype: 'button',
-        //                                                    id: prototype.MatchTkt.id+'-btnBack',
-        //                                                    iconCls: 'prx-icon-back',
-        //                                                    tooltip: 'Back',
-        //                                                    listeners: {
-        //                                                        click: 'btnBack_click'
-        //                                                    }
-        //                                                }
+                                                        //                                                ,{
+                                                        //                                                    xtype: 'button',
+                                                        //                                                    id: prototype.MatchTkt.id+'-btnBack',
+                                                        //                                                    iconCls: 'prx-icon-back',
+                                                        //                                                    tooltip: 'Back',
+                                                        //                                                    listeners: {
+                                                        //                                                        click: 'btnBack_click'
+                                                        //                                                    }
+                                                        //                                                }
                                                     ]
                                                 }
                                             ]
@@ -507,7 +507,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.MatchTkt.id+'-cmbStatus',
+                                            id: prototype.MatchTkt.id + '-cmbStatus',
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
@@ -553,7 +553,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.MatchTkt.id+'-txtComment',
+                                            id: prototype.MatchTkt.id + '-txtComment',
                                             fieldStyle: 'text-align:center;',
                                             enforceMaxLength: true,
                                             maxLength: 54,
@@ -569,7 +569,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                         {xtype: 'tbspacer', height: 4},
                         {
                             xtype: 'panel',
-                            id: prototype.MatchTkt.id+'-boxSearchFilter',
+                            id: prototype.MatchTkt.id + '-boxSearchFilter',
                             layout: {
                                 type: 'hbox',
                                 align: 'bottom'
@@ -579,7 +579,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                 {xtype: 'tbspacer', width: 80},
                                 {
                                     xtype: 'panel',
-                                    id: prototype.MatchTkt.id+'-accordion',
+                                    id: prototype.MatchTkt.id + '-accordion',
                                     layout: 'vbox',
                                     height: 194,
                                     width: 800,
@@ -590,7 +590,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                         {
                                             xtype: 'panel',
                                             title: 'Conditions',
-                                            id: prototype.MatchTkt.id+'-Conditions',
+                                            id: prototype.MatchTkt.id + '-Conditions',
                                             border: true,
                                             layout: 'vbox',
                                             bodyStyle: 'background-color: #FFFFFF;',
@@ -605,10 +605,10 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                             },
                                             listeners: {
                                                 beforeexpand: function() {
-                                                    Ext.getCmp(prototype.MatchTkt.id+'-MoreConditions').collapse();
+                                                    Ext.getCmp(prototype.MatchTkt.id + '-MoreConditions').collapse();
                                                 },
                                                 collapse: function() {
-                                                    Ext.getCmp(prototype.MatchTkt.id+'-MoreConditions').expand();
+                                                    Ext.getCmp(prototype.MatchTkt.id + '-MoreConditions').expand();
                                                 }
                                             },
                                             items: [
@@ -692,14 +692,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 46},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtCampo1',
+                                                            id: prototype.MatchTkt.id + '-txtCampo1',
                                                             fieldStyle: 'text-align:left',
                                                             width: 220,
                                                             padding: '0px 0px 0px 0px'
                                                         },
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbCampo1',
+                                                            id: prototype.MatchTkt.id + '-cmbCampo1',
                                                             queryMode: 'local',
                                                             hidden: true,
                                                             hiddenLabel: false,
@@ -717,7 +717,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 }
                                                             }
@@ -725,7 +725,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 10},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo1',
+                                                            id: prototype.MatchTkt.id + '-imgInfo1',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Fields',
@@ -738,7 +738,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbOperador1',
+                                                            id: prototype.MatchTkt.id + '-cmbOperador1',
                                                             queryMode: 'local',
                                                             hiddenLabel: false,
                                                             forceSelection: true,
@@ -756,13 +756,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("");
                                                                     }
@@ -772,11 +772,11 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtValue1',
+                                                            id: prototype.MatchTkt.id + '-txtValue1',
                                                             fieldStyle: 'text-align:left',
                                                             width: 120,
                                                             padding: '0px 0px 0px 0px',
-                                                            listeners:{
+                                                            listeners: {
                                                                 keypress: 'onTextKeypress'
                                                             }
                                                         }
@@ -805,7 +805,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
 //                                                        {xtype: 'tbspacer', width: 30},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbConector2',
+                                                            id: prototype.MatchTkt.id + '-cmbConector2',
                                                             store: new Ext.data.SimpleStore({
                                                                 fields: ['code', 'name'],
                                                                 data: [
@@ -830,13 +830,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("AND");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("AND");
                                                                     }
@@ -846,14 +846,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 46},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtCampo2',
+                                                            id: prototype.MatchTkt.id + '-txtCampo2',
                                                             fieldStyle: 'text-align:left',
                                                             width: 220,
                                                             padding: '0px 0px 0px 0px'
                                                         },
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbCampo2',
+                                                            id: prototype.MatchTkt.id + '-cmbCampo2',
                                                             queryMode: 'local',
                                                             hidden: true,
                                                             hiddenLabel: false,
@@ -871,7 +871,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 }
                                                             }
@@ -879,7 +879,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 10},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo2',
+                                                            id: prototype.MatchTkt.id + '-imgInfo2',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Fields',
@@ -892,7 +892,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbOperador2',
+                                                            id: prototype.MatchTkt.id + '-cmbOperador2',
                                                             queryMode: 'local',
                                                             hiddenLabel: false,
                                                             forceSelection: true,
@@ -910,13 +910,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("");
                                                                     }
@@ -926,11 +926,11 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtValue2',
+                                                            id: prototype.MatchTkt.id + '-txtValue2',
                                                             fieldStyle: 'text-align:left',
                                                             width: 120,
                                                             padding: '0px 0px 0px 0px',
-                                                            listeners:{
+                                                            listeners: {
                                                                 keypress: 'onTextKeypress'
                                                             }
                                                         }
@@ -959,7 +959,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
 //                                                        {xtype: 'tbspacer', width: 30},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbConector3',
+                                                            id: prototype.MatchTkt.id + '-cmbConector3',
                                                             store: new Ext.data.SimpleStore({
                                                                 fields: ['code', 'name'],
                                                                 data: [
@@ -984,13 +984,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("AND");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("AND");
                                                                     }
@@ -1000,14 +1000,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 46},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtCampo3',
+                                                            id: prototype.MatchTkt.id + '-txtCampo3',
                                                             fieldStyle: 'text-align:left',
                                                             width: 220,
                                                             padding: '0px 0px 0px 0px'
                                                         },
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbCampo3',
+                                                            id: prototype.MatchTkt.id + '-cmbCampo3',
                                                             queryMode: 'local',
                                                             hidden: true,
                                                             hiddenLabel: false,
@@ -1025,7 +1025,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 }
                                                             }
@@ -1033,7 +1033,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 10},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo3',
+                                                            id: prototype.MatchTkt.id + '-imgInfo3',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Fields',
@@ -1046,7 +1046,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbOperador3',
+                                                            id: prototype.MatchTkt.id + '-cmbOperador3',
                                                             queryMode: 'local',
                                                             hiddenLabel: false,
                                                             forceSelection: true,
@@ -1064,13 +1064,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("");
                                                                     }
@@ -1080,11 +1080,11 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtValue3',
+                                                            id: prototype.MatchTkt.id + '-txtValue3',
                                                             fieldStyle: 'text-align:left',
                                                             width: 120,
                                                             padding: '0px 0px 0px 0px',
-                                                            listeners:{
+                                                            listeners: {
                                                                 keypress: 'onTextKeypress'
                                                             }
                                                         }
@@ -1113,7 +1113,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
 //                                                        {xtype: 'tbspacer', width: 30},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbConector4',
+                                                            id: prototype.MatchTkt.id + '-cmbConector4',
                                                             store: new Ext.data.SimpleStore({
                                                                 fields: ['code', 'name'],
                                                                 data: [
@@ -1138,13 +1138,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("AND");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("AND");
                                                                     }
@@ -1154,14 +1154,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 46},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtCampo4',
+                                                            id: prototype.MatchTkt.id + '-txtCampo4',
                                                             fieldStyle: 'text-align:left',
                                                             width: 220,
                                                             padding: '0px 0px 0px 0px'
                                                         },
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbCampo4',
+                                                            id: prototype.MatchTkt.id + '-cmbCampo4',
                                                             queryMode: 'local',
                                                             hidden: true,
                                                             hiddenLabel: false,
@@ -1179,7 +1179,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 }
                                                             }
@@ -1187,7 +1187,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 10},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo4',
+                                                            id: prototype.MatchTkt.id + '-imgInfo4',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Fields',
@@ -1200,7 +1200,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbOperador4',
+                                                            id: prototype.MatchTkt.id + '-cmbOperador4',
                                                             queryMode: 'local',
                                                             hiddenLabel: false,
                                                             forceSelection: true,
@@ -1218,13 +1218,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("");
                                                                     }
@@ -1234,11 +1234,11 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtValue4',
+                                                            id: prototype.MatchTkt.id + '-txtValue4',
                                                             fieldStyle: 'text-align:left',
                                                             width: 120,
                                                             padding: '0px 0px 0px 0px',
-                                                            listeners:{
+                                                            listeners: {
                                                                 keypress: 'onTextKeypress'
                                                             }
                                                         }
@@ -1250,7 +1250,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                         {
                                             xtype: 'panel',
                                             title: 'More Conditions',
-                                            id: prototype.MatchTkt.id+'-MoreConditions',
+                                            id: prototype.MatchTkt.id + '-MoreConditions',
                                             border: true,
                                             layout: 'vbox',
                                             bodyStyle: 'background-color: #FFFFFF;',
@@ -1265,10 +1265,10 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                             },
                                             listeners: {
                                                 beforeexpand: function() {
-                                                    Ext.getCmp(prototype.MatchTkt.id+'-Conditions').collapse();
+                                                    Ext.getCmp(prototype.MatchTkt.id + '-Conditions').collapse();
                                                 },
                                                 collapse: function() {
-                                                    Ext.getCmp(prototype.MatchTkt.id+'-Conditions').expand();
+                                                    Ext.getCmp(prototype.MatchTkt.id + '-Conditions').expand();
                                                 }
                                             },
                                             items: [
@@ -1294,7 +1294,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
 //                                                        {xtype: 'tbspacer', width: 30},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbConector5',
+                                                            id: prototype.MatchTkt.id + '-cmbConector5',
                                                             store: new Ext.data.SimpleStore({
                                                                 fields: ['code', 'name'],
                                                                 data: [
@@ -1319,13 +1319,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("AND");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("AND");
                                                                     }
@@ -1335,14 +1335,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 46},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtCampo5',
+                                                            id: prototype.MatchTkt.id + '-txtCampo5',
                                                             fieldStyle: 'text-align:left',
                                                             width: 220,
                                                             padding: '0px 0px 0px 0px'
                                                         },
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbCampo5',
+                                                            id: prototype.MatchTkt.id + '-cmbCampo5',
                                                             queryMode: 'local',
                                                             hidden: true,
                                                             hiddenLabel: false,
@@ -1360,7 +1360,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 }
                                                             }
@@ -1368,7 +1368,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 10},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo5',
+                                                            id: prototype.MatchTkt.id + '-imgInfo5',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Fields',
@@ -1381,7 +1381,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbOperador5',
+                                                            id: prototype.MatchTkt.id + '-cmbOperador5',
                                                             queryMode: 'local',
                                                             hiddenLabel: false,
                                                             forceSelection: true,
@@ -1399,13 +1399,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("");
                                                                     }
@@ -1415,11 +1415,11 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtValue5',
+                                                            id: prototype.MatchTkt.id + '-txtValue5',
                                                             fieldStyle: 'text-align:left',
                                                             width: 120,
                                                             padding: '0px 0px 0px 0px',
-                                                            listeners:{
+                                                            listeners: {
                                                                 keypress: 'onTextKeypress'
                                                             }
                                                         }
@@ -1448,7 +1448,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
 //                                                        {xtype: 'tbspacer', width: 30},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbConector6',
+                                                            id: prototype.MatchTkt.id + '-cmbConector6',
                                                             store: new Ext.data.SimpleStore({
                                                                 fields: ['code', 'name'],
                                                                 data: [
@@ -1473,13 +1473,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("AND");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("AND");
                                                                     }
@@ -1489,14 +1489,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 46},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtCampo6',
+                                                            id: prototype.MatchTkt.id + '-txtCampo6',
                                                             fieldStyle: 'text-align:left',
                                                             width: 220,
                                                             padding: '0px 0px 0px 0px'
                                                         },
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbCampo6',
+                                                            id: prototype.MatchTkt.id + '-cmbCampo6',
                                                             queryMode: 'local',
                                                             hidden: true,
                                                             hiddenLabel: false,
@@ -1514,7 +1514,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 }
                                                             }
@@ -1522,7 +1522,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 10},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo6',
+                                                            id: prototype.MatchTkt.id + '-imgInfo6',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Fields',
@@ -1535,7 +1535,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbOperador6',
+                                                            id: prototype.MatchTkt.id + '-cmbOperador6',
                                                             queryMode: 'local',
                                                             hiddenLabel: false,
                                                             forceSelection: true,
@@ -1553,13 +1553,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("");
                                                                     }
@@ -1569,11 +1569,11 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtValue6',
+                                                            id: prototype.MatchTkt.id + '-txtValue6',
                                                             fieldStyle: 'text-align:left',
                                                             width: 120,
                                                             padding: '0px 0px 0px 0px',
-                                                            listeners:{
+                                                            listeners: {
                                                                 keypress: 'onTextKeypress'
                                                             }
                                                         }
@@ -1602,7 +1602,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
 //                                                        {xtype: 'tbspacer', width: 30},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbConector7',
+                                                            id: prototype.MatchTkt.id + '-cmbConector7',
                                                             store: new Ext.data.SimpleStore({
                                                                 fields: ['code', 'name'],
                                                                 data: [
@@ -1627,13 +1627,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("AND");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("AND");
                                                                     }
@@ -1643,14 +1643,14 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 46},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtCampo7',
+                                                            id: prototype.MatchTkt.id + '-txtCampo7',
                                                             fieldStyle: 'text-align:left',
                                                             width: 220,
                                                             padding: '0px 0px 0px 0px'
                                                         },
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbCampo7',
+                                                            id: prototype.MatchTkt.id + '-cmbCampo7',
                                                             queryMode: 'local',
                                                             hidden: true,
                                                             hiddenLabel: false,
@@ -1668,7 +1668,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 }
                                                             }
@@ -1676,7 +1676,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 10},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo7',
+                                                            id: prototype.MatchTkt.id + '-imgInfo7',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Fields',
@@ -1689,7 +1689,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'combo',
-                                                            id: prototype.MatchTkt.id+'-cmbOperador7',
+                                                            id: prototype.MatchTkt.id + '-cmbOperador7',
                                                             queryMode: 'local',
                                                             hiddenLabel: false,
                                                             forceSelection: true,
@@ -1707,13 +1707,13 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             triggerAction: 'all',
                                                             padding: '0px 0px 0px 0px',
                                                             listeners: {
-                                                                afterrender: function (combo, eOpts) {
+                                                                afterrender: function(combo, eOpts) {
                                                                     combo.setValue("");
                                                                 },
-                                                                focus: function (combo) {
+                                                                focus: function(combo) {
                                                                     combo.expand();
                                                                 },
-                                                                blur: function (combo, event, eOpts) {
+                                                                blur: function(combo, event, eOpts) {
                                                                     if (combo.getValue() === null) {
                                                                         combo.setValue("");
                                                                     }
@@ -1723,11 +1723,11 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 15},
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.MatchTkt.id+'-txtValue7',
+                                                            id: prototype.MatchTkt.id + '-txtValue7',
                                                             fieldStyle: 'text-align:left',
                                                             width: 120,
                                                             padding: '0px 0px 0px 0px',
-                                                            listeners:{
+                                                            listeners: {
                                                                 keypress: 'onTextKeypress'
                                                             }
                                                         }
@@ -1756,7 +1756,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                         {xtype: 'tbspacer', width: 7},
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.MatchTkt.id+'-imgInfo',
+                                                            id: prototype.MatchTkt.id + '-imgInfo',
                                                             icon: 'resources/img/botones/16x16/information.png',
                                                             style: 'background: #E3EAF9',
                                                             tooltip: 'View Help Information',
@@ -1789,7 +1789,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'combo',
-                                    id: prototype.MatchTkt.id+'-cmbApply',
+                                    id: prototype.MatchTkt.id + '-cmbApply',
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -1827,7 +1827,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                         {xtype: 'tbspacer', height: 4},
                         {
                             xtype: 'panel',
-                            id: prototype.MatchTkt.id+'-boxConsultas',
+                            id: prototype.MatchTkt.id + '-boxConsultas',
                             bodyStyle: 'background: transparent;',
                             border: false,
                             width: '100%',
@@ -1842,7 +1842,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                             items: [
                                 {
                                     xtype: 'panel',
-                                    id: prototype.MatchTkt.id+'-vskDataGrid',
+                                    id: prototype.MatchTkt.id + '-vskDataGrid',
                                     border: false,
                                     width: '100%',
                                     layout: {
@@ -1852,7 +1852,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            id: prototype.MatchTkt.id+'-boxMainData',
+                                            id: prototype.MatchTkt.id + '-boxMainData',
                                             hidden: false,
                                             width: '100%',
                                             bodyStyle: 'background: transparent;',
@@ -1869,8 +1869,8 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                 // <editor-fold defaultstate="collapsed" desc="gridDetTicket">
                                                 {
                                                     xtype: 'grid',
-                                                    id: prototype.MatchTkt.id+'-gridDetTicket',
-                                                    width: 1120,
+                                                    id: prototype.MatchTkt.id + '-gridDetTicket',
+                                                    width: 1185,
                                                     height: 520,
                                                     columnLines: true,
                                                     columns: {
@@ -1880,90 +1880,19 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            
                                                             {
-                                                                text: 'Ticket', flex: 1,
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                columns: [
-                                                                    {
-                                                                        text: 'Number', dataIndex: 'strTicket', flex: 1,//width: 120,
-                                                                        listeners: {
-                                                                            click: 'gridData_VIEWTKT_clickHandler',
-                                                                        },                                                                        
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = "color:#057ECB;background-color:#d5f4d5;";
-                                                                            return '<a href="#payments-sales-reconciliation-form" style="color:#057ECB;text-decoration:underline;">'+value+'</a>';
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                text: 'Type', dataIndex: 'strPEM', width: 60,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:center;color:"+color;
-                                                                    metaData.tdAttr = 'data-qtip="'+data.strPEM+'"';
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Status', dataIndex: 'STVAL', width: 50,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:center;color:"+color;
-                                                                    metaData.tdAttr = 'data-qtip="'+data.strDescStatus+'"';
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Error',
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                columns: [
-                                                                    {
-                                                                        text: 'Code', dataIndex: 'CERROR', width: 130,
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            var data = record.data;
-                                                                            var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                            metaData.style = "text-align:left;color:"+color;
-                                                                            metaData.tdAttr = 'data-qtip="'+data.CERROR+'"';
-                                                                            return value;
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                text: 'Src', dataIndex: 'FTE', width: 40,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:center;color:"+color;
-                                                                    metaData.tdAttr = 'data-qtip="'+data.strSORIG+'"';
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Tr', dataIndex: 'strCampo', width: 30,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:center;color:"+color;
-                                                                    metaData.tdAttr = 'data-qtip="'+data.TRNCU+'"';
+                                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                    metaData.style = "text-align:center;color:" + color;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.strDescCountry + '"';
                                                                     return value;
                                                                 }
                                                             },
                                                             {
                                                                 text: 'Sale',
-                                                                id: prototype.MatchTkt.id+'-hcDetTkt',
+                                                                id: prototype.MatchTkt.id + '-hcDetTkt',
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
@@ -1972,43 +1901,70 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                                 columns: [
                                                                     {
                                                                         text: 'Date', dataIndex: 'SDATE', width: 70,
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
-                                                                            var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                            metaData.style = "text-align:center;color:"+color;
-                                                                            metaData.tdAttr = 'data-qtip="'+data.SDATE+'"';
+                                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                            metaData.style = "text-align:center;color:" + color;
+                                                                            metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
                                                                             return value;
                                                                         }
                                                                     }
                                                                 ]
                                                             },
                                                             {
-                                                                text: 'Ctry', dataIndex: 'SCOUNTRY', width: 45,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                text: 'PNR', dataIndex: 'SPNR', width: 70,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:center;color:"+color;
-                                                                    metaData.tdAttr = 'data-qtip="'+data.strDescCountry+'"';
+                                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                    metaData.style = "text-align:center;color:" + color;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.SPNR + '"';
                                                                     return value;
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Cur.', dataIndex: 'SCURRENCY', width: 40,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                text: 'Date',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Settlement', dataIndex: 'TDATE', width: 80,
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Date',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Liquidación', dataIndex: 'DATEF', width: 80,
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Type', dataIndex: 'strPEM', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:center;color:"+color;
-                                                                    metaData.tdAttr = 'data-qtip="'+data.strMoneda+'"';
+                                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                    metaData.style = "text-align:center;color:" + color;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.strPEM + '"';
                                                                     return value;
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Amount', dataIndex: 'SVFOP', width: 80,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                text: 'Status', dataIndex: 'strDescStatus', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:right;color:"+color;
-                                                                    return win.formatDblNumber(value);
+                                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                    metaData.style = "text-align:center;color:" + color;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.strPEM + '"';
+                                                                    return value;
                                                                 }
                                                             },
                                                             {
@@ -2021,48 +1977,57 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                                 columns: [
                                                                     {
                                                                         text: 'Code', dataIndex: 'SCARCOD', width: 45,
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
-                                                                            var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                            metaData.style = "text-align:center;color:"+color;
-                                                                            metaData.tdAttr = 'data-qtip="'+data.strDescCard+'"';
+                                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                            metaData.style = "text-align:center;color:" + color;
+                                                                            metaData.tdAttr = 'data-qtip="' + data.strDescCard + '"';
                                                                             return value;
                                                                         }
                                                                     },
                                                                     {
                                                                         text: 'Number', dataIndex: 'SCARDN', width: 140,
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
-                                                                            var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                            metaData.style = "text-align:center;color:"+color;
-                                                                            metaData.tdAttr = 'data-qtip="'+data.SCARDN+'"';
+                                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                            metaData.style = "text-align:center;color:" + color;
+                                                                            metaData.tdAttr = 'data-qtip="' + data.SCARDN + '"';
                                                                             return value;
                                                                         }
                                                                     },
                                                                     {
                                                                         text: 'Author.', dataIndex: 'SAUTHOC', width: 70,
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
-                                                                            var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                            metaData.style = "text-align:center;color:"+color;
-                                                                            metaData.tdAttr = 'data-qtip="'+data.SAUTHOC+'"';
+                                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                            metaData.style = "text-align:center;color:" + color;
+                                                                            metaData.tdAttr = 'data-qtip="' + data.SAUTHOC + '"';
                                                                             return value;
                                                                         }
                                                                     }
                                                                 ]
                                                             },
                                                             {
-                                                                text: 'PNR', dataIndex: 'SPNR', width: 70,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
-                                                                    var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                    metaData.style = "text-align:center;color:"+color;
-                                                                    metaData.tdAttr = 'data-qtip="'+data.SPNR+'"';
+                                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                    metaData.style = "text-align:center;color:" + color;
+                                                                    metaData.tdAttr = 'data-qtip="' + data.strMoneda + '"';
                                                                     return value;
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Agent',
+                                                                text: 'Amount', dataIndex: 'SVFOP', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                    metaData.style = "text-align:right;color:" + color;
+                                                                    return win.formatDblNumber(value);
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Credit Card - C1',
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,
@@ -2070,37 +2035,266 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                                 },
                                                                 columns: [
                                                                     {
-                                                                        text: 'Code', dataIndex: 'SAGENT', width: 70,
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                        text: 'Code C-1', dataIndex: 'SCARCOD1', width: 60,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             var data = record.data;
-                                                                            var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                            metaData.style = "text-align:center;color:"+color;
-                                                                            metaData.tdAttr = 'data-qtip="'+data.SAGENT+'"';
+                                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                            metaData.style = "text-align:center;color:" + color;
+                                                                            metaData.tdAttr = 'data-qtip="' + data.strDescCard + '"';
                                                                             return value;
                                                                         }
-                                                                    }
+                                                                    },
+                                                                    /*{
+                                                                     text: 'Number', dataIndex: 'SCARDN', width: 140,
+                                                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                     var data = record.data;
+                                                                     var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                                     metaData.style = "text-align:center;color:"+color;
+                                                                     metaData.tdAttr = 'data-qtip="'+data.SCARDN+'"';
+                                                                     return value;
+                                                                     }
+                                                                     },*/
+                                                                    {
+                                                                        text: 'Author. C-1', dataIndex: 'SAUTHOC1', width: 90,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            var data = record.data;
+                                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                            metaData.style = "text-align:center;color:" + color;
+                                                                            metaData.tdAttr = 'data-qtip="' + data.SAUTHOC + '"';
+                                                                            return value;
+                                                                        }
+                                                                    },
                                                                 ]
                                                             },
                                                             {
-                                                                text: 'Bank',
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                columns: [
-                                                                    {
-                                                                        text: 'Status', dataIndex: 'BSTVAL', width: 60,
-                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            var data = record.data;
-                                                                            var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
-                                                                            metaData.style = "text-align:center;color:"+color;
-                                                                            metaData.tdAttr = 'data-qtip="'+data.BSTVAL+'"';
-                                                                            return value;
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            }
+                                                                text: 'Ref. ACCB', dataIndex: 'NUMREF', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                                    metaData.style = "text-align:right;color:" + color;
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            /*{
+                                                             text: 'Ticket', flex: 1,
+                                                             defaults: {
+                                                             menuDisabled: true,
+                                                             sortable: false,
+                                                             align: 'center'
+                                                             },
+                                                             columns: [
+                                                             {
+                                                             text: 'Number', dataIndex: 'strTicket', flex: 1,//width: 120,
+                                                             listeners: {
+                                                             click: 'gridData_VIEWTKT_clickHandler',
+                                                             },                                                                        
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             metaData.style = "color:#057ECB;background-color:#d5f4d5;";
+                                                             return '<a href="#payments-sales-reconciliation-form" style="color:#057ECB;text-decoration:underline;">'+value+'</a>';
+                                                             }
+                                                             }
+                                                             ]
+                                                             },
+                                                             {
+                                                             text: 'Type', dataIndex: 'strPEM', width: 60,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.strPEM+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Status', dataIndex: 'STVAL', width: 50,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.strDescStatus+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Error',
+                                                             defaults: {
+                                                             menuDisabled: true,
+                                                             sortable: false,
+                                                             align: 'center'
+                                                             },
+                                                             columns: [
+                                                             {
+                                                             text: 'Code', dataIndex: 'CERROR', width: 130,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:left;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.CERROR+'"';
+                                                             return value;
+                                                             }
+                                                             }
+                                                             ]
+                                                             },
+                                                             {
+                                                             text: 'Src', dataIndex: 'FTE', width: 40,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.strSORIG+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Tr', dataIndex: 'strCampo', width: 30,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.TRNCU+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Sale',
+                                                             id: prototype.MatchTkt.id+'-hcDetTkt',
+                                                             defaults: {
+                                                             menuDisabled: true,
+                                                             sortable: false,
+                                                             align: 'center'
+                                                             },
+                                                             columns: [
+                                                             {
+                                                             text: 'Date', dataIndex: 'SDATE', width: 70,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.SDATE+'"';
+                                                             return value;
+                                                             }
+                                                             }
+                                                             ]
+                                                             },
+                                                             {
+                                                             text: 'Ctry', dataIndex: 'SCOUNTRY', width: 45,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.strDescCountry+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Cur.', dataIndex: 'SCURRENCY', width: 40,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.strMoneda+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Amount', dataIndex: 'SVFOP', width: 80,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:right;color:"+color;
+                                                             return win.formatDblNumber(value);
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Credit Card',
+                                                             defaults: {
+                                                             menuDisabled: true,
+                                                             sortable: false,
+                                                             align: 'center'
+                                                             },
+                                                             columns: [
+                                                             {
+                                                             text: 'Code', dataIndex: 'SCARCOD', width: 45,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.strDescCard+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Number', dataIndex: 'SCARDN', width: 140,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.SCARDN+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Author.', dataIndex: 'SAUTHOC', width: 70,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.SAUTHOC+'"';
+                                                             return value;
+                                                             }
+                                                             }
+                                                             ]
+                                                             },
+                                                             {
+                                                             text: 'PNR', dataIndex: 'SPNR', width: 70,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.SPNR+'"';
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Agent',
+                                                             defaults: {
+                                                             menuDisabled: true,
+                                                             sortable: false,
+                                                             align: 'center'
+                                                             },
+                                                             columns: [
+                                                             {
+                                                             text: 'Code', dataIndex: 'SAGENT', width: 70,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.SAGENT+'"';
+                                                             return value;
+                                                             }
+                                                             }
+                                                             ]
+                                                             },
+                                                             {
+                                                             text: 'Bank',
+                                                             defaults: {
+                                                             menuDisabled: true,
+                                                             sortable: false,
+                                                             align: 'center'
+                                                             },
+                                                             columns: [
+                                                             {
+                                                             text: 'Status', dataIndex: 'BSTVAL', width: 60,
+                                                             renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             var data = record.data;
+                                                             var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                             metaData.style = "text-align:center;color:"+color;
+                                                             metaData.tdAttr = 'data-qtip="'+data.BSTVAL+'"';
+                                                             return value;
+                                                             }
+                                                             }
+                                                             ]
+                                                             }*/
                                                         ]
                                                     }
                                                 }
@@ -2112,7 +2306,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                 // <editor-fold defaultstate="collapsed" desc="boxPagDetail">
                                 {
                                     xtype: 'panel',
-                                    id: prototype.MatchTkt.id+'-boxPagDetail',
+                                    id: prototype.MatchTkt.id + '-boxPagDetail',
                                     hidden: true,
                                     layout: {
                                         type: 'hbox',
@@ -2143,7 +2337,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     width: 50
                                                 },
                                                 {
-                                                    id: prototype.MatchTkt.id+'-lblPagActual',
+                                                    id: prototype.MatchTkt.id + '-lblPagActual',
                                                     text: '1',
                                                     width: 50
                                                 },
@@ -2152,7 +2346,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     width: 50
                                                 },
                                                 {
-                                                    id: prototype.MatchTkt.id+'-lblPagTotal',
+                                                    id: prototype.MatchTkt.id + '-lblPagTotal',
                                                     text: '0',
                                                     width: 50
                                                 },
@@ -2162,7 +2356,7 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                     width: 80
                                                 },
                                                 {
-                                                    id: prototype.MatchTkt.id+'-lblRowsTotal',
+                                                    id: prototype.MatchTkt.id + '-lblRowsTotal',
                                                     text: '0',
                                                     width: 50
                                                 }
