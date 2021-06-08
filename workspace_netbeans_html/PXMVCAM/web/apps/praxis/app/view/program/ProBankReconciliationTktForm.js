@@ -452,9 +452,9 @@ Ext.define('Ext.Praxis.view.program.ProBankReconciliationTktForm', {
                                                             id: prototype.MatchTkt.id + '-imgMatch',
                                                             icon: 'resources/img/botones/Change.png',
                                                             tooltip: 'Apply Manual Match',
-                                                            listeners: {
+                                                            /*listeners: {
                                                                 click: 'imgMatch_clickHandler'
-                                                            }
+                                                            }*/
                                                         }
                                                         //                                                ,{
                                                         //                                                    xtype: 'button',
