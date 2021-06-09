@@ -3337,7 +3337,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetTktByStval',
                                     bodyStyle: 'background: transparent;',
-                                    width: 1255,
+                                    width: 1265,
                                     minHeight: 200,
                                     titleAlign: 'center',
                                     columnLines: true,
@@ -3541,12 +3541,19 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Ref. ACCB', dataIndex: 'NUMREF', width: 100,
+                                                text: 'Ref. ACCB', dataIndex: 'NUMREF', width: 110,
+                                                listeners: {
+                                                    click: 'showTicket'
+                                                },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
-                                                    metaData.style = "text-align:right;color:" + color;
-                                                    return value;
+                                                    metaData.style = "text-align:center;color:" + color;
+                                                    if(data.NUMREF.substr(0,3) === '139'){
+                                                        return '<a href="#payments-bank-reconciliation-form" style="color:#008FE3;text-decoration:none;">' + value + '</a>';
+                                                    } else {
+                                                        return value;
+                                                    }                                                    
                                                 }
                                             },
 //                                            {
