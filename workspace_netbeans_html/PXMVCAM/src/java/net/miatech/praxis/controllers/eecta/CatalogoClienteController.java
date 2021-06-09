@@ -30,6 +30,8 @@ import net.miatech.praxis.eecta.SQP03888Filter;
 import net.miatech.praxis.eecta.SQP03959Filter;
 import net.miatech.praxis.eecta.SQP03960Filter;
 import net.miatech.praxis.eecta.SQP04006Filter;
+import net.miatech.praxis.eecta.SQP04038Filter;
+import net.miatech.praxis.eecta.SQP04039Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CatalogoClienteLogic;
 import org.springframework.context.annotation.Scope;
@@ -406,5 +408,57 @@ public class CatalogoClienteController extends BaseController {
             map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    @RequestMapping(value = "/search_contrato")
+    public @ResponseBody
+    String search_contrato(ModelMap map, HttpServletRequest request) {
+        List<SQP04038Filter> listaData;
+        SQP04038Filter filter;
+        filter = new SQP04038Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_A4007CDCLI = request.getParameter("VP_A4007CDCLI");
+            filter.VP_A4007CONTR = request.getParameter("VP_A4007CONTR");            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new CatalogoClienteLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04038Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "ContratoCrud")
+    public @ResponseBody
+    String ContratoCrud(ModelMap map, HttpServletRequest request) {
+        SQP04039Filter objRtn = null;
+        logic = new CatalogoClienteLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04039Filter filter = new SQP04039Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            objRtn = logic.setSQP04039Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+            throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
     }
 }
