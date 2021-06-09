@@ -398,6 +398,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                         if (strOption === "I") {
                             Ext.getCmp(prototype.id + '-btn-save').hide();
                             Ext.getCmp(prototype.id + '-btn-update').show();
+                            Ext.getCmp(prototype.id + '-btnDet-contrato').show();
                             this.view.params.action = "U";
                         }
                         //Ext.getCmp(prototype.id + '-CatalogoClienteEntry').close();
