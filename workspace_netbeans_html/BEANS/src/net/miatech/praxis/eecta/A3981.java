@@ -20,6 +20,7 @@ public class A3981 {
     public String A3981INDPR = "";
     public String A3981INIPR = "";
     public String A3981FINPR = "";
+    public String A3981FPERI = "";
     public String A3981MDLOC = "";
     public Double A3981TOT = 0.0;
     public String A3981TOTLT = "";

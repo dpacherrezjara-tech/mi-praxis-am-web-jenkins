@@ -16,19 +16,19 @@ public class A3954 {
     public String A3954DESCR = "";
     public String A3954CDCLI = "";
     //new
-    public String A1820CLIEN = "";
-    public String A1820DIREC = "";
-    public String A1820TIPO = "";
-    public String A1820DOCU = "";
-    public String A1820CIA = "";
-    public String A1820UNID = "";
-    public String A1820CECO = "";
-    public String A1820UBI = "";
-    public String A1820CTA = "";
-    public String A1820SCTA = "";
-    public String A1820EQUI = "";
-    public String A1820ICIA = "";
-
+    public String A3954CLIEN = "";
+    public String A3954DIREC = "";
+    public String A3954TIPO = "";
+    public String A3954DOCU = "";
+    public String A3954CIA = "";
+    public String A3954UNID = "";
+    public String A3954CECO = "";
+    public String A3954UBI = "";
+    public String A3954CTA = "";
+    public String A3954SCTA = "";
+    public String A3954EQUI = "";
+    public String A3954ICIA = "";
+    //
     public String A3954FALTA = "";
     public String A3954FBAJA = "";
     public String A3954MODO = ""; //new
