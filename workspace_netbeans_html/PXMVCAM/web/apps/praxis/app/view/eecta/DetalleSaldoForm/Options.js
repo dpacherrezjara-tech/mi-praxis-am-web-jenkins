@@ -96,8 +96,7 @@ Ext.define('Ext.Praxis.view.eecta.DetalleSaldoForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel',
-                            hidden:true,
+                            tooltip: 'Export to Excel',                            
                             listeners: {
                                 click: 'btnExcel_click'
                             }

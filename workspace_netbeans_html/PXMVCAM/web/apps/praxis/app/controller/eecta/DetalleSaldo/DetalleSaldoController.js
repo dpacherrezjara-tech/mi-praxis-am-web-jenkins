@@ -62,19 +62,44 @@ Ext.define('Ext.Praxis.controller.eecta.DetalleSaldo.DetalleSaldoController', {
             option.show();
     },
     btnExcel_click: function (obj, e) {
-//        Ext.Msg.show({
-//            title: '.:PRAXIS:.',
-//            msg: 'Download Excel ?',
-//            buttons: Ext.MessageBox.OKCANCEL,
-//            scope: this,
-//            icon: Ext.MessageBox.QUESTION,
-//            modal: true,
-//            fn: function(btn) {
-//                if (btn === 'ok') {
-//                    global.getFile(prototype.url + '/getXLSXAPI?beanString=' + encodeURI(JSON.stringify(this.beanXLS)));
-//                }
-//            }
-//        });
+        var bean = {};
+        bean.VP_OPCION = "1";
+        bean.VP_FDATE1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+        bean.VP_FDATE2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
+        bean.VP_CDCLI = Ext.getCmp(prototype.id + '-CDCLI').getValue();
+        bean.VP_RSOCI = Ext.getCmp(prototype.id + '-RSOCI').getValue();
+        bean.VP_NRRPT = Ext.getCmp(prototype.id + '-NRRPT').getValue();
+        bean.VP_REFPG = Ext.getCmp(prototype.id + '-REFPG').getValue();
+        bean.VP_CTABC = Ext.getCmp(prototype.id + '-CTABC').getValue();
+        bean.VP_STSPG = Ext.getCmp(prototype.id + '-STSPG').getValue(); 
+        bean.VP_BOLETO = "";
+        var t_NUMBER_CIA = Ext.getCmp(prototype.id + '-TICKET_NUMBER_CIA').getValue();
+        var t_NUMBER = Ext.getCmp(prototype.id + '-TICKET_NUMBER').getValue();
+        var t_NUMBER_SEQ = Ext.getCmp(prototype.id + '-TICKET_NUMBER_SEQ').getValue();        
+        if( t_NUMBER !== ''){            
+            if(t_NUMBER_CIA === ''){
+               global.Msg({msg: 'Ingrese la CIA'});
+               return; 
+            }
+            if(t_NUMBER_SEQ === ''){
+               global.Msg({msg: 'Ingrese la secuencia'});
+               return; 
+            }
+            bean.VP_BOLETO = t_NUMBER_CIA + t_NUMBER + t_NUMBER_SEQ;            
+        }
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel File ?',            
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                                            
+                    global.getFile(prototype.url + '/DetSaldoDownloadExcel?beanString='+encodeURI(JSON.stringify(bean)));
+                }
+            }
+        });
     },
     btnClear_click: function (obj, e) {
         Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
@@ -111,10 +136,7 @@ Ext.define('Ext.Praxis.controller.eecta.DetalleSaldo.DetalleSaldoController', {
     Onsearch: function () {
         this.search();
     },
-    search: function ()
-    {
-        //this.page_current = 1;        
-        //console.log('page: ' + this.page_current);        
+    search: function(){
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
         var bean = {};
         bean.VP_OPCION = "1"; //Ext.getCmp(prototype.id + '-cmbfiltro').getValue();
@@ -182,33 +204,34 @@ Ext.define('Ext.Praxis.controller.eecta.DetalleSaldo.DetalleSaldoController', {
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
-    onReportVentaUATP_PDF: function (grid, rowIndex, colIndex) {
-        if (Ext.getCmp(prototype.id + '-infoGrid')) {
-            var grid = Ext.getCmp(prototype.id + '-infoGrid');
-            var store = grid.getStore();
-            var rec = store.getAt(rowIndex);
-            this.gridData = rec;
-        }
-        var bean = {};
-        bean.VP_A3957NRRPT = this.gridData.get('A3957NRRPT');
-        bean.VP_A3957CDCLI = this.gridData.get('A3957CDCLI');
-        this.exportPdf(prototype.url + '/pdf_reportVentaUATP/?beanString=' + encodeURI(JSON.stringify(bean)));
-    },
-    exportPdf: function (_path) {
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Download report Pdf ?',
-            buttons: Ext.MessageBox.OKCANCEL,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'ok') {
-                    global.getFile(_path);
-                }
-            }
-        });
-    },
+//    onReportVentaUATP_PDF: function (grid, rowIndex, colIndex) {
+//        if (Ext.getCmp(prototype.id + '-infoGrid')) {
+//            var grid = Ext.getCmp(prototype.id + '-infoGrid');
+//            var store = grid.getStore();
+//            var rec = store.getAt(rowIndex);
+//            this.gridData = rec;
+//        }
+//        var bean = {};
+//        bean.VP_A3957NRRPT = this.gridData.get('A3957NRRPT');
+//        bean.VP_A3957CDCLI = this.gridData.get('A3957CDCLI');
+//        this.exportPdf(prototype.url + '/pdf_reportVentaUATP/?beanString=' + encodeURI(JSON.stringify(bean)));
+//    },
+//    exportPdf: function (_path) {
+//        Ext.Msg.show({
+//            title: '.:PRAXIS:.',
+//            msg: 'Download report Pdf ?',
+//            buttons: Ext.MessageBox.OKCANCEL,
+//            scope: this,
+//            icon: Ext.MessageBox.QUESTION,
+//            modal: true,
+//            fn: function (btn) {
+//                if (btn === 'ok') {
+//                    global.getFile(_path);
+//                }
+//            }
+//        });
+//    },
+       
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Data entry">
     btnApl_pay_click: function () {

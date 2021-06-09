@@ -393,7 +393,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                     labelAlign: 'left',
                                                     width: 250,
                                                     padding: '2px 5px 2px 3px',
-                                                    html: '<strong style="color:#AC4546;font-size:12px;">Formato: jpg/png file <br> Dimensión: 245x42 pixels </strong>'
+                                                    html: '<strong style="color:#AC4546;font-size:10px;">Formato: jpg/png file <br> Dimensión: 245x42 pixels </strong>'
 
                                                 },
                                                 {
@@ -427,11 +427,11 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                         {
                                             xtype: 'image',
                                             id: prototype.id + '-imgImage',
-                                            margin: '4 4 4 4', //top/right/left
+                                            margin: '4 20 4 20', //top/right/left
                                             align: 'center',
                                             src: 'resources/img/not_picture.png',
                                             style: 'background:#FFFFFF;box-shadow: 0px 0px 2px 0px #777;margin: 1px;border-radius:2px',
-                                            width: 310,
+                                            width: 300,
                                             height: 58
                                         },
                                         {
@@ -620,6 +620,16 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteEntry', {
                                                         Ext.getCmp(prototype.id + '-A3953CTAMA').focus();
                                                     }
                                                 }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnDet-contrato',
+                                            iconCls: 'prx-icon-docum',
+                                            tooltip: 'Detalle Contrato',                                              
+                                            margin: '0 0 0 2',
+                                            listeners: {
+                                                click: 'btnDetContrato_click'
                                             }
                                         }
                                     ]

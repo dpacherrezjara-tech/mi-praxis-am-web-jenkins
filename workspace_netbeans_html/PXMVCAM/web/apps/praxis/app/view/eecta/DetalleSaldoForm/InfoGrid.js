@@ -90,8 +90,8 @@ Ext.define('Ext.Praxis.view.eecta.DetalleSaldoForm.InfoGrid', {
 //                                        }
                                     },                                                                        
                                     {text: 'Pax', dataIndex: 'A3958PAX', align: 'left', width: 200, locked: true},
-                                    {text: 'PNR', dataIndex: 'A3958PNR', align: 'center', width: 50},
-                                    {text: 'F. Emisión', dataIndex: 'A3958FEVTA', align: 'center', width: 70},
+                                    {text: 'PNR', dataIndex: 'A3958PNR', align: 'center', width: 60},
+                                    {text: 'Fecha<br>Emisión', dataIndex: 'A3958FEVTA', align: 'center', width: 70},
                                     {text: 'Grupo', dataIndex: 'A3958GRUPO', align: 'left', width: 70},
                                     {text: 'Fecha<br>Proceso', dataIndex: 'A3958FPROC', align: 'left', width: 70},                                                                       
                                     {

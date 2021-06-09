@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
         var grid01 = Ext.getCmp(prototype.id + '-gridData-uatp');
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp', {});
         grid01.setStore(storeGridDatas);
+              
 
         this.get_ClearField();
         var p = this.view.params;
@@ -29,7 +30,9 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
             case 'I':
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
+                Ext.getCmp(prototype.id + '-btnDet-contrato').hide();
                 Ext.getCmp(prototype.id + '-btn-save').show();
+                
                 this.handlerEvent_setDisabled(true);
                 Ext.getCmp(prototype.id + '-A3953RSOCI').focus();
                 break;
@@ -37,6 +40,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                 this.getDataInputs();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
+                Ext.getCmp(prototype.id + '-btnDet-contrato').show();
                 //Ext.getCmp(prototype.id + '-btn-delete').show(); (no hay opcion de quitar cliente) ??
                 this.handlerEvent_setDisabled(false);
                 break;
@@ -917,6 +921,22 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteEntryCont
                 });
             }
         });
+    },
+    btnDetContrato_click:function(){
+        this.winDataEntry('U');
+    },
+    winDataEntry: function(action) {
+        action = action === null || action === undefined ? 'U' : action;        
+        var VL_CDCLI = Ext.getCmp(prototype.id + '-A3953CDCLI').getValue();
+        Ext.create('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteContrato', {
+            id: prototype.id02 + '-CatalogoClienteContrato',
+            params: {
+                action: action,
+                rec: {
+                  CDCLI:VL_CDCLI
+                }
+            }
+        }).show();
     }
 
 });
