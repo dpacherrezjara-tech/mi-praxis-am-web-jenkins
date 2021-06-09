@@ -118,9 +118,18 @@ public class AccountingPasseInvoicesDAO {
                     objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
                     objRtn.IN_TTRAN = filter.IN_TTRAN;
                     objRtn.IN_PEREST = filter.IN_PEREST;
+                    objRtn.IN_TFECHA = filter.IN_TFECHA.trim();
 
                     objRtn.RN = rs01.getLong("RN");
                     objRtn.FCONT = rs01.getString("FCONT");
+                    objRtn.DATEPROV = rs01.getString("DATEPROV");
+                    
+                    if(filter.IN_TFECHA.equals("PD")){
+                        objRtn.typeDate = rs01.getString("DATEPROV");
+                    }else{
+                        objRtn.typeDate = rs01.getString("FCONT");
+                    }
+                    
                     objRtn.BDATE = rs01.getString("BDATE");
                     objRtn.strFormatDate = Functions.getMonthConvert2(objRtn.BDATE);
 //                    objRtn.strFormatDate = Functions.getMonthConvert3(objRtn.BDATE);//YYMMDD

@@ -5876,6 +5876,7 @@ public class LoadInterlineDAO {
                 objRtn.TGROSS = rs01.getDouble("TGROSS");
                 objRtn.TISC = rs01.getDouble("TISC");
                 objRtn.TTAX = rs01.getDouble("TTAX");
+                objRtn.TVAT = rs01.getDouble("TVAT");
                 objRtn.TOHCOM = rs01.getDouble("TOHCOM");
                 objRtn.HFEEAM = rs01.getDouble("HFEEAM");
                 objRtn.TUATP = rs01.getDouble("TUATP");
@@ -5894,6 +5895,11 @@ public class LoadInterlineDAO {
                 objRtn.TTAXSG = rs01.getString("TTAXSG");
                 if(objRtn.TTAXSG.trim().equals("M")){
                     objRtn.TTAX = objRtn.TTAX * -1;
+                }
+                
+                objRtn.TVATSG = rs01.getString("TVATSG");
+                if(objRtn.TVATSG.trim().equals("M")){
+                    objRtn.TVAT = objRtn.TVAT * -1;
                 }
                 
                 objRtn.TOHCOMSG = rs01.getString("TOHCOMSG");

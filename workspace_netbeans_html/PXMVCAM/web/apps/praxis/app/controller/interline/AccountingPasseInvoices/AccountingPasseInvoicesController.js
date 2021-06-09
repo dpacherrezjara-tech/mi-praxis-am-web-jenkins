@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
 //                click: this.btnClear_click
             },
             '#AccountingPasseInvoicesForm-btnExcel': {
-//                click: this.btnExcel_click
+                click: this.btnExcel_click
             },
             '#AccountingPasseInvoicesForm-btnFilter': {
                 click: this.btnFilter_click
@@ -116,16 +116,22 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         }
     },
     setStoreData: function () {
+        
+        var month = this.fecha.getMonth();
 
+        if (month < 10) {
+            month = '0' + month;
+        }
+        
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(win.getStoreYear(false));
         Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(win.getStoreYear(false));
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(win.getStoreMonth(true));
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(win.getStoreMonth(true));
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(win.getStoreMonth(false));
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(win.getStoreMonth(false));
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue("");
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue("");
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
         
         var cmbTfecha = Ext.getCmp(prototype.id + '-cmbTfecha');
         cmbTfecha.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -133,7 +139,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
             fields: ['code', 'name'],
             data: [
                 ["AD", "Accounting Date"],
-                ["CD", "Creation Date"]
+                ["PD", "Provision Date"]
             ]
         }));
         cmbTfecha.setValue("AD");
@@ -244,13 +250,20 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
                     
+                    var typeDate = Ext.getCmp(prototype.id + '-cmbTfecha').getValue()
+                    if (typeDate === "PD") {
+                        Ext.getCmp(prototype.id + '-typeDate').setText("Provision");
+                    } else {
+                        Ext.getCmp(prototype.id + '-typeDate').setText("Accounting");
+                    }
+                    
                     if (res.success) {
                         if (obj.data.length === 0) {
                             global.Msg({
                                 msg: 'Data not found.'
                             });
                         } else {
-                            
+                            var data = obj.data.items[0].data;
                         }
                     }
                 }
@@ -338,7 +351,11 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     },
     setGridSummary: function () {
         win.lblUser_toolTip("Estructura: SFI100");
-
+        
+//        me.panelActual = '-panelGridSummary';
+//        me.drillDown.push(me.panelActual);
+//        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        
         var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
             proxy: {
                 url: prototype.url + '/searchBySummary'
@@ -1519,7 +1536,6 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     },
     btnExcel_click: function (obj, e) {
 
-        this.setFormatParameter();
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -1550,37 +1566,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
             case '-panelGridData2':
                 global.getFile(prototype.url + '/getXLSX_2?beanString=' + searchParams.beanString);
                 break;
-            case '-panelMainDataDetail':
-                global.getFile(prototype.url + '/getXLSX_Detail30?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail20_1':
-                global.getFile(prototype.url + '/getXLSX_Detail30_1?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail20':
-                global.getFile(prototype.url + '/getXLSX_Detail20?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetailbyCIA':
-                global.getFile(prototype.url + '/getXLSX_DetailbyCIA?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetailbySOURCE':
-                global.getFile(prototype.url + '/getXLSX_DetailbySOURCE?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail21bySO':
-                global.getFile(prototype.url + '/getXLSX_DetailbySO?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail20bySO':
-                global.getFile(prototype.url + '/getXLSX_Detail20bySO?beanString=' + me.paramsDetail.beanString);
-                break;
-//            case '-panelGridDataByCia':
-//                global.getFile(prototype.url + '/getXLSXCia?beanString=' + me.paramsDetail.beanString);
-//                break;
-//            case '-panelGridDataByReason':
-//                global.getFile(prototype.url + '/getXLSXReason?beanString=' + me.paramsDetail.beanString);
-//                break;
-//            default:
-//                global.Msg(
-//                    {msg: 'Under Construction'
-//                });
+                
         }
 
     },

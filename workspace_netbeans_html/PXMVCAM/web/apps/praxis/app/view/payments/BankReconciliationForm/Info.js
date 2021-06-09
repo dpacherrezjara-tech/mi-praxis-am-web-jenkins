@@ -3337,15 +3337,15 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetTktByStval',
                                     bodyStyle: 'background: transparent;',
-                                    width: 1250,
+                                    width: 1255,
                                     minHeight: 200,
                                     titleAlign: 'center',
                                     columnLines: true,
                                     enableColumnMove: false,
                                     /*plugins: {
-                                        ptype: 'cellediting',
-                                        clicksToEdit: 1
-                                    },*/
+                                     ptype: 'cellediting',
+                                     clicksToEdit: 1
+                                     },*/
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -3355,77 +3355,12 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Ticket', flex: 1,
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    resizable: true,
-                                                    align: 'center',
-                                                    border: true
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Number', flex: 1, /*width: 120,*/ dataIndex: 'strTicket',
-//                                                                        listeners: {
-////                                                                            click: 'gridData_act1_clickHandler'
-//                                                                        },
-                                                        /*editor: {
-                                                            xtype: 'textfield',
-                                                            editable: true,
-                                                            enableKeyEvents: true,
-                                                            listeners: {
-                                                                keypress: 'eventKeyTKT',
-                                                                specialkey: 'eventKeyTKT'
-                                                            }
-                                                        },*/
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            var data = record.data;
-                                                            metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;background-color:#d5f4d5;';
-                                                            metaData.tdAttr = 'data-qtip="' + data.STVAL + '"';
-                                                            metaData.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
-                                                            metaData.unselectableAttr = "unselectable='off'";
-                                                            return '<a href="#payments-bank-reconciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Type', dataIndex: 'strPEM', width: 90,
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 60,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                    metaData.style = "text-align:center;color:" + color + ";";
-                                                    metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Error',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Code', dataIndex: 'CERROR', width: 155,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = "text-align:left;color:" + color + ";";
-                                                            metaData.tdAttr = 'data-qtip="' + data.CERROR + '"';
-                                                            return value;
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Src', dataIndex: 'FTE', width: 32,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    var data = record.data;
-                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                    metaData.style = "text-align:center;color:" + color + ";";
-                                                    metaData.tdAttr = 'data-qtip="' + data.strSORIG + '"';
+                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                    metaData.style = "text-align:center;color:" + color;
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescCountry + '"';
                                                     return value;
                                                 }
                                             },
@@ -3439,11 +3374,11 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'SDATE', width: 80,
+                                                        text: 'Date', dataIndex: 'SDATE', width: 70,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                            metaData.style = "text-align:center;color:" + color;
                                                             metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
                                                             return value;
                                                         }
@@ -3451,7 +3386,17 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Country',
+                                                text: 'PNR', dataIndex: 'SPNR', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                    metaData.style = "text-align:center;color:" + color;
+                                                    metaData.tdAttr = 'data-qtip="' + data.SPNR + '"';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Date',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -3459,16 +3404,42 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Code', dataIndex: 'SCOUNTRY', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
-                                                            metaData.tdAttr = 'data-qtip="' + data.strDescCountry + '"';
-                                                            return value;
-                                                        }
+                                                        text: 'Settlement', dataIndex: 'TDATE', width: 80,
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                text: 'Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Liquidación', dataIndex: 'DATEF', width: 80,
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Type', dataIndex: 'strPEM', width: 60,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                    metaData.style = "text-align:center;color:" + color;
+                                                    metaData.tdAttr = 'data-qtip="' + data.strPEM + '"';
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Status', dataIndex: 'strDescStatus', width: 150,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                    metaData.style = "text-align:center;color:" + color;
+                                                    metaData.tdAttr = 'data-qtip="' + data.strPEM + '"';
+                                                    return value;
+                                                }
                                             },
                                             {
                                                 text: 'Credit Card',
@@ -3482,21 +3453,19 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                         text: 'Code', dataIndex: 'SCARCOD', width: 45,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                            metaData.style = "text-align:center;color:" + color;
                                                             metaData.tdAttr = 'data-qtip="' + data.strDescCard + '"';
                                                             return value;
                                                         }
                                                     },
                                                     {
-                                                        text: 'Card Number', width: 150, dataIndex: 'strSCARDN',
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 140,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = 'text-align:center;color:' + color + ';background-color:#CCFFFF;';
-                                                            metaData.tdAttr = 'data-qtip="' + data.strSCARDN + '"';
-                                                            metaData.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
-                                                            metaData.unselectableAttr = "unselectable='off'";
+                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                            metaData.style = "text-align:center;color:" + color;
+                                                            metaData.tdAttr = 'data-qtip="' + data.SCARDN + '"';
                                                             return value;
                                                         }
                                                     },
@@ -3504,8 +3473,8 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                         text: 'Author.', dataIndex: 'SAUTHOC', width: 70,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                            metaData.style = "text-align:center;color:" + color;
                                                             metaData.tdAttr = 'data-qtip="' + data.SAUTHOC + '"';
                                                             return value;
                                                         }
@@ -3513,108 +3482,334 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Cur.', dataIndex: 'SCURRENCY', width: 40,
+                                                text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                    metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                    metaData.style = "text-align:center;color:" + color;
                                                     metaData.tdAttr = 'data-qtip="' + data.strMoneda + '"';
                                                     return value;
                                                 }
                                             },
                                             {
-                                                text: 'Amount', dataIndex: 'SVFOP', width: 75,
+                                                text: 'Amount', dataIndex: 'SVFOP', width: 80,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                    metaData.style = "text-align:right;color:" + color + ";background-color:#b2e1ff;";
+                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                    metaData.style = "text-align:right;color:" + color;
                                                     return win.formatDblNumber(value);
                                                 }
                                             },
                                             {
-                                                text: 'PNR', dataIndex: 'SPNR', width: 70,
+                                                text: 'Credit Card - C1',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Code C-1', dataIndex: 'SCARCOD1', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                            metaData.style = "text-align:center;color:" + color;
+                                                            metaData.tdAttr = 'data-qtip="' + data.strDescCard + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    /*{
+                                                     text: 'Number', dataIndex: 'SCARDN', width: 140,
+                                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     var data = record.data;
+                                                     var color = data.strPEM === 'SALES'? "#64418c" : "#244066";
+                                                     metaData.style = "text-align:center;color:"+color;
+                                                     metaData.tdAttr = 'data-qtip="'+data.SCARDN+'"';
+                                                     return value;
+                                                     }
+                                                     },*/
+                                                    {
+                                                        text: 'Author. C-1', dataIndex: 'SAUTHOC1', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                            metaData.style = "text-align:center;color:" + color;
+                                                            metaData.tdAttr = 'data-qtip="' + data.SAUTHOC + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Ref. ACCB', dataIndex: 'NUMREF', width: 100,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                    metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
-                                                    metaData.tdAttr = 'data-qtip="' + data.SPNR + '"';
+                                                    var color = data.strPEM === 'SALES' ? "#64418c" : "#244066";
+                                                    metaData.style = "text-align:right;color:" + color;
                                                     return value;
                                                 }
                                             },
-                                            {
-                                                text: 'Agent',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Code', dataIndex: 'SAGENT', width: 70,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
-                                                            metaData.tdAttr = 'data-qtip="' + data.SAGENT + '"';
-                                                            return value;
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Transaction',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Code', dataIndex: 'TRNCU', width: 55
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Days', dataIndex: 'lngDays', width: 45,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    var data = record.data;
-                                                    var color = Number(data.lngDays) >= 4 ? '#c22428' : '#2BC224';
-                                                    metaData.style = "text-align:center;color:" + color + ";";
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Flag',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Status', dataIndex: 'strFlagStat', width: 50,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            var data = record.data;
-                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
-                                                            metaData.style = "text-align:center;color:" + color + ";";
-                                                            metaData.tdAttr = 'data-qtip="' + data.strFlagStat + '"';
-                                                            return value;
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            /*{
-                                                text: 'View', dataIndex: '', width: 40,
-                                                listeners: {
-                                                    click: 'viewDataEntry_clickHandler'
-                                                },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    var data = record.data;
-                                                    metaData.tdAttr = 'data-qtip="' + (Number(data.lngQOBS) > 1 ? 'View' : 'View') + '"';
-                                                    var src = Number(data.lngQOBS) > 1 ? 'resources/img/botones/16x16/warning.png' : 'resources/img/botones/16x16/Change.png';
-                                                    return '<a href="#payments-bank-reconciliation-form"><img src="' + src + '"></a>';
-                                                }
-                                            }*/
+//                                            {
+//                                                text: 'Ticket', flex: 1,
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    resizable: true,
+//                                                    align: 'center',
+//                                                    border: true
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Number', flex: 1, /*width: 120,*/ dataIndex: 'strTicket',
+////                                                                        listeners: {
+//////                                                                            click: 'gridData_act1_clickHandler'
+////                                                                        },
+//                                                        /*editor: {
+//                                                            xtype: 'textfield',
+//                                                            editable: true,
+//                                                            enableKeyEvents: true,
+//                                                            listeners: {
+//                                                                keypress: 'eventKeyTKT',
+//                                                                specialkey: 'eventKeyTKT'
+//                                                            }
+//                                                        },*/
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;background-color:#d5f4d5;';
+//                                                            metaData.tdAttr = 'data-qtip="' + data.STVAL + '"';
+//                                                            metaData.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
+//                                                            metaData.unselectableAttr = "unselectable='off'";
+//                                                            return '<a href="#payments-bank-reconciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+//                                                        }
+//                                                    }
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Type', dataIndex: 'strPEM', width: 90,
+//                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                    metaData.style = "text-align:center;color:" + color + ";";
+//                                                    metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
+//                                                    return value;
+//                                                }
+//                                            },
+//                                            {
+//                                                text: 'Error',
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Code', dataIndex: 'CERROR', width: 155,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = "text-align:left;color:" + color + ";";
+//                                                            metaData.tdAttr = 'data-qtip="' + data.CERROR + '"';
+//                                                            return value;
+//                                                        }
+//                                                    }
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Src', dataIndex: 'FTE', width: 32,
+//                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                    metaData.style = "text-align:center;color:" + color + ";";
+//                                                    metaData.tdAttr = 'data-qtip="' + data.strSORIG + '"';
+//                                                    return value;
+//                                                }
+//                                            },
+//                                            {
+//                                                text: 'Sales',
+//                                                id: prototype.id + '-hcDetTktS',
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Date', dataIndex: 'SDATE', width: 80,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+//                                                            metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
+//                                                            return value;
+//                                                        }
+//                                                    }
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Country',
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Code', dataIndex: 'SCOUNTRY', width: 60,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+//                                                            metaData.tdAttr = 'data-qtip="' + data.strDescCountry + '"';
+//                                                            return value;
+//                                                        }
+//                                                    }
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Credit Card',
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Code', dataIndex: 'SCARCOD', width: 45,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+//                                                            metaData.tdAttr = 'data-qtip="' + data.strDescCard + '"';
+//                                                            return value;
+//                                                        }
+//                                                    },
+//                                                    {
+//                                                        text: 'Card Number', width: 150, dataIndex: 'strSCARDN',
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = 'text-align:center;color:' + color + ';background-color:#CCFFFF;';
+//                                                            metaData.tdAttr = 'data-qtip="' + data.strSCARDN + '"';
+//                                                            metaData.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
+//                                                            metaData.unselectableAttr = "unselectable='off'";
+//                                                            return value;
+//                                                        }
+//                                                    },
+//                                                    {
+//                                                        text: 'Author.', dataIndex: 'SAUTHOC', width: 70,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+//                                                            metaData.tdAttr = 'data-qtip="' + data.SAUTHOC + '"';
+//                                                            return value;
+//                                                        }
+//                                                    }
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Cur.', dataIndex: 'SCURRENCY', width: 40,
+//                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                    metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+//                                                    metaData.tdAttr = 'data-qtip="' + data.strMoneda + '"';
+//                                                    return value;
+//                                                }
+//                                            },
+//                                            {
+//                                                text: 'Amount', dataIndex: 'SVFOP', width: 75,
+//                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                    metaData.style = "text-align:right;color:" + color + ";background-color:#b2e1ff;";
+//                                                    return win.formatDblNumber(value);
+//                                                }
+//                                            },
+//                                            {
+//                                                text: 'PNR', dataIndex: 'SPNR', width: 70,
+//                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                    metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+//                                                    metaData.tdAttr = 'data-qtip="' + data.SPNR + '"';
+//                                                    return value;
+//                                                }
+//                                            },
+//                                            {
+//                                                text: 'Agent',
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Code', dataIndex: 'SAGENT', width: 70,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";
+//                                                            metaData.tdAttr = 'data-qtip="' + data.SAGENT + '"';
+//                                                            return value;
+//                                                        }
+//                                                    }
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Transaction',
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Code', dataIndex: 'TRNCU', width: 55
+//                                                    }
+//                                                ]
+//                                            },
+//                                            {
+//                                                text: 'Days', dataIndex: 'lngDays', width: 45,
+//                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    var color = Number(data.lngDays) >= 4 ? '#c22428' : '#2BC224';
+//                                                    metaData.style = "text-align:center;color:" + color + ";";
+//                                                    return value;
+//                                                }
+//                                            },
+//                                            {
+//                                                text: 'Flag',
+//                                                defaults: {
+//                                                    menuDisabled: true,
+//                                                    sortable: false,
+//                                                    align: 'center'
+//                                                },
+//                                                columns: [
+//                                                    {
+//                                                        text: 'Status', dataIndex: 'strFlagStat', width: 50,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            var data = record.data;
+//                                                            var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+//                                                            metaData.style = "text-align:center;color:" + color + ";";
+//                                                            metaData.tdAttr = 'data-qtip="' + data.strFlagStat + '"';
+//                                                            return value;
+//                                                        }
+//                                                    }
+//                                                ]
+//                                            },
+//                                            /*{
+//                                                text: 'View', dataIndex: '', width: 40,
+//                                                listeners: {
+//                                                    click: 'viewDataEntry_clickHandler'
+//                                                },
+//                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    metaData.tdAttr = 'data-qtip="' + (Number(data.lngQOBS) > 1 ? 'View' : 'View') + '"';
+//                                                    var src = Number(data.lngQOBS) > 1 ? 'resources/img/botones/16x16/warning.png' : 'resources/img/botones/16x16/Change.png';
+//                                                    return '<a href="#payments-bank-reconciliation-form"><img src="' + src + '"></a>';
+//                                                }
+//                                            }*/
                                         ]
                                     }
                                 }
