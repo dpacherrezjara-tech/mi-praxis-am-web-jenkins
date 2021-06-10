@@ -2966,6 +2966,7 @@ public class BoomerReconciliationDAO {
                 beanTkt.STATUSC = rst.getString("STATUSC").trim();
 
                 beanTkt.strComment = rst.getString("MSJJ").trim();
+                beanTkt.SPNR = rst.getString("SPNR").trim();
 
                 beanTkt.USCR = rst.getString("USCR").trim();
                 beanTkt.FECR = rst.getString("FECR").trim();
