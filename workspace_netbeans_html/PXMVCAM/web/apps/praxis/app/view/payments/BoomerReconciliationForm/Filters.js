@@ -375,7 +375,27 @@ Ext.define('Ext.Praxis.view.payments.BoomerReconciliationForm.Filters', {
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },                       
-                        {xtype: 'tbspacer', width: 60}
+                        {xtype: 'tbspacer', width: 60},
+                        {
+                            xtype: 'label',
+                            text: 'PNR:',
+                            padding: '3 0',
+                            width: 40
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id+'-txtPNR',     
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,     
+                            maskRe: /[0-9a-zA-Z]/,      
+                            maxLength: 6,
+                            width: 70,
+                            enableKeyEvents: true,
+                            listeners:{
+                                keypress: 'BuscarPNR_keyDownHandler'
+                            }
+                        },
                     ]
                 }
             ]
