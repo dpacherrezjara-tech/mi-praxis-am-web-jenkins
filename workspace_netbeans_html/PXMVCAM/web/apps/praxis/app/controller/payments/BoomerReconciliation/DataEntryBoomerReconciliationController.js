@@ -54,6 +54,7 @@ Ext.define('Ext.Praxis.controller.payments.BoomerReconciliation.DataEntryBoomerR
         
         this.setValue('de-txtSDATE', this.beanResult.SDATE);
         this.setValue('de-txtSAGENT', this.beanResult.SAGENT);
+        this.setValue('de-txtSPNR', this.beanResult.SPNR);
         
         this.setValue('de-cmbSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-cmbSTVAL', this.beanResult.STVAL);
