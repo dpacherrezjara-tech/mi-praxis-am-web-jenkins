@@ -375,14 +375,14 @@ Ext.define('Ext.Praxis.view.payments.BoomerReconciliationForm.Filters', {
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },                       
-                        {xtype: 'tbspacer', width: 60},
+                        {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'label',
                             text: 'PNR:',
                             padding: '3 0',
                             width: 40
                         },
-                        {xtype: 'tbspacer', width: 10},
+                        {xtype: 'tbspacer', width: 60},
                         {
                             xtype: 'textfield',
                             id: prototype.id+'-txtPNR',     
