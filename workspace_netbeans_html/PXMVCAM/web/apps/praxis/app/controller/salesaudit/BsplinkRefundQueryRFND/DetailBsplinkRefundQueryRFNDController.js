@@ -486,8 +486,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
                 bvalida = false;
                 return;
             }
-            if (grid03.getStore().getAt(e).get('A3404FAMIL') !== 'Authorise' && vl_STATUS === 'Z') {
-                Ext.Msg.alert('.: PRAXIS :.', 'Check the answer, the under investigation status cannot be used with rejected answer');
+            if (grid03.getStore().getAt(e).get('A3404FAMIL') === 'Authorise' && vl_STATUS === 'Z') {
+                Ext.Msg.alert('.: PRAXIS :.', 'Check the answer, the under investigation status cannot be used with Authorise answer');
                 bvalida = false;
                 return;
             }
