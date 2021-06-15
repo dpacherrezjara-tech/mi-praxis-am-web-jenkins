@@ -142,7 +142,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
                 ["PD", "Provision Date"]
             ]
         }));
-        cmbTfecha.setValue("AD");
+        cmbTfecha.setValue("PD");
 
         var cmbTTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN');
         cmbTTRAN.bindStore(Ext.create('Ext.data.ArrayStore', {
