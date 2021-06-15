@@ -339,7 +339,7 @@ public class EmisionEdoCtaController extends BaseController {
                 objRtn04.A3958CFDI = listaData.get(i).rpteDet.A3958CFDI.trim();                    
                 objRtn04.A3958MDLOC = listaData.get(i).rpteDet.A3958MDLOC;                   
                 objRtn04.A3958TOT = listaData.get(i).rpteDet.A3958TOT;
-                //objRtn04.CANT_DIA = rs04.getInt("CANT_DIA");                             
+                objRtn04.ANT_SALDO = listaData.get(i).rpteDet.ANT_SALDO;
                 lstRtn04.add(objRtn04);                               
             }
             
