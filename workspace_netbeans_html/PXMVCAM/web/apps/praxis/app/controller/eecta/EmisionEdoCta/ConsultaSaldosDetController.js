@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaSaldosDetControlle
     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
-    loadDataDat01: function(lstRtn01, lstRtn02, ){        
+    loadDataDat01: function(lstRtn01, lstRtn02 ){        
         //cliente   
         //console.log(lstRtn01);
         var VL_DIR = lstRtn01[0].A3953DIRE1.trim();
