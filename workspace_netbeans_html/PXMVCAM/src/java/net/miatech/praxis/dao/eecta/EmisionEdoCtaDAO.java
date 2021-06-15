@@ -644,7 +644,7 @@ public class EmisionEdoCtaDAO {
                     objRtn.rpteDet.A3958CFDI = rs04.getString("A3958CFDI").trim();                    
                     objRtn.rpteDet.A3958MDLOC = rs04.getString("A3958MDLOC");                   
                     objRtn.rpteDet.A3958TOT = rs04.getDouble("A3958TOT");
-                    objRtn.CANT_DIA = rs04.getInt("CANT_DIA");                      
+                    objRtn.rpteDet.ANT_SALDO = rs04.getInt("CANT_DIA");                      
                     lstRtn.add(objRtn);                    
                 }
             }            
