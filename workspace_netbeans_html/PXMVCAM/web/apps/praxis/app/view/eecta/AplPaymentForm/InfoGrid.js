@@ -191,7 +191,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGrid', {
                                             }
                                         ]
 
-                                    },
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,

@@ -113,8 +113,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentController', {
     },
     search: function ()
     {
-        //this.page_current = 1;        
-        //console.log('page: ' + this.page_current);        
+        me = this;
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
         var bean = {};
         bean.VP_OPCION = "1"; //Ext.getCmp(prototype.id + '-cmbfiltro').getValue();
@@ -126,7 +125,21 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentController', {
         bean.VP_REFPG = Ext.getCmp(prototype.id + '-REFPG').getValue();
         bean.VP_CTABC = Ext.getCmp(prototype.id + '-CTABC').getValue();
         bean.VP_STSPG = Ext.getCmp(prototype.id + '-STSPG').getValue();
-        
+        bean.VP_BOLET = "";
+        var t_NUMBER_CIA = Ext.getCmp(prototype.id + '-TICKET_NUMBER_CIA').getValue();
+        var t_NUMBER = Ext.getCmp(prototype.id + '-TICKET_NUMBER').getValue();
+        var t_NUMBER_SEQ = Ext.getCmp(prototype.id + '-TICKET_NUMBER_SEQ').getValue();        
+        if( t_NUMBER !== ''){            
+            if(t_NUMBER_CIA === ''){
+               global.Msg({msg: 'Ingrese la CIA'});
+               return; 
+            }
+            if(t_NUMBER_SEQ === ''){
+               global.Msg({msg: 'Ingrese la secuencia'});
+               return; 
+            }
+            bean.VP_BOLET = t_NUMBER_CIA + t_NUMBER + t_NUMBER_SEQ;            
+        }
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.SalesList.GridData', {
             proxy: {
                 url: prototype.url + '/search'
@@ -152,6 +165,13 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentController', {
                             msg: 'Data not found'
                         });
                     }
+                    if (obj.data.length === 1) {                    
+                        //console.log('abrir ventana en automatico');
+                        //seleccionar el registro
+                        var grid = Ext.getCmp(prototype.id + '-gridData');
+                        me.onDetailClick( grid , 0, 0 );
+                    }
+                    
                     global.clear();
                 }
             }

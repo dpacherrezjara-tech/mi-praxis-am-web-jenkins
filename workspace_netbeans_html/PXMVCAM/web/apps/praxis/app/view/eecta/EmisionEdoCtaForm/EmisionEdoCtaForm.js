@@ -1,5 +1,7 @@
 prototype.widthContenedor = 1200;   
 prototype.widthGrid = '100%';
+prototype.id01 = 'ConsultaEdoCtaForm';
+prototype.id02 = 'ConsultaAntSaldosForm';
 
 Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.EmisionEdoCtaForm', {
     extend: 'Ext.form.Panel',

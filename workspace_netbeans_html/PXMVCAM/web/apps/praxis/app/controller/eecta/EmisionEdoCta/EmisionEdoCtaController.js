@@ -85,21 +85,21 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.EmisionEdoCtaController', 
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible() && this.page_current === 1) {
             global.showMenu();
         }
-        Ext.getCmp(prototype.id + '-cont-filter00').hide();
-        Ext.getCmp(prototype.id + '-cont-filter01').hide();
-        Ext.getCmp(prototype.id + '-cont-filter02').hide();
-        Ext.getCmp(prototype.id + '-cont-filter03').hide();
-        if (this.page_current > 1)
-            this.page_current = this.page_current - 1;
-        if (this.page_current === 1)
-            Ext.getCmp(prototype.id + '-cont-filter00').show();
-        if (this.page_current === 2)
-            Ext.getCmp(prototype.id + '-cont-filter01').show();
-        if (this.page_current === 3)
-            Ext.getCmp(prototype.id + '-cont-filter02').show();
-        if (this.page_current === 4)
-            Ext.getCmp(prototype.id + '-cont-filter03').show();
-        this.Onsearch();
+//        Ext.getCmp(prototype.id + '-cont-filter00').hide();
+//        Ext.getCmp(prototype.id + '-cont-filter01').hide();
+//        Ext.getCmp(prototype.id + '-cont-filter02').hide();
+//        Ext.getCmp(prototype.id + '-cont-filter03').hide();
+//        if (this.page_current > 1)
+//            this.page_current = this.page_current - 1;
+//        if (this.page_current === 1)
+//            Ext.getCmp(prototype.id + '-cont-filter00').show();
+//        if (this.page_current === 2)
+//            Ext.getCmp(prototype.id + '-cont-filter01').show();
+//        if (this.page_current === 3)
+//            Ext.getCmp(prototype.id + '-cont-filter02').show();
+//        if (this.page_current === 4)
+//            Ext.getCmp(prototype.id + '-cont-filter03').show();
+//        this.Onsearch();
 
     },
     // </editor-fold>    
@@ -147,9 +147,9 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.EmisionEdoCtaController', 
                     Ext.getCmp(prototype.id + '-lbl-total').setText(total);
                     // </editor-fold>
                     if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found'
-                        });
+//                        global.Msg({
+//                            msg: 'Data not found'
+//                        });
                     }
                     global.clear();
                 }
@@ -205,6 +205,20 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.EmisionEdoCtaController', 
                 }
             }
         });
+    },
+    onbtn_consultaEECCClick: function () {
+        this.winDataEntry('I',null);
+    },
+    winDataEntry:function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;       
+        Ext.create('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
+            id: prototype.id01 + '-ConsultaEdoCtaForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
     },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">

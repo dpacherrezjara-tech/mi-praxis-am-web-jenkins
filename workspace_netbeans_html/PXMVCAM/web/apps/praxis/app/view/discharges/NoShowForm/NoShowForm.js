@@ -1,4 +1,4 @@
-prototype.widthContenedor = 930;   
+prototype.widthContenedor = 1000;   
 prototype.widthGrid = '100%';
 prototype.id01 = 'NoShowFormDet';
 prototype.id02 = 'NoShowFormDetXml';

@@ -20,30 +20,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
     afterRender: function () {
             
         this.getDataInputs();        
-        Ext.getCmp(prototype.id + '-A3959TOTPG').focus();
-        
-//        //SET store Grid
-//        var grid01 = Ext.getCmp(prototype.id + '-infoGridAplPayment');
-//        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.AplPayment.GridData',{});
-//        grid01.setStore(storeGridDatas);                
-        //this.set_ClearField();
-//        var p = this.view.params;
-//        switch (p.action) {
-//            case 'I':
-//                Ext.getCmp(prototype.id + '-btn-delete').hide();
-//                Ext.getCmp(prototype.id + '-btn-update').hide();
-//                Ext.getCmp(prototype.id + '-btn-save').show();
-//                this.handlerEvent_setDisabled(true);
-//                //Ext.getCmp(prototype.id + '-A3953RSOCI').focus();
-//                break;
-//            case 'U':
-//                this.getDataInputs();                
-//                Ext.getCmp(prototype.id + '-btn-save').hide();
-//                Ext.getCmp(prototype.id + '-btn-update').show();
-//                //Ext.getCmp(prototype.id + '-btn-delete').show(); (no hay opcion de quitar cliente) ??
-//                this.handlerEvent_setDisabled(false);
-//                break;
-//        }
+        Ext.getCmp(prototype.id + '-A3959TOTPG').focus();        
     },
     handlerEvent_setDisabled: function (bflag) {        
         //boton logo
@@ -62,7 +39,9 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         Ext.getCmp(prototype.id + '-A3959BANCO').setValue(data.A3953BANCO.trim());
         Ext.getCmp(prototype.id + '-A3959CTABC').setValue(data.A3953CTABC.trim());
         Ext.getCmp(prototype.id + '-A3959REFPG').setValue(data.A3957REFBC.trim());  
-        Ext.getCmp(prototype.id + '-A3959MDAPG').setValue(data.A3957MDLOC);        
+        Ext.getCmp(prototype.id + '-A3959MDAPG').setValue(data.A3957MDLOC); 
+        var VL_TKT = Ext.getCmp(prototype.id + '-TICKET_NUMBER').getValue();        
+        Ext.getCmp(prototype.id + '-FILTER02').setValue(VL_TKT);        
         this.get_detalle_boleto();        
     },
     getDataEntryValues: function (strOption) {
@@ -286,14 +265,25 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         //Initialize data INPUTS
         //Ext.getCmp(prototype.id + '-A3953CDCLI').setValue('');        
     },
-    
+    onTxtFilterKeypress01: function (obj, e, eOpts) {
+        if (e.getKey() === e.ENTER) {
+            this.get_detalle_boleto();
+        }
+    },
     get_detalle_boleto: function () {
-        var p = this.view.params;        
-        //console.log(p);                 
+        var VL_CIA = Ext.getCmp(prototype.id + '-FILTER01').getValue();
+        var VL_TKT = Ext.getCmp(prototype.id + '-FILTER02').getValue();
+        var VL_SEQ = Ext.getCmp(prototype.id + '-FILTER03').getValue();        
+        var VL_PARAM1 = '';
+        if (VL_TKT !== '') VL_PARAM1 = VL_CIA + VL_TKT + VL_SEQ;
+        
+        var p = this.view.params;                
         var bean = {};        
         bean.VP_A3958NRRPT = p.rec.data.A3957NRRPT;
-        bean.VP_A3958CDCLI = p.rec.data.A3957CDCLI;
-        
+        bean.VP_A3958CDCLI = p.rec.data.A3957CDCLI;        
+        bean.VP_TFILTTRO = '';
+        if ( VL_PARAM1 !== '' ) bean.VP_TFILTTRO = '1';        
+        bean.VP_PARAM1 = VL_PARAM1;        
         bean.limit = "-1";
         bean.page = "-1";
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.AplPayment.GridData', {        

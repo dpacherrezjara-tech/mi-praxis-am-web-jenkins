@@ -60,7 +60,17 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000');
                                         }   
                                     },
-                                    {text: 'Estado', dataIndex: 'A3933STAT', align: 'left', width: 120, locked: false},                                    
+                                    {text: 'Cpns<br>Caduco', dataIndex: 'QTY_CADUCO', align: 'right', width: 65, locked: false,
+                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return Ext.util.Format.number(value, '0,000');
+                                        }   
+                                    },
+                                    {text: '$ Total<br>Caduco', dataIndex: 'TOT_CADUCO', align: 'right', width: 65, locked: false,
+                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }   
+                                    },
+                                    {text: 'Estado', dataIndex: 'A3933STAT', align: 'left', width: 110, locked: false},                                    
                                     {
                                         xtype: 'actioncolumn',
                                         text:'',
@@ -75,7 +85,7 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.InfoGrid', {
                                             }
                                         ]
                                     },
-                                    {text: 'Ref. F. Vuelo', dataIndex: 'A3933RANGF', align: 'left', width: 200, locked: false}, 
+                                    {text: 'Ref. F. Vuelo', dataIndex: 'A3933RANGF', align: 'left', width: 150, locked: false}, 
                                     {text: 'Usuario', dataIndex: 'A3933USRIN', align: 'center', width: 70, locked: false}, 
                                     {text: 'Fecha <br>Carga', dataIndex: 'A3933FECIN', align: 'center', width: 70, locked: false}, 
                                     {text: 'Hora <br>Carga', dataIndex: 'A3933HORIN', align: 'center', width: 70, locked: false}, 
