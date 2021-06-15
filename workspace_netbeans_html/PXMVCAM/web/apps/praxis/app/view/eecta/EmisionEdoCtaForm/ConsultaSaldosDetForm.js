@@ -159,7 +159,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
                                             height: 40, fieldLabel: 'Dirección', labelStyle: 'font-weight: bold;',
                                             border: false, readOnly: true, labelAlign: 'right',
                                             id: prototype.id02 + '-A3953DIRE1',
-                                            padding: '1 1 1 1', width: 400, labelWidth: 80, maxRows: 3
+                                            padding: '1 1 1 1', width: 450, labelWidth: 80, maxRows: 3
                                         }
 //                                        {
 //                                            xtype: 'textfield',

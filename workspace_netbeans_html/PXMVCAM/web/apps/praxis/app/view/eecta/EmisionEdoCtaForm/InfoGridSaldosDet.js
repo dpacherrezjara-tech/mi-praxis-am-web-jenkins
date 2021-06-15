@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGridSaldosDet', {
                                     {text: 'Ruta', dataIndex: 'A3958RUTA', width: 90, align: 'left'},
                                     {text: 'UUID', dataIndex: 'A3958CFDI', width: 100, align: 'left'},
                                     {text: 'Mda.', dataIndex: 'A3958MDLOC', width: 50, align: 'left'},
-                                    {text: 'Ant.Saldo<br>(dias)', dataIndex: 'CANT_DIA', width: 90, align: 'right'},
+                                    {text: 'Ant.Saldo<br>(dias)', dataIndex: 'ANT_SALDO', width: 90, align: 'right'},
                                     {
                                         text: 'Saldo', dataIndex: 'A3958TOT', width: 90, align: 'right',                                        
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
