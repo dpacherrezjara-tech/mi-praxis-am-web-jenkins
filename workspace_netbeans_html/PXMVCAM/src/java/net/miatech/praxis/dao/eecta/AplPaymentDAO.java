@@ -51,15 +51,15 @@ public class AplPaymentDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP03942(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-        Connection cnx = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP03942(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;        
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(11, Types.INTEGER);
             cstmt01.registerOutParameter(12, Types.INTEGER);
             cstmt01.registerOutParameter(13, Types.INTEGER);
             cstmt01.registerOutParameter(14, Types.INTEGER);
+            cstmt01.registerOutParameter(15, Types.INTEGER);
             
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.VP_OPCION);
@@ -71,15 +71,16 @@ public class AplPaymentDAO {
             cstmt01.setString(8, filter.VP_REFPG);
             cstmt01.setString(9, filter.VP_CTABC);
             cstmt01.setString(10, filter.VP_STSPG);
-            cstmt01.setInt(11, filter.page.PAGNUM);
-            cstmt01.setInt(12, filter.page.PAGROW);
-            cstmt01.setInt(13, filter.page.TOTPAG);
-            cstmt01.setInt(14, filter.page.TOTROW);            
+            cstmt01.setString(11, filter.VP_BOLET);
+            cstmt01.setInt(12, filter.page.PAGNUM);
+            cstmt01.setInt(13, filter.page.PAGROW);
+            cstmt01.setInt(14, filter.page.TOTPAG);
+            cstmt01.setInt(15, filter.page.TOTROW);            
             cstmt01.execute();            
-            filter.page.PAGNUM = cstmt01.getInt(11);
-            filter.page.PAGROW = cstmt01.getInt(12);
-            filter.page.TOTPAG = cstmt01.getInt(13);
-            filter.page.TOTROW = cstmt01.getInt(14);
+            filter.page.PAGNUM = cstmt01.getInt(12);
+            filter.page.PAGROW = cstmt01.getInt(13);
+            filter.page.TOTPAG = cstmt01.getInt(14);
+            filter.page.TOTROW = cstmt01.getInt(15);
             
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -141,14 +142,16 @@ public class AplPaymentDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP03951(?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP03951(?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.VP_A3958NRRPT);
-            cstmt01.setString(3, filter.VP_A3958CDCLI);            
+            cstmt01.setString(3, filter.VP_A3958CDCLI);
+            cstmt01.setString(4, filter.VP_TFILTTRO);
+            cstmt01.setString(5, filter.VP_PARAM1);
             cstmt01.execute();
             
             rs01 = cstmt01.getResultSet();

@@ -106,6 +106,8 @@ public class NoShowDAO {
                 objRtn.A3933USRAC = rs01.getString("A3933USRAC");
                 objRtn.A3933FECAC = rs01.getString("A3933FECAC");
                 objRtn.A3933HORAC = rs01.getString("A3933HORAC");
+                objRtn.QTY_CADUCO = rs01.getInt("QTY_CADUCO"); 
+                objRtn.TOT_CADUCO = rs01.getDouble("TOT_CADUCO");                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -197,6 +199,8 @@ public class NoShowDAO {
                 //--
                 objRtn.A3932STCAD = rs01.getString("A3932STCAD").trim();
                 objRtn.A3932ESTAD = rs01.getString("A3932ESTAD_00").trim();
+                objRtn.A3932NINTR = rs01.getInt("A3932NINTR");
+                
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
