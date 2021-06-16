@@ -1519,7 +1519,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_SUD', width: 95,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
                                                             return value;
                                                         }}
                                                 ]
