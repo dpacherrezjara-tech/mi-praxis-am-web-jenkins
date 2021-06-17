@@ -114,7 +114,7 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "searchItinerary")
     public @ResponseBody
     String searchItinerary(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Forecast : SearchItinerary-------------");
+        System.out.println("-------------- Forecast : SearchItinerary-Seats-------------");
 
         map.put("success", true);
         List<IMF141Filter> lst = this.getListItinerary(request, false);
@@ -166,7 +166,7 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "searchPercentage")
     public @ResponseBody
     String searchPercentage(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Forecast : searchPercentage-------------");
+        System.out.println("-------------- Forecast : searchPercentage-OccupationFactor-------------");
         map.put("success", true);
         List<IMF140Filter> lst = this.getListForecastPercentage(request, false);
         System.out.println("Total : " + lst.size());
@@ -522,8 +522,8 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "getXLSXItinerary")
     public @ResponseBody
     void getXLSXItinerary(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Report : getXLSXItinerary");
-        String fileNameDownload = String.format("Itinerary  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("Report : getXLSXItinerary-Seats");
+        String fileNameDownload = String.format("Seats  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -920,8 +920,8 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "getXLSXForecastPercentage")
     public @ResponseBody
     void getXLSXForecastPercentage(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Report : getXLSXForecastPercentage");
-        String fileNameDownload = String.format("Forecast Percentage  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("Report : getXLSXForecastPercentage-OccupationFactor");
+        String fileNameDownload = String.format("Occupation Factor  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
