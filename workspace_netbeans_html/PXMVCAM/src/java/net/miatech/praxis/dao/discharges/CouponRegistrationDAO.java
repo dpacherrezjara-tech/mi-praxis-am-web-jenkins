@@ -89,6 +89,7 @@ public class CouponRegistrationDAO {
                 objRtn.FTE = rs01.getString("FTE");
                 objRtn.AGTIA = rs01.getString("AGTIA");
                 objRtn.PSVVTA = rs01.getString("PSVVTA");
+                objRtn.ZONA = rs01.getString("ZONA");
                 objRtn.CDOC = rs01.getString("CDOC");
                 objRtn.CDEPART = rs01.getString("CDEPART");
                 objRtn.CARRIVA = rs01.getString("CARRIVA");
@@ -96,9 +97,13 @@ public class CouponRegistrationDAO {
                 objRtn.DFLIGHT = rs01.getString("DFLIGHT");
                 objRtn.MDACP = rs01.getString("MDACP");
                 objRtn.VCPN = rs01.getDouble("VCPN");
+                objRtn.VCPNRV = rs01.getDouble("VCPNRV");
                 objRtn.COMISI = rs01.getDouble("COMISI");
+                objRtn.COMREV = rs01.getDouble("COMREV");
                 objRtn.SCOMISI = rs01.getDouble("SCOMISI");
+                objRtn.SCOMREV = rs01.getDouble("SCOMREV");
                 objRtn.YQ = rs01.getDouble("YQ");
+                objRtn.YQREV = rs01.getDouble("YQREV");
                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
