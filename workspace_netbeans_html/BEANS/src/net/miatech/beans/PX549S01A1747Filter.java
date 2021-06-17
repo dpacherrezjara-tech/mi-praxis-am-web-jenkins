@@ -26,6 +26,7 @@ public class PX549S01A1747Filter{
     public String FTE = "";
     public String AGTIA = "";
     public String PSVVTA = "";
+    public String ZONA = "";
     public String CDOC = "";
     public String CDEPART = "";
     public String CARRIVA = "";
@@ -33,7 +34,11 @@ public class PX549S01A1747Filter{
     public String DFLIGHT = "";
     public String MDACP = "";
     public double VCPN = 0.00;
+    public double VCPNRV = 0.00;
     public double COMISI = 0.00;
+    public double COMREV = 0.00;
     public double SCOMISI = 0.00;
+    public double SCOMREV = 0.00;
     public double YQ = 0.00;
+    public double YQREV = 0.00;
 }
