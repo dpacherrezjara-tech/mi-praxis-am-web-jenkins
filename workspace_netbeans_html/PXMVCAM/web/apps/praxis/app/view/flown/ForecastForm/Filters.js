@@ -128,7 +128,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
                     width: 640,
                     items: [
                         {boxLabel: '<b style="color:#148D28;">Flown Real</b>', inputValue: 'F', name: 'rbgType', checked: true},
-                        {boxLabel: '<b style="color:#148D28;">Itinerary</b>', inputValue: 'I', name: 'rbgType'},
+                        {boxLabel: '<b style="color:#148D28;">Seats</b>', inputValue: 'I', name: 'rbgType'},
                         {boxLabel: '<b style="color:#148D28;">Display Forecast</b>', inputValue: 'FC', name: 'rbgType'},
                         //{xtype: 'tbspacer', width: 5},
                         {boxLabel: '<b style="color:#148D28;">Revenue by Regions</b>', inputValue: 'AZ', name: 'rbgType'},
@@ -203,7 +203,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
                     hidden: true,
                     items: [
                         {boxLabel: '<b style="color:#148D28;">Forecast</b>', inputValue: 'FC', name: 'rbgTypeForecast', checked: true},
-                        {boxLabel: '<b style="color:#148D28;">Forecast Percentage</b>', inputValue: 'FP', name: 'rbgTypeForecast', width: 150},
+                        {boxLabel: '<b style="color:#148D28;">Occupation factor</b>', inputValue: 'FP', name: 'rbgTypeForecast', width: 150},
                         {boxLabel: '<b style="color:#148D28;">Forecast Zones</b>', inputValue: 'FZ', name: 'rbgTypeForecast', width: 150},
                     ],
                     listeners: {
