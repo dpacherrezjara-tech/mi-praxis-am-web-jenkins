@@ -94,5 +94,24 @@ Ext.define('Ext.Praxis.controller.discharges.NoShow.NoShowFormDetXmlController',
     },
     onsearchClick: function (btn) {
         this.get_load_grid_ticket_detXML();
+    },
+    onDonwloadExcelClick: function(){        
+        var bean = {};
+        bean.VP_A3935FPROC = Ext.util.Format.date( Ext.getCmp(prototype.id02 + '-A3933FPROC').getValue(), 'Ymd');
+         Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel',            
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                                            
+                    global.getFile(prototype.url + '/DonwloadExcelDetXml?VP_A3935FPROC='+bean.VP_A3935FPROC);
+                }
+            }
+        });
+        
     }
+    
 });
