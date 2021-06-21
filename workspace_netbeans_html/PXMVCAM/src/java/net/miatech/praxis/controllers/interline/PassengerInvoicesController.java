@@ -3894,7 +3894,7 @@ public class PassengerInvoicesController extends BaseController {
 
     public File downloadXLSX_21(HttpServletRequest request) {
         System.out.println("Report : downloadXLSX_21");
-        String fileNameDownload = String.format("Passenger invoices 21 & 22 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 21 & 22 & 23 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         
         DecimalFormat df = new DecimalFormat("#,###,##0");
         DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
@@ -5133,7 +5133,6 @@ public class PassengerInvoicesController extends BaseController {
             srcfile.add(downloadXLSX_31(request));
             srcfile.add(downloadXLSX_32(request));
             srcfile.add(downloadXLSX_41(request));
-//            srcfile.add(downloadXLSX_22(request));
 
             File zipfile = new File(serverPath + path + ".zip");
             zipFiles.zipFiles(srcfile, zipfile);
