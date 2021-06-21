@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Info', {
         {
             region: 'center',
             id: prototype.id + '-regionCenterGrid01',
-            width: 1470,
+            width: 1490,
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Info', {
                     padding: '20 0 0 0',
                     id: prototype.id + '-gridData',
                     height: 550,
-                    width: 1470,
+                    width: 1490,
                     columnLines: true,
                     resizable: false,
                     columns: {
@@ -50,20 +50,21 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Info', {
                         items: [
                             {text: 'Accounting <br>Date', dataIndex: 'FCONT', width: 80},
                             {text: 'Issue <br>Date', dataIndex: 'FVTA', width: 80},
-                            {text: 'Air', dataIndex: 'CCIA', width: 60},
+                            {text: 'Air', dataIndex: 'CCIA', width: 55},
                             {text: 'Document', dataIndex: 'FORMASERIE', width: 80},
-                            {text: 'Coupon', dataIndex: 'CUPON', width: 80},
+                            {text: 'Coupon', dataIndex: 'CUPON', width: 70},
                             {text: 'Discharge <br>Type', dataIndex: 'TIPOC', width: 150},
-                            {text: 'Source', dataIndex: 'FTE', width: 80},
+                            {text: 'Source', dataIndex: 'FTE', width: 65},
                             {text: 'IATA', dataIndex: 'AGTIA', width: 80},
                             {text: 'Country', dataIndex: 'PSVVTA', width: 60},
+                            {text: 'Zone', dataIndex: 'ZONA', width: 55},
                             {text: 'Document <br>Type', dataIndex: 'CDOC', width: 70},
                             {text: 'From', dataIndex: 'CDEPART', width: 60},
                             {text: 'To', dataIndex: 'CARRIVA', width: 60},
                             {text: 'Carrier', dataIndex: 'CARR', width: 60},
                             {text: 'Flight <br>Date', dataIndex: 'DFLIGHT', width: 80},
                             {text: 'Currency', dataIndex: 'MDACP', width: 65},
-                            {text: 'Fare <br>Amount', dataIndex: 'VCPN', width: 80,
+                            {text: 'Fare <br>Amount', dataIndex: 'VCPNRV', width: 80,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     /*var valor = record.data.Diff;
                                     if (valor < 0) {
@@ -74,17 +75,17 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Info', {
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
-                            {text: 'Comm <br>Amount', dataIndex: 'COMISI', width: 80,
+                            {text: 'Comm <br>Amount', dataIndex: 'COMREV', width: 80,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
-                            {text: 'SComm <br>Amount', dataIndex: 'SCOMISI', width: 80,
+                            {text: 'SComm <br>Amount', dataIndex: 'SCOMREV', width: 80,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
                             },
-                            {text: 'YQ <br>Amount', dataIndex: 'YQ', width: 80,
+                            {text: 'YQ <br>Amount', dataIndex: 'YQREV', width: 80,
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     return Ext.util.Format.number(value, '0,000.00');
                                 }
@@ -111,7 +112,7 @@ Ext.define('Ext.Praxis.view.discharges.CouponRegistrationForm.Info', {
                     items: [
                         {
                             xtype: 'panel',
-                            width: 1470,
+                            width: 1490,
                             height: 25,
                             layout: {
                                 type: 'hbox',

@@ -120,7 +120,7 @@ Ext.define('Ext.Praxis.controller.flown.CodesAncillaries.DataEntryCodesAncillari
         if (data.A051STATUS.trim() === 'ACTIVED') {
             this.setValue('de-txtA051STATUS', 'A');
         } else {
-            this.setValue('de-txtA051STATUS', 'B');
+            this.setValue('de-txtA051STATUS', 'D');
         }
 
         var rutaFile = data.A051COMENT.split('|');
