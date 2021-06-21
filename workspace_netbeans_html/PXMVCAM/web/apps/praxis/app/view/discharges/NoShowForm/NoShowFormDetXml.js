@@ -84,8 +84,8 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.NoShowFormDetXml', {
                                 {
                                     xtype: 'combo',
                                     id: prototype.id02 + '-STAT',
-                                    fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
-                                    width: 180,
+                                    fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 1,
+                                    width: 100,
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
@@ -130,6 +130,15 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.NoShowFormDetXml', {
                                             //disabled: true,
                                             listeners: {
                                                 click: 'onsearchClick'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            border:false,
+                                            id: prototype.id + '-btn-donwlod',                                            
+                                            icon: 'resources/img/botones/excel.png',                                            
+                                            listeners: {
+                                                click: 'onDonwloadExcelClick'
                                             }
                                         }
                                     ]

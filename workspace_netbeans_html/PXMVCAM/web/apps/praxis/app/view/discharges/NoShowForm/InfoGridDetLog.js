@@ -55,13 +55,9 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.InfoGridDetLog', {
                                         }
                                     },
                                     {text: 'Cpn', dataIndex: 'A3980CUPON', align: 'center', width: 38},
+                                    {text: 'EMD Related<br> Ticket document', dataIndex: 'A3980TICKA', align: 'left', width: 110},
                                     {text: 'Aplica', dataIndex: 'A3980APLIC', align: 'center', width: 50},
-                                    {text: 'Text', dataIndex: 'A3980TEXT', align: 'left', flex: 1}
-                                    /*
-                                    {text: 'Usuario', dataIndex: 'A3980USRIN', width: 70, align: 'center'},
-                                    {text: 'Fecha', dataIndex: 'A3980FECIN', width: 70, align: 'left'},
-                                    {text: 'Hora', dataIndex: 'A3980HORIN', width: 45, align: 'left'}
-                                    */
+                                    {text: 'Text', dataIndex: 'A3980TEXT', align: 'left', flex: 1}                                    
                                 ],
                                 defaults: {
                                     sortable: false,
