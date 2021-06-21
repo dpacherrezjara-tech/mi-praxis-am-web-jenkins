@@ -3051,32 +3051,17 @@ public class PassengerInvoicesIpDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03934(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03934(?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(4, Types.INTEGER);
-            cstmt01.registerOutParameter(5, Types.INTEGER);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
-            cstmt01.registerOutParameter(7, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
-
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
-
             cstmt01.execute();
-
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -3141,6 +3126,77 @@ public class PassengerInvoicesIpDAO {
                 lstRtn.add(objRtn);
 
             }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new SFI021();
+
+                    objRtn.BDATE = rs01.getString("BDATE");
+                    objRtn.BAIR = rs01.getString("BAIR");
+                    objRtn.PERNUM = rs01.getString("PERNUM");
+                    objRtn.SOURCOD = rs01.getString("SOURCOD");
+                    objRtn.REJNUM = rs01.getString("BCMNUM");
+                    objRtn.LBRATE = rs01.getDouble("LBRATE");
+
+                    objRtn.TGROSSD = rs01.getDouble("TGROSS");
+                    objRtn.TISCD = rs01.getDouble("TISC");
+                    objRtn.TOTHCD = rs01.getDouble("TOHCOM");
+                    objRtn.TUATPD = rs01.getDouble("TUATP");
+                    objRtn.TTAXD = rs01.getDouble("TTAX");
+                    objRtn.THDFD = rs01.getDouble("HFEEAM");
+                    objRtn.TVATD = rs01.getDouble("TVAT");
+                    objRtn.TNETR = rs01.getDouble("NET");
+
+                    objRtn.TGROSSDSG = rs01.getString("TGROSSG");
+                    if(objRtn.TGROSSDSG.trim().equals("M")){
+                        objRtn.TGROSSD = objRtn.TGROSSD * -1;
+                    }
+
+                    objRtn.TISCDSG = rs01.getString("TISCSG");
+                    if(objRtn.TISCDSG.trim().equals("M")){
+                        objRtn.TISCD = objRtn.TISCD * -1;
+                    }
+
+                    objRtn.TOTHCDSG = rs01.getString("TOHCOMSG");
+                    if(objRtn.TOTHCDSG.trim().equals("M")){
+                        objRtn.TOTHCD = objRtn.TOTHCD * -1;
+                    }
+
+                    objRtn.TUATPDSG = rs01.getString("TUATPSG");
+                    if(objRtn.TUATPDSG.trim().equals("M")){
+                        objRtn.TUATPD = objRtn.TUATPD * -1;
+                    }
+
+                    objRtn.TTAXDSG = rs01.getString("TTAXSG");
+                    if(objRtn.TTAXDSG.trim().equals("M")){
+                        objRtn.TTAXD = objRtn.TTAXD * -1;
+                    }
+
+                    objRtn.THDFDSG = rs01.getString("HFEEAMSG");
+                    if(objRtn.THDFDSG.trim().equals("M")){
+                        objRtn.THDFD = objRtn.THDFD * -1;
+                    }
+
+                    objRtn.TVATDSG = rs01.getString("TVATSG");
+                    if(objRtn.TVATDSG.trim().equals("M")){
+                        objRtn.TVATD = objRtn.TVATD * -1;
+                    }
+
+                    objRtn.TNETRSG = rs01.getString("NETSG");
+                    if(objRtn.TNETRSG.trim().equals("M")){
+                        objRtn.TNETR = objRtn.TNETR * -1;
+                    }
+
+                    lstRtn.add(objRtn);
+                }
+            }
+            
             try {
                 rs01.close();
             } catch (SQLException e) {
