@@ -9,11 +9,8 @@ package net.miatech.beans;
  *
  * @author vhidalgo
  */
-public class SQP03961Filter extends A3933  {
-    public String VP_A3933FPROC1 = "";
-    public String VP_A3933FPROC2 = "";
-    public String VP_A3933STAT = "";
-    public Integer QTY_CADUCO = 0;
-    public Double TOT_CADUCO = 0.0;    
+public class SQP04051Filter extends A3935 {
+    public A3936 det_cpn = new A3936();
     public Pagination page = new Pagination();
+    
 }

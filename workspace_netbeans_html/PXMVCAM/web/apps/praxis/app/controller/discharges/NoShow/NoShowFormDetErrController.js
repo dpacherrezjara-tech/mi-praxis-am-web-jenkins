@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.controller.discharges.NoShow.NoShowFormDetErrController',
         var p = this.view.params;
         Ext.getCmp(prototype.id05 + '-A3933FPROC').setValue(Ext.util.Format.date(p.rec.data.A3933FPROC, 'Y/m/d'));                      
         var bean = {};
-        bean.VP_FPROC = Ext.util.Format.date(p.rec.data.A3933FPROC, 'Ymd');
+        bean.VP_A3934FPROC = Ext.util.Format.date(p.rec.data.A3933FPROC, 'Ymd');
         bean.VP_TICKET = Ext.getCmp(prototype.id05 + '-TICKET_NUMBER').getValue();
         bean.VP_SEQ = Ext.getCmp(prototype.id05 + '-SEQ').getValue();
         bean.VP_STAT = Ext.getCmp(prototype.id05 + '-STAT').getValue();

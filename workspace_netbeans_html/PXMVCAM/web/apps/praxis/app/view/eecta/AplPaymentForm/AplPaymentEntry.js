@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
     ],
     title: 'Aplicación Pago',
     header: true,
-    width: 770,
+    width: 850,
     height: 400,
     border: false,
     resizable: false,
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
                     // <editor-fold defaultstate="collapsed" desc="grid">
                     xtype: 'panel',
                     id: prototype.id + '-contenedor-infoGridAplPayment',
-                    width: 760,
+                    width: 840,
                     layout: 'fit',
                     items: [
                         {

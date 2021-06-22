@@ -171,7 +171,7 @@ Ext.define('Ext.Praxis.view.eecta.DetalleSaldoForm.Filters', {
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
                                             }
-                                        },
+                                        }
                                     ]
                                 },
                                 // </editor-fold>

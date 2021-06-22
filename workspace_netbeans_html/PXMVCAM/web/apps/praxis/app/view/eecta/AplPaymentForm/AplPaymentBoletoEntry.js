@@ -45,8 +45,54 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-total_sel',
                             fieldLabel: 'Total Seleccionado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                            width: 225, value:'0.00', fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
+                            width: 225, value: '0.00', fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
                             readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-FILTER01',
+                            fieldLabel: 'Filtrar Boleto', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 130,
+                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                            enableKeyEvents: true,
+                            width: 170,
+                            value: '139',
+                            enforceMaxLength: true,
+                            maxLength: 3,
+                            height: 24,
+                            listeners: {
+                                keypress: 'onTxtFilterKeypress01'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-FILTER02',
+                            fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                            fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
+                            enableKeyEvents: true,
+                            padding: '0 0 0 2',
+                            width: 90,
+                            enforceMaxLength: true,
+                            maxLength: 10,
+                            height: 24,
+                            listeners: {
+                                keypress: 'onTxtFilterKeypress01'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-FILTER03',
+                            fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                            enableKeyEvents: true,
+                            width: 30,
+                            value: '00',
+                            height: 24,
+                            padding: '0 0 0 2',
+                            enforceMaxLength: true,
+                            maxLength: 2,
+                            listeners: {
+                                keypress: 'onTxtFilterKeypress01'
+                            }
                         }
                     ]
                 },
@@ -125,7 +171,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-A3959REFPG',
                             fieldLabel: 'Ref. Pago', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                            width: 475, 
+                            width: 475,
                             readOnly: true,
                             enableKeyEvents: true,
                             enforceMaxLength: true,
@@ -195,14 +241,14 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-A3959TOTPG',
                             fieldLabel: 'Importe de pago', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                            width: 225,fieldStyle:'font-weight: bold;font-size:13px;text-align:right',
+                            width: 225, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
                             value: '0.00',
                             enableKeyEvents: true,
                             enforceMaxLength: true,
                             maskRe: /[1234567890\.]/,
                             listeners: {
                                 focus: 'onFocusNumberfield',
-                                focusleave:'onfocusleaveNumberfield',
+                                focusleave: 'onfocusleaveNumberfield',
                                 keypress: function (obj, e) {
                                     if (e.getKey() === e.ENTER) {
                                         Ext.getCmp(prototype.id + '-A3959FECPG').focus();
@@ -252,7 +298,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                                     listeners: {
                                         keypress: function (obj, e) {
                                             if (e.getKey() === e.ENTER) {
-                                                Ext.getCmp( prototype.id + '-btn-save' ).focus();
+                                                Ext.getCmp(prototype.id + '-btn-save').focus();
                                             }
                                         }
                                     }

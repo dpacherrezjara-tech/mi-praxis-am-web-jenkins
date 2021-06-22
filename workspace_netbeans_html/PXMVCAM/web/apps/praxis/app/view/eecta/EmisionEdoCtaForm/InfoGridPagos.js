@@ -1,9 +1,7 @@
 
-Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
+Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGridPagos', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-infoGridAplPayment',
-    //layout: 'border',
-    align: 'center',
+    alias: 'widget.' + prototype.id01 + '-info-pagos',    
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
         bodyStyle: 'background: transparent;',
@@ -12,7 +10,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
     items: [
         {
             region: 'center',
-            id: prototype.id + '-boxPrincipal-infoGridAplPayment',
+            id: prototype.id01 + '-boxPrincipal-pago',
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -25,7 +23,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
             items: [
                 {
                     region: 'center',
-                    id: prototype.id + '-boxMainData-infoGridAplPayment',
+                    id: prototype.id01 + '-boxMainData-pago',
                     border: false,
                     width: prototype.widthContenedor,
                     hidden: false,
@@ -42,11 +40,11 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
                         // <editor-fold defaultstate="collapsed" desc="grid">
                         {
                             xtype: 'grid',
-                            id: prototype.id + '-infoGridAplPayment',
-                            columnLines: true,                            
+                            id: prototype.id01 + '-gridData-pago',
+                            columnLines: true,
                             width: '99%',
-                            height: 200,
-                            padding: '0px 5px 1px 5px',
+                            height: 150,
+                            padding: '0px 5px 1px 5px',                           
                             features: [
                                 {
                                     dock: 'bottom',
@@ -55,50 +53,22 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
                             ],
                             columns: {
                                 items: [
-                                    {text: 'Nº Reporte', dataIndex: 'A3957NRRPT', width: 80, align: 'center', locked: false},
-                                    {text: 'Id Cliente', dataIndex: 'A3957CDCLI', align: 'center', width: 80, locked: false},
-                                    {text: 'Nombre Cliente', dataIndex: 'A3953RSOCI', align: 'left', width: 200, locked: false},                                    
+                                    {text: 'F. Emisión', dataIndex: 'A3982FECPR', width: 85, align: 'center'},
+                                    {text: 'Nº Reporte', dataIndex: 'NRRPT', align: 'center', width: 85},
+                                    {text: 'Ref. Bancaria', dataIndex: 'A3982REFBC', width: 130, align: 'center'},
+                                    {text: 'Banco', dataIndex: 'A3982BANCO', width: 140, align: 'center'},
+                                    {text: 'Cant.<br> Trx.', dataIndex: 'A3982QTYTX', width: 50, align: 'center'},
+                                    {text: 'Curr.', dataIndex: 'A3982MDLOC', width: 50, align: 'center'},
                                     {
-                                        text: 'Periodo',
-                                        columns: [
-                                            {text: 'Desde', dataIndex: 'A3957INIPR', width: 70, align: 'left'},
-                                            {text: 'Hasta', dataIndex: 'A3957FINPR', width: 70, align: 'left'}
-                                        ]
-                                    },
-                                    {text: 'Mda.', dataIndex: 'A3957MDLOC', width: 50, align: 'center'},                                    
-                                    {
-                                        text: 'Total', dataIndex: 'A3957TOT', width: 85, align: 'right',
+                                        text: 'Importe', dataIndex: 'A3982TOT', width: 110, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
-                                            //summaryData.style = "background-color:red;";
                                             return Ext.util.Format.number(value, '0,000.00');
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
-                                    },
-                                    {
-                                        text: 'Pagos', dataIndex: 'A3957TOTAP', width: 85, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            summaryData.style = "background-color:green;";
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    {
-                                        text: 'Saldo', dataIndex: 'A3957SALDP', width: 85, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            //summaryData.style = "background-color:red;";
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    }                                    
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -108,7 +78,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
                             },
                             viewConfig: {
                                 stripeRows: true,
-                                enableTextSelection: true,                                
+                                enableTextSelection: true,
                                 markDirty: false,
                                 getRowClass: function (record, rowIndex, rowParams, store) {
                                     if (rowIndex % 2 === 0)
@@ -123,12 +93,12 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
 
                                 }
                             }
-                        },
+                        }
                         // </editor-fold>
                         // <editor-fold defaultstate="collapsed" desc="pie">
 //                        {
 //                            xtype: 'panel',
-//                            id: prototype.id + '-pie',
+//                            id: prototype.id01 + '-pie',
 //                            width: prototype.widthGrid,
 //                            layout: {
 //                                type: 'hbox',
@@ -160,7 +130,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
 //                                            width: 50
 //                                        },
 //                                        {
-//                                            id: prototype.id + '-lbl-currentPage',
+//                                            id: prototype.id01 + '-lbl-currentPage',
 //                                            text: '1',
 //                                            width: 50
 //                                        },
@@ -169,7 +139,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
 //                                            width: 50
 //                                        },
 //                                        {
-//                                            id: prototype.id + '-lbl-pageCount',
+//                                            id: prototype.id01 + '-lbl-pageCount',
 //                                            text: '0',
 //                                            width: 50
 //                                        },
@@ -179,7 +149,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
 //                                            width: 80
 //                                        },
 //                                        {
-//                                            id: prototype.id + '-lbl-total',
+//                                            id: prototype.id01 + '-lbl-total',
 //                                            text: '0',
 //                                            width: 50
 //                                        }

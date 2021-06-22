@@ -42,4 +42,7 @@ public class A3932 {
  public String A3932USRIN = "";
  public String A3932FECIN = "";
  public String A3932HORIN = "";
+ 
+ public Integer A3932NINTR = 0;
+ 
 }

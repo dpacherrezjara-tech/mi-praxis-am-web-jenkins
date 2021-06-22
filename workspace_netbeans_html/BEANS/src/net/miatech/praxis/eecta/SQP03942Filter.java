@@ -22,6 +22,7 @@ public class SQP03942Filter extends A3957 {
     public String VP_REFPG = "";
     public String VP_CTABC = "";
     public String VP_STSPG = "";
+    public String VP_BOLET = "";
     //JOIN:Clientes
     public String A3953RSOCI = "";
     public String A3953BANCO = "";

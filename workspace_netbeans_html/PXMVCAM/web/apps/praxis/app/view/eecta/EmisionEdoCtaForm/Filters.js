@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
             width: prototype.widthContenedor,
             border: false,
             bodyStyle: 'background: transparent',
-            layout: 'vbox',
+            layout: 'hbox',
             defaults: {
                 anchor: '100%'
             },
@@ -20,6 +20,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                     xtype: 'panel',
                     id: prototype.id + '-boxSearchFilter',
                     width: '100%',
+                    //width: 700,
                     layout: 'vbox',
                     border: false,
                     bodyStyle: 'background: transparent',
@@ -60,7 +61,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 240,
                                     height: 26,
-                                    value: "3",                                    
+                                    value: "3",
                                     listConfig: {maxHeight: 111},
                                     enableKeyEvents: true,
                                     padding: '6 0',
@@ -78,7 +79,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                     xtype: 'panel',
                                     id: prototype.id + '-BoxFilter01',
                                     border: false,
-                                    hidden:false,
+                                    hidden: false,
                                     layout: 'hbox',
                                     bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
@@ -107,7 +108,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                                 //change: 'onUpperValue',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        Ext.getCmp(prototype.id+'-fecha2').focus();
+                                                        Ext.getCmp(prototype.id + '-fecha2').focus();
                                                     }
                                                 }
                                             }
@@ -129,7 +130,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                             listeners: {
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        
+
                                                     }
                                                 }
                                             }
@@ -142,7 +143,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                     xtype: 'panel',
                                     id: prototype.id + '-BoxFilter02',
                                     border: false,
-                                    hidden:true,
+                                    hidden: true,
                                     layout: 'hbox',
                                     bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
@@ -162,7 +163,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                             width: 210,
                                             height: 26,
                                             maskRe: /[0-9]/,
-                                            value:'480',
+                                            value: '480',
                                             //maskRe:/[1234567890\.]/, NUMERO CON DECIMAL
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
@@ -178,7 +179,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                     hidden: true,
                                     border: false,
                                     layout: 'hbox',
-                                    bodyStyle: 'background: transparent;"',                                    
+                                    bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
                                     defaults: {
                                         anchor: '100%',
@@ -190,13 +191,13 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                             id: prototype.id + '-RSOCI',
                                             fieldLabel: 'Nombre Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
-                                            enableKeyEvents: true,                                                                                        
+                                            enableKeyEvents: true,
                                             width: 300,
                                             height: 26,
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
                                             }
-                                        }                                        
+                                        }
                                     ]
                                 },
                                 // </editor-fold>
@@ -207,7 +208,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                     hidden: true,
                                     border: false,
                                     layout: 'hbox',
-                                    bodyStyle: 'background: transparent;"',                                    
+                                    bodyStyle: 'background: transparent;"',
                                     margin: '3 0',
                                     defaults: {
                                         anchor: '100%',
@@ -219,13 +220,49 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                             id: prototype.id + '-NREDO',
                                             fieldLabel: 'Nro Edo. Cta', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
-                                            enableKeyEvents: true,                                                                                        
+                                            enableKeyEvents: true,
                                             width: 300,
                                             height: 26,
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
                                             }
-                                        }                                        
+                                        }
+                                    ]
+                                },
+                                {xtype: 'tbspacer', width: 80},
+                                {
+                                    xtype: 'toolbar',
+                                    dock: 'bottom',
+                                    ui: 'footer',
+                                    margin: '2 0 2 0',
+                                    layout: {
+                                        pack: 'center'
+                                    },
+                                    fieldStyle: 'text-align:center',
+                                    defaults: {
+                                        scale: 'medium'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btn-genera-eecc',
+                                            text: 'Generar EECC',
+                                            icon: 'resources/img/botones/16x16/Processing_1.png',                                            
+                                            disabled: false,
+                                            listeners: {
+                                                click: 'onbtn_consultaEECCClick'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btn-consulta-eecc',
+                                            text: 'Consulta EECC',
+                                            icon: 'resources/img/botones/file.png',                                            
+                                            disabled: false,
+                                            listeners: {
+                                                click: 'onbtn_consultaEECCClick'
+                                            }
+                                        }
                                     ]
                                 }
                                 // </editor-fold>
@@ -233,6 +270,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                         }
                     ]
                 }
+
             ]
         }
     ]

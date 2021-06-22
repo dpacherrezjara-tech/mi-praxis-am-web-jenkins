@@ -74,7 +74,8 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.InfoGridDet', {
                                     {text: 'Arriv.', dataIndex: 'A3932ARRIV', align: 'center', width: 45},
                                     {text: 'Clase', dataIndex: 'A3932BCLAS', align: 'center', width: 45},
                                     {text: 'Status<br>Reserv.', dataIndex: 'A3932CSTAT', align: 'left', width: 50},
-                                    {text: 'Agent', dataIndex: 'A3932STNBR', align: 'center', width: 70}
+                                    {text: 'Agent', dataIndex: 'A3932STNBR', align: 'center', width: 70},
+                                    {text: 'Nº Intentos<br> de Reg.', dataIndex: 'A3932NINTR', align: 'center', width: 70}                                    
                                 ],
                                 defaults: {
                                     sortable: false,

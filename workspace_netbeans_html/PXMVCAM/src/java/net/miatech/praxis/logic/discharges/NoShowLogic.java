@@ -13,6 +13,7 @@ import net.miatech.beans.SQP03963Filter;
 import net.miatech.beans.SQP03964Filter;
 import net.miatech.beans.SQP03965Filter;
 import net.miatech.beans.SQP03974Filter;
+import net.miatech.beans.SQP04051Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.discharges.NoShowDAO;
 
@@ -49,6 +50,9 @@ public class NoShowLogic {
     }
     public List<SQP03974Filter> loadSQP03974Filter(SQP03974Filter filter) throws SQLException, Exception {
         return noShowDAO.loadSQP03974Filter(filter);
+    }
+    public List<SQP04051Filter> loadSQP04051Filter(SQP04051Filter filter) throws SQLException, Exception {
+        return noShowDAO.loadSQP04051Filter(filter);
     }
     
 

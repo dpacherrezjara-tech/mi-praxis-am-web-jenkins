@@ -14,7 +14,9 @@ import net.miatech.beans.Pagination;
 public class SQP03951Filter extends A3958 {        
     public String VP_A3958NRRPT = "";
     public String VP_A3958CDCLI = "";
-    public String TICKET_NUMBER = "";
+    public String VP_TFILTTRO = "";
+    public String VP_PARAM1 = "";    
+    public String TICKET_NUMBER = "";    
     public Pagination page = new Pagination();
     
 }

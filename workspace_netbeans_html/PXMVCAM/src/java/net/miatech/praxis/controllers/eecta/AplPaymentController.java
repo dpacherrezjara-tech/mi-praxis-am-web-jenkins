@@ -55,7 +55,7 @@ public class AplPaymentController extends BaseController {
             filter.VP_REFPG = request.getParameter("VP_REFPG");
             filter.VP_CTABC = request.getParameter("VP_CTABC");
             filter.VP_STSPG = request.getParameter("VP_STSPG");
-            
+            filter.VP_BOLET = request.getParameter("VP_BOLET");
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 18;
             start = (start != 0 ? start : 0);
@@ -90,7 +90,9 @@ public class AplPaymentController extends BaseController {
                         
             filter.VP_A3958CDCLI = request.getParameter("VP_A3958CDCLI");
             filter.VP_A3958NRRPT = request.getParameter("VP_A3958NRRPT");
-                        
+            filter.VP_TFILTTRO = request.getParameter("VP_TFILTTRO");
+            filter.VP_PARAM1 = request.getParameter("VP_PARAM1");
+            
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
