@@ -23,9 +23,20 @@ public class A2324Filter extends A2324{
     public String desSTVAL = "";
     public String IN_PNR = "";
     
+    // Qty
+    public long QMATCH = 0;
+    public long QPAYMENT_WO = 0;
+    public long QSALES_WO = 0;
+    public long QMATCH_DIFF = 0;
+    public long QTOTSAL = 0;
     
-    
-    
+    // tot
+    public long totQMATCH = 0;
+    public long totQPAYMENT_WO = 0;
+    public long totQSALES_WO = 0;
+    public long totQMATCH_DIFF = 0;
+    public long totQTOTSAL = 0;
+
    
     public String strFormatDate="";
     public long totSVFOP = 0;
