@@ -76,8 +76,10 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterProces3Form.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "(Select)"],
-                                            ["PAPINT", "Interline Accounting Payable"],
-                                            ["PARINT", "Interline Accounting Receivable"]
+                                            ["PAPINT", "Accounting Payable"],
+                                            ["PARINT", "Accounting Receivable"],
+                                            ["PIXPEST", "Accounting Estimated Payable"],
+                                            ["PIXCEST", "Accounting Estimated Receivable"]
                                         ]
                                     }),
                                     queryMode: 'local',
