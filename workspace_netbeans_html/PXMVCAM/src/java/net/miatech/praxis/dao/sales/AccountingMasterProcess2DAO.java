@@ -133,6 +133,35 @@ public class AccountingMasterProcess2DAO {
          return lstRtn; 
     }
     
+    public List<A1955Filter> SQP04042(A1955Filter filter) throws SQLException, Exception {
+        List<A1955Filter> lstRtn = new ArrayList(0);
+        A1955Filter objRtn;
+        int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
+
+        strSQL = "{CALL " + session.getMainLibrary() + ".SQP04042(?,?)}";
+        try {
+            
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();            
+            cs = cnx.prepareCall(strSQL);
+            cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("IN_FPROC", filter.IN_FECHA_PROCESO);            
+            cs.execute();
+            
+            rst = cs.getResultSet();
+            int pos = 0;
+            while (rst.next()) {
+                pos++;
+                objRtn = new A1955Filter();
+                objRtn.A1955ERRLG = rst.getString("A3991GRUPO").trim();
+                lstRtn.add(objRtn);
+            }        
+         }finally {
+            setClose();
+        }
+         
+         return lstRtn; 
+    }
+    
     public String accountMaintance(A1955Filter filter, String strOption) throws SQLException, Exception {
         String STR_RESULT = "";
         try {    
