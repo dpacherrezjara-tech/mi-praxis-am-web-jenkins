@@ -47,6 +47,95 @@ public class SalesReconciliBoomerDAO {
     }
     
     
+    public List<A2324Filter> loadPX559SQP04019(A2324Filter filter) throws SQLException, Exception {
+
+        List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
+        A2324Filter beanTkt;
+        long totQMATCH = 0, totQPAYMENT_WO = 0, totQSALES_WO = 0, totQMATCH_DIFF = 0, totQTOTSAL = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04019(?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.strFecFiltro);
+            cstmt.setString(3, filter.IN_FECHA_FROM);
+            cstmt.setString(4, filter.IN_FECHA_TO);
+            cstmt.setString(5, filter.IN_TDOC.trim());
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                totQMATCH = rst.getLong("QMATCH");
+                totQMATCH_DIFF = rst.getLong("QMATCH_DIFF");
+                totQPAYMENT_WO = rst.getLong("QPAYMENT_WO");
+                totQSALES_WO = rst.getLong("QSALES_WO");
+                totQTOTSAL = rst.getLong("QTOTSAL");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    beanTkt = new A2324Filter();
+                    beanTkt.strFecFiltro = filter.strFecFiltro.trim();
+                    beanTkt.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    beanTkt.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    beanTkt.IN_TDOC = filter.IN_TDOC.trim();
+                    
+                    
+                    beanTkt.DATE = rst.getString("DATE").trim();
+                    beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("DATE").trim());
+
+                    beanTkt.QMATCH = rst.getLong("QMATCH");
+                    beanTkt.QMATCH_DIFF = rst.getLong("QMATCH_DIFF");
+                    beanTkt.QPAYMENT_WO = rst.getLong("QPAYMENT_WO");
+                    beanTkt.QSALES_WO = rst.getLong("QSALES_WO");
+                    beanTkt.QTOTSAL = rst.getLong("QTOTSAL");
+
+                    beanTkt.totQMATCH = totQMATCH;
+                    beanTkt.totQPAYMENT_WO = totQPAYMENT_WO;
+                    beanTkt.totQSALES_WO = totQSALES_WO;
+                    beanTkt.totQMATCH_DIFF = totQMATCH_DIFF;
+                    beanTkt.totQTOTSAL = totQTOTSAL;
+
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
     
     public List<A2324Filter> loadPX559SQP04021(A2324Filter filter) throws SQLException, Exception {
 
@@ -57,7 +146,7 @@ public class SalesReconciliBoomerDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04021(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04021(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -71,10 +160,8 @@ public class SalesReconciliBoomerDAO {
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro);
-            cstmt.setString(3, filter.IN_FECHA_FROM);
-            cstmt.setString(4, filter.IN_FECHA_TO);
-            cstmt.setString(5, filter.IN_TDOC.trim());
-//            cstmt.setString(6, filter.IN_PAYMENT.trim());
+            cstmt.setString(3, filter.IN_TDOC.trim());
+            cstmt.setString(4, filter.DATE.trim());
 //            cstmt.setString(7, filter.IN_BANK);
 //            cstmt.setString(8, filter.IN_CARDC.trim());
 //            //cstmt.setString(9, filter.IN_CARDN.trim());
