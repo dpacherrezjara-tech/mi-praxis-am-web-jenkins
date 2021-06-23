@@ -326,10 +326,134 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //            }
 //        } else {
             this.setFormatParameter();
-            this.setGridData();
+            this.setGridDataSumary();
+//            this.setGridData();
 //        }
 
     },
+    setGridDataSumary: function() {
+        
+        win.lblUser_toolTip("Estructura: A2324");
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchSummary'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+//                        var pag = Ext.getCmp(prototype.id + '-paggin');
+//                        var pagData = pag.getPageData();
+//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                            var data = obj.data.items[0].data;
+//                            if (data.strFecFiltro === "BDATEP") {
+//                                Ext.getCmp(prototype.id + '-adgSalDate').setText = "Reconciliation";
+//                            } else {
+//                                if (data.IN_TDOC === 'R') {
+//                                    Ext.getCmp(prototype.id + '-adgSalDate').setText = "Refund";
+//                                } else {
+//                                    Ext.getCmp(prototype.id + '-adgSalDate').setText = "Sales";
+//                                }
+//                            }
+
+//                            Ext.getCmp(prototype.id + '-lblTotQMATCH').setText(Ext.util.Format.number(data.lngTotQMATCH, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotQTEF').setText(Ext.util.Format.number(data.lngTotQTEF, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotQPAS48').setText(Ext.util.Format.number(data.lngTotQPAS48, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotQTOTSAL').setText(Ext.util.Format.number(data.lngTotQTOTSAL, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotlngQMANUAL').setText(Ext.util.Format.number(data.lngTotQMANUAL, '0,000'));
+                    }
+                    me.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataAirport').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        
+    },
+    
+    OnGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.strFecFiltro = rowData.data.strFecFiltro;
+        this.beanDetDay.IN_FECHA_FROM = rowData.data.IN_SDATE;
+        this.beanDetDay.IN_FECHA_TO = rowData.data.IN_TDOC;
+        this.beanDetDay.IN_TDOC = rowData.data.IN_PAYMENT;
+
+        this.beanDetDay.strFormatDate = rowData.data.strFormatDate;
+        this.beanDetDay.DATE = rowData.data.DATE;
+
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+        this.SetOnGridDetDay();
+    },
+    SetOnGridDetDay: function() {
+        win.lblUser_toolTip("Estructura: A2324");
+//        this.setFormatParameter();
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/search'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = me.paramsDetailDay;
+                },
+                load: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                    var pag = Ext.getCmp(prototype.id + '-paggin2');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                        var data = obj.data.items[0].data;
+//                        var titulo = '';
+//                        var flagDrilDownByDay = 'Date';
+//
+//                        if (flagDrilDownByDay !== 'Date') {
+//                            titulo = " - Card : " + data.SCARCOD + ' : ' + data.strDescCard;
+//                        }
+//                        if (data.strFecFiltro === 'BDATEP') {
+//                            Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Reconciliation Date : ' + data.strFormatDate + titulo + '</center>');
+//                        } else {
+//                            if (data.IN_TDOC == 'R') {
+//                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Refund Date : ' + data.strFormatDate + titulo + '</center>');
+//                            } else {
+//                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Sales Date : ' + data.strFormatDate + titulo + '</center>');
+//                            }
+//                        }
+                    }
+//                    me.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetail').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+        
+    },
+    
     setGridData: function() {
         
         win.lblUser_toolTip("Estructura: A2324");
@@ -386,7 +510,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     },
    
     
-    OnGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    OnGridDetDay2: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetDay';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -411,7 +535,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
         this.SetOnGridDetDay();
     },
-    SetOnGridDetDay: function() {
+    SetOnGridDetDay2: function() {
         win.lblUser_toolTip("Estructura: A2298");
         this.setFormatParameter();
         var msj = this.validateFields();
@@ -823,10 +947,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
 
         win.lblUser_toolTip("Estructura: A2324");
-        me.panelActual = '-panelGridData';
+        me.panelActual = '-panelDetail';
 //        me.panelActual = '-boxDetByPNR';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
+//        me.setWidthPie();
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -858,7 +982,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                 }
             }
         });
-        Ext.getCmp(prototype.id + '-gridDataAirport').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetail').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin7').bindStore(storeGridDatas);
     },
     validateFields: function() {
@@ -1011,7 +1135,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
             case  '-panelGridData':
                 me.pagginActual = '-paggin';
                 break;
-            case '-boxDetDay':
+            case '-panelDetail':
                 me.pagginActual = '-paggin2';
                 break;
             case '-boxDetCardNbr':
