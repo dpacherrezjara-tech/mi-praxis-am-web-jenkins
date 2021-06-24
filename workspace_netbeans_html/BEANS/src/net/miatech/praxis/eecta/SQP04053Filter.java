@@ -16,6 +16,7 @@ public class SQP04053Filter extends A4021 {
     public String VP_A4021CCUST = "";
     public String VP_A4021LOTE = "";
     public String VP_BOLETO = "";
+    public String VP_A4021STAT = "";
     //extras
     public String A3953RSOCI = "";
     public Pagination page = new Pagination();
