@@ -4,8 +4,7 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaEdoCtaController',
     requires: [
        //'Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGrid'
     ],
-    beanXLS: {},    
-    StoreAntSaldos: new Array(),
+    beanXLS: {},        
     me: '',
     init: function(view) {
         me = this;
@@ -14,29 +13,29 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaEdoCtaController',
         this.onbtn_consultaEECCClick01();        
     },
     cmbfiltro_clickHandler: function() {
-        var selectedValue =  Ext.getCmp(prototype.id + '-cmbfiltro').getValue();         
-        Ext.getCmp(prototype.id+'-BoxFilter01').hide();
-        Ext.getCmp(prototype.id+'-BoxFilter02').hide();
-        Ext.getCmp(prototype.id+'-BoxFilter03').hide();
-        Ext.getCmp(prototype.id+'-BoxFilter04').hide();                
-        switch(selectedValue){
-            case '1': 
-                Ext.getCmp(prototype.id+'-BoxFilter01').show();
-                Ext.getCmp(prototype.id+'-fecha1').focus();
-                break;
-            case '2':                
-                Ext.getCmp(prototype.id+'-BoxFilter02').show();                
-                Ext.getCmp(prototype.id+'-CDCLI').focus();
-                break;
-             case '3':                
-                Ext.getCmp(prototype.id+'-BoxFilter03').show();                
-                Ext.getCmp(prototype.id+'-RSOCI').focus();
-                break;
-            case '4':                
-                Ext.getCmp(prototype.id+'-BoxFilter04').show();
-                Ext.getCmp(prototype.id+'-NREDO').focus();
-                break;
-        }
+//        var selectedValue =  Ext.getCmp(prototype.id + '-cmbfiltro').getValue();         
+//        Ext.getCmp(prototype.id+'-BoxFilter01').hide();
+//        Ext.getCmp(prototype.id+'-BoxFilter02').hide();
+//        Ext.getCmp(prototype.id+'-BoxFilter03').hide();
+//        Ext.getCmp(prototype.id+'-BoxFilter04').hide();                
+//        switch(selectedValue){
+//            case '1': 
+//                Ext.getCmp(prototype.id+'-BoxFilter01').show();
+//                Ext.getCmp(prototype.id+'-fecha1').focus();
+//                break;
+//            case '2':                
+//                Ext.getCmp(prototype.id+'-BoxFilter02').show();                
+//                Ext.getCmp(prototype.id+'-CDCLI').focus();
+//                break;
+//             case '3':                
+//                Ext.getCmp(prototype.id+'-BoxFilter03').show();                
+//                Ext.getCmp(prototype.id+'-RSOCI').focus();
+//                break;
+//            case '4':                
+//                Ext.getCmp(prototype.id+'-BoxFilter04').show();
+//                Ext.getCmp(prototype.id+'-NREDO').focus();
+//                break;
+//        }
     },
     setStoreData: function() {
 //        var storeComboDataYear = win.getStoreYear(false);
@@ -96,20 +95,26 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaEdoCtaController',
         var bean = {};        
         bean.VP_A3981FPERI = Ext.util.Format.date(Ext.getCmp(prototype.id01 + '-FPERI').getValue(),'Ym');        
         bean.VP_A3981CDCLI  = Ext.getCmp(prototype.id01 + '-CDCLI').getValue();
-        bean.VP_A3981FEJEC  = '20210611';
+        bean.VP_A3981FEJEC  = Ext.util.Format.date( new Date(),'Ymd');
         Ext.Ajax.request({
             url: prototype.url + '/ConsultaEdoCta',
             timeout: 60000000,
             method: 'POST',
             params: bean,
+            beforerequest: Ext.getCmp(prototype.id01 + '-ConsultaEdoCtaForm').mask('Procesando...', ''),
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);                
+                Ext.getCmp(prototype.id01 + '-ConsultaEdoCtaForm').unmask('Loading...', '');
+                if (res.total === 0) {
+                        global.Msg({
+                            msg: 'No hay registros'
+                        });
+                    return;
+                }                
                 //console.log(res.data01);
                 Ext.getCmp(prototype.id01+'-SALDO-ANTERIOR').setValue(Ext.util.Format.number( res.SALDO_ANTEIOR,'0,000.00'));
                 me.loadDataDat01(res.lstRtn01, res.lstRtn02);
-                me.loadDataDat02(res.lstRtn03, res.lstRtn04); 
-                //me.loadDataDat03(res.lstRtn05); 
-                //me.beanAntSaldos = res.lstRtn05;
+                me.loadDataDat02(res.lstRtn03, res.lstRtn04);                 
             }
         });  
         
@@ -133,38 +138,18 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaEdoCtaController',
         Ext.getCmp(prototype.id01 + '-gridData-pago').setStore(lstRtn04);
         Ext.getCmp(prototype.id01 + '-gridData-pago').getStore().reload();        
     }, 
-//    loadDataDat03: function(lstRtn05){
-//        var me = this;
-//        me.StoreAntSaldos = lstRtn05;        
-//    },
-    onReportEdoCta: function ( grid, rowIndex, colIndex ) {
-        if (Ext.getCmp(prototype.id + '-gridData')) {
-            var grid = Ext.getCmp(prototype.id + '-gridData');
-            var store = grid.getStore();
-            var rec = store.getAt(rowIndex);            
-            this.gridData = rec;
-        }
+
+    onExportExcelClick: function () {       
         var bean = {};
-        bean.VP_A3981NREDO = this.gridData.get('A3981NREDO');
-        bean.VP_A3981CDCLI = this.gridData.get('A3981CDCLI');        
-        this.exportPdf(prototype.url + '/pdf_EstadoCuenta/?beanString=' + encodeURI(JSON.stringify(bean)) );
+        bean.VP_A3981FPERI = Ext.util.Format.date(Ext.getCmp(prototype.id01 + '-FPERI').getValue(),'Ym');        
+        bean.VP_A3981CDCLI  = Ext.getCmp(prototype.id01 + '-CDCLI').getValue();
+        bean.VP_A3981FEJEC  = Ext.util.Format.date( new Date(),'Ymd');       
+        this.exportExcel(prototype.url + '/ConsultaEdoCtaExcel/?beanString=' + encodeURI(JSON.stringify(bean)) );
     },
-    onReportEdoCtaDet: function ( grid, rowIndex, colIndex ) {
-        if (Ext.getCmp(prototype.id + '-gridData')) {
-            var grid = Ext.getCmp(prototype.id + '-gridData');
-            var store = grid.getStore();
-            var rec = store.getAt(rowIndex);            
-            this.gridData = rec;
-        }
-        var bean = {};
-        bean.VP_NROEDO = this.gridData.get('A3981NREDO');
-        bean.VP_CDCLI = this.gridData.get('A3981CDCLI');        
-        this.exportPdf(prototype.url + '/pdf_EstadoCuenta_det/?beanString=' + encodeURI(JSON.stringify(bean)) );
-    },
-    exportPdf: function (_path) {
+    exportExcel: function (_path) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download report ?',
+            msg: 'Descargar reporte en Excel ?',
             buttons: Ext.MessageBox.OKCANCEL,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
@@ -176,9 +161,8 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaEdoCtaController',
             }
         });
     },
-    onbtn_detalleEECCClick: function () {
-        var me = this;        
-        this.winDataEntry('I', me.StoreAntSaldos );
+    onbtn_detalleEECCClick: function () {        
+        this.winDataEntry('I', null );
     },
     winDataEntry:function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;

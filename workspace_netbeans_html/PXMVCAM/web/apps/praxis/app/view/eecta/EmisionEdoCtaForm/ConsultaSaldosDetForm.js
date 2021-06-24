@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
     title: 'Detalle de Saldos',
     header: true,
     width: 800,
-    height: 600,
+    height: 610,
     border: false,
     resizable: false,
     layout: {
@@ -30,11 +30,11 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
             region: 'center',
             xtype: 'form',
             id: prototype.id02 + '-DataEntry-center',
-            border: false,
+            border: false,            
             margin: '2 0 2 0 ',
             defaults: {
                 border: false,
-                autoScroll: true
+                autoScroll: false
             },
             layout: {
                 type: 'vbox'
@@ -43,82 +43,16 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    width: '100%',
-                    height: 80,
-                    margin: '2 0 2 0 ',
+                    width: 790,
+                    border: true,
+                    margin: '2 1 2 1',
                     items: [
-//                        {
-//                            xtype: 'textfield',
-//                            id: prototype.id02 + '-CDCLI',
-//                            fieldLabel: 'Código Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-//                            labelWidth: 100,fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
-//                            padding: '12 0', value:'000001411',
-//                            readOnly: false,
-//                            width: 190, height: 27,
-//                            enableKeyEvents: true,
-//                            enforceMaxLength: true,
-//                            maxLength: 9,
-//                            listeners: {                                
-//                                keypress: function (obj, e) {
-//                                    if (e.getKey() === e.ENTER) {
-//                                        
-//                                    }
-//                                }
-//                            }
-//                        },
-//                        {
-//                            xtype: 'datefield',
-//                            id: prototype.id02 + '-FPERI',
-//                            fieldLabel: 'Al Periodo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 85,
-//                            width: 160, padding: '12 0',
-//                            format: 'Ym', value: new Date(),
-//                            //minValue: new Date(1990, 00, 01),
-//                            //maxValue: new Date()-1,
-//                            readOnly:true,
-//                            maskRe: /[0-9/]/,
-//                            editable: true,
-//                            enableKeyEvents: true,
-//                            enforceMaxLength: true,
-//                            maxLength: 10,
-//                            listeners: {
-//                                //change: 'onUpperValue',
-//                                keypress: function (obj, e) {
-//                                    if (e.getKey() === e.ENTER) {
-//                                        //Ext.getCmp(prototype.id+'-txtA1757NFACT').focus();
-//                                    }
-//                                }
-//                            }
-//                        },
-//                        {
-//                            xtype: 'toolbar',
-//                            dock: 'bottom',
-//                            ui: 'footer',
-//                            margin: '0 0 0 0',
-//                            layout: {
-//                                pack: 'center'
-//                            },
-//                            fieldStyle: 'text-align:center',
-//                            defaults: {
-//                                scale: 'medium'
-//                            },
-//                            items: [
-//                                {
-//                                    xtype: 'button',
-//                                    id: prototype.id02 + '-btn-consulta-eecc',
-//                                    text: 'Buscar',
-//                                    icon: 'resources/img/botones/search.png',
-//                                    listeners: {
-//                                         click: 'onbtn_consultaEECCClick01'
-//                                    }
-//                                }
-//                            ]
-//                        },
                         {
                             xtype: 'panel',
                             layout: 'vbox',
                             border: false,
-                            width: '100%',
-                            height: 75,
+                            width: 570,
+                            //height: 75,
                             margin: '2 2 2 2 ',
                             items: [
                                 {
@@ -132,17 +66,17 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
                                             xtype: 'textfield',
                                             id: prototype.id02 + '-A3953CDCLI',
                                             fieldLabel: 'Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 80, //margin: '0 0 0 5 ',                                          
+                                            labelWidth: 80, fieldStyle: 'font-weight: bold;font-size:12px;text-align:center',                                     
                                             readOnly: true,
-                                            width: 170
+                                            width: 160
                                         },
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id02 + '-A3953RSOCI',
                                             labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            padding: '0 0 0 2',
+                                            padding: '0 0 0 2',fieldStyle: 'font-weight: bold;font-size:12px;text-align:left',
                                             readOnly: true, labelWidth: 10,
-                                            width: 300 //, padding: '0 0 0 2'
+                                            width: 350 //, padding: '0 0 0 2'
                                         }
 
                                     ]
@@ -155,29 +89,33 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
                                     margin: '1 1 1 1 ',
                                     items: [
                                         {
-                                            xtype: 'textareafield',
-                                            height: 40, fieldLabel: 'Dirección', labelStyle: 'font-weight: bold;',
+                                            xtype: 'textareafield',  height: 30,                                            
+                                            fieldLabel: 'Dirección', labelStyle: 'font-weight: bold;',
                                             border: false, readOnly: true, labelAlign: 'right',
-                                            id: prototype.id02 + '-A3953DIRE1',
-                                            padding: '1 1 1 1', width: 450, labelWidth: 80, maxRows: 3
+                                            id: prototype.id02 + '-A3953DIRE1',fieldStyle: 'font-weight: bold;font-size:11px;text-align:left',                                            
+                                            width: 512, labelWidth: 80, maxRows: 3
                                         }
-//                                        {
-//                                            xtype: 'textfield',
-//                                            id: prototype.id02 + '-A3953COLON', labelWidth: 80,width: 200,
-//                                            fieldLabel: 'Colonia', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-//                                            margin: '0 0 0 5 '
-//                                        },
-//                                        {
-//                                            xtype: 'textfield',
-//                                            id: prototype.id02 + '-A3953DELEG', labelWidth: 80,width: 200,
-//                                            fieldLabel: 'Delegación', labelAlign: 'right', labelStyle: 'font-weight: bold;',                                            
-//                                            margin: '0 0 0 5 '
-//                                        }
                                     ]
                                 }
                             ]
-                        }
-
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'vbox',
+                            border: true,
+                            width: 100,                            
+                            margin: '2 2 2 2 ',
+                            items: [
+                                {
+                                    xtype: 'datefield',
+                                    id: prototype.id02 + '-FPERI',
+                                    fieldLabel: 'Al Periodo', labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 85,
+                                    width: 80, padding: '5 5 5 5',fieldStyle: 'font-weight: bold;font-size:12px;text-align:center',
+                                    format: 'Ym', value: new Date(),                                    
+                                    readOnly: true
+                                }
+                            ]
+                        }                                                                        
                     ]
                 },
                 {
@@ -243,23 +181,38 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
                 },
                 {
                     xtype: 'panel',
-                    layout: 'hbox',
+                    layout: 'vbox',
                     width: '100%',
-                    margin: '2 0 2 0 ',
+                    margin: '1 0 1 0 ',
                     items: [
                         {
-                            xtype: 'textfield',
-                            id: prototype.id02 + '-A3981TOT',
-                            fieldLabel: 'GRAN TOTAL:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                            labelWidth: 110, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
-                            padding: '6 0', value: '0.00', readOnly: true, width: 220, height: 27
-                        },
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            width: '100%',
+                            //margin: '1 0 1 0 ',
+                            items: [
+                               {
+                                   xtype: 'panel',
+                                   width: 470,
+                                   border:false
+                               }, 
+                               {
+                                    xtype: 'textfield',
+                                    id: prototype.id02 + '-A3981TOT',
+                                    fieldLabel: 'GRAN TOTAL:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                    labelWidth: 110, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
+                                    padding: '1 0',
+                                    value: '0.00',
+                                    readOnly: true,
+                                    width: 220, height: 27
+                                }
+                            ]
+                        },                        
                         {
                             xtype: 'label',
                             id: prototype.id02 + '-A3981TOTLT',
                             style: 'font-weight:bold;color:#112664;font-size:11px',
-                            padding: '8 0',
-                            margin: '1 1 1 5 '
+                            padding: '1 0',margin: '1 1 1 8 '
                         }
                     ]
                 }
@@ -287,9 +240,9 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
                     }
                 },
                 {
-                    text: 'Close',
+                    text: 'Regresar',
                     id: prototype.id02 + '-btn-cancel',
-                    iconCls: 'prx-icon-cancel',
+                    iconCls: 'prx-icon-back',
                     listeners: {
                         click: 'onCancelClick02'
                     }

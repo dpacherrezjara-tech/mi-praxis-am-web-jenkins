@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGridSaldosDet', {
                             id: prototype.id02 + '-gridData-det',
                             columnLines: true,
                             autoScroll: true,
-                            width: 900,
+                            width: 800,
                             height: 270,
                             padding: '0px 5px 1px 5px',                                                       
                             columns: {
@@ -53,20 +53,20 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGridSaldosDet', {
                                             return record.get('A3958CIA') + record.get('A3958FORMA') + record.get('A3958SERIE') ;
                                         }
                                     },
-                                    {text: 'F. Emisión', dataIndex: 'A3958FEVTA', width: 70, align: 'center', locked: true},
+                                    {text: 'Fecha<br> Emisión', dataIndex: 'A3958FEVTA', width: 70, align: 'center', locked: true},
                                     {text: 'Nombre Pasajero', dataIndex: 'A3958PAX', width: 250, align: 'left', locked: true },
                                     {text: 'Ref1.', dataIndex: 'A3958SOLER', width: 50, align: 'center'},
                                     {text: 'Trx.', dataIndex: 'A3958TRNCU', width: 50, align: 'center'},
                                     {text: 'Ruta', dataIndex: 'A3958RUTA', width: 90, align: 'left'},
                                     {text: 'UUID', dataIndex: 'A3958CFDI', width: 100, align: 'left'},
-                                    {text: 'Mda.', dataIndex: 'A3958MDLOC', width: 50, align: 'left'},
-                                    {text: 'Ant.Saldo<br>(dias)', dataIndex: 'ANT_SALDO', width: 90, align: 'right'},
+                                    {text: 'Mda.', dataIndex: 'A3958MDLOC', width: 50, align: 'left'},                                    
                                     {
                                         text: 'Saldo', dataIndex: 'A3958TOT', width: 90, align: 'right',                                        
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
-                                    }
+                                    },
+                                    {text: 'Ant.Saldo<br>(dias)', dataIndex: 'ANT_SALDO', width: 90, align: 'Center'}
                                 ],
                                 defaults: {
                                     sortable: false,

@@ -58,9 +58,13 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGridPagos', {
                                     {text: 'Ref. Bancaria', dataIndex: 'A3982REFBC', width: 130, align: 'center'},
                                     {text: 'Banco', dataIndex: 'A3982BANCO', width: 140, align: 'center'},
                                     {text: 'Cant.<br> Trx.', dataIndex: 'A3982QTYTX', width: 50, align: 'center'},
-                                    {text: 'Curr.', dataIndex: 'A3982MDLOC', width: 50, align: 'center'},
+                                    {text: 'Curr.', dataIndex: 'A3982MDLOC', width: 80, align: 'center',
+                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                            return 'SUBTOTAL:';
+                                        }
+                                    },
                                     {
-                                        text: 'Importe', dataIndex: 'A3982TOT', width: 110, align: 'right',
+                                        text: 'Importe', dataIndex: 'A3982TOT', width: 100, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000.00');

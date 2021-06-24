@@ -2,6 +2,7 @@ prototype.widthContenedor = 1200;
 prototype.widthGrid = '100%';
 prototype.id01 = 'AplPaymentEntry';
 prototype.id02 = 'AplPaymentBoletoEntry';
+prototype.id03 = 'AplPaymentBatch';
 
 //console.log(prototype.id);
 

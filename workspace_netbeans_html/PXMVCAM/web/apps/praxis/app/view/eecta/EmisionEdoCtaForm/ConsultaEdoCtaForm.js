@@ -6,18 +6,18 @@
 
 
 Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
-    extend: 'Ext.window.Window',     
+    extend: 'Ext.window.Window',
     alias: 'widget.' + prototype.id01 + '-ConsultaEdoCtaForm',
-    controller: prototype.id01 + '-consultaEdoCtaController',        
+    controller: prototype.id01 + '-consultaEdoCtaController',
     requires: [
         'Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaEdoCtaController',
         'Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGridVentas',
         'Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGridPagos'
     ],
-    title: 'Consulta Estado Cuenta',
+    title: 'Consultar Estado de Cuenta',
     header: true,
     width: 750,
-    height: 600,
+    height: 610,
     border: false,
     resizable: false,
     layout: {
@@ -46,18 +46,18 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-CDCLI',
-                            fieldLabel: 'Código Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                            labelWidth: 100,fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
-                            padding: '12 0', value:'000001411',
+                            fieldLabel: 'Código Cliente', labelAlign: 'top', labelStyle: 'font-weight: bold;',
+                            labelWidth: 100, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
+                            padding: '2 2', value: '000001411',
                             readOnly: false,
-                            width: 190, height: 27,
+                            width: 100, height: 27,
                             enableKeyEvents: true,
                             enforceMaxLength: true,
                             maxLength: 9,
-                            listeners: {                                
+                            listeners: {
                                 keypress: function (obj, e) {
                                     if (e.getKey() === e.ENTER) {
-                                        
+
                                     }
                                 }
                             }
@@ -65,8 +65,8 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                         {
                             xtype: 'datefield',
                             id: prototype.id01 + '-FPERI',
-                            fieldLabel: 'Al Periodo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 85,
-                            width: 160, padding: '12 0',
+                            fieldLabel: 'Al Periodo', labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 85,
+                            width: 80, padding: '2 2 0 5', fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                             format: 'Ym',
                             value: '202101',
                             //value: new Date(),
@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                             xtype: 'toolbar',
                             dock: 'bottom',
                             ui: 'footer',
-                            margin: '0 0 0 0',
+                            margin: '10 20 0 10',
                             layout: {
                                 pack: 'center'
                             },
@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                                     text: 'Consultar',
                                     icon: 'resources/img/botones/search.png',
                                     listeners: {
-                                         click: 'onbtn_consultaEECCClick01'
+                                        click: 'onbtn_consultaEECCClick01'
                                     }
                                 }
                             ]
@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                             xtype: 'panel',
                             layout: 'vbox',
                             border: true,
-                            width: '100%',
+                            width: 415,
                             height: 64,
                             margin: '2 2 2 2 ',
                             items: [
@@ -177,11 +177,16 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                     margin: '2 0 2 0 ',
                     items: [
                         {
+                            xtype: 'panel',
+                            width: 460,
+                            border:false
+                        },
+                        {
                             xtype: 'textfield',
                             id: prototype.id01 + '-SALDO-ANTERIOR',
                             fieldLabel: 'Saldo anterior', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                             labelWidth: 100, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
-                            padding: '6 0',value:'0.00',
+                            padding: '1 3 3 0', value: '0.00',
                             readOnly: true,
                             width: 230, height: 27
                         }
@@ -194,9 +199,9 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                     margin: '1 1 1 5 '
                 },
                 {
-                    xtype: 'panel',                    
+                    xtype: 'panel',
                     height: 160,
-                    border: false,                    
+                    border: false,
                     items: [
                         // <editor-fold defaultstate="collapsed" desc="setGridData">
                         {
@@ -224,8 +229,8 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                     margin: '1 1 1 5 '
                 },
                 {
-                    xtype: 'panel',                    
-                    height: 160,                    
+                    xtype: 'panel',
+                    height: 160,
                     items: [
                         // <editor-fold defaultstate="collapsed" desc="setGridData">
                         {
@@ -248,26 +253,38 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
                 },
                 {
                     xtype: 'panel',
-                    layout: 'hbox',
+                    layout: 'vbox',
                     width: '100%',
-                    margin: '2 0 2 0 ',
+                    margin: '1 0 1 0 ',
                     items: [
                         {
-                            xtype: 'textfield',
-                            id: prototype.id01 + '-A3981TOT',
-                            fieldLabel: 'GRAN TOTAL:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                            labelWidth: 110, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
-                            padding: '6 0',
-                            value:'0.00',
-                            readOnly: true,
-                            width: 220, height: 27
-                        },
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            width: '100%',
+                            //margin: '1 0 1 0 ',
+                            items: [
+                               {
+                                   xtype: 'panel',
+                                   width: 470,
+                                   border:false
+                               }, 
+                               {
+                                    xtype: 'textfield',
+                                    id: prototype.id01 + '-A3981TOT',
+                                    fieldLabel: 'GRAN TOTAL:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
+                                    labelWidth: 110, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
+                                    padding: '1 0',
+                                    value: '0.00',
+                                    readOnly: true,
+                                    width: 220, height: 27
+                                }
+                            ]
+                        },                        
                         {
                             xtype: 'label',
-                            id: prototype.id01 + '-A3981TOTLT',                            
+                            id: prototype.id01 + '-A3981TOTLT',
                             style: 'font-weight:bold;color:#112664;font-size:11px',
-                            padding: '8 0',
-                            margin: '1 1 1 5 '
+                            padding: '1 0',margin: '1 1 1 5 '
                         }
                     ]
                 }
@@ -287,24 +304,24 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaEdoCtaForm', {
             style: 'aling:center padding: 5px;',
             items: [
                 {
-                    text: 'Export Pdf',
-                    id: prototype.id + '-btn-export',
-                    iconCls: 'prx-icon-pdf',
+                    text: 'Export Excel',
+                    id: prototype.id01 + '-btn-export',
+                    iconCls: 'prx-icon-excel',
                     listeners: {
-                        click: 'onSaveClick'
+                        click: 'onExportExcelClick'
                     }
-                },                
+                },
                 {
                     text: 'Detalle de Saldos',
-                    id: prototype.id + '-btn-detSaldos',
+                    id: prototype.id01 + '-btn-detSaldos',
                     iconCls: 'prx-icon-image-file',
                     listeners: {
                         click: 'onbtn_detalleEECCClick'
                     }
                 },
                 {
-                    text: 'Close',
-                    id: prototype.id + '-btn-cancel',
+                    text: 'Cerrar',
+                    id: prototype.id01 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick01'

@@ -4,8 +4,7 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaSaldosDetControlle
     requires: [
        //'Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGrid'
     ],
-    beanXLS: {},        
-    page_current: 0,
+    beanXLS: {},            
     me: '',
     setContext: function() {
         me = this;
@@ -15,7 +14,8 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaSaldosDetControlle
     },
     afterRender: function() {         
         var p = this.view.params;
-        //console.log(p.rec);         
+        //console.log(p.rec); 
+        Ext.getCmp(prototype.id02 + '-FPERI').setValue(Ext.getCmp(prototype.id01 + '-FPERI').getValue());
         this.loadDetalleSaldo();
     },    
     loadDetalleSaldo: function() {
@@ -23,14 +23,22 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaSaldosDetControlle
         var bean = {};        
         bean.VP_A3981FPERI  = Ext.util.Format.date(Ext.getCmp(prototype.id01 + '-FPERI').getValue(),'Ym');        
         bean.VP_A3981CDCLI  = Ext.getCmp(prototype.id01 + '-CDCLI').getValue();
-        bean.VP_A3981FEJEC  = '20210611';
+        bean.VP_A3981FEJEC  = Ext.util.Format.date( new Date(),'Ymd'); 
         Ext.Ajax.request({
             url: prototype.url + '/ConsultaEdoCtaDet',
             timeout: 60000000,
             method: 'POST',
             params: bean,
+            beforerequest: Ext.getCmp(prototype.id02 + '-ConsultaSaldosDetForm').mask('Cargando...', ''),
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);                
+                Ext.getCmp(prototype.id02 + '-ConsultaSaldosDetForm').unmask('Loading...', '');
+                if (res.total === 0) {
+                        global.Msg({
+                            msg: 'No hay registros'
+                        });
+                    return;
+                }               
                 //console.log(res.data01);                                               
                 me.loadDataDat01(res.lstRtn01, res.lstRtn02);
                 me.loadDataDat02(res.lstRtn03, res.lstRtn04);

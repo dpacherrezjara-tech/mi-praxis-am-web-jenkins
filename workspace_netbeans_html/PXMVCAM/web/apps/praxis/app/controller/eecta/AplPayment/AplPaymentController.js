@@ -220,6 +220,9 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentController', {
     btnApl_pay_click: function () {
         this.winDataEntry('I');
     },
+    btnAplPaymentBatch: function () {
+        this.winDataEntry03('I');
+    },
     onDetailClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry01('U', rec);
@@ -274,6 +277,17 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentController', {
         rec = rec === null || rec === undefined ? {} : rec;       
         Ext.create('Ext.Praxis.view.eecta.AplPaymentForm.AppliedPaymentsForm', {
             id: prototype.id + '-AppliedPaymentsForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
+    winDataEntry03:function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;       
+        Ext.create('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBatch', {
+            id: prototype.id03 + '-AplPaymentBatch',
             params: {
                 action: action,
                 rec: rec
