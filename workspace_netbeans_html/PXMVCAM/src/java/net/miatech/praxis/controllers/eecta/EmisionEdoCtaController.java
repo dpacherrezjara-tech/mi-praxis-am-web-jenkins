@@ -375,6 +375,7 @@ public class EmisionEdoCtaController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
     @RequestMapping(value = "/ConsultaEdoCtaExcel")
     public @ResponseBody
     void ConsultaEdoCtaExcel(HttpServletRequest request, HttpServletResponse response) {
@@ -687,6 +688,170 @@ public class EmisionEdoCtaController extends BaseController {
             e.printStackTrace();
             throw new SpringException(e);
         }
+    }
+    
+    @RequestMapping(value = "/ConsultaEdoCtaDetExcel")
+    public @ResponseBody
+    void ConsultaEdoCtaDetExcel(HttpServletRequest request, HttpServletResponse response) {
+        
+        SQP04050Filter filter;
+        filter = new SQP04050Filter();
+              
+        try {                        
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());                                            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            //filter.page.PAGROW = -1;
+            //start = (start != 0 ? start : 0);
+            //filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;        
+            String fileName = "EECTA-detalleSaldos-"+ filter.VP_A3981CDCLI+"-"+filter.VP_A3981FPERI;
+            logic = new EmisionEdoCtaLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());            
+            List<SQP04050Filter> lst = logic.getSQP04050Filter(filter);
+            
+           // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet(fileName);
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            CellStyle headerStyle = workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            // </editor-fold>
+            int len = lst.size();
+            
+            Integer vi = 0;
+            Integer vj = 0;                        
+            Row row;
+            Cell cell50, cell51, cell52, cell53, cell54, cell55, cell56;
+            Cell cell57, cell58, cell59;
+            
+            // <editor-fold defaultstate="collapsed" desc="row">
+            row = sheet.createRow(vj);
+            cell50 = row.createCell(0);
+            cell51 = row.createCell(1);
+            cell52 = row.createCell(2);
+            cell53 = row.createCell(3);
+            cell54 = row.createCell(4);
+            cell55 = row.createCell(5);
+            cell56 = row.createCell(6);
+            cell57 = row.createCell(7);
+            cell58 = row.createCell(8);
+            cell59 = row.createCell(9);
+            
+            
+            cell50.setCellValue("BOLETO");
+            cell51.setCellValue("FECHA EMISION");
+            cell52.setCellValue("PAX");
+            cell53.setCellValue("REF1");
+            cell54.setCellValue("TRX");
+            cell55.setCellValue("RUTA");
+            cell56.setCellValue("UUID");
+            cell57.setCellValue("MONEDA");
+            cell58.setCellValue("SALDO");
+            cell59.setCellValue("ANTIGUEDAD SALDO");
+
+            cell50.setCellStyle(headerStyle);
+            cell51.setCellStyle(headerStyle);
+            cell52.setCellStyle(headerStyle);
+            cell53.setCellStyle(headerStyle);
+            cell54.setCellStyle(headerStyle);
+            cell55.setCellStyle(headerStyle);
+            cell56.setCellStyle(headerStyle);
+            cell57.setCellStyle(headerStyle);
+            cell58.setCellStyle(headerStyle);
+            cell59.setCellStyle(headerStyle);
+            
+            ++vj;
+            
+            for (vi = 4; vi < len; vi++) {  
+                row = sheet.createRow(vj);
+                // <editor-fold defaultstate="collapsed" desc="data">
+                cell50 = row.createCell(0);
+                cell51 = row.createCell(1);
+                cell52 = row.createCell(2);
+                cell53 = row.createCell(3);
+                cell54 = row.createCell(4);
+                cell55 = row.createCell(5);
+                cell56 = row.createCell(6);
+                cell57 = row.createCell(7);
+                cell58 = row.createCell(8);
+                cell59 = row.createCell(9);
+                                
+                cell50.setCellValue((String)lst.get(vi).rpteDet.A3958CIA + lst.get(vi).rpteDet.A3958FORMA + lst.get(vi).rpteDet.A3958SERIE );
+                cell51.setCellValue((String)lst.get(vi).rpteDet.A3958FEVTA);
+                cell52.setCellValue((String)lst.get(vi).rpteDet.A3958PAX);
+                cell53.setCellValue((String)lst.get(vi).rpteDet.A3958SOLER);
+                cell54.setCellValue((String)lst.get(vi).rpteDet.A3958TRNCU);
+                cell55.setCellValue(lst.get(vi).rpteDet.A3958RUTA ); 
+                cell56.setCellValue(lst.get(vi).rpteDet.A3958CFDI );
+                cell57.setCellValue(lst.get(vi).rpteDet.A3958MDLOC); 
+                cell58.setCellValue(lst.get(vi).rpteDet.A3958TOT); 
+                cell59.setCellValue(lst.get(vi).rpteDet.ANT_SALDO); 
+                
+                cell50.setCellStyle(bodyStyle);
+                cell51.setCellStyle(bodyStyle);
+                cell52.setCellStyle(bodyStyle);
+                cell53.setCellStyle(bodyStyle);
+                cell54.setCellStyle(bodyStyle);
+                cell55.setCellStyle(bodyStyle);
+                cell56.setCellStyle(bodyStyle);
+                cell57.setCellStyle(bodyStyle);
+                cell58.setCellStyle(bodyStyle);
+                cell59.setCellStyle(bodyStyle);
+                // </editor-fold>
+                //iter.next();
+                //++vi;                
+                ++vj;
+            }
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            
+            String fileNameDownload = String.format(fileName + " - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());            
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");            
+            File file = File.createTempFile(fileNameDownload, ".xlsx");            
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SpringException(e);
+        } 
     }
     
 }
