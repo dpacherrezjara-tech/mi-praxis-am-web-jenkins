@@ -254,16 +254,36 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
     },
     
     crud: function() {
+        var mod = this;
         Ext.Ajax.request({
             url: prototype.url + '/Maintance',
             method: 'POST',
             timeout: 60000000,
             params: this.beanOption,
+            
             beforerequest: Ext.getCmp('DataEntryAccountingMasterProcess2Form').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                    var msg = res.intResult;
+                    var msg = res.intResult;                    
+                    /*var cbxModulo = mod.getValue('cbxModulo');
+                    if(cbxModulo==='PSALES')
+                    {
+                        var lstGroups = res.lstGroups;
+                        if(lstGroups.length>0)
+                        {
+                            var groups = '';
+                            for(var i=0 ; i<lstGroups.length; i++)
+                            {
+                                if(i<(lstGroups.length-1))
+                                    groups+=lstGroups[i].A1955ERRLG+',';
+                                else
+                                    groups+=lstGroups[i].A1955ERRLG;
+                            }
+                            msg = 'Observed Groups: ' + groups 
+                        }
+                    }*/
+                        
                     var icon=1;
                     if(msg==='RECORD EXISTS'){
                         icon=2;

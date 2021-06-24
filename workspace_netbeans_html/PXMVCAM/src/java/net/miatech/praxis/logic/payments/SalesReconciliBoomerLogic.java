@@ -1,0 +1,109 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.miatech.praxis.logic.payments;
+
+import java.sql.SQLException;
+import java.util.List;
+import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.dao.payments.SalesReconciliBoomerDAO;
+import net.miatech.praxis.payment.filter.A2324Filter;
+
+
+
+public class SalesReconciliBoomerLogic {
+
+    private final SalesReconciliBoomerDAO SalesReconciliBoomerDAO = new SalesReconciliBoomerDAO();
+
+    public void setSession(IServerSession ss) {
+        SalesReconciliBoomerDAO.setSession(ss);
+
+    }
+    
+    public List<A2324Filter> loadPX559SQP04019(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX559SQP04019(filter);
+    }
+        
+    public List<A2324Filter> loadPX559SQP04021(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX559SQP04021(filter);
+    }
+    
+    public List<A2324Filter> loadPX559SQP04020(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX559SQP04020(filter);
+    }
+
+    
+    /*
+    
+
+    public List<A2324Filter> loadPX287SQP00839(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX287SQP00839(filter);
+    }
+
+    public List<A2324Filter> loadPX287SQP00840(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX287SQP00840(filter);
+    }
+
+    public List<A2324Filter> loadPX287SQP00841(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX287SQP00841(filter);
+    }
+
+    public List<A2324Filter> loadPX287SQP00924(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX287SQP00924(filter);
+    }
+
+    public List<A2324Filter> loadPX287SQP00925(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX287SQP00925(filter);
+    }
+
+    public List<A2324Filter> loadPX287SQP00926(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX287SQP00926(filter);
+    }
+
+    public List<A2324Filter> loadPX287SQP02055(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX287SQP02055(filter);
+    }
+
+    public A2324Filter loadPX407SQP02076(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP02076(filter);
+    }
+
+    public List<A2324Filter> loadPX407SQP01939(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP01939(filter);
+    }
+
+    public List<A2324Filter> loadPX407SQP01940(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP01940(filter);
+    }
+
+    public List<A2324Filter> loadPX407SQP01941(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP01941(filter);
+    }
+
+    public List<A2324Filter> loadPX407SQP01942(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP01942(filter);
+    }
+
+    public List<A2324Filter> loadPX407SQP01943(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP01943(filter);
+    }
+
+    public List<A2324Filter> loadPX407SQP02030(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP02030(filter);
+    }
+
+    public String loadPX407SQP02077(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP02077(filter);
+    }
+
+    public List<A2324Filter> loadPX407SQP03990(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX407SQP03990(filter);
+    }
+
+
+
+    */
+
+}

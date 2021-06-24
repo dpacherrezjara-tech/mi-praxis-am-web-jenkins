@@ -64,4 +64,8 @@ public class AccountingMasterProcess2Logic {
     public String accountMaintancePending(A1955Filter filter, String strOption) throws SQLException {
         return objDAO.accountMaintancePending(filter, strOption);
     }
+    
+    public List<A1955Filter> SQP04042(A1955Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04042(filter);
+    }
 }

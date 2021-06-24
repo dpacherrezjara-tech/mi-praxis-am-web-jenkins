@@ -380,7 +380,7 @@ public class DefaultController extends BaseController {
             
             UserLogic logic = new UserLogic();
             logic.setSession(this.serverSession.getServerSession());
-            logic.SQP02491(USR);
+            //logic.SQP02491(USR);
             
             if (app.changePassword(USR, TOKEN, NEWTOKEN)) {
                 msg = app.getMsgLogin();
