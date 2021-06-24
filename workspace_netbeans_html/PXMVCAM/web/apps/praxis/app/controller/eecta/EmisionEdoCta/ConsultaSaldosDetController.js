@@ -70,46 +70,25 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.ConsultaSaldosDetControlle
         Ext.getCmp(prototype.id02 + '-gridData-det').setStore(lstRtn04);
         Ext.getCmp(prototype.id02 + '-gridData-det').getStore().reload();        
     }, 
-
-//    onReportEdoCta: function ( grid, rowIndex, colIndex ) {
-//        if (Ext.getCmp(prototype.id + '-gridData')) {
-//            var grid = Ext.getCmp(prototype.id + '-gridData');
-//            var store = grid.getStore();
-//            var rec = store.getAt(rowIndex);            
-//            this.gridData = rec;
-//        }
-//        var bean = {};
-//        bean.VP_A3981NREDO = this.gridData.get('A3981NREDO');
-//        bean.VP_A3981CDCLI = this.gridData.get('A3981CDCLI');        
-//        this.exportPdf(prototype.url + '/pdf_EstadoCuenta/?beanString=' + encodeURI(JSON.stringify(bean)) );
-//    },
-//    onReportEdoCtaDet: function ( grid, rowIndex, colIndex ) {
-//        if (Ext.getCmp(prototype.id + '-gridData')) {
-//            var grid = Ext.getCmp(prototype.id + '-gridData');
-//            var store = grid.getStore();
-//            var rec = store.getAt(rowIndex);            
-//            this.gridData = rec;
-//        }
-//        var bean = {};
-//        bean.VP_NROEDO = this.gridData.get('A3981NREDO');
-//        bean.VP_CDCLI = this.gridData.get('A3981CDCLI');        
-//        this.exportPdf(prototype.url + '/pdf_EstadoCuenta_det/?beanString=' + encodeURI(JSON.stringify(bean)) );
-//    },
-//    exportPdf: function (_path) {
-//        Ext.Msg.show({
-//            title: '.:PRAXIS:.',
-//            msg: 'Download report ?',
-//            buttons: Ext.MessageBox.OKCANCEL,
-//            scope: this,
-//            icon: Ext.MessageBox.QUESTION,
-//            modal: true,
-//            fn: function (btn) {
-//                if (btn === 'ok') {
-//                    global.getFile(_path);
-//                }
-//            }
-//        });
-//    },
+    onExcelDonwloadClick02:function(){        
+        var bean = {};        
+        bean.VP_A3981FPERI  = Ext.util.Format.date(Ext.getCmp(prototype.id01 + '-FPERI').getValue(),'Ym');        
+        bean.VP_A3981CDCLI  = Ext.getCmp(prototype.id01 + '-CDCLI').getValue();
+        bean.VP_A3981FEJEC  = Ext.util.Format.date( new Date(),'Ymd');        
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel File ?',            
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                                            
+                    global.getFile(prototype.url + '/ConsultaEdoCtaDetExcel?beanString='+encodeURI(JSON.stringify(bean)));
+                }
+            }
+        });
+    },
     // </editor-fold>
     
 // <editor-fold defaultstate="collapsed" desc="Options">

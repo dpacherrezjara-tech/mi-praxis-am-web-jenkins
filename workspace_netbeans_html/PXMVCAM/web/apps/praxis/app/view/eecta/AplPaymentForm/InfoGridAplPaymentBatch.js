@@ -42,8 +42,8 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPaymentBatch', {
                             xtype: 'grid',
                             id: prototype.id03 + '-infoGridAplPaymentBatch',
                             columnLines: true,                            
-                            width: 740,
-                            height: 280,
+                            width: 840,
+                            height: 310,
                             padding: '0px 5px 1px 5px',
                             features: [
                                 {
@@ -54,18 +54,18 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPaymentBatch', {
                             columns: {
                                 items: [
                                     {text: 'Nº Lote <br>load batch', dataIndex: 'A4021LOTE', width: 80, align: 'center', locked: true},
-                                    {text: 'Seq.', dataIndex: 'A4021SQCG', width: 40, align: 'center', locked: true},
+                                    //{text: 'Seq.', dataIndex: 'A4021SQCG', width: 40, align: 'center', locked: true},
                                     {
                                         text: 'Nº Boleto', dataIndex: '', width: 100, align: 'center', locked: true,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return record.get('A4021CIA') + record.get('A4021FORMA') + record.get('A4021SERIE');
                                         }
                                     },      
-                                    {text: 'UUID', dataIndex: 'A4021UUID', width: 120, align: 'left', locked: true},
+                                    {text: 'UUID', dataIndex: 'A4021UUID', width: 70, align: 'left', locked: true},
                                     {text: 'Fecha<br>Pago', dataIndex: 'A4021FECPG', width: 70, align: 'center', locked: true},
-                                    {text: 'Mda.', dataIndex: 'A4021MDAPG', width: 50, align: 'true'},                                    
+                                    {text: 'Mda.', dataIndex: 'A4021MDAPG', width: 50, align: 'center', locked: true },                                    
                                     {
-                                        text: 'Importe', dataIndex: 'A4021TOTPG', width: 85, align: 'right',
+                                        text: 'Importe<br>Pago', dataIndex: 'A4021TOTPG', width: 85, align: 'right', locked: true,
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             //summaryData.style = "background-color:red;";
@@ -94,12 +94,14 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPaymentBatch', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            if(record.get('A4021TODIF') === 0)metaData.style = 'font-weight:bold;color:green;';
+                                            if(record.get('A4021TODIF') !== 0)metaData.style = 'font-weight:bold;color:red;';
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },                                    
                                     {text: 'Ref.', dataIndex: 'A4021REFPG', width: 90, align: 'center', locked: false},
                                     {
-                                        text: 'Estado', dataIndex: 'A4021STAT', width: 70, align: 'center', locked: false,
+                                        text: 'Estado', dataIndex: 'A4021STAT', width: 60, align: 'center', locked: false,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                       
                                             var html = '<img src="resources/img/semaforo/Circle_Green.png" title="Match" >';
                                             if ( value === '1' )
@@ -108,7 +110,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPaymentBatch', {
                                         }
                                     },
                                     {
-                                        text: 'Mensaje <br>Resultado', dataIndex: 'A4021DESER', width: 130, align: 'left',
+                                        text: 'Mensaje <br>Resultado', dataIndex: 'A4021DESER', width: 170, align: 'left',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             if(record.get('A4021STAT') === '0')metaData.style = 'font-weight:bold;color:green;';
                                             if(record.get('A4021STAT') !== '0')metaData.style = 'font-weight:bold;color:red;';

@@ -22,29 +22,6 @@ Ext.define('Ext.Praxis.controller.eecta.DetalleSaldo.DetalleSaldoController', {
         this.Onsearch();
     },
     cmbfiltro_clickHandler: function () {
-//        var selectedValue =  Ext.getCmp(prototype.id + '-cmbfiltro').getValue();         
-//        Ext.getCmp(prototype.id+'-BoxFilter01').hide();
-//        Ext.getCmp(prototype.id+'-BoxFilter02').hide();
-//        Ext.getCmp(prototype.id+'-BoxFilter03').hide();
-//        Ext.getCmp(prototype.id+'-BoxFilter04').hide();                
-//        switch(selectedValue){
-//            case '1': 
-//                Ext.getCmp(prototype.id+'-BoxFilter01').show();
-//                Ext.getCmp(prototype.id+'-fecha1').focus();
-//                break;
-//            case '2':                
-//                Ext.getCmp(prototype.id+'-BoxFilter02').show();                
-//                Ext.getCmp(prototype.id+'-CDCLI').focus();
-//                break;
-//             case '3':                
-//                Ext.getCmp(prototype.id+'-BoxFilter03').show();                
-//                Ext.getCmp(prototype.id+'-RSOCI').focus();
-//                break;
-//            case '4':                
-//                Ext.getCmp(prototype.id+'-BoxFilter04').show();
-//                Ext.getCmp(prototype.id+'-NRRPT').focus();
-//                break;
-//        }
     },
     setStoreDataGrid: function () {
         //del grid selected

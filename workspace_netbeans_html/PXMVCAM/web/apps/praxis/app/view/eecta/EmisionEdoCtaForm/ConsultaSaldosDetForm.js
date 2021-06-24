@@ -236,7 +236,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.ConsultaSaldosDetForm', {
                     id: prototype.id02 + '-btn-excel',
                     iconCls: 'prx-icon-excel',
                     listeners: {
-                        click: 'onSaveClick'
+                        click: 'onExcelDonwloadClick02'
                     }
                 },
                 {
