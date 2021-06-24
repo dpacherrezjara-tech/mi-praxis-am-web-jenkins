@@ -15,6 +15,8 @@ import net.miatech.praxis.eecta.SQP03951Filter;
 import net.miatech.praxis.eecta.SQP03952Filter;
 import net.miatech.praxis.eecta.SQP03955Filter;
 import net.miatech.praxis.eecta.SQP03956Filter;
+import net.miatech.praxis.eecta.SQP04053Filter;
+import net.miatech.praxis.eecta.SQP04059Filter;
 
 /**
  *
@@ -50,6 +52,14 @@ public class AplPaymentLogic {
 
     public SQP03943Filter setSQP03943Filter(SQP03943Filter filter) throws SQLException, Exception {
         return objDAO.setSQP03943Filter(filter);
+    }
+
+    public SQP04059Filter setSQP04059Filter(SQP04059Filter filter) throws SQLException, Exception {
+        return objDAO.setSQP04059Filter(filter);
+    }
+
+    public List<SQP04053Filter> getSQP04053Filter(SQP04053Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04053Filter(filter);
     }
 
 }
