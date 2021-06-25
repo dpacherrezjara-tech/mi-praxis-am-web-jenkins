@@ -37,12 +37,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: true,
-                            width: 100,
+                            width: 120,
 //                            value: "ADATE",
                             typeAhead: true,
                             valueField: 'code', 
                             displayField: 'name',
-                            listConfig: {minWidth: 130},
+                            listConfig: {minWidth: 120},
                             enableKeyEvents: true,
                             triggerAction: 'all',
                             listeners:{
@@ -220,7 +220,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Filters', {
                             items: [
                                 { boxLabel: '<b style="color:#148D28;">Sales</b>', inputValue: 'Sales', name: 'rbgType', checked: true },
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#148D28;">Refund</b>', inputValue: 'Refund', name: 'rbgType' }
+                                { boxLabel: '<b style="color:#148D28;">Refund</b>', inputValue: 'Refund', name: 'rbgType' },
+                                {xtype: 'tbspacer', width: 20},
+                                { boxLabel: '<b style="color:#148D28;">Header</b>', inputValue: 'Header', name: 'rbgType' },
                             ],
                             listeners: {
                                 change: 'cmbTranType_changeHandler' 
