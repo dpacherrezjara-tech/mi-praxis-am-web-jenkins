@@ -25,6 +25,22 @@ public class A2318Filter extends A2318{
     public String IN_PNR = "";
     public String descSTVAL = "";
     public String descTREG = "";
+    public String IN_DATSET = "";
+    public String IN_WEEKMO = "";
+    public String TITLE_DATE = "";
+    
+    public double SVFOP_SG = 0.0;
+    public double AMTCOM_SG = 0.0;
+    public double AMTIVA_SG = 0.0;
+    public double AMTSET_SG = 0.0;
+    public double SVFOP_SC = 0.0;
+    public double AMTCOM_SC = 0.0;
+    public double AMTIVA_SC = 0.0;
+    public double AMTSET_SC = 0.0;
+    public double SVFOP_SE = 0.0;
+    public double AMTCOM_SE = 0.0;
+    public double AMTIVA_SE = 0.0;
+    public double AMTSET_SE = 0.0;
     
     
     public Pagination page = new Pagination();
