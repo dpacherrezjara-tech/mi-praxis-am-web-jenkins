@@ -236,7 +236,7 @@ public class SalesReconciliBoomerDAO {
         List<A2318Filter> lstTotals = new ArrayList<A2318Filter>(0);
         A2318Filter beanTOTAL;
         HashMap<String, List<A2318Filter>> hmResultado = new HashMap<String, List<A2318Filter>>();
-        
+
         double SVFOP_SG = 0.0, AMTCOM_SG = 0.0, AMTIVA_SG = 0.0, AMTSET_SG = 0.0;
         double SVFOP_SC = 0.0, AMTCOM_SC = 0.0, AMTIVA_SC = 0.0, AMTSET_SC = 0.0;
         double SVFOP_SE = 0.0, AMTCOM_SE = 0.0, AMTIVA_SE = 0.0, AMTSET_SE = 0.0;
@@ -270,21 +270,54 @@ public class SalesReconciliBoomerDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                beanTOTAL = new A2318Filter();
+                /*beanTOTAL = new A2318Filter();
                 beanTOTAL.SVFOP_SG = rst.getLong("SVFOP_SG");
                 beanTOTAL.AMTCOM_SG = rst.getLong("AMTCOM_SG");
                 beanTOTAL.AMTIVA_SG = rst.getLong("AMTIVA_SG");
                 beanTOTAL.AMTSET_SG = rst.getLong("AMTSET_SG");
-                
+
                 beanTOTAL.SVFOP_SC = rst.getLong("SVFOP_SC");
                 beanTOTAL.AMTCOM_SC = rst.getLong("AMTCOM_SC");
                 beanTOTAL.AMTIVA_SC = rst.getLong("AMTIVA_SC");
                 beanTOTAL.AMTSET_SC = rst.getLong("AMTSET_SC");
-                
+
                 beanTOTAL.SVFOP_SE = rst.getLong("SVFOP_SE");
                 beanTOTAL.AMTCOM_SE = rst.getLong("AMTCOM_SE");
                 beanTOTAL.AMTIVA_SE = rst.getLong("AMTIVA_SE");
                 beanTOTAL.AMTSET_SE = rst.getLong("AMTSET_SE");
+                lstTotals.add(beanTOTAL);*/
+
+                beanTOTAL = new A2318Filter();
+                beanTOTAL.strFecFiltro = filter.strFecFiltro.trim();
+                beanTOTAL.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                beanTOTAL.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                beanTOTAL.IN_TDOC = filter.IN_TDOC.trim();
+
+                beanTOTAL.SDATE = rst.getString("SDATE").trim();
+                beanTOTAL.strFormatDate = Functions.getStringConvertDate(rst.getString("SDATE").trim());
+
+                beanTOTAL.WEEKMO = rst.getString("WEEKMO");
+                beanTOTAL.STVAL = rst.getString("STVAL");
+                if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
+                    beanTOTAL.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                } else {
+                    beanTOTAL.descSTVAL = rst.getString("STVAL").trim();
+                }
+                beanTOTAL.DATSFROM = rst.getString("DATSFROM");
+                beanTOTAL.DATSTO = rst.getString("DATSTO");
+                beanTOTAL.TREG = rst.getString("TREG");
+                if (hmDescTipos.containsKey(rst.getString("TREG").trim())) {
+                    beanTOTAL.descTREG = hmDescTipos.get(rst.getString("TREG").trim()).toString();
+                } else {
+                    beanTOTAL.descTREG = rst.getString("TREG").trim();
+                }
+
+                beanTOTAL.SVFOP = rst.getDouble("SVFOP");
+                beanTOTAL.AMTCOM = rst.getDouble("AMTCOM");
+                beanTOTAL.AMTIVA = rst.getDouble("AMTIVA");
+                beanTOTAL.AMTSET = rst.getDouble("AMTSET");
+
+                beanTOTAL.ACCNBR = rst.getString("ACCNBR");
                 lstTotals.add(beanTOTAL);
             }
             rst.close();
@@ -326,22 +359,21 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.ACCNBR = rst.getString("ACCNBR");
 
                     beanTkt.TITLE_DATE = filter.TITLE_DATE;
-                    
-                    /*beanTkt.SVFOP_SG = SVFOP_SG;
-                    beanTkt.AMTCOM_SG = AMTCOM_SG;
-                    beanTkt.AMTIVA_SG = AMTIVA_SG;
-                    beanTkt.AMTSET_SG = AMTSET_SG;
-                    
-                    beanTkt.SVFOP_SC = SVFOP_SC;
-                    beanTkt.AMTCOM_SC = AMTCOM_SC;
-                    beanTkt.AMTIVA_SC = AMTIVA_SC;
-                    beanTkt.AMTSET_SC = AMTSET_SC;
-                    
-                    beanTkt.SVFOP_SE = SVFOP_SE;                    
-                    beanTkt.AMTCOM_SE = AMTCOM_SE;
-                    beanTkt.AMTIVA_SE = AMTIVA_SE;
-                    beanTkt.AMTSET_SE = AMTSET_SE;*/
 
+                    /*beanTkt.SVFOP_SG = SVFOP_SG;
+                     beanTkt.AMTCOM_SG = AMTCOM_SG;
+                     beanTkt.AMTIVA_SG = AMTIVA_SG;
+                     beanTkt.AMTSET_SG = AMTSET_SG;
+                    
+                     beanTkt.SVFOP_SC = SVFOP_SC;
+                     beanTkt.AMTCOM_SC = AMTCOM_SC;
+                     beanTkt.AMTIVA_SC = AMTIVA_SC;
+                     beanTkt.AMTSET_SC = AMTSET_SC;
+                    
+                     beanTkt.SVFOP_SE = SVFOP_SE;                    
+                     beanTkt.AMTCOM_SE = AMTCOM_SE;
+                     beanTkt.AMTIVA_SE = AMTIVA_SE;
+                     beanTkt.AMTSET_SE = AMTSET_SE;*/
                     lstTkts.add(beanTkt);
                 }
                 rst.close();
