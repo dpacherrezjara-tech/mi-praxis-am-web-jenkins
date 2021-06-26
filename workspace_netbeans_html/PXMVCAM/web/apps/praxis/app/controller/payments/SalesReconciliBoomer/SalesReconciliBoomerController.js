@@ -505,10 +505,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             var totals = new Array();
                             //totals.push(['SVFOP_SG', 'AMTCOM_SG','AMTIVA_SG','AMTSET_SG','SVFOP_SC','AMTCOM_SC','AMTIVA_SC','AMTSET_SC','SVFOP_SE','AMTCOM_SE','AMTIVA_SE','AMTSET_SE']);
                             lstTotal.forEach(function callback(currentValue, index, array) {
-                                totals.push([currentValue.SVFOP_SG, currentValue.AMTCOM_SG, currentValue.AMTIVA_SG, currentValue.AMTSET_SG, currentValue.SVFOP_SC, currentValue.AMTCOM_SC, currentValue.AMTIVA_SC, currentValue.AMTSET_SC, currentValue.SVFOP_SE, currentValue.AMTCOM_SE, currentValue.AMTIVA_SE, currentValue.AMTSET_SE]);
+                                totals.push([currentValue.descSTVAL, currentValue.descTREG, currentValue.SVFOP, currentValue.AMTCOM, currentValue.AMTIVA, currentValue.AMTSET]);
                             });
                             var store = Ext.create('Ext.data.ArrayStore', {
-                                storeId: 'totals', autoLoad: true, data: totals, fields: ['SVFOP_SG', 'AMTCOM_SG','AMTIVA_SG','AMTSET_SG','SVFOP_SC','AMTCOM_SC','AMTIVA_SC','AMTSET_SC','SVFOP_SE','AMTCOM_SE','AMTIVA_SE','AMTSET_SE']
+                                storeId: 'totals', autoLoad: true, data: totals, fields: ['descSTVAL','descTREG','SVFOP','AMTCOM','AMTIVA','AMTSET']
                             });
                             Ext.getCmp(prototype.id + '-gridDataHeaderDetailTotal').bindStore(store);
                             
