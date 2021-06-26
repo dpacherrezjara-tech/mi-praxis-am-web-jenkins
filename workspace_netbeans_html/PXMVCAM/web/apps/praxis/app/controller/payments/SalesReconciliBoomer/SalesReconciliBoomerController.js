@@ -460,6 +460,97 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
+    OnGridDetHeader: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataHeaderDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.IN_DATSET = rowData.data.DATSET;
+        this.beanDetDay.IN_WEEKMO = rowData.data.WEEKMO;
+        this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
+
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+
+        this.SetOnGridDetHeader();
+    },
+    SetOnGridDetHeader: function() {
+        win.lblUser_toolTip("Estructura: A2318");
+//        this.setFormatParameter();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetHeader'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+
+                    obj.proxy.extraParams = me.paramsDetailDay;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                    var pag = Ext.getCmp(prototype.id + '-paggin2');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    var res = Ext.JSON.decode(response._response.responseText);
+
+                    if (res.success) {
+                        var gridDetHeader = res.data;
+                        if (gridDetHeader.length > 0) {
+                            var data = {};
+                            data = gridDetHeader[0];
+                            Ext.getCmp(prototype.id + '-gridDataHeaderDetail').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.TITLE_DATE + ' - Period: ' + data.WEEKMO + ' -  From: ' + data.DATSFROM + ' To: ' + data.DATSTO + '</center>');
+                            //Colocando los totales
+                            var lstTotal = res.lstTotal;
+                            var totals = new Array();
+                            //totals.push(['SVFOP_SG', 'AMTCOM_SG','AMTIVA_SG','AMTSET_SG','SVFOP_SC','AMTCOM_SC','AMTIVA_SC','AMTSET_SC','SVFOP_SE','AMTCOM_SE','AMTIVA_SE','AMTSET_SE']);
+                            lstTotal.forEach(function callback(currentValue, index, array) {
+                                totals.push([currentValue.SVFOP_SG, currentValue.AMTCOM_SG, currentValue.AMTIVA_SG, currentValue.AMTSET_SG, currentValue.SVFOP_SC, currentValue.AMTCOM_SC, currentValue.AMTIVA_SC, currentValue.AMTSET_SC, currentValue.SVFOP_SE, currentValue.AMTCOM_SE, currentValue.AMTIVA_SE, currentValue.AMTSET_SE]);
+                            });
+                            var store = Ext.create('Ext.data.ArrayStore', {
+                                storeId: 'totals', autoLoad: true, data: totals, fields: ['SVFOP_SG', 'AMTCOM_SG','AMTIVA_SG','AMTSET_SG','SVFOP_SC','AMTCOM_SC','AMTIVA_SC','AMTSET_SC','SVFOP_SE','AMTCOM_SE','AMTIVA_SE','AMTSET_SE']
+                            });
+                            Ext.getCmp(prototype.id + '-gridDataHeaderDetailTotal').bindStore(store);
+                            
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                    ///////////////////////////////////////////////
+                    /*if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataHeaderDetail').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.TITLE_DATE + ' - Period: ' + data.WEEKMO + ' -  From: ' + data.DATSFROM + ' To: ' + data.DATSTO + '</center>');
+//
+//                        if (flagDrilDownByDay !== 'Date') {
+//                            titulo = " - Card : " + data.SCARCOD + ' : ' + data.strDescCard;
+//                        }
+//                        if (data.strFecFiltro === 'BDATEP') {
+//                            Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Reconciliation Date : ' + data.strFormatDate + titulo + '</center>');
+//                        } else {
+//                            if (data.IN_TDOC == 'R') {
+//                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Refund Date : ' + data.strFormatDate + titulo + '</center>');
+//                            } else {
+//                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Sales Date : ' + data.strFormatDate + titulo + '</center>');
+//                            }
+//                        }
+                    }*/
+//                    me.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataHeaderDetail').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+
+    },
     OnGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelDetail';
