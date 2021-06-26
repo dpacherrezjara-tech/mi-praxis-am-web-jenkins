@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -149,6 +150,60 @@ public class SalesReconciliBoomerController extends BaseController {
             }
             lst = logic.loadPX559SQP03991(filter);
         } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchDetHeader")
+    public @ResponseBody
+    String searchDetHeader(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- SalesReconciliBoomer : searchDetHeader-------------");
+        HashMap<String, List<A2318Filter>> hmResultado = new HashMap<String, List<A2318Filter>>();
+        
+        map.put("success", true);
+        hmResultado = this.getListSummaryDetailHeader(request, false);
+        List<A2318Filter> lst = hmResultado.get("DATA");
+        List<A2318Filter> lstTotal  = hmResultado.get("TOTAL");
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        map.put("lstTotal", lstTotal);
+        return new Gson().toJson(map);
+    }
+
+    public HashMap<String, List<A2318Filter>> getListSummaryDetailHeader(HttpServletRequest request, Boolean bExcel) {
+        
+        HashMap<String, List<A2318Filter>> lst = new HashMap<String, List<A2318Filter>>();
+        A2318Filter filter = new A2318Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new SalesReconciliBoomerLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2318Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            lst = logic.loadPX559SQP03992(filter);
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
             throw new SpringException(e);
         }
         return lst;

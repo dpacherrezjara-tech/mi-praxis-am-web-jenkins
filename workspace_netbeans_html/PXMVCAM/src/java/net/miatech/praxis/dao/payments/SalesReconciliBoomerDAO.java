@@ -140,14 +140,14 @@ public class SalesReconciliBoomerDAO {
         A2318Filter beanTkt;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
-        hmDescEstados.put("", "Pendiente");
-        hmDescEstados.put("1", "Conciliado");
-        hmDescEstados.put("2", "Diferencia");
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("1", "Conciliate");
+        hmDescEstados.put("2", "Difference");
 
         HashMap<String, String> hmDescTipos = new HashMap<String, String>();
-        hmDescTipos.put("SG", "Venta total");
-        hmDescTipos.put("SC", "Venta al crédito");
-        hmDescTipos.put("SE", "Venta en efectivo");
+        hmDescTipos.put("S", "Total Sale");
+        hmDescTipos.put("SC", "Credit Sale");
+        hmDescTipos.put("SE", "Cash Sale");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -227,6 +227,151 @@ public class SalesReconciliBoomerDAO {
         }
 
         return lstTkts;
+    }
+
+    public HashMap<String, List<A2318Filter>> loadPX559SQP03992(A2318Filter filter) throws SQLException, Exception {
+
+        List<A2318Filter> lstTkts = new ArrayList<A2318Filter>(0);
+        A2318Filter beanTkt;
+        List<A2318Filter> lstTotals = new ArrayList<A2318Filter>(0);
+        A2318Filter beanTOTAL;
+        HashMap<String, List<A2318Filter>> hmResultado = new HashMap<String, List<A2318Filter>>();
+        
+        double SVFOP_SG = 0.0, AMTCOM_SG = 0.0, AMTIVA_SG = 0.0, AMTSET_SG = 0.0;
+        double SVFOP_SC = 0.0, AMTCOM_SC = 0.0, AMTIVA_SC = 0.0, AMTSET_SC = 0.0;
+        double SVFOP_SE = 0.0, AMTCOM_SE = 0.0, AMTIVA_SE = 0.0, AMTSET_SE = 0.0;
+
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "Pending");
+        hmDescEstados.put("1", "Conciliate");
+        hmDescEstados.put("2", "Difference");
+
+        HashMap<String, String> hmDescTipos = new HashMap<String, String>();
+        hmDescTipos.put("S", "Total Sale");
+        hmDescTipos.put("D", "Diary");
+        hmDescTipos.put("SC", "Credit Sale");
+        hmDescTipos.put("SE", "Cash Sale");
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03992(?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATSET);
+            cstmt.setString(3, filter.IN_WEEKMO);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                beanTOTAL = new A2318Filter();
+                beanTOTAL.SVFOP_SG = rst.getLong("SVFOP_SG");
+                beanTOTAL.AMTCOM_SG = rst.getLong("AMTCOM_SG");
+                beanTOTAL.AMTIVA_SG = rst.getLong("AMTIVA_SG");
+                beanTOTAL.AMTSET_SG = rst.getLong("AMTSET_SG");
+                
+                beanTOTAL.SVFOP_SC = rst.getLong("SVFOP_SC");
+                beanTOTAL.AMTCOM_SC = rst.getLong("AMTCOM_SC");
+                beanTOTAL.AMTIVA_SC = rst.getLong("AMTIVA_SC");
+                beanTOTAL.AMTSET_SC = rst.getLong("AMTSET_SC");
+                
+                beanTOTAL.SVFOP_SE = rst.getLong("SVFOP_SE");
+                beanTOTAL.AMTCOM_SE = rst.getLong("AMTCOM_SE");
+                beanTOTAL.AMTIVA_SE = rst.getLong("AMTIVA_SE");
+                beanTOTAL.AMTSET_SE = rst.getLong("AMTSET_SE");
+                lstTotals.add(beanTOTAL);
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    beanTkt = new A2318Filter();
+                    beanTkt.strFecFiltro = filter.strFecFiltro.trim();
+                    beanTkt.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    beanTkt.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    beanTkt.IN_TDOC = filter.IN_TDOC.trim();
+
+                    beanTkt.SDATE = rst.getString("SDATE").trim();
+                    beanTkt.strFormatDate = Functions.getStringConvertDate(rst.getString("SDATE").trim());
+
+                    beanTkt.WEEKMO = rst.getString("WEEKMO");
+                    beanTkt.STVAL = rst.getString("STVAL");
+                    if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
+                        beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                    } else {
+                        beanTkt.descSTVAL = rst.getString("STVAL").trim();
+                    }
+                    beanTkt.DATSFROM = rst.getString("DATSFROM");
+                    beanTkt.DATSTO = rst.getString("DATSTO");
+                    beanTkt.TREG = rst.getString("TREG");
+                    if (hmDescTipos.containsKey(rst.getString("TREG").trim())) {
+                        beanTkt.descTREG = hmDescTipos.get(rst.getString("TREG").trim()).toString();
+                    } else {
+                        beanTkt.descTREG = rst.getString("TREG").trim();
+                    }
+
+                    beanTkt.SVFOP = rst.getDouble("SVFOP");
+                    beanTkt.AMTCOM = rst.getDouble("AMTCOM");
+                    beanTkt.AMTIVA = rst.getDouble("AMTIVA");
+                    beanTkt.AMTSET = rst.getDouble("AMTSET");
+
+                    beanTkt.ACCNBR = rst.getString("ACCNBR");
+
+                    beanTkt.TITLE_DATE = filter.TITLE_DATE;
+                    
+                    /*beanTkt.SVFOP_SG = SVFOP_SG;
+                    beanTkt.AMTCOM_SG = AMTCOM_SG;
+                    beanTkt.AMTIVA_SG = AMTIVA_SG;
+                    beanTkt.AMTSET_SG = AMTSET_SG;
+                    
+                    beanTkt.SVFOP_SC = SVFOP_SC;
+                    beanTkt.AMTCOM_SC = AMTCOM_SC;
+                    beanTkt.AMTIVA_SC = AMTIVA_SC;
+                    beanTkt.AMTSET_SC = AMTSET_SC;
+                    
+                    beanTkt.SVFOP_SE = SVFOP_SE;                    
+                    beanTkt.AMTCOM_SE = AMTCOM_SE;
+                    beanTkt.AMTIVA_SE = AMTIVA_SE;
+                    beanTkt.AMTSET_SE = AMTSET_SE;*/
+
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        hmResultado.put("DATA", lstTkts);
+        hmResultado.put("TOTAL", lstTotals);
+
+        return hmResultado;
     }
 
     public List<A2324Filter> loadPX559SQP04021(A2324Filter filter) throws SQLException, Exception {
