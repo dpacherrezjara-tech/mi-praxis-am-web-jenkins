@@ -25,6 +25,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A3389Filter;
+import net.miatech.beans.SaleAudit.A3908Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.BwrQueryRefundLogic;
@@ -792,6 +793,30 @@ public class BwrQueryRefundController extends BaseController {
         }
         map.put("success", true);
         map.put("data", result);
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "searchSabreLst")
+    public @ResponseBody
+    String searchSabreLst(ModelMap map, HttpServletRequest request) {
+        A3908Filter filter = new A3908Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            BwrQueryRefundLogic logic = new BwrQueryRefundLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A3908Filter> lst_search = logic.searchSabreLst(filter);
+
+            map.put("success", true);
+            map.put("data", lst_search);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
         return new Gson().toJson(map);
     }
 
