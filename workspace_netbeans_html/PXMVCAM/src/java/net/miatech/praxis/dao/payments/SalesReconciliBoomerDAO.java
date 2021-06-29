@@ -145,7 +145,7 @@ public class SalesReconciliBoomerDAO {
         hmDescEstados.put("2", "Difference");
 
         HashMap<String, String> hmDescTipos = new HashMap<String, String>();
-        hmDescTipos.put("S", "Total Sale");
+        hmDescTipos.put("SG", "General Sale");
         hmDescTipos.put("SC", "Credit Sale");
         hmDescTipos.put("SE", "Cash Sale");
 
@@ -198,6 +198,14 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.AMTIVA = rst.getDouble("AMTIVA");
                 beanTkt.AMTSET = rst.getDouble("AMTSET");
 
+                beanTkt.SVFOPC = rst.getDouble("SVFOPC");
+                beanTkt.AMTCOMC = rst.getDouble("AMTCOMC");
+                beanTkt.AMTIVAC = rst.getDouble("AMTIVAC");
+                beanTkt.AMTSETC = rst.getDouble("AMTSETC");
+
+                beanTkt.QTYMATCH = rst.getInt("QTYMATCH");
+                beanTkt.QTYMATDIF = rst.getInt("QTYMATDIF");
+
                 beanTkt.ACCNBR = rst.getString("ACCNBR");
 
                 lstTkts.add(beanTkt);
@@ -247,7 +255,7 @@ public class SalesReconciliBoomerDAO {
         hmDescEstados.put("2", "Difference");
 
         HashMap<String, String> hmDescTipos = new HashMap<String, String>();
-        hmDescTipos.put("S", "Total Sale");
+        hmDescTipos.put("SG", "General Sale");
         hmDescTipos.put("D", "Diary");
         hmDescTipos.put("SC", "Credit Sale");
         hmDescTipos.put("SE", "Cash Sale");
@@ -271,21 +279,21 @@ public class SalesReconciliBoomerDAO {
 
             while (rst.next()) {
                 /*beanTOTAL = new A2318Filter();
-                beanTOTAL.SVFOP_SG = rst.getLong("SVFOP_SG");
-                beanTOTAL.AMTCOM_SG = rst.getLong("AMTCOM_SG");
-                beanTOTAL.AMTIVA_SG = rst.getLong("AMTIVA_SG");
-                beanTOTAL.AMTSET_SG = rst.getLong("AMTSET_SG");
+                 beanTOTAL.SVFOP_SG = rst.getLong("SVFOP_SG");
+                 beanTOTAL.AMTCOM_SG = rst.getLong("AMTCOM_SG");
+                 beanTOTAL.AMTIVA_SG = rst.getLong("AMTIVA_SG");
+                 beanTOTAL.AMTSET_SG = rst.getLong("AMTSET_SG");
 
-                beanTOTAL.SVFOP_SC = rst.getLong("SVFOP_SC");
-                beanTOTAL.AMTCOM_SC = rst.getLong("AMTCOM_SC");
-                beanTOTAL.AMTIVA_SC = rst.getLong("AMTIVA_SC");
-                beanTOTAL.AMTSET_SC = rst.getLong("AMTSET_SC");
+                 beanTOTAL.SVFOP_SC = rst.getLong("SVFOP_SC");
+                 beanTOTAL.AMTCOM_SC = rst.getLong("AMTCOM_SC");
+                 beanTOTAL.AMTIVA_SC = rst.getLong("AMTIVA_SC");
+                 beanTOTAL.AMTSET_SC = rst.getLong("AMTSET_SC");
 
-                beanTOTAL.SVFOP_SE = rst.getLong("SVFOP_SE");
-                beanTOTAL.AMTCOM_SE = rst.getLong("AMTCOM_SE");
-                beanTOTAL.AMTIVA_SE = rst.getLong("AMTIVA_SE");
-                beanTOTAL.AMTSET_SE = rst.getLong("AMTSET_SE");
-                lstTotals.add(beanTOTAL);*/
+                 beanTOTAL.SVFOP_SE = rst.getLong("SVFOP_SE");
+                 beanTOTAL.AMTCOM_SE = rst.getLong("AMTCOM_SE");
+                 beanTOTAL.AMTIVA_SE = rst.getLong("AMTIVA_SE");
+                 beanTOTAL.AMTSET_SE = rst.getLong("AMTSET_SE");
+                 lstTotals.add(beanTOTAL);*/
 
                 beanTOTAL = new A2318Filter();
                 beanTOTAL.strFecFiltro = filter.strFecFiltro.trim();
@@ -316,8 +324,13 @@ public class SalesReconciliBoomerDAO {
                 beanTOTAL.AMTCOM = rst.getDouble("AMTCOM");
                 beanTOTAL.AMTIVA = rst.getDouble("AMTIVA");
                 beanTOTAL.AMTSET = rst.getDouble("AMTSET");
+                
+                beanTOTAL.SVFOPC = rst.getDouble("SVFOPC");
+                beanTOTAL.AMTCOMC = rst.getDouble("AMTCOMC");
+                beanTOTAL.AMTIVAC = rst.getDouble("AMTIVAC");
+                beanTOTAL.AMTSETC = rst.getDouble("AMTSETC");
 
-                beanTOTAL.ACCNBR = rst.getString("ACCNBR");
+                //beanTOTAL.ACCNBR = rst.getString("ACCNBR");
                 lstTotals.add(beanTOTAL);
             }
             rst.close();
@@ -355,6 +368,14 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.AMTCOM = rst.getDouble("AMTCOM");
                     beanTkt.AMTIVA = rst.getDouble("AMTIVA");
                     beanTkt.AMTSET = rst.getDouble("AMTSET");
+
+                    beanTkt.SVFOPC = rst.getDouble("SVFOPC");
+                    beanTkt.AMTCOMC = rst.getDouble("AMTCOMC");
+                    beanTkt.AMTIVAC = rst.getDouble("AMTIVAC");
+                    beanTkt.AMTSETC = rst.getDouble("AMTSETC");
+
+                    beanTkt.QTYMATCH = rst.getInt("QTYMATCH");
+                    beanTkt.QTYMATDIF = rst.getInt("QTYMATDIF");
 
                     beanTkt.ACCNBR = rst.getString("ACCNBR");
 
