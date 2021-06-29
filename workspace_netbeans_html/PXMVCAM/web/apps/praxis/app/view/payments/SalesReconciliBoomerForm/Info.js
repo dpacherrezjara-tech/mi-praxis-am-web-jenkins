@@ -2050,7 +2050,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
-                                align: 'center'
+                                align: 'left'
                             },
                             items: [
                                 {
@@ -2239,7 +2239,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataHeaderDetailTotal',
-                                    width: 964,
+                                    width: 974,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -2280,7 +2280,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                              }
                                              },*/
                                             {
-                                                text: 'Type', dataIndex: 'descTREG', width: 80, //flex: 1
+                                                text: 'Type', dataIndex: 'descTREG', width: 90, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left;background-color:#D7F1FB;";
                                                     return value;
