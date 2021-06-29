@@ -37,6 +37,8 @@ public class A2318 {
     public String FREQUEN = "";
     public String FSELEC = "";
     public String FECSELEC = "";
+    public int QTYMATCH = 0;
+    public int QTYMATDIF = 0;
 
     
     
