@@ -97,6 +97,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
         var ComboEstatus = Ext.getCmp(prototype.id01 + '-ComboEstatus');
         ComboEstatus.setValue('');
     },
+    onSabreStatusClick: function () {
+        
+        var win = new Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.FormSabreEstatus({
+            params: {
+                rec_preme: Ext.getCmp(prototype.id01 + '-txtPreme').getValue(),
+                rec_number:  Ext.getCmp(prototype.id01 + '-txtNumber').getValue(),
+                rec_tkt: Ext.getCmp(prototype.id01 + '-txtSNumber').getValue(),
+                rec_aplidate: Ext.getCmp(prototype.id01 + '-txtAplidate').getValue()
+            }
+        });
+        win.show();
+    },
     onLoadData: function () {
         var me = this;
         rec = me.view.params.rec;

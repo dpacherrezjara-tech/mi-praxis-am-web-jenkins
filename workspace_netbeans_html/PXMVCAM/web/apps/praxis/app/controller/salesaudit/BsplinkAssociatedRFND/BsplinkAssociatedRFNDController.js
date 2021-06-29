@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
         prototype.id01 = 'DataEntryBsplinkRefundQueryRFND';
         prototype.id02 = 'FormOfPaymentRFND';
         prototype.id03 = 'OriginalDataTaxesRFND';
+        prototype.idSabreEstatus = 'FormSabreEstatus';
         prototype.url = CONTEXTPATH + '/BwrBSPLINKRFND';
         prototype.url01 = CONTEXTPATH + '/BsplinkRefundQueryRFND';
         prototype.widthContenedor = 1366;
@@ -97,7 +98,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
                 {"code": "D", "name": "REEMBOLSABLE"},
                 {"code": "G", "name": "NO REEMBOLSABLE"},
                 {"code": "X", "name": "REMOVED"},
-                {"code": "Z", "name": "UNDER INVESTIGATION"}
+                {"code": "Z", "name": "UNDER INVESTIGATION"},
+                {"code": "K", "name": "CPN EVALUATION"}
             ]
         }));
     },
@@ -334,12 +336,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
             }
 
             /*if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) !== '' &&
-                    Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
-                if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
-                    return;
-                }
-            }*/
+             Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
+             if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
+             Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
+             return;
+             }
+             }*/
         }
 
         if (comboBy === '2' || comboBy === '3' || comboBy === '5') {
@@ -475,6 +477,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
             case 'Z':
                 color = '#CCFF00';
                 value = 'UNDER INVESTIGATION';
+                break;
+            case 'K':
+                color = '#E3DAED';
+                value = 'CPN EVALUATION';
                 break;
         }
 
