@@ -122,6 +122,9 @@
 .prx-icon-panel {
   background-image: url("../img/botones/16x16/panel.png");
 }
+.prx-icon-image-facsimil {
+  background-image: url("../img/botones/facsimil.png");
+}
 .prx-icon-base-column {
   width: 16px;
   height: 16px;
