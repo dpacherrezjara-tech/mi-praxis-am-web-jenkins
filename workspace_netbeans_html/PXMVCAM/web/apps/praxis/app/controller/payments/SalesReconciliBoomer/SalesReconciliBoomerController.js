@@ -551,6 +551,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
+    OnGridDetDayFromHeader: function(obj, metaData, rowNum, columnNum, obj2, rowData) {        
+        if(rowData.data.TREG === 'SG'){
+            return;
+        }
+        
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.strFecFiltro = 'SDATE';
+        this.beanDetDay.IN_TDOC = '';
+        this.beanDetDay.DATE = rowData.data.SDATE;
+
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+        this.SetOnGridDetDay();
+    },
     OnGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelDetail';

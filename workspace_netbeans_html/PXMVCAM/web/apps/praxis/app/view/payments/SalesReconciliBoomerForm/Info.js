@@ -312,6 +312,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             return value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -1893,13 +1897,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'descSTVAL', width: 100, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if(record.data.STVAL === ''){
-                                                        metaData.style = "text-align:left;background-color:#ECA438;";
-                                                    } else if(record.data.STVAL === '1'){
-                                                        metaData.style = "text-align:left;background-color:#38EC4A;";
-                                                    } else if(record.data.STVAL === '2'){
-                                                        metaData.style = "text-align:left;background-color:#ED1717;";
-                                                    } 
+                                                    if (record.data.STVAL === '') {
+                                                        metaData.style = "text-align:left;background-color:#F7BD56;";
+                                                    } else if (record.data.STVAL === '1') {
+                                                        metaData.style = "text-align:left;background-color:#C6E5B1;";
+                                                    } else if (record.data.STVAL === '2') {
+                                                        metaData.style = "text-align:left;background-color:#FF6F6F;";
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -2059,8 +2063,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     width: 1104,
                                     columnLines: true,
                                     /*features: [{
-                                            ftype: 'summary'
-                                        }],*/
+                                     ftype: 'summary'
+                                     }],*/
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -2070,15 +2074,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         items: [
                                             {
                                                 text: 'Sale <br> Date', dataIndex: 'SDATE', width: 90, //flex: 1
+                                                listeners: {
+                                                    click: 'OnGridDetDayFromHeader'
+                                                },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     //metaData.style = "color:#057ECB;";
                                                     //value = '<b>' + value + '</b>';
                                                     //return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                    if(record.data.TREG === 'SG'){
-                                                        return "TOTAL"
+                                                    if (record.data.TREG === 'SG') {
+                                                        return "TOTAL";
                                                     } else {
-                                                        return value;
-                                                    }                                                    
+                                                        metaData.style = "color:#057ECB;";
+                                                        value = '<b>' + value + '</b>';
+                                                        return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    }
                                                 }
                                             },
                                             /*{
@@ -2090,13 +2099,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'descSTVAL', width: 80, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if(record.data.STVAL === ''){
-                                                        metaData.style = "text-align:left;background-color:#ECA438;";
-                                                    } else if(record.data.STVAL === '1'){
-                                                        metaData.style = "text-align:left;background-color:#38EC4A;";
-                                                    } else if(record.data.STVAL === '2'){
-                                                        metaData.style = "text-align:left;background-color:#ED1717;";
-                                                    }                                                                                                        
+                                                    if (record.data.STVAL === '') {
+                                                        metaData.style = "text-align:left;background-color:#F7BD56;";
+                                                    } else if (record.data.STVAL === '1') {
+                                                        metaData.style = "text-align:left;background-color:#C6E5B1;";
+                                                    } else if (record.data.STVAL === '2') {
+                                                        metaData.style = "text-align:left;background-color:#FF6F6F;";
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -2289,16 +2298,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'descSTVAL', width: 80, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if(record.data.STVAL === ''){
-                                                        metaData.style = "text-align:left;background-color:#ECA438;";
-                                                    } else if(record.data.STVAL === '1'){
-                                                        metaData.style = "text-align:left;background-color:#38EC4A;";
-                                                    } else if(record.data.STVAL === '2'){
-                                                        metaData.style = "text-align:left;background-color:#ED1717;";
-                                                    } 
+                                                    if (record.data.STVAL === '') {
+                                                        metaData.style = "text-align:left;background-color:#F7BD56;";
+                                                    } else if (record.data.STVAL === '1') {
+                                                        metaData.style = "text-align:left;background-color:#C6E5B1;";
+                                                    } else if (record.data.STVAL === '2') {
+                                                        metaData.style = "text-align:left;background-color:#FF6F6F;";
+                                                    }
                                                     return value;
                                                 }
-                                            },                                            
+                                            },
                                             {text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -2382,11 +2391,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 ]
                                             },
                                             /*{
-                                                text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return value;
-                                                }
-                                            },*/
+                                             text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             return value;
+                                             }
+                                             },*/
                                         ]
                                     }
                                 }
