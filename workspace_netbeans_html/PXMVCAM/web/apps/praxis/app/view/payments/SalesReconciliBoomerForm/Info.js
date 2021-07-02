@@ -283,9 +283,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Number', dataIndex: 'REFNBR', width: 90,
+                                                        listeners: {
+                                                            click: 'OnGridDetByRefNbr'
+                                                        },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
-                                                            return value;
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     }
                                                 ]
@@ -312,6 +316,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                             return value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -385,6 +393,246 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
 //                                        {width: 100, id: prototype.id + '-lblTotQTOTSAL'},
 //                                    ]
 //                                },             
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridDataByRefNbr',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+//                            height: 'auto',
+                            width: 1400,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataByRefNbr',
+                                    width: 1400,
+                                    height: 630,
+                                    columnLines: true,
+                                    /*features: [{
+                                     ftype: 'summary'
+                                     }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            /*{
+                                             text: 'Sales',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {
+                                             text: 'Date', dataIndex: 'SDATE', width: 100,
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             value = '<b>' + value + '</b>';
+                                             return  value;
+                                             }
+                                             }
+                                             ]
+                                             },
+                                             {
+                                             text: 'Reference',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {
+                                             text: 'Number', dataIndex: 'REFNBR', width: 90,
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:center;";
+                                             return value;
+                                             }
+                                             }
+                                             ]
+                                             },*/
+                                            {
+                                                text: 'Settlement',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Document <br> Type', dataIndex: 'TDOCA', width: 85,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOPA', width: 75,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Credit Card',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Code', dataIndex: 'SCARCODA', width: 50,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Card Number', dataIndex: 'SCARDNA', width: 140,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Author.', dataIndex: 'SAUTHOCA', width: 70,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#B2DAFA;";
+                                                                    return value;
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Payment <br> Type', dataIndex: 'TPAYA', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'BANK', dataIndex: 'BANKA', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'ABCD', dataIndex: 'ABCDA', width: 60,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Filler MD', dataIndex: 'SCURRENCYA', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    /*{
+                                                     text: 'Flag Selec.', dataIndex: 'FSELECA', width: 80,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:center;";
+                                                     return value;
+                                                     }
+                                                     },*/
+                                                ]
+                                            },
+                                            {
+                                                text: 'Boomer',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Transaction <br> Type', dataIndex: 'TDOCB', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Curr.', dataIndex: 'SCURRENCYB', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOPA', width: 75,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Document <br> Type', dataIndex: 'DOCTYPEB', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Ticket', dataIndex: 'TKT', width: 100,
+                                                        listeners: {
+                                                            click: 'showTicket'
+                                                        },
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;background-color:#B2FAC6";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Credit Card',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Code', dataIndex: 'SCARCODB', width: 55,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Card Number', dataIndex: 'SCARDNB', width: 120,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'PNR', dataIndex: 'SPNRB', width: 75,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
                             ]
                         },
                         {
@@ -1851,7 +2099,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1161,
+                            width: 1380,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -1861,7 +2109,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataHeader',
-                                    width: 1161,
+                                    width: 1450,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -1885,7 +2133,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Period', dataIndex: 'WEEKMO', width: 100, //flex: 1
+                                                text: 'Period', dataIndex: 'WEEKMO', width: 50, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     return value;
                                                 }
@@ -1893,7 +2141,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'descSTVAL', width: 100, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;background-color:#D7F1FB;";
+                                                    if (record.data.STVAL === '') {
+                                                        metaData.style = "text-align:left;background-color:#F7BD56;";
+                                                    } else if (record.data.STVAL === '1') {
+                                                        metaData.style = "text-align:left;background-color:#C6E5B1;";
+                                                    } else if (record.data.STVAL === '2') {
+                                                        metaData.style = "text-align:left;background-color:#FF6F6F;";
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -1909,51 +2163,126 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     return value;
                                                 }
                                             },
-                                            {
-                                                text: 'Type', dataIndex: 'descTREG', width: 120, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;background-color:#D7F1FB;";
-                                                    return value;
-                                                }
+                                            /*{
+                                             text: 'Type', dataIndex: 'descTREG', width: 120, //flex: 1
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:left;background-color:#D7F1FB;";
+                                             return value;
+                                             }
+                                             },*/
+                                            {text: 'Settlement',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOP', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commissions', dataIndex: 'AMTCOM', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'IVA', dataIndex: 'AMTIVA', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount to <br> be settled', dataIndex: 'AMTSET', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
-                                            {
-                                                text: 'Amount', dataIndex: 'SVFOP', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                            {text: 'Boomer',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOPC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commissions', dataIndex: 'AMTCOMC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'IVA', dataIndex: 'AMTIVAC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount to <br> be settled', dataIndex: 'AMTSETC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
-                                            {
-                                                text: 'Commissions', dataIndex: 'AMTCOM', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                            {text: 'Settlement <br> vs Boomer',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Match', dataIndex: 'QTYMATCH', width: 50, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Match with <br> differences', dataIndex: 'QTYMATDIF', width: 80, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
-                                            {
-                                                text: 'IVA', dataIndex: 'AMTIVA', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Amount to <br> be settled', dataIndex: 'AMTSET', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return value;
-                                                }
-                                            },
+                                            /*{
+                                             text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             return value;
+                                             }
+                                             },*/
                                         ]
                                     }
                                 }
@@ -1965,21 +2294,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1352,
+                            width: 1104,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
-                                align: 'center'
+                                align: 'left'
                             },
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataHeaderDetail',
-                                    width: 554,
+                                    width: 1104,
                                     columnLines: true,
-                                    features: [{
-                                            ftype: 'summary'
-                                        }],
+                                    /*features: [{
+                                     ftype: 'summary'
+                                     }],*/
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -1989,11 +2318,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         items: [
                                             {
                                                 text: 'Sale <br> Date', dataIndex: 'SDATE', width: 90, //flex: 1
+                                                listeners: {
+                                                    click: 'OnGridDetDayFromHeader'
+                                                },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     //metaData.style = "color:#057ECB;";
                                                     //value = '<b>' + value + '</b>';
                                                     //return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                    return value
+                                                    if (record.data.TREG === 'SG') {
+                                                        return "TOTAL";
+                                                    } else {
+                                                        metaData.style = "color:#057ECB;";
+                                                        value = '<b>' + value + '</b>';
+                                                        return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    }
                                                 }
                                             },
                                             /*{
@@ -2005,7 +2343,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'descSTVAL', width: 80, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;";
+                                                    if (record.data.STVAL === '') {
+                                                        metaData.style = "text-align:left;background-color:#F7BD56;";
+                                                    } else if (record.data.STVAL === '1') {
+                                                        metaData.style = "text-align:left;background-color:#C6E5B1;";
+                                                    } else if (record.data.STVAL === '2') {
+                                                        metaData.style = "text-align:left;background-color:#FF6F6F;";
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -2028,37 +2372,112 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                              return value;
                                              }
                                              },*/
-                                            {
-                                                text: 'Amount', dataIndex: 'SVFOP', width: 90, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                            {text: 'Settlement',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOP', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commissions', dataIndex: 'AMTCOM', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'IVA', dataIndex: 'AMTIVA', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount to <br> be settled', dataIndex: 'AMTSET', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
-                                            {
-                                                text: 'Commissions', dataIndex: 'AMTCOM', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                            {text: 'Boomer',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOPC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commissions', dataIndex: 'AMTCOMC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'IVA', dataIndex: 'AMTIVAC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount to <br> be settled', dataIndex: 'AMTSETC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
-                                            {
-                                                text: 'IVA', dataIndex: 'AMTIVA', width: 90, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Amount to <br> be settled', dataIndex: 'AMTSET', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                            {text: 'Settlement <br> vs Boomer',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Match', dataIndex: 'QTYMATCH', width: 50, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Match with <br> differences', dataIndex: 'QTYMATDIF', width: 80, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             /*{
                                              text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
@@ -2073,7 +2492,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataHeaderDetailTotal',
-                                    width: 584,
+                                    width: 974,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -2114,7 +2533,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                              }
                                              },*/
                                             {
-                                                text: 'Type', dataIndex: 'descTREG', width: 120, //flex: 1
+                                                text: 'Type', dataIndex: 'descTREG', width: 90, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:left;background-color:#D7F1FB;";
                                                     return value;
@@ -2123,42 +2542,104 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Status', dataIndex: 'descSTVAL', width: 80, //flex: 1
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;";
+                                                    if (record.data.STVAL === '') {
+                                                        metaData.style = "text-align:left;background-color:#F7BD56;";
+                                                    } else if (record.data.STVAL === '1') {
+                                                        metaData.style = "text-align:left;background-color:#C6E5B1;";
+                                                    } else if (record.data.STVAL === '2') {
+                                                        metaData.style = "text-align:left;background-color:#FF6F6F;";
+                                                    }
                                                     return value;
                                                 }
                                             },
-                                            {
-                                                text: 'Amount', dataIndex: 'SVFOP', width: 90, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                            {text: 'Settlement',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOP', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commissions', dataIndex: 'AMTCOM', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'IVA', dataIndex: 'AMTIVA', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount to <br> be settled', dataIndex: 'AMTSET', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
-                                            {
-                                                text: 'Commissions', dataIndex: 'AMTCOM', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                            {text: 'Boomer',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOPC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commissions', dataIndex: 'AMTCOMC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'IVA', dataIndex: 'AMTIVAC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount to <br> be settled', dataIndex: 'AMTSETC', width: 100, //flex: 1
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
-                                            {
-                                                text: 'IVA', dataIndex: 'AMTIVA', width: 90, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Amount to <br> be settled', dataIndex: 'AMTSET', width: 100, //flex: 1
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#D7F1FB;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
+                                            /*{
+                                             text: 'Account to <br> deposit', dataIndex: 'ACCNBR', width: 140, //flex: 1
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             return value;
+                                             }
+                                             },*/
                                         ]
                                     }
                                 }

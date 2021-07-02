@@ -460,6 +460,93 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
+    OnGridDetByRefNbr: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataByRefNbr';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.IN_SDATE = rowData.data.SDATE;
+        this.beanDetDay.IN_REFNBR = rowData.data.REFNBR;
+        //this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
+
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+
+        this.setOnGridDetByRefNbr();
+    },
+    setOnGridDetByRefNbr: function() {
+
+        win.lblUser_toolTip("Estructura: A2319 - A2286");
+        //me.panelActual = '-panelGridDataByRefNbr';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDataByRefNbr'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = me.paramsDetailDay;
+                },
+                load: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+//                        var pag = Ext.getCmp(prototype.id + '-paggin');
+//                        var pagData = pag.getPageData();
+//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                            var data = obj.data.items[0].data;
+                            Ext.getCmp(prototype.id + '-gridDataByRefNbr').setTitle('<center style="font-size:12px;">' + ' Sale Date : ' + data.SDATE + ' - Reference Number: ' + data.REFNBR + ' </center>');
+//                            if (data.strFecFiltro === "BDATEP") {
+//                                Ext.getCmp(prototype.id + '-adgSalDate').setText = "Reconciliation";
+//                            } else {
+//                                if (data.IN_TDOC === 'R') {
+//                                    Ext.getCmp(prototype.id + '-adgSalDate').setText = "Refund";
+//                                } else {
+//                                    Ext.getCmp(prototype.id + '-adgSalDate').setText = "Sales";
+//                                }
+//                            }
+
+//                            Ext.getCmp(prototype.id + '-lblTotQMATCH').setText(Ext.util.Format.number(data.lngTotQMATCH, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotQTEF').setText(Ext.util.Format.number(data.lngTotQTEF, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotQPAS48').setText(Ext.util.Format.number(data.lngTotQPAS48, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotQTOTSAL').setText(Ext.util.Format.number(data.lngTotQTOTSAL, '0,000'));
+//                            Ext.getCmp(prototype.id + '-lblTotlngQMANUAL').setText(Ext.util.Format.number(data.lngTotQMANUAL, '0,000'));
+                    }
+                    //me.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataByRefNbr').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        console.log('RowData');
+        console.log(rowData.data);
+        me.viewMasterTkt(rowData.data);
+    },
+    viewMasterTkt: function(data) {
+
+        prototypeProgram.view = 'payments-sales-reconcili-boomer-form';
+        prototypeProgram.nprog = 'PX00000095';
+        prototypeProgram.title = 'Sales Reconciliation by Boomer';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        beanProMasterTicket.IN_CIA = data.CCIAB;
+        beanProMasterTicket.IN_FORMA = data.FORMAB;
+        beanProMasterTicket.IN_SERIE = data.SERIEB;
+        beanProMasterTicket.IN_SEQ = '';
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
     OnGridDetHeader: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataHeaderDetail';
@@ -505,13 +592,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             var totals = new Array();
                             //totals.push(['SVFOP_SG', 'AMTCOM_SG','AMTIVA_SG','AMTSET_SG','SVFOP_SC','AMTCOM_SC','AMTIVA_SC','AMTSET_SC','SVFOP_SE','AMTCOM_SE','AMTIVA_SE','AMTSET_SE']);
                             lstTotal.forEach(function callback(currentValue, index, array) {
-                                totals.push([currentValue.descSTVAL, currentValue.descTREG, currentValue.SVFOP, currentValue.AMTCOM, currentValue.AMTIVA, currentValue.AMTSET]);
+                                totals.push([currentValue.descSTVAL, currentValue.descTREG, currentValue.SVFOP, currentValue.AMTCOM, currentValue.AMTIVA, currentValue.AMTSET, currentValue.ACCNBR, currentValue.STVAL, currentValue.SVFOPC, currentValue.AMTCOMC, currentValue.AMTIVAC, currentValue.AMTSETC]);
                             });
                             var store = Ext.create('Ext.data.ArrayStore', {
-                                storeId: 'totals', autoLoad: true, data: totals, fields: ['descSTVAL','descTREG','SVFOP','AMTCOM','AMTIVA','AMTSET']
+                                storeId: 'totals', autoLoad: true, data: totals, fields: ['descSTVAL', 'descTREG', 'SVFOP', 'AMTCOM', 'AMTIVA', 'AMTSET', 'ACCNBR', 'STVAL', 'SVFOPC', 'AMTCOMC', 'AMTIVAC', 'AMTSETC']
                             });
                             Ext.getCmp(prototype.id + '-gridDataHeaderDetailTotal').bindStore(store);
-                            
+
                         } else {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -521,26 +608,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
                     ///////////////////////////////////////////////
                     /*if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found.'
-                        });
-                    } else {
-                        var data = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-gridDataHeaderDetail').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.TITLE_DATE + ' - Period: ' + data.WEEKMO + ' -  From: ' + data.DATSFROM + ' To: ' + data.DATSTO + '</center>');
-//
-//                        if (flagDrilDownByDay !== 'Date') {
-//                            titulo = " - Card : " + data.SCARCOD + ' : ' + data.strDescCard;
-//                        }
-//                        if (data.strFecFiltro === 'BDATEP') {
-//                            Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Reconciliation Date : ' + data.strFormatDate + titulo + '</center>');
-//                        } else {
-//                            if (data.IN_TDOC == 'R') {
-//                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Refund Date : ' + data.strFormatDate + titulo + '</center>');
-//                            } else {
-//                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Sales Date : ' + data.strFormatDate + titulo + '</center>');
-//                            }
-//                        }
-                    }*/
+                     global.Msg({
+                     msg: 'Data not found.'
+                     });
+                     } else {
+                     var data = obj.data.items[0].data;
+                     Ext.getCmp(prototype.id + '-gridDataHeaderDetail').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.TITLE_DATE + ' - Period: ' + data.WEEKMO + ' -  From: ' + data.DATSFROM + ' To: ' + data.DATSTO + '</center>');
+                     //
+                     //                        if (flagDrilDownByDay !== 'Date') {
+                     //                            titulo = " - Card : " + data.SCARCOD + ' : ' + data.strDescCard;
+                     //                        }
+                     //                        if (data.strFecFiltro === 'BDATEP') {
+                     //                            Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Reconciliation Date : ' + data.strFormatDate + titulo + '</center>');
+                     //                        } else {
+                     //                            if (data.IN_TDOC == 'R') {
+                     //                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Refund Date : ' + data.strFormatDate + titulo + '</center>');
+                     //                            } else {
+                     //                                Ext.getCmp(prototype.id + '-gridDetDay').setTitle('<center style="font-size:12px;">' + ' Sales Date : ' + data.strFormatDate + titulo + '</center>');
+                     //                            }
+                     //                        }
+                     }*/
 //                    me.setWidthPie();
                 }
             }
@@ -550,6 +637,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-gridDataHeaderDetail').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
+    },
+    OnGridDetDayFromHeader: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        if (rowData.data.TREG === 'SG') {
+            return;
+        }
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.strFecFiltro = 'SDATE';
+        this.beanDetDay.IN_TDOC = '';
+        this.beanDetDay.DATE = rowData.data.SDATE;
+
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+        this.SetOnGridDetDay();
     },
     OnGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);

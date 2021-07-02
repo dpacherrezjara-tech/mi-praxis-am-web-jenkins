@@ -41,6 +41,10 @@ public class SalesReconciliBoomerLogic {
     public List<A2324Filter> loadPX559SQP04020(A2324Filter filter) throws SQLException, Exception {
         return SalesReconciliBoomerDAO.loadPX559SQP04020(filter);
     }
+    
+    public List<A2324Filter> loadPX559SQP04013(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX559SQP04013(filter);
+    }
 
     /*
     

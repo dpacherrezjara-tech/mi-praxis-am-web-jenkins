@@ -87,7 +87,9 @@ Ext.define('Ext.Praxis.view.sales.OracleAccountingReportForm.Filters', {
                                     ["FWNTNU", "FLOWN TNU"],
                                     ["IXPTNU", "IXP TNU"],
                                     ["FOB", "FOB"],
-                                    ["CONSORTIA", "CONSORTIA"]
+                                    ["CONSORTIA", "CONSORTIA"],
+                                    ["IXPEST", "IXP Estimated"],
+                                    ["IXCEST", "IXC Estimated"]
                                 ]
                             }),
                             queryMode: 'local',
