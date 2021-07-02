@@ -262,18 +262,22 @@ public class SalesReconciliBoomerController extends BaseController {
     public @ResponseBody
     String searchDataByRefNbr(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- SalesReconciliBoomer : SearchDataByRefNbr-------------");
-
+        HashMap<String, List<A2324Filter>> hmResultado = new HashMap<String, List<A2324Filter>>();
+        
         map.put("success", true);
-        List<A2324Filter> lst = this.getListDataByRefNbr(request, false);
+        hmResultado = this.getListDataByRefNbr(request, false);
+        List<A2324Filter> lst = hmResultado.get("DATA");
+        List<A2324Filter> lstSett  = hmResultado.get("SETT");
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
+        map.put("lstSett", lstSett);
         return new Gson().toJson(map);
     }
 
-    public List<A2324Filter> getListDataByRefNbr(HttpServletRequest request, Boolean bExcel) {
+    public HashMap<String, List<A2324Filter>> getListDataByRefNbr(HttpServletRequest request, Boolean bExcel) {
 
-        List<A2324Filter> lst = new ArrayList<>(0);
+        HashMap<String, List<A2324Filter>> lst = new HashMap<String, List<A2324Filter>>();
         A2324Filter filter = new A2324Filter();
         Gson gson = new Gson();
         String beanString = "";

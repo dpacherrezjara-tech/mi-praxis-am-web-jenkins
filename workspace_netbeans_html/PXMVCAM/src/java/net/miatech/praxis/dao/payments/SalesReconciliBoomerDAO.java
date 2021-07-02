@@ -324,7 +324,7 @@ public class SalesReconciliBoomerDAO {
                 beanTOTAL.AMTCOM = rst.getDouble("AMTCOM");
                 beanTOTAL.AMTIVA = rst.getDouble("AMTIVA");
                 beanTOTAL.AMTSET = rst.getDouble("AMTSET");
-                
+
                 beanTOTAL.SVFOPC = rst.getDouble("SVFOPC");
                 beanTOTAL.AMTCOMC = rst.getDouble("AMTCOMC");
                 beanTOTAL.AMTIVAC = rst.getDouble("AMTIVAC");
@@ -751,11 +751,14 @@ public class SalesReconciliBoomerDAO {
 
         return lstTkts;
     }
-    
-    public List<A2324Filter> loadPX559SQP04013(A2324Filter filter) throws SQLException, Exception {
 
+    public HashMap<String, List<A2324Filter>> loadPX559SQP04013(A2324Filter filter) throws SQLException, Exception {
+        double totSVFOPA = 0.0, totSVFOPB = 0.0;
         List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
         A2324Filter beanTkt;
+        List<A2324Filter> lstSett = new ArrayList<A2324Filter>(0);
+        A2324Filter beanSett;
+        HashMap<String, List<A2324Filter>> hmResultado = new HashMap<String, List<A2324Filter>>();
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "Pending");
@@ -766,6 +769,10 @@ public class SalesReconciliBoomerDAO {
         hmDescTipos.put("SG", "General Sale");
         hmDescTipos.put("SC", "Credit Sale");
         hmDescTipos.put("SE", "Cash Sale");
+        
+        HashMap<String, String> hmDescTipoDocumento = new HashMap<String, String>();
+        hmDescTipoDocumento.put("S", "Sales");
+        hmDescTipoDocumento.put("R", "Refund");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -783,42 +790,60 @@ public class SalesReconciliBoomerDAO {
             cstmt.execute();
 
             rst = cstmt.getResultSet();
-
             while (rst.next()) {
-                beanTkt = new A2324Filter();
-                beanTkt.SDATE = rst.getString("SDATE").trim();
-                beanTkt.REFNBR = rst.getString("REFNBR").trim();
-
                 //Settlement
-                beanTkt.TDOCA = rst.getString("TDOCA").trim();
-                beanTkt.SVFOPA = rst.getDouble("SVFOPA");
-                beanTkt.SCARCODA = rst.getString("SCARCODA");
-                beanTkt.SCARDNA = rst.getString("SCARDNA");
-                beanTkt.SAUTHOCA = rst.getString("SAUTHOCA");
-                beanTkt.TPAYA = rst.getString("TPAYA");
-                beanTkt.BANKA = rst.getString("BANKA");
-                beanTkt.ABCDA = rst.getString("ABCDA");
-                beanTkt.SCURRENCYA = rst.getString("SCURRENCYA");
-                beanTkt.FSELECA = rst.getString("FSELECA");
-                
-
-                //Boomer
-                beanTkt.TDOCB = rst.getString("TDOCB").trim();
-                beanTkt.SCURRENCYB = rst.getString("SCURRENCYB").trim();
-                beanTkt.SVFOPB = rst.getDouble("SVFOPB");
-                beanTkt.DOCTYPEB = rst.getString("DOCTYPEB").trim();
-                beanTkt.TDOCB = rst.getString("TDOCB").trim();
-                beanTkt.CCIAB = rst.getString("CCIAB");
-                beanTkt.FORMAB = rst.getString("FORMAB");
-                beanTkt.SERIEB = rst.getString("SERIEB");
-                beanTkt.TKT = rst.getString("CCIAB") + rst.getString("FORMAB")  + rst.getString("SERIEB");
-                beanTkt.SCARCODB = rst.getString("SCARCODB");
-                beanTkt.SCARDNB = rst.getString("SCARDNB");
-                beanTkt.SPNRB = rst.getString("SPNRB");
-                               
-                lstTkts.add(beanTkt);
+                beanSett = new A2324Filter();
+                beanSett.SDATE = rst.getString("SDATE").trim();
+                beanSett.REFNBR = rst.getString("REFNBR").trim();
+                beanSett.TDOCA = rst.getString("TDOCA").trim();
+                if (hmDescTipoDocumento.containsKey(rst.getString("TDOCA").trim())) {
+                        beanSett.descTDOCA = hmDescTipoDocumento.get(rst.getString("TDOCA").trim()).toString();
+                    } else {
+                        beanSett.descTDOCA = rst.getString("TDOCA").trim();
+                    }
+                beanSett.SVFOPA = rst.getDouble("SVFOPA");
+                beanSett.SCARCODA = rst.getString("SCARCODA");
+                beanSett.SCARDNA = rst.getString("SCARDNA");
+                beanSett.SAUTHOCA = rst.getString("SAUTHOCA");
+                beanSett.TPAYA = rst.getString("TPAYA");
+                beanSett.CUR = rst.getString("CUR");
+                beanSett.BANKA = rst.getString("BANKA");
+                beanSett.ABCDA = rst.getString("ABCDA");
+                beanSett.SCURRENCYA = rst.getString("SCURRENCYA");
+                beanSett.FSELECA = rst.getString("FSELECA");
+                totSVFOPA = totSVFOPA + beanSett.SVFOPA;
+                lstSett.add(beanSett);
             }
+
             rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    beanTkt = new A2324Filter();
+                    beanTkt.SDATE = rst.getString("SDATE").trim();
+                    beanTkt.REFNBR = rst.getString("REFNBR").trim();
+
+                    //Boomer
+                    beanTkt.TDOCB = rst.getString("TDOCB").trim();
+                    beanTkt.SCURRENCYB = rst.getString("SCURRENCYB").trim();
+                    beanTkt.SVFOPB = rst.getDouble("SVFOPB");
+                    beanTkt.DOCTYPEB = rst.getString("DOCTYPEB").trim();
+                    beanTkt.CHANNELID  = rst.getString("CHANNELID").trim();
+                    beanTkt.TDOCB = rst.getString("TDOCB").trim();
+                    beanTkt.CCIAB = rst.getString("CCIAB");
+                    beanTkt.FORMAB = rst.getString("FORMAB");
+                    beanTkt.SERIEB = rst.getString("SERIEB");
+                    beanTkt.TKT = rst.getString("CCIAB") + rst.getString("FORMAB") + rst.getString("SERIEB");
+                    beanTkt.SCARCODB = rst.getString("SCARCODB");
+                    beanTkt.SAUTHOCB = rst.getString("SAUTHOCB");
+                    beanTkt.SCARDNB = rst.getString("SCARDNB");
+                    beanTkt.SPNRB = rst.getString("SPNRB");
+                    beanTkt.estadoTitulo = filter.estadoTitulo;
+                    totSVFOPB = totSVFOPB + beanTkt.SVFOPB;
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
 
         } catch (Exception e) {
             e.getMessage();
@@ -841,8 +866,18 @@ public class SalesReconciliBoomerDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
-
-        return lstTkts;
+        
+        for (int i = 0; i < lstTkts.size(); i++) {
+            lstTkts.get(i).totSVFOPB = totSVFOPB;
+        }
+        
+        for (int i = 0; i < lstSett.size(); i++) {
+            lstSett.get(i).totSVFOPA = totSVFOPA;
+        }
+        
+        hmResultado.put("DATA", lstTkts);
+        hmResultado.put("SETT", lstSett);
+        return hmResultado;
     }
 
 }
