@@ -46,8 +46,11 @@ public class A2324Filter extends A2324 {
 
     //SETTLEMENT
     public String TDOCA = "";
+    public String descTDOCA = "";
     public double SVFOPA = 0.0;
+    public double totSVFOPA = 0.0;
     public String SCARCODA = "";
+    public String CUR = "";
     public String SCARDNA = "";
     public String SAUTHOCA = "";
     public String TPAYA = "";
@@ -60,14 +63,18 @@ public class A2324Filter extends A2324 {
     public String TDOCB = "";
     public String SCURRENCYB = "";
     public double SVFOPB = 0.0;
+    public double totSVFOPB = 0.0;
     public String DOCTYPEB = "";
     public String CCIAB = "";
+    public String CHANNELID = "";
     public String FORMAB = "";
     public String SERIEB = "";
     public String TKT = "";
     public String SCARCODB = "";
     public String SCARDNB = "";
+    public String SAUTHOCB = "";
     public String SPNRB = "";
+    public String estadoTitulo = "";
 
     public Pagination page = new Pagination();
 
