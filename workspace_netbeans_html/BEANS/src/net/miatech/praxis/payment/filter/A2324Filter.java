@@ -12,8 +12,8 @@ import net.miatech.praxis.payment.A2324;
  *
  * @author ggutierrez
  */
-public class A2324Filter extends A2324{
-    
+public class A2324Filter extends A2324 {
+
     public long RN = 0;
     public String strFecFiltro = "";
     public String IN_TDOC = "";
@@ -22,14 +22,14 @@ public class A2324Filter extends A2324{
     public String DATE = "";
     public String desSTVAL = "";
     public String IN_PNR = "";
-    
+
     // Qty
     public long QMATCH = 0;
     public long QPAYMENT_WO = 0;
     public long QSALES_WO = 0;
     public long QMATCH_DIFF = 0;
     public long QTOTSAL = 0;
-    
+
     // tot
     public long totQMATCH = 0;
     public long totQPAYMENT_WO = 0;
@@ -37,12 +37,38 @@ public class A2324Filter extends A2324{
     public long totQMATCH_DIFF = 0;
     public long totQTOTSAL = 0;
 
-   
-    public String strFormatDate="";
+    public String strFormatDate = "";
     public long totSVFOP = 0;
-    
-  
-    
+
+    //CAMPOS PARA SETTLEMENT VS BOOMER
+    public String IN_SDATE = "";
+    public String IN_REFNBR = "";
+
+    //SETTLEMENT
+    public String TDOCA = "";
+    public double SVFOPA = 0.0;
+    public String SCARCODA = "";
+    public String SCARDNA = "";
+    public String SAUTHOCA = "";
+    public String TPAYA = "";
+    public String BANKA = "";
+    public String ABCDA = "";
+    public String SCURRENCYA = "";
+    public String FSELECA = "";
+
+    //BOOMER
+    public String TDOCB = "";
+    public String SCURRENCYB = "";
+    public double SVFOPB = 0.0;
+    public String DOCTYPEB = "";
+    public String CCIAB = "";
+    public String FORMAB = "";
+    public String SERIEB = "";
+    public String TKT = "";
+    public String SCARCODB = "";
+    public String SCARDNB = "";
+    public String SPNRB = "";
+
     public Pagination page = new Pagination();
-    
+
 }
