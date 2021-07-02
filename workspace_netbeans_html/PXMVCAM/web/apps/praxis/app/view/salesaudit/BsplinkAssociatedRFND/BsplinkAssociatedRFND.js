@@ -7,6 +7,7 @@ prototype.id = 'BsplinkAssociatedRFND';
 prototype.id01 = 'DataEntryBsplinkRefundQueryRFND';
 prototype.id02 = 'FormOfPaymentRFND';
 prototype.id03 = 'OriginalDataTaxesRFND';
+prototype.idSabreEstatus = 'FormSabreEstatus'; 
 prototype.url = CONTEXTPATH + '/BwrBSPLINKRFND';
 prototype.url01 = CONTEXTPATH + '/BsplinkRefundQueryRFND';
 prototype.widthContenedor = 1366;

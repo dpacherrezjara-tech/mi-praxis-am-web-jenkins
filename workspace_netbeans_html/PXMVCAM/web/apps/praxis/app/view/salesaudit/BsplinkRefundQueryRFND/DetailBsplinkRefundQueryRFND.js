@@ -14,7 +14,8 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.DetailBsplinkRefun
         'Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.FormOfPaymentRFND',
         'Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.OriginalDataTaxesRFND',
         'Ext.Praxis.view.salesaudit.BsplinkAssociatedRFND.FormRazonesRFND',
-        'Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.BsplinkFileViewer'
+        'Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.BsplinkFileViewer',
+        'Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.FormSabreEstatus'
     ],
     id: prototype.id01 + '-win',
 
@@ -72,21 +73,28 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.DetailBsplinkRefun
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtAplidate',
                             fieldLabel: 'Application date',
-                            labelWidth: 110,
+                            labelWidth: 95,
                             width: 200,
                             value: 'xxxxxx',
-                            readOnly: true,
-                            labelAlign: 'right'
+                            readOnly: true
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtHourRFND',
                             fieldLabel: 'Hour RFND',
-                            labelWidth: 110,
+                            labelWidth: 65,
                             width: 200,
                             value: 'xxxxxx',
-                            readOnly: true,
-                            labelAlign: 'right'
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id01 + '-txtSabrestatus',
+                            iconCls: 'prx-icon-image-facsimil',
+                            tooltip: 'Detail Coupons',
+                            listeners:{
+                                click: 'onSabreStatusClick'
+                            }
                         }
                     ]
                 },
