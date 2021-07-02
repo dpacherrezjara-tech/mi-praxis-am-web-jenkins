@@ -467,6 +467,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
         this.beanDetDay.IN_SDATE = rowData.data.SDATE;
         this.beanDetDay.IN_REFNBR = rowData.data.REFNBR;
+        this.beanDetDay.estadoTitulo = rowData.data.desSTVAL;
+        
         //this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
 
         me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
@@ -475,7 +477,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     },
     setOnGridDetByRefNbr: function() {
 
-        win.lblUser_toolTip("Estructura: A2319 - A2286");
+        win.lblUser_toolTip("Estructura: A2286 - A2319");
         //me.panelActual = '-panelGridDataByRefNbr';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
@@ -487,44 +489,40 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                     obj.proxy.extraParams = me.paramsDetailDay;
                 },
-                load: function(obj) {
-//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
-
-//                        var pag = Ext.getCmp(prototype.id + '-paggin');
-//                        var pagData = pag.getPageData();
-//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                    if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found.'
-                        });
-                    } else {
-                            var data = obj.data.items[0].data;
-                            Ext.getCmp(prototype.id + '-gridDataByRefNbr').setTitle('<center style="font-size:12px;">' + ' Sale Date : ' + data.SDATE + ' - Reference Number: ' + data.REFNBR + ' </center>');
-//                            if (data.strFecFiltro === "BDATEP") {
-//                                Ext.getCmp(prototype.id + '-adgSalDate').setText = "Reconciliation";
-//                            } else {
-//                                if (data.IN_TDOC === 'R') {
-//                                    Ext.getCmp(prototype.id + '-adgSalDate').setText = "Refund";
-//                                } else {
-//                                    Ext.getCmp(prototype.id + '-adgSalDate').setText = "Sales";
-//                                }
-//                            }
-
-//                            Ext.getCmp(prototype.id + '-lblTotQMATCH').setText(Ext.util.Format.number(data.lngTotQMATCH, '0,000'));
-//                            Ext.getCmp(prototype.id + '-lblTotQTEF').setText(Ext.util.Format.number(data.lngTotQTEF, '0,000'));
-//                            Ext.getCmp(prototype.id + '-lblTotQPAS48').setText(Ext.util.Format.number(data.lngTotQPAS48, '0,000'));
-//                            Ext.getCmp(prototype.id + '-lblTotQTOTSAL').setText(Ext.util.Format.number(data.lngTotQTOTSAL, '0,000'));
-//                            Ext.getCmp(prototype.id + '-lblTotlngQMANUAL').setText(Ext.util.Format.number(data.lngTotQMANUAL, '0,000'));
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetBoomer = res.data;
+                        if (gridDetBoomer.length > 0) {
+                            var data = {};
+                            data = gridDetBoomer[0];
+                            //Ext.getCmp(prototype.id + '-gridDataSettlement').setTitle('<center style="font-size:12px;">' + ' Sale Date : ' + data.SDATE + ' - Reference Number: ' + data.REFNBR + ' </center>');
+                            //Ext.getCmp(prototype.id + '-gridDataBoomer').setTitle('<center style="font-size:12px;">' + ' Sale Date : ' + data.SDATE + ' - Reference Number: ' + data.REFNBR + ' </center>');
+                            Ext.getCmp(prototype.id + '-panelGridDataByRefNbr').setTitle('<center style="font-size:12px;">' + ' Sale Date : ' + data.SDATE + ' - Reference Number: ' + data.REFNBR + ' - Status: ' + data.estadoTitulo + ' </center>');
+                            //Colocando los totales
+                            var lstSett = res.lstSett;
+                            var settlement = new Array();
+                            
+                            lstSett.forEach(function callback(currentValue, index, array) {
+                                settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, , currentValue.CUR]);
+                            });
+                            var store = Ext.create('Ext.data.ArrayStore', {
+                                storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR']
+                            });
+                            Ext.getCmp(prototype.id + '-gridDataSettlement').bindStore(store);
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
                     }
-                    //me.setWidthPie();
+
                 }
             }
         });
 
         global.clear();
-        Ext.getCmp(prototype.id + '-gridDataByRefNbr').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataBoomer').bindStore(storeGridDatas);
         //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
