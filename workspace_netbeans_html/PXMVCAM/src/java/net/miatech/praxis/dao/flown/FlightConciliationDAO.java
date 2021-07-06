@@ -752,9 +752,9 @@ public class FlightConciliationDAO {
                 beanCons.STVCR = rst.getString("STVCR").trim();
                 
                 if(rst.getString("STVCR").trim().equals("Y")){
-                    beanCons.desSTVCR = "Existe";
+                    beanCons.desSTVCR = "Yes";
                 } else if (rst.getString("STVCR").trim().equals("")) {
-                    beanCons.desSTVCR = "No existe";
+                    beanCons.desSTVCR = "";
                 } 
 
                 lstCons.add(beanCons);
