@@ -42,12 +42,12 @@ public class SalesReconciliBoomerLogic {
     public List<A2324Filter> loadPX559SQP04020(A2324Filter filter) throws SQLException, Exception {
         return SalesReconciliBoomerDAO.loadPX559SQP04020(filter);
     }
-    
+
     public HashMap<String, List<A2324Filter>> loadPX559SQP04013(A2324Filter filter) throws SQLException, Exception {
         return SalesReconciliBoomerDAO.loadPX559SQP04013(filter);
     }
-    
-        public List<SQP00697Filter> loadSQP04014(SQP00697Filter filter) throws SQLException, Exception {
+
+    public List<SQP00697Filter> loadSQP04014(SQP00697Filter filter) throws SQLException, Exception {
         return SalesReconciliBoomerDAO.loadSQP04014(filter);
     }
 

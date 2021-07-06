@@ -269,10 +269,12 @@ public class SalesReconciliBoomerController extends BaseController {
         hmResultado = this.getListDataByRefNbr(request, false);
         List<A2324Filter> lst = hmResultado.get("DATA");
         List<A2324Filter> lstSett  = hmResultado.get("SETT");
+        //List<A2324Filter> lstPnr  = hmResultado.get("PNR");
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         map.put("lstSett", lstSett);
+        //map.put("lstPnr", lstPnr);
         return new Gson().toJson(map);
     }
 

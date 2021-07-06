@@ -846,7 +846,7 @@ public class SalesReconciliBoomerDAO {
                 }
                 rst.close();
             }
-
+            
         } catch (Exception e) {
             e.getMessage();
             e.printStackTrace();
@@ -885,11 +885,13 @@ public class SalesReconciliBoomerDAO {
     public List<SQP00697Filter> loadSQP04014(SQP00697Filter filter) throws SQLException, Exception {
         List<SQP00697Filter> lstRtn = new ArrayList<SQP00697Filter>(0);
         SQP00697Filter objRtn;
+        
+        double totAmount = 0.0;
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL SQP04014(?,?)}";
+        String SQLCLL01 = "{CALL "  + session.getMainLibrary() +  ".SQP04014(?,?)}";
 
         Connection cnx = null;
         try {
@@ -897,7 +899,7 @@ public class SalesReconciliBoomerDAO {
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.A720PNR);
+            cstmt01.setString(2, filter.A720PNR.trim());
 
             cstmt01.execute();
 
@@ -915,6 +917,7 @@ public class SalesReconciliBoomerDAO {
                 //objRtn.A720MONEDA = rs01.getString("A720MONEDA");
                 //objRtn.A720PNR = rs01.getString("A720PNR");
                 objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
+                totAmount = totAmount + rs01.getDouble("A1531VFOP");
                 //objRtn.A720SEQ = rs01.getString("A720SEQ");
                 lstRtn.add(objRtn);
             }
@@ -940,6 +943,11 @@ public class SalesReconciliBoomerDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
+        
+        for (int i = 0; i < lstRtn.size(); i++) {
+            lstRtn.get(i).totA1531VFOP = totAmount;
+        }
+        
         return lstRtn;
     }
 
