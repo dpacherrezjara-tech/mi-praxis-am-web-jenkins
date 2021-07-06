@@ -41,6 +41,7 @@ public class SQP00697Filter {
     public String A720MONEDA = "";
     public String A720PNR = "";
     public double A1531VFOP = 0d;
+    public double totA1531VFOP = 0d;
     public String A720SEQ = "";
     public String IN_DATE_FROM = "";
     public String IN_DATE_TO = "";
