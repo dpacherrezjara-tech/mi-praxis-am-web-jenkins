@@ -13,6 +13,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import net.miatech.beans.SQP00697Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A2318Filter;
@@ -769,7 +770,7 @@ public class SalesReconciliBoomerDAO {
         hmDescTipos.put("SG", "General Sale");
         hmDescTipos.put("SC", "Credit Sale");
         hmDescTipos.put("SE", "Cash Sale");
-        
+
         HashMap<String, String> hmDescTipoDocumento = new HashMap<String, String>();
         hmDescTipoDocumento.put("S", "Sales");
         hmDescTipoDocumento.put("R", "Refund");
@@ -797,10 +798,10 @@ public class SalesReconciliBoomerDAO {
                 beanSett.REFNBR = rst.getString("REFNBR").trim();
                 beanSett.TDOCA = rst.getString("TDOCA").trim();
                 if (hmDescTipoDocumento.containsKey(rst.getString("TDOCA").trim())) {
-                        beanSett.descTDOCA = hmDescTipoDocumento.get(rst.getString("TDOCA").trim()).toString();
-                    } else {
-                        beanSett.descTDOCA = rst.getString("TDOCA").trim();
-                    }
+                    beanSett.descTDOCA = hmDescTipoDocumento.get(rst.getString("TDOCA").trim()).toString();
+                } else {
+                    beanSett.descTDOCA = rst.getString("TDOCA").trim();
+                }
                 beanSett.SVFOPA = rst.getDouble("SVFOPA");
                 beanSett.SCARCODA = rst.getString("SCARCODA");
                 beanSett.SCARDNA = rst.getString("SCARDNA");
@@ -828,7 +829,7 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SCURRENCYB = rst.getString("SCURRENCYB").trim();
                     beanTkt.SVFOPB = rst.getDouble("SVFOPB");
                     beanTkt.DOCTYPEB = rst.getString("DOCTYPEB").trim();
-                    beanTkt.CHANNELID  = rst.getString("CHANNELID").trim();
+                    beanTkt.CHANNELID = rst.getString("CHANNELID").trim();
                     beanTkt.TDOCB = rst.getString("TDOCB").trim();
                     beanTkt.CCIAB = rst.getString("CCIAB");
                     beanTkt.FORMAB = rst.getString("FORMAB");
@@ -839,6 +840,7 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SCARDNB = rst.getString("SCARDNB");
                     beanTkt.SPNRB = rst.getString("SPNRB");
                     beanTkt.estadoTitulo = filter.estadoTitulo;
+                    beanTkt.IN_STVAL = filter.IN_STVAL;
                     totSVFOPB = totSVFOPB + beanTkt.SVFOPB;
                     lstTkts.add(beanTkt);
                 }
@@ -866,18 +868,79 @@ public class SalesReconciliBoomerDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
-        
+
         for (int i = 0; i < lstTkts.size(); i++) {
             lstTkts.get(i).totSVFOPB = totSVFOPB;
         }
-        
+
         for (int i = 0; i < lstSett.size(); i++) {
             lstSett.get(i).totSVFOPA = totSVFOPA;
         }
-        
+
         hmResultado.put("DATA", lstTkts);
         hmResultado.put("SETT", lstSett);
         return hmResultado;
+    }
+
+    public List<SQP00697Filter> loadSQP04014(SQP00697Filter filter) throws SQLException, Exception {
+        List<SQP00697Filter> lstRtn = new ArrayList<SQP00697Filter>(0);
+        SQP00697Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL SQP04014(?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.A720PNR);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new SQP00697Filter();
+                //objRtn.ROWKEY = rs01.getString("ROWKEY");
+                //objRtn.A720PAX = rs01.getString("A720PAX");
+                objRtn.TICKET = rs01.getString("TICKET");
+                objRtn.A1531NREF = rs01.getString("A1531NREF");
+                //objRtn.A720CIUVTA = rs01.getString("A720CIUVTA");
+                objRtn.A720AGENTE = rs01.getString("A720AGENTE");
+                //objRtn.A720FECVTA = Functions.getMonthConvertDate(rs01.getString("A720FECVTA"));
+                //objRtn.A720TARIFA = rs01.getDouble("A720TARIFA");
+                //objRtn.A720MONEDA = rs01.getString("A720MONEDA");
+                //objRtn.A720PNR = rs01.getString("A720PNR");
+                objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
+                //objRtn.A720SEQ = rs01.getString("A720SEQ");
+                lstRtn.add(objRtn);
+            }
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logError.error("Exception -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
     }
 
 }

@@ -8,6 +8,7 @@ package net.miatech.praxis.logic.payments;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesReconciliBoomerDAO;
 import net.miatech.praxis.payment.filter.A2324Filter;
@@ -44,6 +45,10 @@ public class SalesReconciliBoomerLogic {
     
     public HashMap<String, List<A2324Filter>> loadPX559SQP04013(A2324Filter filter) throws SQLException, Exception {
         return SalesReconciliBoomerDAO.loadPX559SQP04013(filter);
+    }
+    
+        public List<SQP00697Filter> loadSQP04014(SQP00697Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadSQP04014(filter);
     }
 
     /*

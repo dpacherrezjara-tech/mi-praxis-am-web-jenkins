@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -365,6 +366,31 @@ public class SalesReconciliBoomerController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
+    }
+    
+    @RequestMapping(value = "/searchPNRInHeader")
+    public @ResponseBody
+    String searchPNRInHeader(ModelMap map, HttpServletRequest request) {
+        SQP00697Filter filter = new SQP00697Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            SalesReconciliBoomerLogic logic = new SalesReconciliBoomerLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            List<SQP00697Filter> listaData = logic.loadSQP04014(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+        } catch (SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
     }
 
 }
