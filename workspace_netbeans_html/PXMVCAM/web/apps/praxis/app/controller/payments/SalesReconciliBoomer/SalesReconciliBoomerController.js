@@ -468,7 +468,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         this.beanDetDay.IN_SDATE = rowData.data.SDATE;
         this.beanDetDay.IN_REFNBR = rowData.data.REFNBR;
         this.beanDetDay.estadoTitulo = rowData.data.desSTVAL;
-        
+        this.beanDetDay.IN_STVAL = rowData.data.STVAL;
+        console.log(this.beanDetDay);
         //this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
 
         me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
@@ -476,7 +477,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         this.setOnGridDetByRefNbr();
     },
     setOnGridDetByRefNbr: function() {
-
+        Ext.getCmp(prototype.id + '-panelPNR').setVisible(false);
         win.lblUser_toolTip("Estructura: A2286 - A2319");
         //me.panelActual = '-panelGridDataByRefNbr';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -502,7 +503,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             //Colocando los totales
                             var lstSett = res.lstSett;
                             var settlement = new Array();
-                            
+
                             lstSett.forEach(function callback(currentValue, index, array) {
                                 settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, , currentValue.CUR]);
                             });
@@ -510,6 +511,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                                 storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR']
                             });
                             Ext.getCmp(prototype.id + '-gridDataSettlement').bindStore(store);
+
+                            if (data.IN_STVAL === '4') {
+                                var objPNR = {};
+                                var beanPNR = {};
+                                console.log('Llenando tabla SPNR: ' + data.SPNRB);
+                                Ext.getCmp(prototype.id + '-panelPNR').setVisible(true);
+                                objPNR.A720PNR = data.SPNRB;
+                                beanPNR.beanString = JSON.stringify(objPNR);
+                                me.setOnGridDetPNR(beanPNR);
+                            }
+
                         } else {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -524,6 +536,32 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataBoomer').bindStore(storeGridDatas);
         //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setOnGridDetPNR: function(bean) {
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchPNRInHeader'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = bean;
+                },
+                load: function(obj) {
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+
+                    }
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataPNR').bindStore(storeGridDatas);
+
     },
     showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         console.log('RowData');

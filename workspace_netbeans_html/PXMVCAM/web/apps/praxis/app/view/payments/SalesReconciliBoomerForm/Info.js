@@ -397,50 +397,47 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                         },
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelGridDataByRefNbr',
                             bodyStyle: 'background-color: #E3EAEF;',
+                            id: prototype.id + '-panelGridDataByRefNbr',
                             border: true,
 //                            height: 'auto',
                             width: 1310,
                             margin: '0 0 0 0 ',
                             layout: {
-                                type: 'hbox',
-                                //align: 'center'
+                                type: 'vbox',
+                                align: 'center'
                             },
                             items: [
                                 {
-                                    xtype: 'grid',
-                                    id: prototype.id + '-gridDataSettlement',
-                                    width: 594,
-                                    height: 600,
-                                    columnLines: true,
-                                    features: [{
-                                            ftype: 'summary'
-                                        }],
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
-                                        },
-                                        items: [
-                                            {
-                                                text: 'Settlement',
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    border: true,
+//                            height: 'auto',
+                                    width: 1310,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridDataSettlement',
+                                            width: 594,
+                                            height: 200,
+                                            columnLines: true,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }],
+                                            columns: {
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
-                                                columns: [
+                                                items: [
                                                     {
-                                                        text: 'SRC', dataIndex: 'descTDOCA', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Credit Card',
+                                                        text: 'Settlement',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -448,106 +445,113 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Code', dataIndex: 'SCARCODA', width: 50,
+                                                                text: 'SRC', dataIndex: 'descTDOCA', width: 80,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#B2DAFA";
                                                                     return value;
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Card Number', dataIndex: 'SCARDNA', width: 140,
+                                                                text: 'Credit Card',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Code', dataIndex: 'SCARCODA', width: 50,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Card Number', dataIndex: 'SCARDNA', width: 140,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Author.', dataIndex: 'SAUTHOCA', width: 70,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2DAFA;";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Bank', dataIndex: 'BANKA', width: 80,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Cur', dataIndex: 'SCURRENCYA', width: 90,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#B2DAFA";
                                                                     return value;
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Author.', dataIndex: 'SAUTHOCA', width: 70,
+                                                                text: 'Amount', dataIndex: 'SVFOPA', width: 80,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#B2DAFA;";
+                                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                                     return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataSettlement').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSVFOPA, '0,000.00') + '<b>';
                                                                 }
                                                             },
-                                                            {
-                                                                text: 'Bank', dataIndex: 'BANKA', width: 80,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#B2DAFA";
-                                                                    return value;
-                                                                }
-                                                            },
+                                                            /*{
+                                                             text: 'Payment <br> Type', dataIndex: 'TPAYA', width: 90,
+                                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'ABCD', dataIndex: 'ABCDA', width: 60,
+                                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                             return value;
+                                                             }
+                                                             },
+                                                             {
+                                                             text: 'Filler MD', dataIndex: 'SCURRENCYA', width: 80,
+                                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                             return value;
+                                                             }
+                                                             },*/
                                                         ]
                                                     },
-                                                    {
-                                                        text: 'Cur', dataIndex: 'SCURRENCYA', width: 90,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Amount', dataIndex: 'SVFOPA', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
-                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataSettlement').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totSVFOPA, '0,000.00') + '<b>';
-                                                        }
-                                                    },
-                                                    /*{
-                                                        text: 'Payment <br> Type', dataIndex: 'TPAYA', width: 90,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'ABCD', dataIndex: 'ABCDA', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Filler MD', dataIndex: 'SCURRENCYA', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
-                                                            return value;
-                                                        }
-                                                    },*/
                                                 ]
-                                            },
-                                        ]
-                                    }
-                                },,
-                                {
-                                    xtype: 'grid',
-                                    id: prototype.id + '-gridDataBoomer',
-                                    width: 714,
-                                    height: 600,
-                                    columnLines: true,
-                                    features: [{
-                                            ftype: 'summary'
-                                        }],
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
+                                            }
                                         },
-                                        items: [
-                                            {
-                                                text: 'Boomer',
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridDataBoomer',
+                                            width: 714,
+                                            height: 200,
+                                            columnLines: true,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }],
+                                            columns: {
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
-                                                columns: [
+                                                items: [
                                                     {
-                                                        text: 'Credit Card',
+                                                        text: 'Boomer',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: false,
@@ -555,28 +559,89 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Code', dataIndex: 'SCARCODB', width: 60,
+                                                                text: 'Credit Card',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Code', dataIndex: 'SCARCODB', width: 60,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Card Number', dataIndex: 'SCARDNB', width: 120,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Author.', dataIndex: 'SAUTHOCB', width: 70,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2FAC6;";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Bank', dataIndex: 'CHANNELID', width: 120,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: 'Cur', dataIndex: 'SCURRENCYB', width: 80,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#B2FAC6";
                                                                     return value;
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Card Number', dataIndex: 'SCARDNB', width: 120,
+                                                                text: 'Amount', dataIndex: 'SVFOPB', width: 80,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                                    metaData.style = "text-align:right;background-color:#B2FAC6";
+                                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                                     return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataBoomer').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totSVFOPB, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                            /*{
+                                                             text: 'Transaction <br> Type', dataIndex: 'TDOCB', width: 90,
+                                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                             return value;
+                                                             }
+                                                             },                                                    
+                                                             {
+                                                             text: 'Document <br> Type', dataIndex: 'DOCTYPEB', width: 70,
+                                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                             metaData.style = "text-align:center;background-color:#B2FAC6";
+                                                             return value;
+                                                             }
+                                                             },*/
+                                                            {
+                                                                text: 'Ticket', dataIndex: 'TKT', width: 100,
+                                                                listeners: {
+                                                                    click: 'showTicket'
+                                                                },
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "color:#057ECB;background-color:#B2FAC6";
+                                                                    value = '<b>' + value + '</b>';
+                                                                    return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                                 }
                                                             },
                                                             {
-                                                                text: 'Author.', dataIndex: 'SAUTHOCB', width: 70,
-                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#B2FAC6;";
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {
-                                                                text: 'Bank', dataIndex: 'CHANNELID', width: 120,
+                                                                text: 'PNR', dataIndex: 'SPNRB', width: 80,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#B2FAC6";
                                                                     return value;
@@ -584,62 +649,84 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             },
                                                         ]
                                                     },
-                                                    {
-                                                        text: 'Cur', dataIndex: 'SCURRENCYB', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Amount', dataIndex: 'SVFOPB', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#B2FAC6";
-                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataBoomer').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totSVFOPB, '0,000.00') + '<b>';
-                                                        }
-                                                    },
-                                                    /*{
-                                                        text: 'Transaction <br> Type', dataIndex: 'TDOCB', width: 90,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
-                                                            return value;
-                                                        }
-                                                    },                                                    
-                                                    {
-                                                        text: 'Document <br> Type', dataIndex: 'DOCTYPEB', width: 70,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
-                                                            return value;
-                                                        }
-                                                    },*/
-                                                    {
-                                                        text: 'Ticket', dataIndex: 'TKT', width: 100,
-                                                        listeners: {
-                                                            click: 'showTicket'
-                                                        },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "color:#057ECB;background-color:#B2FAC6";
-                                                            value = '<b>' + value + '</b>';
-                                                            return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'PNR', dataIndex: 'SPNRB', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#B2FAC6";
-                                                            return value;
-                                                        }
-                                                    },
                                                 ]
-                                            },
-                                        ]
-                                    }
+                                            }
+                                        },
+                                    ]
                                 },
+                                {xtype: 'tbspacer', height: 50},
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelPNR',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    border: true,
+                                    hidden: true,
+//                            height: 'auto',
+                                    width: 540,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridDataPNR',
+                                            columnLines: true,
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    /*{
+                                                        text: 'Passenger Name', dataIndex: 'A720PAX',  width: 280,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";
+                                                            return value;
+                                                        },
+                                                    },*/
+                                                    {
+                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150, editor: {xtype: 'textfield', editable: false}
+                                                    },
+                                                    {
+                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 180, editor: {xtype: 'textfield', editable: false}
+                                                    },
+                                                    /*{
+                                                        text: 'Issue<br/>Orig.', dataIndex: 'A720CIUVTA', width: 60
+                                                    },
+                                                    {
+                                                        text: 'Issue Date', dataIndex: 'A720FECVTA', width: 80
+                                                    },*/
+                                                    {
+                                                        text: 'IATA', dataIndex: 'A720AGENTE', width: 80, editor: {xtype: 'textfield', editable: false}
+                                                    },
+                                                    /*{
+                                                        text: 'Fare', dataIndex: 'A720TARIFA', width: 120,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return value;
+                                                        }
+                                                    },*/
+                                                    {
+                                                        text: 'Amount', dataIndex: 'A1531VFOP', width: 130,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    /*{
+                                                        text: 'Cur', dataIndex: 'A720MONEDA', width: 40
+                                                    },
+                                                    {
+                                                        text: 'PNR', dataIndex: 'A720PNR', width: 80, editor: {xtype: 'textfield', editable: false}
+                                                    },*/
+                                                ]
+                                            }
+                                        },
+                                    ]
+                                }
                             ]
                         },
                         {
