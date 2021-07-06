@@ -1265,7 +1265,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     {text: 'Status', dataIndex: 'desSTVAL', width: 110, sortable: true},
                                                     {text: 'Orig', dataIndex: 'CDEPART', width: 70, sortable: true},
                                                     {text: 'Dest', dataIndex: 'CARRIVA', width: 70, sortable: true},
-                                                    {text: 'Status',
+                                                    {text: 'VCR vs',
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: true,
@@ -1273,7 +1273,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             border: true
                                                         },
                                                         columns: [
-                                                            {text: 'VCR', dataIndex: 'desSTVCR', width: 70, sortable: true},
+                                                            {text: 'Manifest', dataIndex: 'desSTVCR', width: 70, sortable: true},
                                                         ]
                                                     }
                                                 ]
