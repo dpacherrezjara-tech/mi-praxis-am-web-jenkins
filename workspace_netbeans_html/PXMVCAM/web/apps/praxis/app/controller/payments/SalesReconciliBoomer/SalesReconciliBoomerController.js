@@ -469,17 +469,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         this.beanDetDay.IN_REFNBR = rowData.data.REFNBR;
         this.beanDetDay.estadoTitulo = rowData.data.desSTVAL;
         this.beanDetDay.IN_STVAL = rowData.data.STVAL;
+        this.beanDetDay.A720PNR = rowData.data.SPNR;
         console.log(this.beanDetDay);
         //this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
 
         me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
 
         this.setOnGridDetByRefNbr();
+        //Ext.Function.defer(function() {
+        if (rowData.data.STVAL === '4') {
+            me.setOnGridDetPNR(rowData.data.SPNR);
+        }
+        //}, 5000);
+
     },
     setOnGridDetByRefNbr: function() {
         Ext.getCmp(prototype.id + '-panelPNR').setVisible(false);
         win.lblUser_toolTip("Estructura: A2286 - A2319");
-        //me.panelActual = '-panelGridDataByRefNbr';
+        me.panelActual = '-panelGridDataByRefNbr';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -512,16 +519,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             });
                             Ext.getCmp(prototype.id + '-gridDataSettlement').bindStore(store);
 
-                            if (data.IN_STVAL === '4') {
-                                var objPNR = {};
-                                var beanPNR = {};
-                                console.log('Llenando tabla SPNR: ' + data.SPNRB);
-                                Ext.getCmp(prototype.id + '-panelPNR').setVisible(true);
-                                objPNR.A720PNR = data.SPNRB;
-                                beanPNR.beanString = JSON.stringify(objPNR);
-                                me.setOnGridDetPNR(beanPNR);
-                            }
-
                         } else {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -537,31 +534,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-gridDataBoomer').bindStore(storeGridDatas);
         //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
-    setOnGridDetPNR: function(bean) {
+    setOnGridDetPNR: function(pnr) {
+        Ext.getCmp(prototype.id + '-panelPNR').setVisible(true);
+        Ext.Ajax.request({
+            url: prototype.url + '/searchPNRInHeader',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: me.paramsDetailDay
+            },
+            success: function(response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                me.data = res.data;
+                console.log(res);
+                var storeData = Ext.create('Ext.data.Store', {
+                    data: me.data,
+                    autoLoad: false
+                });
+                Ext.getCmp(prototype.id + '-panelPNR').setTitle('<center style="font-size:12px;">' + ' PNR : ' + pnr + ' </center>');
+                Ext.getCmp(prototype.id + '-gridDataPNRInHeader').bindStore(storeData);
 
-        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-            proxy: {
-                url: prototype.url + '/searchPNRInHeader'
-            }, listeners: {
-                beforeload: function(obj) {
-//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                    obj.proxy.extraParams = bean;
-                },
-                load: function(obj) {
-                    if (obj.data.length === 0) {
-                        global.Msg({
-                            msg: 'Data not found.'
-                        });
-                    } else {
-
-                    }
-                }
             }
         });
-
-        global.clear();
-        Ext.getCmp(prototype.id + '-gridDataPNR').bindStore(storeGridDatas);
-
     },
     showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         console.log('RowData');

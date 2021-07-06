@@ -402,6 +402,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             border: true,
 //                            height: 'auto',
                             width: 1310,
+                            height: 800,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -410,6 +411,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             items: [
                                 {
                                     xtype: 'panel',
+                                    id: prototype.id + '-panelSettBoomer',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
 //                            height: 'auto',
@@ -424,7 +426,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataSettlement',
                                             width: 594,
-                                            height: 200,
+                                            height: 250,
                                             columnLines: true,
                                             features: [{
                                                     ftype: 'summary'
@@ -538,7 +540,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataBoomer',
                                             width: 714,
-                                            height: 200,
+                                            height: 250,
                                             columnLines: true,
                                             features: [{
                                                     ftype: 'summary'
@@ -654,13 +656,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         },
                                     ]
                                 },
-                                {xtype: 'tbspacer', height: 50},
+                                {xtype: 'tbspacer', height: 25},
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-panelPNR',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
-                                    hidden: true,
+                                    //hidden: true,
 //                            height: 'auto',
                                     width: 540,
                                     margin: '0 0 0 0 ',
@@ -671,57 +673,67 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     items: [
                                         {
                                             xtype: 'grid',
-                                            id: prototype.id + '-gridDataPNR',
+                                            id: prototype.id + '-gridDataPNRInHeader',
+                                            width: 594,
+                                            height: 'auto',
                                             columnLines: true,
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }],
                                             columns: {
                                                 defaults: {
                                                     menuDisabled: true,
-                                                    sortable: true,
+                                                    sortable: false,
                                                     align: 'center'
                                                 },
                                                 items: [
                                                     /*{
-                                                        text: 'Passenger Name', dataIndex: 'A720PAX',  width: 280,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:left;";
-                                                            return value;
-                                                        },
-                                                    },*/
+                                                     text: 'Passenger Name', dataIndex: 'A720PAX',  width: 280,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:left;";
+                                                     return value;
+                                                     },
+                                                     },*/
                                                     {
-                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150, editor: {xtype: 'textfield', editable: false}
+                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150
                                                     },
                                                     {
-                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 180, editor: {xtype: 'textfield', editable: false}
-                                                    },
-                                                    /*{
-                                                        text: 'Issue<br/>Orig.', dataIndex: 'A720CIUVTA', width: 60
-                                                    },
-                                                    {
-                                                        text: 'Issue Date', dataIndex: 'A720FECVTA', width: 80
-                                                    },*/
-                                                    {
-                                                        text: 'IATA', dataIndex: 'A720AGENTE', width: 80, editor: {xtype: 'textfield', editable: false}
+                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 180
                                                     },
                                                     /*{
-                                                        text: 'Fare', dataIndex: 'A720TARIFA', width: 120,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            return value;
-                                                        }
-                                                    },*/
+                                                     text: 'Issue<br/>Orig.', dataIndex: 'A720CIUVTA', width: 60
+                                                     },
+                                                     {
+                                                     text: 'Issue Date', dataIndex: 'A720FECVTA', width: 80
+                                                     },*/
+                                                    {
+                                                        text: 'IATA', dataIndex: 'A720AGENTE', width: 80
+                                                    },
+                                                    /*{
+                                                     text: 'Fare', dataIndex: 'A720TARIFA', width: 120,
+                                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                     metaData.style = "text-align:right;";
+                                                     return value;
+                                                     }
+                                                     },*/
                                                     {
                                                         text: 'Amount', dataIndex: 'A1531VFOP', width: 130,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             return value;
-                                                        }
+                                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataPNRInHeader').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totA1531VFOP, '0,000.00') + '<b>';
+                                                                }
                                                     },
                                                     /*{
-                                                        text: 'Cur', dataIndex: 'A720MONEDA', width: 40
-                                                    },
-                                                    {
-                                                        text: 'PNR', dataIndex: 'A720PNR', width: 80, editor: {xtype: 'textfield', editable: false}
-                                                    },*/
+                                                     text: 'Cur', dataIndex: 'A720MONEDA', width: 40
+                                                     },
+                                                     {
+                                                     text: 'PNR', dataIndex: 'A720PNR', width: 80, editor: {xtype: 'textfield', editable: false}
+                                                     },*/
                                                 ]
                                             }
                                         },
