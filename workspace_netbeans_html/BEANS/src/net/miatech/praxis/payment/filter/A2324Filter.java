@@ -23,7 +23,7 @@ public class A2324Filter extends A2324 {
     public String desSTVAL = "";
     public String IN_PNR = "";
     public String IN_STVAL = "";
-    
+
     // Qty
     public long QMATCH = 0;
     public long QPAYMENT_WO = 0;
@@ -76,6 +76,12 @@ public class A2324Filter extends A2324 {
     public String SAUTHOCB = "";
     public String SPNRB = "";
     public String estadoTitulo = "";
+
+    //TABLA PNR
+    public String TICKET = "";
+    public String A1531NREF = "";
+    public String A720AGENTE = "";
+    public double A1531VFOP = 0.0;
 
     public Pagination page = new Pagination();
 
