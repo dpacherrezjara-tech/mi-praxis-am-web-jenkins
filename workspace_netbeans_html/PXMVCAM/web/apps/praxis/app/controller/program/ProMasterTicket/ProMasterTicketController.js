@@ -2349,7 +2349,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 if(paramsResultSet11.fileA1692.SEQ.trim()==='' || paramsResultSet11.fileA1692.SEQ.trim()==='XX')
                                 {
                                     strTKTIND = (paramsResultSet11.fileA1692.SERIE.length === 6) ? paramsResultSet11.fileA1692.SERIE.substr(4, 2) : '';
-                                    me01.filterTKT.VP_A1716SEQF = paramsResultSet11.fileA1692.SEQ.trim();
+                                    //me01.filterTKT.VP_A1716SEQF = paramsResultSet11.fileA1692.SEQ.trim();
                                     me01.gridDataTktRealUsesAC.push({
                                         TKTIND : strTKTIND,
                                         STATUS : STR_UNMATCH,
@@ -2417,7 +2417,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                 if(paramsResultSet12.fileA1818.SEQ.trim()==='' || paramsResultSet12.fileA1818.SEQ.trim()==='XX')
                                 {
                                     strTKTIND = (paramsResultSet12.fileA1818.SERIE.length === 6) ? paramsResultSet12.fileA1818.SERIE.substr(4, 2) : '';
-                                    me01.filterTKT.VP_A1716SEQF = paramsResultSet12.fileA1818.SEQ.trim();
+                                    //me01.filterTKT.VP_A1716SEQF = paramsResultSet12.fileA1818.SEQ.trim();
                                     me01.gridDataTktRealUsesAC.push({
                                         TKTIND : strTKTIND,
                                         STATUS : STR_UNMATCH,
