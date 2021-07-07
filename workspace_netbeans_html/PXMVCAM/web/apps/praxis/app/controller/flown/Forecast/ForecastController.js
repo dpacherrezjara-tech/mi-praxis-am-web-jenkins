@@ -443,6 +443,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-gridDataAmountByZones').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataAmountByZones').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displaySAChart01').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart02').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     onGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {

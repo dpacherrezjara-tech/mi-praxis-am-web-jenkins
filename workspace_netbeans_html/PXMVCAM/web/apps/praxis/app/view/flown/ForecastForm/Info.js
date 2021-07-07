@@ -1606,7 +1606,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                             id: prototype.id + '-panelGridDataAmountByZones',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 859,
+                            width: 1600,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'hbox',
@@ -1622,7 +1622,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                     background: '#E0F8F7',
                                     captions: {
                                         title: {
-                                            text: 'Revenue by Region',
+                                            text: 'Revenue MXN by Region',
                                             alignTo: 'chart'
                                         }
                                     },
@@ -1709,12 +1709,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                         }*/
                                     ]
                                 },
-                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAmountByZones',
                                     //height: 600,
-                                    width: 189,
+                                    width: 274,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -1726,15 +1726,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             sortable: false,
                                             align: 'center'
                                         },
-                                        items: [
-                                            {
-                                                text: 'Region', dataIndex: 'ZONA', width: 80,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    //value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                }
-                                            },
+                                        items: [                                            
                                             {
                                                 text: 'AMOUNT MXN', dataIndex: 'VCPNMXN', width: 95,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
@@ -1748,8 +1740,96 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000.00') + '<b>';
                                                 }
                                             },
+                                            {
+                                                text: 'Region', dataIndex: 'ZONA', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    //value = Ext.util.Format.number(value, '0,000');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'AMOUNT USD', dataIndex: 'VCPNUSD', width: 95,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataAmountByZones').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000.00') + '<b>';
+                                                }
+                                            },
                                         ]
                                     }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'cartesian',
+                                    id: prototype.id + '-displaySAChart02',
+                                    width: 641,
+                                    border: false,
+                                    height: 340,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Revenue USD by Region',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    axes: [{
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['VCPNUSD'],
+                                            grid: true,
+                                            title: 'Millions of USD',
+                                            renderer: function(obj, value) {
+                                                /*if (value > 1) {
+                                                 if ((value / 1000).toString().length > 3) {
+                                                 return ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                 } else {
+                                                 return ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                 }
+                                                 } else {
+                                                 return '';
+                                                 }*/
+                                                return ' ' + Ext.util.Format.number((value), '0.00') + 'M';
+                                            }
+                                        }, {
+                                            type: 'category3d',
+                                            position: 'bottom',
+                                            grid: true,
+                                            title: {
+                                                translationX: -30
+                                            }
+                                        }],
+                                    series: [{
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            xField: 'ZONA',
+                                            yField: ['VCPNUSD'],
+                                            colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function(toolTip, record, ctx) {
+                                                    toolTip.setHtml(record.get('ZONA') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                                                }
+                                            },
+                                            renderer: 'onColumnRender'
+                                        },
+                                    ]
                                 },
                             ]
                         },
