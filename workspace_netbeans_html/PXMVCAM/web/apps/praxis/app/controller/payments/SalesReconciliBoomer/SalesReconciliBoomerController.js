@@ -562,6 +562,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         console.log(rowData.data);
         me.viewMasterTkt(rowData.data);
     },
+    showTicket_2: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        var data = {}
+        data.CCIAB = rowData.data.TICKET.substring(0,3);
+        data.FORMAB = rowData.data.TICKET.substring(3,7);
+        data.SERIEB = rowData.data.TICKET.substring(7,13);
+        console.log(data);
+        me.viewMasterTkt(data);
+    },
     viewMasterTkt: function(data) {
 
         prototypeProgram.view = 'payments-sales-reconcili-boomer-form';

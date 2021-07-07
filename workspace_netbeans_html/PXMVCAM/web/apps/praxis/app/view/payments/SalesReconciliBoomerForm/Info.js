@@ -695,7 +695,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                      },
                                                      },*/
                                                     {
-                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150
+                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150,
+                                                        listeners: {
+                                                            click: 'showTicket_2'
+                                                        },
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;background-color:#B2FAC6";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-sales-reconcili-boomer-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
                                                     },
                                                     {
                                                         text: 'CC Number', dataIndex: 'A1531NREF', width: 180
@@ -722,11 +730,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             return value;
-                                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDataPNRInHeader').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA1531VFOP, '0,000.00') + '<b>';
-                                                                }
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataPNRInHeader').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totA1531VFOP, '0,000.00') + '<b>';
+                                                        }
                                                     },
                                                     /*{
                                                      text: 'Cur', dataIndex: 'A720MONEDA', width: 40
