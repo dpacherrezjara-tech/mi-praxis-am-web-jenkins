@@ -755,7 +755,9 @@ public class FlightConciliationDAO {
                     beanCons.desSTVCR = "Yes";
                 } else if (rst.getString("STVCR").trim().equals("")) {
                     beanCons.desSTVCR = "";
-                } 
+                }
+                
+                beanCons.TPAX = rst.getString("TPAX").trim();
 
                 lstCons.add(beanCons);
                 
