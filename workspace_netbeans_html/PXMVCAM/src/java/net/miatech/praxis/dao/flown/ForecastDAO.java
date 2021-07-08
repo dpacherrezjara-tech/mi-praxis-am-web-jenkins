@@ -1030,6 +1030,7 @@ public class ForecastDAO {
 
             while (rst.next()) {
                 VCPNMXN = rst.getDouble("VCPNMXN");
+                VCPNUSD = rst.getDouble("VCPNUSD");
             }
             rst.close();
             if (cstmt.getMoreResults()) {
@@ -1043,8 +1044,10 @@ public class ForecastDAO {
 
                     bean.ZONA = rst.getString("ZONA").trim();                    
                     bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                    bean.VCPNUSD = rst.getDouble("VCPNUSD");
 
                     bean.totVCPNMXN = VCPNMXN;
+                    bean.totVCPNUSD = VCPNUSD;
 
                     lst.add(bean);
                 }

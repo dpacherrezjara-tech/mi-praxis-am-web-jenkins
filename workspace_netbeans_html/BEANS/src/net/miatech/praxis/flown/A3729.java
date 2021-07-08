@@ -26,6 +26,7 @@ public class A3729 {
     public String CARRIVA = "";
     public String STVAL = "";
     
+    public String TPAX = "";
     public String LNKMVLO = "";
     public String STVCR = "";
     

@@ -16,6 +16,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import org.apache.log4j.Logger;
 import net.miatech.beans.SaleAudit.A3389Filter;
 import net.miatech.beans.SaleAudit.A3390Filter;
+import net.miatech.beans.SaleAudit.A3908Filter;
 import net.miatech.praxis.SaleAudit.A3389;
 import net.miatech.praxis.SaleAudit.A3390;
 import net.miatech.praxis.SaleAudit.A3391;
@@ -654,6 +655,70 @@ public class BwrQueryRefundDAO {
         }
 
         return STR_RESULT;
+    }
+    
+    public List<A3908Filter> searchSabreLst(A3908Filter filter) throws SQLException, Exception {
+        List<A3908Filter> lstRtn = new ArrayList<A3908Filter>(0);
+        A3908Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04073(?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_PREME);
+
+            cstmt01.execute();
+
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new A3908Filter();
+                objRtn.A3908PREME = rs01.getString("A3908PREME");
+                objRtn.A3908TKT = rs01.getString("A3908TKT");
+
+                objRtn.A3908CPN = rs01.getString("A3908CPN");
+                objRtn.A3908CPNS = rs01.getString("A3908CPNS");
+                objRtn.A3908CODE = rs01.getString("A3908CODE");
+                objRtn.A3908STINI = rs01.getString("A3908STINI");
+                objRtn.A3908STFIN = rs01.getString("A3908STFIN");
+                objRtn.A3908FCAMB = rs01.getString("A3908FCAMB");
+                objRtn.A3908PAIS = rs01.getString("A3908PAIS");
+                objRtn.A3908STATO = rs01.getString("A3908STATO");
+                objRtn.A3908HCAMB = rs01.getString("A3908HCAMB");
+                
+                lstRtn.add(objRtn);
+
+                //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
+            }
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
     }
     
 }

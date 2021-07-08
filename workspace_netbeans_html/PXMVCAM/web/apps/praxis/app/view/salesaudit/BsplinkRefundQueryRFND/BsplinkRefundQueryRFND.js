@@ -9,6 +9,7 @@ prototype.id02 = 'FormOfPaymentRFND';
 prototype.id03 = 'OriginalDataTaxesRFND';
 prototype.id04 = 'FormRazonesRFND';
 prototype.id05 = 'BsplinkFileViewer';
+prototype.idSabreEstatus = 'FormSabreEstatus'; 
 prototype.url = CONTEXTPATH + '/BsplinkRefundQueryRFND';
 prototype.url01 = CONTEXTPATH + '/BwrBSPLINKRFND';
 prototype.widthContenedor = 1366;

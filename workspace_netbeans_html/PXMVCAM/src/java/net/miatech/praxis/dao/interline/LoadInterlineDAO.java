@@ -5355,6 +5355,7 @@ public class LoadInterlineDAO {
                 
                 objRtn.BDATE = rs01.getString("BDATE");
                 objRtn.BAIR = rs01.getString("BAIR");
+                objRtn.BDAIR = rs01.getString("BDAIR");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.SOURCOD = rs01.getString("SOURCOD");
                 objRtn.REJNUM = rs01.getString("REJNUM");
@@ -5424,6 +5425,7 @@ public class LoadInterlineDAO {
 
                     objRtn.BDATE = rs01.getString("BDATE");
                     objRtn.BAIR = rs01.getString("BAIR");
+                    objRtn.BDAIR = rs01.getString("BDAIR");
                     objRtn.PERNUM = rs01.getString("PERNUM");
                     objRtn.SOURCOD = rs01.getString("SOURCOD");
                     objRtn.REJNUM = rs01.getString("BCMNUM");
@@ -5494,6 +5496,7 @@ public class LoadInterlineDAO {
 
                         objRtn.BDATE = rs01.getString("BDATE");
                         objRtn.BAIR = rs01.getString("BAIR");
+                        objRtn.BDAIR = rs01.getString("BDAIR");
                         objRtn.PERNUM = rs01.getString("PERNUM");
                         objRtn.SOURCOD = rs01.getString("SOURCOD");
                         objRtn.REJNUM = rs01.getString("BCMNUM");

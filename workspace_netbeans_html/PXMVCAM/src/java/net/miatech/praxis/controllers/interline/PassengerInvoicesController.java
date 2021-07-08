@@ -3962,7 +3962,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_13 = row1.createCell(13);
 
             CH1_0.setCellValue("Clearing Date");             //BDATE
-            CH1_1.setCellValue("Billing Airline");           //BAIR
+            CH1_1.setCellValue("Billed Airline");           //BDAIR
             CH1_2.setCellValue("Period Number");             //PERNUM
             CH1_3.setCellValue("Source Code");               //SOURCOD
             CH1_4.setCellValue("Billing/Credit");            //REJNUM
@@ -4028,7 +4028,7 @@ public class PassengerInvoicesController extends BaseController {
                 Cell rcell13 = row1.createCell(13);
 
                 rcell0.setCellValue(listaData.get(vi).BDATE);
-                rcell1.setCellValue(listaData.get(vi).BAIR);
+                rcell1.setCellValue(listaData.get(vi).BDAIR);
                 rcell2.setCellValue(listaData.get(vi).PERNUM);
                 rcell3.setCellValue(listaData.get(vi).SOURCOD);
                 rcell4.setCellValue(listaData.get(vi).REJNUM);
