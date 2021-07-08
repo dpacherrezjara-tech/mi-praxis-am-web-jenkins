@@ -335,11 +335,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
             if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6 || Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length === 8) {
                     this.searchByPNR();
                 } else {
-                    if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length < 6) {
+                    if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length < 6 && Ext.getCmp(prototype.id + '-txtPNR').getValue().length > 0) {
                         global.Msg({
                             msg: 'PNR must contain 6 characters.'
                         });
-                    } else if (Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length < 8) {
+                    } else if (Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length < 8 && Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length > 0) {
                         global.Msg({
                             msg: 'Reference Number must contain 8 characters.'
                         });
@@ -1244,11 +1244,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                 if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6 || Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length === 8) {
                     this.searchByPNR();
                 } else {
-                    if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length < 6) {
+                    if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length < 6 && Ext.getCmp(prototype.id + '-txtPNR').getValue().length > 0) {
                         global.Msg({
                             msg: 'PNR must contain 6 characters.'
                         });
-                    } else if (Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length < 8) {
+                    } else if (Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length < 8 && Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length > 0) {
                         global.Msg({
                             msg: 'Reference Number must contain 8 characters.'
                         });
