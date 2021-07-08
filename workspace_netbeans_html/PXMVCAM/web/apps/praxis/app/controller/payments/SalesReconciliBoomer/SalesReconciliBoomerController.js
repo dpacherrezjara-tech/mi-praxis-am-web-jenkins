@@ -331,15 +331,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //        console.log(searchParams);
     },
     btnSearch_click: function(obj, e) {
-//        if (win.getValue('txtPNR').trim() !== '') {
-//            if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6) {
-//                this.searchByPNR();
-//            } else {
-//                global.Msg({
-//                    msg: 'PNR must contain 6 characters.'
-//                });
-//            }
-//        } else {
+        if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length !== 0 || Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length !== 0) {
+            if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6 || Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length === 8) {
+                    this.searchByPNR();
+                } else {
+                    if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length < 6) {
+                        global.Msg({
+                            msg: 'PNR must contain 6 characters.'
+                        });
+                    } else if (Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length < 8) {
+                        global.Msg({
+                            msg: 'Reference Number must contain 8 characters.'
+                        });
+                    }
+
+                }
+        } else {
         this.setFormatParameter();
         if (me.bean.IN_TDOC === 'H') {
             this.setGridDataHeader();
@@ -347,7 +354,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
             this.setGridDataSumary();
         }
 //            this.setGridData();
-//        }
+        }
 
     },
     setGridDataHeader: function() {
@@ -564,9 +571,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     },
     showTicket_2: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         var data = {}
-        data.CCIAB = rowData.data.TICKET.substring(0,3);
-        data.FORMAB = rowData.data.TICKET.substring(3,7);
-        data.SERIEB = rowData.data.TICKET.substring(7,13);
+        data.CCIAB = rowData.data.TICKET.substring(0, 3);
+        data.FORMAB = rowData.data.TICKET.substring(3, 7);
+        data.SERIEB = rowData.data.TICKET.substring(7, 13);
         console.log(data);
         me.viewMasterTkt(data);
     },
@@ -1234,12 +1241,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     BuscarPNR_keyDownHandler: function(obj, e, eOpts) {
         switch (e.getKey()) {
             case 13:
-                if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6) {
+                if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6 || Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length === 8) {
                     this.searchByPNR();
                 } else {
-                    global.Msg({
-                        msg: 'PNR must contain 6 characters.'
-                    });
+                    if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length < 6) {
+                        global.Msg({
+                            msg: 'PNR must contain 6 characters.'
+                        });
+                    } else if (Ext.getCmp(prototype.id + '-txtRefNbr').getValue().length < 8) {
+                        global.Msg({
+                            msg: 'Reference Number must contain 8 characters.'
+                        });
+                    }
+
                 }
                 break;
         }
@@ -1247,6 +1261,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     searchByPNR: function() {
         var bean = {};
         bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        bean.IN_REFNUMBER = Ext.getCmp(prototype.id + '-txtRefNbr').getValue();
 
         win.lblUser_toolTip("Estructura: A2324");
         me.panelActual = '-panelDetail';
@@ -1357,7 +1372,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //        Ext.getCmp(prototype.id + '-txtMERCHN').setValue('');
 //        Ext.getCmp(prototype.id + '-txtSAGENT').setValue('');
         Ext.getCmp(prototype.id + '-txtPNR').setValue('');
-//        Ext.getCmp(prototype.id + '-txtREFNBR').setValue('');
+        Ext.getCmp(prototype.id + '-txtRefNbr').setValue('');
 //        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
 //        Ext.getCmp(prototype.id + '-txtTicket').setValue('');
 
