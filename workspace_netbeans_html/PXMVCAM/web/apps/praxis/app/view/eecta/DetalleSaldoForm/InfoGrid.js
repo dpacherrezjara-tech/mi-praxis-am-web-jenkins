@@ -178,8 +178,11 @@ Ext.define('Ext.Praxis.view.eecta.DetalleSaldoForm.InfoGrid', {
                                     {text: 'Id Contable<BR>Venta', dataIndex: 'A3958IDCON', align: 'left', width: 130},
                                     {text: 'Per.<br>Contable Venta', dataIndex: 'A3958FCONT', align: 'center', width: 70},                                    
                                     {text: 'UUID', dataIndex: 'A3958CFDI', align: 'left', width: 130},
-                                    {text: 'RFC', dataIndex: 'A3958RFC', align: 'left', width: 80},
-                                    {text: 'Fecha<br>Timbrado', dataIndex: 'A3958FECTB', align: 'left', width: 70}
+                                    {text: 'RFC', dataIndex: 'A3958RFC', align: 'left', width: 80},                                    
+                                    {text: 'Fecha<br>Timbrado', dataIndex: 'A3958FECTB', align: 'left', width: 70},
+                                    {text: 'Id Cliente', dataIndex: 'A3958CDCLI', align: 'left', width: 70},
+                                    {text: 'Cliente', dataIndex: 'A3953RSOCI', align: 'left', width: 120}
+                                    
                                 ],
                                 defaults: {
                                     sortable: true,
