@@ -146,7 +146,7 @@ public class DetalleSaldoController extends BaseController {
             Row row;
             Cell cell50, cell51, cell52, cell53, cell54, cell55, cell56;
             Cell cell57, cell58, cell59, cell60, cell61, cell62, cell63, cell64, cell65;
-            Cell cell66, cell67, cell68;
+            Cell cell66, cell67, cell68, cell69, cell70;
             
             // <editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
@@ -169,6 +169,8 @@ public class DetalleSaldoController extends BaseController {
             cell66 = row.createCell(16);
             cell67 = row.createCell(17);
             cell68 = row.createCell(18);
+            cell69 = row.createCell(19);
+            cell70 = row.createCell(20);
             
             cell50.setCellValue("BOLETO");
             cell51.setCellValue("PAX");
@@ -189,6 +191,9 @@ public class DetalleSaldoController extends BaseController {
             cell66.setCellValue("UUID");
             cell67.setCellValue("RFC");
             cell68.setCellValue("FECHA TIMBRADO");
+            cell69.setCellValue("ID CLIENTE");
+            cell70.setCellValue("CLIENTE");
+            
             
 //            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
 //            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
@@ -222,6 +227,8 @@ public class DetalleSaldoController extends BaseController {
             cell66.setCellStyle(headerStyle);
             cell67.setCellStyle(headerStyle);
             cell68.setCellStyle(headerStyle);
+            cell69.setCellStyle(headerStyle);
+            cell70.setCellStyle(headerStyle);
 
             ++vj;
             
@@ -247,6 +254,8 @@ public class DetalleSaldoController extends BaseController {
                 cell66 = row.createCell(16);
                 cell67 = row.createCell(17);
                 cell68 = row.createCell(18);
+                cell69 = row.createCell(19);
+                cell70 = row.createCell(20);
                 
                 //HashMap hm = (HashMap) listaData.get(vi);                
                 cell50.setCellValue((String)lst.get(vi).A3958CIA + lst.get(vi).A3958FORMA + lst.get(vi).A3958SERIE );
@@ -268,6 +277,8 @@ public class DetalleSaldoController extends BaseController {
                 cell66.setCellValue(lst.get(vi).A3958CFDI); //Double.parseDouble((String)hm.get("A1720VNTRV"))
                 cell67.setCellValue(lst.get(vi).A3958RFC); //Double.parseDouble((String)hm.get("A1720VNTRV"))
                 cell68.setCellValue(lst.get(vi).A3958FECTB); //Double.parseDouble((String)hm.get("A1720VNTRV"))
+                cell69.setCellValue(lst.get(vi).A3958CDCLI);
+                cell70.setCellValue(lst.get(vi).A3953RSOCI);
                 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
@@ -288,6 +299,8 @@ public class DetalleSaldoController extends BaseController {
                 cell66.setCellStyle(bodyStyle);
                 cell67.setCellStyle(bodyStyle);
                 cell68.setCellStyle(bodyStyle);
+                cell69.setCellStyle(bodyStyle);
+                cell70.setCellStyle(bodyStyle);
                 // </editor-fold>
                 //iter.next();
                 //++vi;                

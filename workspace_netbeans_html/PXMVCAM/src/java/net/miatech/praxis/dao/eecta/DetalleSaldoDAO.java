@@ -86,6 +86,7 @@ public class DetalleSaldoDAO {
                 objRtn.A3958NRRPT = rs01.getString("A3958NRRPT");
                 objRtn.A3958SQRPT = rs01.getString("A3958SQRPT");
                 objRtn.A3958CDCLI = rs01.getString("A3958CDCLI");
+                objRtn.A3953RSOCI = rs01.getString("A3953RSOCI").trim();
                 objRtn.A3958SOLER = rs01.getString("A3958SOLER");
                 objRtn.A3958GESTR = rs01.getString("A3958GESTR");
                 objRtn.A3958CFDI = rs01.getString("A3958CFDI");
