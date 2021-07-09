@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.IMF140Filter;
 import net.miatech.beans.IMF141Filter;
@@ -740,38 +741,38 @@ public class ForecastDAO {
                     bean.VCPNMXNUSA = rst.getDouble("VCPNMXNUSA");
 
                     lst.add(bean);
-                    
-                    if(bean.VCPNMXNASI > 0){
+
+                    if (bean.VCPNMXNASI > 0) {
                         totalRegistrosASI++;
                     }
-                    if(bean.VCPNMXNCAM > 0){
+                    if (bean.VCPNMXNCAM > 0) {
                         totalRegistrosCAM++;
                     }
-                    if(bean.VCPNMXNCAN > 0){
+                    if (bean.VCPNMXNCAN > 0) {
                         totalRegistrosCAN++;
                     }
-                    if(bean.VCPNMXNCAR > 0){
+                    if (bean.VCPNMXNCAR > 0) {
                         totalRegistrosCAR++;
                     }
-                    if(bean.VCPNMXNEUR > 0){
+                    if (bean.VCPNMXNEUR > 0) {
                         totalRegistrosEUR++;
                     }
-                    if(bean.VCPNMXNFRO > 0){
+                    if (bean.VCPNMXNFRO > 0) {
                         totalRegistrosFRO++;
                     }
-                    if(bean.VCPNMXNLOC > 0){
+                    if (bean.VCPNMXNLOC > 0) {
                         totalRegistrosLOC++;
                     }
-                    if(bean.VCPNMXNPLA > 0){
+                    if (bean.VCPNMXNPLA > 0) {
                         totalRegistrosPLA++;
                     }
-                    if(bean.VCPNMXNSUD > 0){
+                    if (bean.VCPNMXNSUD > 0) {
                         totalRegistrosSUD++;
                     }
-                    if(bean.VCPNMXNUSA > 0){
+                    if (bean.VCPNMXNUSA > 0) {
                         totalRegistrosUSA++;
                     }
-                    
+
                     //Totales
                     bean.TOTPAXASI = TOTPAXASI;
                     bean.TOTPAXCAM = TOTPAXCAM;
@@ -783,7 +784,7 @@ public class ForecastDAO {
                     bean.TOTPAXPLA = TOTPAXPLA;
                     bean.TOTPAXSUD = TOTPAXSUD;
                     bean.TOTPAXUSA = TOTPAXUSA;
-                    
+
                     bean.TOTVCPNUSDASI = TOTVCPNUSDASI;
                     bean.TOTVCPNUSDCAM = TOTVCPNUSDCAM;
                     bean.TOTVCPNUSDCAN = TOTVCPNUSDCAN;
@@ -794,7 +795,7 @@ public class ForecastDAO {
                     bean.TOTVCPNUSDPLA = TOTVCPNUSDPLA;
                     bean.TOTVCPNUSDSUD = TOTVCPNUSDSUD;
                     bean.TOTVCPNUSDUSA = TOTVCPNUSDUSA;
-                    
+
                     bean.TOTVPROUSDASI = TOTVPROUSDASI;
                     bean.TOTVPROUSDCAM = TOTVPROUSDCAM;
                     bean.TOTVPROUSDCAN = TOTVPROUSDCAN;
@@ -805,7 +806,7 @@ public class ForecastDAO {
                     bean.TOTVPROUSDPLA = TOTVPROUSDPLA;
                     bean.TOTVPROUSDSUD = TOTVPROUSDSUD;
                     bean.TOTVPROUSDUSA = TOTVPROUSDUSA;
-                    
+
                     bean.TOTVCPNMXNASI = TOTVCPNMXNASI;
                     bean.TOTVCPNMXNCAM = TOTVCPNMXNCAM;
                     bean.TOTVCPNMXNCAN = TOTVCPNMXNCAN;
@@ -816,13 +817,13 @@ public class ForecastDAO {
                     bean.TOTVCPNMXNPLA = TOTVCPNMXNPLA;
                     bean.TOTVCPNMXNSUD = TOTVCPNMXNSUD;
                     bean.TOTVCPNMXNUSA = TOTVCPNMXNUSA;
-                         
+
                 }
 
             }
 
             rst.close();
-   
+
             for (int i = 0; i < lst.size(); i++) {
                 //ASI
                 if (lst.get(i).VCPNMXNASI > 0) {
@@ -974,9 +975,9 @@ public class ForecastDAO {
                     }
                     //lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
                 }
-                
+
             }
-            
+
         } catch (Exception e) {
             e.getMessage();
             e.printStackTrace();
@@ -1001,7 +1002,7 @@ public class ForecastDAO {
 
         return lst;
     }
-    
+
     public List<IMF140Filter> loadPX551SQP03937(IMF140Filter filter) throws SQLException, Exception {
 
         List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
@@ -1023,7 +1024,6 @@ public class ForecastDAO {
             cstmt.setString(2, filter.IN_FECHA_FROM);
             cstmt.setString(3, filter.IN_FECHA_TO);
 
-
             cstmt.execute();
 
             rst = cstmt.getResultSet();
@@ -1042,7 +1042,7 @@ public class ForecastDAO {
                     bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
                     bean.IN_TREG = filter.IN_TREG.trim();
 
-                    bean.ZONA = rst.getString("ZONA").trim();                    
+                    bean.ZONA = rst.getString("ZONA").trim();
                     bean.VCPNMXN = rst.getDouble("VCPNMXN");
                     bean.VCPNUSD = rst.getDouble("VCPNUSD");
 
@@ -1077,7 +1077,7 @@ public class ForecastDAO {
 
         return lst;
     }
-    
+
     public List<IMF140Filter> loadPX551SQP04015(IMF140Filter filter) throws SQLException, Exception {
 
         List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
@@ -1099,7 +1099,6 @@ public class ForecastDAO {
             cstmt.setString(2, filter.IN_FECHA_FROM);
             cstmt.setString(3, filter.IN_FECHA_TO);
 
-
             cstmt.execute();
 
             rst = cstmt.getResultSet();
@@ -1118,7 +1117,7 @@ public class ForecastDAO {
                     bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
                     bean.IN_TREG = filter.IN_TREG.trim();
 
-                    bean.ZONA = rst.getString("ZONA").trim();                    
+                    bean.ZONA = rst.getString("ZONA").trim();
                     bean.VCPNMXN = rst.getDouble("VCPNMXN");
                     bean.VCPNUSD = rst.getDouble("VCPNUSD");
 
@@ -1152,5 +1151,201 @@ public class ForecastDAO {
         }
 
         return lst;
+    }
+
+    public List<IMF140Filter> loadPX551SQP04016(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        long QTYPAX = 0;
+        double VCPNUSD = 0, VPROUSD = 0, VCPNMXN = 0, VPROMXN = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04016(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                VCPNMXN = rst.getDouble("VCPNMXN");
+                VCPNUSD = rst.getDouble("VCPNUSD");
+                QTYPAX = rst.getLong("QTYPAX");
+                VPROUSD = rst.getDouble("VPROUSD");
+                VPROMXN = rst.getDouble("VPROMXN");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF140Filter();
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    bean.IN_TREG = filter.IN_TREG.trim();
+
+                    bean.ZONA = rst.getString("ZONA").trim();
+                    bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                    bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                    bean.VPROUSD = rst.getDouble("VPROUSD");
+                    bean.VPROMXN = rst.getDouble("VPROMXN");
+                    bean.QTYPAX = rst.getInt("QTYPAX");
+
+                    bean.totVCPNMXN = VCPNMXN;
+                    bean.totVCPNUSD = VCPNUSD;
+                    bean.totQTYPAX = QTYPAX;
+                    bean.totVPROUSD = VPROUSD;
+                    bean.totVPROMXN = VPROMXN;
+
+                    lst.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public HashMap<String, List<IMF140Filter>> loadPX551SQP04017(IMF140Filter filter) throws SQLException, Exception {
+        //Domestico
+        long DQTYPAX = 0;
+        double DVCPNUSD = 0, DVPROUSD = 0, DVCPNMXN = 0, DVPROMXN = 0;
+        //Internacional
+        long IQTYPAX = 0;
+        double IVCPNUSD = 0, IVPROUSD = 0, IVCPNMXN = 0, IVPROMXN = 0;
+        List<IMF140Filter> lstDomestic = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        List<IMF140Filter> lstInternational = new ArrayList<IMF140Filter>(0);
+        IMF140Filter beanI;
+        HashMap<String, List<IMF140Filter>> hmResultado = new HashMap<String, List<IMF140Filter>>();
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04017(?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                bean = new IMF140Filter();
+                bean.ZONA = rst.getString("ZONA").trim();
+                bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                bean.VPROUSD = rst.getDouble("VPROUSD");
+                bean.VPROMXN = rst.getDouble("VPROMXN");
+                bean.QTYPAX = rst.getInt("QTYPAX");
+                
+                /*DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
+                DVCPNUSD = DVCPNUSD + rst.getDouble("VCPNUSD");
+                DVPROUSD = DVPROUSD + rst.getDouble("VPROUSD");
+                DVPROMXN = DVPROMXN + rst.getDouble("VPROMXN");
+                DQTYPAX = DQTYPAX + rst.getInt("QTYPAX");*/
+
+                lstDomestic.add(bean);
+            }
+
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    beanI = new IMF140Filter();
+                    beanI.ZONA = rst.getString("ZONA").trim();
+                    beanI.VCPNMXN = rst.getDouble("VCPNMXN");
+                    beanI.VCPNUSD = rst.getDouble("VCPNUSD");
+                    beanI.VPROUSD = rst.getDouble("VPROUSD");
+                    beanI.VPROMXN = rst.getDouble("VPROMXN");
+                    beanI.QTYPAX = rst.getInt("QTYPAX");
+
+                    /*IVCPNMXN = IVCPNMXN + rst.getDouble("VCPNMXN");
+                    IVCPNUSD = IVCPNUSD + rst.getDouble("VCPNUSD");
+                    IVPROUSD = IVPROUSD + rst.getDouble("VPROUSD");
+                    IVPROMXN = IVPROMXN + rst.getDouble("VPROMXN");
+                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAX");*/
+
+                    lstInternational.add(beanI);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        /*for (int i = 0; i < lstDomestic.size(); i++) {
+            lstDomestic.get(i).totVCPNMXN = DVCPNMXN;
+            lstDomestic.get(i).totVCPNUSD = DVCPNUSD;
+            lstDomestic.get(i).totVPROUSD = DVPROUSD;
+            lstDomestic.get(i).totVPROMXN = DVPROMXN;
+            lstDomestic.get(i).totQTYPAX = DQTYPAX;
+        }
+
+        for (int i = 0; i < lstInternational.size(); i++) {
+            lstInternational.get(i).totVCPNMXN = IVCPNMXN;
+            lstInternational.get(i).totVCPNUSD = IVCPNUSD;
+            lstInternational.get(i).totVPROUSD = IVPROUSD;
+            lstInternational.get(i).totVPROMXN = IVPROMXN;
+            lstInternational.get(i).totQTYPAX = IQTYPAX;
+        }*/
+        hmResultado.put("DOMESTIC", lstDomestic);
+        hmResultado.put("INTERNATIONAL", lstInternational);
+        return hmResultado;
     }
 }

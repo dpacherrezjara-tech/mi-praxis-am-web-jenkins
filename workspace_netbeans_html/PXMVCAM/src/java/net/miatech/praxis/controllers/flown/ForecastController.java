@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -421,6 +422,112 @@ public class ForecastController extends BaseController {
         }
         return lst;
     }
+    
+    @RequestMapping(value = "searchForecastByMarketFirstLevel")
+    public @ResponseBody
+    String searchForecastByMarketFirstLevel(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Forecast : SearchForecastByMarketFirstLevel-------------");
+
+        map.put("success", true);
+        List<IMF140Filter> lst = this.getListForecastByMarketFirstLevel(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<IMF140Filter> getListForecastByMarketFirstLevel(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF140Filter> lst = new ArrayList<>(0);
+        IMF140Filter filter = new IMF140Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ForecastLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF140Filter.class);
+
+            // Paginacion
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            //--------------------
+            lst = logic.loadPX551SQP04016(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchForecastByMarketSecondLevel")
+    public @ResponseBody
+    String searchForecastByMarketSecondLevel(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- SalesReconciliBoomer : searchForecastByMarketSecondLevel-------------");
+        HashMap<String, List<IMF140Filter>> hmResultado = new HashMap<String, List<IMF140Filter>>();
+        
+        map.put("success", true);
+        hmResultado = this.getListDataByMarketSecondLevel(request, false);
+        List<IMF140Filter> lst = hmResultado.get("DOMESTIC");
+        List<IMF140Filter> lstInternational  = hmResultado.get("INTERNATIONAL");
+        //List<A2324Filter> lstPnr  = hmResultado.get("PNR");
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        map.put("lstInternational", lstInternational);
+        //map.put("lstPnr", lstPnr);
+        return new Gson().toJson(map);
+    }
+
+    public HashMap<String, List<IMF140Filter>> getListDataByMarketSecondLevel(HttpServletRequest request, Boolean bExcel) {
+
+        HashMap<String, List<IMF140Filter>> lst = new HashMap<String, List<IMF140Filter>>();
+        IMF140Filter filter = new IMF140Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ForecastLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF140Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            lst = logic.loadPX551SQP04017(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }    
 
     //Reportes Excel
     @RequestMapping(value = "getXLSX")

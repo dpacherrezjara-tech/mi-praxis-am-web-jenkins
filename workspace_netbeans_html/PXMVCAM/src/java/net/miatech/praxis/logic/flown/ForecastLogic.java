@@ -6,6 +6,7 @@
 package net.miatech.praxis.logic.flown;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.IMF140Filter;
 import net.miatech.beans.IMF141Filter;
@@ -43,8 +44,16 @@ public class ForecastLogic {
     public List<IMF140Filter> loadPX551SQP03937(IMF140Filter filter) throws SQLException, Exception {
         return ForecastDAO.loadPX551SQP03937(filter);
     }
-    
+
     public List<IMF140Filter> loadPX551SQP04015(IMF140Filter filter) throws SQLException, Exception {
         return ForecastDAO.loadPX551SQP04015(filter);
+    }
+
+    public List<IMF140Filter> loadPX551SQP04016(IMF140Filter filter) throws SQLException, Exception {
+        return ForecastDAO.loadPX551SQP04016(filter);
+    }
+
+    public HashMap<String, List<IMF140Filter>> loadPX551SQP04017(IMF140Filter filter) throws SQLException, Exception {
+        return ForecastDAO.loadPX551SQP04017(filter);
     }
 }
