@@ -206,6 +206,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
             case 'AZ':
                 this.setFormatParameter();
                 this.setGridDataAmountByZones();
+                this.setGridDataAmountByMarket();
                 break;
                 /*case 'FZ':
                  this.setFormatParameter();
@@ -445,6 +446,30 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-displaySAChart01').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displaySAChart02').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setGridDataAmountByMarket: function() {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchAmountByMarket'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataAmountByMarket').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataAmountByMarket').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart03').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart04').bindStore(storeGridDatas);
     },
     onGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 

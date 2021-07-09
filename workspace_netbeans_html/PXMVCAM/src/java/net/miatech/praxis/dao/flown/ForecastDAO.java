@@ -1077,4 +1077,80 @@ public class ForecastDAO {
 
         return lst;
     }
+    
+    public List<IMF140Filter> loadPX551SQP04015(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        long QTYPAX = 0;
+        double VCPNUSD = 0, VPROUSD = 0, VCPNMXN = 0, VPROMXN = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04015(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                VCPNMXN = rst.getDouble("VCPNMXN");
+                VCPNUSD = rst.getDouble("VCPNUSD");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF140Filter();
+                    bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                    bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                    bean.IN_TREG = filter.IN_TREG.trim();
+
+                    bean.ZONA = rst.getString("ZONA").trim();                    
+                    bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                    bean.VCPNUSD = rst.getDouble("VCPNUSD");
+
+                    bean.totVCPNMXN = VCPNMXN;
+                    bean.totVCPNUSD = VCPNUSD;
+
+                    lst.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
 }
