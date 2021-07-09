@@ -93,13 +93,15 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
                 //Ext.getCmp(prototype.id + '-AplPaymentBoletoEntry').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
+                    icon: objRtn.dbException.SQLCODE, //var icons = [Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
                     fn: function () {
                         //culmino PROCESO 
-                        Ext.getCmp(prototype.id03 + '-A4021LOTE').setValue(objRtn.OU_A4021LOTE);
-                        me.search_det_loadbatch();
-                        //Ext.getCmp(prototype.id03 + '-AplPaymentBatch').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        if(objRtn.OU_A4021LOTE !== ""){
+                            Ext.getCmp(prototype.id03 + '-A4021LOTE').setValue(objRtn.OU_A4021LOTE);
+                            me.search_det_loadbatch();
+                            //Ext.getCmp(prototype.id03 + '-AplPaymentBatch').close();
+                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        }                        
                     }
                 });
             },
