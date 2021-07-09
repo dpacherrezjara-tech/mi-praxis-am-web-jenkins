@@ -557,6 +557,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                                 storeId: 'international', autoLoad: true, data: international, fields: ['ZONA', 'QTYPAX', 'VCPNUSD', 'VCPNMXN', 'VPROUSD', 'VPROMXN']
                             });
                             Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').bindStore(store);
+                            Ext.getCmp(prototype.id + '-displaySAChart06').bindStore(store);
                             //Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').setStore(store);
 
                         } else {
@@ -575,6 +576,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').setTitle('<center style="font-size:12px;">' + 'Domestic Market' + ' </center>');
         Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').setTitle('<center style="font-size:12px;">' + 'International Market' + ' </center>');
         Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart05').bindStore(storeGridDatas);
         //Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').setStore(storeGridDatas);
         //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
