@@ -1199,7 +1199,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDetailFlightManifest',
-                                            width: 994,
+                                            width: 1064,
                                             height: 550,
                                             features: [{
                                                     ftype: 'summary'
@@ -1241,6 +1241,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             metaData.style = "text-align:left;";
                                                             return value;
                                                         }
+                                                    },
+                                                    {
+                                                        text: 'Type <br> Pax', dataIndex: 'TPAX', width: 70, sortable: true, 
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "text-align:center;background:#FFF9E0;";
+//                                                            return value;
+//                                                        }
                                                     },
                                                     {
                                                         text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true, 

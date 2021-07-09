@@ -190,22 +190,28 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         console.log(selectedValue);
         switch (selectedValue) {
             case 'F':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
                 this.setFormatParameter();
                 this.setGridData();
                 break;
             case 'I':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataItinerary();
                 break;
             case 'FC':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
                 Ext.getCmp(prototype.id + '-radiogroupForecast').show();
                 this.onChangeRadioForecast();
                 //this.setFormatParameter();
                 //this.setGridDataForecast();                
                 break;
             case 'AZ':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(true);
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setValue(false);
                 this.setFormatParameter();
                 this.setGridDataAmountByZones();
+                this.setGridDataAmountByMarket();
                 break;
                 /*case 'FZ':
                  this.setFormatParameter();
@@ -217,14 +223,17 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupForecast').getValue().rbgTypeForecast;
         switch (selectedValue) {
             case 'FC':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecast();
                 break;
             case 'FP':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecastPercentage();
                 break;
             case 'FZ':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecastZones();
                 break;
@@ -443,7 +452,131 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-gridDataAmountByZones').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataAmountByZones').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displaySAChart01').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart02').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setGridDataAmountByMarket: function() {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchAmountByMarket'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataAmountByMarket').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataAmountByMarket').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart03').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart04').bindStore(storeGridDatas);
+    },
+    btnSearch_MarketByLevel: function() {
+        this.setFormatParameter();
+        if (Ext.getCmp(prototype.id + '-chkMarketByLevel').getValue() === false) {
+            Ext.getCmp(prototype.id + '-panelGridDataMarketInGeneral').setVisible(false);
+            this.setGridDataAmountByZones();
+            this.setGridDataAmountByMarket();
+            return
+        }
+
+        win.lblUser_toolTip("Estructura: IMF140");
+        me.panelActual = '-panelGridDataMarketInGeneral';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.setGridDataMarketFirstLevel();
+        this.setGridDataMarketSecondLevel();
+
+    },
+    setGridDataMarketFirstLevel: function() {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastByMarketFirstLevel'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                            var data = obj.data.items[0].data;
+                    }
+//                        me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').setTitle('<center style="font-size:12px;">' + 'First Level' + ' </center>');
+        Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setGridDataMarketSecondLevel: function() {
+        //Ext.getCmp(prototype.id + '-panelPNR').setVisible(false);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastByMarketSecondLevel'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetMarket = res.data;
+                        if (gridDetMarket.length > 0) {
+                            var data = {};
+                            data = gridDetMarket[0];
+                            //Ext.getCmp(prototype.id + '-panelGridDataByRefNbr').setTitle('<center style="font-size:12px;">' + ' Sale Date : ' + data.SDATE + ' - Reference Number: ' + data.REFNBR + ' - Status: ' + data.estadoTitulo + ' </center>');
+                            //Colocando los totales
+                            var lstInternational = res.lstInternational;
+                            var international = new Array();
+
+                            lstInternational.forEach(function callback(currentValue, index, array) {
+                                international.push([currentValue.ZONA, currentValue.QTYPAX, currentValue.VCPNUSD, currentValue.VCPNMXN, currentValue.VPROUSD, currentValue.VPROMXN]);
+                            });
+                            var store = Ext.create('Ext.data.ArrayStore', {
+                                storeId: 'international', autoLoad: true, data: international, fields: ['ZONA', 'QTYPAX', 'VCPNUSD', 'VCPNMXN', 'VPROUSD', 'VPROMXN']
+                            });
+                            Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').bindStore(store);
+                            //Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').setStore(store);
+
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-panelGridDataMarketSecondLevel').setTitle('<center style="font-size:12px;">' + 'Second Level' + ' </center>');
+        Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').setTitle('<center style="font-size:12px;">' + 'Domestic Market' + ' </center>');
+        Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').setTitle('<center style="font-size:12px;">' + 'International Market' + ' </center>');
+        Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     onGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 

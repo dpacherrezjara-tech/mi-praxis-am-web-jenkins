@@ -192,6 +192,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Filters', {
                                 change: 'onUpperValue'
                             }
                         },
+                        {xtype: 'tbspacer', width: 40},
+                        {
+                            xtype: 'label',
+                            text: 'Ref. Number:',
+                            padding: '3 0',
+                            width: 80
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id+'-txtRefNbr',     
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,     
+                            maskRe: /[0-9]/,
+                            maxLength: 8,
+                            width: 70,
+                            enableKeyEvents: true,
+                            listeners:{
+                                keypress: 'BuscarPNR_keyDownHandler',
+                                change: 'onUpperValue'
+                            }
+                        },
 //                        {xtype: 'tbspacer', width: 30},
 //                        {
 //                            xtype: 'label',

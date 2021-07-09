@@ -574,7 +574,7 @@ public class SalesReconciliBoomerDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04020(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04020(?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -583,6 +583,7 @@ public class SalesReconciliBoomerDAO {
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_PNR);
+            cstmt.setString(3, filter.IN_REFNUMBER);
             cstmt.execute();
 
             rst = cstmt.getResultSet();

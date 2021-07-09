@@ -252,15 +252,12 @@ public class AplPaymentController extends BaseController {
     String setAplPaymentBatch(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
         byte[] bytes = null;
         SQP04059Filter filter = new SQP04059Filter();                
-        SQP04059Filter objRtn;
+        SQP04059Filter objRtn = new SQP04059Filter();
         Integer cont = 0;        
         try {        
             
             logic = new AplPaymentLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            //DecimalFormat formatter = new DecimalFormat(".##");
-            //formatter.setRoundingMode(RoundingMode.HALF_UP);
-            //String filename = excelfile.getOriginalFilename();
+            logic.setSession(this.serverSession.getServerSession());            
             XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
@@ -275,7 +272,8 @@ public class AplPaymentController extends BaseController {
             String json_texto1;
             String json_texto = "";
             json_texto1 = "[";
-            
+            String ERROR_FIELDS = "N";
+            Integer VL_INDICE = 0;
             //filter = new SQP04059Filter();
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             while (iterator.hasNext()) {                
@@ -283,12 +281,38 @@ public class AplPaymentController extends BaseController {
                 Row sheet = iterator.next();
                 //Iterator<Cell> cellIterator = currentRow.iterator();                
                 if (cont > 1) {
-                    if (sheet.getCell(0) != null) {                                                
+                    if (sheet.getCell(0) != null) {
                         FPAGO = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString();
+                        //Si Fecha de pago y moneda es blanco , hay lineas completas en blanco y no debe continuar
+                        if( FPAGO == "" && sheet.getCell(4).toString() == "" ){
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 0;
+                            break;
+                        } 
+                        if( FPAGO == "" && sheet.getCell(4).toString() != "" ){
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 1;
+                            break;
+                        } 
                         NBOLE = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString();
+                        if( NBOLE != "" && NBOLE.trim().length() != 13 ){ 
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 2;
+                            break;
+                        }                        
                         UUID  = sheet.getCell(2)== null ? "" : sheet.getCell(2).toString();
                         IMPORTE = sheet.getCell(3)== null ? "0": sheet.getCell(3).toString();
+                        if( IMPORTE == ""){
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 3;
+                            break;
+                        }                        
                         MONEDA = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString();
+                        if( MONEDA == ""){
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 4;
+                            break;
+                        }                        
                         REFPAG=  sheet.getCell(5)== null ? "" : sheet.getCell(5).toString(); 
                         //crear obj json
                         HashMap obj=new HashMap();    
@@ -302,14 +326,19 @@ public class AplPaymentController extends BaseController {
                         json_texto += jsonText + ",";                        
                     }
                 }
-            }         
-            int length = json_texto.length(); 
-            json_texto1 +=  json_texto.substring(0,length-1);            
-            json_texto1 += "]"; 
-            
-            filter.VP_JSON = json_texto1;             
-            objRtn = logic.setSQP04059Filter(filter); 
-            
+            }                      
+            // SI NO HAY ERRORES EN EXCEL ENVIAR A GRABAR            
+            if(ERROR_FIELDS == "N"){
+                int length = json_texto.length(); 
+                json_texto1 +=  json_texto.substring(0,length-1);            
+                json_texto1 += "]";
+                filter.VP_JSON = json_texto1;             
+                objRtn = logic.setSQP04059Filter(filter); 
+            }else if( ERROR_FIELDS == "S" ){
+                objRtn.OU_A4021LOTE = "";
+                objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+                objRtn.dbException.MESSAGE = this.get_errorLoadFile(VL_INDICE);
+            }
             map.put("success", true);
             map.put("objRtn",  objRtn);
             
@@ -322,6 +351,18 @@ public class AplPaymentController extends BaseController {
         }
         return new Gson().toJson(map);
     }  
+    
+    public String get_errorLoadFile ( Integer INDICE  ){
+        String[] MESSAGE_ERROR = {
+            "EXCEL CONTIENE REGISTROS EN BLANCO",               //0
+            "COLUMNA FECHA DE APLICACION DEL PAGO EN BLANCO",   //1
+            "FORMATO NO VALIDO PARA COLUMNA BOLETO",            //2
+            "COLUMNA IMPORTE INVALIDO O EN BLANCO",             //3
+            "COLUMNA MONEDA EN BLANCO"                          //4
+        };        
+        return MESSAGE_ERROR[INDICE];
+    }
+    
     
     @RequestMapping(value = "/search_det_loadbatch"/*, method = RequestMethod.POST*/)
     public @ResponseBody

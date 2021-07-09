@@ -68,7 +68,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.ForecastForm', {
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 630,
+                                            height: 720,
                                             width: 1650,
                                             layout: 'fit',
                                             items: [

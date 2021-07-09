@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
+Ext.define('Ext.Praxis.controller.compensation.Compensation.CompensationLoadFileFormController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.' + prototype.id03 + '-aplPaymentBatchController',
-    url: CONTEXTPATH + '/AplPayment', 
+    alias: 'controller.' + prototype.id01 + '-compensationLoadFileFormController',
+    url: CONTEXTPATH + '/Compensation', 
     bean: {},
     init: function (view) {
         var me = this;
@@ -19,22 +19,10 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
         
     },                
     getDataInputs: function () {
-//        var p = this.view.params;
-//        var data = p.rec.data;
-//        //console.log(data);
-//        var vtitle = Ext.getCmp(prototype.id + '-AplPaymentBoletoEntry').getTitle();
-//        Ext.getCmp(prototype.id + '-AplPaymentBoletoEntry').setTitle( vtitle + ' Nº: ' + data.A3957NRRPT );
-//        Ext.getCmp(prototype.id + '-A3958NRRPT').setValue(data.A3957NRRPT);
-//        Ext.getCmp(prototype.id + '-A3959MDAPG').setValue(data.A3957MDLOC); 
-//        var VL_TKT = Ext.getCmp(prototype.id + '-TICKET_NUMBER').getValue();        
-//        Ext.getCmp(prototype.id + '-FILTER02').setValue(VL_TKT);        
-//        this.get_detalle_boleto();        
+        
     },
     getDataEntryValues: function (strOption) {
-//        var VP_ACTION = strOption;              
-//        return {
-//            VP_ACTION:VP_ACTION                     
-//        };
+
     },    
     onSaveClick: function (btn) {
         var p = this.view.params;
@@ -68,19 +56,19 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
         var strOption = p.action;
         
         var me = this;
-        var file = Ext.getCmp(prototype.id03 + '-file').getValue().trim();
+        var file = Ext.getCmp(prototype.id01 + '-file').getValue().trim();
         if (file === '') {
             Ext.MessageBox.alert('PRAXIS', "SELECCIONAR ARCHIVO ", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.id03 + '-file').focus();", 100);
+                    setTimeout("Ext.getCmp(prototype.id01 + '-file').focus();", 100);
             });
             return;
         }            
         me.bean.VP_ACTION = strOption;        
         me.bean.fileName = file;
-        var form = Ext.getCmp(prototype.id03 + '-form01').getForm();
+        var form = Ext.getCmp(prototype.id01 + '-form01').getForm();
         form.submit({
-            url: prototype.url + '/setAplPaymentBatch',
+            url: prototype.url + '/setLoadFileInput',
             waitMsg: 'Uploading your sure to upload the file...',
             params: {
                 beanString:JSON.stringify(me.bean)
@@ -93,15 +81,13 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
                 //Ext.getCmp(prototype.id + '-AplPaymentBoletoEntry').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: objRtn.dbException.SQLCODE, //var icons = [Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+                    icon: 1,
                     fn: function () {
                         //culmino PROCESO 
-                        if(objRtn.OU_A4021LOTE !== ""){
-                            Ext.getCmp(prototype.id03 + '-A4021LOTE').setValue(objRtn.OU_A4021LOTE);
-                            me.search_det_loadbatch();
-                            //Ext.getCmp(prototype.id03 + '-AplPaymentBatch').close();
-                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                        }                        
+                        //Ext.getCmp(prototype.id01 + '-A4021LOTE').setValue(objRtn.OU_A4021LOTE);
+                        //me.search_det_loadbatch();
+                        //Ext.getCmp(prototype.id01 + '-AplPaymentBatch').close();
+                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }
                 });
             },
@@ -155,7 +141,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
         });
     },
     onCancelClick: function (btn) {
-        Ext.getCmp(prototype.id03 + '-AplPaymentBatch').close();
+        Ext.getCmp(prototype.id01 + '-CompensationLoadFileForm').close();
     }, 
     cmbfiltro_clickHandler03:function(){
         this.search_det_loadbatch();
@@ -163,9 +149,9 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
     search_det_loadbatch:function( ){
         me = this;
         var bean = {};        
-        bean.VP_A4021LOTE = Ext.getCmp(prototype.id03 + '-A4021LOTE').getValue();
-        bean.VP_BOLETO  = Ext.getCmp(prototype.id03 + '-A4021BOLETO').getValue();
-        bean.VP_A4021STAT  = Ext.getCmp(prototype.id03 + '-A4021STAT').getValue();
+        bean.VP_A4021LOTE = Ext.getCmp(prototype.id01 + '-A4021LOTE').getValue();
+        bean.VP_BOLETO  = Ext.getCmp(prototype.id01 + '-A4021BOLETO').getValue();
+        bean.VP_A4021STAT  = Ext.getCmp(prototype.id01 + '-A4021STAT').getValue();
         if (bean.VP_A4021STAT !== '' ){
             if (bean.VP_BOLETO === '' && bean.VP_A4021LOTE === '' ){
                 global.Msg({msg: 'Ingrese Nº lote y/o Boleto'});
@@ -183,26 +169,26 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
             timeout: 60000000,
             method: 'POST',
             params: bean,
-            beforerequest: Ext.getCmp(prototype.id03 + '-AplPaymentBatch').mask('Cargando...', ''),
+            beforerequest: Ext.getCmp(prototype.id01 + '-AplPaymentBatch').mask('Cargando...', ''),
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText); 
-                Ext.getCmp(prototype.id03 + '-AplPaymentBatch').unmask('Loading...', '');
+                Ext.getCmp(prototype.id01 + '-AplPaymentBatch').unmask('Loading...', '');
                 if (res.total === 0) {
                         global.Msg({
                             msg: 'No hay registros'
                         });
                     return;
                 }  
-                Ext.getCmp(prototype.id03 + '-infoGridAplPaymentBatch').setStore(res.data);
-                Ext.getCmp(prototype.id03 + '-infoGridAplPaymentBatch').getStore().reload();           
+                Ext.getCmp(prototype.id01 + '-infoGridAplPaymentBatch').setStore(res.data);
+                Ext.getCmp(prototype.id01 + '-infoGridAplPaymentBatch').getStore().reload();           
             }
         }); 
     },
     onExportXlsClick: function(){
         var bean = {};         
-        bean.VP_A4021LOTE = Ext.getCmp(prototype.id03 + '-A4021LOTE').getValue();
-        bean.VP_BOLETO  = Ext.getCmp(prototype.id03 + '-A4021BOLETO').getValue();
-        bean.VP_A4021STAT  = Ext.getCmp(prototype.id03 + '-A4021STAT').getValue();        
+        bean.VP_A4021LOTE = Ext.getCmp(prototype.id01 + '-A4021LOTE').getValue();
+        bean.VP_BOLETO  = Ext.getCmp(prototype.id01 + '-A4021BOLETO').getValue();
+        bean.VP_A4021STAT  = Ext.getCmp(prototype.id01 + '-A4021STAT').getValue();        
         if (bean.VP_A4021STAT !== '' ){
             if (bean.VP_BOLETO === '' || bean.VP_A4021LOTE === '' ){
                 global.Msg({msg: 'Ingrese Nº lote y/o Boleto'});
