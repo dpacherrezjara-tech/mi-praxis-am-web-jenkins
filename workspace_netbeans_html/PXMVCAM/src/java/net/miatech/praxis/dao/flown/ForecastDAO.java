@@ -1120,6 +1120,8 @@ public class ForecastDAO {
                     bean.ZONA = rst.getString("ZONA").trim();
                     bean.VCPNMXN = rst.getDouble("VCPNMXN");
                     bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                    bean.LABEL_MXN = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNMXN");
+                    bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
 
                     bean.totVCPNMXN = VCPNMXN;
                     bean.totVCPNUSD = VCPNUSD;
