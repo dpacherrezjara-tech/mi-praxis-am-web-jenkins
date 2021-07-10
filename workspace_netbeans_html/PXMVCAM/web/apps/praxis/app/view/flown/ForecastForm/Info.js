@@ -1681,6 +1681,20 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         minGapWidth: 2,
                                                         maxBarWidth: 1200
                                                     },
+                                                    label: {
+                                                        field: ['VCPNMXN'],
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0.00') + 'M'
+                                                        }
+                                                    },
                                                     tooltip: {
                                                         trackMouse: true,
                                                         height: 28,
@@ -1833,6 +1847,20 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         minGapWidth: 2,
                                                         maxBarWidth: 1200
                                                     },
+                                                    label: {
+                                                        field: ['VCPNUSD'],
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0.00') + 'M'
+                                                        }
+                                                    },
                                                     tooltip: {
                                                         trackMouse: true,
                                                         height: 28,
@@ -1880,13 +1908,27 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     type: 'pie3d',
                                                     angleField: 'VCPNMXN',
                                                     colors: ['#339933', '#3978F5'],
-                                                    label: {
+                                                    /*label: {
                                                         field: 'ZONA',
                                                         calloutLine: {
                                                             length: 60,
                                                             width: 3
                                                                     // specifying 'color' is also possible here
                                                         }
+                                                    },*/
+                                                    label: {
+                                                        field: 'LABEL_MXN',
+                                                        //display: 'insideEnd',
+                                                        display: 'middle',
+                                                        calloutLine: {
+                                                            length: 60,
+                                                            width: 3
+                                                                    // specifying 'color' is also possible here
+                                                        }
+                                                        /*renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0,000.00')
+                                                        }*/
                                                     },
                                                     highlight: true,
                                                     tooltip: {
@@ -1974,12 +2016,18 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     angleField: 'VCPNUSD',
                                                     colors: ['#339933', '#3978F5'],
                                                     label: {
-                                                        field: 'ZONA',
-                                                        /*calloutLine: {
-                                                         length: 60,
-                                                         width: 3
-                                                         // specifying 'color' is also possible here
-                                                         }*/
+                                                        field: 'LABEL_USD',
+                                                        //display: 'insideEnd',
+                                                        display: 'middle',
+                                                        calloutLine: {
+                                                            length: 60,
+                                                            width: 3
+                                                                    // specifying 'color' is also possible here
+                                                        }
+                                                        /*renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0,000.00')
+                                                        }*/
                                                     },
                                                     highlight: true,
                                                     tooltip: {
@@ -2441,7 +2489,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             series: [{
                                                     type: 'pie3d',
                                                     angleField: 'VCPNUSD',
-                                                    colors: ['#54AAB8', '#B5E6EE','#6CDAEB'],
+                                                    colors: ['#54AAB8', '#B5E6EE', '#6CDAEB'],
                                                     label: {
                                                         field: 'ZONA',
                                                         /*calloutLine: {
@@ -2479,7 +2527,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             series: [{
                                                     type: 'pie3d',
                                                     angleField: 'VCPNUSD',
-                                                    colors: ['#1b5692', '#43a756','#999999', '#de8a3d','#74a2d7', '#f0c33b','#9fc54d'],
+                                                    colors: ['#1b5692', '#43a756', '#999999', '#de8a3d', '#74a2d7', '#f0c33b', '#9fc54d'],
                                                     label: {
                                                         field: 'ZONA',
                                                         /*calloutLine: {
