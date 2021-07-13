@@ -1202,7 +1202,10 @@ public class ForecastDAO {
                     bean.VCPNUSD = rst.getDouble("VCPNUSD");
                     bean.VPROUSD = rst.getDouble("VPROUSD");
                     bean.VPROMXN = rst.getDouble("VPROMXN");
+                    bean.LABEL_MXN = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNMXN");
+                    bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
                     bean.QTYPAX = rst.getInt("QTYPAX");
+                    
 
                     bean.totVCPNMXN = VCPNMXN;
                     bean.totVCPNUSD = VCPNUSD;
@@ -1275,6 +1278,8 @@ public class ForecastDAO {
                 bean.VCPNUSD = rst.getDouble("VCPNUSD");
                 bean.VPROUSD = rst.getDouble("VPROUSD");
                 bean.VPROMXN = rst.getDouble("VPROMXN");
+                bean.LABEL_MXN = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNMXN");
+                bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
                 bean.QTYPAX = rst.getInt("QTYPAX");
                 
                 /*DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
