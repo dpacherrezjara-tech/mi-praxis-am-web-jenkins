@@ -594,6 +594,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                     autoLoad: false
                 });
                 //Ext.getCmp(prototype.id + '-panelPNR').setTitle('<center style="font-size:12px;">' + ' PNR : ' + pnr + ' </center>');                
+                Ext.getCmp(prototype.id + '-gridDataAccounting').setTitle('<center style="font-size:12px;"> Accounting </center>');                
                 Ext.getCmp(prototype.id + '-gridDataAccounting').bindStore(storeData);
 
             }
