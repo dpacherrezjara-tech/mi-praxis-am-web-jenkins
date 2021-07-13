@@ -1,7 +1,7 @@
 
 prototype.id = 'PolicyDeliveryLogForm';
 prototype.url = CONTEXTPATH + '/PolicyDeliveryLogForm';
-prototype.widthWindow = 1366;
+prototype.widthWindow = 1400;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.sales.PolicyDeliveryLogForm.PolicyDeliveryLogForm', {
@@ -347,13 +347,13 @@ Ext.define('Ext.Praxis.view.sales.PolicyDeliveryLogForm.PolicyDeliveryLogForm', 
                                     {text: 'Accounting /</br>date', dataIndex: 'A4014FCONT', width: 90},
                                     {text: 'Processing /</br>date', dataIndex: 'A4014FPROC', width: 90,renderer: 'onRendererColumnOnPais'},
                                     {text: 'System /</br>date', dataIndex: 'A4014FECIN', width: 75},
-                                    {text: 'Praxis </br> ID', dataIndex: 'A4014IDLOT', align: 'left', width: 180,renderer: 'onRendererColumnAttr'},
-                                    {text: 'File </br> name', dataIndex: 'A4014NCAMP', align: 'left', width: 180,renderer: 'onRendererColumnAttr'},
-                                    {text: 'Module', dataIndex: 'A4014MODUL', align: 'center', width: 70},
+                                    {text: 'Praxis </br> ID', dataIndex: 'A4014IDLOT', align: 'left', width: 160,renderer: 'onRendererColumnAttr'},
+                                    {text: 'File </br> name', dataIndex: 'A4014NCAMP', align: 'left', width: 160,renderer: 'onRendererColumnAttr'},
+                                    {text: 'Module', dataIndex: 'A4014MODUL', align: 'center', width: 60},
                                     {text: 'Type', dataIndex: 'A4014TIPOM', align: 'center', width: 70},
                                     {text: 'Poliza', dataIndex: 'A4014POLIZ', align: 'center', width: 50},
                                     {text: 'Type </br>Poliza', dataIndex: 'A4014TPOLI', align: 'center', width: 60},
-                                    {text: 'QTY </br> Poliza', dataIndex: 'A4014QTYPL', width: 70},
+                                    {text: 'QTY </br> Poliza', dataIndex: 'A4014QTYPL', width: 48},
                                     {text: 'Cur.', dataIndex: 'A4014MDA', width: 40},
                                     {
                                         text: 'Debit',
@@ -376,6 +376,7 @@ Ext.define('Ext.Praxis.view.sales.PolicyDeliveryLogForm.PolicyDeliveryLogForm', 
                                         }
                                     },                                    
                                     {text: 'Status', dataIndex: 'A4014STAT', width: 150,renderer: 'onRendererColumnStatus'}, // renderer: ''
+                                    {text: 'Oracle Status', dataIndex: 'A1955STATU_LABEL', width: 150}
                                     /*{text: '', dataIndex: '', width: 60, renderer: 'onRendererColumnStatus'},
                                      {
                                      sortable: false,
