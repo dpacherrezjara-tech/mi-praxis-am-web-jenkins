@@ -121,7 +121,9 @@ public class PolicyDeliveryLogFormDAO {
                 objRtn.A4014REVIS = rs01.getString("A4014REVIS");
                 objRtn.A4014FREVI = rs01.getString("A4014FREVI");
                 objRtn.A4014HREVI = rs01.getString("A4014HREVI");
-
+                objRtn.A1955STATU = rs01.getString("A1955STATU");
+                objRtn.A1955STATU_LABEL = rs01.getString("A1955STATU_LABEL");                
+                
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
