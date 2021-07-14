@@ -990,6 +990,7 @@ public class SalesReconciliBoomerDAO {
                 objRtn.A1716CIA = rst.getString("CIA");
                 objRtn.A1716FORMA = rst.getString("FORMA");
                 objRtn.A1716SERIE = rst.getString("SERIE");
+                objRtn.TICKET = rst.getString("CIA") + rst.getString("FORMA") + rst.getString("SERIE");                
                 objRtn.A1716CUPON = rst.getString("CUPON");
                 objRtn.A1716SEQT = rst.getString("SEQT");
                 objRtn.A1716SEQ = rst.getString("SEQ");
@@ -997,21 +998,21 @@ public class SalesReconciliBoomerDAO {
                 objRtn.A1716MODO = rst.getString("MODO");
                 objRtn.A1716FUENT = rst.getString("FUENTE");
                 objRtn.A1716SUBFU = rst.getString("SUBFUENTE");
-                //objRtn.A1716FP = rst.getString("FP");
+                objRtn.A1716FP = rst.getString("SCARCOD");
                 objRtn.A1716FPRO = rst.getString("SDATE");                
                 objRtn.A1716CUR = rst.getString("SCURRENCY");                
                 objRtn.A1716ACTIV = rst.getDouble("ACTIVO");
                 objRtn.A1716PASIV = rst.getDouble("PASIV0");               
-                //objRtn.A1716CURRV = rst.getString("CURRV");
+                objRtn.A1716CURRV = "USD";
                 objRtn.A1716ACTRV = rst.getDouble("ACTIVORV");
                 objRtn.A1716PASRV = rst.getDouble("PASISVORV");                
-                objRtn.A1716CUENT = rst.getString("CUENTA");
+                objRtn.A1716CUENT = rst.getString("CIAF") + "-" + rst.getString("UNIDAD") + "-" + rst.getString("CECOSTO") + "-" + rst.getString("UBICA") + "-" + rst.getString("CUENTA") + "-" + rst.getString("SUBCUENTA") + "-" + rst.getString("EQUIPO") + "-" + rst.getString("ICIA");
                 objRtn.A1716SUBCU = rst.getString("SUBCUENTA");                
-                objRtn.A1716FCONT = rst.getString("FCONTAB"); //PERIODO
+                objRtn.A1716FCONT = rst.getString("ANNOMES") + rst.getString("PERIODO"); //PERIODO
                 objRtn.A1716TITU = rst.getString("TITULO");
                 objRtn.A1716COPE = rst.getString("CLIENTE");
-                //objRtn.A1716PROV = rst.getString("PROV");
-                //objRtn.A1716IDCON = rst.getString("IDCON");
+                objRtn.A720ROE = rst.getDouble("TIPPOCAM");
+                objRtn.A1716IDCON = rst.getString("IDCON");
 
                 if (objRtn.A1716MODO.isEmpty() || objRtn.A1716MODO.equals("---------")) {
                     objRtn.A1716MODO = objRtn.A1716CIA; //Format example: "TOTAL AR S100-499:".
