@@ -14,6 +14,7 @@ public class A1716 {
     public String A1716CIA = "";
     public String A1716FORMA = "";
     public String A1716SERIE = "";
+    public String TICKET = "";
     public String A1716CUPON = "";
     public String A1716SEQ = "";
     public String A1716MODO = "";
@@ -25,6 +26,7 @@ public class A1716 {
     public String A1716CUR = "";
     public double A1716ACTIV = 0.0;
     public double A1716PASIV = 0.0;
+    public double A720ROE = 0.0;
     public String A1716UBICA = "";
     public String A1716CUENT = "";
     public String A1716SUBCU = "";
