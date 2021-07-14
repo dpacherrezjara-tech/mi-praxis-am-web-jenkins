@@ -42,12 +42,11 @@ public class ReportVentaUATP {
 
     private String FILE = "RptVentaUATP.pdf";
     public final String FileTXT = "RptVentaUATP.txt";
-    private Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
-    private Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL); // 10
-    private Font subFontT = new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD); //12
-    private Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL);
-    private Font subFont_1 = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD, BaseColor.WHITE);
-    private Font subFont_2 = new Font(Font.FontFamily.TIMES_ROMAN, 7, Font.NORMAL);
+    private Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD); //12
+    private Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 7, Font.NORMAL); // 8  contenido  
+    private Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL); //10
+    private Font subFont_1 = new Font(Font.FontFamily.TIMES_ROMAN, 6, Font.BOLD, BaseColor.WHITE); //8 titulos del grid
+    private Font subFont_2 = new Font(Font.FontFamily.TIMES_ROMAN, 6, Font.NORMAL); //7 pie de lagina notas
     private int PYi = 0;
     private int Hlng = 12;
     private File fileTmp01, fileTmp02;
@@ -155,10 +154,9 @@ public class ReportVentaUATP {
     public void colorRectangle(PdfContentByte under, BaseColor color, float x, float y, float width, float height) {
         under.saveState();
         under.setColorFill(color);
-        under.rectangle(x, y, width, height);
+        under.rectangle(x, y, width, height);        
         under.fillStroke();
         under.restoreState();
-
     }
     
     
@@ -307,23 +305,35 @@ public class ReportVentaUATP {
             Phrase txtAMInfo3 = new Phrase(new Paragraph( "RFC: " +  Data.get(1).tbl_misl.A3961COME2, NORMAL));  //Clave CITA AM           
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT,  txtAMInfo3, 120, PYi, 0);
 
-            int px1 = 500; //580
+            int px1 = 480; //500
             //LOGO CLIENTE   
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
             }
             img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
-            img.setAbsolutePosition(px1, 530);
+            img.setAbsolutePosition(px1, 520); //530
             //img.scaleToFit(190, 40);
-            img.scaleToFit(245, 42);
+            img.scaleToFit(280, 60); //245 42
             document.add(new Paragraph(String.format("", Data.get(0).tbl_client.A3953LOGO/*RESOURCES[0]*/, img.getClass().getName())));
             document.add(img);            
             writer.setCompressionLevel(0);
             
-            //datos CLIENTE
+            //datos CLIENTE           
             PYi = py0;
-            Phrase RSOCI = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);
+            String A3953RSOCI_part1 = "";
+            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+            int length = A3953RSOCI.length(); 
+            if(length > 44 ){
+               A3953RSOCI = A3953RSOCI.substring(0, 44);
+               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
+            }
+            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
+            if (!A3953RSOCI_part1.trim().equals("")){
+                PYi = PYi - Hlng;
+                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
+            }
             PYi = PYi - Hlng;
             Phrase DIRE1 = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953DIRE1, NORMAL)); //"AV. MARINA NACIONAL Nº. 329 INT C3 "
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, DIRE1, px1, PYi, 0);
@@ -343,20 +353,20 @@ public class ReportVentaUATP {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CP, px1, PYi, 0);
                     
             //datos  Contrato
-            PYi = PYi + 10;
-            PYi = PYi - Hlng;
-            
+            int PYi_c = 461;
+//            PYi = PYi + 10;
+//            PYi = PYi - Hlng;            
             //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi+10, 400, 0); //LINEA 
                         
-            Phrase CONTR = new Phrase(new Paragraph("Contrato Nº: " + Data.get(0).rpteCab.A3957CONTR, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CONTR, PosX1, PYi, 0);
-            PYi = PYi - Hlng;            
-            int Py_c = PYi;
+            Phrase CONTR = new Phrase(new Paragraph("Contrato Nº:" + Data.get(0).rpteCab.A3957CONTR, NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CONTR, PosX1, PYi_c, 0);
+            PYi_c = PYi_c - Hlng;            
+            int Py_c = PYi_c;
             Phrase NRRPT = new Phrase(new Paragraph("Reporte Nº: " + Data.get(0).rpteCab.A3957NRRPT, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, NRRPT, PosX1, PYi, 0);
-            PYi = PYi - Hlng;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, NRRPT, PosX1, PYi_c, 0);
+            PYi_c = PYi_c - Hlng;
             Phrase FEECC = new Phrase(new Paragraph("Fecha Emisión: " + Data.get(0).rpteCab.A3957FEECC, NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, FEECC, PosX1, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, FEECC, PosX1, PYi_c, 0);
             
             //Py_c; //vuelve a la altura de "REPORTE Nº:"
             int PosX1_ = 180;            
@@ -371,12 +381,13 @@ public class ReportVentaUATP {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtPERIODO, PosX1_, Py_c, 0);                                    
             //Py_c = Py_c - Hlng;  
             PosX1_ = 330; 
-            colorRectangle(under, new GrayColor(0.825f), PosX1_-5, PYi, 120, 15);
+            colorRectangle(under, new GrayColor(0.825f), PosX1_-5, PYi_c, 120, 15);
             Phrase TXTNACIONAL = new Phrase(new Paragraph( Data.get(0).tbl_client.A3953TORGN , NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, TXTNACIONAL, PosX1_+28, Py_c+4, 0);
             
             
             // Titulo Columnas grid 
+            PYi = PYi_c;
             colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), PosX1, PYi - 35, 750, 22);  //28
             PYi = PYi - (Hlng + 14); //9
             
@@ -451,7 +462,7 @@ public class ReportVentaUATP {
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958SOLER, subFont)), PosX3, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958GESTR, subFont)), PosX4, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958PAX, subFont)), PosX5, PYi, 0);
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958RUTA, subFont_2)), PosX6, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958RUTA, subFont)), PosX6, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958CIA + "" + Data.get(i).rpteDet.A3958FORMA + "" + Data.get(i).rpteDet.A3958SERIE, subFont)), PosX7, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958CFDI, subFont)), PosX8, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958TRNCU, subFont)), PosX9, PYi, 0);

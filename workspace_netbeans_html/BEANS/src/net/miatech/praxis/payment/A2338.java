@@ -33,6 +33,9 @@ public class A2338 {
     public String CUOTAS = "";
     public String CUOTAV = "";
     public String NUMLIQUI = "";
+    public String FVCLEAR = "";
+    public int PLAZOPAG = 0;
+    public String TPLAZOPA = "";
     public double BRUTO = 0.00;
     public double COMISB = 0.00;
     public double IVA = 0.00;
@@ -57,6 +60,18 @@ public class A2338 {
     public double IVACFINA = 0.00;
     public double IMPCTASD = 0.00;
     public double IVACTASD = 0.00;
+    //Status de auditoria
+    public String STIMPARA = "";
+    public String STIVAARA = "";
+    public String STIMPOCF = "";
+    public String STIVACFI = "";
+    public String STFECPAG = "";
+    //Campos calculados de auditoria
+    public double AIMPARAN = 0.00;     
+    public double AIVAARAN = 0.00;     
+    public double AIMPORCF = 0.00;     
+    public double AIVACFIN = 0.00;     
+    public int APLAZOPA = 0;     
     
     public String FECRFILE = "";
     public String FSELEC = "";

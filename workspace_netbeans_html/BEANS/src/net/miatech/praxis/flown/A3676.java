@@ -49,6 +49,7 @@ public class A3676 {
     
     public String A3676USE;
     public String A3676USEB;
+    public String A3676TIDOC;
 
     public Double A3676MONRB;
     public Double A3676MONTO;
@@ -61,6 +62,13 @@ public class A3676 {
     public int A3676CNTPR;
     public int A3676TOTPAGI;
 
+    public String getA3676TIDOC() {
+        return A3676TIDOC;
+    }
+
+    public void setA3676TIDOC(String A3676TIDOC) {
+        this.A3676TIDOC = A3676TIDOC;
+    }
     public String getA3676REVIS() {
         return A3676REVIS;
     }

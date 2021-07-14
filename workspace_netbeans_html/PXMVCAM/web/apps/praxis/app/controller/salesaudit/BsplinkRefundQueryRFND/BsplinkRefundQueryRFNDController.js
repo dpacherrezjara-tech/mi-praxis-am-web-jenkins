@@ -30,6 +30,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
         prototype.id04 = 'FormRazonesRFND';
         prototype.id06 = 'FormListRFND';
         prototype.id07 = 'FormPDIRFND';
+        prototype.idSabreEstatus = 'FormSabreEstatus';
         prototype.url = CONTEXTPATH + '/BsplinkRefundQueryRFND';
         prototype.url01 = CONTEXTPATH + '/BwrBSPLINKRFND';
     },
@@ -90,7 +91,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
                 {"code": "C", "name": "INCONSISTENCY WITH THE ROBOT"},
                 {"code": "Y", "name": "PENDING"},
                 {"code": "R", "name": "REJECTED"},
-                {"code": "X", "name": "REMOVED"}
+                {"code": "X", "name": "REMOVED"},
+                {"code": "Z", "name": "UNDER INVESTIGATION"},
+                {"code": "K", "name": "CPN EVALUATION"}
 
             ]
         }));
@@ -435,6 +438,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
             case 'E':
                 color = '#F2A60D';
                 value = 'ERROR IN THE PROCESS';
+                break;
+            case 'Z':
+                color = '#CCFF00';
+                value = 'UNDER INVESTIGATION';
+                break;
+            case 'K':
+                color = '#E3DAED';
+                value = 'CPN EVALUATION';
                 break;
         }
 

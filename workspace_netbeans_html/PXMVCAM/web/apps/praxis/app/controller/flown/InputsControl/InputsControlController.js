@@ -1,7 +1,7 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+  To change this license header, choose License Headers in Project Properties.
+  To change this template file, choose Tools | Templates
+  and open the template in the editor.
  */
 
 Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', {
@@ -25,8 +25,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             // -------------------Eventos Genericos --------------------
             '#InputsControlForm-xpanel': {
                 afterrender: this.xpanel_afterrender
-            }
-            ,
+            },
             '#InputsControlForm-btnSearch': {
                 click: this.btnSearch_click
             },
@@ -318,6 +317,15 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         global.Msg({
                             msg: 'Data not found.'
                         });
+                    }else{
+                        var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                        console.log(fuente);
+                        
+                        if(fuente === 'ODS'){
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Duplicate');
+                        }else{
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Error');
+                        }
                     }
                 }
             }
@@ -422,11 +430,14 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     },
     setGridDataA1686Formateados: function(dv, record, item, index, e) {
         var data = dv.dataSource.data.items[item].data;
+        console.log(data);
         params = {
             IN_TIPOFECHA: data.IN_TIPOFECHA,
             FECHA: data.FECHA,
             FUENTE: data.FUENTE,
-            HOCR: data.HOCR
+            HOCR: data.HOCR,
+            QRECOR: data.QRECOR,
+            QRECERR: data.QRECERR
         };
 
         this.hideAllGrid();
@@ -447,6 +458,17 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         global.Msg({
                             msg: 'Data not found.'
                         });
+                    }else{
+                        
+                        var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                        console.log(fuente);
+                        console.log(obj.data);
+                        
+                        if(fuente === 'ODS'){
+                            Ext.getCmp(prototype.id + '-id_error').setText('Duplicate');
+                        }else{
+                            Ext.getCmp(prototype.id + '-id_error').setText('Error');
+                        }
                     }
                 }
             }
@@ -496,12 +518,78 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
 
     },
-    setGridDataA1696Errores: function(dv, record, item, index, e) {
+    
+    setErrores: function(dv, record, item, index, e) {
+        
+        
         var data = dv.dataSource.data.items[item].data;
+        console.log(data);
+        
+        if(data.QRECERR > 0){
+        
+            var src = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+            if(src === 'ODS' || src === 'SSIM' || src === 'EMD'){
+                console.log('...');
+            }else{
+                if(data.FUENTE === 'VCRJ'){
+                    this.setErroresVCRJ(data.FECHA, data.FUENTE, data.DPRDA, data.DTRANS, data.FECR, data.HOCR);
+                }else{
+                    this.setGridDataA1696Errores(data.FECHA, data.HOCR, data.FUENTE);
+                }
+            }
+        }
+    },
+    
+    setErroresVCRJ: function(FECHA, FUENTE, DPRDA, DTRANS, FECR, HOCR) {
+        
         params = {
-            FECHA: data.FECHA,
-            HOCR: data.HOCR,
-            FUENTE: data.FUENTE
+            FECHA: FECHA,
+            FUENTE: FUENTE,
+            DPRDA: DPRDA,
+            DTRANS: DTRANS,
+            FECR: FECR,
+            HOCR: HOCR
+        };
+        
+        console.log(params);
+
+        this.hideAllGrid();
+        var storeErrorVCRJ = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
+            proxy: {
+                url: prototype.url + '/searchErrorVCRJ'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = params;
+                },
+                load: function(obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin');
+                    var foot = Ext.getCmp(prototype.id + '-pie');
+                    pag.hide();
+                    foot.hide();
+                    
+                    console.log(obj.data);
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataErrorVCRJ').bindStore(storeErrorVCRJ);
+        Ext.getCmp(prototype.id + '-gridDataErrorVCRJ').show();
+
+    },
+    
+    setGridDataA1696Errores: function(FECHA, HOCR, FUENTE ) {
+        
+        
+        params = {
+            FECHA: FECHA,
+            HOCR: HOCR,
+            FUENTE: FUENTE
         };
 
         console.log(" --->FECHA : " + params.FECHA);
@@ -577,9 +665,11 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     setGridDataA1688: function(dv, record, item, index, e) {
         var data = dv.dataSource.data.items[item].data;
         params = {
-            FECHA: data.FECHA
+            FECHA: data.FECHA,
+            HOCR: data.HOCR
         };
-
+        
+        console.log(params);
 
         var storeDataA1688 = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
             proxy: {
@@ -755,23 +845,23 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     var data = obj.data.items[0].data;
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
-                    var header1;
-                    var header2;
-                    var strGrupos;
-                    if (data.GrupoMin.trim() !== '') {
-                        strGrupos = 'Grupos del ' + data.GrupoMin + '  al  ' + data.GrupoMax;
-                    }
+//                    var header1;
+//                    var header2;
+//                    var strGrupos;
+//                    if (data.GrupoMin.trim() !== '') {
+//                        strGrupos = 'Grupos del ' + data.GrupoMin + '  al  ' + data.GrupoMax;
+//                    }
+//
+//                    header1 = strGrupos + '<pre style="display:inline">&#09;&#09;</pre>' + ' Total  OCR  ' + data.totOCR + '<pre style="display:inline">&#09;&#09;</pre>AM : ' + data.totAM + '   OAL :  ' + data.totOAL;
+//                    header2 = 'Total  IxC  <pre style="display:inline">&#09;</pre>' + data.totIXC;
 
-                    header1 = strGrupos + '<pre style="display:inline">&#09;&#09;</pre>' + ' Total  OCR  ' + data.totOCR + '<pre style="display:inline">&#09;&#09;</pre>AM : ' + data.totAM + '   OAL :  ' + data.totOAL;
-                    header2 = 'Total  IxC  <pre style="display:inline">&#09;</pre>' + data.totIXC;
 
-
-                    Ext.getCmp(prototype.id + '-gridDataA1690-header').setText(header1);
-                    Ext.getCmp(prototype.id + '-gridDataA1690-header2').setText(header2);
+//                    Ext.getCmp(prototype.id + '-gridDataA1690-header').setText(header1);
+//                    Ext.getCmp(prototype.id + '-gridDataA1690-header2').setText(header2);
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(pagData.currentPage);
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pagData.pageCount);
                     Ext.getCmp(prototype.id + '-lbl-total').setText(pagData.total);
-                    Ext.getCmp(prototype.id + '-titleA1690').setHtml("<strong style=\"color:#000;\">Processing Date " + data.strFormatDate3 + "</strong> ");
+                    Ext.getCmp(prototype.id + '-titleA1690').setHtml("<strong style=\"color:#000;text-align:center\">Processing Date " + data.strFormatDate3 + "</strong> ");
 
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -845,38 +935,44 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
     },
     setGridDataByFlightDate: function(dv, record, item, index, e) {
-        this.hideAllGrid();
+        
         var data = dv.dataSource.data.items[item].data;
-        params = {
-            FUENTE: data.FUENTE
-        };
-        switch (params.FUENTE) {
-            case 'SSIM':
-                this.setGridDataA1687(dv, record, item, index, e);
-                break;
+        
+        if(data.QRECORG > 0){
+        
+            this.hideAllGrid();
 
-            case 'ODS':
-                this.setGridDataA1688(dv, record, item, index, e);
-                break;
+            params = {
+                FUENTE: data.FUENTE
+            };
+            switch (params.FUENTE) {
+                case 'SSIM':
+                    this.setGridDataA1687(dv, record, item, index, e);
+                    break;
 
-            case 'EMD':
-                this.setGridDataA1689(dv, record, item, index, e);
-                break;
+                case 'ODS':
+                    this.setGridDataA1688(dv, record, item, index, e);
+                    break;
 
-            case 'VCR':
-                this.setGridDataA1413(dv, record, item, index, e);
-                break;
-            
-            case 'VCRJ':
-                this.setGridDataA1413(dv, record, item, index, e);
-                break;
-                
-            case 'ISR':
-                this.setGridDataA1419(dv, record, item, index, e);
-                break;
+                case 'EMD':
+                    this.setGridDataA1689(dv, record, item, index, e);
+                    break;
+
+                case 'VCR':
+                    this.setGridDataA1413(dv, record, item, index, e);
+                    break;
+
+                case 'VCRJ':
+                    this.setGridDataA1413(dv, record, item, index, e);
+                    break;
+
+                case 'ISR':
+                    this.setGridDataA1419(dv, record, item, index, e);
+                    break;
+            }
         }
 
-    },
+    },    
     initCalendar: function() {
         var anio = Ext.getCmp(prototype.id + '-cmbYear').getValue();
         var dias = ["7", "1", "2", "3", "4", "5", "6"];
@@ -885,8 +981,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var init, totalDays, fin, day;
         var colorFlag;
 
-        console.log("Aplicando estilos genericos");
 
+        for (var m = 1; m <= 12; m++) {
+//                    console.log('mex: ' + m );
+            var panelmes = Ext.getCmp(prototype.id +'panel'+ (m < 10 ? '0' : '') + m);
+            panelmes.removeAll(true);
+        }
+        console.log('comienza cracion');
         for (var i = 1; i <= 12; i++) {
             if (i < 10) {
                 mes = '0' + i;
@@ -898,26 +999,46 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             init = dias[dt2.getUTCDay()];
             fin = parseInt(totalDays) + parseInt(init);
             day = 1;
+            
+            var panelmes = Ext.getCmp(prototype.id +'panel'+ (i < 10 ? '0' : '') + i);
             for (var n = init; n < fin; n++) {
-                if (n % 7 === 1) {
-                    colorFlag = '#D6D6D6';
-                } else {
-                    if (i % 2 !== 0) {
-                        colorFlag = '#65C3E5';
-                    } else {
-                        colorFlag = '#2e6bf4';
+//                if (n % 7 === 1) {
+//                    colorFlag = '#D6D6D6';
+//                } else {
+//                    if (i % 2 !== 0) {
+//                        colorFlag = '#65C3E5';
+//                    } else {
+//                        colorFlag = '#2e6bf4';
+//                    }
+//                }
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
+//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
+//                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
+                
+                    
+                    
+                    if(n === init){
+                        for (var c = 1; c < init; c++) {
+                            var v_label2 = new Ext.form.Label({text: '',backgroundColor:'#D6D6D6'});
+                            panelmes.add( v_label2);
+                        }
+                        
                     }
-                }
-                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
-                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
-                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
-                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
+                    
+                    var fday = (day < 10 ? '0' : '') + day;
+                    var v_id = 'lbl'+anio+''+mes+''+ fday ;
+                    var v_label = new Ext.form.Label({
+                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000',backgroundColor:colorFlag
+                                    });
+                    panelmes.add( v_label);
+                
+//                    console.log('mex: ' + i + ' dia : ' + n);
                 day++;
             }
         }
-    }
-
-    ,
+    },
+    
     setCalendar: function() {
         console.log("Estamos en SetCalendar");
         this.setClearCalendar();
@@ -965,22 +1086,38 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         } else {
                             colorFlag = '#2e6bf4';
                         }
-                        if (dia === '01') {
-                            dato = dias[dt.getUTCDay()];
+                        
+                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
+                        
+//                        if(mes ==='01'){
+                            Ext.getCmp('lbl' + res[i].fecha).setStyle('backgroundColor', color);
+                            Ext.getCmp('lbl' + res[i].fecha).setStyle('color', '#000000');
+//                        }
+                        
+//                        Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
+//                        if (dia === '01') {
+//                            dato = dias[dt.getUTCDay()];
+//
+//                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setText(dia);
+//                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setStyle('backgroundColor', color);
+//                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setStyle('color', '#000000');
+//                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
+//
+//                            
+////                            console.log('if** -->' + prototype.id + '-lblDay_' + dato + ' = ' + dia);
+//
+//                        } else{
+//                            
+//                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setText(dia);
+//                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', color);
+//                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('color', '#000000');
+//                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', colorFlag);
+//
+////                            console.log('else -->'+ ' dato :'+ dato + ' dia : ' + dia + ' == ' + prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1) + ' = ' + dia);
+//                        }
 
-                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setText(dia);
-                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setStyle('backgroundColor', color);
-                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + dato).setStyle('color', '#000000');
-                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
+                        
 
-                        } else
-                        {
-                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setText(dia);
-                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', color);
-                            Ext.getCmp(prototype.id + '-lblDay_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('color', '#000000');
-                            Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + (parseInt(dato) + parseInt(dia) - 1)).setStyle('backgroundColor', colorFlag);
-
-                        }
 
                     }
                     aux = false;
@@ -993,15 +1130,15 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     }
     ,
     setClearCalendar: function() {
-        for (var i = 1; i <= 42; i++) {
-            for (var j = 1; j <= 12; j++) {
-                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setText('.');
-                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
-                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('color', '#E5ECEF');
-                Ext.getCmp(prototype.id + 'gdiFlag_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
-
-            }
-        }
+//        for (var i = 1; i <= 42; i++) {
+//            for (var j = 1; j <= 12; j++) {
+//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).Aplicando estilos genericossetText('.');
+//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
+//                Ext.getCmp(prototype.id + '-lblDay_' + j + '_' + i).setStyle('color', '#E5ECEF');
+//                Ext.getCmp(prototype.id + 'gdiFlag_' + j + '_' + i).setStyle('backgroundColor', '#E5ECEF');
+//
+//            }
+//        }
     }
     ,
     btnClear_click: function(obj, e) {
@@ -1049,6 +1186,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var boxA1686Formateados = Ext.getCmp(prototype.id + '-gridDataA1686Formateados');
         var boxA1686ProcDateData = Ext.getCmp(prototype.id + '-panelGridProcDateData');
         var boxA1696Errores = Ext.getCmp(prototype.id + '-gridDataA1696Errores');
+        var boxAErrorVCRJ = Ext.getCmp(prototype.id + '-gridDataErrorVCRJ');
         var boxA1690 = Ext.getCmp(prototype.id + '-panelGridDataA1690');
         var boxA2735 = Ext.getCmp(prototype.id + '-gridDataA2735');
 
@@ -1085,8 +1223,19 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     + '&HOCR=' + params.HOCR
                     + '&FUENTE=' + params.FUENTE);
         }
+        if (!boxAErrorVCRJ.hidden) {
+            global.getFile(prototype.url + '/GetXLSX6ErrorVCRJ?FECHA=' + params.FECHA
+                    + '&FUENTE=' + params.FUENTE
+                    + '&DPRDA=' + params.DPRDA
+                    + '&DTRANS=' + params.DTRANS
+                    + '&FECR=' + params.FECR
+                    + '&HOCR=' + params.HOCR
+            );
+        }
         if (!boxA1688.hidden) {
-            global.getFile(prototype.url + '/GetXLSA1688?FECHA=' + params.FECHA);
+            global.getFile(prototype.url + '/GetXLSA1688?FECHA=' + params.FECHA
+                    + '&HOCR=' + params.HOCR
+            );
         }
 
         if (!boxA1689.hidden) {
@@ -1094,7 +1243,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         }
 
         if (!boxA1413.hidden) {
-            global.getFile(prototype.url + '/GetXLSA1413?FECHA=' + params.FECHA);
+            global.getFile(prototype.url + '/GetXLSA1413?FECHA=' + params.FECHA
+                    + '&FECR=' + params.FECR
+                    + '&HOCR=' + params.HOCR
+                    + '&FUENTE=' + params.FUENTE
+                    + '&strFormatDate4=' + params.strFormatDate4
+                    + '&strFormatDate=' + params.strFormatDate
+            );
         }
         if (!boxA1419.hidden) {
             global.getFile(prototype.url + '/GetXLSA1419?FECHA=' + params.FECHA);
@@ -1147,6 +1302,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var boxA1686Formateados = Ext.getCmp(prototype.id + '-gridDataA1686Formateados');
         var boxA1686ProcDateData = Ext.getCmp(prototype.id + '-panelGridProcDateData');
         var boxA1696Errores = Ext.getCmp(prototype.id + '-gridDataA1696Errores');
+        var boxErrorVCRJ = Ext.getCmp(prototype.id + '-gridDataErrorVCRJ');
         var boxA1690 = Ext.getCmp(prototype.id + '-panelGridDataA1690');
         var boxA2735 = Ext.getCmp(prototype.id + '-gridDataA2735');
 
@@ -1170,6 +1326,13 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             return;
         }
         if (!boxA1696Errores.hidden) {
+
+            this.hideAllGrid();
+            boxA1686Formateados.show();
+            return;
+        }
+        
+        if (!boxErrorVCRJ.hidden) {
 
             this.hideAllGrid();
             boxA1686Formateados.show();
@@ -1227,6 +1390,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         Ext.getCmp(prototype.id + '-gridMainDataOCR').hide();
         Ext.getCmp(prototype.id + '-gridDataA1686Formateados').hide();
         Ext.getCmp(prototype.id + '-panelGridProcDateData').hide();
+        Ext.getCmp(prototype.id + '-gridDataErrorVCRJ').hide();
         Ext.getCmp(prototype.id + '-gridDataA1696Errores').hide();
         Ext.getCmp(prototype.id + '-panelGridDataA1687').hide();
         Ext.getCmp(prototype.id + '-panelGridDataA1688').hide();

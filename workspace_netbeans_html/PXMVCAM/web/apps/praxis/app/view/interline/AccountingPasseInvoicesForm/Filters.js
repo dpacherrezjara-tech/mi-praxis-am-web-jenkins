@@ -43,15 +43,29 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Filters', {
                         anchor: '100%'
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 30},
+                        {xtype: 'tbspacer', width: 100},
+//                        {
+//                            xtype: 'label',
+//                            text: 'Accounting Date',
+//                            style: 'font-weight:bold;',
+//                            padding: '10 5 5 5'
+//
+//                        },
                         {
-                            xtype: 'label',
-                            text: 'Accounting Date',
-                            style: 'font-weight:bold;',
-                            padding: '10 5 5 5'
-
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbTfecha',
+                            fieldStyle: 'text-align: left;',
+                            disabled: false,
+                            fieldLabel: '',
+                            width: 120,
+                            labelWidth: 10,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
                         },
-                        {xtype: 'tbspacer', width: 5},
+                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbDateFromYear',
@@ -118,54 +132,49 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.Filters', {
                             maxLength: 3,
                             enforceMaxLength: true
                         },
-//                        {
-//                            xtype: 'combo',
-//                            id: prototype.id + '-cmbSource',
-//                            fieldStyle: 'text-align: center;',
-//                            disabled: false,
-//                            fieldLabel: 'Source',
-//                            width: 130,
-//                            labelWidth: 60,
-//                            labelAlign: 'right',
-//                            queryMode: 'local',
-//                            triggerAction: 'all',
-//                            valueField: 'code',
-//                            displayField: 'name'
-//                        },
                         {xtype: 'tbspacer', width: 30},
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtSource',
-//                            hidden:true,
-//                            required: true,
-                            readOnly: false,
-                            fieldLabel: 'Source',
-                            width: 130,
-                            labelWidth: 60,
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbTTRAN',
                             fieldStyle: 'text-align: center;',
-                            enableKeyEvents: true,
-                            enforceMaxLength: true,
-                            labelAlign: 'left',
-                            maxLength: 2,
-                            maskRe: /[0-9]/,
+                            disabled: false,
+                            fieldLabel: 'Transaction',
+                            width: 150,
+                            labelWidth: 90,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbPEREST',
+                            fieldStyle: 'text-align: center;',
+                            disabled: false,
+                            fieldLabel: 'Per. Estimated',
+                            width: 145,
+                            labelWidth: 90,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
+                        },
+                        {xtype: 'tbspacer', width: 40},
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkSummary',
+                            labelStyle: 'color:#378BCC;font-weight:bold;',
+                            width: 70,
+                            boxLabel: 'Summary',
+                            inputValue: '1',
+//                            checked   : true,
                             listeners: {
-                                keypress: 'findSource'
+                                change: 'showSummary'
                             }
                         },
-//                        {
-//                            xtype: 'combo',
-//                            id: prototype.id + '-cmbAerolinea',
-//                            fieldStyle: 'text-align: left;',
-//                            disabled: false,
-//                            fieldLabel: 'Airline',
-//                            width: 300,
-//                            labelWidth: 60,
-//                            labelAlign: 'right',
-//                            queryMode: 'local',
-//                            triggerAction: 'all',
-//                            valueField: 'A005KEY',
-//                            displayField: 'A005KEY2'
-//                        },
 //                        {
 //                            xtype: 'combo',
 //                            id: prototype.id + '-cmbPMI',

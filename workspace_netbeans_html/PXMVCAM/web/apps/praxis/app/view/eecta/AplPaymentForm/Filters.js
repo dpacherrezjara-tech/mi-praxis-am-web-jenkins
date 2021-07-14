@@ -125,6 +125,52 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Filters', {
                                                     }
                                                 }
                                             }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-TICKET_NUMBER_CIA',
+                                            fieldLabel: 'Boleto', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                            enableKeyEvents: true,
+                                            width: 130,
+                                            value:'139',
+                                            enforceMaxLength: true,
+                                            maxLength: 3,
+                                            height: 24,
+                                            listeners: {
+                                                keypress: 'onTxtFilterKeypress'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-TICKET_NUMBER',
+                                            fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                            fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
+                                            enableKeyEvents: true,
+                                            padding:'0 0 0 2',
+                                            width: 110,
+                                            enforceMaxLength: true,
+                                            maxLength: 10,
+                                            height: 24,
+                                            listeners: {
+                                                keypress: 'onTxtFilterKeypress'
+                                            }
+                                        },
+                                         {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-TICKET_NUMBER_SEQ',
+                                            fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                            enableKeyEvents: true,
+                                            width: 30,
+                                            value:'00',
+                                            height: 24,
+                                            padding:'0 0 0 2',
+                                            enforceMaxLength: true,
+                                            maxLength: 2,
+                                            listeners: {
+                                                keypress: 'onTxtFilterKeypress'
+                                            }
                                         }
                                     ]
                                 },
@@ -211,17 +257,41 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.Filters', {
                                             listeners: {
                                                 //change: 'cmbfiltro_clickHandler'
                                             }
-                                        }/*,
+                                        },
                                         {
-                                            xtype: 'radiogroup',
-                                            labelAlign: 'right',
-                                            id:prototype.id+'-rbt-agrupar',
-                                            fieldLabel: 'Nivel',                                            
+                                            xtype: 'toolbar',
+                                            dock: 'bottom',
+                                            ui: 'footer',
+                                            margin: '2 0 2 15',
+                                            layout: {
+                                                pack: 'center'
+                                            },
+                                            fieldStyle: 'text-align:center',
+                                            defaults: {
+                                                scale: 'medium'
+                                            },
                                             items: [
-                                                { boxLabel: 'Reporte', width: 80, inputValue: '1', name: 'rbtagrupar', checked: true },
-                                                { boxLabel: 'Boleto', inputValue: '0', name: 'rbtagrupar' }                                                
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id + '-btn-apl-batch',
+                                                    text: 'Aplicar pago masivo',
+                                                    icon: 'resources/img/icon/single_format.png',                                                    
+                                                    listeners: {
+                                                        click: 'btnAplPaymentBatch'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id + '-btn-apl-reporte',
+                                                    text: 'Aplicar por reporte',
+                                                    icon: 'resources/img/botones/check.png',                                                    
+                                                    listeners: {
+                                                        click: 'btnApl_pay_click'
+                                                    }
+                                                }
                                             ]
-                                        }*/
+                                        }
+                                        
                                     ]
                                 }
                                 // </editor-fold>                                

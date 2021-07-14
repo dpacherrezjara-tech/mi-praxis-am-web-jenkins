@@ -90,11 +90,11 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.NoShowFormDet', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "TODOS"],
-                                            ["0", "Formateado TXT"],
-                                            ["1", "Cargado XML"],
+                                            //["0", "Formateado TXT"],
+                                            //["1", "Cargado XML"],
                                             ["2", "Error XML"],
-                                            ["3", "Formateado XML"],
-                                            ["4", "Procesado para caduco"]                                            
+                                            //["3", "Formateado XML"],
+                                            ["4", "Procesado Caduco"]
                                         ]
                                     }),
                                     queryMode: 'local',

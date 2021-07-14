@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -114,7 +115,7 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "searchItinerary")
     public @ResponseBody
     String searchItinerary(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Forecast : SearchItinerary-------------");
+        System.out.println("-------------- Forecast : SearchItinerary-Seats-------------");
 
         map.put("success", true);
         List<IMF141Filter> lst = this.getListItinerary(request, false);
@@ -166,7 +167,7 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "searchPercentage")
     public @ResponseBody
     String searchPercentage(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- Forecast : searchPercentage-------------");
+        System.out.println("-------------- Forecast : searchPercentage-OccupationFactor-------------");
         map.put("success", true);
         List<IMF140Filter> lst = this.getListForecastPercentage(request, false);
         System.out.println("Total : " + lst.size());
@@ -370,6 +371,164 @@ public class ForecastController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "searchAmountByMarket")
+    public @ResponseBody
+    String searchAmountByMarket(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Forecast : SearchAmountByMarket-------------");
+
+        map.put("success", true);
+        List<IMF140Filter> lst = this.getListAmountByMarket(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<IMF140Filter> getListAmountByMarket(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF140Filter> lst = new ArrayList<>(0);
+        IMF140Filter filter = new IMF140Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ForecastLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF140Filter.class);
+
+            // Paginacion
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            //--------------------
+            lst = logic.loadPX551SQP04015(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchForecastByMarketFirstLevel")
+    public @ResponseBody
+    String searchForecastByMarketFirstLevel(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Forecast : SearchForecastByMarketFirstLevel-------------");
+
+        map.put("success", true);
+        List<IMF140Filter> lst = this.getListForecastByMarketFirstLevel(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<IMF140Filter> getListForecastByMarketFirstLevel(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF140Filter> lst = new ArrayList<>(0);
+        IMF140Filter filter = new IMF140Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ForecastLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF140Filter.class);
+
+            // Paginacion
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            //--------------------
+            lst = logic.loadPX551SQP04016(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    @RequestMapping(value = "searchForecastByMarketSecondLevel")
+    public @ResponseBody
+    String searchForecastByMarketSecondLevel(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- SalesReconciliBoomer : searchForecastByMarketSecondLevel-------------");
+        HashMap<String, List<IMF140Filter>> hmResultado = new HashMap<String, List<IMF140Filter>>();
+        
+        map.put("success", true);
+        hmResultado = this.getListDataByMarketSecondLevel(request, false);
+        List<IMF140Filter> lst = hmResultado.get("DOMESTIC");
+        List<IMF140Filter> lstInternational  = hmResultado.get("INTERNATIONAL");
+        //List<A2324Filter> lstPnr  = hmResultado.get("PNR");
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        map.put("lstInternational", lstInternational);
+        //map.put("lstPnr", lstPnr);
+        return new Gson().toJson(map);
+    }
+
+    public HashMap<String, List<IMF140Filter>> getListDataByMarketSecondLevel(HttpServletRequest request, Boolean bExcel) {
+
+        HashMap<String, List<IMF140Filter>> lst = new HashMap<String, List<IMF140Filter>>();
+        IMF140Filter filter = new IMF140Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ForecastLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF140Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            lst = logic.loadPX551SQP04017(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }    
+
     //Reportes Excel
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
@@ -522,8 +681,8 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "getXLSXItinerary")
     public @ResponseBody
     void getXLSXItinerary(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Report : getXLSXItinerary");
-        String fileNameDownload = String.format("Itinerary  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("Report : getXLSXItinerary-Seats");
+        String fileNameDownload = String.format("Seats  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -866,7 +1025,7 @@ public class ForecastController extends BaseController {
                 } else if (listaData.get(vi).TREG.equals("2")) {
                     rcell0.setCellStyle(style_yellow);
                 }
-                
+
                 rcell1.setCellValue(listaData.get(vi).DFLIGHT);
                 rcell2.setCellValue(listaData.get(vi).QTYPAX);
                 rcell3.setCellValue(listaData.get(vi).VCPNUSD);
@@ -886,7 +1045,7 @@ public class ForecastController extends BaseController {
                         rcell8.setCellStyle(style_yellow);
                     }
                 }
-                
+
                 rcell9.setCellValue(listaData.get(vi).AVRG_VCPMXN_PORCENTAJE);
                 iter.next();
                 ++vi;
@@ -920,8 +1079,8 @@ public class ForecastController extends BaseController {
     @RequestMapping(value = "getXLSXForecastPercentage")
     public @ResponseBody
     void getXLSXForecastPercentage(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Report : getXLSXForecastPercentage");
-        String fileNameDownload = String.format("Forecast Percentage  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("Report : getXLSXForecastPercentage-OccupationFactor");
+        String fileNameDownload = String.format("Occupation Factor  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");

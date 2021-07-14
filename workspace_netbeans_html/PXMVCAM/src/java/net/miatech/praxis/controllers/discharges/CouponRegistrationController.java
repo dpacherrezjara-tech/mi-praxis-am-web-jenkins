@@ -181,6 +181,7 @@ public class CouponRegistrationController extends BaseController {
             Cell CH1_16 = row.createCell(16);
             Cell CH1_17 = row.createCell(17);
             Cell CH1_18 = row.createCell(18);
+            Cell CH1_19 = row.createCell(19);
             
             CH1_00.setCellValue("Accounting Date");
             CH1_01.setCellValue("Issue Date");
@@ -191,16 +192,17 @@ public class CouponRegistrationController extends BaseController {
             CH1_06.setCellValue("Source");
             CH1_07.setCellValue("IATA");
             CH1_08.setCellValue("Country");
-            CH1_09.setCellValue("Document Type");
-            CH1_10.setCellValue("From");
-            CH1_11.setCellValue("To");
-            CH1_12.setCellValue("Carrier");
-            CH1_13.setCellValue("Flight Date");
-            CH1_14.setCellValue("Currency");
-            CH1_15.setCellValue("Fare Amount");
-            CH1_16.setCellValue("Comm Amount");
-            CH1_17.setCellValue("SComm Amount");
-            CH1_18.setCellValue("YQ Amount");
+            CH1_09.setCellValue("Zone");
+            CH1_10.setCellValue("Document Type");
+            CH1_11.setCellValue("From");
+            CH1_12.setCellValue("To");
+            CH1_13.setCellValue("Carrier");
+            CH1_14.setCellValue("Flight Date");
+            CH1_15.setCellValue("Currency");
+            CH1_16.setCellValue("Fare Amount");
+            CH1_17.setCellValue("Comm Amount");
+            CH1_18.setCellValue("SComm Amount");
+            CH1_19.setCellValue("YQ Amount");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -221,6 +223,7 @@ public class CouponRegistrationController extends BaseController {
             CH1_16.setCellStyle(headerStyle);
             CH1_17.setCellStyle(headerStyle);
             CH1_18.setCellStyle(headerStyle);
+            CH1_19.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -246,6 +249,7 @@ public class CouponRegistrationController extends BaseController {
                 Cell rcell16 = row.createCell(16);
                 Cell rcell17 = row.createCell(17);
                 Cell rcell18 = row.createCell(18);
+                Cell rcell19 = row.createCell(19);
 
                 rcell0.setCellValue(listaData.get(vi).FCONT);
                 rcell1.setCellValue(listaData.get(vi).FVTA);
@@ -255,17 +259,18 @@ public class CouponRegistrationController extends BaseController {
                 rcell5.setCellValue(listaData.get(vi).TIPOC);
                 rcell6.setCellValue(listaData.get(vi).FTE);
                 rcell7.setCellValue(listaData.get(vi).AGTIA);
-                rcell8.setCellValue(listaData.get(vi).CDOC);
-                rcell9.setCellValue(listaData.get(vi).PSVVTA);
-                rcell10.setCellValue(listaData.get(vi).CDEPART);
-                rcell11.setCellValue(listaData.get(vi).CARRIVA);
-                rcell12.setCellValue(listaData.get(vi).CARR);
-                rcell13.setCellValue(listaData.get(vi).DFLIGHT);
-                rcell14.setCellValue(listaData.get(vi).MDACP);
-                rcell15.setCellValue(listaData.get(vi).VCPN);
-                rcell16.setCellValue(listaData.get(vi).COMISI);
-                rcell17.setCellValue(listaData.get(vi).SCOMISI);
-                rcell18.setCellValue(listaData.get(vi).YQ);
+                rcell8.setCellValue(listaData.get(vi).PSVVTA);
+                rcell9.setCellValue(listaData.get(vi).ZONA);
+                rcell10.setCellValue(listaData.get(vi).CDOC);
+                rcell11.setCellValue(listaData.get(vi).CDEPART);
+                rcell12.setCellValue(listaData.get(vi).CARRIVA);
+                rcell13.setCellValue(listaData.get(vi).CARR);
+                rcell14.setCellValue(listaData.get(vi).DFLIGHT);
+                rcell15.setCellValue(listaData.get(vi).MDACP);
+                rcell16.setCellValue(listaData.get(vi).VCPNRV);
+                rcell17.setCellValue(listaData.get(vi).COMREV);
+                rcell18.setCellValue(listaData.get(vi).SCOMREV);
+                rcell19.setCellValue(listaData.get(vi).YQREV);
                 iter.next();
                 ++vi;
                 ++vj;

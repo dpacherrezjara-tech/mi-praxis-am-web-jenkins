@@ -20,6 +20,7 @@ public class A2290 {
     public String FTE = "";
     public String TRNCU = "";
     public String NUMREF = "";
+    public String TICKET = "";    
     //Datos de la Venta
     public String SDATEL = "";
     public String SFLOAD = "";
@@ -77,6 +78,7 @@ public class A2290 {
     public String FADYEN = "";
     public String DATEC2 = "";
     public String DATEC3 = "";
+    public String TRNXCODE = "";
     //TEF
     public String TDATE = "";
     public String DATEF = "";

@@ -1,11 +1,15 @@
 package net.miatech.provider;
 
 import com.ibm.as400.access.AS400;
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.miatech.beans.ServerSession;
 import net.miatech.beans.implement.IServerSession;
 import net.miatech.utils.GeneralLog;
@@ -13,6 +17,7 @@ import net.miatech.utils.GeneralLog;
 public class ConnectionIBMDB2Server {
     
     private GeneralLog generalLog = GeneralLog.getInstance();
+    private final SQLServerDataSource dataSource = new SQLServerDataSource();
 
     private String dbHost = "";
     private String dbPort = "";
@@ -26,6 +31,7 @@ public class ConnectionIBMDB2Server {
     private PrintWriter err = null;
     
     private Connection conexion = null;
+    private Connection conexion41 = null;
     private AS400 system = null;
 
     public ConnectionIBMDB2Server(String pHost, String pPort, String pDefaultLibrary, String pAttachedLibraries, String pUserName, String pPassword){
@@ -255,6 +261,36 @@ public class ConnectionIBMDB2Server {
         //return cnx ;
     }
     
+    public SQLServerDataSource getDataSource() {
+        return dataSource;
+    }
+    
+    public Connection getSQLConnection41(net.miatech.beans.spring.implement.IServerSession serverSession) {
+
+        try {
+            getDataSource().setServerName((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_HOST"));
+            getDataSource().setPortNumber(Integer.parseInt((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_PORT")));
+            getDataSource().setInstanceName((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_INSTANCE"));
+            getDataSource().setDatabaseName((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_DATABASE"));
+            getDataSource().setUser((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_USER"));
+            getDataSource().setPassword((String)serverSession.getPropertySession().get("DB_SQLSERVER_" + serverSession.getAttribute("DB_SERVER_DEFAULT_CALF").toString() + "_" + serverSession.getAttribute("DB_SERVER_DEFAULT_TYPE").toString() + "_PASSWORD"));
+
+            conexion41 = getDataSource().getConnection();
+        } catch (Exception ex) {
+            Logger.getLogger(ConnectionIBMDB2Server.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+        return conexion41;
+    }
+
+    /**
+     * @return the connection
+     */
+    public Connection getSQLConnection41() {
+        return conexion41;
+    }
+    
+    
     public void closeSQLConnection(Connection cnx){
         if(cnx != null){
             try{
@@ -274,7 +310,28 @@ public class ConnectionIBMDB2Server {
         }
 
         cnx = null;
-    }  
+    }
+    
+    public void closeSQLConnection41(Connection cnx){
+        if(cnx != null){
+            try{
+                if(!cnx.isClosed())
+                {    
+                    cnx.close();
+                    generalLog.add("Close Connection for Data Base SQL Server " + dbDefaultLibrary + " Libraries " + dbAttachedLibraries + ", Ok.");
+                }
+            }catch(SQLException e){
+                //generalLog.add(e.getMessage());
+                e.printStackTrace(err);
+                strMessageError = "CLOSE CONNECTION SQL Server Exception Message: " + e.getMessage() + ". StackTrace:" + err.toString();
+                generalLog.add(strMessageError);
+                err.flush();
+                
+            }
+        }
+
+        cnx = null;
+    } 
     
     public Connection getIBMDB2Connection(){
        //Connection cnx;    

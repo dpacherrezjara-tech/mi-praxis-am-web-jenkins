@@ -181,12 +181,12 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                     enableKeyEvents: true,
                                     triggerAction: 'all'
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
                                     text: 'Card Code',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 95
+                                    width: 89
                                 },
                                 {
                                     xtype: 'label',
@@ -235,47 +235,15 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
-                                    text: 'Authorization Code',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 142
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'label',
-                                    text: '(*)',
-                                    style: 'font-weight:bold;color:#9C1717;',
-                                    width: 25
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSAUTHOC',
-                                    fieldStyle: 'text-align:right;',
-                                    enableKeyEvents: true,
-                                    enforceMaxLength: true,
-                                    editable: true,
-                                    maxLength: 6,
-                                    minLength: 1,
-                                    allowBlank: false,
-                                    validator: function(value) {
-                                        if (value === "") {
-                                            return "It requires you to enter a Sales Authorization Code";
-                                        } else
-                                            return true;
-                                    },
-                                    width: 202
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'label',
                                     text: 'Card Number',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 117
+                                    width: 98
                                 },
                                 {
                                     xtype: 'label',
                                     text: '(*)',
                                     style: 'font-weight:bold;color:#9C1717;',
-                                    width: 25
+                                    width: 22
                                 },
                                 {xtype: 'tbspacer', width: 4},
                                 {
@@ -292,6 +260,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                         keyup: 'tarjeta_keyDownHandler'
                                     }
                                 },
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: '*****(*)',
@@ -299,9 +268,9 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                         tag: 'label',
                                         'data-qtip': '5 encrypted characters for AMEX and 6 characters for the rest.'
                                     },
-                                    width: 70
+                                    width: 55
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                {xtype: 'tbspacer', width: 2},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtCard2',
@@ -312,7 +281,58 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                     maskRe: /[0-9]/,
                                     maxLength: 4,
                                     width: 65
-                                }
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: 'Authorization Code',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 142
+                                },
+                                {xtype: 'tbspacer', width: 4},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:#9C1717;',
+                                    width: 29
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSAUTHOC',
+                                    fieldStyle: 'text-align:center;',
+                                    enableKeyEvents: true,
+                                    enforceMaxLength: true,
+                                    editable: true,
+                                    maxLength: 6,
+                                    minLength: 1,
+                                    allowBlank: false,
+                                    validator: function(value) {
+                                        if (value === "") {
+                                            return "It requires you to enter a Sales Authorization Code";
+                                        } else
+                                            return true;
+                                    },
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 75},
+                                {
+                                    xtype: 'label',
+                                    text: 'PNR',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 55
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtPNR',
+                                    fieldStyle: 'text-align:center;',
+//                                    enableKeyEvents: true,
+//                                    enforceMaxLength: true,
+//                                    editable: true,
+//                                    maskRe: /[0-9]/,
+//                                    maxLength: 4,
+//                                    readOnly: true,
+                                    width: 68
+                                },
                             ]
                         },
                         {
@@ -331,7 +351,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                     xtype: 'label',
                                     text: 'Local Amount',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 142
+                                    width: 95
                                 },
                                 {xtype: 'tbspacer', width: 4},
                                 {
@@ -376,12 +396,12 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                     },
                                     width: 40
                                 },
-                                {xtype: 'tbspacer', width: 56},
+                                {xtype: 'tbspacer', width: 130},
                                 {
                                     xtype: 'label',
                                     text: 'Sequence',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 117
+                                    width: 90
                                 },
                                 {
                                     xtype: 'label',
@@ -393,7 +413,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtSEQNUM',
-                                    fieldStyle: 'text-align:left;',
+                                    fieldStyle: 'text-align:center;',
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
                                     editable: true,
@@ -407,9 +427,9 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                         } else
                                             return true;
                                     },
-                                    width: 85
+                                    width: 45
                                 },
-                                {xtype: 'tbspacer', width: 70},
+                                {xtype: 'tbspacer', width: 110},
                                 {
                                     xtype: 'checkboxfield',
                                     id: prototype.id + '-de-chkFADYEN',
@@ -450,12 +470,12 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                     editable: false,
                                     width: 271
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                {xtype: 'tbspacer', width: 9},
                                 {
                                     xtype: 'label',
                                     text: 'Merchant',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 95
+                                    width: 90
                                 },
                                 {
                                     xtype: 'label',
@@ -467,7 +487,7 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtMERCHN',
-                                    fieldStyle: 'text-align:left;',
+                                    fieldStyle: 'text-align:center;',
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
                                     editable: true,
@@ -481,9 +501,9 @@ Ext.define('Ext.Praxis.view.payments.BankReconciliationForm.DataEntry', {
                                         } else
                                             return true;
                                     },
-                                    width: 150
+                                    width: 100
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {xtype: 'tbspacer', width: 60},
                                 {
                                     xtype: 'label',
                                     text: '',

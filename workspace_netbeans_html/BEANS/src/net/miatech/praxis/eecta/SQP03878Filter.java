@@ -17,5 +17,7 @@ public class SQP03878Filter extends A3953 {
     public String VP_PARAM1 = ""; 
     public Pagination page = new Pagination();
     public Integer A3962CONT1 = 0;
-    public Integer A3962CONT2 = 0;    
+    public Integer A3962CONT2 = 0;
+    public Integer A3962CONT1_E = 0;
+    
 }

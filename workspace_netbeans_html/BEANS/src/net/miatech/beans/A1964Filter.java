@@ -30,6 +30,8 @@ public class A1964Filter extends A1964{
     public String IN_FECINI = "";
     public String IN_FECFIN = "";
     public String IN_TIPO = "";
+    public String IN_TTRAN = "";
+    public String IN_PEREST = "";
     
     public String IDCON = "";
     public String MESCON = "";
@@ -60,6 +62,8 @@ public class A1964Filter extends A1964{
     
     public Double TOTAL = 0.0;
     public Double tot_TOTAL = 0.0;
+    public Double totACTIVO = 0.0;
+    public Double totPASIVO = 0.0;
     
     public Pagination page = new Pagination();
 }

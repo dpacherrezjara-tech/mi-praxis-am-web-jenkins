@@ -11,6 +11,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.sun.org.apache.bcel.internal.generic.Type;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,6 +25,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A3389Filter;
+import net.miatech.beans.SaleAudit.A3908Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.BwrQueryRefundLogic;
@@ -149,7 +151,7 @@ public class BwrQueryRefundController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "loadDataInit2")
     public @ResponseBody
     String loadDataInit2(ModelMap map, HttpServletRequest request) {
@@ -178,7 +180,7 @@ public class BwrQueryRefundController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "loadDataInit3")
     public @ResponseBody
     String loadDataInit3(ModelMap map, HttpServletRequest request) {
@@ -401,6 +403,7 @@ public class BwrQueryRefundController extends BaseController {
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         A3389Filter filter = new A3389Filter();
+        String vl_A3389FLAG = "ASSIGNED TO AUDITOR";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -411,8 +414,8 @@ public class BwrQueryRefundController extends BaseController {
             logic = new BwrQueryRefundLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A3389Filter> lst = logic.SearchReportQueryRFND(filter);
-            int limite= 300;
-             SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
             //Workbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("QueryRefund");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
@@ -555,7 +558,52 @@ public class BwrQueryRefundController extends BaseController {
                 CH_11.setCellValue(lst.get(vi).A3389REGAS);
                 CH_12.setCellValue(lst.get(vi).A3389RAAG);
                 CH_13.setCellValue(lst.get(vi).A3389STATO);
-                CH_14.setCellValue(lst.get(vi).A3389FLAG);
+
+                switch ((lst.get(vi).A3389FLAG).trim()) {
+                    case "A":
+                        vl_A3389FLAG = "ASSIGNED TO AUDITOR";
+                        break;
+                    case "R":
+                        vl_A3389FLAG = "REJECTED";
+                        break;
+                    case "F":
+                        vl_A3389FLAG = "AUTHORISED";
+                        break;
+                    case "Y":
+                        vl_A3389FLAG = "PENDING";
+                        break;
+                    case "X":
+                        vl_A3389FLAG = "VOID";
+                        break;
+                    case "D":
+                        vl_A3389FLAG = "REEMBOLSABLE";
+                        break;
+                    case "J":
+                        vl_A3389FLAG = "EXEC. OF THE ROBOT";
+                        break;
+                    case "G":
+                        vl_A3389FLAG = "NO REEMBOLSABLE";
+                        break;
+                    case "B":
+                        vl_A3389FLAG = "CHANGE FOR ANOTHER";
+                        break;
+                    case "C":
+                        vl_A3389FLAG = "INCONSISTENCY WITH THE ROBOT";
+                        break;
+                    case "":
+                        vl_A3389FLAG = "PENDING DOWNLOAD";
+                        break;
+                    case "E":
+                        vl_A3389FLAG = "ERROR IN THE PROCESS";
+                        break;
+                    case "Z":
+                        vl_A3389FLAG = "UNDER INVESTIGATION";
+                        break;
+                    case "K":
+                        vl_A3389FLAG = "CPN EVALUATION";
+                        break;
+                }
+                CH_14.setCellValue(vl_A3389FLAG);
                 CH_15.setCellValue(lst.get(vi).A3389DIAS);
 
                 CH_00.setCellStyle(bodyStyle);
@@ -728,29 +776,51 @@ public class BwrQueryRefundController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "ProcesaMantenimiento")
     public @ResponseBody
     String ProcesaMantenimiento(ModelMap map, HttpServletRequest request) {
-        String result="";
+        String result = "";
         A3389Filter filter = new A3389Filter();
-        
-        try{
-            
+
+        try {
+
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             BwrQueryRefundLogic logic = new BwrQueryRefundLogic();
             logic.setSession(this.serverSession.getServerSession());
             result = logic.ProcesaMantenimiento(filter);
-        
-            
+
         } catch (Exception e) {
             throw new SpringException(e);
         }
         map.put("success", true);
         map.put("data", result);
-         return new Gson().toJson(map);
+        return new Gson().toJson(map);
     }
-     
+    
+    @RequestMapping(value = "searchSabreLst")
+    public @ResponseBody
+    String searchSabreLst(ModelMap map, HttpServletRequest request) {
+        A3908Filter filter = new A3908Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            BwrQueryRefundLogic logic = new BwrQueryRefundLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A3908Filter> lst_search = logic.searchSabreLst(filter);
+
+            map.put("success", true);
+            map.put("data", lst_search);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
 
 }

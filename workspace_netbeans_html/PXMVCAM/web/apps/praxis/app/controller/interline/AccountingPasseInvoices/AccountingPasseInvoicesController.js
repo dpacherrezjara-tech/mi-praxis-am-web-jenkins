@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
 //                click: this.btnClear_click
             },
             '#AccountingPasseInvoicesForm-btnExcel': {
-//                click: this.btnExcel_click
+                click: this.btnExcel_click
             },
             '#AccountingPasseInvoicesForm-btnFilter': {
                 click: this.btnFilter_click
@@ -116,42 +116,88 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         }
     },
     setStoreData: function () {
+        
+        var month = this.fecha.getMonth();
 
+        if (month < 10) {
+            month = '0' + month;
+        }
+        
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(win.getStoreYear(false));
         Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(win.getStoreYear(false));
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(win.getStoreMonth(true));
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(win.getStoreMonth(true));
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(win.getStoreMonth(false));
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(win.getStoreMonth(false));
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue("");
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue("");
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
+        
+        var cmbTfecha = Ext.getCmp(prototype.id + '-cmbTfecha');
+        cmbTfecha.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["AD", "Accounting Date"],
+                ["PD", "Provision Date"]
+            ]
+        }));
+        cmbTfecha.setValue("PD");
 
-
-//        var cmbSource = Ext.getCmp(prototype.id + '-cmbSource');
-//        cmbSource.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["01", "01"],
-//                ["02", "02"],
-//                ["03", "03"],
-//                ["04", "04"],
-//                ["04", "04"],
-//                ["04", "04"],
-//                ["04", "04"],
-//                ["04", "04"],
-//            ]
-//        }));
-//        cmbSource.setValue("");
+        var cmbTTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN');
+        cmbTTRAN.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["OB", "IXC"],
+                ["IB", "IXP"]
+            ]
+        }));
+        cmbTTRAN.setValue("OB");
+        
+        var cmbPEREST = Ext.getCmp(prototype.id + '-cmbPEREST');
+        cmbPEREST.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["03", "03"],
+                ["04", "04"]
+            ]
+        }));
+        cmbPEREST.setValue("03");
 
         this.btnSearch_click();
 
     },
+    showSummary: function (obj, value, old_value) {
+        
+        if (value) {
+            Ext.getCmp(prototype.id + '-panelGrid').hide();
+            Ext.getCmp(prototype.id + '-panelGridSummary').show();
+            this.setFormatParameter();
+            this.setGridSummary();
+        } else {
+            Ext.getCmp(prototype.id + '-panelGridSummary').hide();
+            Ext.getCmp(prototype.id + '-panelGrid').show();
+            this.btnSearch_click();
+        }
+                       
+    },
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
-        this.setGridData();
+        this.setGrid();
+        
+        var TTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN').getValue();
+        if(TTRAN === 'OB'){
+            Ext.getCmp(prototype.id + '-panelContaIXP').hide();
+            Ext.getCmp(prototype.id + '-panelContaIXC').show();
+            this.setGridContaIXC();
+        }else{
+            Ext.getCmp(prototype.id + '-panelContaIXC').hide();
+            Ext.getCmp(prototype.id + '-panelContaIXP').show();
+            this.setGridContaIXP();
+        }
+//        this.setGridData();
 
     },
     setFormatParameter: function () {
@@ -171,7 +217,9 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         me.bean.IN_FECHA_FROM = '' + yearFrom + monthFrom;
         me.bean.IN_FECHA_TO = '' + yearTo + monthTo;
 
-        me.bean.IN_A1964TUSO = Ext.getCmp(prototype.id + '-txtSource').getValue();
+        me.bean.IN_TFECHA = Ext.getCmp(prototype.id + '-cmbTfecha').getValue();
+        me.bean.IN_TTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN').getValue();
+        me.bean.IN_PEREST = Ext.getCmp(prototype.id + '-cmbPEREST').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -179,10 +227,10 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
         };
         console.log(searchParams);
     },
-    // <editor-fold defaultstate="collapsed" desc="setGridData">
+    // <editor-fold defaultstate="collapsed" desc="setGrid">
 
-    setGridData: function () {
-        win.lblUser_toolTip("Estructura: A1964/A1965");
+    setGrid: function () {
+        win.lblUser_toolTip("Estructura: SFI100/A1964/A1965");
         me.setWidthPie();
         me.panelActual = '-panelGridData';
         me.drillDown.push(me.panelActual);
@@ -194,10 +242,174 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
             }, listeners: {
                 beforeload: function (obj) {
                     obj.proxy.extraParams = searchParams;
-                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                 },
                 load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    var typeDate = Ext.getCmp(prototype.id + '-cmbTfecha').getValue()
+                    if (typeDate === "PD") {
+                        Ext.getCmp(prototype.id + '-typeDate').setText("Provision");
+                    } else {
+                        Ext.getCmp(prototype.id + '-typeDate').setText("Accounting");
+                    }
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            var data = obj.data.items[0].data;
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+
+    },
+    setGridContaIXC: function () {
+        me.setWidthPie();
+        me.panelActual = '-panelGridData';
+        me.drillDown.push(me.panelActual);
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchA1964'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+//                    Ext.getCmp(prototype.id + '-panelContaIXC').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+//                    Ext.getCmp(prototype.id + '-panelContaIXC').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridContaIXC').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridContaIXC').setStore(storeGridDatas);
+
+    },
+    setGridContaIXP: function () {
+        me.setWidthPie();
+        me.panelActual = '-panelGridData';
+        me.drillDown.push(me.panelActual);
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchA1965'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-panelContaIXC').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-panelContaIXC').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridContaIXP').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridContaIXP').setStore(storeGridDatas);
+
+    },
+    setGridSummary: function () {
+        win.lblUser_toolTip("Estructura: SFI100");
+        
+//        me.panelActual = '-panelGridSummary';
+//        me.drillDown.push(me.panelActual);
+//        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchBySummary'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataSummary').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataSummary').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+
+    },
+    // </editor-fold>
+     
+     
+    // <editor-fold defaultstate="collapsed" desc="setGridData">
+
+    setGridData: function () {
+//        win.lblUser_toolTip("Estructura: A1964/A1965");
+        me.setWidthPie();
+        me.panelActual = '-panelGridData';
+        me.drillDown.push(me.panelActual);
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/searchX'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-panelGrid2').mask('Loading...');
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-panelGrid2').unmask();
                     
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
@@ -271,7 +483,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
                                 root: dataRoot
                             });
 
-                            Ext.getCmp(prototype.id + '-gridData').setStore(storeTree);
+                            Ext.getCmp(prototype.id + '-gridDataX').setStore(storeTree);
 
                             // ---------------------------------------------------------------------
                             
@@ -1324,7 +1536,6 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     },
     btnExcel_click: function (obj, e) {
 
-        this.setFormatParameter();
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -1355,37 +1566,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
             case '-panelGridData2':
                 global.getFile(prototype.url + '/getXLSX_2?beanString=' + searchParams.beanString);
                 break;
-            case '-panelMainDataDetail':
-                global.getFile(prototype.url + '/getXLSX_Detail30?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail20_1':
-                global.getFile(prototype.url + '/getXLSX_Detail30_1?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail20':
-                global.getFile(prototype.url + '/getXLSX_Detail20?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetailbyCIA':
-                global.getFile(prototype.url + '/getXLSX_DetailbyCIA?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetailbySOURCE':
-                global.getFile(prototype.url + '/getXLSX_DetailbySOURCE?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail21bySO':
-                global.getFile(prototype.url + '/getXLSX_DetailbySO?beanString=' + me.paramsDetail.beanString);
-                break;
-            case '-panelMainDataDetail20bySO':
-                global.getFile(prototype.url + '/getXLSX_Detail20bySO?beanString=' + me.paramsDetail.beanString);
-                break;
-//            case '-panelGridDataByCia':
-//                global.getFile(prototype.url + '/getXLSXCia?beanString=' + me.paramsDetail.beanString);
-//                break;
-//            case '-panelGridDataByReason':
-//                global.getFile(prototype.url + '/getXLSXReason?beanString=' + me.paramsDetail.beanString);
-//                break;
-//            default:
-//                global.Msg(
-//                    {msg: 'Under Construction'
-//                });
+                
         }
 
     },
@@ -1523,8 +1704,8 @@ Ext.define('Ext.Praxis.controller.interline.AccountingPasseInvoices.AccountingPa
     },
     findSource: function (obj, e, eOpts) {
         
-        var txtSource = Ext.getCmp(prototype.id + '-txtSource').getValue();
-        if(txtSource !== ''){
+        var cmbPEREST = Ext.getCmp(prototype.id + '-cmbPEREST').getValue();
+        if(cmbPEREST !== ''){
             switch (e.getKey()) {
                 case 13:
                     this.btnSearch_click();

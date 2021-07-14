@@ -95,5 +95,8 @@ public class SFI041 extends SFI041Filter {
     public double AMOUNT_YQ = 0.0;
     public double AMOUNT_YR = 0.0;
     public double LBRATE = 0.00;
+    public String SIGN_TAX = "";
+    public String SIGN_YQ = "";
+    public String SIGN_YR = "";
     
 }

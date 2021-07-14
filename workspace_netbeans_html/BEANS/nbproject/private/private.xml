@@ -27,6 +27,12 @@
             <file>file:/D:/LZAMBRANO/Backup/workspace_netbeans/BEANS/src/net/miatech/utils/Functions.java</file>
             <file>file:/D:/LZAMBRANO/Backup/workspace_netbeans/BEANS/src/net/miatech/praxis/persistence/daoimpl/UserDaoImpl.java</file>
         </group>
-        <group name="PRAXIS AM GIT"/>
+        <group name="PRAXIS AM GIT">
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/provider/ConnectionIBMDB2Server.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/sql/biamdb/ModuleFilter.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/sql/biamdb/AuditFilter.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/dao/UserDAO.java</file>
+        </group>
+        <group name="PRAXIS AM HTML GIT"/>
     </open-files>
 </project-private>

@@ -8,6 +8,7 @@ package net.miatech.praxis.logic.salesAudit;
 import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.SaleAudit.A3389Filter;
+import net.miatech.beans.SaleAudit.A3908Filter;
 import net.miatech.praxis.dao.salesAudit.BwrQueryRefundDAO;
 import net.miatech.beans.spring.implement.IServerSession;
 
@@ -40,5 +41,9 @@ public class BwrQueryRefundLogic {
     }
      public String ProcesaMantenimiento(A3389Filter beanGuardarA3389) throws SQLException, Exception {
         return objDAO.ProcesaMantenimiento(beanGuardarA3389);
+    }
+     
+      public List<A3908Filter> searchSabreLst(A3908Filter filter) throws SQLException, Exception {
+        return objDAO.searchSabreLst(filter);
     }
 }

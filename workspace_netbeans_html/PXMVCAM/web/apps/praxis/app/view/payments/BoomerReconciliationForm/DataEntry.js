@@ -255,9 +255,9 @@ Ext.define('Ext.Praxis.view.payments.BoomerReconciliationForm.DataEntry', {
                                     enforceMaxLength: true,
                                     maxLength: 8,
                                     readOnly: true,
-                                    width: 130
+                                    width: 70
                                 },
-                                {xtype: 'tbspacer', width: 31},
+                                {xtype: 'tbspacer', width: 50},
                                 {
                                     xtype: 'label',
                                     text: 'Agent Code',
@@ -273,9 +273,28 @@ Ext.define('Ext.Praxis.view.payments.BoomerReconciliationForm.DataEntry', {
                                     enforceMaxLength: true,
                                     maxLength: 8,
                                     readOnly: true,
-                                    width: 140
+                                    width: 80
                                 },
-                                {xtype: 'tbspacer', width: 330}
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Authorization Code',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    width: 120,
+                                    padding: '3 0'
+                                },
+                                {xtype: 'tbspacer', width: 22},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSAUTHOC',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 6,
+                                    readOnly: true,
+                                    padding: '3 0',
+                                    width: 210
+                                },                                
+                                {xtype: 'tbspacer', width: 38},
                             ]
                         },
                         {
@@ -317,7 +336,7 @@ Ext.define('Ext.Praxis.view.payments.BoomerReconciliationForm.DataEntry', {
                                     enableKeyEvents: true,
                                     triggerAction: 'all'
                                 },
-                                {xtype: 'tbspacer', width: 100},
+                                {xtype: 'tbspacer', width: 39},
                                 {
                                     xtype: 'label',
                                     text: 'Status',
@@ -325,7 +344,7 @@ Ext.define('Ext.Praxis.view.payments.BoomerReconciliationForm.DataEntry', {
                                     width: 70,
                                     padding: '3 0'
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {xtype: 'tbspacer', width: 70},
                                 {
                                     xtype: 'combobox',
                                     id: prototype.id + '-de-cmbSTVAL',
@@ -387,24 +406,23 @@ Ext.define('Ext.Praxis.view.payments.BoomerReconciliationForm.DataEntry', {
                                     readOnly: true,
                                     width: 40
                                 },
-                                {xtype: 'tbspacer', width: 159},
+                                {xtype: 'tbspacer', width: 173},
                                 {
                                     xtype: 'label',
-                                    text: 'Authorization Code',
-                                    style: 'font-weight:bold;color:#121E31;',
-                                    width: 120,
-                                    padding: '3 0'
+                                    text: 'PNR',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    padding: '3 0',
+                                    width: 40
                                 },
-                                {xtype: 'tbspacer', width: 35},
+                                {xtype: 'tbspacer', width: 101},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSAUTHOC',
-                                    fieldStyle: 'text-align:right',
+                                    id: prototype.id + '-de-txtSPNR',
+                                    fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     maxLength: 6,
                                     readOnly: true,
-                                    padding: '3 0',
-                                    width: 212
+                                    width: 210
                                 },
                                 {xtype: 'tbspacer', width: 38}
                             ]

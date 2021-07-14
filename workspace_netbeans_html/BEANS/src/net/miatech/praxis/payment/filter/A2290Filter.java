@@ -332,6 +332,9 @@ public class A2290Filter extends A2290 {
     public String INVSEQNO = "";
     public String SEREFNO = "";
     public String ELECREFNO = "";
+    
+    public String SAUTHOC1 = "";
+    public String SCARCOD1 = "";        
 
     //A2240
     //A2240

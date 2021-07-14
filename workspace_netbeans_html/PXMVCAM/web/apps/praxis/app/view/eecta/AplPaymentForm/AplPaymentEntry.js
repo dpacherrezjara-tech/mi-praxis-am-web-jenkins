@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
     ],
     title: 'Aplicación Pago',
     header: true,
-    width: 770,
+    width: 850,
     height: 400,
     border: false,
     resizable: false,
@@ -37,13 +37,13 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
                     // <editor-fold defaultstate="collapsed" desc="grid">
                     xtype: 'panel',
                     id: prototype.id + '-contenedor-infoGridAplPayment',
-                    width: 760,
+                    width: 840,
                     layout: 'fit',
                     items: [
                         {
                             xtype: prototype.id + '-infoGridAplPayment'
                         }
-                    ]                            
+                    ]
                             // </editor-fold>
                 },
                 {
@@ -179,17 +179,17 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-A3959TOTPG',
                             fieldLabel: 'Importe', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
-                            width: 225,fieldStyle:'font-weight: bold;font-size:13px;text-align:right',
-                            value:'0.00',
+                            width: 225, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
+                            value: '0.00',
                             enableKeyEvents: true,
                             enforceMaxLength: true,
                             maskRe: /[1234567890\.]/,
                             listeners: {
-                                focus: 'onFocusNumberfield',                                
-                                focusleave:'onfocusleaveNumberfield',
+                                focus: 'onFocusNumberfield',
+                                focusleave: 'onfocusleaveNumberfield',
                                 keypress: function (obj, e) {
                                     if (e.getKey() === e.ENTER) {
-                                       Ext.getCmp(prototype.id + '-A3959FECPG').focus();
+                                        Ext.getCmp(prototype.id + '-A3959FECPG').focus();
                                     }
                                 }
                             }
@@ -222,8 +222,8 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
                                 {
                                     xtype: 'datefield',
                                     id: prototype.id + '-A3959FECPG',
-                                    fieldLabel: 'Fech Pago', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
-                                    width: 190,fieldStyle:'font-weight: bold;font-size:13px;text-align:center',
+                                    fieldLabel: 'Fech Pago', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
+                                    width: 178, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                                     format: 'Ymd',
                                     invalidText: 'Ingrese fecha valida en formato Ymd',
                                     minValue: new Date(1990, 00, 01),
@@ -243,6 +243,36 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
                                 }
                             ]
 
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-criterio_apl',
+                            fieldLabel: 'Criterio Apl.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 95,
+                            width: 240,
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["1", "Fecha de emision"],                                    
+                                    ["2", "Importe"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            forceSelection: true,
+                            caseSensitive: false,
+                            editable: true,
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            value: "1",
+                            enableKeyEvents: true,
+                            listeners: {
+//                                focus: function(combo) {
+//                                    combo.expand();
+//                                }
+                                //keypress: 'onTextKeypress',
+                                //change: 'cmbfiltro_clickHandler'
+                            }
                         }
                     ]
                 }
@@ -273,7 +303,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentEntry', {
                     text: 'Update',
                     id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    hidden:true,
+                    hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }

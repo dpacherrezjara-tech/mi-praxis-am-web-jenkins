@@ -84,14 +84,15 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.NoShowFormDetLog', {
                                 {
                                     xtype: 'combo',
                                     id: prototype.id06 + '-STAT',
-                                    fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
-                                    width: 180,
+                                    fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                    width: 120,
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "Todos"],
                                             ["A", "Aplica caduco"],
-                                            ["N", "No aplica"]
+                                            ["N", "No aplica"],
+                                            ["X", "Error XML"]
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -130,6 +131,15 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.NoShowFormDetLog', {
                                             tooltip: 'Exportar en formato texto',
                                             listeners: {
                                                 click: 'ondoanlodTxtClick'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id06 + '-btnExcel',
+                                            icon: 'resources/img/botones/excel.png',
+                                            tooltip: 'Exportar en formato Excel',
+                                            listeners: {
+                                                click: 'ondoanlodExcelClick'
                                             }
                                         }
                                     ]

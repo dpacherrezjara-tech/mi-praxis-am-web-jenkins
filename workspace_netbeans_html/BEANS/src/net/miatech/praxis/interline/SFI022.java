@@ -67,5 +67,8 @@ public class SFI022 {
     /*Ursula--Inicio*/
     public int QUANTITY=0;
     /*Ursula--Fin*/
-     
+    
+    
+    public double LBRATE = 0.0;
+    
 }

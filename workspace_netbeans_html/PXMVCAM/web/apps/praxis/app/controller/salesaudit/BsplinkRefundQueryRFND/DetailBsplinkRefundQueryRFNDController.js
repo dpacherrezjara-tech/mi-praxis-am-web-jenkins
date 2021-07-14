@@ -88,13 +88,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
             data: [
                 {"code": "", "name": "SELECT"},
                 {"code": "R", "name": "REJECT"},
-                {"code": "F", "name": "AUTHORISE"}
+                {"code": "F", "name": "AUTHORISE"},
+                {"code": "Z", "name": "UNDER INVESTIGATION"}
             ]
         }));
     },
     onCmbStatusAfterrender: function () {
         var ComboEstatus = Ext.getCmp(prototype.id01 + '-ComboEstatus');
         ComboEstatus.setValue('');
+    },
+    onSabreStatusClick: function () {
+        
+        var win = new Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.FormSabreEstatus({
+            params: {
+                rec_preme: Ext.getCmp(prototype.id01 + '-txtPreme').getValue(),
+                rec_number:  Ext.getCmp(prototype.id01 + '-txtNumber').getValue(),
+                rec_tkt: Ext.getCmp(prototype.id01 + '-txtSNumber').getValue(),
+                rec_aplidate: Ext.getCmp(prototype.id01 + '-txtAplidate').getValue()
+            }
+        });
+        win.show();
     },
     onLoadData: function () {
         var me = this;
@@ -183,6 +196,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
                 break;
             case 'G':
                 Ext.getCmp(prototype.id01 + '-txtStatusRFND').setValue('NO REEMBOLSABLE');
+                break;
+             case 'Z':
+                Ext.getCmp(prototype.id01 + '-txtStatusRFND').setValue('UNDER INVESTIGATION');
                 break;
         }
 
@@ -479,6 +495,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.DetailBsplin
             }
             if (grid03.getStore().getAt(e).get('A3404FAMIL') !== 'Authorise' && vl_STATUS === 'F') {
                 Ext.Msg.alert('.: PRAXIS :.', 'Check the answer, the authorise status cannot be used with rejected answer');
+                bvalida = false;
+                return;
+            }
+            if (grid03.getStore().getAt(e).get('A3404FAMIL') === 'Authorise' && vl_STATUS === 'Z') {
+                Ext.Msg.alert('.: PRAXIS :.', 'Check the answer, the under investigation status cannot be used with Authorise answer');
                 bvalida = false;
                 return;
             }

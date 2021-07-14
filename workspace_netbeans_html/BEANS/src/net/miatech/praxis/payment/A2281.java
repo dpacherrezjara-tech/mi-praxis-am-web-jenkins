@@ -35,6 +35,7 @@ public class A2281 {
     public double RATECOP2 = 0;
     public double RATEIVA = 0;
     public String CLIENTE = "";
+    public String option = "";
     public int DOCNUM = 0;
     //Variables del 
     public String USCR = "";

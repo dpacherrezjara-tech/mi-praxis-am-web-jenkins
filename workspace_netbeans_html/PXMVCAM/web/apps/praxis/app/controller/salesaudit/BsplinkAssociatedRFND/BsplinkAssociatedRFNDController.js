@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
         prototype.id01 = 'DataEntryBsplinkRefundQueryRFND';
         prototype.id02 = 'FormOfPaymentRFND';
         prototype.id03 = 'OriginalDataTaxesRFND';
+        prototype.idSabreEstatus = 'FormSabreEstatus';
         prototype.url = CONTEXTPATH + '/BwrBSPLINKRFND';
         prototype.url01 = CONTEXTPATH + '/BsplinkRefundQueryRFND';
         prototype.widthContenedor = 1366;
@@ -51,7 +52,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 Ext.getCmp(prototype.id + '-txtUser').setValue(Ext.String.trim(res.user.USR));
-                if (Ext.String.trim(res.user.USR) === 'XEILIANA') {
+                if (Ext.String.trim(res.user.USR) === 'XEILIANA' || Ext.String.trim(res.user.USR) === 'SAP26') {
                     Ext.getCmp(prototype.id + '-txtUser').setReadOnly(false);
                 }
                 me.onSearchClickInitial();
@@ -96,7 +97,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
                 {"code": "R", "name": "REJECTED"},
                 {"code": "D", "name": "REEMBOLSABLE"},
                 {"code": "G", "name": "NO REEMBOLSABLE"},
-                {"code": "X", "name": "REMOVED"}
+                {"code": "X", "name": "REMOVED"},
+                {"code": "Z", "name": "UNDER INVESTIGATION"},
+                {"code": "K", "name": "CPN EVALUATION"}
             ]
         }));
     },
@@ -333,12 +336,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
             }
 
             /*if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) !== '' &&
-                    Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
-                if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
-                    return;
-                }
-            }*/
+             Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
+             if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
+             Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
+             return;
+             }
+             }*/
         }
 
         if (comboBy === '2' || comboBy === '3' || comboBy === '5') {
@@ -407,17 +410,17 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
 
     onRendererColumnAgency: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnPassenger: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnReason: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -471,11 +474,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkAssociatedRFND.BsplinkAssoci
                 color = '#F2A60D';
                 value = 'ERROR IN THE PROCESS';
                 break;
+            case 'Z':
+                color = '#CCFF00';
+                value = 'UNDER INVESTIGATION';
+                break;
+            case 'K':
+                color = '#E3DAED';
+                value = 'CPN EVALUATION';
+                break;
         }
 
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
-        return value
+        return value;
     },
 
     onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {

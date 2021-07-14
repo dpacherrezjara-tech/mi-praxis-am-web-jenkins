@@ -23,14 +23,13 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                 /*
                  *          MAIN-A1686
                  ***/
-
                 {
                     xtype: 'grid',
                     id: prototype.id + '-gridDataMainA1686',
                     bodyStyle: 'background-color: #E3EAEF;',
                     height: 550,
                     hidden: false,
-                    width: 1000,
+                    width: 1052,
                     columnLines: true,
                     columns: {
                         defaults: {
@@ -91,13 +90,13 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             return Ext.util.Format.number(value, '0,000');
                                         }},
-                                    {text: 'Error', width: 80, dataIndex: 'QRECERR',
+                                    {text: 'Error', width: 80, dataIndex: 'QRECERR', id: prototype.id + '-errorMain',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             return Ext.util.Format.number(value, '0,000');
                                         }}
                                 ]
                             },
-                            {text: 'Details/Error Message', width: 258, dataIndex: 'MENSA'}
+                            {text: 'Details/Error Message', width: 300, align: 'left', dataIndex: 'MENSA'}
                         ]
                     }
                 },
@@ -110,7 +109,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                     bodyStyle: 'background-color: #E3EAEF;',
                     labelAlign: 'left',
                     height: 550,
-                    width: 1000,
+                    width: 962,
                     columnLines: true,
                     columns: {
                         defaults: {
@@ -134,8 +133,8 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                 ]
                             },
                             {text: 'User ', width: 100, dataIndex: 'USCR'},
-                            {text: 'Generation <br> Date', width: 100, dataIndex: 'strFormatDate4'},
-                            {text: 'SSIM <br> Loaded', width: 80, dataIndex: 'QRECORG2'},
+                            {text: 'Date <br> Flight', width: 100, dataIndex: 'DPRDA'},
+//                            {text: 'SSIM <br> Loaded', width: 80, dataIndex: 'QRECORG2'},
                             {text: 'Total Records',
                                 defaults: {
                                     menuDisabled: true,
@@ -152,18 +151,24 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             return Ext.util.Format.number(value, '0,000');
                                         }},
-                                    {text: 'Error', width: 80, dataIndex: 'QRECERR',
+                                    {text: 'Error', width: 80, dataIndex: 'QRECERR',id: prototype.id + '-id_error',
+                                        
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = 'text-decoration:underline; color:#008FE3; ';
-                                            return  '<a href="#flown-inputs-control-form" style="color:#008FE3">' + Ext.util.Format.number(value, '0,000') + '</a>';
+                                            var src = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                                            if(src === 'ODS' || src === 'SSIM' || src === 'EMD'){
+                                                return  value;
+                                            }else {
+                                                metaData.style = 'text-decoration:underline; color:#008FE3; ';
+                                                return  '<a href="#flown-inputs-control-form" style="color:#008FE3">' + Ext.util.Format.number(value, '0,000') + '</a>';
+                                            }
                                         },
                                         listeners: {
-                                            click: 'setGridDataA1696Errores'
+                                            click: 'setErrores'
                                         }
                                     }
                                 ]
                             },
-                            {text: 'Details/Error Message', width: 258, dataIndex: 'MENSA'}
+                            {text: 'Details/Error Message', width: 300, dataIndex: 'MENSA'}
                         ]
                     }
                 },
@@ -172,11 +177,38 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                  * */
                 {
                     xtype: 'grid',
+                    id: prototype.id + '-gridDataErrorVCRJ',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    labelAlign: 'left',
+                    height: 550,
+                    width: 960,
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: true,
+                            align: 'center'
+                        },
+                        items: [
+                            {text: 'Nbr', width: 60, dataIndex: 'RN'},
+                            {text: 'A1413DATE ', width: 100, dataIndex: 'A1413DATE'},
+                            {text: 'A1413SEC ', width: 100, dataIndex: 'A1413SEC'},
+                            {text: 'Details Data', width: 600, align: 'left', dataIndex: 'A1413DATA'},
+                            {text: 'Cia', width: 100, dataIndex: 'A1413CIA'},
+                            {text: 'A1413FORSE', width: 100, dataIndex: 'A1413FORSE'},
+                            {text: 'Cupon', width: 100, dataIndex: 'A1413CUPON'},
+                            {text: 'From', width: 100, dataIndex: 'A1413FROM'},
+                            {text: 'To', width: 100, dataIndex: 'A1413TO'},
+                        ]
+                    }
+                },
+                {
+                    xtype: 'grid',
                     id: prototype.id + '-gridDataA1696Errores',
                     bodyStyle: 'background-color: #E3EAEF;',
                     labelAlign: 'left',
                     height: 550,
-                    width: 950,
+                    width: 992,
                     columnLines: true,
                     columns: {
                         defaults: {
@@ -200,7 +232,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                 ]
                             },
                             {text: 'Source ', width: 100, dataIndex: 'FUENTE'},
-                            {text: 'Details / Error Message', width: 600, dataIndex: 'MENSA'}
+                            {text: 'Details / Error Message', width: 642, dataIndex: 'MENSA'}
 
                         ]
                     }
@@ -401,7 +433,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Nbr', width: 35, dataIndex: 'Nbr'},
+                                    {text: 'Nbr', width: 35, dataIndex: 'RN'},
                                     {text: 'Flight <br> Date', width: 90, dataIndex: 'strFormatDate'},
                                     {text: 'Transaction <br> Number', width: 100, dataIndex: 'TRNN'},
                                     {text: 'CIA ', width: 90, dataIndex: 'CCIA'},
@@ -449,7 +481,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Nbr', width: 35, dataIndex: 'Nbr'},
+                                    {text: 'Nbr', width: 35, dataIndex: 'RN'},
                                     {text: 'VCR Information', width: 800, dataIndex: 'EMDDATA',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align :left ; margin-left : 1px ";
@@ -559,14 +591,14 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                             labelAlign: 'center',
                             labelStyle: 'color:#231223',
                             align: 'center',
-                            margin: '10 5 10 350'
+                            margin: '10 5 10 180'
                         },
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridDataA1690',
                             bodyStyle: 'background-color: #E3EAEF;',
-                            height: 515,
-                            width: 943,
+                            height: 520,
+                            width: 564,
                             columnLines: true,
                             columns: {
                                 defaults: {
@@ -586,7 +618,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                         columns: [
                                             {text: 'Nbr', width: 50, dataIndex: 'RN'},
                                             {text: 'Ticket', width: 140, dataIndex: 'strTicket'},
-                                            {text: 'Flight Date <br> Control', width: 100, dataIndex: 'strFormatDate'},
+//                                            {text: 'Flight Date <br> Control', width: 100, dataIndex: 'strFormatDate'},
                                             {text: 'Flight Information',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -605,21 +637,21 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
 
                                         ]
                                     },
-                                    {text: '',
-                                        id: prototype.id + '-gridDataA1690-header2',
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: true,
-                                            align: 'center',
-                                            border: true
-                                        },
-                                        columns: [
-                                            {text: 'Flag', width: 50, dataIndex: 'FLAG'},
-                                            {text: 'Prorate Nbr', width: 140, dataIndex: 'NROPRT'},
-                                            {text: 'Grupo', width: 100, dataIndex: 'GRUPO'}
-
-                                        ]
-                                    }
+//                                    {text: '',
+//                                        id: prototype.id + '-gridDataA1690-header2',
+//                                        defaults: {
+//                                            menuDisabled: true,
+//                                            sortable: true,
+//                                            align: 'center',
+//                                            border: true
+//                                        },
+//                                        columns: [
+//                                            {text: 'Flag', width: 50, dataIndex: 'FLAG'},
+//                                            {text: 'Prorate Nbr', width: 140, dataIndex: 'NROPRT'},
+//                                            {text: 'Grupo', width: 100, dataIndex: 'GRUPO'}
+//
+//                                        ]
+//                                    }
                                 ]
                             }
                         }
@@ -635,7 +667,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                     bodyStyle: 'background-color: #E3EAEF;',
                     height: 550,
                     hidden: false,
-                    width: 1000,
+                    width: 1042,
                     columnLines: true,
                     columns: {
                         defaults: {
@@ -697,7 +729,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                         }}
                                 ]
                             },
-                            {text: 'Details/Error Message', width: 258, dataIndex: 'MENSA'}
+                            {text: 'Details/Error Message', width: 300, dataIndex: 'MENSA'}
                         ]
                     }
                 },
@@ -739,7 +771,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                     bodyStyle: 'background-color: #E3EAEF;',
                     height: 550,
                     hidden: false,
-                    width: 1000,
+                    width: 1042,
                     columnLines: true,
                     columns: {
                         defaults: {
@@ -787,7 +819,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                         }}
                                 ]
                             },
-                            {text: 'Details/Error Message', width: 258, dataIndex: 'MENSA'}
+                            {text: 'Details/Error Message', width: 300, dataIndex: 'MENSA'}
                         ]
                     }
                 }

@@ -1,6 +1,7 @@
 prototype.widthContenedor = 1200;   
 prototype.widthGrid = '100%';
 prototype.id01 = 'CatalogoClienteUatpAdd';
+prototype.id02 = 'CatalogoClienteContrato';
 
 Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteForm', {
     extend: 'Ext.form.Panel',

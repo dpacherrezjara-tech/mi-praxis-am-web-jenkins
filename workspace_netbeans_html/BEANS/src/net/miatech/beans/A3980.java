@@ -20,6 +20,7 @@ public class A3980 {
     public String A3980SEQ = "";
     public String A3980CUPON = "";
     public String A3980TICKI = "";
+    public String A3980TICKA= "";
     public String A3980CORR = "";
     public String A3980APLIC = "";
     public String A3980TEXT = "";

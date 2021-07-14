@@ -22,6 +22,13 @@ public class A2338Filter extends A2338{
     public String IN_SCURRENCY = "";
     public String IN_NUMLIQUI = "";
     public String IN_FPRESENT = "";
+    public String IN_CARDN1 = "";
+    public String IN_CARDN2 = "";
+    public String IN_SDATE = "";
+    public String IN_TIPOFEC = "";
+    public String IN_DATE = "";
+    public String TIPOFEC = "";
+    public String strFormatDate = "";
     
     public double totIMPORTE = 0.00;
     public double totNETO = 0.00;
@@ -49,6 +56,14 @@ public class A2338Filter extends A2338{
     public double TOT_TOTDESC = 0.00;
     public double TOT_NETO = 0.00;
     public double TOT_IMPORFIN = 0.00;
+    public double TOT_AIMPARAN = 0.00;
+    public double TOT_AIVAARAN = 0.00;
+    public double TOT_AIMPORCF = 0.00;
+    public double TOT_AIVACFIN = 0.00;
+    
+    public Integer QtySETTLEMENT = 0;
+    public Integer TOT_QtySETTLEMENT = 0;
+    public String DESC_MERCHANT = "";
     
     
     public Pagination page = new Pagination();

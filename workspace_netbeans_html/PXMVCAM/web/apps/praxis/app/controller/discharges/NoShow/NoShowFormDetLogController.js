@@ -81,5 +81,27 @@ Ext.define('Ext.Praxis.controller.discharges.NoShow.NoShowFormDetLogController',
                 }
             }
         });
+    },
+    ondoanlodExcelClick:function(){
+        var bean = {};
+        bean.VP_A3980FFILE = Ext.util.Format.date( Ext.getCmp(prototype.id06 + '-A3980FFILE').getValue() , 'Ymd');
+        bean.VP_TICKET = Ext.getCmp(prototype.id06 + '-TICKET_NUMBER').getValue();
+        bean.VP_A3980SEQ = Ext.getCmp(prototype.id06 + '-SEQ').getValue();
+        bean.VP_A3980APLIC = Ext.getCmp(prototype.id06 + '-STAT').getValue();
+        //bean.limit = "-1";
+        //bean.page = "-1";
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel',            
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                                            
+                    global.getFile(prototype.url + '/downloadExcelLog?VP_A3980FFILE='+bean.VP_A3980FFILE+'&VP_TICKET='+bean.VP_TICKET+'&VP_A3980SEQ='+bean.VP_A3980SEQ+'&VP_A3980APLIC='+bean.VP_A3980APLIC);
+                }
+            }
+        });
     }
 });

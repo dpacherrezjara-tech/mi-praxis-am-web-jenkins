@@ -148,7 +148,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                             ["", "All"],
                             ["M", "Multicurrency"],
                             ["O", "Origin"],
-                            ["C", "Expired"]
+                            ["C", "Expired"],
+                            ["R", "RAC"],
+                            ["N", "No Show"]
                         ]
                     }),
                     queryMode: 'local',

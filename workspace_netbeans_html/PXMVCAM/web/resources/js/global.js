@@ -196,6 +196,7 @@ win = {
         }
     },
     displayProMasterTicket: function (controller, action, bean) {
+        optionSelect = 'PX00000040';
         var params = {};
         params.view = 'program-pro-master-ticket-form';
         params.nprog = 'PX00000040';

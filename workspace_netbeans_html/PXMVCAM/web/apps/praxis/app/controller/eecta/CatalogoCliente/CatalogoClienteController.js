@@ -17,7 +17,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteControlle
         this.Onsearch();                
         //create STORE for Data Entry UATP grid
         Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataUatp',{});
-        Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataIdentif',{});        
+        Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataIdentif',{}); 
+        Ext.create('Ext.Praxis.store.eecta.CatalogoCliente.GridDataContrato',{});         
     },     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {

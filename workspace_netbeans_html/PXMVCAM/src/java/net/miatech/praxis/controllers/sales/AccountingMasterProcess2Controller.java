@@ -148,13 +148,22 @@ public class AccountingMasterProcess2Controller extends BaseController {
                         break;
                 }                
             }    
-            
-            String result = logic.accountMaintance(filter,strOption);
+            String result = "";
+            List<A1955Filter> lstGroups = new ArrayList(0);
+            /*if("PSALES".equals(filter.A1955MODUL) && !reversa.IN_ENVIO.equals("true"))
+            {
+                lstGroups = logic.SQP04042(filter);
+                if(lstGroups.size()==0)
+                    result = logic.accountMaintance(filter,strOption);                
+            }
+            else*/
+                result = logic.accountMaintance(filter,strOption);
             
             map.put("success", true);
             map.put("intResult", result);
             map.put("strOption", strOption);
             map.put("strModulo", filter.A1955MODUL);
+            map.put("lstGroups", lstGroups);
 
         } catch (NumberFormatException | SQLException ex) {
             map.put("success", false);

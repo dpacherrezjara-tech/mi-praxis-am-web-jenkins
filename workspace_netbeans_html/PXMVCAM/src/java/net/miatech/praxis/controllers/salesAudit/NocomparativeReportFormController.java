@@ -28,6 +28,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -69,6 +70,7 @@ public class NocomparativeReportFormController extends BaseController {
             filter.IN_DATETO = request.getParameter("IN_DATETO").toString().trim();
             filter.IN_IATA = request.getParameter("IN_IATA").toString().trim();
             filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").toString().trim();
+            filter.IN_TYPE = request.getParameter("IN_TYPE").toString().trim();
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
@@ -105,7 +107,9 @@ public class NocomparativeReportFormController extends BaseController {
             List<A3951Filter> listaData = logic.Search(filter);
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
-            Workbook workbook = new XSSFWorkbook();
+           // Workbook workbook = new XSSFWorkbook();
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
             Sheet sheet = workbook.createSheet("NocomparativeReportForm");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
 //            CellStyle headerStyle = workbook.createCellStyle();
@@ -143,7 +147,7 @@ public class NocomparativeReportFormController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13,CH_14;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -161,21 +165,23 @@ public class NocomparativeReportFormController extends BaseController {
             CH_11 = row.createCell(11);
             CH_12 = row.createCell(12);
             CH_13 = row.createCell(13);
+            CH_14 = row.createCell(14);
 
             CH_00.setCellValue("System date");
             CH_01.setCellValue("Period");
-            CH_02.setCellValue("Country");
-            CH_03.setCellValue("Agent Code");
-            CH_04.setCellValue("Agent Name");
-            CH_05.setCellValue("Sales Type");
-            CH_06.setCellValue("Currency");
-            CH_07.setCellValue("Cash");
-            CH_08.setCellValue("Credit turned cash");
-            CH_09.setCellValue("MS Cash");
-            CH_10.setCellValue("Payment card");
-            CH_11.setCellValue("MS Credit");
-            CH_12.setCellValue("EasyPay");
-            CH_13.setCellValue("Total");
+            CH_02.setCellValue("Detail");
+            CH_03.setCellValue("Country");
+            CH_04.setCellValue("Agent Code");
+            CH_05.setCellValue("Agent Name");
+            CH_06.setCellValue("Sales Type");
+            CH_07.setCellValue("Currency");
+            CH_08.setCellValue("Cash");
+            CH_09.setCellValue("Credit turned cash");
+            CH_10.setCellValue("MS Cash");
+            CH_11.setCellValue("Payment card");
+            CH_12.setCellValue("MS Credit");
+            CH_13.setCellValue("EasyPay");
+            CH_14.setCellValue("Total");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -191,6 +197,7 @@ public class NocomparativeReportFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -206,6 +213,7 @@ public class NocomparativeReportFormController extends BaseController {
             CH_11.setCellStyle(headerStyle);
             CH_12.setCellStyle(headerStyle);
             CH_13.setCellStyle(headerStyle);
+            CH_14.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -227,21 +235,23 @@ public class NocomparativeReportFormController extends BaseController {
                 CH_11 = row.createCell(11);
                 CH_12 = row.createCell(12);
                 CH_13 = row.createCell(13);
+                CH_14 = row.createCell(14);
 
                 CH_00.setCellValue(listaData.get(vi).A3951FREGI);
-                CH_01.setCellValue(listaData.get(vi).A3951PERIO);
-                CH_02.setCellValue(listaData.get(vi).A3951PAIS);
-                CH_03.setCellValue(listaData.get(vi).A3951IATA);
-                CH_04.setCellValue(listaData.get(vi).A3951IATANAME);
-                CH_05.setCellValue(listaData.get(vi).A3951TVTA);
-                CH_06.setCellValue(listaData.get(vi).A3951MDA);
-                CH_07.setCellValue(listaData.get(vi).A3951CASH);
-                CH_08.setCellValue(listaData.get(vi).A3951CTUC);
-                CH_09.setCellValue(listaData.get(vi).A3951CAMS);
-                CH_10.setCellValue(listaData.get(vi).A3951CCAD);
-                CH_11.setCellValue(listaData.get(vi).A3951CCMS);
-                CH_12.setCellValue(listaData.get(vi).A3951EPAY);
-                CH_13.setCellValue(listaData.get(vi).A3951NETO);
+                CH_01.setCellValue(listaData.get(vi).A3951PER);
+                CH_02.setCellValue(listaData.get(vi).A3951PERIO);
+                CH_03.setCellValue(listaData.get(vi).A3951PAIS);
+                CH_04.setCellValue(listaData.get(vi).A3951IATA);
+                CH_05.setCellValue(listaData.get(vi).A3951IATANAME);
+                CH_06.setCellValue(listaData.get(vi).A3951TVTA);
+                CH_07.setCellValue(listaData.get(vi).A3951MDA);
+                CH_08.setCellValue(listaData.get(vi).A3951CASH);
+                CH_09.setCellValue(listaData.get(vi).A3951CTUC);
+                CH_10.setCellValue(listaData.get(vi).A3951CAMS);
+                CH_11.setCellValue(listaData.get(vi).A3951CCAD);
+                CH_12.setCellValue(listaData.get(vi).A3951CCMS);
+                CH_13.setCellValue(listaData.get(vi).A3951EPAY);
+                CH_14.setCellValue(listaData.get(vi).A3951NETO);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -257,6 +267,7 @@ public class NocomparativeReportFormController extends BaseController {
                 CH_11.setCellStyle(bodyStyle);
                 CH_12.setCellStyle(bodyStyle);
                 CH_13.setCellStyle(bodyStyle);
+                CH_14.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -276,6 +287,7 @@ public class NocomparativeReportFormController extends BaseController {
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
 
             String fileNameDownload = String.format("NocomparativeReportForm - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");

@@ -12,10 +12,10 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
      * Constructor
      */
 
-    init: function(view) {
+    init: function (view) {
         var me = this;
     },
-    OnBeforeShow: function() {
+    OnBeforeShow: function () {
         /*
          * Solucion temporal para el reinicio de variables
          */
@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    afterRender: function () {
         // alert('Controlador cargado correctamente...')
         //this.setUser();
         this.setStoresFilters();
@@ -36,12 +36,13 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
 
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
     },
-    setStoresFilters: function() {
+    setStoresFilters: function () {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
         var cmbStatusIni = Ext.getCmp(prototype.id + '-CmbStatusIni');
         var cmbStatusFin = Ext.getCmp(prototype.id + '-CmbStatusFin');
         var cmbOrigen = Ext.getCmp(prototype.id + '-CmbOrigen');
         var cmbStatus = Ext.getCmp(prototype.id + '-CmbStatus');
+        var CmbType = Ext.getCmp(prototype.id + '-CmbType');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -104,9 +105,18 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             ]
         }));
 
+        CmbType.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "1", "name": "TKT"},
+                {"code": "2", "name": "CPN"}
+
+            ]
+        }));
+
 
     },
-    setStoresGrids: function() {
+    setStoresGrids: function () {
         var grid00 = Ext.getCmp(prototype.id + '-grid');
 
         var store00 = Ext.create('Ext.data.Store', {
@@ -128,13 +138,13 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
 
         Ext.getCmp(prototype.id + '-pagginator-01').setStore(store00);
     },
-    onPagingBeforeChange01: function(obj, page, opts) {
+    onPagingBeforeChange01: function (obj, page, opts) {
         obj.store.proxy.extraParams = this.beanTMP;
     },
-    onCmbSearchAfterRender: function(obj) {
+    onCmbSearchAfterRender: function (obj) {
         obj.setValue('');
     },
-    onCmbSearchChange: function(obj, newValue, oldValue, eOpts) {
+    onCmbSearchChange: function (obj, newValue, oldValue, eOpts) {
         // console.log(String(newValue))
         var txtCia = Ext.getCmp(prototype.id + '-txtCia');
         var txtFrmaSerie = Ext.getCmp(prototype.id + '-txtFrmaSerie');
@@ -169,7 +179,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
                 txtReference.setValue('');
                 break;
             case '3':
-             case '5':
+            case '5':
                 txtReference.hide();
                 txtCia.show();
                 txtFrmaSerie.show();
@@ -183,16 +193,16 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
                 break;
         }
     },
-    onCmbStatusAfterRender: function(obj) {
+    onCmbStatusAfterRender: function (obj) {
         obj.setValue('');
     },
-    onCmbStatusChange: function(obj, newValue, oldValue, eOpts) {
+    onCmbStatusChange: function (obj, newValue, oldValue, eOpts) {
         obj.setValue('');
     },
-    onCmbStatusOrigen: function(obj, newValue, oldValue, eOpts) {
-         obj.setValue('NO');
+    onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
+        obj.setValue('NO');
     },
-    onSearchClick: function(btn) {
+    onSearchClick: function (btn) {
         var me = this;
 
         var grid = Ext.getCmp(prototype.id + '-grid');
@@ -220,12 +230,12 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             }
 
             /*if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) !== '' &&
-                    Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
-                if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
-                    return;
-                }
-            }*/
+             Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
+             if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
+             Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
+             return;
+             }
+             }*/
         }
 
         me.beanTMP.IN_OPTION = comboBy;
@@ -245,26 +255,27 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         me.beanTMP.IN_LOTE = Ext.String.trim(Ext.getCmp(prototype.id + '-txtLote').getValue());
         me.beanTMP.IN_DATEFROM = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
         me.beanTMP.IN_DATETO = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
+        me.beanTMP.IN_TYPE = Ext.getCmp(prototype.id + '-CmbType').getValue();
         me.beanTMP.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
 
         store.loadPage(1, {
             params: me.beanTMP,
-            callback: function(records, operation, success) {
+            callback: function (records, operation, success) {
                 Ext.getCmp(prototype.id + '-pagination').enable();
             }
         });
 
     },
-    onSearchkey: function(f, e) {
+    onSearchkey: function (f, e) {
         if (e.getKey() == e.ENTER) {
             this.onSearchClick();
         }
 
     },
-    onchange: function(field, newValue, oldValue) {
+    onchange: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onPaginationChkChange: function(obj, newValue, oldValue, eOpts) {
+    onPaginationChkChange: function (obj, newValue, oldValue, eOpts) {
         Ext.getCmp(prototype.id + '-btn-search').fireEvent('click', {});
         if (!newValue) {
             Ext.getCmp(prototype.id + '-pagginator-01').disable();
@@ -274,11 +285,11 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             // Ext.getCmp(prototype.id + '-pagginator-legend').show();
         }
     },
-    onRendererToltip: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererToltip: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value
     },
-    onRendererColumnStatus: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
         switch (String(record.get('A3676STROB'))) {
             case 'PROCESSED BY THE ROBOT':
@@ -301,15 +312,15 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
                 color = '#FBBF48';
                 value = 'NOT MATCH';
                 break;
-             case 'NOT PROCESSED':
+            case 'NOT PROCESSED':
                 color = '#F5A9A9';
                 value = 'NOT PROCESSED';
                 break;
-             case 'NOT ACTION SABRE':
+            case 'NOT ACTION SABRE':
                 color = '#F3F781';
                 value = 'NOT ACTION SABRE';
                 break;
-             case 'NOT APPLICABLE RULE':
+            case 'NOT APPLICABLE RULE':
                 color = '#F5DA81';
                 value = 'NOT APPLICABLE RULE';
                 break;
@@ -321,7 +332,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value
     },
-    onRendererColumnOnTime: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (String(record.get('A3389SEMAF'))) {
             case 'ORANGE':
                 value = 'orange';
@@ -334,7 +345,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
     },
-    winDataEntry: function(action, rec) {
+    winDataEntry: function (action, rec) {
         action = action == null || action == undefined ? 'I' : action;
         rec = rec == null || rec == undefined ? {} : rec;
         var win = new Ext.Praxis.view.salesaudit.BsplinkRefundQueryRFND.DetailBsplinkRefundQueryRFND({
@@ -347,7 +358,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         });
         win.show();
     },
-    onExcelClick: function(obj) {
+    onExcelClick: function (obj) {
         if (Ext.Object.getSize(this.beanTMP) > 0) {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
@@ -356,7 +367,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'ok') {
                         global.getFile(prototype.url + '/getXLSXFLOWN?beanString=' + encodeURI(JSON.stringify(this.beanTMP)));
                     }
@@ -364,7 +375,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             });
         }
     },
-    onTxtClick: function(obj) {
+    onTxtClick: function (obj) {
         if (Ext.Object.getSize(this.beanTMP) > 0) {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
@@ -373,7 +384,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'ok') {
                         global.getFile(prototype.url + '/getFileTxt?beanString=' + encodeURI(JSON.stringify(this.beanTMP)));
                     }

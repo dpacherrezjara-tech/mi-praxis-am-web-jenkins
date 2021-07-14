@@ -109,7 +109,9 @@ Ext.define('Ext.Praxis.controller.sales.OracleControlAcknowledgment.OracleContro
                 ["FWNTNU", "Flown TNU"],
                 ["IXPTNU", "IXP TNU"],
                 ["FOB", "FOB"],
-                ["CONSORTIA", "CONSORTIA"]
+                ["CONSORTIA", "CONSORTIA"],
+                ["IXPEST", "IXP Estimated"],
+                ["IXCEST", "IXC Estimated"]
             ]
         }));
         cboModulo.setValue("");

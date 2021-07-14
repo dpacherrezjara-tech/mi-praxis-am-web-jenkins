@@ -30,6 +30,7 @@ public class A3676Filter extends A3676 {
     public String IN_LOTE;
     public String IN_DATEFROM;
     public String IN_DATETO;
+    public String IN_TYPE;
     public String pexcel;
 
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();

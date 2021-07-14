@@ -57,10 +57,17 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
                                 items: [
                                     {text: 'Nº Reporte', dataIndex: 'A3957NRRPT', width: 80, align: 'center', locked: false},
                                     {text: 'Id Cliente', dataIndex: 'A3957CDCLI', align: 'center', width: 80, locked: false},
-                                    {text: 'Nombre Cliente', dataIndex: 'A3953RSOCI', align: 'left', width: 250, locked: false},                                    
+                                    {text: 'Nombre Cliente', dataIndex: 'A3953RSOCI', align: 'left', width: 200, locked: false},                                    
+                                    {
+                                        text: 'Periodo',
+                                        columns: [
+                                            {text: 'Desde', dataIndex: 'A3957INIPR', width: 70, align: 'left'},
+                                            {text: 'Hasta', dataIndex: 'A3957FINPR', width: 70, align: 'left'}
+                                        ]
+                                    },
                                     {text: 'Mda.', dataIndex: 'A3957MDLOC', width: 50, align: 'center'},                                    
                                     {
-                                        text: 'Total', dataIndex: 'A3957TOT', width: 90, align: 'right',
+                                        text: 'Total', dataIndex: 'A3957TOT', width: 85, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             //summaryData.style = "background-color:red;";
@@ -71,7 +78,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
                                         }
                                     },
                                     {
-                                        text: 'Pagos', dataIndex: 'A3957TOTAP', width: 90, align: 'right',
+                                        text: 'Pagos', dataIndex: 'A3957TOTAP', width: 85, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             summaryData.style = "background-color:green;";
@@ -82,7 +89,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPayment', {
                                         }
                                     },
                                     {
-                                        text: 'Saldo', dataIndex: 'A3957SALDP', width: 90, align: 'right',
+                                        text: 'Saldo', dataIndex: 'A3957SALDP', width: 85, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             //summaryData.style = "background-color:red;";

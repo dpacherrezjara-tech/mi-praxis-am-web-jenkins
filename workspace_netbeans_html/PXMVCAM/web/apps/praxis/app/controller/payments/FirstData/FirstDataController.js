@@ -34,7 +34,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         prototype.url = CONTEXTPATH + '/FirstData';
         prototype.urlMaster = CONTEXTPATH + '/MasterController';
         this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
-        me.panelActual = '-panelGridData';
+        me.panelActual = '-panelGridByMonth';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.control({
@@ -134,6 +134,48 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         me.bean.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbFindByCurrency').getValue();
         me.bean.IN_MERCHNP = Ext.getCmp(prototype.id + '-txtMerch').getValue()
+        me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
+        me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
+        me.bean.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        me.bean.IN_NUMLIQUI = Ext.getCmp(prototype.id + '-txtSettlement').getValue();
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+    },
+    setFormatParameterForExcelGridDataMain: function() {
+        me.bean = {};
+        var grid = Ext.getCmp(prototype.id + '-gridDataMain').getStore().data.items[0]
+        
+        me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbFindByCurrency').getValue();
+        me.bean.IN_MERCHNP = Ext.getCmp(prototype.id + '-txtMerch').getValue()
+        me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
+        me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
+        me.bean.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        me.bean.IN_DATE = grid.get("TIPOFEC").substring(0,6);
+        me.bean.IN_NUMLIQUI = Ext.getCmp(prototype.id + '-txtSettlement').getValue();
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+    },
+    setFormatParameterForExcelBySettlement: function() {
+        me.bean = {};
+        var grid = Ext.getCmp(prototype.id + '-gridDataMainBySettlement').getStore().data.items[0]
+        
+        me.bean.IN_SCURRENCY = grid.get("SCURRENCY");
+        me.bean.IN_MERCHNP = grid.get("MERCHNP");
+        me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
+        me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
+        me.bean.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        me.bean.IN_DATE = grid.get("TIPOFEC");
+        me.bean.IN_NUMLIQUI = grid.get("NUMLIQUI");
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -157,9 +199,13 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             bean: me.bean
         };
     },
+    cmbfiltro_clickHandler: function(){
+        this.setFormatParameter();
+        this.setGridDataByMonth();
+    },
     btnSearch_click: function(obj, e) {
         this.setFormatParameter();
-        this.setGridData();
+        this.setGridDataByMonth();
     },
     setGridData: function() {
         win.lblUser_toolTip("Estructura: A2338");
@@ -171,7 +217,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
                 url: prototype.url + '/search'
             }, listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = searchParams;
+                    obj.proxy.extraParams = me.paramsDetail;
                 },
                 load: function(obj) {
                     var pag = Ext.getCmp(prototype.id + '-paggin');
@@ -186,6 +232,19 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
                         });
                     } else {
                         var data = obj.data.items[0].data;
+                        var IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+                        var titIN_DATE = '';
+
+                        if (IN_DATE === 'FPRESENT') {
+                            titIN_DATE = 'Presentation';
+                        } else if (IN_DATE === 'SDATE') {
+                            titIN_DATE = 'Sale';
+                        }
+
+                        Ext.getCmp(prototype.id + '-adgTitFecha2').setText(titIN_DATE);
+                        
+                        Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">' + titIN_DATE + ' Date: ' + data.strFormatDate + '</center>');
+                        
                     }
                     me.setWidthPie();
                 }
@@ -204,7 +263,8 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
 
             this.beanDet.IN_NUMLIQUI = rowData.data.NUMLIQUI;
             this.beanDet.IN_SCURRENCY = rowData.data.SCURRENCY;
-            this.beanDet.IN_FPRESENT = rowData.data.FPRESENT;
+            this.beanDet.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+            this.beanDet.IN_DATE = rowData.data.TIPOFEC;
             this.beanDet.IN_MERCHNP = rowData.data.MERCHNP;
 
             console.log('data')
@@ -248,9 +308,22 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
 
                             //Ext.getCmp(prototype.id + '-gridDataDet').setTitle('<center style="font-size:12px;">' + bean.strTitulo + '</center>');
                             //console.log(data);
+                            var IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+                            var titIN_DATE = '';
+
+                            if (IN_DATE === 'FPRESENT') {
+                                titIN_DATE = 'Presentation';
+                            } else if (IN_DATE === 'SDATE') {
+                                titIN_DATE = 'Sale';
+                            }
+
+                            Ext.getCmp(prototype.id + '-adgTitFecha3').setText(titIN_DATE);
 
                             var tit = Ext.getCmp(prototype.id + '-gridDataMainBySettlement');
-                            tit.setTitle('<center style="font-size:12px;">' + 'Settlement Number: ' + data.NUMLIQUI + ' - Currency: ' + data.SCURRENCY + ' - Merchant: ' + data.MERCHNP + '</center>');
+                            if (data.DESC_MERCHANT == undefined) {
+                                data.DESC_MERCHANT = "";
+                            }
+                            tit.setTitle('<center style="font-size:12px;">' + 'Settlement Number: ' + data.NUMLIQUI + ' - Currency: ' + data.SCURRENCY + ' - Merchant: ' + data.MERCHNP + ' ' + data.DESC_MERCHANT + '</center>');
                         }
                         me.setWidthPie();
                     }
@@ -261,6 +334,106 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             Ext.getCmp(prototype.id + '-gridDataMainBySettlement').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridDataMainBySettlement').setStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+        }
+    },
+    setGridDataByMonth: function() {
+        win.lblUser_toolTip("Estructura: A2338");
+        me.panelActual = '-panelGridByMonth';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByMonths'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin3');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var data = obj.data.items[0].data;
+                        var IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+                        var titIN_DATE = '';
+
+                        if (IN_DATE === 'FPRESENT') {
+                            titIN_DATE = 'Presentation';
+                        } else if (IN_DATE === 'SDATE') {
+                            titIN_DATE = 'Sale';
+                        }
+
+                        Ext.getCmp(prototype.id + '-adgTitFecha').setText(titIN_DATE);
+                    }
+                    me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataByMonth').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByMonth').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
+    },
+    onGridDataMain: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        if (rowData.data.QtySETTLEMENT !== '') {
+
+            this.beanDet.IN_DATE = rowData.data.TIPOFEC;
+            this.beanDet.strFormatDate = rowData.data.strFormatDate;
+            this.beanDet.IN_SCURRENCY = Ext.getCmp(prototype.id + '-cmbFindByCurrency').getValue();
+            this.beanDet.IN_MERCHNP = Ext.getCmp(prototype.id + '-txtMerch').getValue()
+            this.beanDet.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
+            this.beanDet.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
+            this.beanDet.IN_TIPOFEC = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+            this.beanDet.IN_NUMLIQUI = Ext.getCmp(prototype.id + '-txtSettlement').getValue();
+            
+            console.log(this.beanDet);
+            me.paramsDetail.beanString = JSON.stringify(this.beanDet);
+            this.setGridData();
+        } else {
+            global.Msg({
+                msg: 'Data not found.'
+            });
+        }
+    },
+    tarjeta_keyDownHandler: function(e, eOpts) {
+        if (eOpts.getKey() !== 9 && eOpts.getKey() !== 16) {
+            if (Ext.getCmp(prototype.id + '-txtCard1').getValue().length === 6) {
+                Ext.getCmp(prototype.id + '-txtCard2').focus();
+            }
+        }
+    },
+    buscarCard_keyDownHandler: function(e, eOpts, a, b, c) {
+        if (Ext.getCmp(prototype.id + '-txtCard1').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCard2').getValue() !== '') {
+            console.log(eOpts.getKey());
+            switch (eOpts.getKey()) {
+                case 13:
+                    if (Ext.getCmp(prototype.id + '-txtCard1').getValue().trim().length === 6
+                            && Ext.getCmp(prototype.id + '-txtCard2').getValue().trim().length === 4) {
+                        this.eventKey(e, eOpts);
+                    } else {
+                        global.Msg({
+                            msg: 'Credit Card Number must contain 10 digits.'
+                        });
+                        Ext.getCmp(prototype.id + '-txtCard1').setValue('');
+                        Ext.getCmp(prototype.id + '-txtCard2').setValue('');
+                    }
+            }
+        } else {
+            global.Msg({
+                msg: 'Credit Card Number must contain 10 digits.'
+            });
+            Ext.getCmp(prototype.id + '-txtCard1').setValue('');
+            Ext.getCmp(prototype.id + '-txtCard2').setValue('');
         }
     },
     setGridDataItinerary: function() {
@@ -783,9 +956,11 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
-        //Ext.getCmp(prototype.id + '-cmbTReg').setValue('');
-        Ext.getCmp(prototype.id + '-cmbFindByCurrency').setValue('');
+        Ext.getCmp(prototype.id + '-txtCard1').setValue('');
+        Ext.getCmp(prototype.id + '-txtCard2').setValue('');
+        Ext.getCmp(prototype.id + '-cmbFindByCurrency').setValue('ARS');
         Ext.getCmp(prototype.id + '-txtMerch').setValue('');
+        Ext.getCmp(prototype.id + '-txtSettlement').setValue('');
     },
     btnExcel_click: function(obj, e) {
 
@@ -807,12 +982,16 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
-                this.setFormatParameter();
+                this.setFormatParameterForExcelGridDataMain();
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
             case  '-panelGridDataBySettlement':
-                this.setFormatParameterBySettlement()
+                this.setFormatParameterForExcelBySettlement()
                 global.getFile(prototype.url + '/getXLSXBySettlement?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridByMonth':
+                this.setFormatParameter()
+                global.getFile(prototype.url + '/getXLSXByMonth?beanString=' + searchParams.beanString);
                 break;
         }
     },
@@ -857,7 +1036,7 @@ Ext.define('Ext.Praxis.controller.payments.FirstData.FirstDataController', {
             case '-panelGridDataBySettlement':
                 me.pagginActual = '-paggin2';
                 break;
-            case '-boxDetTran':
+            case '-panelGridByMonth':
                 me.pagginActual = '-paggin3';
                 break;
             case '-boxDetCard':

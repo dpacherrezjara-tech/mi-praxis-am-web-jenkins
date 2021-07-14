@@ -98,6 +98,7 @@ public class ChangeOfStatusFormController extends BaseController {
             filter.IN_LOTE = request.getParameter("IN_LOTE").toString().trim();
             filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").toString().trim();
             filter.IN_DATETO = request.getParameter("IN_DATETO").toString().trim();
+            filter.IN_TYPE = request.getParameter("IN_TYPE").toString().trim();
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;

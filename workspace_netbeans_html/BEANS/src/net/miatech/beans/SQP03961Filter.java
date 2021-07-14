@@ -13,5 +13,7 @@ public class SQP03961Filter extends A3933  {
     public String VP_A3933FPROC1 = "";
     public String VP_A3933FPROC2 = "";
     public String VP_A3933STAT = "";
+    public Integer QTY_CADUCO = 0;
+    public Double TOT_CADUCO = 0.0;    
     public Pagination page = new Pagination();
 }

@@ -19,6 +19,8 @@ public class IMF140Filter extends IMF140{
     public String IN_TREG = "";
     public String strImagen1 = "";
     public String strImagen2 = "";
+    public String LABEL_MXN = "";
+    public String LABEL_USD = "";
     public String AVRG_VCPMXN_PORCENTAJE = "" ;
     public double AVRG_VCPNMXN = 0.00;
     

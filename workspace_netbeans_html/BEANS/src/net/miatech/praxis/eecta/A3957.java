@@ -19,6 +19,7 @@ public class A3957 {
     public String A3957INDPR = "";
     public String A3957INIPR = "";
     public String A3957FINPR = "";
+    public String A3957FPERI = "";
     public String A3957MDLOC = "";
     public double A3957FARE = 0.00;
     public double A3957IVA  = 0.00;

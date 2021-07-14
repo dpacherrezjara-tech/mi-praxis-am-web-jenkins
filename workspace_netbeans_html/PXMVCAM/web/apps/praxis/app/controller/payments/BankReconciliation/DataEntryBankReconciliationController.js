@@ -242,6 +242,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.DataEntryBankRecon
         this.setValue('de-cmbSCOUNTRY', meDe.bean.SCOUNTRY);
         this.setValue('de-cmbSCARCOD', meDe.bean.SCARCOD);
         this.setValue('de-txtSAUTHOC', meDe.bean.SAUTHOC);
+        this.setValue('de-txtPNR', meDe.bean.SPNR);
         this.setValue('de-txtCard1', meDe.bean.IN_CARDN1);
         this.setValue('de-txtCard2', meDe.bean.IN_CARDN2);
         this.setValue('de-txtSVFOP', Ext.util.Format.number(meDe.bean.SVFOP, '0,000.00'));
@@ -392,6 +393,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.DataEntryBankRecon
         bean.SCOUNTRY = String(this.getValue("de-cmbSCOUNTRY"));
         bean.SCARCOD = String(this.getValue("de-cmbSCARCOD"));
         bean.SAUTHOC = this.getValue("de-txtSAUTHOC").trim();
+        bean.SPNR = this.getValue("de-txtPNR").trim();
         bean.SCARDN = meDe.bean.SCARDN;
         bean.IN_CARDN1 = this.getValue("de-txtCard1").trim();
         bean.IN_CARDN2 = this.getValue("de-txtCard2").trim();
@@ -447,6 +449,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.DataEntryBankRecon
         this.setValue('de-cmbSCOUNTRY', '');
         this.setValue('de-cmbSCARCOD', '');
         this.setValue('de-txtSAUTHOC', '');
+        this.setValue('de-txtPNR', '');
         this.setValue('de-txtCard1', '');
         this.setValue('de-txtCard2', '');
         this.setValue('de-txtSVFOP', '0');
@@ -695,6 +698,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.DataEntryBankRecon
         Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY').disable(true);
         Ext.getCmp(prototype.id + '-de-cmbSCARCOD').disable(true);
         Ext.getCmp(prototype.id + '-de-txtSAUTHOC').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-de-txtPNR').setReadOnly(true);
         Ext.getCmp(prototype.id + '-de-txtCard1').setReadOnly(true);
         Ext.getCmp(prototype.id + '-de-txtCard2').setReadOnly(true);
         Ext.getCmp(prototype.id + '-de-txtSVFOP').setReadOnly(true);
@@ -726,6 +730,7 @@ Ext.define('Ext.Praxis.controller.payments.BankReconciliation.DataEntryBankRecon
 //        Ext.getCmp(prototype.id + '-de-cmbSCOUNTRY').disable(false);
 //        Ext.getCmp(prototype.id + '-de-cmbSCARCOD').disable(false);
         Ext.getCmp(prototype.id + '-de-txtSAUTHOC').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-de-txtPNR').setReadOnly(false);
         Ext.getCmp(prototype.id + '-de-txtCard1').setReadOnly(false);
         Ext.getCmp(prototype.id + '-de-txtCard2').setReadOnly(false);
         Ext.getCmp(prototype.id + '-de-txtSVFOP').setReadOnly(false);

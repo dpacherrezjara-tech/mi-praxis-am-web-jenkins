@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingPasseInvoicesForm.AccountingPass
                                         },
                                         {
                                             xtype: 'panel',
-                                            height: 650,
+                                            height: 1100,
                                             //width: 1400,
                                             layout: 'fit',
                                             items: [

@@ -56,10 +56,16 @@ Ext.define('Ext.Praxis.view.eecta.SalesListForm.InfoGrid', {
                             ],
                             columns: {
                                 items: [
-                                    {text: 'Nbr Report', dataIndex: 'A3957NRRPT', width: 85, align: 'left'},
-                                    {text: 'Client Id', dataIndex: 'A3957CDCLI', align: 'left', width: 85},
-                                    {text: 'Client', dataIndex: 'A3953RSOCI', align: 'left', flex: 1},
-                                    //{text: 'Contrato', dataIndex: 'A3957CONTR', width: 60, align: 'left'},
+                                    {text: 'Nbr Report', dataIndex: 'A3957NRRPT', width: 80, align: 'center'},
+                                    {text: 'Client Id', dataIndex: 'A3957CDCLI', align: 'center', width: 80},
+                                    {text: 'Client', dataIndex: 'A3953RSOCI', align: 'left', flex: 1},                                    
+                                    {
+                                        text: 'Periodo',
+                                        columns: [
+                                            {text: 'Desde', dataIndex: 'A3957INIPR', width: 70, align: 'center'},
+                                            {text: 'Hasta', dataIndex: 'A3957FINPR', width: 70, align: 'center'}
+                                        ]
+                                    },
                                     {text: 'Curr.', dataIndex: 'A3957MDLOC', width: 50, align: 'center'},
                                     {text: 'Fare', dataIndex: 'A3957FARE', width: 90, align: 'right',
                                         summaryType: 'sum',

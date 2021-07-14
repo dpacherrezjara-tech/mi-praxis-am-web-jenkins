@@ -128,12 +128,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
                     width: 640,
                     items: [
                         {boxLabel: '<b style="color:#148D28;">Flown Real</b>', inputValue: 'F', name: 'rbgType', checked: true},
-                        {boxLabel: '<b style="color:#148D28;">Itinerary</b>', inputValue: 'I', name: 'rbgType'},
+                        {boxLabel: '<b style="color:#148D28;">Seats</b>', inputValue: 'I', name: 'rbgType'},
                         {boxLabel: '<b style="color:#148D28;">Display Forecast</b>', inputValue: 'FC', name: 'rbgType'},
                         //{xtype: 'tbspacer', width: 5},
                         {boxLabel: '<b style="color:#148D28;">Revenue by Regions</b>', inputValue: 'AZ', name: 'rbgType'},
                         /*{boxLabel: '<b style="color:#148D28;">Forecast Percentage</b>', inputValue: 'FP', name: 'rbgType'},
-                        {boxLabel: '<b style="color:#148D28;">Forecast Zones</b>', inputValue: 'FZ', name: 'rbgType'}*/
+                         {boxLabel: '<b style="color:#148D28;">Forecast Zones</b>', inputValue: 'FZ', name: 'rbgType'}*/
                     ],
                     listeners: {
                         change: 'rbChangeType'
@@ -178,20 +178,20 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
             },
             items: [
                 /*{
-                    xtype: 'textfield',
-                    fieldLabel: 'Merchant Number:',
-                    id: prototype.id + '-txtMerchant2',
-                    allowBlank: true,
-//                    maskRe: /[0-9]/,
-                    enforceMaxLength: true,
-                    maxLength: 20,
-                    labelWidth: 150,
-                    width: 300,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keypress: 'eventKey'
-                    }
-                },*/
+                 xtype: 'textfield',
+                 fieldLabel: 'Merchant Number:',
+                 id: prototype.id + '-txtMerchant2',
+                 allowBlank: true,
+                 //                    maskRe: /[0-9]/,
+                 enforceMaxLength: true,
+                 maxLength: 20,
+                 labelWidth: 150,
+                 width: 300,
+                 enableKeyEvents: true,
+                 listeners: {
+                 keypress: 'eventKey'
+                 }
+                 },*/
                 {xtype: 'tbspacer', width: 140},
                 {
                     xtype: 'radiogroup',
@@ -203,14 +203,26 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
                     hidden: true,
                     items: [
                         {boxLabel: '<b style="color:#148D28;">Forecast</b>', inputValue: 'FC', name: 'rbgTypeForecast', checked: true},
-                        {boxLabel: '<b style="color:#148D28;">Forecast Percentage</b>', inputValue: 'FP', name: 'rbgTypeForecast', width: 150},
+                        {boxLabel: '<b style="color:#148D28;">Occupation factor</b>', inputValue: 'FP', name: 'rbgTypeForecast', width: 150},
                         {boxLabel: '<b style="color:#148D28;">Forecast Zones</b>', inputValue: 'FZ', name: 'rbgTypeForecast', width: 150},
                     ],
                     listeners: {
                         change: 'onChangeRadioForecast'
                     }
-                }
+                },
             ]
+        },
+        {
+            xtype: 'checkboxfield',
+            id: prototype.id + '-chkMarketByLevel',
+            width: 130,
+            hidden: true,
+            margin: '-6px 0px 0px 0px',
+            boxLabel: 'Market by level',
+            inputValue: '1',
+            listeners: {
+                change: 'btnSearch_MarketByLevel'
+            }
         },
         /*{
          xtype: 'form',

@@ -155,6 +155,7 @@ public class CreditCardDAO {
             cstmt = cnx.prepareCall(SQLCLL01);
 
             cstmt.setString(1, option);
+            //cstmt.setString(1, filter.option.trim());
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
             cstmt.setString(3, filter.COUNTRY.trim());
             cstmt.setString(4, filter.CURRENC.trim());
