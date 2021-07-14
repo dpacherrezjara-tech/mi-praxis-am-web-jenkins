@@ -303,7 +303,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Country', dataIndex: 'SCURRENCY', width: 80,
+                                                        text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return value;
@@ -820,6 +820,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
+                                                        text: 'TICKET', dataIndex: 'TICKET', width: 100
+                                                    },
+                                                    {
                                                         text: 'SRC', dataIndex: 'A1716FUENT', width: 40
                                                     },
                                                     {
@@ -851,7 +854,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         ]
                                                     },
                                                     {
-                                                        text: 'ACCOUNT NUMBER', dataIndex: 'A1716CUENT', /*width: 277*/flex: 1,
+                                                        text: 'ACCOUNT NUMBER', dataIndex: 'A1716CUENT', width: 277, /*flex: 1,*/
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = 'font-family:"Courier New";';
                                                             return value;
@@ -929,9 +932,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'CLIENT', dataIndex: 'A1716COPE', width: 80
                                                     },
-                                                    {
+                                                    /*{
                                                         text: 'PROVIDER', dataIndex: 'A1716PROV', width: 80
-                                                    },
+                                                    },*/
                                                     {
                                                         text: 'JOURNAL<br>ENTRY', dataIndex: 'A1716IDCON', width: 80
                                                     },
