@@ -180,19 +180,19 @@ Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAu
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtNARCH',
-                                            fieldLabel: 'File Name',
-                                            width: 350,
-                                            labelWidth: 100,
-                                            maxLength: 100,
-                                            enforceMaxLength: 100,
-                                            listeners: {
-                                                specialkey: 'onSearchkey'
-                                            }
                                         }
+//                                        {
+//                                            xtype: 'textfield',
+//                                            id: prototype.id + '-txtNARCH',
+//                                            fieldLabel: 'File Name',
+//                                            width: 350,
+//                                            labelWidth: 100,
+//                                            maxLength: 100,
+//                                            enforceMaxLength: 100,
+//                                            listeners: {
+//                                                specialkey: 'onSearchkey'
+//                                            }
+//                                        }
 //                                        {
 //                                            xtype: 'textfield',
 //                                            id: prototype.id + '-txtPraxisID',

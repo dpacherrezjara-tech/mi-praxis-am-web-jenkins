@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
         me.beanTMP.IN_OPTION = comboBy;
         me.beanTMP.IN_DATEFROM = IN_DATEFROM;
         me.beanTMP.IN_DATETO = IN_DATETO;
-        me.beanTMP.IN_NARCH = IN_NARCH;
+        //me.beanTMP.IN_NARCH = IN_NARCH;
         //me.beanTMP.IN_PRAXID = IN_PRAXID;
         me.beanTMP.IN_MODULO = CmbModule;
         me.beanTMP.IN_TIPOM = CmbType;
