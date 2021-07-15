@@ -161,13 +161,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
         var input  = Ext.getCmp(prototype.id + '-cmbInput').getValue;
         var banco  = Ext.getCmp(prototype.id + '-cmbBankCode').getValue;
         
-//        if(banco === 'EL' || banco=== 'US' || banco==='AX'){
-//            me.uploadCSV();
-//        }else if(banco === 'STB' && input === 'C'){
-//            me.uploadFile();
-//        }else{
-            me.onFileLoad();
-//        }
+        me.onFileLoad();
     },
     
     onFileLoad: function() {
@@ -203,11 +197,10 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
                         }else{
                             global.Msg({msg: 'Clarification successfully loaded.'});
                         }
-//                        me.setGridData(banco);
+                        me.setGridData(banco);
 
                     }else{
                         global.Msg({msg: msjUpload});
-                        me.setGridData(banco);
                     }
                 } else if(success){
                     var msjResult = res.msjResult;
@@ -254,10 +247,6 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
         
     },
     // </editor-fold>
-
-
-    
-    
 
     btnBack_click: function(obj, e) {
 
