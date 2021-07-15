@@ -38,5 +38,22 @@ public class ClarificationLoadLogic {
         return ClarificationLoadDAO.loadPX413SQP03598(lstExcel);
     }
     
-   
+    // ------------------------ Upload ------------------------
+    
+    public String loadPX413SQP01999(List lstExcel, String strBanco, String strHora) throws SQLException, Exception {
+        return ClarificationLoadDAO.loadPX413SQP01999(lstExcel, strBanco, strHora);
+    }
+    
+    public String loadPX413PRO10577(String strBanco, String strHora) throws SQLException, Exception {
+        return ClarificationLoadDAO.loadPX413PRO10577(strBanco, strHora);
+    }
+    
+    public String loadPX413SQP01977(List lstExcel, String strBanco, String strHora) throws SQLException, Exception {
+        return ClarificationLoadDAO.loadPX413SQP01977(lstExcel, strBanco, strHora);
+    }
+    
+    // ------------------------ Search ------------------------
+    public List<A1686Filter> loadPX264SQP00665(A1686Filter filter, String consulta) throws SQLException, Exception {
+        return ClarificationLoadDAO.loadPX264SQP00665(filter, consulta);
+    }
 }
