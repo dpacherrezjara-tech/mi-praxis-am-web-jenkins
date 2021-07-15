@@ -18,6 +18,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
     fileName: '',
     me: '',
     searchParams: {},
+    searchParamsExcel: {},
     paramsDetail: {},
     dataObtain: {},
     init: function(view) {
@@ -78,32 +79,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
 //        // this.setStoreData();
 ////           this.btnSearch_click();
 //    },
-
-
-    eventKey: function(e, eOpts) {
-        if (eOpts.getKey() === 13) {
-            this.btnSearch_click();
-        }
-    },
-    onUpperValue: function(field, newValue, oldValue) {
-        field.setValue(newValue.toUpperCase());
-    },
-    onChangeCmbType: function(obj, value) {
-
-        Ext.getCmp(prototype.id + '-panelFilter1').hide();
-        Ext.getCmp(prototype.id + '-panelFilter2').hide();
-        Ext.getCmp(prototype.id + '-panelFilter3').hide();
-        Ext.getCmp(prototype.id + '-panelFilter4').hide();
-        Ext.getCmp(prototype.id + '-panelFilter5').hide();
-        Ext.getCmp(prototype.id + '-panelFilter6').hide();
-        Ext.getCmp(prototype.id + '-panelFilter7').hide(); 
-        Ext.getCmp(prototype.id + '-panelFilter8').hide();
-
-        if (value !== '') {
-            Ext.getCmp(prototype.id + '-panelFilter' + value).show();
-        }
-
-    },
+   
     obtainData: function() {
         
         var cmbBankCode = Ext.getCmp(prototype.id + '-cmbBankCode');
@@ -112,14 +88,15 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
             fields: ['code', 'name'],
             data: [
                 ["BX", "Bananex"],
-                ["AX", "American Express MEX"],
+                ["AX", "American Express MEX"],  //uploadCSV
                 ["ST", "Santander"],
                 ["PP", "PayPal"],
-                ["US", "American Express USA"],
-                ["EL", "Elavon"]
+                ["US", "American Express USA"],  //uploadCSV
+                ["EL", "Elavon"],                //uploadCSV
+                ["STB", "Santander BSP"]            //uploadFile
             ]
         }));
-        cmbBankCode.setValue(" ");
+        cmbBankCode.setValue("BX");
         
         var cmbInput = Ext.getCmp(prototype.id + '-cmbInput');
         cmbInput.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -130,88 +107,90 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
                 ["N", "Bank Notice / Chargeback"]                   
             ]
         }));
-        cmbInput.setValue(" ");
+        cmbInput.setValue("C");
         
     },
     
+    onLoadClick: function() {
         
-    btnLoad_click: function(cmp, value) {
-        
-        console.log('load1');
         var input  = Ext.getCmp(prototype.id + '-cmbInput').getValue;
         var banco  = Ext.getCmp(prototype.id + '-cmbBankCode').getValue;
         var msjPregunta = '', msjError = '';
         
         if(input === 'N'){
             msjPregunta = 'Sure to load *Bank Notice / Chargeback* file?';
-            
             if(banco !== 'BX'){
-                    msjError = 'Under Construction';
+                msjError = 'Under Construction';
             }
         }else{
-                msjPregunta = 'Sure to load *Clarification* file?';
+            msjPregunta = 'Sure to load *Clarification* file?';
         }
                 
         if(msjError === ''){
-                Ext.MessageBox.show({
-                    title: 'Icon Support',
-                    msg:  msjPregunta,
-                    buttons: Ext.MessageBox.OKCANCEL,
-                    icon: Ext.MessageBox.WARNING,
-                    fn: function(btn){
-                        if(btn === 'ok'){
-                            this.file = cmp.fileInputEl.dom.files[0];
-                            me.onFileSelected(this.file);
-                        } else {
-                            return;
-                        }
+            Ext.MessageBox.show({
+                title: 'Icon Support',
+                msg:  msjPregunta,
+                buttons: Ext.MessageBox.OKCANCEL,
+                icon: Ext.MessageBox.WARNING,
+                fn: function(btn){
+                    if(btn === 'ok'){
+                       me.onSelectMetod();
                     }
-                });
-        }       
-                
-                
-                
-                
+                }
+            });
+        }
     },
     
-    onFileSelected: function(file) {
-        alert('onFileSelected');
-
-        console.log(file);
+    onSelectMetod: function() {
+        
         var input  = Ext.getCmp(prototype.id + '-cmbInput').getValue;
         var banco  = Ext.getCmp(prototype.id + '-cmbBankCode').getValue;
         
-        if(banco === 'EL' || banco=== 'US' || banco==='AX'){
-            me.uploadCSV();
-        }else if(banco === 'STB' && input === 'C'){
-            
-        }else{
-            
+//        if(banco === 'EL' || banco=== 'US' || banco==='AX'){
+//            me.uploadCSV();
+//        }else if(banco === 'STB' && input === 'C'){
+//            me.uploadFile();
+//        }else{
+            me.onFileLoad();
+//        }
+    },
+    
+    onFileLoad: function() {
+        
+        var me = this;
+        var banco = Ext.getCmp(prototype.id + '-cmbBankCode').getValue();
+        var input = Ext.getCmp(prototype.id + '-cmbInput').getValue();
+        var file = Ext.getCmp(prototype.id + '-file').getValue();
+        
+        if (file === '') {
+            Ext.MessageBox.alert('PRAXIS', "::: Select only one file. Please :::", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.id + '-File').focus();", 100);
+            });
+            return;
         }
         
-        
-    },
-    uploadCSV: function() {
-        
-        Ext.Ajax.request({
-            url: prototype.url + '/searchDetailComment',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getBody().mask('Loading...'),
-            params: {beanString: this.searchParams, dw_excel: false},
-            success: function(response, options) {
-                Ext.getBody().unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-                var lstData = res.data;
-                var storeData = Ext.create('Ext.data.Store', {
-                    fields: ['data'],
-                    data: lstData,
-                    autoLoad: true
-                });
-                Ext.getCmp(prototype.id + '-gridDataDetailTCommnetBsplink').bindStore(storeData);
+        var form = Ext.getCmp(prototype.id + '-form-01').getForm();
+        form.submit({
+            url: prototype.url + '/setData',
+            waitMsg: 'Uploading your sure to upload the file...',
+//            params: {beanString:JSON.stringify(me.searchParams)},
+            params: {fileName: file, banco: banco, input: input},
+            success: function (fp, o) {
+                var res = Ext.decode(o.response.responseText);
+                console.log(res);
+                var mensaje = res.msj;
+//                if (res.success) {
+//                    
+//                } else {
+                    global.Msg({msg: mensaje});
+//                }
+                Ext.getCmp(prototype.id+'-btn-upload').enable(true);
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
             }
         });
-        
         
     },
     setFormatParameter: function() {
@@ -276,32 +255,8 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
     // </editor-fold>
 
 
-    validateFields: function() {
-        var msj = '';
-        var bean = searchParams.bean;
-
-        return msj;
-    },
-    btnAdd_click: function() {
-        this.winDataEntry('I');
-    },
-    onEditClick: function(grid, rowIndex, colIndex) {
-        var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry('U', rec);
-    },
-    winDataEntry: function(action, rec) {
-        action = action === null || action === undefined ? 'U' : action;
-        rec = rec === null || rec === undefined ? {} : rec;       
-        
-        Ext.create('Ext.Praxis.view.payments.BanksCatalogForm.DataEntry', {
-            id: prototype.id + '-dataEntry',
-            params: {
-                action: action,
-                rec: rec,
-                lstCountry:me.lstCountry
-            }
-        }).show();
-    },
+    
+    
 
     btnBack_click: function(obj, e) {
 
@@ -364,31 +319,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
         }
 
     },
-    onDownloadFile: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
-        me.paramsDetail.beanString = JSON.stringify(rowData.data);
-        me.fileName = rowData.data.A2536NAMEF;
-        Ext.Ajax.request({
-            url: prototype.url + '/download',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
-            params: me.paramsDetail,
-            success: function(response, options) {
-                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-
-                var resultByte = res.bytes;
-                var bytes = new Uint8Array(resultByte); // pass your byte response to this constructor
-                var blob = new Blob([bytes], {type: "application/png"});// change resultByte to bytes
-
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = me.fileName;
-                link.click();
-            }
-        });
-
-    },
+    
     btnFilter_click: function(obj) {
         console.log('btnFilter_click');
         var option = Ext.getCmp(prototype.id + '-contentFilter');
