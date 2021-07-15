@@ -1,7 +1,7 @@
 
 prototype.id = 'AccountingControlAuditForm';
 prototype.url = CONTEXTPATH + '/AccountingControlAudit';
-prototype.widthWindow = 1200;
+prototype.widthWindow = 1300;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAuditForm', {
@@ -377,7 +377,23 @@ Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAu
                                         }
                                     },                                    
                                     //{text: 'File </br> Name', dataIndex: 'A4022NARCH', align: 'left', width: 180,renderer: 'onRendererColumnAttr'},
-                                    {text: 'Status', dataIndex: 'A4022STAT', width: 150,renderer: 'onRendererColumnStatus'}                                    
+                                    {text: 'Status', dataIndex: 'A4022STAT', width: 150,renderer: 'onRendererColumnStatus'},
+                                    {
+                                        text: 'Datos de Envio',
+                                        columns: [
+                                            {text: 'Estado', dataIndex: 'A4022STSAF', width: 80, align: 'left'},
+                                            {text: 'Usuario', dataIndex: 'A4022USAF', width: 70, align: 'center'},
+                                            {text: 'Fecha', dataIndex: 'A4022FISAF', width: 70, align: 'center'}
+                                        ]
+                                    },
+                                    {
+                                        text: 'Carga a BD',
+                                        columns: [
+                                            {text: 'Estado', dataIndex: 'A4022STSDB', width: 80, align: 'left'},
+                                            {text: 'Fecha', dataIndex: 'A4022FISDB', width: 70, align: 'center'},
+                                            {text: 'Hora', dataIndex: 'A4022HISDB', width: 50, align: 'center'}
+                                        ]
+                                    }
                                 ],
                                 defaults: {
                                     sortable: true,

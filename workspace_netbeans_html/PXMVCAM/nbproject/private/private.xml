@@ -115,5 +115,13 @@
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/Log4j.properties</file>
         </group>
+        <group>
+            <file>file:/D:/repositories/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/discharges/NoShowForm/Filters.js</file>
+            <file>file:/D:/repositories/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/discharges/NoShow/NoShowFormLoadInputController.js</file>
+            <file>file:/D:/repositories/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/ControlFiguresController.java</file>
+            <file>file:/D:/repositories/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/discharges/NoShowForm/NoShowFormLoadInput.js</file>
+            <file>file:/D:/repositories/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/discharges/NoShowController.java</file>
+            <file>file:/D:/repositories/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/discharges/NoShow/NoShowFormController.js</file>
+        </group>
     </open-files>
 </project-private>
