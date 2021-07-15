@@ -18,6 +18,14 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationARC.ConciliationARCControlle
         prototype.id = 'ConciliationARCForm';
         prototype.url = CONTEXTPATH + '/ConciliationARC';
         me = this;
+        console.log('PERMX-ACCESS');
+        console.log(accessSelect);        
+        if(accessSelect.PERMX==='N'){
+            Ext.getCmp(prototype.id+'-btnExcel').hide();
+	}else{
+            Ext.getCmp(prototype.id+'-btnExcel').show();
+        }
+        
         this.control({
             // -------------------Eventos Genericos --------------------
             '#ConciliationARCForm-xpanel': {
