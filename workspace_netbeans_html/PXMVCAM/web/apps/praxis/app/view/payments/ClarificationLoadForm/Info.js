@@ -88,7 +88,7 @@ Ext.define('Ext.Praxis.view.payments.ClarificationLoadForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Creator', dataIndex: 'RATECON', width: 110, align: 'Center'},
+                                                    {text: 'Creator', dataIndex: 'USCR', width: 110, align: 'Center'},
                                                 ]
                                             }
                                             ,
@@ -133,6 +133,7 @@ Ext.define('Ext.Praxis.view.payments.ClarificationLoadForm.Info', {
                                         pack: 'center'
                                     },
                                     border: true,
+                                    hidden: true,
                                     width: 1300,
                                     height: 25,
                                     bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
