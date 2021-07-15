@@ -529,6 +529,8 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
     },
     setGridDataMarketSecondLevel: function() {
         //Ext.getCmp(prototype.id + '-panelPNR').setVisible(false);
+        
+        var test = {};
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -551,14 +553,16 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                             var international = new Array();
 
                             lstInternational.forEach(function callback(currentValue, index, array) {
-                                international.push([currentValue.ZONA, currentValue.QTYPAX, currentValue.VCPNUSD, currentValue.VCPNMXN, currentValue.VPROUSD, currentValue.VPROMXN]);
+                                international.push([currentValue.ZONA, currentValue.QTYPAX, currentValue.VCPNUSD, currentValue.VCPNMXN, currentValue.VPROUSD, currentValue.VPROMXN, currentValue.totQTYPAX, currentValue.totVCPNUSD, currentValue.totVCPNMXN, currentValue.totVPROUSD, currentValue.totVPROMXN]);
                             });
                             var store = Ext.create('Ext.data.ArrayStore', {
-                                storeId: 'international', autoLoad: true, data: international, fields: ['ZONA', 'QTYPAX', 'VCPNUSD', 'VCPNMXN', 'VPROUSD', 'VPROMXN']
+                                storeId: 'international', autoLoad: true, data: international, fields: ['ZONA', 'QTYPAX', 'VCPNUSD', 'VCPNMXN', 'VPROUSD', 'VPROMXN', 'totQTYPAX', 'totVCPNUSD', 'totVCPNMXN', 'totVPROUSD', 'totVPROMXN']
                             });
+                            test = store;
+                            console.log(store);
                             Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').bindStore(store);
-                            Ext.getCmp(prototype.id + '-displaySAChart06').bindStore(store);
                             //Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').setStore(store);
+                            Ext.getCmp(prototype.id + '-displaySAChart06').bindStore(store);                            
 
                         } else {
                             global.Msg({
@@ -577,7 +581,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').setTitle('<center style="font-size:12px;">' + 'International Market' + ' </center>');
         Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displaySAChart05').bindStore(storeGridDatas);
-        //Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').setStore(storeGridDatas);
         //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     onGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
