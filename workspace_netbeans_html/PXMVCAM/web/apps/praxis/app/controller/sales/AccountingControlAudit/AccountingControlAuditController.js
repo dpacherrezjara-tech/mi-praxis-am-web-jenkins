@@ -204,10 +204,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
     },
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
-        switch (String(record.get('A4014STAT'))) {            
+        switch (String(record.get('A4022STAT'))) {            
             case 'ACTIVE':
                 color = '#81F7BE';
-                value = 'ACTIVE';
+                value = 'ACTIVE';                
                 break;            
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
