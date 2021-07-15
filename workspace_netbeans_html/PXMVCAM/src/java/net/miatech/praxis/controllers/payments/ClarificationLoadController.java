@@ -92,17 +92,17 @@ public class ClarificationLoadController extends BaseController {
             if(banco.equals("EL") || banco.equals("US") || banco.equals("AX")){
 
                 byte[] fileData2 = excelfile.getBytes();
-//                msjResult = uploadCSV(fileData2, banco);
+                msjResult = uploadCSV(fileData2, banco);
 
             }else if(banco.equals("STB") && input.equals("C")){
 
                 byte[] dataFile = excelfile.getBytes();
-//                msjResult = uploadFile(dataFile, banco);
+                msjResult = uploadFile(dataFile, banco);
 
             }else{
-                // -----------------------------------------------------------
-                // ---- CONVERTIR EXCEL a version 97-2003(*xls) --------------
-                // -----------------------------------------------------------
+                // ------------------------------------------------------------------------
+                // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
+                // ------------------------------------------------------------------------
                 
                 msjUpload = uploadPrev(excelfile, banco, input);
                 map.put("successUp", true);
@@ -309,6 +309,7 @@ public class ClarificationLoadController extends BaseController {
                         //Avisos
                         msjError = "Under Construction";
                     }else{
+                        msjError = "Error. File Load";
                         // <editor-fold defaultstate="collapsed" desc="SANTANDEEEER - Aclaraciones()">
                         //</editor-fold>
                     }
@@ -621,7 +622,7 @@ public class ClarificationLoadController extends BaseController {
             if(!msjError.equals("")){
                 msj = msjError;
             }else{
-//                msj = upload(listaExcelString, banco, input);
+                msj = upload(listaExcelString, banco, input);
             }
         
         } catch (Exception e) {
