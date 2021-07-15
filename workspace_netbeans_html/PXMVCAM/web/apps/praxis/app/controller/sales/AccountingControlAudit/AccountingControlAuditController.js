@@ -138,7 +138,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
         //var CmbPoliza = Ext.getCmp(prototype.id + '-CmbPoliza').getValue();
         //var CmbTypePoliza = Ext.getCmp(prototype.id + '-CmbTypePoliza').getValue();
         var CmbStatus = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
-        var IN_NARCH = Ext.getCmp(prototype.id + '-txtNARCH').getValue();
+        //var IN_NARCH = Ext.getCmp(prototype.id + '-txtNARCH').getValue();
         //var IN_PRAXID = Ext.getCmp(prototype.id + '-txtPraxisID').getValue();
         if (comboBy === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select filter type');
