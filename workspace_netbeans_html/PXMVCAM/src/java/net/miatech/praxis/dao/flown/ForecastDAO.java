@@ -1282,11 +1282,11 @@ public class ForecastDAO {
                 bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
                 bean.QTYPAX = rst.getInt("QTYPAX");
                 
-                /*DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
+                DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
                 DVCPNUSD = DVCPNUSD + rst.getDouble("VCPNUSD");
                 DVPROUSD = DVPROUSD + rst.getDouble("VPROUSD");
                 DVPROMXN = DVPROMXN + rst.getDouble("VPROMXN");
-                DQTYPAX = DQTYPAX + rst.getInt("QTYPAX");*/
+                DQTYPAX = DQTYPAX + rst.getInt("QTYPAX");
 
                 lstDomestic.add(bean);
             }
@@ -1303,11 +1303,11 @@ public class ForecastDAO {
                     beanI.VPROMXN = rst.getDouble("VPROMXN");
                     beanI.QTYPAX = rst.getInt("QTYPAX");
 
-                    /*IVCPNMXN = IVCPNMXN + rst.getDouble("VCPNMXN");
+                    IVCPNMXN = IVCPNMXN + rst.getDouble("VCPNMXN");
                     IVCPNUSD = IVCPNUSD + rst.getDouble("VCPNUSD");
                     IVPROUSD = IVPROUSD + rst.getDouble("VPROUSD");
                     IVPROMXN = IVPROMXN + rst.getDouble("VPROMXN");
-                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAX");*/
+                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAX");
 
                     lstInternational.add(beanI);
                 }
@@ -1336,21 +1336,21 @@ public class ForecastDAO {
             pasarGarbageCollector();
         }
 
-        /*for (int i = 0; i < lstDomestic.size(); i++) {
+        for (int i = 0; i < lstDomestic.size(); i++) {
             lstDomestic.get(i).totVCPNMXN = DVCPNMXN;
             lstDomestic.get(i).totVCPNUSD = DVCPNUSD;
-            lstDomestic.get(i).totVPROUSD = DVPROUSD;
-            lstDomestic.get(i).totVPROMXN = DVPROMXN;
+            lstDomestic.get(i).totVPROUSD = DVCPNUSD/DQTYPAX;
+            lstDomestic.get(i).totVPROMXN = DVCPNMXN/DQTYPAX;
             lstDomestic.get(i).totQTYPAX = DQTYPAX;
         }
 
         for (int i = 0; i < lstInternational.size(); i++) {
             lstInternational.get(i).totVCPNMXN = IVCPNMXN;
             lstInternational.get(i).totVCPNUSD = IVCPNUSD;
-            lstInternational.get(i).totVPROUSD = IVPROUSD;
-            lstInternational.get(i).totVPROMXN = IVPROMXN;
+            lstInternational.get(i).totVPROUSD = IVCPNUSD/IQTYPAX;
+            lstInternational.get(i).totVPROMXN = IVCPNMXN/IQTYPAX;
             lstInternational.get(i).totQTYPAX = IQTYPAX;
-        }*/
+        }
         hmResultado.put("DOMESTIC", lstDomestic);
         hmResultado.put("INTERNATIONAL", lstInternational);
         return hmResultado;
