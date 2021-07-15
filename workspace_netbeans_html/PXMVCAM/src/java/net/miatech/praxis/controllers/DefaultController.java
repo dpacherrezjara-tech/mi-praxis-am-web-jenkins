@@ -389,8 +389,8 @@ public class DefaultController extends BaseController {
                 }
                 return msg;
             } else {
-                //msg = app.getMsgLogin();
-                return "-1";
+                msg = app.getMsgLogin();
+                return msg;
             }
 
         } catch (Exception e) {

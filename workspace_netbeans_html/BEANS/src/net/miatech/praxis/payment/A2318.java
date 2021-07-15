@@ -39,6 +39,7 @@ public class A2318 {
     public String FECSELEC = "";
     public int QTYMATCH = 0;
     public int QTYMATDIF = 0;
+    public int QTYSETSAL = 0;
 
     
     

@@ -51,7 +51,9 @@ public class A4014 {
     public String A4014USDB = "";
     public String A4014FISDB = "";
     public String A4014HISDB = "";
-
+    public String A1955STATU = "";
+    public String A1955STATU_LABEL = "";
+    
     public int A4014CORRL = 0;
     public int RN = 0;
     public int A4014QTYPL = 0;
@@ -59,6 +61,23 @@ public class A4014 {
     public double A4014CARGO = 0;
     public double A4014ABONO = 0;
 
+    public String getA1955STATU() {
+        return A1955STATU;
+    }
+
+    public void setA1955STATU(String A1955STATU) {
+        this.A1955STATU = A1955STATU;
+    }
+
+    public String getA1955STATU_LABEL() {
+        return A1955STATU_LABEL;
+    }
+
+    public void setA1955STATU_LABEL(String A1955STATU_LABEL) {
+        this.A1955STATU_LABEL = A1955STATU_LABEL;
+    }
+    
+    
     public String getA4014FISDB() {
         return A4014FISDB;
     }

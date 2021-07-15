@@ -8,6 +8,7 @@ package net.miatech.praxis.logic.payments;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import net.miatech.beans.A1686Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ClarificationLoadDAO;
 import net.miatech.praxis.payment.filter.A2331Filter;
@@ -25,11 +26,17 @@ public class ClarificationLoadLogic {
 
     }
     
-   public String loadPX413SQP02535(String strBanco,String ruta) throws SQLException, IOException, Exception {
+    public String loadPX413SQP02535(String strBanco,String ruta) throws SQLException, IOException, Exception {
         return ClarificationLoadDAO.loadPX413SQP02535(strBanco,ruta);
     }
-   
-   public String loadPX413PRO10570(String strBanco, String strHora) throws SQLException, Exception {
+    
+    public String loadPX413PRO10570(String strBanco, String strHora) throws SQLException, Exception {
         return ClarificationLoadDAO.loadPX413PRO10570(strBanco, strHora);
     }
+    
+    public String loadPX413SQP03598(List<A1686Filter> lstExcel) throws SQLException, IOException, Exception {
+        return ClarificationLoadDAO.loadPX413SQP03598(lstExcel);
+    }
+    
+   
 }

@@ -148,7 +148,7 @@ public class PolicyDeliveryLogFormController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11,
-                    CH_12, CH_13, CH_14/*, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29,CH_30*/;
+                    CH_12, CH_13, CH_14, CH_15/*, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25, CH_26, CH_27, CH_28, CH_29,CH_30*/;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -167,8 +167,8 @@ public class PolicyDeliveryLogFormController extends BaseController {
             CH_12 = row.createCell(12);
             CH_13 = row.createCell(13);
             CH_14 = row.createCell(14);
-            /*CH_15 = row.createCell(15);
-            CH_16 = row.createCell(16);
+            CH_15 = row.createCell(15);
+            /*CH_16 = row.createCell(16);
             CH_17 = row.createCell(17);
             CH_18 = row.createCell(18);
             CH_19 = row.createCell(19);
@@ -199,8 +199,8 @@ public class PolicyDeliveryLogFormController extends BaseController {
             CH_12.setCellValue("Credit");
             CH_13.setCellValue("Praxis ID");
             CH_14.setCellValue("Status");
-            /*CH_15.setCellValue("");
-            CH_16.setCellValue("");
+            CH_15.setCellValue("Oracle Status");
+            /*CH_16.setCellValue("");
             CH_17.setCellValue("");
             CH_18.setCellValue("");
             CH_19.setCellValue("");
@@ -231,8 +231,8 @@ public class PolicyDeliveryLogFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
-            /*sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+           /* sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
@@ -263,8 +263,8 @@ public class PolicyDeliveryLogFormController extends BaseController {
             CH_12.setCellStyle(headerStyle);
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
-            /*CH_15.setCellStyle(headerStyle);
-            CH_16.setCellStyle(headerStyle);
+            CH_15.setCellStyle(headerStyle);
+            /*CH_16.setCellStyle(headerStyle);
             CH_17.setCellStyle(headerStyle);
             CH_18.setCellStyle(headerStyle);
             CH_19.setCellStyle(headerStyle);
@@ -301,8 +301,8 @@ public class PolicyDeliveryLogFormController extends BaseController {
                 CH_12 = row.createCell(12);
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
-                /*CH_15 = row.createCell(15);
-                CH_16 = row.createCell(16);
+                CH_15 = row.createCell(15);
+                /*CH_16 = row.createCell(16);
                 CH_17 = row.createCell(17);
                 CH_18 = row.createCell(18);
                 CH_19 = row.createCell(19);
@@ -333,6 +333,7 @@ public class PolicyDeliveryLogFormController extends BaseController {
                 CH_12.setCellValue(listaData.get(vi).A4014ABONO);
                 CH_13.setCellValue(listaData.get(vi).A4014IDLOT);
                 CH_14.setCellValue(listaData.get(vi).A4014STAT);
+                CH_14.setCellValue(listaData.get(vi).A1955STATU_LABEL);
                
 
                 CH_00.setCellStyle(bodyStyle);
@@ -350,8 +351,8 @@ public class PolicyDeliveryLogFormController extends BaseController {
                 CH_12.setCellStyle(bodyStyle);
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
-                /*CH_15.setCellStyle(bodyStyle);
-                CH_16.setCellStyle(bodyStyle);
+                CH_15.setCellStyle(bodyStyle);
+                /*CH_16.setCellStyle(bodyStyle);
                 CH_17.setCellStyle(bodyStyle);
                 CH_18.setCellStyle(bodyStyle);
                 CH_19.setCellStyle(bodyStyle);
@@ -386,8 +387,8 @@ public class PolicyDeliveryLogFormController extends BaseController {
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
             sheet.autoSizeColumn(14, true);
-            /*sheet.autoSizeColumn(15, true);
-            sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(15, true);
+            /*sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true); 
             sheet.autoSizeColumn(19, true);

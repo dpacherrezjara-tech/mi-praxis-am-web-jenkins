@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.PX040S01A1716Filter;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
@@ -389,6 +390,30 @@ public class SalesReconciliBoomerController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+        @RequestMapping(value = "/loadAccountig")
+    public @ResponseBody
+    String loadAccountig(ModelMap map, HttpServletRequest request) {
+        PX040S01A1716Filter filter = new PX040S01A1716Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new SalesReconciliBoomerLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<PX040S01A1716Filter> lst_Accounting = logic.loadPXSQP04092(filter);
+            
+            map.put("success", true);
+            map.put("lst_Accounting", lst_Accounting);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
