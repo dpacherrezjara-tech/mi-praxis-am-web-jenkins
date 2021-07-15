@@ -6,6 +6,7 @@ prototype.id03 = 'NoShowFormViewXml';
 prototype.id04 = 'NoShowFormViewXmlTicket';
 prototype.id05 = 'NoShowFormDetErr';
 prototype.id06 = 'NoShowFormDetLog';
+prototype.id07 = 'NoShowFormLoadInput';
 
 
 Ext.define('Ext.Praxis.view.discharges.NoShowForm.NoShowForm', {
