@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.payment.filter.A2290Filter;
 import net.miatech.praxis.payment.filter.A3800Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -124,6 +125,112 @@ public class LastConciliationDAO {
                     objRtn.page.TOTPAG = filter.page.TOTPAG;
                     objRtn.page.TOTROW = filter.page.TOTROW;
 
+                    list.add(objRtn);
+                }
+            }
+
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            try {
+                cstmt.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return list;
+    }
+    
+    
+    public List<A2290Filter> loadPX565SQP04094(A2290Filter filter) throws SQLException, Exception {
+        List<A2290Filter> list = new ArrayList<A2290Filter>();
+        A2290Filter objRtn;
+        CallableStatement cstmt = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04094(?,?,?,?)}";//" + session.getMainLibrary() + "
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_SDATE.trim());
+            cstmt.setString(3, filter.IN_CARDN.trim());
+            cstmt.setString(4, filter.IN_SAUTHOC.trim());
+
+            cstmt.execute();
+
+
+            rs01 = cstmt.getResultSet();
+            while (rs01.next()) {
+
+                //dblAMOUNTDOC = rs01.getDouble("AMOUNTDOC");
+
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+            if (cstmt.getMoreResults()) {
+                rs01 = cstmt.getResultSet();
+                while (rs01.next()) {
+
+                    objRtn = new A2290Filter();
+                    objRtn.IN_SDATE = filter.IN_SDATE;
+                    objRtn.IN_CARDN = filter.IN_CARDN;
+                    objRtn.IN_SAUTHOC = filter.IN_SAUTHOC;                    
+                            
+                    objRtn.CCIA = rs01.getString("CCIA").trim();
+                    objRtn.FORMA = rs01.getString("FORMA").trim();
+                    objRtn.SERIE = rs01.getString("SERIE").trim();
+                    objRtn.TICKET = rs01.getString("CCIA").trim() + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
+                    objRtn.SVFOP = rs01.getDouble("SVFOP");
+                    objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
+                    objRtn.SPNR = rs01.getString("SPNR").trim();
+                    objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();                    
+                    objRtn.STVAL = rs01.getString("STVAL").trim();
+                    objRtn.CERROR = rs01.getString("CERROR").trim() + " : " + rs01.getString("ERROR").trim();
+                    if (rs01.getString("AFTE").trim().equals("X")) {
+                            objRtn.strPEM = "ACCB BSP";
+                        } else if (rs01.getString("AFTE").trim().equals("A")) {
+                            objRtn.strPEM = "ACCB ARC";
+                        } else if (rs01.getString("AFTE").trim().equals("B")) {
+                            objRtn.strPEM = "ACCB ASR";
+                        } else if (rs01.getString("AFTE").trim().equals("N")) {
+                            objRtn.strPEM = "ACCB ASR";
+                        } else if (rs01.getString("AFTE").trim().equals("L")) {
+                            objRtn.strPEM = "ACCB ASR";
+                        } else {
+                            objRtn.strPEM = "ACCB";
+                        }
+                    
                     list.add(objRtn);
                 }
             }
