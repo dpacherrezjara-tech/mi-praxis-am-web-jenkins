@@ -55,8 +55,7 @@ public class AccountingControlAuditController extends BaseController {
         try {
             filter.IN_OPTION = request.getParameter("IN_OPTION");
             filter.IN_DATEFROM = request.getParameter("IN_DATEFROM");
-            filter.IN_DATETO = request.getParameter("IN_DATETO");
-            filter.IN_NARCH = request.getParameter("IN_NARCH");
+            filter.IN_DATETO = request.getParameter("IN_DATETO");            
             filter.IN_MODULO = request.getParameter("IN_MODULO");
             filter.IN_TIPOM = request.getParameter("IN_TIPOM");            
             filter.IN_STATO = request.getParameter("IN_STATO"); 
@@ -134,6 +133,7 @@ public class AccountingControlAuditController extends BaseController {
 
             Row row;
             Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11;
+            Cell CH_12, CH_13, CH_14, CH_15, CH_16;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -149,6 +149,12 @@ public class AccountingControlAuditController extends BaseController {
             CH_09 = row.createCell(9);
             CH_10 = row.createCell(10);
             CH_11 = row.createCell(11);
+            CH_12 = row.createCell(12);
+            CH_13 = row.createCell(13);
+            CH_14 = row.createCell(14);
+            CH_15 = row.createCell(15);
+            CH_16 = row.createCell(16);
+            
             
             CH_00.setCellValue("Accounting date");
             CH_01.setCellValue("Processing date");
@@ -159,22 +165,15 @@ public class AccountingControlAuditController extends BaseController {
             CH_06.setCellValue("Qty");
             CH_07.setCellValue("Currency");
             CH_08.setCellValue("Debit");
-            CH_09.setCellValue("Credit");
-            CH_10.setCellValue("File name");            
-            CH_11.setCellValue("Status");           
-
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            CH_09.setCellValue("Credit");           
+            CH_10.setCellValue("Estado audit");           
+            CH_11.setCellValue("Envio por correo");
+            CH_12.setCellValue("Usuario");
+            CH_13.setCellValue("Fecha");
+            CH_14.setCellValue("Cargado en DB ");
+            CH_15.setCellValue("Fecha");
+            CH_16.setCellValue("Hora");
+                
             
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -188,6 +187,11 @@ public class AccountingControlAuditController extends BaseController {
             CH_09.setCellStyle(headerStyle);
             CH_10.setCellStyle(headerStyle);
             CH_11.setCellStyle(headerStyle);
+            CH_12.setCellStyle(headerStyle);
+            CH_13.setCellStyle(headerStyle);
+            CH_14.setCellStyle(headerStyle);
+            CH_15.setCellStyle(headerStyle);
+            CH_16.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -207,6 +211,11 @@ public class AccountingControlAuditController extends BaseController {
                 CH_09 = row.createCell(9);
                 CH_10 = row.createCell(10);
                 CH_11 = row.createCell(11);
+                CH_12 = row.createCell(12);
+                CH_13 = row.createCell(13);
+                CH_14 = row.createCell(14);
+                CH_15 = row.createCell(15);
+                CH_16 = row.createCell(16);
                 
                 CH_00.setCellValue(listaData.get(vi).A4022FCONT);
                 CH_01.setCellValue(listaData.get(vi).A4022FPROC);
@@ -218,8 +227,13 @@ public class AccountingControlAuditController extends BaseController {
                 CH_07.setCellValue(listaData.get(vi).A4022MDA);
                 CH_08.setCellValue(listaData.get(vi).A4022CARGO);
                 CH_09.setCellValue(listaData.get(vi).A4022ABONO);
-                CH_10.setCellValue(listaData.get(vi).A4022NARCH);
-                CH_11.setCellValue(listaData.get(vi).A4022STAT);
+                CH_10.setCellValue(listaData.get(vi).A4022STAT);
+                CH_11.setCellValue(listaData.get(vi).A4022STSAF);
+                CH_12.setCellValue(listaData.get(vi).A4022USAF);
+                CH_13.setCellValue(listaData.get(vi).A4022FISAF);
+                CH_14.setCellValue(listaData.get(vi).A4022STSDB);
+                CH_15.setCellValue(listaData.get(vi).A4022FISDB);
+                CH_16.setCellValue(listaData.get(vi).A4022HISDB);
                
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -233,6 +247,12 @@ public class AccountingControlAuditController extends BaseController {
                 CH_09.setCellStyle(bodyStyle);
                 CH_10.setCellStyle(bodyStyle);
                 CH_11.setCellStyle(bodyStyle);
+                CH_12.setCellStyle(bodyStyle);
+                CH_13.setCellStyle(bodyStyle);
+                CH_14.setCellStyle(bodyStyle);
+                CH_15.setCellStyle(bodyStyle);
+                CH_16.setCellStyle(bodyStyle);
+                
 
                 // </editor-fold>
                 iter.next();
@@ -251,6 +271,11 @@ public class AccountingControlAuditController extends BaseController {
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
             
             String fileNameDownload = String.format("AccountingControlAudit-" + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");

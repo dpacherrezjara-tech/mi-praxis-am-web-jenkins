@@ -6,6 +6,12 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
     beanFilter: {},
     bean_by_amount_excel: {},
     init: function(view) {
+        console.log('PERMX-ACCESS');
+        if(accessSelect.PERMX==='N'){
+            Ext.getCmp(prototype.id+'-btnExcel').hide();
+	}else{
+            Ext.getCmp(prototype.id+'-btnExcel').show();
+        }
     },
     afterRender: function () {
         this.setStoreData();

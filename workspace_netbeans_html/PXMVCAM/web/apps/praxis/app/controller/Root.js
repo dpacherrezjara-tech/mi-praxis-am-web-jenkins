@@ -7,6 +7,7 @@
 var optionSelect = {};
 var optionSelectDashboard = {};
 var userAccess = [] ;
+var accessSelect = {};
 
 Ext.define('Ext.Praxis.controller.Root', {
     extend: 'Ext.app.Controller',
@@ -108,6 +109,7 @@ Ext.define('Ext.Praxis.controller.Root', {
                                     $.each(userAccess, function(x, y) {
                                         if (y.NPROG === optionSelect.nprog) {                
                                             boAccess = false;
+                                            accessSelect = y;
                                             console.log(boAccess);
                                             console.log(optionSelect);                                                                                      
                                         }
@@ -166,6 +168,7 @@ Ext.define('Ext.Praxis.controller.Root', {
                         $.each(userAccess, function(x, y) {
                             if (y.NPROG === optionSelect.nprog) {                
                                 boAccess = false;
+                                accessSelect = y;
                                 console.log(boAccess);
                             }
                         });

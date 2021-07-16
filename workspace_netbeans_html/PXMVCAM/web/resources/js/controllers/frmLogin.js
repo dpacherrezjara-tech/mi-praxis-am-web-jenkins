@@ -156,7 +156,7 @@ function AsyncChangePassword() {
         async: false,    
         data: {txtAuthName: $('#txtAuthName').val().toUpperCase(), txtAuthPass: $('#txtAuthPass').val(), txtNewPass: $('#txtNewPass').val()},
         success: function(status) {
-            if (status != '-1') {
+            if (status === '') {
                 //if (data.indexOf("changed", 0) !== -1) {
                     //alert('Your password has been successfully changed.');
                     showMessage('Your password has been successfully changed.');
@@ -172,11 +172,13 @@ function AsyncChangePassword() {
                 //$("#divMensajeError").append(strHtmlMensajeError);
             } else {
                 //alert('There was a problem with the request. Error: ' + xhr);
-                showMessage('The following fields are mandatories:<br/>User.<br/>Password.<br/>New Password (Alphanumeric between 8 and 10 characters).<br/>Confirm Password.<br/>Do not use old passwords.');
+                //showMessage('The following 1 fields are mandatories:<br/>User.<br/>Password.<br/>New Password (Alphanumeric between 8 and 10 characters).<br/>Confirm Password.<br/>Do not use old passwords.');
+                showMessage(status);
             }
         },
         error: function(throwError) {
-                showMessage('The following fields are mandatories:<br/>User.<br/>Password.<br/>New Password (Alphanumeric between 8 and 10 characters).<br/>Confirm Password.<br/>Do not use old passwords.');
+                //showMessage('The following 2 fields are mandatories:<br/>User.<br/>Password.<br/>New Password (Alphanumeric between 8 and 10 characters).<br/>Confirm Password.<br/>Do not use old passwords.');
+                showMessage('There was a problem with the request. Try again.');
         },
         cache: false
     });

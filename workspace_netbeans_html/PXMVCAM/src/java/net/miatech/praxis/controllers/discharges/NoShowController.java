@@ -6,18 +6,27 @@
 package net.miatech.praxis.controllers.discharges;
 
 import com.google.gson.Gson;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A3936;
+import net.miatech.beans.DBException;
 import net.miatech.beans.SQP03961Filter;
 import net.miatech.beans.SQP03962Filter;
 import net.miatech.beans.SQP03963Filter;
@@ -45,8 +54,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
 /**
  *
  * @author vhidalgo
@@ -57,7 +68,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class NoShowController extends BaseController {
 
     private NoShowLogic logic;
-
+    
     @RequestMapping(value = "/search_control_recep")
     public @ResponseBody
     String search_control_recep(ModelMap map, HttpServletRequest request) {
@@ -873,4 +884,64 @@ public class NoShowController extends BaseController {
             throw new SpringException(e);
         }
     }
+    
+    //METODO FUNCIONAL, PERO NO USADO SE HACE CON EL S3 DE AWS
+    @RequestMapping(value = "/setUploadInput", method = RequestMethod.POST)
+    public @ResponseBody
+    String setUploadInput(ModelMap map, @RequestParam("textfile") MultipartFile file, HttpServletRequest request) throws IOException {        
+        DBException objRtn = new DBException();        
+        try { 
+            logic = new NoShowLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());   
+            
+            byte[] bytes = file.getBytes();
+            String StrfileName = file.getOriginalFilename(); 
+            String rutaFile = "\\\\10.0.0.87\\am\\CADUCOS\\temp";
+            Path dir = Paths.get(rutaFile);
+            if (!Files.exists(dir)) {
+                Files.createDirectory(dir);
+            }             
+            String strArchivo = rutaFile + "\\" + StrfileName;
+            
+            File archivo = new File(strArchivo);
+            FileOutputStream fs = new FileOutputStream(archivo);
+            fs.write(bytes);
+            fs.flush();
+            fs.close();            
+            //API
+            String VP_HOST_DB = serverSession.getServerSession().getPropertySession().get("SERVER_DJANGO").toString();
+            String VP_SWITCH= "LOAD_FILE_INPUT";
+            String VP_CCUST = "139";            
+            String VP_FPROC = request.getParameter("VP_FPROC");
+            String url_REST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString(); //"http://127.0.0.1:5557";
+            String url_API  = "/api/praxis/discharge_noshow/";  //"http://127.0.0.1:5557/api/praxis/discharge_noshow/"
+            Unirest.setTimeouts(3600000, 3600000);
+            HashMap bodyData = new HashMap<>();            
+            bodyData.put("VP_HOST_DB", VP_HOST_DB);
+            bodyData.put("VP_SWITCH", VP_SWITCH);
+            bodyData.put("VP_CCUST", VP_CCUST);
+            bodyData.put("VP_FPROC", VP_FPROC);            
+            HttpResponse<JsonNode> responseAPI = Unirest.post(url_REST + url_API )
+                    .header("content-type", "application/json") 
+                    .header("cache-control", "no-cache")
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+            //respuesta API
+            String error_code = responseAPI.getBody().getObject().get("RESPONSE").toString();
+            String error_msg = responseAPI.getBody().getObject().get("MESSAGE_TEXT").toString();
+            if (error_code.equals("OK")) objRtn.SQLCODE = "1";
+            else objRtn.SQLCODE = "0";
+            objRtn.MESSAGE = error_msg;
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());                        
+            objRtn.SQLCODE = "0";
+            objRtn.MESSAGE = ex.getMessage();            
+            throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+    } 
+  
 }

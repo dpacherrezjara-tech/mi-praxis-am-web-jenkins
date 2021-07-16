@@ -138,7 +138,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
         //var CmbPoliza = Ext.getCmp(prototype.id + '-CmbPoliza').getValue();
         //var CmbTypePoliza = Ext.getCmp(prototype.id + '-CmbTypePoliza').getValue();
         var CmbStatus = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
-        var IN_NARCH = Ext.getCmp(prototype.id + '-txtNARCH').getValue();
+        //var IN_NARCH = Ext.getCmp(prototype.id + '-txtNARCH').getValue();
         //var IN_PRAXID = Ext.getCmp(prototype.id + '-txtPraxisID').getValue();
         if (comboBy === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select filter type');
@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
         me.beanTMP.IN_OPTION = comboBy;
         me.beanTMP.IN_DATEFROM = IN_DATEFROM;
         me.beanTMP.IN_DATETO = IN_DATETO;
-        me.beanTMP.IN_NARCH = IN_NARCH;
+        //me.beanTMP.IN_NARCH = IN_NARCH;
         //me.beanTMP.IN_PRAXID = IN_PRAXID;
         me.beanTMP.IN_MODULO = CmbModule;
         me.beanTMP.IN_TIPOM = CmbType;
@@ -204,10 +204,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
     },
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
-        switch (String(record.get('A4014STAT'))) {            
+        switch (String(record.get('A4022STAT'))) {            
             case 'ACTIVE':
                 color = '#81F7BE';
-                value = 'ACTIVE';
+                value = 'ACTIVE';                
                 break;            
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';

@@ -7,6 +7,7 @@ package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.A1686Filter;
 import net.miatech.beans.A1691Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
@@ -26,8 +28,10 @@ import net.miatech.praxis.logic.payments.ClarificationLoadLogic;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -36,7 +40,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -66,116 +72,46 @@ public class ClarificationLoadController extends BaseController {
         return "sales/ClarificationLoad/form_index";
     }
     
-    
-    @RequestMapping(value = "/setData"/*, method = RequestMethod.POST*/)
+    @RequestMapping(value = "/setData", method = RequestMethod.POST)
     public @ResponseBody
-    String setData(ModelMap map, @RequestParam("fileLoad") MultipartFile file ,HttpServletRequest request) {
+    String setData(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
+        byte[] bytes = null;
+        Integer cont = 0;
+        String mensaje = "";
+        String msjResult = "";
+        String msjUpload = "";
         
-        System.out.println("-------------- ClarificationLoad : setData-------------");
-        String mensaje = "", strHora = Functions.getHoraActual();
-        
-        
-        try {
-            String strBanco = request.getParameter("banco");
-            byte[] bytes = file.getBytes();
-            
-            logic = new ClarificationLoadLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            
-            String strSesion = UUID.randomUUID().toString();
-            String strNomExcel = "ClarificationCsv." + strSesion + ".csv";
-            
-            String strArchivo = "C:\\Windows\\Temp\\" + strNomExcel;
-            File archivo = new File(strArchivo);
-            FileOutputStream fs = new FileOutputStream(archivo);
-            
-            fs.write(bytes);
-            fs.flush();
-            fs.close(); 
-            
-            mensaje = logic.loadPX413SQP02535(strBanco,strArchivo);
-            
-            if(mensaje.contains("Successful")){
-                //Llamando al PRO10574(ELavon)
-                mensaje = logic.loadPX413PRO10570(strBanco,strHora);
-            }
-            
-            map.put("Mensaje", mensaje);
-            
-//          //Eliminar temporal           
-            archivo.delete();
-            
-        } catch (Exception ex) {
-            map.put("success", false);
-            map.put("sesion", "Se produjo un error al cargar el archivo: " + ex.getMessage());
-        }
-        return new Gson().toJson(map);
-    }
-    
-    
-    /*
-    
-    @RequestMapping(value = "search")
-    public @ResponseBody
-    String search(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- ClarificationLoad : Search-------------");
-
-        map.put("success", true);
-        List<A2331Filter> lst = this.getList(request, false);
-        System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
-        return new Gson().toJson(map);
-    }
-
-    public List<A2331Filter> getList(HttpServletRequest request, Boolean bExcel) {
-
-        List<A2331Filter> lst = new ArrayList<>(0);
-        A2331Filter filter = new A2331Filter();
-        Gson gson = new Gson();
-        String beanString = "";
-
-        try {
-            logic = new ClarificationLoadLogic();
-            logic.setSession(this.serverSession.getServerSession());
-
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A2331Filter.class);
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-            lst = logic.loadPX419SQP02079(filter);
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
-        return lst;
-    }
-
-    
-    @RequestMapping(value = "detailByBank")
-    public @ResponseBody
-    String detailByBank(ModelMap map, HttpServletRequest request) {
-
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            
+            String banco = request.getParameter("banco");
+            String input = request.getParameter("input");
+            String filename = excelfile.getOriginalFilename();
+            
+            
+            if(banco.equals("EL") || banco.equals("US") || banco.equals("AX")){
 
-            List<A2331Filter> lst = this.getListdetailByBank(request, false);
+                byte[] fileData2 = excelfile.getBytes();
+                msjResult = uploadCSV(fileData2, banco);
 
+            }else if(banco.equals("STB") && input.equals("C")){
+
+                byte[] dataFile = excelfile.getBytes();
+                msjResult = uploadFile(dataFile, banco);
+
+            }else{
+                // ------------------------------------------------------------------------
+                // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
+                // ------------------------------------------------------------------------
+                
+                msjUpload = uploadPrev(excelfile, banco, input);
+                map.put("successUp", true);
+                map.put("msjUpload", msjUpload);
+            }
+            
+            
             map.put("success", true);
-            map.put("data", lst);
-            map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+            map.put("msjResult", msjResult);
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -185,632 +121,682 @@ public class ClarificationLoadController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    private String uploadCSV(byte[] bytes, String strBanco) throws Exception {
+        
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        String mensaje = "", strHora = Functions.getHoraActual();
+        
+        try {
+            String strSesion = UUID.randomUUID().toString();
+            String strNomExcel = "ClarificationCsv." + strSesion + ".csv";
+            
+            String strArchivo = "C:\\Windows\\Temp\\" + strNomExcel;
+            File archivo = new File(strArchivo);
+            FileOutputStream fs = new FileOutputStream(archivo);
+            
+            fs.write(bytes);
+            fs.flush();
+            fs.close();
+         
+            ClarificationLoadLogic logic = new ClarificationLoadLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            mensaje = logic.loadPX413SQP02535(strBanco,strArchivo);
+            
+            if(mensaje.contains("Successful")){
+                //Llamando al PRO10574(ELavon)
+                mensaje = logic.loadPX413PRO10570(strBanco,strHora);
+            }
+            
+            //Eliminar temporal           
+            archivo.delete();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            mensaje = "Se produjo un error al intentar subir el archivo.";
+        }
 
-    public List<A2331Filter> getListdetailByBank(HttpServletRequest request, Boolean bExcel) {
+        return mensaje;
+        
+    }
+    
+    private String uploadFile(byte[] bytes, String strBanco) throws Exception {
+        
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        A1686Filter obj = new A1686Filter();
+        List<A1686Filter> lstData = new ArrayList<>();
+        String mensaje = "", strHora = Functions.getHoraActual();
+        
+        try {
+            String strSesion = UUID.randomUUID().toString();
+            String strNomExcel = "StanderBSPAclaration." + strSesion + ".xlsx";
+            
+            String strArchivo = "C:\\Dumps\\" + strNomExcel;
+            File archivo = new File(strArchivo);
+            FileOutputStream fs = new FileOutputStream(archivo);
+            
+            fs.write(bytes);
+            fs.flush();
+            fs.close();
+            
+            
+//            String nombreArchivo = "Inventario.xlsx";
+//            String rutaArchivo = "C:\\Ficheros-Excel\\" + nombreArchivo;
+//            String hoja = "Hoja1";
+         
+            DataFormatter formatter = new DataFormatter();
+            String primeraCelda="";
+            boolean escribe = false;
+                
+            FileInputStream file = new FileInputStream(new File(strArchivo));
+            // leer archivo excel
+            XSSFWorkbook worbook = new XSSFWorkbook(file);
+            //obtener la hoja que se va leer
+            XSSFSheet sheet = worbook.getSheetAt(0);
+            //obtener todas las filas de la hoja excel
+            Iterator<Row> rowIterator = sheet.iterator();
 
-        List<A2331Filter> lst = new ArrayList<>(0);
-        A2331Filter filter;
+            Row row;
+            // se recorre cada fila hasta el final
+            while (rowIterator.hasNext()) {
+                row = rowIterator.next();
+                primeraCelda = formatter.formatCellValue(row.getCell(0));
+                
+                if(primeraCelda.trim().equals("IATA LINEA AEREA")){
+                    escribe = true ;
+                }
+                    
+                if(escribe){
+                
+                    String cadena = "";
+                    for(int i=0 ; i<12 ; i++){
+
+                        String val = formatter.formatCellValue(row.getCell(i));
+                        //En la fecha de envio  pongo ceros a dias o a mes
+                        if(i==8){
+                            val = Functions.getMonthwitZeros(val,"/");
+                        }
+
+                        if(i == 11){
+                            cadena = cadena+ val  ;
+                        }else{
+                            cadena = cadena+ val  + "," ;
+                        }
+                    }
+
+                    System.out.print(cadena);
+
+                    if(cadena.trim().equals(",,,,,,,,,,,")){//linea en blanco
+                        escribe = false ;
+                    }else{
+                        obj = new A1686Filter();
+                        obj.strDescripcion = cadena;
+                        lstData.add(obj);
+                    }
+                }
+            }
+            
+            ClarificationLoadLogic logic = new ClarificationLoadLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            mensaje = logic.loadPX413SQP03598(lstData);
+            
+//            if(mensaje.contains("Successful")){
+//                //Llamando al PRO10574(ELavon)
+//                mensaje = logic.loadPX413PRO10570(strBanco,strHora);
+//            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            mensaje = "Se produjo un error al intentar subir el archivo.";
+        }
+
+        return mensaje;
+        
+    }
+        
+    private String uploadPrev(MultipartFile excelfile, String banco, String input) {
+        
+        String msj = "";
+        
+        try {
+            String filaCompleta = "";
+            List<String> listaExcelString = new ArrayList<String>(0);
+            String msjError = "";
+            String tmp = "";
+            boolean filaTotal = false;
+            int i = 0;
+            int noOfColumns;
+
+            byte[] fileData = excelfile.getBytes();
+            
+            if(fileData != null && fileData.length > 0){
+                
+                String strSesion = UUID.randomUUID().toString();
+                String strNomExcel = excelfile.getOriginalFilename();
+
+                String strArchivo = "C:\\Dumps\\" + strNomExcel;
+                File archivo = new File(strArchivo);
+                FileOutputStream fs = new FileOutputStream(archivo);
+
+                fs.write(fileData);
+                fs.flush();
+                fs.close();
+                
+                DataFormatter formatter = new DataFormatter();
+                String primeraCelda="";
+                boolean escribe = false;
+
+                FileInputStream file = new FileInputStream(archivo);
+                // leer archivo excel
+                HSSFWorkbook worbook = new HSSFWorkbook(file);
+                //obtener la hoja que se va leer
+                HSSFSheet sheet = worbook.getSheetAt(0);
+                //obtener todas las filas de la hoja excel
+                Iterator<Row> rowIterator = sheet.iterator();
+
+                if(banco.equals("**" )){
+                    System.out.println("***************");
+                }else if(banco.equals("ST")){
+                    //==================================================================================
+                    //INICIO SANTANDER =================================================================
+                    // convertir el excel en la version de 95
+                    
+                    if(input.equals("N")){
+                        //Avisos
+                        msjError = "Under Construction";
+                    }else{
+                        msjError = "Error. File Load";
+                        // <editor-fold defaultstate="collapsed" desc="SANTANDEEEER - Aclaraciones()">
+                        //</editor-fold>
+                    }
+                }else if(banco.equals("PP")){                    
+                    if(input.equals("N")){
+                        //Avisos
+                        msjError = "Under Construction";
+                    }else{
+                        // <editor-fold defaultstate="collapsed" desc="PAYPAL - Aclaraciones()">
+                        
+                        int rowP = -1;
+                        int noOfCol = 0;
+                        while (rowIterator.hasNext()) {
+                            Row row = rowIterator.next();
+                            rowP++;
+                            i++;
+                            filaCompleta = "";
+                            
+                            String numberTkt = formatter.formatCellValue(row.getCell(0));     //Número de Ticket
+                            String fechVenta = formatter.formatCellValue(row.getCell(1));     //Fecha de Venta
+                            String imporVent = formatter.formatCellValue(row.getCell(2));     //Importe de la venta
+                            String moneda    = formatter.formatCellValue(row.getCell(3));     //Moneda
+                            String numerCaso = formatter.formatCellValue(row.getCell(4));     //Numero de caso
+                            
+                            if (numberTkt.equals("") && fechVenta.equals("") && imporVent.equals("") && moneda.equals("") && numerCaso.equals("")){
+                                break;
+                            }
+                            
+                            if(i == 1){
+                                noOfCol = row.getLastCellNum();
+                            }
+                            for (int colP = 0; colP < noOfCol; colP++) {
+                                String cellValueP = "";
+                                if(row.getCell(colP) != null){
+                                    msjError = "";
+                                    tmp = "";
+                                    tmp = formatter.formatCellValue(row.getCell(colP));
+
+                                    if(colP == 0 && tmp.equals("")){
+                                        filaTotal = true;
+                                    }
+
+                                    if(filaTotal == false){
+                                        if(rowP > 0 && colP == 1){
+                                            //Fecha de Venta (11-Aug-17)
+                                            //tmp : Thu Aug 17 00:00:00 GMT-0500 2017
+                                            tmp = row.getCell(colP).toString();
+                                            tmp = formatter.formatCellValue(row.getCell(colP));
+                                            
+                                            try {
+                                                String [] fields = tmp.split("/");
+                                                tmp =   Functions.fillZeros(2, fields[1]) + "-" + 
+                                                        getAbreviaturaMes(Functions.fillZeros(2, fields[0])) + "-" +
+                                                        Functions.fillZeros(2, fields[2]) ;
+                                            } catch (Exception e) {
+                                                tmp = "Error";
+                                            }
+                                            
+                                            if(tmp.trim().equals("")){
+                                                msjError = "Error. Sales Date is Empty. Please contact AM. (Column B)";
+
+                                            }else if(tmp.indexOf("N/A") >= 0){
+                                                msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column B)";
+
+                                            }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                msjError = "Error. Invalid Sales Date. Please contact AM. (Column B)";
+
+                                            }else if(tmp.length() == 9){
+                                                cellValueP = tmp;
+
+                                            }else{
+                                                msjError = "Error. Format Date Invalid. Please contact AM. (Column B)";
+//                                                cellValueP = excelFloatToDate(Number(tmp));
+//                                                if(cellValueP.equals("Error")){
+//                                                    msjError = "Error. Sales Date incorrect format. Please contact AM. (Column B)";
+//                                                }
+                                            }
+                                        }else{
+                                            cellValueP = formatter.formatCellValue(row.getCell(colP));
+                                        }
+                                    }else{
+                                        break;
+                                    }
+
+                                    if(!msjError.equals("")){
+                                        break;
+                                    }else{
+                                        filaCompleta += cellValueP + ',';
+                                    }
+                                }
+                            } // for noOfCol
+
+                            if(!msjError.equals("")){
+                                break;
+                            }else{
+                                listaExcelString.add(filaCompleta);
+                            }
+                            
+                        } //while
+                        
+                        //</editor-fold>
+                    }
+                }else{
+                    //==================================================================================
+                    //INICIO BANAMEX ===================================================================
+                    
+                    if(input.equals("N")){                        
+                        // <editor-fold defaultstate="collapsed" desc="BANAMEX - Avisos()">
+                        
+                        int rowAB = -1;
+                        int noOfColumn = 0;
+                        while (rowIterator.hasNext()) {
+                            Row row = rowIterator.next();
+                            rowAB++;
+                            i++;
+                            filaCompleta = "";
+                            
+                            if(i == 1){
+                                noOfColumn = row.getLastCellNum();
+                            }
+                            
+                            for (int colAB = 0; colAB < noOfColumn; colAB++) {
+                                String cellValueAB = "";
+                                if(row.getCell(colAB) != null){
+                                    msjError = "";
+                                    tmp = "";
+                                    tmp = formatter.formatCellValue(row.getCell(colAB));
+
+                                    if(colAB == 0 && tmp.equals("")){
+                                        filaTotal = true;
+                                    }
+
+                                    if(filaTotal == false){
+                                        if(rowAB > 0 && colAB == 5){
+                                            //FECHA DE APLICACIÓN (02/10/2017)
+                                            tmp = formatter.formatCellValue(row.getCell(colAB));
+
+                                            if(tmp.trim().equals("")){
+                                                msjError = "Error. Application Date is Empty. Please contact AM. (Column F)";
+
+                                            }else if(tmp.indexOf("N/A") >= 0){
+                                                msjError = "Error. Application Date incorrect format (N/A). Please contact AM. (Column F)";
+
+                                            }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                msjError = "Error. Invalid Application Date. Please contact AM. (Column F)";
+
+                                            }else if(tmp.length() == 10){
+                                                cellValueAB = tmp;
+
+                                            }else{
+                                                msjError = "Error. Format Date Invalid. Please contact AM. (Column F)";
+//                                                cellValueAB = excelFloatToDate(Number(tmp));
+//                                                if(cellValueAB.equals("Error")){
+//                                                    msjError = "Error. Application Date incorrect format. Please contact AM. (Column F)";
+//                                                }
+                                            }
+                                        }else{
+                                            cellValueAB = formatter.formatCellValue(row.getCell(colAB));
+                                        }
+                                    }else{
+                                        break;
+                                    }
+
+                                    if(!msjError.equals("")){
+                                        break;
+                                    }else{
+                                        filaCompleta += cellValueAB + ',';
+                                    }
+                                }
+                            } // for noOfColumn
+
+                            if(!msjError.equals("")){
+                                break;
+                            }else{
+                                listaExcelString.add(filaCompleta);
+                            }
+                            
+                        } //while
+                        
+                        
+                        //</editor-fold>
+                    }else{
+                        // <editor-fold defaultstate="collapsed" desc="BANAMEX - Aclaraciones()">
+                        int rowB = -1;
+                        String valueS = "";
+                        String valueTOT = "";
+                        boolean correct = true;
+                        int noOfColu = 0;
+                        
+                        // se recorre cada fila hasta el final
+                        while (rowIterator.hasNext()) {
+                            Row row = rowIterator.next();
+                            rowB++;
+                            i++;
+                            
+                            if(i == 1){
+                                noOfColu = row.getLastCellNum();
+                            }
+                            
+                            valueS = formatter.formatCellValue(row.getCell(4));     //NUM_CTA
+                            valueTOT = formatter.formatCellValue(row.getCell(5));   //NUM_REF
+                            
+                            if(rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") == -1 ) {
+                                        
+                                if(valueS.trim().length() != 16 && valueS.trim().length() != 15  ){
+                                   correct = false;
+
+                                   msjError = "Error. Invalid format. TOO LONG CREDIT CARD. Please contact AM.";
+                                }
+                            }
+                            
+                            filaCompleta = "";
+                            
+                            if (rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") > -1){
+                                break;
+                            }
+                            
+                            if(correct){
+                                for (int colB = 0; colB < noOfColu; colB++) {
+                                    String cellValueB = "";
+                                    if(row.getCell(colB) != null){
+                                        msjError = "";
+                                        tmp = "";
+                                        tmp = formatter.formatCellValue(row.getCell(colB));
+
+                                        if(colB == 0 && tmp.equals("")){
+                                            filaTotal = true;
+                                        }
+                                        
+                                        if(filaTotal == false){
+                                            if(rowB > 0 && colB == 0){
+                                                //FECHA_REME (04/10/2017)
+                                                tmp = formatter.formatCellValue(row.getCell(colB));
+
+                                                if(tmp.trim().equals("")){
+                                                    msjError = "Error. Remittance Date is Empty. Please contact AM. (Column A)";
+
+                                                }else if(tmp.indexOf("N/A") >= 0){
+                                                    msjError = "Error. Remittance Date incorrect format (N/A). Please contact AM. (Column A)";
+
+                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                    msjError = "Error. Invalid Remittance Date. Please contact AM. (Column A)";
+
+                                                }else if(tmp.length() == 10){
+                                                    cellValueB = tmp;
+
+                                                }else{
+                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column A)";
+    //                                                cellValueB = excelFloatToDate(Number(tmp));
+//                                                    if(cellValueB.equals("Error")){
+//                                                        msjError = "Error. Remittance Date incorrect format. Please contact AM. (Column A)";
+//                                                    }
+                                                }
+                                            }else if(rowB > 0 && colB == 7){
+                                                //FECHA_VENT (16/09/2017)
+                                                tmp = formatter.formatCellValue(row.getCell(colB));
+
+                                                if(tmp.trim().equals("")){
+                                                    msjError = "Error. Sales Date is Empty. Please contact AM. (Column H)";
+
+                                                }else if(tmp.indexOf("N/A") >= 0){
+                                                    msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column H)";
+
+                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                    msjError = "Error. Invalid Sales Date. Please contact AM. (Column H)";
+
+                                                }else if(tmp.length() == 10){
+                                                    cellValueB = tmp;
+
+                                                }else{
+                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column H)";
+//                                                    cellValueB = excelFloatToDate(Number(tmp));
+//                                                    if(cellValueB.equals("Error")){
+//                                                        msjError = "Error. Sales Date incorrect format. Please contact AM. (Column H)";
+//                                                    }
+                                                }
+
+                                            } else{
+                                                cellValueB = formatter.formatCellValue(row.getCell(colB));
+                                            }
+                                        }else{
+                                            break;
+                                        }
+                                        
+                                        if(!msjError.equals("")){
+                                            break;
+                                        }else{
+                                            filaCompleta += cellValueB + ',';
+                                        }
+                                    }// Cell is null
+                                } // for noOfColu
+                                
+                                if(!msjError.equals("")){
+                                    break;
+                                }else{
+                                    listaExcelString.add(filaCompleta);
+                                }
+                            } //if correct
+                        } //while
+                    } //else Aclaraciones
+                    //</editor-fold>
+                    
+                }//else BANAMEX
+                
+                //Eliminar temporal           
+                archivo.delete();
+
+            } //if filedata
+            
+            if(!msjError.equals("")){
+                msj = msjError;
+            }else{
+                msj = upload(listaExcelString, banco, input);
+            }
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+            if(e.getMessage().contains("to be Excel 5.0/7.0 (BIFF5) format")){
+                msj = "Error. Convertir excel a version 97-2003(*xls)";
+            }else{
+                msj = "Hubo un error al cargar Archivo";
+            }
+        }
+        
+        return msj;
+    }
+    
+    private String upload(List lstExcel, String strBanco, String strInput) throws Exception {
+        
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        String msj = "";
+        
+        try {
+            String strHora = Functions.getHoraActual();
+            if (lstExcel != null && lstExcel.size() > 0) {
+                
+                if(strInput.trim().equals("N")){
+                    //AVISOS PREVIOS / CONTRACARGOS
+                    ClarificationLoadLogic logic = new ClarificationLoadLogic();
+                    logic.setSession(this.serverSession.getServerSession());
+
+                    msj = logic.loadPX413SQP01999(lstExcel, strBanco, strHora);
+
+                    if (msj.trim().equals("SUCCESS")) {
+                        //Llamando al PRO10577
+                        msj = logic.loadPX413PRO10577(strBanco, strHora);
+                    }
+                    
+                }else{
+                    //ACLARACIONES
+                
+                    ClarificationLoadLogic logic = new ClarificationLoadLogic();
+                    logic.setSession(this.serverSession.getServerSession());
+
+                    msj = logic.loadPX413SQP01977(lstExcel, strBanco, strHora);
+
+                    if (msj.trim().equals("SUCCESS")) {
+                        //Llamando al PRO10570/71/72/73
+                        msj = logic.loadPX413PRO10570(strBanco, strHora);
+                    }
+                }
+                
+            } else {
+                msj = "Error. Information not found.";
+            }
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = "Se produjo un error al intentar subir el archivo.";
+        }
+
+        return msj;
+        
+    }
+    
+    @RequestMapping(value = "search")
+    public @ResponseBody
+    String search(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ClarificationLoad : Search-------------");
+
+        map.put("success", true);
+        List<A1686Filter> lst = this.getList(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A1686Filter> getList(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1686Filter> lst = new ArrayList<>(0);
+        A1686Filter filter = new A1686Filter();
         Gson gson = new Gson();
-        String beanString;
+        String beanString = "";
+        String strBanco = "" , buffer = "";
+       
+        
+        strBanco = request.getParameter("banco");
+        if (strBanco.trim().equals("AX")) {
+            //AMEX
+            buffer = "ACLARAMEX";
+        } else if (strBanco.trim().equals("ST")) {
+            //SANTANDER
+            buffer = "ACLARSNTDR";
+        } else if (strBanco.trim().equals("PP")) {
+            //PAYPAL
+            buffer = "ACLARPAYPA";
+        } else if (strBanco.trim().equals("EL")) {
+            //PAYPAL
+            buffer = "ACLAELAVON";    
+        } else if (strBanco.trim().equals("US")) {
+            //PAYPAL
+            buffer = "ACLARAMEXU";        
+        } else {
+            //BANAMEX
+            buffer = "ACLARBNMX";
+        }
 
         try {
-            logic = new ClarificationLoadLogic();
+            filter.IN_FECHA_FROM = Functions.getFechaActual().substring(0, 6);
+            filter.IN_FECHA_TO = Functions.getFechaActual().substring(0, 6);
+            filter.IN_FUENTE = buffer;
+
+            ClarificationLoadLogic logic = new ClarificationLoadLogic();
             logic.setSession(this.serverSession.getServerSession());
-
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A2331Filter.class);
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
-
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-            lst = logic.loadPX419SQP02104(filter);
+            
+            lst = logic.loadPX264SQP00665(filter, "");
+//            resp.vars.put("listaData", lst);
+            
         } catch (Exception e) {
             throw new SpringException(e);
         }
         return lst;
     }
     
-    
-    @RequestMapping(value = "getXLSX")
-    public @ResponseBody
-    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
- 
-        System.out.println("ClarificationLoad : getXLSX");
-        String fileNameDownload = String.format("ClarificationLoad   - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-        
-        try {
-            Workbook workbook;
-            File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A2331Filter> listaData = this.getList(request, true);
-            
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-            workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Report");
-            
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-            
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
-            
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            Integer vi = 0;
-            Integer vj = 0; //Almacena el numero de fila
-            Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
-
-
-             // ======  Nivel 1 ==========
-
-            Row row1 = sheet.createRow(vj);
-            Cell CH1_0 = row1.createCell(0);
-            Cell CH1_1 = row1.createCell(1);
-            Cell CH1_2 = row1.createCell(2);
-            Cell CH1_3 = row1.createCell(3);
-            Cell CH1_4 = row1.createCell(4);
-            Cell CH1_5 = row1.createCell(5);
-            Cell CH1_6 = row1.createCell(6);
-            Cell CH1_7 = row1.createCell(7);
-            Cell CH1_8 = row1.createCell(8);
-            Cell CH1_9 = row1.createCell(9);
-            Cell CH1_10 = row1.createCell(10);
-
-            CH1_0.setCellValue("Reception");
-            CH1_1.setCellValue("Sales");
-            CH1_2.setCellValue("Clarifications");
-            CH1_8.setCellValue("Bank Notice / ChargedBack");
-
-
-            CH1_0.setCellStyle(headerStyle);
-            CH1_1.setCellStyle(headerStyle);
-            CH1_2.setCellStyle(headerStyle);
-            CH1_3.setCellStyle(headerStyle);
-            CH1_4.setCellStyle(headerStyle);
-            CH1_5.setCellStyle(headerStyle);
-            CH1_6.setCellStyle(headerStyle);
-            CH1_7.setCellStyle(headerStyle);
-            CH1_8.setCellStyle(headerStyle);
-            CH1_9.setCellStyle(headerStyle);
-            CH1_10.setCellStyle(headerStyle);
-
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 10));
-            ++vj;
-             //============================================
-
-             // ======  Nivel 2 ==========
-
-            Row row2 = sheet.createRow(vj);
-            Cell CH2_0 = row2.createCell(0);
-            Cell CH2_1 = row2.createCell(1);
-            Cell CH2_2 = row2.createCell(2);
-            Cell CH2_3 = row2.createCell(3);
-            Cell CH2_4 = row2.createCell(4);
-            Cell CH2_5 = row2.createCell(5);
-            Cell CH2_6 = row2.createCell(6);
-            Cell CH2_7 = row2.createCell(7);
-            Cell CH2_8 = row2.createCell(8);
-            Cell CH2_9 = row2.createCell(9);
-            Cell CH2_10 = row2.createCell(10);
-
-            CH2_0.setCellValue("Date");
-            CH2_1.setCellValue("MXN");
-            CH2_2.setCellValue("Stand By");
-            CH2_3.setCellValue("On Process");
-            CH2_4.setCellValue("Charged");
-            CH2_5.setCellValue("Not Found");
-            CH2_6.setCellValue("Total");
-            CH2_7.setCellValue("MXN");
-            CH2_8.setCellValue("Total");
-            CH2_9.setCellValue("Not Found");
-            CH2_10.setCellValue("MXN");
-
-            CH2_0.setCellStyle(headerStyle);
-            CH2_1.setCellStyle(headerStyle);
-            CH2_2.setCellStyle(headerStyle);
-            CH2_3.setCellStyle(headerStyle);
-            CH2_4.setCellStyle(headerStyle);
-            CH2_5.setCellStyle(headerStyle);
-            CH2_6.setCellStyle(headerStyle);
-            CH2_7.setCellStyle(headerStyle);
-            CH2_8.setCellStyle(headerStyle);
-            CH2_9.setCellStyle(headerStyle);
-            CH2_10.setCellStyle(headerStyle);
-
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-        ++vj;
-        while (iter.hasNext()) {
-           row1 = sheet.createRow(vj);
-           Cell rcell0 = row1.createCell(0);
-           Cell rcell1 = row1.createCell(1);
-           Cell rcell2 = row1.createCell(2);
-           Cell rcell3 = row1.createCell(3);
-           Cell rcell4 = row1.createCell(4);
-           Cell rcell5 = row1.createCell(5);
-           Cell rcell6 = row1.createCell(6);
-           Cell rcell7 = row1.createCell(7);
-           Cell rcell8 = row1.createCell(8);
-           Cell rcell9 = row1.createCell(9);
-           Cell rcell10 = row1.createCell(10);
-
-           rcell0.setCellValue(listaData.get(vi).strFormatDate);
-           rcell1.setCellValue(listaData.get(vi).dblAMTSALE);
-           rcell2.setCellValue(listaData.get(vi).lngQTYCLARS);
-           rcell3.setCellValue(listaData.get(vi).lngQTYCLARP);
-           rcell4.setCellValue(listaData.get(vi).lngQTYCLARC);
-           rcell5.setCellValue(listaData.get(vi).lngQNMATCH);
-           rcell6.setCellValue(listaData.get(vi).lngQTYCLAR);
-           rcell7.setCellValue(listaData.get(vi).dblAMTCLAR);
-           rcell8.setCellValue(listaData.get(vi).lngQTYBANK);
-           rcell9.setCellValue(listaData.get(vi).lngQTYBANKN);
-           rcell10.setCellValue(listaData.get(vi).dblAMTBANK);
-           
-           iter.next();
-           ++vi;
-           ++vj;
-        }
-
-            sheet.autoSizeColumn(0, true);
-            sheet.autoSizeColumn(1, true);
-            sheet.autoSizeColumn(2, true);
-            sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-            sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
-            sheet.autoSizeColumn(8, true);
-            sheet.autoSizeColumn(9, true);
-            sheet.autoSizeColumn(10, true);
-
-             //============================================
-            response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-
-            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-            workbook.write(response.getOutputStream());
-            fos.close();
-
-        } catch (IOException e) {
-            throw new SpringException(e);
+    private static String getAbreviaturaMes(String strDate) {
+//
+       if (strDate.equals("01")) {
+            return "Jan";
+        } else if (strDate.equals("02")) {
+            return "Feb";
+        } else if (strDate.equals("03")) {
+            return "Mar";
+        } else if (strDate.equals("04")) {
+            return "Apr";
+        } else if (strDate.equals("05")) {
+            return "May";
+        } else if (strDate.equals("06")) {
+            return "Jun";
+        } else if (strDate.equals("07")) {
+            return "Jul";
+        } else if (strDate.equals("08")) {
+            return "Aug";
+        } else if (strDate.equals("09")) {
+            return "Sep";
+        } else if (strDate.equals("10")) {
+            return "Oct";
+        } else if (strDate.equals("11")) {
+            return "Nov";
+        } else if (strDate.equals("12")) {
+            return "Dec";
+        } else {
+            return "Error";
         }
     }
     
+//    private static String excelFloatToDate(double floatVal) {
+//
+//        double seconds = (floatVal - 25569) * 86400.0;
+//        Date fec = new Date(seconds*1000);
+//        fec.setDate(fec.date + 1);
+//        
+//        String result = "";
+//
+//        try{
+//            result = formatDate.format(fec);
+//        }catch(Exception e){
+//            result = "Error";
+//        }
+//        
+//        return result;
+//    }
+   
     
-    @RequestMapping(value = "getXLSX_2")
-    public @ResponseBody
-    void getXLSX_2(HttpServletRequest request, HttpServletResponse response) {
     
-        System.out.println("Report : getXLSX_2");
-        String fileNameDownload = String.format("ClarificationLoad  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-  
-        try {
- 
-            Workbook workbook;
-            File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A2331Filter> listaData = this.getListdetailByBank(request, true);
- 
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-            workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Report");
-
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-            
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            Integer vi = 0;
-            Integer vj = 0; //Almacena el numero de fila
-            Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
-
-
-             // ======  Nivel 1 ==========
-
-            Row row1 = sheet.createRow(vj);
-            Cell CH1_0 = row1.createCell(0);
-            Cell CH1_1 = row1.createCell(1);
-            Cell CH1_2 = row1.createCell(2);
-            Cell CH1_3 = row1.createCell(3);
-            Cell CH1_4 = row1.createCell(4);
-            Cell CH1_5 = row1.createCell(5);
-            Cell CH1_6 = row1.createCell(6);
-            Cell CH1_7 = row1.createCell(7);
-            Cell CH1_8 = row1.createCell(8);
-            Cell CH1_9 = row1.createCell(9);
-            Cell CH1_10 = row1.createCell(10);
-            Cell CH1_11 = row1.createCell(11);
-
-            CH1_0.setCellValue("Bank");
-            CH1_2.setCellValue("Sales");
-            CH1_3.setCellValue("Clarifications");
-            CH1_9.setCellValue("Bank Notice / ChargedBack");
-
-            CH1_0.setCellStyle(headerStyle);
-            CH1_1.setCellStyle(headerStyle);
-            CH1_2.setCellStyle(headerStyle);
-            CH1_3.setCellStyle(headerStyle);
-            CH1_4.setCellStyle(headerStyle);
-            CH1_5.setCellStyle(headerStyle);
-            CH1_6.setCellStyle(headerStyle);
-            CH1_7.setCellStyle(headerStyle);
-            CH1_8.setCellStyle(headerStyle);
-            CH1_9.setCellStyle(headerStyle);
-            CH1_10.setCellStyle(headerStyle);
-            CH1_11.setCellStyle(headerStyle);
-
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 11));
-            ++vj;
-             //============================================
-
-             // ======  Nivel 2 ==========
-
-            Row row2 = sheet.createRow(vj);
-            Cell CH2_0 = row2.createCell(0);
-            Cell CH2_1 = row2.createCell(1);
-            Cell CH2_2 = row2.createCell(2);
-            Cell CH2_3 = row2.createCell(3);
-            Cell CH2_4 = row2.createCell(4);
-            Cell CH2_5 = row2.createCell(5);
-            Cell CH2_6 = row2.createCell(6);
-            Cell CH2_7 = row2.createCell(7);
-            Cell CH2_8 = row2.createCell(8);
-            Cell CH2_9 = row2.createCell(9);
-            Cell CH2_10 = row2.createCell(10);
-            Cell CH2_11 = row2.createCell(11);
-
-            CH2_0.setCellValue("Code");
-            CH2_1.setCellValue("Description");
-            CH2_2.setCellValue("MXN");
-            CH2_3.setCellValue("Stand By");
-            CH2_4.setCellValue("On Process");
-            CH2_5.setCellValue("Charged");
-            CH2_6.setCellValue("Not Found");
-            CH2_7.setCellValue("Total");
-            CH2_8.setCellValue("MXN");
-            CH2_9.setCellValue("Total");
-            CH2_10.setCellValue("Not Found");
-            CH2_11.setCellValue("MXN");
-
-            CH2_0.setCellStyle(headerStyle);
-            CH2_1.setCellStyle(headerStyle);
-            CH2_2.setCellStyle(headerStyle);
-            CH2_3.setCellStyle(headerStyle);
-            CH2_4.setCellStyle(headerStyle);
-            CH2_5.setCellStyle(headerStyle);
-            CH2_6.setCellStyle(headerStyle);
-            CH2_7.setCellStyle(headerStyle);
-            CH2_8.setCellStyle(headerStyle);
-            CH2_9.setCellStyle(headerStyle);
-            CH2_10.setCellStyle(headerStyle);
-            CH2_11.setCellStyle(headerStyle);
-
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-            ++vj;
-             //============================================
-
-            while (iter.hasNext()) {
-                row1 = sheet.createRow(vj);
-                Cell rcell0 = row1.createCell(0);
-                Cell rcell1 = row1.createCell(1);
-                Cell rcell2 = row1.createCell(2);
-                Cell rcell3 = row1.createCell(3);
-                Cell rcell4 = row1.createCell(4);
-                Cell rcell5 = row1.createCell(5);
-                Cell rcell6 = row1.createCell(6);
-                Cell rcell7 = row1.createCell(7);
-                Cell rcell8 = row1.createCell(8);
-                Cell rcell9 = row1.createCell(9);
-                Cell rcell10 = row1.createCell(10);
-                Cell rcell11 = row1.createCell(11);
-
-                rcell0.setCellValue(listaData.get(vi).CODEBANK);
-                rcell1.setCellValue(listaData.get(vi).strDescripcion);
-                rcell2.setCellValue(listaData.get(vi).dblAMTSALE);
-                rcell3.setCellValue(listaData.get(vi).lngQTYCLARS);
-                rcell4.setCellValue(listaData.get(vi).lngQTYCLARP);
-                rcell5.setCellValue(listaData.get(vi).lngQTYCLARC);
-                rcell6.setCellValue(listaData.get(vi).lngQNMATCH);
-                rcell7.setCellValue(listaData.get(vi).lngQTYCLAR);
-                rcell8.setCellValue(listaData.get(vi).dblAMTCLAR);
-                rcell9.setCellValue(listaData.get(vi).lngQTYBANK);
-                rcell10.setCellValue(listaData.get(vi).lngQTYBANKN);
-                rcell11.setCellValue(listaData.get(vi).dblAMTBANK);
-                iter.next();
-                 ++vi;
-                ++vj;
-            }
-
-            sheet.autoSizeColumn(0, true);
-            sheet.autoSizeColumn(1, true);
-            sheet.autoSizeColumn(2, true);
-            sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-            sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
-            sheet.autoSizeColumn(8, true);
-            sheet.autoSizeColumn(9, true);
-            sheet.autoSizeColumn(10, true);
-            sheet.autoSizeColumn(11, true);
-
-             //============================================
-            response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-
-            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-            workbook.write(response.getOutputStream());
-            fos.close();
-
-        } catch (IOException e) {
-            throw new SpringException(e);
-        }
-    }
-
     
-    @RequestMapping(value = "getXLSX_3")
-    public @ResponseBody
-    void getXLSX_3(HttpServletRequest request, HttpServletResponse response) {
-    
-        System.out.println("Report : getXLSX_3");
-        String fileNameDownload = String.format("ClarificationLoad  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-  
-        try {
-            Workbook workbook;
-            File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A2331Filter> listaData = this.getListdetailByBank(request, true);
-            
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-            workbook = new XSSFWorkbook();
-            Sheet sheet = workbook.createSheet("Report");
-            
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-            
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            Integer vi = 0;
-            Integer vj = 0; //Almacena el numero de fila
-            Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
-
-
-             // ======  Nivel 1 ==========
-
-            Row row1 = sheet.createRow(vj);
-            Cell CH1_0 = row1.createCell(0);
-            Cell CH1_1 = row1.createCell(1);
-            Cell CH1_2 = row1.createCell(2);
-            Cell CH1_3 = row1.createCell(3);
-            Cell CH1_4 = row1.createCell(4);
-            Cell CH1_5 = row1.createCell(5);
-            Cell CH1_6 = row1.createCell(6);
-            Cell CH1_7 = row1.createCell(7);
-            Cell CH1_8 = row1.createCell(8);
-            Cell CH1_9 = row1.createCell(9);
-            Cell CH1_10 = row1.createCell(10);
-            Cell CH1_11 = row1.createCell(11);
-
-            CH1_0.setCellValue("Bank");
-            CH1_2.setCellValue("Sales");
-            CH1_3.setCellValue("Clarifications");
-            CH1_9.setCellValue("Bank Notice / ChargedBack");
-
-            CH1_0.setCellStyle(headerStyle);
-            CH1_1.setCellStyle(headerStyle);
-            CH1_2.setCellStyle(headerStyle);
-            CH1_3.setCellStyle(headerStyle);
-            CH1_4.setCellStyle(headerStyle);
-            CH1_5.setCellStyle(headerStyle);
-            CH1_6.setCellStyle(headerStyle);
-            CH1_7.setCellStyle(headerStyle);
-            CH1_8.setCellStyle(headerStyle);
-            CH1_9.setCellStyle(headerStyle);
-            CH1_10.setCellStyle(headerStyle);
-            CH1_11.setCellStyle(headerStyle);
-
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 11));
-            ++vj;
-             //============================================
-
-             // ======  Nivel 2 ==========
-
-            Row row2 = sheet.createRow(vj);
-            Cell CH2_0 = row2.createCell(0);
-            Cell CH2_1 = row2.createCell(1);
-            Cell CH2_2 = row2.createCell(2);
-            Cell CH2_3 = row2.createCell(3);
-            Cell CH2_4 = row2.createCell(4);
-            Cell CH2_5 = row2.createCell(5);
-            Cell CH2_6 = row2.createCell(6);
-            Cell CH2_7 = row2.createCell(7);
-            Cell CH2_8 = row2.createCell(8);
-            Cell CH2_9 = row2.createCell(9);
-            Cell CH2_10 = row2.createCell(10);
-            Cell CH2_11 = row2.createCell(11);
-
-            CH2_0.setCellValue("Code");
-            CH2_1.setCellValue("Description");
-            CH2_2.setCellValue("MXN");
-            CH2_3.setCellValue("Stand By");
-            CH2_4.setCellValue("On Process");
-            CH2_5.setCellValue("Charged");
-            CH2_6.setCellValue("Not Found");
-            CH2_7.setCellValue("Total");
-            CH2_8.setCellValue("MXN");
-            CH2_9.setCellValue("Total");
-            CH2_10.setCellValue("Not Found");
-            CH2_11.setCellValue("MXN");
-
-            CH2_0.setCellStyle(headerStyle);
-            CH2_1.setCellStyle(headerStyle);
-            CH2_2.setCellStyle(headerStyle);
-            CH2_3.setCellStyle(headerStyle);
-            CH2_4.setCellStyle(headerStyle);
-            CH2_5.setCellStyle(headerStyle);
-            CH2_6.setCellStyle(headerStyle);
-            CH2_7.setCellStyle(headerStyle);
-            CH2_8.setCellStyle(headerStyle);
-            CH2_9.setCellStyle(headerStyle);
-            CH2_10.setCellStyle(headerStyle);
-            CH2_11.setCellStyle(headerStyle);
-
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-            ++vj;
-             //============================================
-
-            while (iter.hasNext()) {
-                row1 = sheet.createRow(vj);
-                Cell rcell0 = row1.createCell(0);
-                Cell rcell1 = row1.createCell(1);
-                Cell rcell2 = row1.createCell(2);
-                Cell rcell3 = row1.createCell(3);
-                Cell rcell4 = row1.createCell(4);
-                Cell rcell5 = row1.createCell(5);
-                Cell rcell6 = row1.createCell(6);
-                Cell rcell7 = row1.createCell(7);
-                Cell rcell8 = row1.createCell(8);
-                Cell rcell9 = row1.createCell(9);
-                Cell rcell10 = row1.createCell(10);
-                Cell rcell11 = row1.createCell(11);
-
-                rcell0.setCellValue(listaData.get(vi).SENTDATE);
-                rcell1.setCellValue(listaData.get(vi).strDescripcion);
-                rcell2.setCellValue(listaData.get(vi).dblAMTSALE);
-                rcell3.setCellValue(listaData.get(vi).lngQTYCLARS);
-                rcell4.setCellValue(listaData.get(vi).lngQTYCLARP);
-                rcell5.setCellValue(listaData.get(vi).lngQTYCLARC);
-                rcell6.setCellValue(listaData.get(vi).lngQNMATCH);
-                rcell7.setCellValue(listaData.get(vi).lngQTYCLAR);
-                rcell8.setCellValue(listaData.get(vi).dblAMTCLAR);
-                rcell9.setCellValue(listaData.get(vi).lngQTYBANK);
-                rcell10.setCellValue(listaData.get(vi).lngQTYBANKN);
-                rcell11.setCellValue(listaData.get(vi).dblAMTBANK);
-                iter.next();
-                 ++vi;
-                ++vj;
-            }
-                sheet.autoSizeColumn(0, true);
-                sheet.autoSizeColumn(1, true);
-                sheet.autoSizeColumn(2, true);
-                sheet.autoSizeColumn(3, true);
-                sheet.autoSizeColumn(4, true);
-                sheet.autoSizeColumn(5, true);
-                sheet.autoSizeColumn(6, true);
-                sheet.autoSizeColumn(7, true);
-                sheet.autoSizeColumn(8, true);
-                sheet.autoSizeColumn(9, true);
-                sheet.autoSizeColumn(10, true);
-                sheet.autoSizeColumn(11, true);
-
-             //============================================
-            response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-
-            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-            workbook.write(response.getOutputStream());
-            fos.close();
-
-        } catch (IOException e) {
-            throw new SpringException(e);
-        }
-    }
-
-    
-    */
 }
+    
+

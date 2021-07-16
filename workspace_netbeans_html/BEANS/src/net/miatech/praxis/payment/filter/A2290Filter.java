@@ -39,6 +39,7 @@ public class A2290Filter extends A2290 {
     public String IN_CARDN = "";
     public String IN_CARDN1 = "";
     public String IN_CARDN2 = "";
+    public String IN_SAUTHOC = "";
     public String IN_FTE = "";
     public String IN_PAYMENT = "";
     public String IN_TDOC = "";
