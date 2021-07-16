@@ -265,9 +265,9 @@ Ext.define('Ext.Praxis.controller.sales.PolicyDeliveryLogForm.PolicyDeliveryLogF
                 color = '#FF9966';
                 value = 'Disputed';
                 break;
-            case 'E':
+            case 'INACTIVE':
                 color = '#F78181';
-                value = 'Rejected dispute';
+                value = 'INACTIVE';
                 break;
             case 'W':
                 color = '#F3EFB6';
