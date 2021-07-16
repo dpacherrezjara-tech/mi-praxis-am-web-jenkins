@@ -16,6 +16,8 @@ import net.miatech.praxis.payment.A3800;
 public class A3800Filter extends A3800 {
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String strDescStatus = "";
+    public double DIFF = 0.0;
     
     public Pagination page = new Pagination();
 }
