@@ -48,6 +48,7 @@ Ext.define('Ext.Praxis.controller.sales.PolicyDeliveryLogForm.PolicyDeliveryLogF
                 {"code": "", "name": "ALL"},
                 {"code": "SA", "name": "SALE"},
                 {"code": "AUD", "name": "SALE AUDIT"},
+                {"code": "DISC", "name": "DISC"},
                 {"code": "FL", "name": "FLOWN"},
                 {"code": "IXC", "name": "IXC"},
                 {"code": "IXP", "name": "IXP"},
@@ -94,7 +95,10 @@ Ext.define('Ext.Praxis.controller.sales.PolicyDeliveryLogForm.PolicyDeliveryLogF
                 {"code": "ARD", "name": "AR DISTRIBUTION"},
                 {"code": "GLT", "name": "GL TAXES"},
                 {"code": "GAP", "name": "PROVITIONAL GL OF THE AP"},
-                {"code": "GAR", "name": "PROVITIONAL GL OF THE AR"}
+                {"code": "GAR", "name": "PROVITIONAL GL OF THE AR"},
+                {"code": "GLT", "name": "GL TUAS"},
+                {"code": "GLE", "name": "GL TUAS"},
+                {"code": "GLR", "name": "GL  TKT AEREO"}
             ]
         }));
 
