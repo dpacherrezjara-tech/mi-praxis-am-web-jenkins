@@ -198,6 +198,9 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         console.log(this.beanDetCard)
         me.paramsDetailCard.beanString = JSON.stringify(this.beanDetCard);
         this.SetOnGridDetCardA2290();
+        this.SetOnGridDetCardA2291();
+        Ext.getCmp(prototype.id + '-gridCardDataA2290').setTitle('<center style="font-size:12px;">' + 'Sales Reconciliation By Ticket' + '</center>');
+        Ext.getCmp(prototype.id + '-gridCardDataA2291').setTitle('<center style="font-size:12px;">' + 'Bank Reconciliation' + '</center>');
     },
     SetOnGridDetCardA2290: function() {
         win.lblUser_toolTip("Estructura: A2290 - A2291");
@@ -225,6 +228,56 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             }
         });
         Ext.getCmp(prototype.id + '-gridCardDataA2290').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridCardDataA2290').setStore(storeGridDatas);
+    },
+    SetOnGridDetCardA2291: function() {
+        win.lblUser_toolTip("Estructura: A2290 - A2291");
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetCardA2291'
+            }, listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = me.paramsDetailCard;
+                },
+                load: function(obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var data = obj.data.items[0].data;
+                        //Ext.getCmp(prototype.id + '-boxCardData').setTitle('<center style="font-size:12px;">' + ' Sale Date : ' + data.IN_SDATE + ' - ' + 'Card: ' + data.IN_CARDN + ' - ' + 'Authorizacion Code: ' + data.IN_SAUTHOC + '</center>');
+
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridCardDataA2291').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridCardDataA2291').setStore(storeGridDatas);
+    },
+    showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        console.log('RowData');
+        console.log(rowData.data);
+        me.viewMasterTkt(rowData.data);
+    },
+    viewMasterTkt: function(data) {
+
+        prototypeProgram.view = 'payments-last-conciliation-form';
+        prototypeProgram.nprog = 'PX00000095';
+        prototypeProgram.title = 'Last Conciliation with Sales';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        beanProMasterTicket.IN_CIA = data.CCIA;
+        beanProMasterTicket.IN_FORMA = data.FORMA;
+        beanProMasterTicket.IN_SERIE = data.SERIE;
+        beanProMasterTicket.IN_SEQ = data.SEQRO;
+
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
     validateFields: function() {
         var msj = '';
