@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author 
+ * @author
  */
 public class LastConciliationDAO {
 
@@ -47,14 +48,16 @@ public class LastConciliationDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A3800Filter> loadPX565SQP04093(A3800Filter filter) throws SQLException, Exception {
         List<A3800Filter> list = new ArrayList<A3800Filter>();
         A3800Filter objRtn;
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
-        double dblAMOUNTDOC = 0;
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04093(?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
+        
+        HashMap<String, String> hmDescEstadosSTVAL = new HashMap<String, String>();
+        hmDescEstadosSTVAL.put("1", "Conciliate");
 
         Connection cnx = null;
         try {
@@ -99,14 +102,14 @@ public class LastConciliationDAO {
                     objRtn = new A3800Filter();
                     objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
                     objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
-                    
-                    //, , , , , , , , ,
-                    //, , , , , , 
-                            
+
                     objRtn.SDATE = rs01.getString("SDATE").trim();
                     objRtn.TDOC = rs01.getString("TDOC").trim();
                     objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
                     objRtn.STVAL = rs01.getString("STVAL").trim();
+                    if (hmDescEstadosSTVAL.containsKey(rs01.getString("STVAL").trim().toUpperCase())) {
+                        objRtn.strDescStatus = hmDescEstadosSTVAL.get(rs01.getString("STVAL").trim()).toString();
+                    }
                     objRtn.SCARDN = rs01.getString("SCARDN").trim();
                     objRtn.SDATEXP = rs01.getString("SDATEXP").trim();
                     objRtn.SAUTHOC = rs01.getString("SAUTHOC").trim();
@@ -115,11 +118,12 @@ public class LastConciliationDAO {
                     objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
                     objRtn.SAGENT = rs01.getString("SAGENT").trim();
                     objRtn.SPAYMENT = rs01.getString("SPAYMENT").trim();
-                    objRtn.SVFOP = rs01.getDouble("SVFOP");
+                    objRtn.SVFOP = rs01.getDouble("SVFOP");     
                     objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
                     objRtn.SVFOPS = rs01.getDouble("SVFOPS");
                     objRtn.SCURRENCYS = rs01.getString("SCURRENCYS").trim();
-
+                    objRtn.DIFF = rs01.getDouble("SVFOP") - rs01.getDouble("SVFOPS");
+                    
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;
                     objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -164,14 +168,14 @@ public class LastConciliationDAO {
 
         return list;
     }
-    
-    
+
     public List<A2290Filter> loadPX565SQP04094(A2290Filter filter) throws SQLException, Exception {
         List<A2290Filter> list = new ArrayList<A2290Filter>();
         A2290Filter objRtn;
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04094(?,?,?,?)}";//" + session.getMainLibrary() + "
+        double totSVFOP = 0;
 
         Connection cnx = null;
         try {
@@ -185,12 +189,10 @@ public class LastConciliationDAO {
 
             cstmt.execute();
 
-
             rs01 = cstmt.getResultSet();
             while (rs01.next()) {
 
-                //dblAMOUNTDOC = rs01.getDouble("AMOUNTDOC");
-
+                totSVFOP = rs01.getDouble("SVFOP");
             }
             try {
                 rs01.close();
@@ -205,8 +207,8 @@ public class LastConciliationDAO {
                     objRtn = new A2290Filter();
                     objRtn.IN_SDATE = filter.IN_SDATE;
                     objRtn.IN_CARDN = filter.IN_CARDN;
-                    objRtn.IN_SAUTHOC = filter.IN_SAUTHOC;                    
-                            
+                    objRtn.IN_SAUTHOC = filter.IN_SAUTHOC;
+
                     objRtn.CCIA = rs01.getString("CCIA").trim();
                     objRtn.FORMA = rs01.getString("FORMA").trim();
                     objRtn.SERIE = rs01.getString("SERIE").trim();
@@ -214,23 +216,29 @@ public class LastConciliationDAO {
                     objRtn.SVFOP = rs01.getDouble("SVFOP");
                     objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
                     objRtn.SPNR = rs01.getString("SPNR").trim();
-                    objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();                    
-                    objRtn.STVAL = rs01.getString("STVAL").trim();
-                    objRtn.CERROR = rs01.getString("CERROR").trim() + " : " + rs01.getString("ERROR").trim();
+                    objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
+                    objRtn.STVAL = rs01.getString("STVAL").trim();                    
+                    objRtn.SAGENT = rs01.getString("SAGENT").trim();
+                    if (!rs01.getString("CERROR").trim().equals("")) {
+                        objRtn.CERROR = rs01.getString("CERROR").trim() + " : " + rs01.getString("ERROR").trim();
+                    }
+
                     if (rs01.getString("AFTE").trim().equals("X")) {
-                            objRtn.strPEM = "ACCB BSP";
-                        } else if (rs01.getString("AFTE").trim().equals("A")) {
-                            objRtn.strPEM = "ACCB ARC";
-                        } else if (rs01.getString("AFTE").trim().equals("B")) {
-                            objRtn.strPEM = "ACCB ASR";
-                        } else if (rs01.getString("AFTE").trim().equals("N")) {
-                            objRtn.strPEM = "ACCB ASR";
-                        } else if (rs01.getString("AFTE").trim().equals("L")) {
-                            objRtn.strPEM = "ACCB ASR";
-                        } else {
-                            objRtn.strPEM = "ACCB";
-                        }
+                        objRtn.strPEM = "ACCB BSP";
+                    } else if (rs01.getString("AFTE").trim().equals("A")) {
+                        objRtn.strPEM = "ACCB ARC";
+                    } else if (rs01.getString("AFTE").trim().equals("B")) {
+                        objRtn.strPEM = "ACCB ASR";
+                    } else if (rs01.getString("AFTE").trim().equals("N")) {
+                        objRtn.strPEM = "ACCB ASR";
+                    } else if (rs01.getString("AFTE").trim().equals("L")) {
+                        objRtn.strPEM = "ACCB ASR";
+                    } else {
+                        objRtn.strPEM = "ACCB";
+                    }
                     
+                    objRtn.totSVFOP = totSVFOP;
+
                     list.add(objRtn);
                 }
             }
@@ -270,5 +278,196 @@ public class LastConciliationDAO {
 
         return list;
     }
-    
+
+    public List<A2290Filter> loadPX565SQP04095(A2290Filter filter) throws SQLException, Exception {
+        List<A2290Filter> list = new ArrayList<A2290Filter>();
+        A2290Filter beanTkt;
+        CallableStatement cstmt = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04095(?,?,?,?)}";//" + session.getMainLibrary() + "
+
+        double totSVFOP = 0;
+        
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("1", "Accepted");
+        hmDescEstados.put("2", "Rejected");
+        hmDescEstados.put("3", "Suspect");
+
+        HashMap<String, String> hmDescEstadosSTVAL = new HashMap<String, String>();
+        hmDescEstadosSTVAL.put("1", "Match");
+        hmDescEstadosSTVAL.put("2", "Settlement w/o Paying");
+        hmDescEstadosSTVAL.put("3", "Paying w/o Settlement");
+        hmDescEstadosSTVAL.put("4", "Match with Difference");
+        hmDescEstadosSTVAL.put("5", "Match Manual");
+
+        HashMap<String, String> hmDescOrigen = new HashMap<String, String>();
+        hmDescOrigen.put("B", "Banamex");
+        hmDescOrigen.put("A", "American");
+        hmDescOrigen.put("P", "Pagatodo");
+        hmDescOrigen.put("C", "Citibank");
+        hmDescOrigen.put("S", "Santander");
+        hmDescOrigen.put("N", "Banorte");
+        hmDescOrigen.put("E", "Elavon");
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_SDATE.trim());
+            cstmt.setString(3, filter.IN_CARDN.trim());
+            cstmt.setString(4, filter.IN_SAUTHOC.trim());
+
+            cstmt.execute();
+
+            rs01 = cstmt.getResultSet();
+            while (rs01.next()) {
+
+                totSVFOP = rs01.getDouble("SVFOP");
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+            if (cstmt.getMoreResults()) {
+                rs01 = cstmt.getResultSet();
+                while (rs01.next()) {
+
+                    beanTkt = new A2290Filter();
+                    beanTkt.IN_SDATE = filter.IN_SDATE.trim();
+
+                    beanTkt.STVAL = rs01.getString("STVAL").trim();
+                    if (hmDescEstadosSTVAL.containsKey(rs01.getString("STVAL").trim().toUpperCase())) {
+                        beanTkt.strDescStatus = hmDescEstadosSTVAL.get(rs01.getString("STVAL").trim()).toString();
+                    }
+                    beanTkt.SEQNUM = rs01.getString("SEQNUM").trim();
+                    beanTkt.SAGENT = rs01.getString("SAGENT").trim();
+                    //beanTkt.strDescripcion = rs01.getString("DESCAGT").trim();
+                    beanTkt.FTE = rs01.getString("FTE").trim();
+                    if (rs01.getString("FTE").trim().equals("S")) {
+                        beanTkt.strDescFTE = "ASR";
+                    } else if (rs01.getString("FTE").trim().equals("A")) {
+                        beanTkt.strDescFTE = "ARC";
+                    } else if (rs01.getString("FTE").trim().equals("B")) {
+                        beanTkt.strDescFTE = "BSP";
+                    } else {
+                        beanTkt.strDescFTE = rs01.getString("FTE").trim();
+                    }
+                    beanTkt.strTRNXCODE = rs01.getString("TRNXCODE").trim();
+                    beanTkt.strPEM = rs01.getString("PEM").trim();
+                    if (beanTkt.strPEM.trim().equals("01")) {
+                        beanTkt.strPEM = "Manual";
+                    } else if (beanTkt.strPEM.trim().equals("05")) {
+                        beanTkt.strPEM = "Chip EMV";
+                    } else if (beanTkt.strPEM.trim().equals("80")) {
+                        beanTkt.strPEM = "Fallback";
+                    } else if (beanTkt.strPEM.trim().equals("90")) {
+                        beanTkt.strPEM = "Deslizada";
+                    }
+                    beanTkt.MERCHN = rs01.getString("MERCHN").trim();
+                    if (rs01.getString("NMERCHN") != null && !rs01.getString("NMERCHN").trim().equals("-")) {
+                        beanTkt.strDescMerchn = rs01.getString("NMERCHN").trim();
+                    }
+                    beanTkt.SCARCOD = rs01.getString("SCARCOD").trim();
+                    beanTkt.SCARDN = rs01.getString("SCARDN").trim();
+                    beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rs01.getString("SCARDN").trim(), "");
+                    beanTkt.SAUTHOC = rs01.getString("SAUTHOC").trim();
+                    beanTkt.SCURRENCY = rs01.getString("SCURRENCY").trim();
+                    beanTkt.SVFOP = rs01.getDouble("SVFOP");
+                    beanTkt.TDATE = rs01.getString("TDATE").trim();
+                    beanTkt.DATEF = rs01.getString("DATEF").trim();
+                    if (rs01.getString("BDATEP").trim().length() == 6) {
+                        beanTkt.BDATEP = Functions.FormatFecha(rs01.getString("BDATEP").trim(), "yyMMdd", "yyyyMMdd");
+                    } else {
+                        beanTkt.BDATEP = rs01.getString("BDATEP").trim();
+                    }
+                    if (hmDescEstados.containsKey(rs01.getString("BSTVAL").trim().toUpperCase())) {
+                        beanTkt.BSTVAL = hmDescEstados.get(rs01.getString("BSTVAL").trim()).toString();
+                    } else {
+                        beanTkt.BSTVAL = rs01.getString("BSTVAL").trim();
+                    }
+
+                    beanTkt.TDOC = rs01.getString("TDOC").trim();
+                    beanTkt.strNUMREF = rs01.getString("NUMREF").trim();
+                    beanTkt.SDATE = rs01.getString("SDATE").trim();
+                    beanTkt.strFLOAD = rs01.getString("FLOAD").trim();
+                    if (beanTkt.strFLOAD.trim().equals("M")) {
+                        beanTkt.strFLOAD = "Manual";
+                    }
+                    beanTkt.SDATEL = rs01.getString("LDATE").trim();
+                    beanTkt.strSORIG = rs01.getString("SORIG").trim();
+
+                    if (hmDescOrigen.containsKey(rs01.getString("SORIG").trim())) {
+                        beanTkt.strSORIG = hmDescOrigen.get(rs01.getString("SORIG").trim());
+                    } else {
+                        beanTkt.strSORIG = rs01.getString("SORIG").trim();
+                    }
+                    beanTkt.BAID = rs01.getString("BAID").trim();
+                    if (rs01.getString("FLAGC").trim().equals("C")) {
+                        beanTkt.FLAGC = "Match";
+                    }/* else {
+                     beanTkt.FLAGC = "Paying w/o Sales";
+                     }*/
+
+                    beanTkt.DATEC = rs01.getString("DATEC").trim();
+                    if (!rs01.getString("DATEC").trim().equals("")) {
+                        beanTkt.strBankDeposit = rs01.getString("DATEC").trim();
+                    } else {
+                        if (!beanTkt.BDATEP.trim().isEmpty()) {
+                            beanTkt.strBankDeposit = String.valueOf(Functions.diferenciaDiasEntreSistema(beanTkt.BDATEP));
+                        }
+                    }
+                    if (beanTkt.SCARCOD.equals("AX")) {
+                        beanTkt.FCONC = rs01.getString("FCONC").trim();
+                        if (beanTkt.FCONC.trim().equals("T")) {
+                            beanTkt.strDescFCONC = "Conciliation by Ticket";
+                        } else if (beanTkt.FCONC.trim().equals("G")) {
+                            beanTkt.strDescFCONC = "Conciliation by Group";
+                        }
+                    }
+                    
+                    beanTkt.totSVFOP = totSVFOP;
+
+                    list.add(beanTkt);
+                }
+            }
+
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            try {
+                cstmt.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return list;
+    }
 }

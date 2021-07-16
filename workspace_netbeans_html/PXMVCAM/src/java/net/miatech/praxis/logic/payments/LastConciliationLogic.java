@@ -32,5 +32,9 @@ public class LastConciliationLogic {
     public List<A2290Filter> loadPX565SQP04094(A2290Filter filter) throws SQLException, Exception {
         return LastConciliationDAO.loadPX565SQP04094(filter);
     }
+    
+    public List<A2290Filter> loadPX565SQP04095(A2290Filter filter) throws SQLException, Exception {
+        return LastConciliationDAO.loadPX565SQP04095(filter);
+    }
 
 }
