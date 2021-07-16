@@ -2340,11 +2340,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDataMarketSecondLevelInternational',
                                                     width: 664,
-                                                    height: 'auto',
+                                                    height: 262,
                                                     columnLines: true,
                                                     features: [{
                                                             ftype: 'summary',
-                                                            dock: 'bottom'
+                                                            //dock: 'bottom'
                                                         }],
                                                     columns: {
                                                         defaults: {
@@ -2367,9 +2367,10 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                     return value;
                                                                 },
                                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').getStore().getData().items[0].data;
+                                                                    console.log(data.totQTYPAX);
                                                                     metaData.style = 'text-align:right; margin-right:3px ';               
-                                                                    return '<b>' + Ext.util.Format.number(data.QTYPAX, '0,000') + '<b>';
+                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
                                                                 }
                                                             },
                                                             {
