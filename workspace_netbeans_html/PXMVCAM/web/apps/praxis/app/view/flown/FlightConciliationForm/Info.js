@@ -820,7 +820,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                                        },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#ccfaff;";
-                                                            value = '<b>' + value + '</b>';
+//                                                            value = '<b>' + value + '</b>';
                                                             return value;
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
