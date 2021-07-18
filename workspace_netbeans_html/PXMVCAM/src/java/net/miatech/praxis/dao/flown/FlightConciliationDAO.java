@@ -345,7 +345,7 @@ public class FlightConciliationDAO {
         A1691Filter2 beanCons;
         String strDesc = "";
         long QCPNOD = 0, QCPNVC = 0, QCPAD = 0, QCPCHD = 0, QCPINF = 0, QCPTRA = 0, QCPNOCR = 0, QCPNMA = 0, QCPNTOT = 0, QCPNLEG = 0, QCPNVAL = 0;
-        int QCPNFI = 0;
+        int QCPNFI = 0, QCPNFRE = 0;
         if (strTipo.equals("QPRO")) {
             strDesc = " Detail of Quantity Pending";
         } else if (strTipo.equals("QCLO")) {
@@ -414,6 +414,7 @@ public class FlightConciliationDAO {
                 QCPNMA = rst.getLong("QCPNMA");
                 QCPNTOT = rst.getLong("QCPNTOT");
                 QCPNFI = rst.getInt("QCPNFI");
+                QCPNFRE = rst.getInt("QCPNFRE");
 
                 QCPAD = rst.getLong("QCPAD");
                 QCPCHD = rst.getLong("QCPCHD");
@@ -486,6 +487,7 @@ public class FlightConciliationDAO {
 
                     beanCons.QCPNOD = rst.getLong("QCPNOD");
                     beanCons.QCPNFI = rst.getInt("QCPNFI");
+                    beanCons.QCPNFRE = rst.getInt("QCPNFRE");
                     beanCons.QCPNOCR = rst.getLong("QCPNOCR");
                     beanCons.QCPNVC = rst.getLong("QCPNVC");
                     beanCons.QCPNLEG = rst.getLong("QCPNLEG");
@@ -514,6 +516,7 @@ public class FlightConciliationDAO {
                     beanCons.totQCPINF = QCPINF;
                     beanCons.totQCPTRA = QCPTRA;
                     beanCons.totQCPNFI = QCPNFI;
+                    beanCons.totQCPNFRE = QCPNFRE;
                     beanCons.totQCPNVAL = QCPNVAL;
                     beanCons.totQCPNVAL = QCPNVAL;
                     

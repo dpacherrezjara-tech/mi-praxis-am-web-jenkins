@@ -440,7 +440,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'SSIM Data', flex: 1,
+                                                text: 'SSIM Data', //flex: 1,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -448,7 +448,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Flight', flex: 1,
+                                                        text: 'Flight', // flex: 1,
                                                         defaults: {
                                                             menuDisabled: true,
                                                             sortable: true,
@@ -456,7 +456,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatDate', flex: 1//width: 90flex: 1
+                                                                text: 'Date', dataIndex: 'strFormatDate', width: 100 //flex: 1
                                                             },
                                                             {
                                                                 text: 'Number', dataIndex: 'NFLIGHT', width: 60,
@@ -502,7 +502,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Date', dataIndex: 'strFormatFSENDSS', width: 90
+                                                                text: 'Date', dataIndex: 'strFormatFSENDSS', width: 100
                                                             }
                                                         ]
                                                     }
@@ -798,7 +798,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Qty', dataIndex: 'QCPNFI', width: 45, sortable: true,
+                                                        text: 'Qty', dataIndex: 'QCPNFI', width: 50, sortable: true,
                                                         listeners: {
                                                             click: 'onViewDetailFlightManifest'
                                                         },
@@ -811,6 +811,22 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                             return Ext.util.Format.number(data.totQCPNFI, '0,000');
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Qty NR', dataIndex: 'QCPNFRE', width: 60, sortable: true,
+//                                                        listeners: {
+//                                                            click: 'onViewDetailFlightManifest'
+//                                                        },
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:#ccfaff;";
+//                                                            value = '<b>' + value + '</b>';
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = "text-align:right;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                            return Ext.util.Format.number(data.totQCPNFRE, '0,000');
                                                         }
                                                     }
                                                 ]
