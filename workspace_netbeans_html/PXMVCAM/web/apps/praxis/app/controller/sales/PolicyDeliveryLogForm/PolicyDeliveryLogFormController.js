@@ -34,6 +34,7 @@ Ext.define('Ext.Praxis.controller.sales.PolicyDeliveryLogForm.PolicyDeliveryLogF
         var cmbStatus = Ext.getCmp(prototype.id + '-CmbStatus');
         var CmbPoliza = Ext.getCmp(prototype.id + '-CmbPoliza');
         var CmbTypePoliza = Ext.getCmp(prototype.id + '-CmbTypePoliza');
+        var CmbOracleStatus = Ext.getCmp(prototype.id + '-CmbOracleStatus');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -101,6 +102,18 @@ Ext.define('Ext.Praxis.controller.sales.PolicyDeliveryLogForm.PolicyDeliveryLogF
                 {"code": "GLR", "name": "GL  TKT AEREO"}
             ]
         }));
+        
+        CmbOracleStatus.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "P", "name": "PENDING"},
+                {"code": "N", "name": "IN PROCESS"},
+                {"code": "Q", "name": "SENT"},
+                {"code": "E", "name": "EXPIRED"},
+                {"code": "X", "name": "ERROR"},
+                {"code": "C", "name": "PROCESSED"}
+            ]
+        }));
 
     },
     setStoresGrids: function () {
@@ -150,6 +163,7 @@ Ext.define('Ext.Praxis.controller.sales.PolicyDeliveryLogForm.PolicyDeliveryLogF
         var CmbStatus = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
         var IN_NCAMP = Ext.getCmp(prototype.id + '-txtNCAMP').getValue();
         var IN_PRAXID = Ext.getCmp(prototype.id + '-txtPraxisID').getValue();
+        var CmbOracleStatus = Ext.getCmp(prototype.id + '-CmbOracleStatus').getValue();
         if (comboBy === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'SELECT Of By');
             return;
@@ -184,6 +198,7 @@ Ext.define('Ext.Praxis.controller.sales.PolicyDeliveryLogForm.PolicyDeliveryLogF
         me.beanTMP.IN_POLIZ = CmbPoliza;
         me.beanTMP.IN_TPOLI = CmbTypePoliza;
         me.beanTMP.IN_STATO = CmbStatus;
+        me.beanTMP.IN_ORACLESTATU = CmbOracleStatus;
         /*
          * El valor obtenido del checkbox se interpreta de forma inversa para 
          * aprovechar el uso de la variable bexcel
