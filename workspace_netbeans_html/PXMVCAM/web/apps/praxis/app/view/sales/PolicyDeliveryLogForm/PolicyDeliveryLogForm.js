@@ -321,12 +321,12 @@ Ext.define('Ext.Praxis.view.sales.PolicyDeliveryLogForm.PolicyDeliveryLogForm', 
                                             queryMode: 'local',
                                             displayField: 'name',
                                             valueField: 'code',
-                                            width: 150,
+                                            width: 230,
                                             labelWidth: 80,
                                             labelAlign: 'right',
                                             emptyText: '',
                                             listConfig: {
-                                                minWidth: 200
+                                                minWidth: 230
                                             },
                                             listeners: {
                                                 afterrender: 'onCmbStatusAfterRender',
