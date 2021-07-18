@@ -313,6 +313,25 @@ Ext.define('Ext.Praxis.view.sales.PolicyDeliveryLogForm.PolicyDeliveryLogForm', 
                                                 afterrender: 'onCmbStatusAfterRender',
                                                 change: 'onCmbStatusChange'
                                             }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-CmbOracleStatus',
+                                            fieldLabel: 'Oracle Status',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 150,
+                                            labelWidth: 80,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender',
+                                                change: 'onCmbStatusChange'
+                                            }
                                         }
                                     ]
                                 }
