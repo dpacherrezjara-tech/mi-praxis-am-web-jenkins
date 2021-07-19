@@ -150,7 +150,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAu
                                                 minWidth: 200
                                             },
                                             listeners: {
-                                                afterrender: 'onCmbSearchAfterRender'
+                                                afterrender: 'onCmbTypeSearchAfterRender'
                                             }
                                         },
                                         {
@@ -256,42 +256,6 @@ Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAu
                                                 afterrender: 'onCmbSearchAfterRender'
                                             }
                                         },
-//                                        {
-//                                            xtype: 'combo',
-//                                            id: prototype.id + '-CmbPoliza',
-//                                            fieldLabel: 'Poliza',
-//                                            queryMode: 'local',
-//                                            displayField: 'name',
-//                                            valueField: 'code',
-//                                            width: 200,
-//                                            labelWidth: 50,
-//                                            labelAlign: 'right',
-//                                            emptyText: '',
-//                                            listConfig: {
-//                                                minWidth: 200
-//                                            },
-//                                            listeners: {
-//                                                afterrender: 'onCmbSearchAfterRender'
-//                                            }
-//                                        },
-//                                        {
-//                                            xtype: 'combo',
-//                                            id: prototype.id + '-CmbTypePoliza',
-//                                            fieldLabel: 'Type Poliza',
-//                                            queryMode: 'local',
-//                                            displayField: 'name',
-//                                            valueField: 'code',
-//                                            width: 250,
-//                                            labelWidth: 70,
-//                                            labelAlign: 'right',
-//                                            emptyText: '',
-//                                            listConfig: {
-//                                                minWidth: 300
-//                                            },
-//                                            listeners: {
-//                                                afterrender: 'onCmbSearchAfterRender'
-//                                            }
-//                                        },
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-CmbStatus',
@@ -307,7 +271,45 @@ Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAu
                                                 minWidth: 200
                                             },
                                             listeners: {
-                                                afterrender: 'onCmbStatusAfterRender',
+                                                afterrender: 'onCmbSearchAfterRender01',
+                                                change: 'onCmbStatusChange'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-CmbStatus1',
+                                            fieldLabel: 'Status sending',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 170,
+                                            labelWidth: 90,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbSearchAfterRender',
+                                                change: 'onCmbStatusChange'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-CmbStatus2',
+                                            fieldLabel: 'Status load DB',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 170,
+                                            labelWidth: 90,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbSearchAfterRender',
                                                 change: 'onCmbStatusChange'
                                             }
                                         }
@@ -379,7 +381,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAu
                                     //{text: 'File </br> Name', dataIndex: 'A4022NARCH', align: 'left', width: 180,renderer: 'onRendererColumnAttr'},
                                     {text: 'Status', dataIndex: 'A4022STAT', width: 150,renderer: 'onRendererColumnStatus'},
                                     {
-                                        text: 'Datos de Envio',
+                                        text: 'Status sending',
                                         columns: [
                                             {text: 'Estado', dataIndex: 'A4022STSAF', width: 80, align: 'left'},
                                             {text: 'Usuario', dataIndex: 'A4022USAF', width: 70, align: 'center'},
@@ -387,7 +389,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingControlAuditForm.AccountingControlAu
                                         ]
                                     },
                                     {
-                                        text: 'Carga a BD',
+                                        text: 'Load DB',
                                         columns: [
                                             {text: 'Estado', dataIndex: 'A4022STSDB', width: 80, align: 'left'},
                                             {text: 'Fecha', dataIndex: 'A4022FISDB', width: 70, align: 'center'},
