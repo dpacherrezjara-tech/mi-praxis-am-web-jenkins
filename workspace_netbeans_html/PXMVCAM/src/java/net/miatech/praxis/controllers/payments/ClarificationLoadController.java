@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -445,7 +446,11 @@ public class ClarificationLoadController extends BaseController {
                                     if(filaTotal == false){
                                         if(rowAB > 0 && colAB == 5){
                                             //FECHA DE APLICACIÓN (02/10/2017)
-                                            tmp = formatter.formatCellValue(row.getCell(colAB));
+                                            if(row.getCell(colAB).getCellType() == 1){
+                                                tmp = formatter.formatCellValue(row.getCell(colAB));
+                                            }else{
+                                                tmp = new SimpleDateFormat("dd/MM/yyyy").format(row.getCell(colAB).getDateCellValue());
+                                            }
 
                                             if(tmp.trim().equals("")){
                                                 msjError = "Error. Application Date is Empty. Please contact AM. (Column F)";
