@@ -10,4 +10,4 @@ phases:
        - dt=$(date '+%d-%m-%Y-%H:%M:%S');
        - echo "$dt" 
        - zip -r $dt-$REPOSITORY_NAME-backup.zip ./
-       - aws s3 cp $dt-$REPOSITORY_NAME-backup.zip s3://$REPOSITORY_S3/$REPOSITORY_NAME
+       - aws s3 cp $dt-$REPOSITORY_NAME-backup.zip s3://$REPOSITORY_S3
