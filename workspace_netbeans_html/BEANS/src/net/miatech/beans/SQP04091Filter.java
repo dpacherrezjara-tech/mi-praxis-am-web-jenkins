@@ -14,10 +14,11 @@ import net.miatech.praxis.A4022;
 public class SQP04091Filter extends A4022 {
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
-    public String IN_OPTION = "";
-    //public String IN_NARCH = "";
+    public String IN_OPTION = "";    
     public String IN_MODULO = "";
     public String IN_TIPOM = "";    
-    public String IN_STATO = "";    
-     public Pagination page = new Pagination();
+    public String IN_STATO = ""; 
+    public String IN_STAT1 = ""; 
+    public String IN_STAT2 = ""; 
+    public Pagination page = new Pagination();
 }
