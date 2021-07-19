@@ -73,6 +73,7 @@ public class PolicyDeliveryLogFormController extends BaseController {
             filter.IN_TPOLI = request.getParameter("IN_TPOLI");
             filter.IN_PRAXID = request.getParameter("IN_PRAXID");
             filter.IN_STATO = request.getParameter("IN_STATO");
+            filter.IN_ORACLESTATU = request.getParameter("IN_ORACLESTATU");
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;

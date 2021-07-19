@@ -25,9 +25,9 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
         me = this;
         prototype.id = 'ClarificationLoadForm';
         prototype.url = CONTEXTPATH + '/ClarificationLoad';
-//        this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
-//        me.panelActual = '-panelGridData';
-//        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.obtainData();
         
 
@@ -79,7 +79,22 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
 //        // this.setStoreData();
 ////           this.btnSearch_click();
 //    },
-   
+    setFormatParameter: function() {
+
+        me.bean = {};
+        me.bean.CURRENC = Ext.getCmp(prototype.id + '-cmbCode').getValue();
+        me.bean.COUNTRY = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            bean: me.bean,
+            beanString: beanString
+        };
+        console.log(searchParams);
+    },
+    btnSearch_click: function(obj, e) {
+        this.setFormatParameter();
+        this.setGridData();
+    },
     obtainData: function() {
         
         var cmbBankCode = Ext.getCmp(prototype.id + '-cmbBankCode');
@@ -146,13 +161,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
         var input  = Ext.getCmp(prototype.id + '-cmbInput').getValue;
         var banco  = Ext.getCmp(prototype.id + '-cmbBankCode').getValue;
         
-//        if(banco === 'EL' || banco=== 'US' || banco==='AX'){
-//            me.uploadCSV();
-//        }else if(banco === 'STB' && input === 'C'){
-//            me.uploadFile();
-//        }else{
-            me.onFileLoad();
-//        }
+        me.onFileLoad();
     },
     
     onFileLoad: function() {
@@ -179,12 +188,26 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
             success: function (fp, o) {
                 var res = Ext.decode(o.response.responseText);
                 console.log(res);
-                var mensaje = res.msj;
-//                if (res.success) {
-//                    
-//                } else {
-                    global.Msg({msg: mensaje});
-//                }
+                
+                if (res.successUp) {
+                    var msjUpload = res.msjUpload;
+                    if(msjUpload === 'SUCCESS'){
+                        if(input === "N"){
+                            global.Msg({msg: 'Bank Notice successfully loaded.'});
+                        }else{
+                            global.Msg({msg: 'Clarification successfully loaded.'});
+                        }
+                        me.setGridData(banco);
+
+                    }else{
+                        global.Msg({msg: msjUpload});
+                    }
+                } else if(success){
+                    var msjResult = res.msjResult;
+                    global.Msg({msg: msjResult});
+                }else{
+                    global.Msg({msg: "Error File Load"});
+                }
                 Ext.getCmp(prototype.id+'-btn-upload').enable(true);
             },
             failure: function(response, opts) {
@@ -193,70 +216,37 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
         });
         
     },
-    setFormatParameter: function() {
-
-        me.bean = {};
-        me.bean.CURRENC = Ext.getCmp(prototype.id + '-cmbCode').getValue();
-        me.bean.COUNTRY = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
-        var beanString = JSON.stringify(me.bean);
-        searchParams = {
-            bean: me.bean,
-            beanString: beanString
-        };
-        console.log(searchParams);
-    },
-    btnSearch_click: function(obj, e) {
-        this.setFormatParameter();
-        this.setGridData();
-    },
+    
     // <editor-fold defaultstate="collapsed" desc="setGridData">
-
-    setGridData: function() {
-        win.lblUser_toolTip("Estructura: A2281");
+    setGridData: function(banco) {
+        
+        win.lblUser_toolTip("Estructura: A2270");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
-        this.setFormatParameter();
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            
-            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-                proxy: {
-                    url: prototype.url + '/search'
-                }, listeners: {
-                    beforeload: function(obj) {
-                        obj.proxy.extraParams =searchParams                                       
-                        
-                    },
-                    load: function(obj) {
-                        var pag = Ext.getCmp(prototype.id + '-paggin');
-                        var pagData = pag.getPageData();
-                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                        if (obj.data.length === 0) {
-                            global.Msg({
-                                msg: 'Data not found.'
-                            });
-                        }
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/search'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = {banco: banco}
+                },
+                load: function(obj) {
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
                     }
                 }
-            });
+            }
+        });
             
-            console.log(storeGridDatas);
-            global.clear();
-            Ext.getCmp(prototype.id + '-gridDataAirport').bindStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-        }
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataAirport').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        
     },
     // </editor-fold>
-
-
-    
-    
 
     btnBack_click: function(obj, e) {
 
@@ -313,9 +303,7 @@ Ext.define('Ext.Praxis.controller.payments.ClarificationLoad.ClarificationLoadCo
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
             default:
-                global.Msg(
-                        {msg: 'Under Construction'
-                        });
+                global.Msg({msg: 'Under Construction'});
         }
 
     },

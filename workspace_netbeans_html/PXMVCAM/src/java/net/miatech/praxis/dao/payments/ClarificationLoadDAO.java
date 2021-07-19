@@ -244,6 +244,315 @@ public class ClarificationLoadDAO {
         return strMsj;
     }
     
+    // ------------------------------------------------------ 
+    // ----------------------- Upload ----------------------- 
+    // ------------------------------------------------------ 
+    
+    
+    //**************************************************************************
+    //***************** PX413  AVISOS PREVIOS / CONTRACARGOS *******************
+    //**************************************************************************
+    public String loadPX413SQP01999(List lstExcel, String strBanco, String strHora) throws SQLException, Exception {
+
+        CallableStatement cs = null;
+        Connection cnx = null;
+        String strSQL;
+        String msj = "SUCCESS", strTrama = "";
+        int cantReg = 0;
+
+        for (int i = 0; i < lstExcel.size(); i++) {
+            strTrama = lstExcel.get(i).toString();
+
+            if (!strTrama.toUpperCase().contains("TOTAL")) {
+                cantReg++;
+            } else {
+                break;
+            }
+        }
+
+        try {
+
+            strSQL = "{CALL PRAXIS.SQP01999(?,?,?,?,?,?,?)}";
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+
+            for (int i = 0; i < lstExcel.size(); i++) {
+                strTrama = lstExcel.get(i).toString();
+                //System.out.println("Fila " + i + " : " + strTrama.trim());
+
+                if (i == 0) {
+                    if (strBanco.equals("BX") && strTrama.trim().length() > 200) {
+                        strTrama = strTrama.trim().substring(0, 200);
+
+                    }
+                }
+
+                if (!strTrama.toUpperCase().contains("TOTAL")) {
+                    //Para no incluir las ultimas lineas
+                    cs.setString(1, strBanco.trim());
+                    cs.setString(2, strTrama.trim());
+                    if (i == 0) {
+                        cs.setString(3, "Y");
+                    } else {
+                        cs.setString(3, "");
+                    }
+                    cs.setInt(4, cantReg);
+                    cs.setString(5, session.getUserView().getUserInfo().USR);
+                    cs.setString(6, Functions.getFechaActual());
+                    cs.setString(7, strHora);
+                    cs.execute();
+                } else {
+                    break;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = "Error : " + e.getMessage();
+        } finally {
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            // =================
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+    
+    public String loadPX413PRO10577(String strBanco, String strHora) throws SQLException, Exception {
+
+        String msj = "SUCCESS";
+
+        DatabaseMetaData dmd = null;
+        CallableStatement cstmt = null;
+        Connection cnx = null;
+        String strBuffer = "", strPRO = "SPPRO10577";
+
+        /*if (strBanco.trim().equals("AX")) {
+         //AMEX
+         strPRO = "SPPRO10571";
+         } else if (strBanco.trim().equals("ST")) {
+         //SANTANDER
+         strPRO = "SPPRO10572";
+         } else if (strBanco.trim().equals("PP")) {
+         //PAYPAL
+         strPRO = "SPPRO10573";
+         } else {
+         //BANAMEX
+         strPRO = "SPPRO10577";
+         }*/
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            dmd = cnx.getMetaData();
+
+            cstmt = cnx.prepareCall("{CALL PRAXIS".concat(dmd.getCatalogSeparator()).concat(strPRO + "(?)}"));
+            strBuffer = "W " + Functions.fillString(strHora, 150);
+            cstmt.setString(1, strBuffer);
+            cstmt.registerOutParameter(1, Types.CHAR);
+            cstmt.execute();
+
+            String sBufferRes = cstmt.getString(1);
+
+            if (sBufferRes.substring(1, 2).equals("1")) {
+                //Error
+                msj = "Error : " + sBufferRes.substring(2);
+            }
+
+        } catch (Exception e) {
+            msj = "Error : " + e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return msj;
+    }
+
+    
+    //**************************************************************************
+    //************************ PX413 ACLARACIONES ******************************
+    //**************************************************************************
+    public String loadPX413SQP01977(List lstExcel, String strBanco, String strHora) throws SQLException, Exception {
+
+        CallableStatement cs = null;
+        String strSQL;
+        String msj = "SUCCESS", strTrama = "";
+        int cantReg = 0;
+
+        for (int i = 0; i < lstExcel.size(); i++) {
+            strTrama = lstExcel.get(i).toString();
+
+            if (!strTrama.toUpperCase().contains("TOTAL")) {
+                cantReg++;
+            } else {
+                break;
+            }
+        }
+
+        Connection cnx = null;
+        try {
+
+            strSQL = "{CALL PRAXIS.SQP01977(?,?,?,?,?,?,?)}";
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+
+            for (int i = 0; i < lstExcel.size(); i++) {
+                strTrama = lstExcel.get(i).toString();
+
+                if ((i == 5 || i == 0) && strBanco.equals("AX")) {
+                    if (strTrama.trim().length() > 300) {
+                        strTrama = strTrama.trim().substring(0, 300);
+                    }
+                } else if (i == 0) {
+                    if (strBanco.equals("BX") && strTrama.trim().length() > 300) {
+                        strTrama = strTrama.trim().substring(0, 300);
+
+                    } else if (strBanco.equals("ST") && strTrama.trim().length() > 900) {
+                        strTrama = strTrama.trim().substring(0, 900);
+
+                    }//else if(strBanco.equals("PP") && strTrama.trim().length() > 150){
+                    // strTrama = strTrama.trim().substring(0, 150);
+                    // }
+                }
+                if (strBanco.equals("PP") && strTrama.trim().length() > 150) {
+                    strTrama = strTrama.trim().substring(0, 150);
+                }
+                //System.out.println("Fila " + i + " : " + strTrama.trim());
+                //System.out.println("Fila " + i + " : " + strTrama.trim().length());
+
+                if (!strTrama.toUpperCase().contains("TOTAL")) {
+                    //Para no incluir las ultimas lineas
+                    cs.setString(1, strBanco.trim());
+                    cs.setString(2, strTrama.trim());
+                    if (i == 0) {
+                        cs.setString(3, "Y");
+                    } else {
+                        cs.setString(3, "");
+                    }
+                    cs.setInt(4, cantReg);
+                    cs.setString(5, session.getUserView().getUserInfo().USR);
+                    cs.setString(6, Functions.getFechaActual());
+                    cs.setString(7, strHora);
+                    cs.execute();
+                } else {
+                    break;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = "Error : " + e.getMessage();
+        } finally {
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            // =================
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    // ------------------------- Search --------------------------------
+    public List<A1686Filter> loadPX264SQP00665(A1686Filter filter, String consulta) throws SQLException, Exception {
+
+        List<A1686Filter> lstRtn = new ArrayList<A1686Filter>(0);
+        A1686Filter objRtn;
+        int totQRECOR = 0, totQRECORG = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00665(?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_FUENTE);
+            cstmt01.setString(5, consulta);
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            int pos = 0;
+            while (rs01.next()) {
+                pos++;
+                //FUENTE,MENSA
+                objRtn = new A1686Filter();
+                objRtn.IN_FUENTE = filter.IN_FUENTE;
+                objRtn.RN = pos;
+                objRtn.FECR = rs01.getString("FECR");
+                objRtn.strFormatDate = Functions.getMonthConvert(objRtn.FECR);
+                objRtn.HOCR = rs01.getString("HOCR");
+                objRtn.strDescripcion1 = Functions.ConvertedTime(rs01.getString("HOCR"));
+                objRtn.USCR = rs01.getString("USCR").trim();
+                objRtn.DPRDA = filter.DPRDA;
+                objRtn.strFormatDate2 = filter.strFormatDate2;
+                objRtn.FECHA = rs01.getString("FECRFILE");
+                objRtn.strFormatDate3 = Functions.getMonthConvert(objRtn.FECHA);
+                objRtn.strFormatDate4 = rs01.getString("NLOT");
+                objRtn.FUENTE = rs01.getString("FUENTE");
+                objRtn.PPROGRAM = rs01.getString("PPROGRAM");
+                objRtn.MENSA = rs01.getString("MENSA").trim();
+                objRtn.QRECOR = rs01.getInt("QTYREAD");
+                objRtn.QRECORG = rs01.getInt("QTYWRITE");
+                objRtn.IN_TIPOFECHA = rs01.getInt("QTYRECEI");
+                objRtn.QRECERR = rs01.getInt("QTYERROR");
+                objRtn.totQRECOR = totQRECOR;
+                objRtn.totQRECORG = totQRECORG;
+                lstRtn.add(objRtn);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+
+    
     private static String[] removeTrailingQuotes(String[] fields, String QUOTE) {
 
         String result[] = new String[fields.length];

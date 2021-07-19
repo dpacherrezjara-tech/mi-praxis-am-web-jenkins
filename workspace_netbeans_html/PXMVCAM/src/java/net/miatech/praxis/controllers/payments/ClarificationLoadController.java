@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +29,7 @@ import net.miatech.praxis.logic.payments.ClarificationLoadLogic;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -41,6 +43,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -77,6 +80,7 @@ public class ClarificationLoadController extends BaseController {
         Integer cont = 0;
         String mensaje = "";
         String msjResult = "";
+        String msjUpload = "";
         
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -97,13 +101,18 @@ public class ClarificationLoadController extends BaseController {
                 msjResult = uploadFile(dataFile, banco);
 
             }else{
-//                msjResult = upload(excelfile, banco, input);
-                msjResult = "Error al cargar Archivo";
+                // ------------------------------------------------------------------------
+                // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
+                // ------------------------------------------------------------------------
+                
+                msjUpload = uploadPrev(excelfile, banco, input);
+                map.put("successUp", true);
+                map.put("msjUpload", msjUpload);
             }
             
             
             map.put("success", true);
-            map.put("msj", msjResult);
+            map.put("msjResult", msjResult);
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -141,9 +150,6 @@ public class ClarificationLoadController extends BaseController {
                 //Llamando al PRO10574(ELavon)
                 mensaje = logic.loadPX413PRO10570(strBanco,strHora);
             }
-            
-            
-//            map.put("msj", mensaje);
             
             //Eliminar temporal           
             archivo.delete();
@@ -252,689 +258,546 @@ public class ClarificationLoadController extends BaseController {
         return mensaje;
         
     }
-    
-    
-    /*
-    private String upload(MultipartFile excelfile, String banco, String input) {
+        
+    private String uploadPrev(MultipartFile excelfile, String banco, String input) {
         
         String msj = "";
         
         try {
-            
             String filaCompleta = "";
-            //listaExcelString
+            List<String> listaExcelString = new ArrayList<String>(0);
             String msjError = "";
             String tmp = "";
             boolean filaTotal = false;
-            int noOfRows;
+            int i = 0;
             int noOfColumns;
 
             byte[] fileData = excelfile.getBytes();
-
             
             if(fileData != null && fileData.length > 0){
-
-                XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
-                Sheet sheet = workbook.getSheetAt(0);
-
-                if(sheet != null){
-                    noOfRows = sheet.getLastRowNum();
-                    noOfColumns = sheet.getRow(0).getLastCellNum();
-                    //CAMBIADO POR ORDEN DE JUGAZ, ARCIVHO DE AX AHORA VIENE EN .CSV antes venia en .XLS
-                    if(banco.equals("**")){ //if(banco == "AX" ){
-                        //==================================================================================
-                        //INICIO AMERICAN EXPRESS ========================================================== 
-                        if(input.equals("N")){
-                            //Avisos
-                            msjError = "Under Construction";
-                            
-//                            for(var row:int = 0; row < noOfRows; row++){
-//                                //var cellObject:Object ={};
-//                                filaCompleta = '';
-//                                for(var col:int = 0; col < noOfColumns; col++){
-//                                        var cell:Cell = new Cell();
-//                                        var cellValue:String = new String();
-//                                        cell = sheet.getCell(row, col);
-//                                        if(cell != null){
-//                                                if(row > 0 && col == 5){
-//                                                        cellValue = excelFloatToDate(Number(cell.value.toString()));
-//                                                }else{
-//                                                        cellValue =(cell.value).toString();
-//                                                }
-//                                                filaCompleta += cellValue + ',';
-//                                        }
-//                                }// inner for loop ends
-//                                listaExcelString.addItem(filaCompleta);
-//                            } //for loop ends
-                            
-                        }else{
-
-                            //Aclaraciones
-                            for( int row2 = 0; row2 < noOfRows; row2++){
-                                //var cellObject:Object ={};
-                                filaCompleta = "";
-                                for(int col2 = 0; col2 < noOfColumns; col2++){
-                                    Cell cell2 = new Cell();
-                                    var cellValue2:String = new String();
-                                    cell2 = sheet.getCell(row2, col2);
-
-                                    if(cell2 != null){
-                                            msjError = "";
-                                            tmp = "";
-
-                                            tmp = (cell2.value).toString();
-                                            if(tmp.toUpperCase().indexOf("TOTAL") >= 0){
-                                                    filaTotal = true;
-                                            }
-
-                                            if(filaTotal == false){
-
-                                                                    if(row2 > 5 && col2 == 3){
-                                                                            //Fecha de Transaccion (05/09/2017)
-                                                                            tmp = (cell2.value).toString();
-
-                                                                            if(app.trim(tmp) == ""){
-                                                                                    msjError = "Error. Transaction Date is Empty. Please contact AM. (Column D)";
-
-                                                                            }else if(tmp.indexOf("N/A") >= 0){
-                                                                                    msjError = "Error. Transaction Date incorrect format (N/A). Please contact AM. (Column D)";
-
-                                                                            }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                    msjError = "Error. Invalid Transaction Date. Please contact AM. (Column D)";
-
-                                                                            }else if(tmp.length == 10){
-                                                                                    cellValue2 = tmp;
-
-                                                                            }else{
-                                                                                    cellValue2 = excelFloatToDate(Number(cell2.value.toString()));
-                                                                                    if(cellValue2 == "Error"){
-                                                                                            msjError = "Error. Transaction Date incorrect format. Please contact AM. (Column D)";
-                                                                                    }
-                                                                            }
-
-                                                                    } else if(row2 > 5 && col2 == 5){
-                                                                            //Responder a mas tardar: dias restantes (24/10/2017-18)
-                                                                            tmp = (cell2.value).toString();
-
-                                                                            if(app.trim(tmp) == ""){
-                                                                                    msjError = "Error. Date is empty. Please contact AM. (Column F)";
-
-                                                                            }else if(tmp.indexOf("N/A") >= 0){
-                                                                                    msjError = "Error. Invalid format date (N/A). Please contact AM. (Column F)";
-
-                                                                            }else if(tmp.substring(0, 10) == "99/99/9999" || tmp.substring(0, 10) == "99-99-9999"){
-                                                                                    msjError = "Error. Invalid Date. Please contact AM. (Column F)";
-
-                                                                            }else if(tmp.length == 13){
-                                                                                    cellValue2 = tmp;
-
-                                                                            }else{
-                                                                                    cellValue2 = excelFloatToDate(Number(tmp.substring(0, 10)));
-                                                                                    if(cellValue2 == "Error"){
-                                                                                            msjError = "Error. Invalid format date. Please contact AM. (Column F)";
-                                                                                    }
-                                                                            }
-
-                                                                    } else if(row2 > 5 && col2 == 8){
-                                                                            //Responder a mas tardar el (24/10/2017)
-                                                                            tmp = (cell2.value).toString();
-                                                                            //Alert.show(tmp + " indexOf : " + tmp.indexOf("N/A"));
-
-                                                                            if(app.trim(tmp) == ""){
-                                                                                    msjError = "Error. Date is Empty. Please contact AM. (Column I)";
-
-                                                                            }else if(tmp.indexOf("N/A") >= 0){
-                                                                                    msjError = "Error. Invalid format date (N/A). Please contact AM. (Column I)";
-
-                                                                            }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                    msjError = "Error. Invalid Date. Please contact AM. (Column I)";
-
-                                                                            }else if(tmp.length == 10){
-                                                                                    cellValue2 = tmp;
-
-                                                                            }else{
-                                                                                    cellValue2 = excelFloatToDate(Number(tmp));
-                                                                                    if(cellValue2 == "Error"){
-                                                                                            msjError = "Error. Invalid format date. Please contact AM. (Column I)";
-                                                                                    }
-                                                                            }
-
-                                                                    } else{
-                                                                            cellValue2 =(cell2.value).toString();
-                                                                    }
-
-                                                            } else{
-                                                                    cellValue2 =(cell2.value).toString();
-                                                            }
-
-                                                            if(msjError != ""){
-                                                                    break;
-                                                            }else{
-                                                                    filaCompleta += cellValue2 + ',';
-                                                            }
-                                                    }
-                                            }
-
-                                            if(msjError != ""){
-                                                    break;
-                                            }else{
-                                                    listaExcelString.addItem(filaCompleta);
-                                            }
-                                    }
-                            }
-                            //FIN AMERICAN EXPRESS =============================================================
-                            //==================================================================================
-
-                    }else if(banco == "ST"){
-                            //==================================================================================
-                            //INICIO SANTANDER =================================================================
-                            // convertir el excel en la version de 95
-                            if(input == "N"){
-                                    //Avisos
-                                    msjError = "Under Construction";
-                            }else{
-                                    //Aclaraciones
-                                    var flag:Boolean = false;
-                                    for(var rowS:int = 0; rowS < noOfRows; rowS++){
-                                            var cellSv:Cell = new Cell();
-                                        cellSv = sheet.getCell(rowS, 0);
-                                        var valueS:String = (cellSv.value).toString();
-                                            if(app.trim(valueS).toUpperCase()==='FOLIO'){
-                                                    flag = true;
-                                            }
-
-                                            filaCompleta = '';
-
-                                            if(flag){
-
-                                                    for(var colS:int = 0; colS < noOfColumns; colS++){
-
-                                                            var cellS:Cell = new Cell();
-                                                            var cellValueS:String = new String();
-                                                            cellS = sheet.getCell(rowS, colS);
-
-                                                            if(cellS != null){
-                                                                    msjError = "";
-                                                                    tmp = "";
-
-                                                                    tmp = (cellS.value).toString();
-
-                                                                    if(colS == 0 && tmp == ''){
-                                                                            filaTotal = true;
-                                                                    }
-
-                                                                    if(filaTotal == false){
-
-                                                                            if(rowS > 0 && colS == 7){
-                                                                                    //Fecha de envío de solicitud de Pagaré (31/08/2017)
-                                                                                    tmp = (cellS.value).toString();
-
-                                                                                    if(app.trim(tmp) == ""){
-                                                                                            msjError = "Error. Sending Date is Empty. Please contact AM. (Column H)";
-
-                                                                                    }else if(tmp.indexOf("N/A") >= 0){
-                                                                                            msjError = "Error. Sending Date incorrect format (N/A). Please contact AM. (Column H)";
-
-                                                                                    }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                            msjError = "Error. Invalid Sending Date. Please contact AM. (Column H)";
-
-                                                                                    }else if(tmp.length == 10){
-                                                                                            cellValueS = tmp;
-
-                                                                                    }else{
-                                                                                            cellValueS = excelFloatToDate(Number(cellS.value.toString()));
-                                                                                            if(cellValueS == "Error"){
-                                                                                                    msjError = "Error. Sending Date incorrect format. Please contact AM. (Column H)";
-                                                                                            }
-                                                                                    }
-
-                                                                            } 
-//                                                                            else if(rowS > 0 && colS == 9){
-//                                                                                    //Fecha de envío del Recordatorio
-//                                                                                    tmp = (cellS.value).toString();
-//
-//                                                                                    if(app.trim(tmp) == ""){
-//                                                                                            msjError = "Error. Reminder Date is Empty. Please contact AM. (Column J)";
-//
-//                                                                                    }else if(tmp.indexOf("N/A") >= 0){
-//                                                                                            msjError = "Error. Reminder Date incorrect format (N/A). Please contact AM. (Column J)";
-//
-//                                                                                    }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-//                                                                                            msjError = "Error. Invalid Reminder Date. Please contact AM. (Column J)";
-//
-//                                                                                    }else if(tmp.length == 10){
-//                                                                                            cellValueS = tmp;
-//
-//                                                                                    }else{
-//                                                                                            cellValueS = excelFloatToDate(Number(cellS.value.toString()));
-//                                                                                            if(cellValueS == "Error"){
-//                                                                                                    msjError = "Error. Reminder Date incorrect format. Please contact AM. (Column J)";
-//                                                                                            }
-//                                                                                    }
-//
-//                                                                            } 
-                                                                            
-                                                                            else if(rowS > 0 && colS == 16){
-                                                                                    //Fecha de la transacción (09/08/2017)
-                                                                                    tmp = (cellS.value).toString();
-
-                                                                                    if(app.trim(tmp) == ""){
-                                                                                            msjError = "Error. Transaction Date is empty. Please contact AM. (Column Q)";
-
-                                                                                    }else if(tmp.indexOf("N/A") >= 0){
-                                                                                            msjError = "Error. Invalid format Transaction Date (N/A). Please contact AM. (Column Q)";
-
-                                                                                    }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                            msjError = "Error. Invalid Transaction Date. Please contact AM. (Column Q)";
-
-                                                                                    }else if(tmp.length == 10){
-                                                                                            cellValueS = tmp;
-
-                                                                                    }else{
-                                                                                            cellValueS = excelFloatToDate(Number(cellS.value.toString()));
-                                                                                            if(cellValueS == "Error"){
-                                                                                                    msjError = "Error. Invalid format Transaction Date. Please contact AM. (Column Q)";
-                                                                                            }
-                                                                                    }
-
-                                                                            } else if(rowS > 0 && colS == 21){
-                                                                                    //Fecha de Recepción de la Solicitud de Pagaré (31/08/2017)
-                                                                                    tmp = (cellS.value).toString();
-
-                                                                                    if(app.trim(tmp) == ""){
-                                                                                            msjError = "Error. Reception Date is Empty. Please contact AM. (Column V)";
-
-                                                                                    }else if(tmp.indexOf("N/A") >= 0){
-                                                                                            msjError = "Error. Invalid format Reception Date (N/A). Please contact AM. (Column V)";
-
-                                                                                    }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                            msjError = "Error. Invalid Reception Date. Please contact AM. (Column V)";
-
-                                                                                    }else if(tmp.length == 10){
-                                                                                            cellValueS = tmp;
-
-                                                                                    }else{
-                                                                                            cellValueS = excelFloatToDate(Number(tmp));
-                                                                                            if(cellValueS == "Error"){
-                                                                                                    msjError = "Error. Invalid format Reception Date. Please contact AM. (Column V)";
-                                                                                            }
-                                                                                    }
-
-                                                                            } else if(rowS > 0 && colS == 26){
-                                                                                    //Fecha Límite para Atender (11/09/2017)
-                                                                                    tmp = (cellS.value).toString();
-
-                                                                                    if(app.trim(tmp) == ""){
-                                                                                            msjError = "Error. Attention Date Limit is Empty. Please contact AM. (Column AA)";
-
-                                                                                    }else if(tmp.indexOf("N/A") >= 0){
-                                                                                            msjError = "Error. Invalid format Attention Date Limit Date (N/A). Please contact AM. (Column AA)";
-
-                                                                                    }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                            msjError = "Error. Invalid Attention Date Limit Date. Please contact AM. (Column AA)";
-
-                                                                                    }else if(tmp.length == 10){
-                                                                                            cellValueS = tmp;
-
-                                                                                    }else{
-                                                                                            cellValueS = excelFloatToDate(Number(tmp));
-                                                                                            if(cellValueS == "Error"){
-                                                                                                    msjError = "Error. Invalid format Attention Date Limit Date. Please contact AM. (Column AA)";
-                                                                                            }
-                                                                                    }
-
-                                                                            } else{
-                                                                                    cellValueS =(cellS.value).toString();
-                                                                            }
-
-                                                                    }else{
-                                                                            break;
-                                                                    }
-
-                                                                    if(msjError != ""){
-                                                                            break;
-                                                                    }else{
-                                                                            filaCompleta += cellValueS + ',';
-                                                                    }
-                                                            }
-                                                    }
-
-
-                                                if(msjError != ""){
-                                                       break;
-                                                    }else{
-                                                            listaExcelString.addItem(filaCompleta);
-                                                    }
-                                            }else{
-                                                    msjError = "Error.Excel file has an invalid format.";
-
-                                            }																		
-
-
-                                    }
-                            }
-
-                            //FIN SANTANDER ====================================================================
-                            //==================================================================================
-
-                    }else if(banco == "PP"){
-                            //==================================================================================
-                            //INICIO PAYPAL ====================================================================
-
-                            if(input == "N"){
-                                    //Avisos
-                                    msjError = "Under Construction";
-                            }else{
-                                    //Aclaraciones
-                                    for(var rowP:int = 0; rowP < noOfRows; rowP++){
-
-                                            filaCompleta = '';
-                                            for(var colP:int = 0; colP < noOfColumns; colP++){
-                                                    var cellP:Cell = new Cell();
-                                                    var cellValueP:String = new String();
-                                                    cellP = sheet.getCell(rowP, colP);
-
-                                                    if(cellP != null){
-                                                            msjError = "";
-                                                            tmp = "";
-
-                                                            tmp = (cellP.value).toString();
-
-                                                            if(colP == 0 && tmp == ''){
-                                                                    filaTotal = true;
-                                                            }
-
-                                                            if(filaTotal == false){
-
-                                                                    if(rowP > 0 && colP == 1){
-                                                                            //Fecha de Venta (11-Aug-17)
-                                                                            //tmp : Thu Aug 17 00:00:00 GMT-0500 2017
-                                                                            tmp = (cellP.value).toString();
-
-                                                                            var fecha:Date = new Date(tmp);
-                                                                            tmp = app.stringPad((fecha.getDate() - 1).toString(), '0', 2) + '-'
-                                                                                    + app.getAbreviaturaMes(app.stringPad((fecha.getMonth() + 1).toString(), '0', 2)) + '-'
-                                                                                    + fecha.getFullYear().toString().substring(2, 4);
-
-                                                                            //Alert.show('fecha : ' + tmp);
-
-                                                                            if(app.trim(tmp) == ""){
-                                                                                    msjError = "Error. Sales Date is Empty. Please contact AM. (Column B)";
-
-                                                                            }else if(tmp.indexOf("N/A") >= 0){
-                                                                                    msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column B)";
-
-                                                                            }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                    msjError = "Error. Invalid Sales Date. Please contact AM. (Column B)";
-
-                                                                            }else if(tmp.length == 9){
-                                                                                    cellValueP = tmp;
-
-                                                                            }else{
-                                                                                    cellValueP = excelFloatToDate(Number(cellP.value.toString()));
-                                                                                    if(cellValueP == "Error"){
-                                                                                            msjError = "Error. Sales Date incorrect format. Please contact AM. (Column B)";
-                                                                                    }
-                                                                            }
-
-                                                                    } else{
-                                                                            cellValueP =(cellP.value).toString();
-                                                                    }
-
-                                                            }else{
-                                                                    break;
-                                                            }
-
-                                                            if(msjError != ""){
-                                                                    break;
-                                                            }else{
-                                                                    filaCompleta += cellValueP + ',';
-                                                            }
-                                                    }
-                                            }
-
-                                            if(msjError != ""){
-                                                    break;
-                                            }else{
-                                                    listaExcelString.addItem(filaCompleta);
-                                            }
-                                    }
-                            }
-
-                            //FIN PAYPAL =======================================================================
-                            //==================================================================================
-
+                
+                String strSesion = UUID.randomUUID().toString();
+                String strNomExcel = excelfile.getOriginalFilename();
+
+                String strArchivo = "C:\\Dumps\\" + strNomExcel;
+                File archivo = new File(strArchivo);
+                FileOutputStream fs = new FileOutputStream(archivo);
+
+                fs.write(fileData);
+                fs.flush();
+                fs.close();
+                
+                DataFormatter formatter = new DataFormatter();
+                String primeraCelda="";
+                boolean escribe = false;
+
+                FileInputStream file = new FileInputStream(archivo);
+                // leer archivo excel
+                HSSFWorkbook worbook = new HSSFWorkbook(file);
+                //obtener la hoja que se va leer
+                HSSFSheet sheet = worbook.getSheetAt(0);
+                //obtener todas las filas de la hoja excel
+                Iterator<Row> rowIterator = sheet.iterator();
+
+                if(banco.equals("**" )){
+                    System.out.println("***************");
+                }else if(banco.equals("ST")){
+                    //==================================================================================
+                    //INICIO SANTANDER =================================================================
+                    // convertir el excel en la version de 95
+                    
+                    if(input.equals("N")){
+                        //Avisos
+                        msjError = "Under Construction";
                     }else{
+                        msjError = "Error. File Load";
+                        // <editor-fold defaultstate="collapsed" desc="SANTANDEEEER - Aclaraciones()">
+                        //</editor-fold>
+                    }
+                }else if(banco.equals("PP")){                    
+                    if(input.equals("N")){
+                        //Avisos
+                        msjError = "Under Construction";
+                    }else{
+                        // <editor-fold defaultstate="collapsed" desc="PAYPAL - Aclaraciones()">
+                        
+                        int rowP = -1;
+                        int noOfCol = 0;
+                        while (rowIterator.hasNext()) {
+                            Row row = rowIterator.next();
+                            rowP++;
+                            i++;
+                            filaCompleta = "";
+                            
+                            String numberTkt = formatter.formatCellValue(row.getCell(0));     //Número de Ticket
+                            String fechVenta = formatter.formatCellValue(row.getCell(1));     //Fecha de Venta
+                            String imporVent = formatter.formatCellValue(row.getCell(2));     //Importe de la venta
+                            String moneda    = formatter.formatCellValue(row.getCell(3));     //Moneda
+                            String numerCaso = formatter.formatCellValue(row.getCell(4));     //Numero de caso
+                            
+                            if (numberTkt.equals("") && fechVenta.equals("") && imporVent.equals("") && moneda.equals("") && numerCaso.equals("")){
+                                break;
+                            }
+                            
+                            if(i == 1){
+                                noOfCol = row.getLastCellNum();
+                            }
+                            for (int colP = 0; colP < noOfCol; colP++) {
+                                String cellValueP = "";
+                                if(row.getCell(colP) != null){
+                                    msjError = "";
+                                    tmp = "";
+                                    tmp = formatter.formatCellValue(row.getCell(colP));
 
-                            //==================================================================================
-                            //INICIO BANAMEX ===================================================================
-
-                            if(input == "N"){
-                                    //Avisos
-                                    for(var rowAB:int = 0; rowAB < noOfRows; rowAB++){
-
-                                            filaCompleta = '';
-                                            for(var colAB:int = 0; colAB < noOfColumns; colAB++){
-                                                    var cellAB:Cell = new Cell();
-                                                    var cellValueAB:String = new String();
-                                                    cellAB = sheet.getCell(rowAB, colAB);
-
-                                                    if(cellAB != null){
-                                                            msjError = "";
-                                                            tmp = "";
-
-                                                            tmp = (cellAB.value).toString();
-
-                                                            if(colAB == 0 && tmp == ''){
-                                                                    filaTotal = true;
-                                                            }
-
-                                                            if(filaTotal == false){
-
-                                                                    if(rowAB > 0 && colAB == 5){
-                                                                            //FECHA DE APLICACIÓN (02/10/2017)
-                                                                            tmp = (cellAB.value).toString();
-
-                                                                            if(app.trim(tmp) == ""){
-                                                                                    msjError = "Error. Application Date is Empty. Please contact AM. (Column F)";
-
-                                                                            }else if(tmp.indexOf("N/A") >= 0){
-                                                                                    msjError = "Error. Application Date incorrect format (N/A). Please contact AM. (Column F)";
-
-                                                                            }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                    msjError = "Error. Invalid Application Date. Please contact AM. (Column F)";
-
-                                                                            }else if(tmp.length == 10){
-                                                                                    cellValueAB = tmp;
-
-                                                                            }else{
-                                                                                    cellValueAB = excelFloatToDate(Number(cellAB.value.toString()));
-                                                                                    if(cellValueAB == "Error"){
-                                                                                            msjError = "Error. Application Date incorrect format. Please contact AM. (Column F)";
-                                                                                    }
-                                                                            }
-
-                                                                    } else{
-                                                                            cellValueAB =(cellAB.value).toString();
-                                                                    }
-
-                                                            }else{
-                                                                    break;
-                                                            }
-
-                                                            if(msjError != ""){
-                                                                    break;
-                                                            }else{
-                                                                    filaCompleta += cellValueAB + ',';
-                                                            }
-                                                    }
-                                            }
-
-                                            if(msjError != ""){
-                                                    break;
-                                            }else{
-                                                    listaExcelString.addItem(filaCompleta);
-                                            }
+                                    if(colP == 0 && tmp.equals("")){
+                                        filaTotal = true;
                                     }
 
-                            }else{
-                                    //Aclaraciones
+                                    if(filaTotal == false){
+                                        if(rowP > 0 && colP == 1){
+                                            //Fecha de Venta (11-Aug-17)
+                                            //tmp : Thu Aug 17 00:00:00 GMT-0500 2017
+                                            tmp = row.getCell(colP).toString();
+                                            tmp = formatter.formatCellValue(row.getCell(colP));
+                                            
+                                            try {
+                                                String [] fields = tmp.split("/");
+                                                tmp =   Functions.fillZeros(2, fields[1]) + "-" + 
+                                                        getAbreviaturaMes(Functions.fillZeros(2, fields[0])) + "-" +
+                                                        Functions.fillZeros(2, fields[2]) ;
+                                            } catch (Exception e) {
+                                                tmp = "Error";
+                                            }
+                                            
+                                            if(tmp.trim().equals("")){
+                                                msjError = "Error. Sales Date is Empty. Please contact AM. (Column B)";
 
-                                    var correct:Boolean = true;
-                                    for(var rowB:int = 0; rowB < noOfRows; rowB++){
+                                            }else if(tmp.indexOf("N/A") >= 0){
+                                                msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column B)";
 
-                                            var cellSv:Cell = new Cell();
-                                        cellSv = sheet.getCell(rowB, 4);
-                                        var valueS:String = (cellSv.value).toString();
+                                            }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                msjError = "Error. Invalid Sales Date. Please contact AM. (Column B)";
 
+                                            }else if(tmp.length() == 9){
+                                                cellValueP = tmp;
 
-                                            var cellTot:Cell = new Cell();
-                                        cellTot = sheet.getCell(rowB, 5);
-                                        var valueTOT:String = (cellTot.value).toString();
-
-                                        if(rowB !== 0  &&valueTOT.toUpperCase().indexOf("TOTAL") ===-1 ) {
-
-                                                if(app.trim(valueS).length !== 16 && app.trim(valueS).length !== 15  ){
-                                                   correct = false;
-
-                                                   msjError = "Error. Invalid format. TOO LONG CREDIT CARD. Please contact AM.";
-                                                    }
+                                            }else{
+                                                msjError = "Error. Format Date Invalid. Please contact AM. (Column B)";
+//                                                cellValueP = excelFloatToDate(Number(tmp));
+//                                                if(cellValueP.equals("Error")){
+//                                                    msjError = "Error. Sales Date incorrect format. Please contact AM. (Column B)";
+//                                                }
+                                            }
+                                        }else{
+                                            cellValueP = formatter.formatCellValue(row.getCell(colP));
                                         }
+                                    }else{
+                                        break;
+                                    }
 
-                                            filaCompleta = '';
+                                    if(!msjError.equals("")){
+                                        break;
+                                    }else{
+                                        filaCompleta += cellValueP + ',';
+                                    }
+                                }
+                            } // for noOfCol
 
-                                        if (rowB !== 0  &&valueTOT.toUpperCase().indexOf("TOTAL") > -1){
+                            if(!msjError.equals("")){
+                                break;
+                            }else{
+                                listaExcelString.add(filaCompleta);
+                            }
+                            
+                        } //while
+                        
+                        //</editor-fold>
+                    }
+                }else{
+                    //==================================================================================
+                    //INICIO BANAMEX ===================================================================
+                    
+                    if(input.equals("N")){                        
+                        // <editor-fold defaultstate="collapsed" desc="BANAMEX - Avisos()">
+                        
+                        int rowAB = -1;
+                        int noOfColumn = 0;
+                        while (rowIterator.hasNext()) {
+                            Row row = rowIterator.next();
+                            rowAB++;
+                            i++;
+                            filaCompleta = "";
+                            
+                            if(i == 1){
+                                noOfColumn = row.getLastCellNum();
+                            }
+                            
+                            for (int colAB = 0; colAB < noOfColumn; colAB++) {
+                                String cellValueAB = "";
+                                if(row.getCell(colAB) != null){
+                                    msjError = "";
+                                    tmp = "";
+                                    tmp = formatter.formatCellValue(row.getCell(colAB));
+
+                                    if(colAB == 0 && tmp.equals("")){
+                                        filaTotal = true;
+                                    }
+
+                                    if(filaTotal == false){
+                                        if(rowAB > 0 && colAB == 5){
+                                            //FECHA DE APLICACIÓN (02/10/2017)
+                                            if(row.getCell(colAB).getCellType() == 1){
+                                                tmp = formatter.formatCellValue(row.getCell(colAB));
+                                            }else{
+                                                tmp = new SimpleDateFormat("dd/MM/yyyy").format(row.getCell(colAB).getDateCellValue());
+                                            }
+
+                                            if(tmp.trim().equals("")){
+                                                msjError = "Error. Application Date is Empty. Please contact AM. (Column F)";
+
+                                            }else if(tmp.indexOf("N/A") >= 0){
+                                                msjError = "Error. Application Date incorrect format (N/A). Please contact AM. (Column F)";
+
+                                            }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                msjError = "Error. Invalid Application Date. Please contact AM. (Column F)";
+
+                                            }else if(tmp.length() == 10){
+                                                cellValueAB = tmp;
+
+                                            }else{
+                                                msjError = "Error. Format Date Invalid. Please contact AM. (Column F)";
+//                                                cellValueAB = excelFloatToDate(Number(tmp));
+//                                                if(cellValueAB.equals("Error")){
+//                                                    msjError = "Error. Application Date incorrect format. Please contact AM. (Column F)";
+//                                                }
+                                            }
+                                        }else{
+                                            cellValueAB = formatter.formatCellValue(row.getCell(colAB));
+                                        }
+                                    }else{
+                                        break;
+                                    }
+
+                                    if(!msjError.equals("")){
+                                        break;
+                                    }else{
+                                        filaCompleta += cellValueAB + ',';
+                                    }
+                                }
+                            } // for noOfColumn
+
+                            if(!msjError.equals("")){
+                                break;
+                            }else{
+                                listaExcelString.add(filaCompleta);
+                            }
+                            
+                        } //while
+                        
+                        
+                        //</editor-fold>
+                    }else{
+                        // <editor-fold defaultstate="collapsed" desc="BANAMEX - Aclaraciones()">
+                        int rowB = -1;
+                        String valueS = "";
+                        String valueTOT = "";
+                        boolean correct = true;
+                        int noOfColu = 0;
+                        
+                        // se recorre cada fila hasta el final
+                        while (rowIterator.hasNext()) {
+                            Row row = rowIterator.next();
+                            rowB++;
+                            i++;
+                            
+                            if(i == 1){
+                                noOfColu = row.getLastCellNum();
+                            }
+                            
+                            valueS = formatter.formatCellValue(row.getCell(4));     //NUM_CTA
+                            valueTOT = formatter.formatCellValue(row.getCell(5));   //NUM_REF
+                            
+                            if(rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") == -1 ) {
+                                        
+                                if(valueS.trim().length() != 16 && valueS.trim().length() != 15  ){
+                                   correct = false;
+
+                                   msjError = "Error. Invalid format. TOO LONG CREDIT CARD. Please contact AM.";
+                                }
+                            }
+                            
+                            filaCompleta = "";
+                            
+                            if (rowB != 0  && valueTOT.toUpperCase().indexOf("TOTAL") > -1){
+                                break;
+                            }
+                            
+                            if(correct){
+                                for (int colB = 0; colB < noOfColu; colB++) {
+                                    String cellValueB = "";
+                                    if(row.getCell(colB) != null){
+                                        msjError = "";
+                                        tmp = "";
+                                        tmp = formatter.formatCellValue(row.getCell(colB));
+
+                                        if(colB == 0 && tmp.equals("")){
+                                            filaTotal = true;
+                                        }
+                                        
+                                        if(filaTotal == false){
+                                            if(rowB > 0 && colB == 0){
+                                                //FECHA_REME (04/10/2017)
+                                                tmp = formatter.formatCellValue(row.getCell(colB));
+
+                                                if(tmp.trim().equals("")){
+                                                    msjError = "Error. Remittance Date is Empty. Please contact AM. (Column A)";
+
+                                                }else if(tmp.indexOf("N/A") >= 0){
+                                                    msjError = "Error. Remittance Date incorrect format (N/A). Please contact AM. (Column A)";
+
+                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                    msjError = "Error. Invalid Remittance Date. Please contact AM. (Column A)";
+
+                                                }else if(tmp.length() == 10){
+                                                    cellValueB = tmp;
+
+                                                }else{
+                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column A)";
+    //                                                cellValueB = excelFloatToDate(Number(tmp));
+//                                                    if(cellValueB.equals("Error")){
+//                                                        msjError = "Error. Remittance Date incorrect format. Please contact AM. (Column A)";
+//                                                    }
+                                                }
+                                            }else if(rowB > 0 && colB == 7){
+                                                //FECHA_VENT (16/09/2017)
+                                                tmp = formatter.formatCellValue(row.getCell(colB));
+
+                                                if(tmp.trim().equals("")){
+                                                    msjError = "Error. Sales Date is Empty. Please contact AM. (Column H)";
+
+                                                }else if(tmp.indexOf("N/A") >= 0){
+                                                    msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column H)";
+
+                                                }else if(tmp.equals("99/99/9999") || tmp.equals("99-99-9999")){
+                                                    msjError = "Error. Invalid Sales Date. Please contact AM. (Column H)";
+
+                                                }else if(tmp.length() == 10){
+                                                    cellValueB = tmp;
+
+                                                }else{
+                                                    msjError = "Error. Format Date Invalid. Please contact AM. (Column H)";
+//                                                    cellValueB = excelFloatToDate(Number(tmp));
+//                                                    if(cellValueB.equals("Error")){
+//                                                        msjError = "Error. Sales Date incorrect format. Please contact AM. (Column H)";
+//                                                    }
+                                                }
+
+                                            } else{
+                                                cellValueB = formatter.formatCellValue(row.getCell(colB));
+                                            }
+                                        }else{
                                             break;
                                         }
+                                        
+                                        if(!msjError.equals("")){
+                                            break;
+                                        }else{
+                                            filaCompleta += cellValueB + ',';
+                                        }
+                                    }// Cell is null
+                                } // for noOfColu
+                                
+                                if(!msjError.equals("")){
+                                    break;
+                                }else{
+                                    listaExcelString.add(filaCompleta);
+                                }
+                            } //if correct
+                        } //while
+                    } //else Aclaraciones
+                    //</editor-fold>
+                    
+                }//else BANAMEX
+                
+                //Eliminar temporal           
+                archivo.delete();
 
-                                            if(correct){
-
-                                               for(var colB:int = 0; colB < noOfColumns; colB++){
-                                                    var cellB:Cell = new Cell();
-                                                    var cellValueB:String = new String();
-                                                    cellB = sheet.getCell(rowB, colB);
-
-                                                            if(cellB != null){
-                                                                    msjError = "";
-                                                                    tmp = "";
-
-                                                                    tmp = (cellB.value).toString();
-
-
-                                                                    if(colB == 0 && tmp == ''){
-                                                                            filaTotal = true;
-                                                                    }
-
-                                                                    if(filaTotal == false){
-
-                                                                            if(rowB > 0 && colB == 0){
-                                                                                    //FECHA_REME (04/10/2017)
-                                                                                    tmp = (cellB.value).toString();
-
-                                                                                    if(app.trim(tmp) == ""){
-                                                                                            msjError = "Error. Remittance Date is Empty. Please contact AM. (Column A)";
-
-                                                                                    }else if(tmp.indexOf("N/A") >= 0){
-                                                                                            msjError = "Error. Remittance Date incorrect format (N/A). Please contact AM. (Column A)";
-
-                                                                                    }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                            msjError = "Error. Invalid Remittance Date. Please contact AM. (Column A)";
-
-                                                                                    }else if(tmp.length == 10){
-                                                                                            cellValueB = tmp;
-
-                                                                                    }else{
-                                                                                            cellValueB = excelFloatToDate(Number(cellB.value.toString()));
-                                                                                            if(cellValueB == "Error"){
-                                                                                                    msjError = "Error. Remittance Date incorrect format. Please contact AM. (Column A)";
-                                                                                            }
-                                                                                    }
-
-                                                                            }else if(rowB > 0 && colB == 7){
-                                                                                    //FECHA_VENT (16/09/2017)
-                                                                                    tmp = (cellB.value).toString();
-
-                                                                                    if(app.trim(tmp) == ""){
-                                                                                            msjError = "Error. Sales Date is Empty. Please contact AM. (Column H)";
-
-                                                                                    }else if(tmp.indexOf("N/A") >= 0){
-                                                                                            msjError = "Error. Sales Date incorrect format (N/A). Please contact AM. (Column H)";
-
-                                                                                    }else if(tmp == "99/99/9999" || tmp == "99-99-9999"){
-                                                                                            msjError = "Error. Invalid Sales Date. Please contact AM. (Column H)";
-
-                                                                                    }else if(tmp.length == 10){
-                                                                                            cellValueB = tmp;
-
-                                                                                    }else{
-                                                                                            cellValueB = excelFloatToDate(Number(cellB.value.toString()));
-                                                                                            if(cellValueB == "Error"){
-                                                                                                    msjError = "Error. Sales Date incorrect format. Please contact AM. (Column H)";
-                                                                                            }
-                                                                                    }
-
-                                                                            } else{
-                                                                                    cellValueB =(cellB.value).toString();
-                                                                            }
-
-                                                                    }else{
-                                                                            break;
-                                                                    }
-
-                                                                    if(msjError != ""){
-                                                                            break;
-                                                                    }else{
-                                                                            filaCompleta += cellValueB + ',';
-                                                                    }
-                                                            }
-                                                    }
-
-                                                    if(msjError != ""){
-                                                            break;
-                                                    }else{
-                                                            listaExcelString.addItem(filaCompleta);
-                                                    }
-
-                                            }
-                                    }
-
-                            }
-
-
-                            //Banamex, Santander, Paypal
-                            
-//                            for(var rowO:int = 0; rowO < noOfRows; rowO++){
-//                                    //var cellObject:Object ={};
-//                                    filaCompleta = '';
-//                                    for(var colO:int = 0; colO < noOfColumns; colO++){
-//                                            var cellO:Cell = new Cell();
-//                                            var cellValueO:String = new String();
-//                                            cellO = sheet.getCell(rowO, colO);
-//                                            if(cellO != null){
-//                                                    cellValueO =(cellO.value).toString();
-//                                                    filaCompleta += cellValueO + ',';
-//                                            }
-//                                    }// inner for loop ends
-//                                    listaExcelString.addItem(filaCompleta);
-//                            } //for loop ends
-                            
-
-                                //FIN BANAMEX ======================================================================
-                                //==================================================================================
-                        }
-
-
-                    } //if sheet
             } //if filedata
+            
+            if(!msjError.equals("")){
+                msj = msjError;
+            }else{
+                msj = upload(listaExcelString, banco, input);
+            }
         
         } catch (Exception e) {
-            
+            e.printStackTrace();
+            if(e.getMessage().contains("to be Excel 5.0/7.0 (BIFF5) format")){
+                msj = "Error. Convertir excel a version 97-2003(*xls)";
+            }else{
+                msj = "Hubo un error al cargar Archivo";
+            }
         }
         
         return msj;
     }
-    */
     
+    private String upload(List lstExcel, String strBanco, String strInput) throws Exception {
+        
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        String msj = "";
+        
+        try {
+            String strHora = Functions.getHoraActual();
+            if (lstExcel != null && lstExcel.size() > 0) {
+                
+                if(strInput.trim().equals("N")){
+                    //AVISOS PREVIOS / CONTRACARGOS
+                    ClarificationLoadLogic logic = new ClarificationLoadLogic();
+                    logic.setSession(this.serverSession.getServerSession());
+
+                    msj = logic.loadPX413SQP01999(lstExcel, strBanco, strHora);
+
+                    if (msj.trim().equals("SUCCESS")) {
+                        //Llamando al PRO10577
+                        msj = logic.loadPX413PRO10577(strBanco, strHora);
+                    }
+                    
+                }else{
+                    //ACLARACIONES
+                
+                    ClarificationLoadLogic logic = new ClarificationLoadLogic();
+                    logic.setSession(this.serverSession.getServerSession());
+
+                    msj = logic.loadPX413SQP01977(lstExcel, strBanco, strHora);
+
+                    if (msj.trim().equals("SUCCESS")) {
+                        //Llamando al PRO10570/71/72/73
+                        msj = logic.loadPX413PRO10570(strBanco, strHora);
+                    }
+                }
+                
+            } else {
+                msj = "Error. Information not found.";
+            }
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            msj = "Se produjo un error al intentar subir el archivo.";
+        }
+
+        return msj;
+        
+    }
+    
+    @RequestMapping(value = "search")
+    public @ResponseBody
+    String search(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ClarificationLoad : Search-------------");
+
+        map.put("success", true);
+        List<A1686Filter> lst = this.getList(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A1686Filter> getList(HttpServletRequest request, Boolean bExcel) {
+
+        List<A1686Filter> lst = new ArrayList<>(0);
+        A1686Filter filter = new A1686Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+        String strBanco = "" , buffer = "";
+       
+        
+        strBanco = request.getParameter("banco");
+        if (strBanco.trim().equals("AX")) {
+            //AMEX
+            buffer = "ACLARAMEX";
+        } else if (strBanco.trim().equals("ST")) {
+            //SANTANDER
+            buffer = "ACLARSNTDR";
+        } else if (strBanco.trim().equals("PP")) {
+            //PAYPAL
+            buffer = "ACLARPAYPA";
+        } else if (strBanco.trim().equals("EL")) {
+            //PAYPAL
+            buffer = "ACLAELAVON";    
+        } else if (strBanco.trim().equals("US")) {
+            //PAYPAL
+            buffer = "ACLARAMEXU";        
+        } else {
+            //BANAMEX
+            buffer = "ACLARBNMX";
+        }
+
+        try {
+            filter.IN_FECHA_FROM = Functions.getFechaActual().substring(0, 6);
+            filter.IN_FECHA_TO = Functions.getFechaActual().substring(0, 6);
+            filter.IN_FUENTE = buffer;
+
+            ClarificationLoadLogic logic = new ClarificationLoadLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            lst = logic.loadPX264SQP00665(filter, "");
+//            resp.vars.put("listaData", lst);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    private static String getAbreviaturaMes(String strDate) {
+//
+       if (strDate.equals("01")) {
+            return "Jan";
+        } else if (strDate.equals("02")) {
+            return "Feb";
+        } else if (strDate.equals("03")) {
+            return "Mar";
+        } else if (strDate.equals("04")) {
+            return "Apr";
+        } else if (strDate.equals("05")) {
+            return "May";
+        } else if (strDate.equals("06")) {
+            return "Jun";
+        } else if (strDate.equals("07")) {
+            return "Jul";
+        } else if (strDate.equals("08")) {
+            return "Aug";
+        } else if (strDate.equals("09")) {
+            return "Sep";
+        } else if (strDate.equals("10")) {
+            return "Oct";
+        } else if (strDate.equals("11")) {
+            return "Nov";
+        } else if (strDate.equals("12")) {
+            return "Dec";
+        } else {
+            return "Error";
+        }
+    }
+    
+//    private static String excelFloatToDate(double floatVal) {
+//
+//        double seconds = (floatVal - 25569) * 86400.0;
+//        Date fec = new Date(seconds*1000);
+//        fec.setDate(fec.date + 1);
+//        
+//        String result = "";
+//
+//        try{
+//            result = formatDate.format(fec);
+//        }catch(Exception e){
+//            result = "Error";
+//        }
+//        
+//        return result;
+//    }
    
     
     

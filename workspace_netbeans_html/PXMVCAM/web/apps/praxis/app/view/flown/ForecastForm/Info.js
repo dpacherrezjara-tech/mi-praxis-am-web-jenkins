@@ -1909,13 +1909,13 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     angleField: 'VCPNMXN',
                                                     colors: ['#339933', '#3978F5'],
                                                     /*label: {
-                                                        field: 'ZONA',
-                                                        calloutLine: {
-                                                            length: 60,
-                                                            width: 3
-                                                                    // specifying 'color' is also possible here
-                                                        }
-                                                    },*/
+                                                     field: 'ZONA',
+                                                     calloutLine: {
+                                                     length: 60,
+                                                     width: 3
+                                                     // specifying 'color' is also possible here
+                                                     }
+                                                     },*/
                                                     label: {
                                                         field: 'LABEL_MXN',
                                                         //display: 'insideEnd',
@@ -1926,9 +1926,9 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                     // specifying 'color' is also possible here
                                                         }
                                                         /*renderer: function(value, b, callout) {
-                                                            callout.calloutVertical = false;
-                                                            return Ext.util.Format.number(value, '0,000.00')
-                                                        }*/
+                                                         callout.calloutVertical = false;
+                                                         return Ext.util.Format.number(value, '0,000.00')
+                                                         }*/
                                                     },
                                                     highlight: true,
                                                     tooltip: {
@@ -2025,9 +2025,9 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                     // specifying 'color' is also possible here
                                                         }
                                                         /*renderer: function(value, b, callout) {
-                                                            callout.calloutVertical = false;
-                                                            return Ext.util.Format.number(value, '0,000.00')
-                                                        }*/
+                                                         callout.calloutVertical = false;
+                                                         return Ext.util.Format.number(value, '0,000.00')
+                                                         }*/
                                                     },
                                                     highlight: true,
                                                     tooltip: {
@@ -2214,6 +2214,10 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     width: 664,
                                                     height: 'auto',
                                                     columnLines: true,
+                                                    features: [{
+                                                            ftype: 'summary',
+                                                            dock: 'bottom'
+                                                        }],
                                                     columns: {
                                                         defaults: {
                                                             menuDisabled: true,
@@ -2235,7 +2239,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                     return value;
                                                                 },
                                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').getStore().getData().items[0].data;
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').getStore().getData().items[0].data;
                                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
                                                                 }
@@ -2255,7 +2259,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                             return value;
                                                                         },
                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000.00') + '<b>';
                                                                         }
@@ -2277,7 +2281,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                             return value;
                                                                         },
                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000.00') + '<b>';
                                                                         }
@@ -2299,7 +2303,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                             return value;
                                                                         },
                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totVPROUSD, '0,000.00') + '<b>';
                                                                         }
@@ -2321,7 +2325,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                             return value;
                                                                         },
                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketFirstLevel').getStore().getData().items[0].data;
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').getStore().getData().items[0].data;
                                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                                             return '<b>' + Ext.util.Format.number(data.totVPROMXN, '0,000.00') + '<b>';
                                                                         }
@@ -2336,8 +2340,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDataMarketSecondLevelInternational',
                                                     width: 664,
-                                                    height: 'auto',
+                                                    height: 262,
                                                     columnLines: true,
+                                                    features: [{
+                                                            ftype: 'summary',
+                                                            //dock: 'bottom'
+                                                        }],
                                                     columns: {
                                                         defaults: {
                                                             menuDisabled: true,
@@ -2360,7 +2368,8 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                 },
                                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelInternational').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    console.log(data.totQTYPAX);
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';               
                                                                     return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
                                                                 }
                                                             },
