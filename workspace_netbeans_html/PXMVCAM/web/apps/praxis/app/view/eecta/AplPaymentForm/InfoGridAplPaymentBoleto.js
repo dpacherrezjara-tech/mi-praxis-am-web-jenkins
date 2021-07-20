@@ -88,6 +88,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPaymentBoleto', {
                                     },                                                                        
                                     {text: 'Pax', dataIndex: 'A3958PAX', align: 'left', width: 200, locked: true},
                                     {text: 'Grupo', dataIndex: 'A3958GRUPO', align: 'left', width: 70},
+                                    {text: 'Trx.', dataIndex: 'A3958TRNCU', align: 'center', width: 60},
                                     {text: 'Fecha<br>Proceso', dataIndex: 'A3958FPROC', align: 'left', width: 70},                                                                       
                                     {
                                         text: 'Tarifa', dataIndex: 'A3958FARE', width: 80, align: 'right',
