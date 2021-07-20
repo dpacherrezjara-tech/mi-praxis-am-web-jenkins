@@ -2568,7 +2568,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                             height: 'auto',
                             margin: '0 0 0 0 ',
                             layout: {
-                                type: 'hbox',
+                                type: 'vbox',
                                 align: 'center'
                             },
                             items: [
@@ -2577,7 +2577,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
                                     //hidden: true,
-                                    width: 948,
+                                    width: 1428,
                                     height: 'auto',
                                     margin: '0 0 0 0 ',
                                     layout: {
@@ -2585,12 +2585,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                         //align: 'center'
                                     },
                                     items: [
-                                        {//USD
+                                        {//USD & MXN
                                             xtype: 'panel',
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             border: true,
                                             //hidden: true,
-                                            width: 948,
+                                            width: 1428,
                                             height: 'auto',
                                             margin: '0 0 0 0 ',
                                             layout: {
@@ -2628,7 +2628,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     bodyStyle: 'background-color: #E3EAEF;',
                                                     border: true,
                                                     //hidden: true,
-                                                    width: 428,
+                                                    width: 668,
                                                     height: 'auto',
                                                     margin: '0 0 0 0 ',
                                                     layout: {
@@ -2639,7 +2639,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByPreviousYearDomesticUSD',
-                                                            width: 214,
+                                                            width: 334,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -2687,13 +2687,35 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                     {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                             metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                                                            value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         },
                                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                                                             var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').getStore().getData().items[0].data;
                                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000.00') + '<b>';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
                                                                                         }
                                                                                     },
                                                                                 ]
@@ -2706,7 +2728,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByPreviousYearInternationalUSD',
-                                                            width: 214,
+                                                            width: 334,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -2754,13 +2776,35 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                     {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                             metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                                                            value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         },
                                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                                                             var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').getStore().getData().items[0].data;
                                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000.00') + '<b>';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
                                                                                         }
                                                                                     },
                                                                                 ]
@@ -2779,7 +2823,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     bodyStyle: 'background-color: #E3EAEF;',
                                                     border: true,
                                                     //hidden: true,
-                                                    width: 428,
+                                                    width: 668,
                                                     height: 'auto',
                                                     margin: '0 0 0 0 ',
                                                     layout: {
@@ -2790,7 +2834,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByCurrentYearDomesticUSD',
-                                                            width: 214,
+                                                            width: 334,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -2838,13 +2882,35 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                     {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                             metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                                                            value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         },
                                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
                                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000.00') + '<b>';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
                                                                                         }
                                                                                     },
                                                                                 ]
@@ -2857,7 +2923,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByCurrentYearInternationalUSD',
-                                                            width: 214,
+                                                            width: 334,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -2905,13 +2971,35 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                     {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                                             metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                                                            value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         },
                                                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                                                             var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalUSD').getStore().getData().items[0].data;
                                                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000.00') + '<b>';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalUSD').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
                                                                                         }
                                                                                     },
                                                                                 ]
@@ -2925,358 +3013,20 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                 },
                                             ]
                                         },
-                                        {//MXN
-                                            xtype: 'panel',
-                                            bodyStyle: 'background-color: #E3EAEF;',
-                                            border: true,
-                                            //hidden: true,
-                                            width: 948,
-                                            height: 'auto',
-                                            margin: '0 0 0 0 ',
-                                            layout: {
-                                                type: 'hbox',
-                                                //align: 'center'
-                                            },
-                                            items: [
-                                                //Months
-                                                {
-                                                    xtype: 'grid',
-                                                    id: prototype.id + '-gridMonths_2',
-                                                    width: 92,
-                                                    margin: '73 0 0 0 ',
-                                                    height: 'auto',
-                                                    columnLines: true,
-                                                    columns: {
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: false,
-                                                            align: 'center'
-                                                        },
-                                                        items: [
-                                                            {
-                                                                text: 'Months',
-                                                                dataIndex: 'NAME',
-                                                                width: 90,
-                                                            },
-                                                        ]
-                                                    }
-                                                },
-                                                //Previous
-                                                {
-                                                    xtype: 'panel',
-                                                    id: prototype.id + '-panelDataPreviousYearMXN',
-                                                    bodyStyle: 'background-color: #E3EAEF;',
-                                                    border: true,
-                                                    //hidden: true,
-                                                    width: 428,
-                                                    height: 'auto',
-                                                    margin: '0 0 0 0 ',
-                                                    layout: {
-                                                        type: 'hbox',
-                                                        //align: 'center'
-                                                    },
-                                                    items: [
-                                                        {
-                                                            xtype: 'grid',
-                                                            id: prototype.id + '-gridDataByPreviousYearDomesticMXN',
-                                                            width: 214,
-                                                            height: 'auto',
-                                                            columnLines: true,
-                                                            features: [{
-                                                                    ftype: 'summary',
-                                                                    dock: 'bottom'
-                                                                }],
-                                                            columns: {
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                items: [
-                                                                    {
-                                                                        text: 'Domestic',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: false,
-                                                                            align: 'center'
-                                                                        },
-                                                                        columns: [
-                                                                            {
-                                                                                text: 'PAX',
-                                                                                dataIndex: 'QTYPAX',
-                                                                                width: 90,
-                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = "text-align:right;background:";
-                                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                                    return value;
-                                                                                },
-                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').getStore().getData().items[0].data;
-                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                text: 'Amount',
-                                                                                defaults: {
-                                                                                    menuDisabled: true,
-                                                                                    sortable: false,
-                                                                                    align: 'center'
-                                                                                },
-                                                                                columns: [
-                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
-                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                                                            return value;
-                                                                                        },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000.00') + '<b>';
-                                                                                        }
-                                                                                    },
-                                                                                ]
-                                                                            },
-                                                                        ]
-                                                                    },
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            xtype: 'grid',
-                                                            id: prototype.id + '-gridDataByPreviousYearInternationalMXN',
-                                                            width: 214,
-                                                            height: 'auto',
-                                                            columnLines: true,
-                                                            features: [{
-                                                                    ftype: 'summary',
-                                                                    //dock: 'bottom'
-                                                                }],
-                                                            columns: {
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                items: [
-                                                                    {
-                                                                        text: 'International',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: false,
-                                                                            align: 'center'
-                                                                        },
-                                                                        columns: [
-                                                                            {
-                                                                                text: 'PAX',
-                                                                                dataIndex: 'QTYPAX',
-                                                                                width: 90,
-                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = "text-align:right;background:";
-                                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                                    return value;
-                                                                                },
-                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalMXN').getStore().getData().items[0].data;
-                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                text: 'Amount',
-                                                                                defaults: {
-                                                                                    menuDisabled: true,
-                                                                                    sortable: false,
-                                                                                    align: 'center'
-                                                                                },
-                                                                                columns: [
-                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
-                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                                                            return value;
-                                                                                        },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalMXN').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000.00') + '<b>';
-                                                                                        }
-                                                                                    },
-                                                                                ]
-                                                                            },
-                                                                        ]
-                                                                    },
-                                                                ]
-                                                            }
-                                                        },
-                                                    ]
-                                                },
-                                                //Current
-                                                {
-                                                    xtype: 'panel',
-                                                    id: prototype.id + '-panelDataCurrentYearMXN',
-                                                    bodyStyle: 'background-color: #E3EAEF;',
-                                                    border: true,
-                                                    //hidden: true,
-                                                    width: 428,
-                                                    height: 'auto',
-                                                    margin: '0 0 0 0 ',
-                                                    layout: {
-                                                        type: 'hbox',
-                                                        //align: 'center'
-                                                    },
-                                                    items: [
-                                                        {
-                                                            xtype: 'grid',
-                                                            id: prototype.id + '-gridDataByCurrentYearDomesticMXN',
-                                                            width: 214,
-                                                            height: 'auto',
-                                                            columnLines: true,
-                                                            features: [{
-                                                                    ftype: 'summary',
-                                                                    dock: 'bottom'
-                                                                }],
-                                                            columns: {
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                items: [
-                                                                    {
-                                                                        text: 'Domestic',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: false,
-                                                                            align: 'center'
-                                                                        },
-                                                                        columns: [
-                                                                            {
-                                                                                text: 'PAX',
-                                                                                dataIndex: 'QTYPAX',
-                                                                                width: 90,
-                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = "text-align:right;background:";
-                                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                                    return value;
-                                                                                },
-                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').getStore().getData().items[0].data;
-                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                text: 'Amount',
-                                                                                defaults: {
-                                                                                    menuDisabled: true,
-                                                                                    sortable: false,
-                                                                                    align: 'center'
-                                                                                },
-                                                                                columns: [
-                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
-                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                                                            return value;
-                                                                                        },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000.00') + '<b>';
-                                                                                        }
-                                                                                    },
-                                                                                ]
-                                                                            },
-                                                                        ]
-                                                                    },
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            xtype: 'grid',
-                                                            id: prototype.id + '-gridDataByCurrentYearInternationalMXN',
-                                                            width: 214,
-                                                            height: 'auto',
-                                                            columnLines: true,
-                                                            features: [{
-                                                                    ftype: 'summary',
-                                                                    //dock: 'bottom'
-                                                                }],
-                                                            columns: {
-                                                                defaults: {
-                                                                    menuDisabled: true,
-                                                                    sortable: false,
-                                                                    align: 'center'
-                                                                },
-                                                                items: [
-                                                                    {
-                                                                        text: 'International',
-                                                                        defaults: {
-                                                                            menuDisabled: true,
-                                                                            sortable: false,
-                                                                            align: 'center'
-                                                                        },
-                                                                        columns: [
-                                                                            {
-                                                                                text: 'PAX',
-                                                                                dataIndex: 'QTYPAX',
-                                                                                width: 90,
-                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = "text-align:right;background:";
-                                                                                    value = Ext.util.Format.number(value, '0,000');
-                                                                                    return value;
-                                                                                },
-                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalMXN').getStore().getData().items[0].data;
-                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                text: 'Amount',
-                                                                                defaults: {
-                                                                                    menuDisabled: true,
-                                                                                    sortable: false,
-                                                                                    align: 'center'
-                                                                                },
-                                                                                columns: [
-                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
-                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
-                                                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                                                            return value;
-                                                                                        },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalMXN').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000.00') + '<b>';
-                                                                                        }
-                                                                                    },
-                                                                                ]
-                                                                            },
-                                                                        ]
-                                                                    },
-                                                                ]
-                                                            }
-                                                        },
-                                                    ]
-                                                },
-                                            ]
-                                        },
+                                        
                                     ]
                                 },
+                                {xtype: 'tbspacer', height: 20},
                                 {//Gráficos
                                     xtype: 'panel',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
                                     //hidden: true,
-                                    width: 652,
+                                    width: 1404,
                                     height: 'auto',
                                     margin: '0 0 0 0 ',
                                     layout: {
-                                        type: 'vbox',
+                                        type: 'hbox',
                                         //align: 'center'
                                     },
                                     items: [
@@ -3394,6 +3144,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                 }
                                             ]
                                         },
+                                        {xtype: 'tbspacer', width: 100},
                                         {
                                             xtype: 'cartesian',
                                             id: prototype.id + '-displaySAChart08',

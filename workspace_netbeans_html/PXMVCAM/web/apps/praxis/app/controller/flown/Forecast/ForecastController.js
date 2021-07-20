@@ -648,7 +648,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
 
                             console.log(lstInternational);
                             Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalUSD').bindStore(store);
-                            Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalMXN').bindStore(store);
+                            //Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalMXN').bindStore(store);
                         } else {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -671,10 +671,10 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-panelDataCurrentYearUSD').setTitle('<center style="font-size:12px;">' + year + ' </center>');
-        Ext.getCmp(prototype.id + '-panelDataCurrentYearMXN').setTitle('<center style="font-size:12px;">' + year + ' </center>');
+        //Ext.getCmp(prototype.id + '-panelDataCurrentYearMXN').setTitle('<center style="font-size:12px;">' + year + ' </center>');
     },
     setGridDataRevenueByPreviousYear: function() {
         var prev_year = new Date().getFullYear() - 1;
@@ -705,7 +705,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
 
                             console.log(lstInternational);
                             Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').bindStore(store);
-                            Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalMXN').bindStore(store);
+                            //Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalMXN').bindStore(store);
                         } else {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -717,21 +717,21 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
             }
         });
 
-        var months = new Array();
+        /*var months = new Array();
         months.push(['January'], ['February'], ['March'], ['April'], ['May'], ['June'], ['July'], ['August'], ['September'], ['October'], ['November'], ['December']);
 
         var storeMonths = Ext.create('Ext.data.ArrayStore', {
             storeId: 'months', autoLoad: true, data: months, fields: ['NAME']
         });
-        Ext.getCmp(prototype.id + '-gridMonths_2').bindStore(storeMonths);
+        Ext.getCmp(prototype.id + '-gridMonths_2').bindStore(storeMonths);*/
 
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-panelDataPreviousYearUSD').setTitle('<center style="font-size:12px;">' + prev_year + ' </center>');
-        Ext.getCmp(prototype.id + '-panelDataPreviousYearMXN').setTitle('<center style="font-size:12px;">' + prev_year + ' </center>');
+        //Ext.getCmp(prototype.id + '-panelDataPreviousYearMXN').setTitle('<center style="font-size:12px;">' + prev_year + ' </center>');
     },
     setGridDataRevenueByYearGraphic: function() {
         var year = new Date().getFullYear();
