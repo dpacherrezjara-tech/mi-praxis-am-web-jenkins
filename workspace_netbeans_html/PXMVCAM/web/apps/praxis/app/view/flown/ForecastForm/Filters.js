@@ -132,6 +132,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
                         {boxLabel: '<b style="color:#148D28;">Display Forecast</b>', inputValue: 'FC', name: 'rbgType'},
                         //{xtype: 'tbspacer', width: 5},
                         {boxLabel: '<b style="color:#148D28;">Revenue by Regions</b>', inputValue: 'AZ', name: 'rbgType'},
+                        {boxLabel: '<b style="color:#148D28;">Revenue by Years</b>', inputValue: 'YY', name: 'rbgType'},
                         /*{boxLabel: '<b style="color:#148D28;">Forecast Percentage</b>', inputValue: 'FP', name: 'rbgType'},
                          {boxLabel: '<b style="color:#148D28;">Forecast Zones</b>', inputValue: 'FZ', name: 'rbgType'}*/
                     ],
