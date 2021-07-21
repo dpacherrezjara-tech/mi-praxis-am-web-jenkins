@@ -231,7 +231,11 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                         text: 'Number', width: 120, dataIndex: 'TICKET', //enableTextSelection :true,
                                                         listeners: {
                                                             click: 'showTicket'
-                                                        },
+                                                        },renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
+                                                            return '<b>' + value + '<b>';
+                                                        }
                                                     }
                                                 ]
                                             },

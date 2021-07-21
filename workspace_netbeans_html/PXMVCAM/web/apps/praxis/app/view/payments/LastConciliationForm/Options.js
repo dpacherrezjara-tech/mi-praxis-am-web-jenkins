@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.payments.DuplicateACCBForm.Options', {
+Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Options', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-options',
     border: false,
