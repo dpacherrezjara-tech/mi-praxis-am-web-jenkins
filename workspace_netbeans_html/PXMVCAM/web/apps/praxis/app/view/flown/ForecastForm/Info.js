@@ -3261,12 +3261,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                             metaData.style = "text-align:right;background:";
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
-                                                                                        },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
-                                                                                        }
+                                                                                        },                                                                                        
                                                                                     },
                                                                                 ]
                                                                             },
@@ -3283,11 +3278,6 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                             metaData.style = "text-align:right;background:";
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
-                                                                                        },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
                                                                                         }
                                                                                     },
                                                                                 ]
