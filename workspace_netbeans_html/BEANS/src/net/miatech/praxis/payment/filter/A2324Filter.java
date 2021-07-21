@@ -50,7 +50,9 @@ public class A2324Filter extends A2324 {
     public String TDOCA = "";
     public String descTDOCA = "";
     public double SVFOPA = 0.0;
+    public double SVFOPAB = 0.0;
     public double totSVFOPA = 0.0;
+    public double totSVFOPAB = 0.0;
     public String SCARCODA = "";
     public String CUR = "";
     public String SCARDNA = "";

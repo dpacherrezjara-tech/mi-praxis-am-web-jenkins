@@ -162,6 +162,17 @@ public class IMF140Filter extends IMF140{
     public double VCPNUSD_LY = 0.00;
     public double VCPNMXN_LY = 0.00;
     
+    //Balances  
+    public double DOMESTIC_B_QTYPAX = 0.00;
+    public double DOMESTIC_B_VCPNUSD = 0.00;
+    public double DOMESTIC_B_VCPNMXN = 0.00;
+    public double INTERNATIONAL_B_QTYPAX = 0.00;
+    public double INTERNATIONAL_B_VCPNUSD = 0.00;
+    public double INTERNATIONAL_B_VCPNMXN = 0.00;
+    public double GENERAL_B_QTYPAX = 0.00;
+    public double GENERAL_B_VCPNUSD = 0.00;
+    public double GENERAL_B_VCPNMXN = 0.00;
+    
     public Pagination page = new Pagination();
     
 }
