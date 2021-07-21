@@ -415,7 +415,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
 //                            height: 'auto',
-                                    width: 1310,
+                                    width: 1448,
                                     margin: '0 0 0 0 ',
                                     layout: {
                                         type: 'hbox',
@@ -425,7 +425,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataSettlement',
-                                            width: 594,
+                                            width: 734,
                                             height: 250,
                                             columnLines: true,
                                             features: [{
@@ -492,7 +492,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                                 ]
                                                             },
                                                             {
-                                                                text: 'Cur', dataIndex: 'SCURRENCYA', width: 90,
+                                                                text: 'Cur', dataIndex: 'SCURRENCYA', width: 70,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;background-color:#B2DAFA";
                                                                     return value;
@@ -510,6 +510,35 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                                     return '<b>' + Ext.util.Format.number(data.totSVFOPA, '0,000.00') + '<b>';
                                                                 }
                                                             },
+                                                            {
+                                                                text: 'Payments',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'PNR', dataIndex: 'SPNR', width: 80,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                            return value;
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'SVFOPAB', width: 80,
+                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                                            return value;
+                                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                            var data = Ext.getCmp(prototype.id + '-gridDataSettlement').getStore().getData().items[0].data;
+                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                            return '<b>' + Ext.util.Format.number(data.totSVFOPAB, '0,000.00') + '<b>';
+                                                                        }
+                                                                    },
+                                                                ]
+                                                            }
                                                             /*{
                                                              text: 'Payment <br> Type', dataIndex: 'TPAYA', width: 90,
                                                              renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
@@ -933,8 +962,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         text: 'CLIENT', dataIndex: 'A1716COPE', width: 80
                                                     },
                                                     /*{
-                                                        text: 'PROVIDER', dataIndex: 'A1716PROV', width: 80
-                                                    },*/
+                                                     text: 'PROVIDER', dataIndex: 'A1716PROV', width: 80
+                                                     },*/
                                                     {
                                                         text: 'JOURNAL<br>ENTRY', dataIndex: 'A1716IDCON', width: 80
                                                     },
