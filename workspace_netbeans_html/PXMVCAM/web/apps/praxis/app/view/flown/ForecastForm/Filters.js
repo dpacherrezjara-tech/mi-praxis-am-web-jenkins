@@ -218,11 +218,38 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
             id: prototype.id + '-chkMarketByLevel',
             width: 130,
             hidden: true,
-            margin: '-6px 0px 0px 0px',
+            margin: '0px 0px 0px 0px',
             boxLabel: 'Market by level',
             inputValue: '1',
             listeners: {
                 change: 'btnSearch_MarketByLevel'
+            }
+        },
+        {
+            xtype: 'combo',
+            id: prototype.id + '-cmbSummaryType',
+            store: new Ext.data.SimpleStore({
+                fields: ['code', 'name'],
+                data: [
+                    ["G", "General"], ["D", "Domestic"], ["I", "International"]
+                ]
+            }),
+            hidden: true,
+            fieldStyle: 'text-align: left;',
+            disabled: false,
+            editable: false,
+            margin: '-6px 0px 0px 0px',
+            fieldLabel: 'Type',
+            width: 150,
+            labelWidth: 45,
+            value: "G",
+            labelAlign: 'right',
+            queryMode: 'local',
+            triggerAction: 'all',
+            valueField: 'code', displayField: 'name',
+            listConfig: {maxHeight: 111, minWidth: 70},
+            listeners: {
+                change: 'cbxSummaryType_changeHandler'
             }
         },
         /*{

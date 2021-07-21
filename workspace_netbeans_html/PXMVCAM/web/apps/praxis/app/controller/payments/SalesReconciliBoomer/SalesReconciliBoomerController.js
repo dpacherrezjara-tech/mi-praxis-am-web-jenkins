@@ -535,13 +535,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
                         var lstSett = res.lstSett;
                         var settlement = new Array();
-
+                        console.log(lstSett);
                         lstSett.forEach(function callback(currentValue, index, array) {
-                            settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, , currentValue.CUR]);
+                            settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, currentValue.CUR,currentValue.SPNR,currentValue.SVFOPAB, currentValue.totSVFOPAB]);
                         });
                         var store = Ext.create('Ext.data.ArrayStore', {
-                            storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR']
+                            storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR','SPNR','SVFOPAB','totSVFOPAB']
                         });
+                        console.log(store);
                         Ext.getCmp(prototype.id + '-gridDataSettlement').bindStore(store);
                     }
 
