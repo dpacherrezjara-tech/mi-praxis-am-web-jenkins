@@ -775,6 +775,10 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         global.clear();
         Ext.getCmp(prototype.id + '-displaySAChart07').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displaySAChart08').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart09').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart10').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart11').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart12').bindStore(storeGridDatas);
         // Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').bindStore(storeGridDatas);
     },
     setGridDataRevenueByYearBalance: function() {
@@ -883,6 +887,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
 
         switch (value) {
             case 'G':
+                //Grillas
                 //Previous
                 Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').setVisible(false);
                 Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').setVisible(false);
@@ -895,6 +900,11 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 Ext.getCmp(prototype.id + '-DataDomesticBalanceByYear').setVisible(false);
                 Ext.getCmp(prototype.id + '-DataInternationalBalanceByYear').setVisible(false);
                 Ext.getCmp(prototype.id + '-DataGeneralBalanceByYear').setVisible(true);
+                //Graficos                
+                Ext.getCmp(prototype.id + '-panelGraphicDomestic').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicInternational').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicGeneral').setVisible(true);
+                
                 break;
             case 'I':
                 //Previous
@@ -909,6 +919,10 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 Ext.getCmp(prototype.id + '-DataDomesticBalanceByYear').setVisible(false);
                 Ext.getCmp(prototype.id + '-DataInternationalBalanceByYear').setVisible(true);
                 Ext.getCmp(prototype.id + '-DataGeneralBalanceByYear').setVisible(false);
+                //Graficos                
+                Ext.getCmp(prototype.id + '-panelGraphicDomestic').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicInternational').setVisible(true);
+                Ext.getCmp(prototype.id + '-panelGraphicGeneral').setVisible(false);
                 break;
             case 'D':
                 //Previous
@@ -923,6 +937,10 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 Ext.getCmp(prototype.id + '-DataDomesticBalanceByYear').setVisible(true);
                 Ext.getCmp(prototype.id + '-DataInternationalBalanceByYear').setVisible(false);
                 Ext.getCmp(prototype.id + '-DataGeneralBalanceByYear').setVisible(false);
+                //Graficos                
+                Ext.getCmp(prototype.id + '-panelGraphicDomestic').setVisible(true);
+                Ext.getCmp(prototype.id + '-panelGraphicInternational').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicGeneral').setVisible(false);
                 break;
         }
 

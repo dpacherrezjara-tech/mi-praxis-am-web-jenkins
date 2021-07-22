@@ -3303,7 +3303,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 dataIndex: 'DOMESTIC_B_QTYPAX',
                                                                                 width: 90,
                                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = "text-align:right;background:";
+                                                                                    var color = "";
+                                                                                    if (value < 0) {
+                                                                                        color = "#9C0101";
+                                                                                    }
+                                                                                    metaData.style = "text-align:right;color:" + color;
                                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                                     return value;
                                                                                 },
@@ -3318,7 +3322,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 columns: [
                                                                                     {text: 'Revenue USD', dataIndex: 'DOMESTIC_B_VCPNUSD', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         },
@@ -3335,7 +3343,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 columns: [
                                                                                     {text: 'Revenue MXN', dataIndex: 'DOMESTIC_B_VCPNMXN', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         }
@@ -3360,15 +3372,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 dataIndex: 'INTERNATIONAL_B_QTYPAX',
                                                                                 width: 90,
                                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = "text-align:right;background:";
+                                                                                    var color = "";
+                                                                                    if (value < 0) {
+                                                                                        color = "#9C0101";
+                                                                                    }
+                                                                                    metaData.style = "text-align:right;color:" + color;
                                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                                     return value;
                                                                                 },
-                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
-                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
-                                                                                }
                                                                             },
                                                                             {
                                                                                 text: 'Amount',
@@ -3380,7 +3391,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 columns: [
                                                                                     {text: 'Revenue USD', dataIndex: 'INTERNATIONAL_B_VCPNUSD', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         }
@@ -3397,7 +3412,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 columns: [
                                                                                     {text: 'Revenue MXN', dataIndex: 'INTERNATIONAL_B_VCPNMXN', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         }
@@ -3421,15 +3440,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 dataIndex: 'GENERAL_B_QTYPAX',
                                                                                 width: 90,
                                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                    metaData.style = "text-align:right;background:";
+                                                                                    var color = "";
+                                                                                    if (value < 0) {
+                                                                                        color = "#9C0101";
+                                                                                    }
+                                                                                    metaData.style = "text-align:right;color:" + color;
                                                                                     value = Ext.util.Format.number(value, '0,000');
                                                                                     return value;
                                                                                 },
-                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
-                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
-                                                                                }
                                                                             },
                                                                             {
                                                                                 text: 'Amount',
@@ -3441,15 +3459,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 columns: [
                                                                                     {text: 'Revenue USD', dataIndex: 'GENERAL_B_VCPNUSD', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
-                                                                                        }
                                                                                     },
                                                                                 ]
                                                                             },
@@ -3463,15 +3480,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                                 columns: [
                                                                                     {text: 'Revenue MXN', dataIndex: 'GENERAL_B_VCPNMXN', width: 120,
                                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
                                                                                             value = Ext.util.Format.number(value, '0,000');
                                                                                             return value;
                                                                                         },
-                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').getStore().getData().items[0].data;
-                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
-                                                                                        }
                                                                                     },
                                                                                 ]
                                                                             },
@@ -3487,8 +3503,10 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                     ]
                                 },
                                 {xtype: 'tbspacer', height: 20},
-                                {//Gráficos
+                                //Gráficos - GENERAL
+                                {
                                     xtype: 'panel',
+                                    id: prototype.id + '-panelGraphicGeneral',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
                                     //hidden: true,
@@ -3509,7 +3527,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             background: '#E0F8F7',
                                             captions: {
                                                 title: {
-                                                    text: 'Comparison in USD last year with current',
+                                                    text: 'Comparison in USD last year with current - General',
                                                     alignTo: 'chart'
                                                 }
                                             },
@@ -3624,7 +3642,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             background: '#E0F8F7',
                                             captions: {
                                                 title: {
-                                                    text: 'Comparison in MXN last year with current',
+                                                    text: 'Comparison in MXN last year with current - General',
                                                     alignTo: 'chart'
                                                 }
                                             },
@@ -3699,6 +3717,498 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     },
                                                     label: {
                                                         field: 'GENERAL_VCPNMXN_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                //Gráficos - DOMESTIC
+                                {
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    id: prototype.id + '-panelGraphicDomestic',
+                                    border: true,
+                                    hidden: true,
+                                    width: 1404,
+                                    height: 'auto',
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart09',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in USD last year with current - Domestic',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['DOMESTIC_VCPNUSD_LY', 'DOMESTIC_VCPNUSD_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of USD',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNUSD_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNUSD_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNUSD_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNUSD_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart10',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in MXN last year with current - Domestic',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['DOMESTIC_VCPNMXN_LY', 'DOMESTIC_VCPNMXN_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of MXN',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNMXN_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNMXN_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNMXN_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNMXN_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                //Gráficos - INTERNATIONAL
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelGraphicInternational',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    width: 1404,
+                                    height: 'auto',
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart11',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in USD last year with current - International',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['INTERNATIONAL_VCPNUSD_LY', 'INTERNATIONAL_VCPNUSD_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of USD',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNUSD_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNUSD_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNUSD_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNUSD_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart12',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in MXN last year with current - International',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['INTERNATIONAL_VCPNMXN_LY', 'INTERNATIONAL_VCPNMXN_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of MXN',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNMXN_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNMXN_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNMXN_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNMXN_CY',
                                                         display: 'over',
                                                         renderer: function(value, b, callout) {
                                                             callout.calloutVertical = false;
