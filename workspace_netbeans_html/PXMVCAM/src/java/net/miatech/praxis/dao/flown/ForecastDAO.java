@@ -1526,10 +1526,21 @@ public class ForecastDAO {
                 } else {
                     bean.MES = rst.getString("MES").trim();
                 }
+                //GENERAL
                 bean.GENERAL_VCPNUSD_CY = rst.getDouble("GENERAL_VCPNUSD_CY");
                 bean.GENERAL_VCPNMXN_CY = rst.getDouble("GENERAL_VCPNMXN_CY");
                 bean.GENERAL_VCPNUSD_LY = rst.getDouble("GENERAL_VCPNUSD_LY");
                 bean.GENERAL_VCPNMXN_LY = rst.getDouble("GENERAL_VCPNMXN_LY");
+                //DOMESTIC
+                bean.DOMESTIC_VCPNUSD_CY = rst.getDouble("DOMESTIC_VCPNUSD_CY");
+                bean.DOMESTIC_VCPNMXN_CY = rst.getDouble("DOMESTIC_VCPNMXN_CY");
+                bean.DOMESTIC_VCPNUSD_LY = rst.getDouble("DOMESTIC_VCPNUSD_LY");
+                bean.DOMESTIC_VCPNMXN_LY = rst.getDouble("DOMESTIC_VCPNMXN_LY");
+                //INTERNATIONAL
+                bean.INTERNATIONAL_VCPNUSD_CY = rst.getDouble("INTERNATIONAL_VCPNUSD_CY");
+                bean.INTERNATIONAL_VCPNMXN_CY = rst.getDouble("INTERNATIONAL_VCPNMXN_CY");
+                bean.INTERNATIONAL_VCPNUSD_LY = rst.getDouble("INTERNATIONAL_VCPNUSD_LY");
+                bean.INTERNATIONAL_VCPNMXN_LY = rst.getDouble("INTERNATIONAL_VCPNMXN_LY");
 
                 lst.add(bean);
             }
