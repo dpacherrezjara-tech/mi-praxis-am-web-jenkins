@@ -1526,10 +1526,10 @@ public class ForecastDAO {
                 } else {
                     bean.MES = rst.getString("MES").trim();
                 }
-                bean.VCPNUSD_CY = rst.getDouble("VCPNUSD_CY");
-                bean.VCPNMXN_CY = rst.getDouble("VCPNMXN_CY");
-                bean.VCPNUSD_LY = rst.getDouble("VCPNUSD_LY");
-                bean.VCPNMXN_LY = rst.getDouble("VCPNMXN_LY");
+                bean.GENERAL_VCPNUSD_CY = rst.getDouble("GENERAL_VCPNUSD_CY");
+                bean.GENERAL_VCPNMXN_CY = rst.getDouble("GENERAL_VCPNMXN_CY");
+                bean.GENERAL_VCPNUSD_LY = rst.getDouble("GENERAL_VCPNUSD_LY");
+                bean.GENERAL_VCPNMXN_LY = rst.getDouble("GENERAL_VCPNMXN_LY");
 
                 lst.add(bean);
             }
