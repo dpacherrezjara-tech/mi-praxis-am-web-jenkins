@@ -3064,12 +3064,15 @@ public class PassengerInvoicesController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -3087,7 +3090,7 @@ public class PassengerInvoicesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register20(filter);
+            lst = logic.loadPX538_register20(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -3403,12 +3406,15 @@ public class PassengerInvoicesController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -3426,7 +3432,7 @@ public class PassengerInvoicesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_41(filter);
+            lst = logic.loadPX538_register_41(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -3653,12 +3659,15 @@ public class PassengerInvoicesController extends BaseController {
         SFI010Filter filter = new SFI010Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI010Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -3676,7 +3685,7 @@ public class PassengerInvoicesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_10(filter);
+            lst = logic.loadPX538_register_10(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -3855,19 +3864,22 @@ public class PassengerInvoicesController extends BaseController {
         }
     }
 
-    // ------------------------------- SFI 21 && 22 ------------------------------------------------------
+    // ------------------------------- SFI 21 && 22 y 23------------------------------------------------------
     public List<SFI021> getXLSX_21(HttpServletRequest request, Boolean bExcel) {
 
         List<SFI021> lst = new ArrayList<>(0);
         SFI021Filter filter = new SFI021Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI021Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -3885,7 +3897,7 @@ public class PassengerInvoicesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_21(filter);
+            lst = logic.loadPX538_register_21(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -4087,12 +4099,15 @@ public class PassengerInvoicesController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -4110,7 +4125,7 @@ public class PassengerInvoicesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_31(filter);
+            lst = logic.loadPX538_register_31(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -4305,12 +4320,15 @@ public class PassengerInvoicesController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -4328,7 +4346,7 @@ public class PassengerInvoicesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_32(filter);
+            lst = logic.loadPX538_register_32(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -4838,12 +4856,15 @@ public class PassengerInvoicesController extends BaseController {
         SFI030Filter filter = new SFI030Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI030Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -4861,7 +4882,7 @@ public class PassengerInvoicesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_30(filter);
+            lst = logic.loadPX538_register_30(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
