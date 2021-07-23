@@ -264,16 +264,16 @@ public class RobotPostbillingControlController extends BaseController {
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
             //sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-            sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
-            sheet.autoSizeColumn(8, true);
-            sheet.autoSizeColumn(9, true);
-            sheet.autoSizeColumn(10, true);
+            //sheet.autoSizeColumn(4, true);
+            //sheet.autoSizeColumn(5, true);
+            //sheet.autoSizeColumn(6, true);
+            //sheet.autoSizeColumn(7, true);
+            //sheet.autoSizeColumn(8, true);
+            //sheet.autoSizeColumn(9, true);
+            //sheet.autoSizeColumn(10, true);
             //sheet.autoSizeColumn(11, true);
-            sheet.autoSizeColumn(12, true);
-            sheet.autoSizeColumn(13, true);
+            //sheet.autoSizeColumn(12, true);
+            //sheet.autoSizeColumn(13, true);
 
             String fileNameDownload = String.format("RobotPostbilling - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");
