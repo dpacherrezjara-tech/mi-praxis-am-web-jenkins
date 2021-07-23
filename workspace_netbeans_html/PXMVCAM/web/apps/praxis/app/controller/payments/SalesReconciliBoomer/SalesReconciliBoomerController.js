@@ -720,6 +720,57 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
+    OnGridDetHeaderByPeriod: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataHeaderDetailByPeriod';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.IN_DATSET = rowData.data.DATSET;
+        this.beanDetDay.IN_WEEKMO = rowData.data.WEEKMO;
+        this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
+
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+
+        this.SetOnGridDetHeaderByPeriod();
+    },
+    SetOnGridDetHeaderByPeriod: function() {
+        win.lblUser_toolTip("Estructura: A2324");
+//        this.setFormatParameter();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetHeaderByPeriod'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+
+                    obj.proxy.extraParams = me.paramsDetailDay;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+
+                    if (res.success) {
+                        var gridDetHeader = res.data;
+                        if (gridDetHeader.length > 0) {
+                            var data = {};
+                            data = gridDetHeader[0];
+                            Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + '</center>');                          
+
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+
+    },
     OnGridDetDayFromHeader: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         if (rowData.data.TREG === 'SG') {
             return;
@@ -1461,6 +1512,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                 break;
             case  '-boxDetCardNbrByS':
                 global.getFile(prototype.url + '/getXLSXCardNbrByS?beanString=' + me.paramsDetailCardNbrS.beanString);
+                break;
+            case  '-panelGridDataHeaderDetailByPeriod':
+                global.getFile(prototype.url + '/getXLSXDetHeaderByPeriod?beanString=' + me.paramsDetailDay.beanString);
                 break;
         }
     },
