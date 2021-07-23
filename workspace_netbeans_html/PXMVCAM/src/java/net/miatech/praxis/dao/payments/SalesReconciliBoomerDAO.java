@@ -827,7 +827,7 @@ public class SalesReconciliBoomerDAO {
                 beanSett.SDATE = filter.IN_SDATE;
                 beanSett.REFNBR = filter.IN_REFNBR;
                 totSVFOPA = totSVFOPA + beanSett.SVFOPA;
-                totSVFOPAB = totSVFOPAB + beanSett.SVFOPB;
+                totSVFOPAB = totSVFOPAB + beanSett.SVFOPAB;
                 lstSett.add(beanSett);
             }
 

@@ -486,7 +486,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
         this.setOnGridDetByRefNbr();
         //Ext.Function.defer(function() {
-        if (rowData.data.STVAL === '4') {
+        if (rowData.data.STVAL === '4' || rowData.data.STVAL === '2') {
+            console.log("Busca por pnr");
             me.setOnGridDetPNR(rowData.data.SPNR);
         }
         if (rowData.data.STVAL === '1') {
@@ -537,7 +538,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                         var settlement = new Array();
                         console.log(lstSett);
                         lstSett.forEach(function callback(currentValue, index, array) {
-                            settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, currentValue.CUR,currentValue.SPNR,currentValue.SVFOPAB, currentValue.totSVFOPAB]);
+                            settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, currentValue.CUR, currentValue.SPNR, currentValue.SVFOPAB, currentValue.totSVFOPAB]);
                         });
                         var store = Ext.create('Ext.data.ArrayStore', {
                             storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR','SPNR','SVFOPAB','totSVFOPAB']

@@ -449,7 +449,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             {
                                                                 text: 'SRC', dataIndex: 'descTDOCA', width: 80,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                    metaData.style = "text-align:center;background-color:#FFFFFF";
                                                                     return value;
                                                                 }
                                                             },
@@ -464,28 +464,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                                     {
                                                                         text: 'Code', dataIndex: 'SCARCODA', width: 50,
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                            metaData.style = "text-align:center;background-color:#FFFFFF";
                                                                             return value;
                                                                         }
                                                                     },
                                                                     {
                                                                         text: 'Card Number', dataIndex: 'SCARDNA', width: 140,
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                            metaData.style = "text-align:center;background-color:#FFFFFF";
                                                                             return value;
                                                                         }
                                                                     },
                                                                     {
                                                                         text: 'Author.', dataIndex: 'SAUTHOCA', width: 70,
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = "text-align:center;background-color:#B2DAFA;";
+                                                                            metaData.style = "text-align:center;background-color:#FFFFFF;";
                                                                             return value;
                                                                         }
                                                                     },
                                                                     {
                                                                         text: 'Bank', dataIndex: 'BANKA', width: 80,
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                            metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                            metaData.style = "text-align:center;background-color:#FFFFFF";
                                                                             return value;
                                                                         }
                                                                     },
@@ -494,14 +494,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             {
                                                                 text: 'Cur', dataIndex: 'SCURRENCYA', width: 70,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:center;background-color:#B2DAFA";
+                                                                    metaData.style = "text-align:center;background-color:#FFFFFF";
                                                                     return value;
                                                                 }
                                                             },
                                                             {
                                                                 text: 'Amount', dataIndex: 'SVFOPA', width: 80,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                                    metaData.style = "text-align:right;background-color:#FFFFFF";
                                                                     value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                                     return value;
                                                                 }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
