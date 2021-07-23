@@ -850,12 +850,12 @@ public class PostbillingController extends BaseController {
             }
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
-            sheet.autoSizeColumn(2, true);
+            //sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-            sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
+           // sheet.autoSizeColumn(5, true);
+            //sheet.autoSizeColumn(6, true);
+            //sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
