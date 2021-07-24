@@ -79,7 +79,9 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterProces3Form.Filters', {
                                             ["PAPINT", "Accounting Payable"],
                                             ["PARINT", "Accounting Receivable"],
                                             ["PIXPEST", "Accounting Estimated Payable"],
-                                            ["PIXCEST", "Accounting Estimated Receivable"]
+                                            ["PIXCEST", "Accounting Estimated Receivable"],
+                                            ["PIXPREV", "Accounting REV Estimated Payable"],
+                                            ["PIXCREV", "Accounting REV Estimated Receivable"]
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -88,7 +90,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterProces3Form.Filters', {
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
-                                    width: 194,
+                                    width: 254,
                                     typeAhead: true,
                                     valueField: 'code', displayField: 'name',
                                     listConfig: {maxHeight: 111},
