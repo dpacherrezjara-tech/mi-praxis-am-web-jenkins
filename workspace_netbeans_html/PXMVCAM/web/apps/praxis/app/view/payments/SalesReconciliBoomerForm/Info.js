@@ -415,7 +415,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
 //                            height: 'auto',
-                                    width: 1448,
+                                    width: 1488,
                                     margin: '0 0 0 0 ',
                                     layout: {
                                         type: 'hbox',
@@ -568,7 +568,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataBoomer',
-                                            width: 714,
+                                            width: 754,
                                             height: 250,
                                             columnLines: true,
                                             features: [{
@@ -677,6 +677,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                                     metaData.style = "text-align:center;background-color:#B2FAC6";
                                                                     return value;
                                                                 }
+                                                            },
+                                                            {
+                                                                sortable: false,
+                                                                xtype: 'actioncolumn',
+                                                                width: 40,
+                                                                text: 'Edit',
+                                                                align: 'center',
+                                                                items: [
+                                                                    {
+                                                                        iconCls: 'prx-icon-edit',
+                                                                        tooltip: 'Edit',
+                                                                        handler: 'onEditClick'
+                                                                    }
+                                                                ]
                                                             },
                                                         ]
                                                     },
@@ -3077,20 +3091,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         },
                                         items: [
                                             {text: 'Account', width: 70,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "*8221";
                                                 }
                                             },
                                             {text: 'Client <br> Number', width: 70,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "2103";
                                                 }
                                             },
                                             {text: 'PNR', dataIndex: 'SPNR', width: 70},
                                             {text: 'Document <br> Type', width: 70,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "F";
                                                 }
@@ -3110,31 +3124,31 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 }
                                             },
                                             {text: 'Exchange <br> Rate', width: 70,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "";
                                                 }
                                             },
                                             {text: 'Value <br> Type', width: 70,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "";
                                                 }
                                             },
                                             {text: 'Date', width: 70,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "";
                                                 }
                                             },
                                             {text: 'Description', width: 80,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "";
                                                 }
                                             },
                                             {text: 'Reference', width: 70,
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center";
                                                     return "";
                                                 }

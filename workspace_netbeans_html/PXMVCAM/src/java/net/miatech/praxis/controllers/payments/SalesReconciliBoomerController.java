@@ -467,6 +467,72 @@ public class SalesReconciliBoomerController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    @RequestMapping(value = "/searchBean")
+    public @ResponseBody
+    String searchBean(ModelMap map, HttpServletRequest request) {
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            A2324Filter bean;
+            A2324Filter filter;
+            Gson gson = new Gson();
+            String beanString;
+
+            logic = new SalesReconciliBoomerLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2324Filter.class);
+
+            bean = logic.loadPX559SQP04121(filter);
+
+            map.put("success", true);
+            map.put("data", bean);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+
+    }
+
+    @RequestMapping(value = "/executeOption")
+    public @ResponseBody
+    String executeOption(ModelMap map, HttpServletRequest request) {
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String msj = "";
+            A2324Filter filter;
+            Gson gson = new Gson();
+            String beanString;
+
+            logic = new SalesReconciliBoomerLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2324Filter.class);
+
+            msj = logic.loadPX559SQP04122(filter);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+
+    }
+
     //Excel
     @RequestMapping(value = "getXLSXDetHeaderByPeriod")
     public @ResponseBody
@@ -511,7 +577,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Iterator iter = listaData.iterator();
              // ====== CREANDO TITULOS ======================================
 
-             // ======  Nivel 1 ==========
+            // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
             Cell CH1_0 = row1.createCell(0);
             Cell CH1_1 = row1.createCell(1);
@@ -549,12 +615,12 @@ public class SalesReconciliBoomerController extends BaseController {
             CH1_9.setCellStyle(headerStyle);
             CH1_10.setCellStyle(headerStyle);
 
- //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
              //============================================
 
-             // ======  Nivel 2 ==========
+            // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
             Cell CH2_0 = row2.createCell(0);
             Cell CH2_1 = row2.createCell(1);
@@ -592,10 +658,10 @@ public class SalesReconciliBoomerController extends BaseController {
             CH2_9.setCellStyle(headerStyle);
             CH2_10.setCellStyle(headerStyle);
 
- //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -639,7 +705,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
 
-             //============================================
+            //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 

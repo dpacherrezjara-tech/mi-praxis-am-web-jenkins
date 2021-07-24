@@ -77,6 +77,7 @@ public class A2324Filter extends A2324 {
     public String FORMAB = "";
     public String SERIEB = "";
     public String TKT = "";
+    public String SEQNUM = "";
     public String SCARCODB = "";
     public String SCARDNB = "";
     public String SAUTHOCB = "";
