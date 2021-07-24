@@ -762,7 +762,7 @@ public class SalesReconciliBoomerDAO {
     }
 
     public HashMap<String, List<A2324Filter>> loadPX559SQP04013(A2324Filter filter) throws SQLException, Exception {
-        double totSVFOPA = 0.0, totSVFOPB = 0.0;
+        double totSVFOPA = 0.0, totSVFOPB = 0.0, totSVFOPAB = 0.0;
         List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
         A2324Filter beanTkt;
         List<A2324Filter> lstSett = new ArrayList<A2324Filter>(0);
@@ -820,11 +820,14 @@ public class SalesReconciliBoomerDAO {
                 beanSett.ABCDA = rst.getString("ABCDA");
                 beanSett.SCURRENCYA = rst.getString("SCURRENCYA");
                 beanSett.FSELECA = rst.getString("FSELECA");
+                beanSett.SPNR = rst.getString("SPNR");
+                beanSett.SVFOPAB = rst.getDouble("SVFOPAB");
                 beanSett.estadoTitulo = filter.estadoTitulo;
                 beanSett.IN_STVAL = filter.IN_STVAL;
                 beanSett.SDATE = filter.IN_SDATE;
                 beanSett.REFNBR = filter.IN_REFNBR;
                 totSVFOPA = totSVFOPA + beanSett.SVFOPA;
+                totSVFOPAB = totSVFOPAB + beanSett.SVFOPAB;
                 lstSett.add(beanSett);
             }
 
@@ -887,6 +890,7 @@ public class SalesReconciliBoomerDAO {
 
         for (int i = 0; i < lstSett.size(); i++) {
             lstSett.get(i).totSVFOPA = totSVFOPA;
+            lstSett.get(i).totSVFOPAB = totSVFOPAB;
         }
 
         hmResultado.put("DATA", lstTkts);
@@ -1045,6 +1049,79 @@ public class SalesReconciliBoomerDAO {
         }
 
         return lstRtn;
+    }
+    
+    public List<A2324Filter> loadPX559SQP04120(A2324Filter filter) throws SQLException, Exception {
+
+        List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
+        A2324Filter beanTkt;
+        long totSVFOP = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04120(?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATSET.trim());
+            cstmt.setString(3, filter.IN_WEEKMO.trim());
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                totSVFOP = rst.getLong("SVFOP");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    beanTkt = new A2324Filter();
+                    beanTkt.IN_DATSET = filter.IN_DATSET.trim();
+                    beanTkt.IN_WEEKMO = filter.IN_WEEKMO.trim();
+                    beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("DATSET").trim());
+
+                    beanTkt.SCURRENCY = rst.getString("SCURRENCY");
+                    beanTkt.SVFOP = rst.getLong("SVFOP");
+                    beanTkt.SPNR = rst.getString("SPNR");
+
+                    beanTkt.totSVFOP = totSVFOP;
+
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
     }
 
 }

@@ -1402,14 +1402,19 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoicesIp.PassengerInvoice
         });
     },
     openExportManyExcels: function(grid, rowIndex, colIndex) {
+        
+        var flagByMonth = "";
+        
+        if(colIndex === 12){
+            flagByMonth = "Y";
+        }
         this.beanDetail = grid.getStore().getAt(rowIndex).data;
         this.beanExcel.BDATE = this.beanDetail.BDATE;
         this.beanExcel.PERNUM = this.beanDetail.PERNUM;
-//        
+        
         me.paramsDetailExcel.beanString = JSON.stringify(this.beanExcel);
-        var flag = false;
-        global.getFile(prototype.url + '/downloadXlsxs?beanString=' + me.paramsDetailExcel.beanString);
-//       
+        global.getFile(prototype.url + '/downloadXlsxs?beanString=' + me.paramsDetailExcel.beanString + '&flagByMonth=' + flagByMonth);
+       
     },
     openExport20: function(grid, rowIndex, colIndex) {
         this.beanDetail = grid.getStore().getAt(rowIndex).data;

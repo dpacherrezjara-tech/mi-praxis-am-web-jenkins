@@ -24,16 +24,17 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
     afterRender: function () {
         var me = this;
         me.setStoresFilters();
-        me.setStoresGrids();
+        me.setStoresGrids();        
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        me.onSearchClick();
     },
     setStoresFilters: function () {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
         var CmbModulo = Ext.getCmp(prototype.id + '-CmbModule');
         var CmbTipom = Ext.getCmp(prototype.id + '-CmbType');
         var cmbStatus = Ext.getCmp(prototype.id + '-CmbStatus');
-        //var CmbPoliza = Ext.getCmp(prototype.id + '-CmbPoliza');
-        //var CmbTypePoliza = Ext.getCmp(prototype.id + '-CmbTypePoliza');
+        var cmbStatus1 = Ext.getCmp(prototype.id + '-CmbStatus1');
+        var cmbStatus2 = Ext.getCmp(prototype.id + '-CmbStatus2');
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "Select"},
@@ -70,29 +71,24 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
                 {"code": "E", "name": "INACTIVE"}
             ]
         }));
-//        CmbPoliza.bindStore(Ext.create('Ext.data.Store', {
-//            data: [
-//                {"code": "", "name": "ALL"},
-//                {"code": "GL", "name": "GL"},
-//                {"code": "AR", "name": "AR"},
-//                {"code": "AP", "name": "AP"}
-//            ]
-//        }));
-//
-//        CmbTypePoliza.bindStore(Ext.create('Ext.data.Store', {
-//            data: [
-//                {"code": "", "name": "ALL"},
-//                {"code": "GL", "name": "GL"},
-//                {"code": "AR", "name": "AR"},
-//                {"code": "APL", "name": "AP LINES"},
-//                {"code": "APD", "name": "AP DISTRIBUTION"},
-//                {"code": "ARL", "name": "AR LINES"},
-//                {"code": "ARD", "name": "AR DISTRIBUTION"},
-//                {"code": "GLT", "name": "GL TAXES"},
-//                {"code": "GAP", "name": "PROVITIONAL GL OF THE AP"},
-//                {"code": "GAR", "name": "PROVITIONAL GL OF THE AR"}
-//            ]
-//        }));
+        cmbStatus1.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "00", "name": "PENDIENTE"},
+                {"code": "OK", "name": "ENVIADO POR CORREO"},
+                {"code": "XX", "name": "PROCESANDO"},                
+                {"code": "ER", "name": "ERROR"}                
+            ]
+        }));
+        cmbStatus2.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+               {"code": "", "name": "ALL"},
+                {"code": "00", "name": "PENDIENTE"},
+                {"code": "OK", "name": "CARGADO A BD"},
+                {"code": "XX", "name": "PROCESANDO"},                
+                {"code": "ER", "name": "ERROR"}                
+            ]
+        }));
 
     },
     setStoresGrids: function () {
@@ -117,9 +113,17 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
     onPagingBeforeChange01: function (obj, page, opts) {
         obj.store.proxy.extraParams = this.beanTMP;
     },
+    
     onCmbSearchAfterRender: function (obj) {
         obj.setValue('');
     },
+    onCmbSearchAfterRender01: function (obj) {
+        obj.setValue('A');
+    },
+    onCmbTypeSearchAfterRender: function (obj) {
+        obj.setValue('2');
+    },
+    
     onSearchkey: function (f, e) {
         if (e.getKey() === e.ENTER) {
             this.onSearchClick();
@@ -134,12 +138,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
         var IN_DATEFROM = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
         var IN_DATETO = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
         var CmbModule = Ext.getCmp(prototype.id + '-CmbModule').getValue();
-        var CmbType = Ext.getCmp(prototype.id + '-CmbType').getValue();
-        //var CmbPoliza = Ext.getCmp(prototype.id + '-CmbPoliza').getValue();
-        //var CmbTypePoliza = Ext.getCmp(prototype.id + '-CmbTypePoliza').getValue();
+        var CmbType = Ext.getCmp(prototype.id + '-CmbType').getValue();        
         var CmbStatus = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
-        //var IN_NARCH = Ext.getCmp(prototype.id + '-txtNARCH').getValue();
-        //var IN_PRAXID = Ext.getCmp(prototype.id + '-txtPraxisID').getValue();
+        var CmbStatus1 = Ext.getCmp(prototype.id + '-CmbStatus1').getValue();
+        var CmbStatus2 = Ext.getCmp(prototype.id + '-CmbStatus2').getValue();
+        
         if (comboBy === '') {
             Ext.Msg.alert('.: PRAXIS :.', 'Select filter type');
             return;
@@ -166,14 +169,13 @@ Ext.define('Ext.Praxis.controller.sales.AccountingControlAudit.AccountingControl
         }
         me.beanTMP.IN_OPTION = comboBy;
         me.beanTMP.IN_DATEFROM = IN_DATEFROM;
-        me.beanTMP.IN_DATETO = IN_DATETO;
-        //me.beanTMP.IN_NARCH = IN_NARCH;
-        //me.beanTMP.IN_PRAXID = IN_PRAXID;
+        me.beanTMP.IN_DATETO = IN_DATETO;        
         me.beanTMP.IN_MODULO = CmbModule;
-        me.beanTMP.IN_TIPOM = CmbType;
-        //me.beanTMP.IN_POLIZ = CmbPoliza;
-        //me.beanTMP.IN_TPOLI = CmbTypePoliza;
+        me.beanTMP.IN_TIPOM = CmbType;        
         me.beanTMP.IN_STATO = CmbStatus;
+        me.beanTMP.IN_STAT01 = CmbStatus1;
+        me.beanTMP.IN_STAT02 = CmbStatus2;
+        
         /*
          * El valor obtenido del checkbox se interpreta de forma inversa para 
          * aprovechar el uso de la variable bexcel

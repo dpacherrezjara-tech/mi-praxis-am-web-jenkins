@@ -1,17 +1,17 @@
 
-prototype.id = 'ForecastForm';
-prototype.url = CONTEXTPATH + '/Forecast';
+prototype.id = 'LastConciliationForm';
+prototype.url = CONTEXTPATH + '/LastConciliation';
 
-Ext.define('Ext.Praxis.view.flown.ForecastForm.ForecastForm', {
+Ext.define('Ext.Praxis.view.payments.LastConciliationForm.LastConciliationForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.ForecastForm',
+    alias: 'widget.LastConciliationForm',
     requires: [
-        'Ext.Praxis.view.flown.ForecastForm.Options',
-        'Ext.Praxis.view.flown.ForecastForm.Filters',
-        'Ext.Praxis.view.flown.ForecastForm.Info',
-        'Ext.Praxis.controller.flown.Forecast.ForecastController'
+        'Ext.Praxis.view.payments.LastConciliationForm.Options',
+        'Ext.Praxis.view.payments.LastConciliationForm.Filters',
+        'Ext.Praxis.view.payments.LastConciliationForm.Info',
+        'Ext.Praxis.controller.payments.LastConciliation.LastConciliationController'
     ],
-    controller: 'ForecastController',
+    controller: 'LastConciliationController',
     layout: {
         type: 'fit'
     },
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.ForecastForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1764,
+                                        width: 1500,
                                         align: 'center'
                                     },
                                     items: [
@@ -68,14 +68,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.ForecastForm', {
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 820,
-                                            width: 1764,
+                                            height: 600,
+                                            width: 1500,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1764,
+                                                    width: 1500,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
@@ -104,7 +104,3 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.ForecastForm', {
         }
     ]
 });
-
-
-
-

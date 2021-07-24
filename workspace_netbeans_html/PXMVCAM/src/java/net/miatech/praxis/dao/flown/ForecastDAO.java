@@ -1205,7 +1205,6 @@ public class ForecastDAO {
                     bean.LABEL_MXN = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNMXN");
                     bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
                     bean.QTYPAX = rst.getInt("QTYPAX");
-                    
 
                     bean.totVCPNMXN = VCPNMXN;
                     bean.totVCPNUSD = VCPNUSD;
@@ -1281,7 +1280,7 @@ public class ForecastDAO {
                 bean.LABEL_MXN = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNMXN");
                 bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
                 bean.QTYPAX = rst.getInt("QTYPAX");
-                
+
                 DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
                 DVCPNUSD = DVCPNUSD + rst.getDouble("VCPNUSD");
                 DVPROUSD = DVPROUSD + rst.getDouble("VPROUSD");
@@ -1339,20 +1338,397 @@ public class ForecastDAO {
         for (int i = 0; i < lstDomestic.size(); i++) {
             lstDomestic.get(i).totVCPNMXN = DVCPNMXN;
             lstDomestic.get(i).totVCPNUSD = DVCPNUSD;
-            lstDomestic.get(i).totVPROUSD = DVCPNUSD/DQTYPAX;
-            lstDomestic.get(i).totVPROMXN = DVCPNMXN/DQTYPAX;
+            lstDomestic.get(i).totVPROUSD = DVCPNUSD / DQTYPAX;
+            lstDomestic.get(i).totVPROMXN = DVCPNMXN / DQTYPAX;
             lstDomestic.get(i).totQTYPAX = DQTYPAX;
         }
 
         for (int i = 0; i < lstInternational.size(); i++) {
             lstInternational.get(i).totVCPNMXN = IVCPNMXN;
             lstInternational.get(i).totVCPNUSD = IVCPNUSD;
-            lstInternational.get(i).totVPROUSD = IVCPNUSD/IQTYPAX;
-            lstInternational.get(i).totVPROMXN = IVCPNMXN/IQTYPAX;
+            lstInternational.get(i).totVPROUSD = IVCPNUSD / IQTYPAX;
+            lstInternational.get(i).totVPROMXN = IVCPNMXN / IQTYPAX;
             lstInternational.get(i).totQTYPAX = IQTYPAX;
         }
         hmResultado.put("DOMESTIC", lstDomestic);
         hmResultado.put("INTERNATIONAL", lstInternational);
         return hmResultado;
     }
+
+    public HashMap<String, List<IMF140Filter>> loadPX551SQP04096(IMF140Filter filter) throws SQLException, Exception {
+        //Domestico
+        long DQTYPAX = 0;
+        double DVCPNUSD = 0, DVPROUSD = 0, DVCPNMXN = 0, DVPROMXN = 0;
+        //Internacional
+        long IQTYPAX = 0;
+        double IVCPNUSD = 0, IVPROUSD = 0, IVCPNMXN = 0, IVPROMXN = 0;
+        List<IMF140Filter> lstDomestic = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        List<IMF140Filter> lstInternational = new ArrayList<IMF140Filter>(0);
+        IMF140Filter beanI;
+        HashMap<String, List<IMF140Filter>> hmResultado = new HashMap<String, List<IMF140Filter>>();
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04096(?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_YEAR);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                bean = new IMF140Filter();
+                bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                /*bean.VPROUSD = rst.getDouble("VPROUSD");
+                 bean.VPROMXN = rst.getDouble("VPROMXN");*/
+                bean.LABEL_MXN = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNMXN");
+                bean.LABEL_USD = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNUSD");
+                bean.QTYPAX = rst.getInt("QTYPAX");
+
+                DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
+                DVCPNUSD = DVCPNUSD + rst.getDouble("VCPNUSD");
+                //DVPROUSD = DVPROUSD + rst.getDouble("VPROUSD");
+                //DVPROMXN = DVPROMXN + rst.getDouble("VPROMXN");
+                DQTYPAX = DQTYPAX + rst.getInt("QTYPAX");
+
+                lstDomestic.add(bean);
+            }
+
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    beanI = new IMF140Filter();
+                    beanI.DFLIGHT = rst.getString("DFLIGHT").trim();
+                    beanI.VCPNMXN = rst.getDouble("VCPNMXN");
+                    beanI.VCPNUSD = rst.getDouble("VCPNUSD");
+                    /*beanI.VPROUSD = rst.getDouble("VPROUSD");
+                     beanI.VPROMXN = rst.getDouble("VPROMXN");*/
+                    beanI.QTYPAX = rst.getInt("QTYPAX");
+                    beanI.LABEL_MXN = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNMXN");
+                    beanI.LABEL_USD = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNUSD");
+
+                    IVCPNMXN = IVCPNMXN + rst.getDouble("VCPNMXN");
+                    IVCPNUSD = IVCPNUSD + rst.getDouble("VCPNUSD");
+                    /*IVPROUSD = IVPROUSD + rst.getDouble("VPROUSD");
+                     IVPROMXN = IVPROMXN + rst.getDouble("VPROMXN");*/
+                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAX");
+
+                    lstInternational.add(beanI);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        for (int i = 0; i < lstDomestic.size(); i++) { //lstDomestic.size()
+            /*if (i > lstDomestic.size()) {
+             IMF140Filter beanTemp = new IMF140Filter();
+             lstDomestic.add(beanTemp);
+             } else {
+             }*/
+            lstDomestic.get(i).totVCPNMXN = DVCPNMXN;
+            lstDomestic.get(i).totVCPNUSD = DVCPNUSD;
+            lstDomestic.get(i).totVPROUSD = DVCPNUSD / DQTYPAX;
+            lstDomestic.get(i).totVPROMXN = DVCPNMXN / DQTYPAX;
+            lstDomestic.get(i).totQTYPAX = DQTYPAX;
+        }
+
+        for (int i = 0; i < lstInternational.size(); i++) {//lstInternational.size()
+            /*if (i > lstInternational.size()) {
+             IMF140Filter beanITemp = new IMF140Filter();
+             lstInternational.add(beanITemp);
+             } else {
+
+             }*/
+
+            lstInternational.get(i).totVCPNMXN = IVCPNMXN;
+            lstInternational.get(i).totVCPNUSD = IVCPNUSD;
+            lstInternational.get(i).totVPROUSD = IVCPNUSD / IQTYPAX;
+            lstInternational.get(i).totVPROMXN = IVCPNMXN / IQTYPAX;
+            lstInternational.get(i).totQTYPAX = IQTYPAX;
+        }
+        hmResultado.put("DOMESTIC", lstDomestic);
+        hmResultado.put("INTERNATIONAL", lstInternational);
+        return hmResultado;
+    }
+
+    public List<IMF140Filter> loadPX551SQP04097(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        HashMap<String, String> hmDescMeses = new HashMap<String, String>();
+        hmDescMeses.put("01", "Jan");
+        hmDescMeses.put("02", "Feb");
+        hmDescMeses.put("03", "Mar");
+        hmDescMeses.put("04", "Apr");
+        hmDescMeses.put("05", "May");
+        hmDescMeses.put("06", "Jun");
+        hmDescMeses.put("07", "Jul");
+        hmDescMeses.put("08", "Aug");
+        hmDescMeses.put("09", "Sep");
+        hmDescMeses.put("10", "Oct");
+        hmDescMeses.put("11", "Nov");
+        hmDescMeses.put("12", "Dec");
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04097(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, "2021");
+            cstmt.setString(3, "2020");
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new IMF140Filter();
+                //bean.MES = rst.getString("MES").trim();
+                if (hmDescMeses.containsKey(rst.getString("MES").trim().toUpperCase())) {
+                    bean.MES = hmDescMeses.get(rst.getString("MES").trim()).toString();
+                } else {
+                    bean.MES = rst.getString("MES").trim();
+                }
+                //GENERAL
+                bean.GENERAL_VCPNUSD_CY = rst.getDouble("GENERAL_VCPNUSD_CY");
+                bean.GENERAL_VCPNMXN_CY = rst.getDouble("GENERAL_VCPNMXN_CY");
+                bean.GENERAL_VCPNUSD_LY = rst.getDouble("GENERAL_VCPNUSD_LY");
+                bean.GENERAL_VCPNMXN_LY = rst.getDouble("GENERAL_VCPNMXN_LY");
+                //DOMESTIC
+                bean.DOMESTIC_VCPNUSD_CY = rst.getDouble("DOMESTIC_VCPNUSD_CY");
+                bean.DOMESTIC_VCPNMXN_CY = rst.getDouble("DOMESTIC_VCPNMXN_CY");
+                bean.DOMESTIC_VCPNUSD_LY = rst.getDouble("DOMESTIC_VCPNUSD_LY");
+                bean.DOMESTIC_VCPNMXN_LY = rst.getDouble("DOMESTIC_VCPNMXN_LY");
+                //INTERNATIONAL
+                bean.INTERNATIONAL_VCPNUSD_CY = rst.getDouble("INTERNATIONAL_VCPNUSD_CY");
+                bean.INTERNATIONAL_VCPNMXN_CY = rst.getDouble("INTERNATIONAL_VCPNMXN_CY");
+                bean.INTERNATIONAL_VCPNUSD_LY = rst.getDouble("INTERNATIONAL_VCPNUSD_LY");
+                bean.INTERNATIONAL_VCPNMXN_LY = rst.getDouble("INTERNATIONAL_VCPNMXN_LY");
+
+                lst.add(bean);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<IMF140Filter> loadPX551SQP04118(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        HashMap<String, String> hmDescMeses = new HashMap<String, String>();
+        hmDescMeses.put("01", "Jan");
+        hmDescMeses.put("02", "Feb");
+        hmDescMeses.put("03", "Mar");
+        hmDescMeses.put("04", "Apr");
+        hmDescMeses.put("05", "May");
+        hmDescMeses.put("06", "Jun");
+        hmDescMeses.put("07", "Jul");
+        hmDescMeses.put("08", "Aug");
+        hmDescMeses.put("09", "Sep");
+        hmDescMeses.put("10", "Oct");
+        hmDescMeses.put("11", "Nov");
+        hmDescMeses.put("12", "Dec");
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04118(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, "2021");
+            cstmt.setString(3, "2020");
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new IMF140Filter();
+                //bean.MES = rst.getString("MES").trim();
+                if (hmDescMeses.containsKey(rst.getString("MES").trim().toUpperCase())) {
+                    bean.MES = hmDescMeses.get(rst.getString("MES").trim()).toString();
+                } else {
+                    bean.MES = rst.getString("MES").trim();
+                }
+                bean.DOMESTIC_B_QTYPAX = rst.getDouble("DOMESTIC_B_QTYPAX");
+                bean.DOMESTIC_B_VCPNUSD = rst.getDouble("DOMESTIC_B_VCPNUSD");
+                bean.DOMESTIC_B_VCPNMXN = rst.getDouble("DOMESTIC_B_VCPNMXN");
+                bean.INTERNATIONAL_B_QTYPAX = rst.getDouble("INTERNATIONAL_B_QTYPAX");
+                bean.INTERNATIONAL_B_VCPNUSD = rst.getDouble("INTERNATIONAL_B_VCPNUSD");
+                bean.INTERNATIONAL_B_VCPNMXN = rst.getDouble("INTERNATIONAL_B_VCPNMXN");
+                bean.GENERAL_B_QTYPAX = rst.getDouble("GENERAL_B_QTYPAX");
+                bean.GENERAL_B_VCPNUSD = rst.getDouble("GENERAL_B_VCPNUSD");
+                bean.GENERAL_B_VCPNMXN = rst.getDouble("GENERAL_B_VCPNMXN");
+
+                lst.add(bean);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+    
+    public List<IMF140Filter> loadPX551SQP04119(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+        
+        double VCPNMXN = 0.0, VCPNUSD = 0.0;
+        long QTYPAX = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04119(?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_YEAR);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new IMF140Filter();
+
+                bean = new IMF140Filter();
+                bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                bean.LABEL_MXN = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNMXN");
+                bean.LABEL_USD = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNUSD");
+                bean.QTYPAX = rst.getInt("QTYPAX");
+
+                VCPNMXN = VCPNMXN + rst.getDouble("VCPNMXN");
+                VCPNUSD = VCPNUSD + rst.getDouble("VCPNUSD");
+                QTYPAX = QTYPAX + rst.getInt("QTYPAX");
+
+                lst.add(bean);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        
+        for (int i = 0; i < lst.size(); i++) { //lstDomestic.size()
+
+            lst.get(i).totVCPNMXN = VCPNMXN;
+            lst.get(i).totVCPNUSD = VCPNUSD;
+            lst.get(i).totVPROUSD = VCPNUSD / QTYPAX;
+            lst.get(i).totVPROMXN = VCPNMXN / QTYPAX;
+            lst.get(i).totQTYPAX = QTYPAX;
+        }
+
+        return lst;
+    }
+
 }

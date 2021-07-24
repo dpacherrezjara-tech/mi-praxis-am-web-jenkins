@@ -38,35 +38,38 @@ public class AccountingControlAuditDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL PRAXIS.SQP04091(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP04091(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(7, Types.INTEGER);
-            cstmt01.registerOutParameter(8, Types.INTEGER);
-            cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
             
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_OPTION);
             cstmt01.setString(3, filter.IN_DATEFROM);
             cstmt01.setString(4, filter.IN_DATETO);                      
             cstmt01.setString(5, filter.IN_MODULO);
-            cstmt01.setString(6, filter.IN_TIPOM);            
-            cstmt01.setInt(7, filter.page.PAGNUM);
-            cstmt01.setInt(8, filter.page.PAGROW);
-            cstmt01.setInt(9, filter.page.TOTPAG);
-            cstmt01.setInt(10, filter.page.TOTROW);
+            cstmt01.setString(6, filter.IN_TIPOM);
+            cstmt01.setString(7, filter.IN_STATO);
+            cstmt01.setString(8, filter.IN_STAT1);
+            cstmt01.setString(9, filter.IN_STAT2);
+            cstmt01.setInt(10, filter.page.PAGNUM);
+            cstmt01.setInt(11, filter.page.PAGROW);
+            cstmt01.setInt(12, filter.page.TOTPAG);
+            cstmt01.setInt(13, filter.page.TOTROW);
             cstmt01.execute();
 
             //*System.out.println("Aqui entro con Filtro Categoria: ");
-            filter.page.PAGNUM = cstmt01.getInt(7);
-            filter.page.PAGROW = cstmt01.getInt(8);
-            filter.page.TOTPAG = cstmt01.getInt(9);
-            filter.page.TOTROW = cstmt01.getInt(10);
+            filter.page.PAGNUM = cstmt01.getInt(10);
+            filter.page.PAGROW = cstmt01.getInt(11);
+            filter.page.TOTPAG = cstmt01.getInt(12);
+            filter.page.TOTROW = cstmt01.getInt(13);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {

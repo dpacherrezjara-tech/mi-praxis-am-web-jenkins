@@ -58,7 +58,9 @@ public class AccountingControlAuditController extends BaseController {
             filter.IN_DATETO = request.getParameter("IN_DATETO");            
             filter.IN_MODULO = request.getParameter("IN_MODULO");
             filter.IN_TIPOM = request.getParameter("IN_TIPOM");            
-            filter.IN_STATO = request.getParameter("IN_STATO"); 
+            filter.IN_STATO = request.getParameter("IN_STATO");
+            filter.IN_STAT1 = request.getParameter("IN_STAT1");
+            filter.IN_STAT2 = request.getParameter("IN_STAT2");
             //filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;

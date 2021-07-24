@@ -10,6 +10,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
     fecha: new Date(),
     childs: '5',
     bean: '',
+    bean_2: '',
     beanDay: {},
     beanDetTran: {},
     beanDetCard: {},
@@ -24,6 +25,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
     reg99: 0,
     me: '',
     searchParams: {},
+    searchParams_2: {},
     paramsDetail: {},
     dataObtain: {},
     dataGrid: [],
@@ -163,8 +165,8 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                     data: lstBank,
                     autoLoad: true
                 });
-                Ext.getCmp(prototype.id + '-cmbBank').bindStore(storeData);
-                Ext.getCmp(prototype.id + '-cmbBank').setValue('');
+                //Ext.getCmp(prototype.id + '-cmbBank').bindStore(storeData);
+                //Ext.getCmp(prototype.id + '-cmbBank').setValue('');
                 me.btnSearch_click();
             }
         });
@@ -183,6 +185,28 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
             bean: me.bean
         };
     },
+    setFormatParameterForYear: function(year) {
+        me.bean = {};
+
+        me.bean.IN_YEAR = year;
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+    },
+    setFormatParameterForPreviousYear: function(year) {
+        me.bean_2 = {};
+
+        me.bean_2.IN_YEAR = year;
+
+        var beanString = JSON.stringify(me.bean_2);
+        searchParams_2 = {
+            beanString: beanString,
+            bean: me.bean_2
+        };
+    },
     rbChangeType: function() {
         Ext.getCmp(prototype.id + '-radiogroupForecast').hide();
 
@@ -191,16 +215,19 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         switch (selectedValue) {
             case 'F':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridData();
                 break;
             case 'I':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataItinerary();
                 break;
             case 'FC':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 Ext.getCmp(prototype.id + '-radiogroupForecast').show();
                 this.onChangeRadioForecast();
                 //this.setFormatParameter();
@@ -209,9 +236,22 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
             case 'AZ':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(true);
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setValue(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataAmountByZones();
                 this.setGridDataAmountByMarket();
+                break;
+            case 'YY':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(true);
+                me.panelActual = '-panelGridDataRevenueByYear';
+                global.selectedChild(me.childs, prototype.id + me.panelActual);
+                this.setGridDataRevenueByCurrentYear();
+                this.setGridDataRevenueByPreviousYear();
+                this.setGridDataRevenueByYearGraphic();
+                this.setGridDataRevenueByYearBalance();
+                this.setGridDataRevenueByPreviousYearGeneral();
+                this.setGridDataRevenueByCurrentYearGeneral();
                 break;
                 /*case 'FZ':
                  this.setFormatParameter();
@@ -224,16 +264,19 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         switch (selectedValue) {
             case 'FC':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecast();
                 break;
             case 'FP':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecastPercentage();
                 break;
             case 'FZ':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecastZones();
                 break;
@@ -588,6 +631,319 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-displaySAChart05').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataMarketSecondLevelDomestic').setStore(storeGridDatas);
         //Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setGridDataRevenueByCurrentYear: function() {
+        var year = new Date().getFullYear();
+        this.setFormatParameterForYear(year);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastRevenueByYear'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetMarket = res.data;
+                        if (gridDetMarket.length > 0) {
+                            var data = {};
+                            data = gridDetMarket[0];
+                            var lstInternational = res.lstInternational;
+
+                            var store = Ext.create('Ext.data.Store', {
+                                data: lstInternational,
+                                autoLoad: true
+                            });
+
+                            console.log(lstInternational);
+                            Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalUSD').bindStore(store);
+                            //Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalMXN').bindStore(store);
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+
+        var months = new Array();
+        months.push(['January'], ['February'], ['March'], ['April'], ['May'], ['June'], ['July'], ['August'], ['September'], ['October'], ['November'], ['December']);
+
+        var storeMonths = Ext.create('Ext.data.ArrayStore', {
+            storeId: 'months', autoLoad: true, data: months, fields: ['NAME']
+        });
+        Ext.getCmp(prototype.id + '-gridMonths_1').bindStore(storeMonths);
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-panelDataCurrentYearUSD').setTitle('<center style="font-size:12px;">' + year + ' </center>');
+        //Ext.getCmp(prototype.id + '-panelDataCurrentYearMXN').setTitle('<center style="font-size:12px;">' + year + ' </center>');
+    },
+    setGridDataRevenueByPreviousYear: function() {
+        var prev_year = new Date().getFullYear() - 1;
+        console.log(prev_year)
+        this.setFormatParameterForPreviousYear(prev_year);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastRevenueByYear'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+
+                    obj.proxy.extraParams = searchParams_2;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetMarket = res.data;
+                        if (gridDetMarket.length > 0) {
+                            var data = {};
+                            data = gridDetMarket[0];
+                            var lstInternational = res.lstInternational;
+
+                            var store = Ext.create('Ext.data.Store', {
+                                data: lstInternational,
+                                autoLoad: true
+                            });
+
+                            console.log(lstInternational);
+                            Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').bindStore(store);
+                            //Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalMXN').bindStore(store);
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+
+        /*var months = new Array();
+         months.push(['January'], ['February'], ['March'], ['April'], ['May'], ['June'], ['July'], ['August'], ['September'], ['October'], ['November'], ['December']);
+         
+         var storeMonths = Ext.create('Ext.data.ArrayStore', {
+         storeId: 'months', autoLoad: true, data: months, fields: ['NAME']
+         });
+         Ext.getCmp(prototype.id + '-gridMonths_2').bindStore(storeMonths);*/
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticMXN').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-panelDataPreviousYearUSD').setTitle('<center style="font-size:12px;">' + prev_year + ' </center>');
+        //Ext.getCmp(prototype.id + '-panelDataPreviousYearMXN').setTitle('<center style="font-size:12px;">' + prev_year + ' </center>');
+    },
+    setGridDataRevenueByYearGraphic: function() {
+        var year = new Date().getFullYear();
+        this.setFormatParameterForYear(year);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastRevenueByYearGraphics'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetMarket = res.data;
+                        if (gridDetMarket.length > 0) {
+
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-displaySAChart07').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart08').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart09').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart10').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart11').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySAChart12').bindStore(storeGridDatas);
+        // Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').bindStore(storeGridDatas);
+    },
+    setGridDataRevenueByYearBalance: function() {
+        var year = new Date().getFullYear();
+        this.setFormatParameterForYear(year);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastRevenueByYearBalance'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetMarket = res.data;
+                        if (gridDetMarket.length > 0) {
+
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+
+        global.clear();
+        console.log(storeGridDatas);
+        Ext.getCmp(prototype.id + '-panelDataBalanceByYear').setTitle('<center style="font-size:12px;">' + 'Balance' + '</center>');
+        Ext.getCmp(prototype.id + '-gridDataBalanceByYear').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-').bindStore(storeGridDatas);
+        // Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticMXN').bindStore(storeGridDatas);
+    },
+    setGridDataRevenueByCurrentYearGeneral: function() {
+        var year = new Date().getFullYear();
+        this.setFormatParameterForYear(year);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastRevenueByYearGeneral'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetMarket = res.data;
+                        if (gridDetMarket.length > 0) {
+
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+
+        global.clear();
+        console.log(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByCurrentYearGeneral').bindStore(storeGridDatas);
+    },
+    setGridDataRevenueByPreviousYearGeneral: function() {
+        var prev_year = new Date().getFullYear() - 1;
+        console.log(prev_year)
+        this.setFormatParameterForPreviousYear(prev_year);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastRevenueByYearGeneral'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParams_2;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        var gridDetMarket = res.data;
+                        if (gridDetMarket.length > 0) {
+
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+
+        global.clear();
+        console.log(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByPreviousYearGeneral').bindStore(storeGridDatas);
+    },
+    cbxSummaryType_changeHandler: function() {
+
+        var value = Ext.getCmp(prototype.id + '-cmbSummaryType').getValue();
+
+        switch (value) {
+            case 'G':
+                //Grillas
+                //Previous
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearGeneral').setVisible(true);
+                //Current
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearGeneral').setVisible(true);
+                //Balance
+                Ext.getCmp(prototype.id + '-DataDomesticBalanceByYear').setVisible(false);
+                Ext.getCmp(prototype.id + '-DataInternationalBalanceByYear').setVisible(false);
+                Ext.getCmp(prototype.id + '-DataGeneralBalanceByYear').setVisible(true);
+                //Graficos                
+                Ext.getCmp(prototype.id + '-panelGraphicDomestic').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicInternational').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicGeneral').setVisible(true);
+                
+                break;
+            case 'I':
+                //Previous
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').setVisible(true);
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearGeneral').setVisible(false);
+                //Current
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalUSD').setVisible(true);
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearGeneral').setVisible(false);
+                //Balance
+                Ext.getCmp(prototype.id + '-DataDomesticBalanceByYear').setVisible(false);
+                Ext.getCmp(prototype.id + '-DataInternationalBalanceByYear').setVisible(true);
+                Ext.getCmp(prototype.id + '-DataGeneralBalanceByYear').setVisible(false);
+                //Graficos                
+                Ext.getCmp(prototype.id + '-panelGraphicDomestic').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicInternational').setVisible(true);
+                Ext.getCmp(prototype.id + '-panelGraphicGeneral').setVisible(false);
+                break;
+            case 'D':
+                //Previous
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearDomesticUSD').setVisible(true);
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearInternationalUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByPreviousYearGeneral').setVisible(false);
+                //Current
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearDomesticUSD').setVisible(true);
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearInternationalUSD').setVisible(false);
+                Ext.getCmp(prototype.id + '-gridDataByCurrentYearGeneral').setVisible(false);
+                //Balance
+                Ext.getCmp(prototype.id + '-DataDomesticBalanceByYear').setVisible(true);
+                Ext.getCmp(prototype.id + '-DataInternationalBalanceByYear').setVisible(false);
+                Ext.getCmp(prototype.id + '-DataGeneralBalanceByYear').setVisible(false);
+                //Graficos                
+                Ext.getCmp(prototype.id + '-panelGraphicDomestic').setVisible(true);
+                Ext.getCmp(prototype.id + '-panelGraphicInternational').setVisible(false);
+                Ext.getCmp(prototype.id + '-panelGraphicGeneral').setVisible(false);
+                break;
+        }
+
     },
     onGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
@@ -1006,7 +1362,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         //Ext.getCmp(prototype.id + '-cmbTReg').setValue('');
-        Ext.getCmp(prototype.id + '-cmbBank').setValue('');
+        //Ext.getCmp(prototype.id + '-cmbBank').setValue('');
         Ext.getCmp(prototype.id + '-txtMerchant').setValue('');
     },
     btnExcel_click: function(obj, e) {

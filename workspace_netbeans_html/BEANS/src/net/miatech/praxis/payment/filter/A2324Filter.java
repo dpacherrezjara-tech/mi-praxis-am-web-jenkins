@@ -24,6 +24,9 @@ public class A2324Filter extends A2324 {
     public String IN_PNR = "";
     public String IN_REFNUMBER = "";
     public String IN_STVAL = "";
+    public String IN_DATSET = "";
+    public String IN_WEEKMO = "";
+    public double tot_SVFOP = 0.0;
 
     // Qty
     public long QMATCH = 0;
@@ -50,7 +53,9 @@ public class A2324Filter extends A2324 {
     public String TDOCA = "";
     public String descTDOCA = "";
     public double SVFOPA = 0.0;
+    public double SVFOPAB = 0.0;
     public double totSVFOPA = 0.0;
+    public double totSVFOPAB = 0.0;
     public String SCARCODA = "";
     public String CUR = "";
     public String SCARDNA = "";

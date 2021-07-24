@@ -268,6 +268,7 @@ public class AplPaymentController extends BaseController {
             String IMPORTE;
             String MONEDA;
             String REFPAG;
+            String TIPO;
             //json object
             String json_texto1;
             String json_texto = "";
@@ -314,6 +315,12 @@ public class AplPaymentController extends BaseController {
                             break;
                         }                        
                         REFPAG=  sheet.getCell(5)== null ? "" : sheet.getCell(5).toString(); 
+                        TIPO=  sheet.getCell(6)== null ? "" : sheet.getCell(6).toString(); 
+                        if( TIPO == ""){
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 5;
+                            break;
+                        } 
                         //crear obj json
                         HashMap obj=new HashMap();    
                         obj.put("FPAGO", FPAGO );    
@@ -321,7 +328,8 @@ public class AplPaymentController extends BaseController {
                         obj.put("UUID", UUID );
                         obj.put("IMPORTE",new Double(IMPORTE)); 
                         obj.put("MONEDA",MONEDA); 
-                        obj.put("REFPAG",REFPAG); 
+                        obj.put("REFPAG",REFPAG);
+                        obj.put("TIPO", TIPO);
                         String jsonText = JSONValue.toJSONString(obj);                          
                         json_texto += jsonText + ",";                        
                     }
@@ -358,7 +366,8 @@ public class AplPaymentController extends BaseController {
             "COLUMNA FECHA DE APLICACION DEL PAGO EN BLANCO",   //1
             "FORMATO NO VALIDO PARA COLUMNA BOLETO",            //2
             "COLUMNA IMPORTE INVALIDO O EN BLANCO",             //3
-            "COLUMNA MONEDA EN BLANCO"                          //4
+            "COLUMNA MONEDA EN BLANCO",                         //4
+            "COLUMNA TIPO EN BLANCO"                            //5
         };        
         return MESSAGE_ERROR[INDICE];
     }
