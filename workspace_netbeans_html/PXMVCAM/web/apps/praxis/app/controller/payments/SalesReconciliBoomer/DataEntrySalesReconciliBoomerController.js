@@ -26,8 +26,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
     afterRender: function() {
 //        this.obtainData();
         switch (this.actionCode) {
-            case 'S':
-                Ext.getCmp(prototype.id + '-btn-save').hide();
+            case 'I':
+                Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
@@ -55,10 +55,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
         
         this.setValue('de-cmbSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-cmbSTVAL', this.beanResult.STVAL);
-        //COLOCAR REFERENCE NUMBER
+        this.setValue('de-txtREFNBR', this.beanResult.REFNBR);
         this.setValue('de-txtSVFOP', this.beanResult.SVFOPB);
         this.setValue('de-txtSCURRENCY', this.beanResult.SCURRENCY);
         this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
+        this.setValue('de-txtWEEKMO', this.beanResult.WEEKMO);
+        this.setValue('de-txtDATSET', this.beanResult.DATSET);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -156,17 +158,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function(beanTemp) {
-        
+        var ticket = this.getValue("de-txtTicket");
         //Llenando los valores ingresados por el usuario =======
-        beanTemp.SVFOP = this.getValue("de-txtSVFOP");
-        
+        beanTemp.NEW_SDATE = this.getValue("de-txtSDATE");
+        beanTemp.NEW_REFNBR = this.getValue("de-txtREFNBR");
+        beanTemp.NEW_DATSET = this.getValue("de-txtDATSET");
+        beanTemp.NEW_WEEKMO = this.getValue("de-txtWEEKMO");
+        beanTemp.NEW_CCIA = ticket.substring(0,3);
+        beanTemp.NEW_FORMA = ticket.substring(3,7);
+        beanTemp.NEW_SERIE = ticket.substring(7,13);
+        beanTemp.NEW_TDOC = this.getValue("de-cmbTDOC");
+        beanTemp.NEW_SCARCOD = this.getValue("de-cmbSCARCOD");
+        beanTemp.NEW_SCARDN = this.getValue("de-txtCard");
+        beanTemp.NEW_SAUTHOC = this.getValue("de-txtSAUTHOC");
+        beanTemp.NEW_SPNR = this.getValue("de-txtSPNR");
+        beanTemp.NEW_SCOUNTRY = this.getValue("de-cmbSCOUNTRY");
+        beanTemp.NEW_STVAL = this.getValue("de-cmbSTVAL");
+        beanTemp.NEW_SCURRENCY = this.getValue("de-txtSCURRENCY");
+        beanTemp.NEW_SVFOP = this.getValue("de-txtSVFOP");
+                
         //Guardando valores originales =========================
         console.log(this.beanResult);
         beanTemp.strTicket = this.beanResult.TICKET;
         beanTemp.CCIAB = this.beanResult.CCIAB;
         beanTemp.FORMAB = this.beanResult.FORMAB;
         beanTemp.SERIEB = this.beanResult.SERIEB;
-//        beanTemp.CUPON = this.beanResult.CUPON;
         beanTemp.TDOC = this.beanResult.TDOC;
         beanTemp.SCARCOD = this.beanResult.SCARCOD;
         beanTemp.SCARDN = this.beanResult.SCARDN;
@@ -174,30 +190,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
         beanTemp.SPNR = this.beanResult.SPNR;      
         beanTemp.REFNBR = this.beanResult.REFNBR;      
         beanTemp.SDATE = this.beanResult.SDATE;      
-        
-        /*
-        beanTemp.SDATE = this.beanResult.SDATE;
-        beanTemp.SAGENT = this.beanResult.SAGENT;
-        beanTemp.SCOUNTRY = this.beanResult.SCOUNTRY;
-        beanTemp.SVFOP = this.beanResult.SVFOP;
-        beanTemp.SCURRENCY = this.beanResult.SCURRENCY;
-        beanTemp.SAUTHOC = this.beanResult.SAUTHOC;
-        beanTemp.BCARCOD = this.beanResult.BCARCOD;
-        beanTemp.BCARDN = this.beanResult.BCARDN;
-        
-        beanTemp.DAMOUNT = this.beanResult.DAMOUNT;
-        beanTemp.BCURRENCY = this.beanResult.BCURRENCY;
-        beanTemp.BDATEP = this.beanResult.BDATEP;
-        beanTemp.BDATEL = this.beanResult.BDATEL;
-        beanTemp.CODEBANK = this.beanResult.CODEBANK;
-        beanTemp.DAMOUNTR = this.beanResult.DAMOUNTR;
-        beanTemp.SCURRENCYRF = this.beanResult.SCURRENCYRF;
-        beanTemp.MERCHNR = this.beanResult.MERCHNR;
-        beanTemp.DESCRI = this.beanResult.DESCRI;
-        beanTemp.CERROR = this.beanResult.CERROR;
-        beanTemp.STATUSC = this.beanResult.STATUSC;
-        beanTemp.DATEC = this.beanResult.DATEC;
-        */
+        beanTemp.SVFOP = this.beanResult.SVFOP;      
+        beanTemp.DATSET = this.beanResult.DATSET;      
+        beanTemp.WEEKMO = this.beanResult.WEEKMO;        
     },
     getData: function() {
         
@@ -260,13 +255,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
                 if (btn === 'yes') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
-                    var msjResult = this.validacionInsert(beanTemp);
-                    if (msjResult === '') {
+                    //var msjResult = this.validacionInsert(beanTemp);
+                    //if (msjResult === '') {
                         beanTemp.option = 'I';
-                        this.maintenanceBean(beanTemp);
-                    } else {
-                        global.Msg({msg: msjResult});
-                    }
+                        this.executeOption(beanTemp);
+                    //} else {
+                      //  global.Msg({msg: msjResult});
+                    //}
                 }
             }
         });         
@@ -285,7 +280,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
                     if (btn === 'yes') {
                         var beanTemp = {};
                         this.llenarData(beanTemp);
-//                        beanTemp.option = 'U';
+                        beanTemp.option = 'U';
                         //var msjResult = this.validacionUpdate(beanTemp);
 			//var comentario = (Ext.getCmp(prototype.id + '-de-txtComment').getValue()).trim();
                         //if(msjResult === ''){
@@ -360,7 +355,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
 
     validacionInsert: function(beanTemp) {
         var msjResult = '';
-        if (this.getValue("de-txtCODEBANK") === '' || this.getValue("de-cmbCOUNTRY") === '' || this.getValue("de-txtCURRENC") === '') {
+        if (this.getValue("de-txtCODEBANK") === '' || this.getValue("de-cmbCOUNTRY") === '' || this.getValue("de-txtSCURRENCY") === '') {
             msjResult = "You must enter the required field.";
         }
         return msjResult;

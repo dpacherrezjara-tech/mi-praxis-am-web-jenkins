@@ -1167,6 +1167,8 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.SVFOPB = rst.getDouble("SVFOP");
                 beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                 beanTkt.SPNR = rst.getString("SPNR").trim();
+                beanTkt.DATSET = rst.getString("DATSET").trim();
+                beanTkt.WEEKMO = rst.getString("WEEKMO").trim();
 
                 beanTkt.USCR = rst.getString("USCR").trim();
                 beanTkt.FECR = rst.getString("FECR").trim();
@@ -1206,30 +1208,51 @@ public class SalesReconciliBoomerDAO {
 
         //REALIZA EL UPDATE DE UN REGISTRO EN LA TABLA A2298.
         String strMsj = "SUCCESSFUL. Information Updated.";
+        //strMsj = "SUCCESSFUL. Information Created.";
         CallableStatement cstmt = null;
         Connection cnx = null;
         //SQP02077
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04122(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04122(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.setString(1, "U");
+            cstmt.setString(1, filter.option.trim());
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(3, filter.CCIAB.trim());
-            cstmt.setString(4, filter.FORMAB.trim());
-            cstmt.setString(5, filter.SERIEB.trim());
-            cstmt.setString(6, filter.SCARCOD.trim());
-            cstmt.setString(7, filter.SCARDN.trim());
-            cstmt.setString(8, filter.SDATE.trim());
-            cstmt.setString(9, filter.REFNBR.trim());            
-            cstmt.setString(10, filter.SPNR.trim());            
-            cstmt.setDouble(11, filter.SVFOP);
-            cstmt.setString(12, session.getUserView().getUserInfo().USR);
-            cstmt.setString(13, Functions.getFechaActual());
-            cstmt.setString(14, Functions.getHoraActual());
+            //Campos para actualizar
+            cstmt.setString(3, filter.NEW_SDATE);
+            cstmt.setString(4, filter.NEW_REFNBR);
+            cstmt.setString(5, filter.NEW_DATSET);
+            cstmt.setString(6, filter.NEW_WEEKMO);
+            cstmt.setString(7, filter.NEW_CCIA);
+            cstmt.setString(8, filter.NEW_FORMA);
+            cstmt.setString(9, filter.NEW_SERIE);
+            cstmt.setString(10, filter.NEW_TDOC);
+            cstmt.setString(11, filter.NEW_SCARCOD);
+            cstmt.setString(12, filter.NEW_SCARDN);
+            cstmt.setString(13, filter.NEW_SAUTHOC);
+            cstmt.setString(14, filter.NEW_SPNR);
+            cstmt.setString(15, filter.NEW_SCOUNTRY);
+            cstmt.setString(16, filter.NEW_STVAL);
+            cstmt.setString(17, filter.NEW_SCURRENCY);
+            cstmt.setDouble(18, filter.NEW_SVFOP);
+            //Campos para el where
+            cstmt.setString(19, filter.CCIAB.trim());
+            cstmt.setString(20, filter.FORMAB.trim());
+            cstmt.setString(21, filter.SERIEB.trim());
+            //cstmt.setString(6, filter.SCARCOD.trim());
+            //cstmt.setString(7, filter.SCARDN.trim());
+            cstmt.setString(22, filter.SDATE.trim());
+            cstmt.setString(23, filter.REFNBR.trim());
+            cstmt.setString(24, filter.DATSET.trim());
+            cstmt.setString(25, filter.WEEKMO.trim());
+            cstmt.setString(26, filter.SPNR.trim());
+            //Campos para auditoria
+            cstmt.setString(27, session.getUserView().getUserInfo().USR);
+            cstmt.setString(28, Functions.getFechaActual());
+            cstmt.setString(29, Functions.getHoraActual());
             
             cstmt.execute();
 

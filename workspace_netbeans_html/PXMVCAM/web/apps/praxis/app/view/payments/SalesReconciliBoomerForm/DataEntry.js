@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
         'Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesReconciliBoomerController'
     ],
     controller: 'DataEntrySalesReconciliBoomerController',
-    title: 'Boomer - Data Entry Form',
+    title: 'Sales Reconciliation by Boomer - Data Entry Form',
     header: true,
 //    height: 575,
     width: 895,
@@ -45,6 +45,117 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                 width: 1080
                             },
                             items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Sales Date',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    padding: '3 0',
+                                    width: 110
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    padding: '3 0',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSDATE',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 8,
+                                    //readOnly: true,
+                                    width: 70
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Ref. Number',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    width: 80,
+                                    padding: '3 0'
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    padding: '3 0',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtREFNBR',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 14,
+                                    //readOnly: true,
+                                    padding: '3 0',
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Settlement Date',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    padding: '3 0',
+                                    width: 110
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    padding: '3 0',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtDATSET',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 6,
+                                    //readOnly: true,
+                                    width: 70
+                                },
+                                {xtype: 'tbspacer', width: 30},
+                                {
+                                    xtype: 'label',
+                                    text: 'Period',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    padding: '3 0',
+                                    width: 60
+                                },
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    padding: '3 0',
+                                    width: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtWEEKMO',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 2,
+                                    //readOnly: true,
+                                    width: 70
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '0 2 2 5',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
                                 {
                                     xtype: 'label',
                                     text: 'Ticket Number',
@@ -68,7 +179,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     id: prototype.id + '-de-txtTicket',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
-                                    readOnly: true,
+                                    //readOnly: true,
                                     maxLength: 13,
                                     width: 140
 
@@ -94,12 +205,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     width: 90,
                                     fieldStyle: 'color:#074066;',
                                     queryMode: 'local',
-                                    forceSelection: true,
+                                            forceSelection: true,
                                     selectOnFocus: false,
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
-                                    disabled: true,
+                                    //disabled: true,
                                     typeAhead: true,
                                     valueField: 'code',
                                     displayField: 'name',
@@ -146,7 +257,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     autoSelect: true,
                                     editable: false,
                                     width: 300,
-                                    disabled: true,
+                                    //disabled: true,
                                     typeAhead: true,
                                     valueField: 'CODE',
                                     displayField: 'NAME',
@@ -176,9 +287,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     maxLength: 16,
                                     maskRe: /[0-9, */]/,
                                     padding: '3 0',
-                                    readOnly: true,
+                                    //readOnly: true,
                                     width: 120
-                                },                                
+                                },
                                 {xtype: 'tbspacer', width: 40}
                             ]
                         },
@@ -193,24 +304,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                 width: 1080
                             },
                             items: [
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'label',
-                                    text: 'Sales Date',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 130
-                                },
-//                                { xtype: 'tbspacer', width: 4 },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSDATE',
-                                    fieldStyle: 'text-align:left',
-                                    enforceMaxLength: true,
-                                    maxLength: 8,
-                                    readOnly: true,
-                                    width: 70
-                                },                              
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 7},                                
                                 {
                                     xtype: 'label',
                                     text: 'Authorization Code',
@@ -218,18 +312,37 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     width: 120,
                                     padding: '3 0'
                                 },
-                                {xtype: 'tbspacer', width: 22},
+                                {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtSAUTHOC',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 6,
-                                    readOnly: true,
+                                    //readOnly: true,
                                     padding: '3 0',
+                                    width: 150
+                                },
+                                {xtype: 'tbspacer', width: 84},
+                                {
+                                    xtype: 'label',
+                                    text: 'PNR',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    padding: '3 0',
+                                    width: 40
+                                },
+                                {xtype: 'tbspacer', width: 41},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSPNR',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maxLength: 6,
+                                    //readOnly: true,
                                     width: 210
-                                },                                
-                                {xtype: 'tbspacer', width: 38},
+                                },
+                                {xtype: 'tbspacer', width: 38}
+                                
                             ]
                         },
                         {
@@ -263,7 +376,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     autoSelect: true,
                                     editable: false,
                                     width: 300,
-                                    disabled: true,
+                                    //disabled: true,
                                     value: null,
                                     typeAhead: true,
                                     valueField: 'A006PAIS',
@@ -291,7 +404,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     autoSelect: true,
                                     editable: false,
                                     width: 210,
-                                    disabled: true,
+                                    //disabled: true,
                                     value: null,
                                     typeAhead: true,
                                     valueField: 'code', displayField: 'name',
@@ -328,10 +441,29 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     enforceMaxLength: true,
                                     maxLength: 15,
                                     padding: '3 0',
-                                    readOnly: false,
+                                    //readOnly: false,
                                     maskRe: /[0-9]/,
                                     width: 125
                                 },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Currency',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'label',
+                                    text: '(*)',
+                                    style: 'font-weight:bold;color:red;',
+                                    width: 20,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 4},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtSCURRENCY',
@@ -339,27 +471,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     enforceMaxLength: true,
                                     maxLength: 3,
                                     padding: '3 0',
-                                    readOnly: true,
+                                    //readOnly: true,
                                     width: 40
                                 },
-                                {xtype: 'tbspacer', width: 173},
-                                {
-                                    xtype: 'label',
-                                    text: 'PNR',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    padding: '3 0',
-                                    width: 40
-                                },
-                                {xtype: 'tbspacer', width: 101},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSPNR',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    maxLength: 6,
-                                    readOnly: true,
-                                    width: 210
-                                },
+                                {xtype: 'tbspacer', width: 84},
+                                {xtype: 'tbspacer', width: 291},
                                 {xtype: 'tbspacer', width: 38}
                             ]
                         },
@@ -444,7 +560,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                             border: false,
                             layout: 'hbox',
                             margin: '5 0 10 50',
-
                             defaults: {
                                 labelAlign: 'left'
                             },

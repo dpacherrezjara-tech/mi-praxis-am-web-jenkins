@@ -136,12 +136,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Options', {
                             tooltip: 'Display filter'
 
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btnAdd',
-//                            iconCls: 'prx-icon-add',
-//                            tooltip: 'New'
-//                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAdd',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New'
+                        },
                         {
                             xtype:'button',
                             id: prototype.id+'-btnDisplay',
