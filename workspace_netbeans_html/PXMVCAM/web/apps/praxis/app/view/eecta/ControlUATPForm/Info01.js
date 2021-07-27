@@ -1,7 +1,7 @@
 
 Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info01', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id01 + '-info01',    
+    alias: 'widget.' + prototype.id01 + '-info01',
     align: 'left',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -42,26 +42,44 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info01', {
                         {
                             xtype: 'grid',
                             id: prototype.id01 + '-gridData',
-                            columnLines: true,                            
-                            width: '99%',
+                            columnLines: true,
+                            width: 965,
                             height: 450,
                             padding: '0px 5px 1px 5px',
                             columns: {
-                                items: [
-                                    {text: 'Fecha<br>Proceso', dataIndex: 'A3535FCONT', width: 90, align: 'center',locked: true},
-                                    {text: 'Ticket', dataIndex: 'A3981NREDO', width: 90, align: 'center',locked: true},
-                                    {text: 'Estado', dataIndex: 'A3981CDCLI', align: 'center', width: 60,locked: true},                                    
-                                    {text: 'Fecha<br>Emisión', dataIndex: 'A3535FEVTA', align: 'center', width: 70,locked: true},
-                                    {text: 'PNR', dataIndex: 'A3535PNR', align: 'left', width: 60,locked: true},
-                                    {text: 'Trx.', dataIndex: 'A3535TRNCU', align: 'center', width: 60,locked: true},
-                                    {text: 'Pax', dataIndex: 'A3535PAX', align: 'left', width: 120,locked: true},
+                                items: [                                    
+                                    {
+                                        text: 'Ticket', dataIndex: 'A3981NREDO', width: 110, align: 'center', locked: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return record.get('A3535CIA') + record.get('A3535FORMA') + record.get('A3535SERIE');
+                                        }
+                                    },
+                                    {
+                                        text: 'Estado', dataIndex: 'A3535ESTA', align: 'center', width: 60, locked: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var VL_A1272DES = record.get('A1272DES');
+                                            var html = '<img src="resources/img/semaforo/Circle_Green.png" title="OK" >';
+                                            if (value === '2')
+                                                var html = '<img src="resources/img/semaforo/Circle_Red.png" title="' + VL_A1272DES + '" >';
+                                            return html;
+                                        }
+                                    },
+                                    {text: 'Fecha<br>Emisión', dataIndex: 'A3535FEVTA', align: 'center', width: 70, locked: true},
+                                    {text: 'PNR', dataIndex: 'A3535PNR', align: 'left', width: 60, locked: true},
+                                    {text: 'Trx.', dataIndex: 'A3535TRNCU', align: 'center', width: 60, locked: true},
+                                    {text: 'Pax', dataIndex: 'A3535PAX', align: 'left', width: 140, locked: true},
                                     {
                                         text: 'Información FOP',
                                         columns: [
-                                            {text: 'FOP', dataIndex: 'A3535CFOP', width: 50, align: 'center'},
-                                            {text: 'Tarj.', dataIndex: 'A3535NTARJ', width: 80, align: 'left'},
                                             {
-                                                text: 'Total', dataIndex: 'A3535VFOP', width: 90, align: 'right',                                                
+                                                text: 'FOP', dataIndex: 'A3535CFOP', width: 50, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                                    return record.get('A3535CFOP')+record.get('A3535TTARJ');
+                                                }
+                                            },
+                                            {text: 'Tarj.', dataIndex: 'A3535NTARJ', width: 110, align: 'left'},
+                                            {
+                                                text: 'Total', dataIndex: 'A3535VFOP', width: 90, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
@@ -77,7 +95,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info01', {
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
-                                            }, 
+                                            },
                                             {
                                                 text: 'IVA', dataIndex: 'A3535IVA', width: 80, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
@@ -85,50 +103,37 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info01', {
                                                 }
                                             },
                                             {
-                                                text: 'TUA', dataIndex: 'A3535TUA', width: 90, align: 'right',                                                
+                                                text: 'TUA', dataIndex: 'A3535TUA', width: 90, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
                                             },
                                             {
-                                                text: 'YR', dataIndex: 'A3535YR', width: 90, align: 'right',                                                
+                                                text: 'YR', dataIndex: 'A3535YR', width: 90, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
                                             },
                                             {
-                                                text: 'YQ', dataIndex: 'A3535YQ', width: 90, align: 'right',                                                
+                                                text: 'YQ', dataIndex: 'A3535YQ', width: 90, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
                                             },
                                             {
-                                                text: 'OTR.', dataIndex: 'A3535OTR', width: 90, align: 'right',                                                
+                                                text: 'OTR.', dataIndex: 'A3535OTR', width: 90, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
                                             },
                                             {
-                                                text: 'Total', dataIndex: 'A3535TOTAL', width: 90, align: 'right', 
+                                                text: 'Total', dataIndex: 'A3535TOTAL', width: 90, align: 'right',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                                     return Ext.util.Format.number(value, '0,000.00');
                                                 }
                                             }
                                         ]
-                                    },
-                                    {
-                                        xtype: 'actioncolumn',
-                                        sortable: false,
-                                        width: 40,
-                                        align: 'center',
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-pdf',
-                                                tooltip: 'Detalle',
-                                                handler: 'onReportEdoCta'
-                                            }
-                                        ]
-                                    }
+                                    }                                    
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -160,12 +165,12 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info01', {
                             xtype: 'panel',
                             id: prototype.id01 + '-pie',
                             width: '99%',
-                            height: 35,                            
+                            height: 35,
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
                             },
-                            border: true,                            
+                            border: true,
                             bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                             defaults: {
                                 border: true

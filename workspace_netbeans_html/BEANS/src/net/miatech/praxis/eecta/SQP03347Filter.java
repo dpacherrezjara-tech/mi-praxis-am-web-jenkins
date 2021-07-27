@@ -5,15 +5,15 @@
  */
 package net.miatech.praxis.eecta;
 
-import net.miatech.beans.DBException;
+import net.miatech.beans.Pagination;
 
 /**
  *
  * @author vhidalgo
  */
-public class SQP03952Filter extends A3959 {
-    public String VP_ACTION ="";     
-    public String VP_TICKET_NC ="";    
-    public String  VP_json_detail = "";   
-    public DBException dbException = new DBException();
+public class SQP03347Filter extends A4054 {
+    public String VP_CCUST  = "";
+    public String VP_FDESDE = "";
+    public String VP_FHASTA  = "";
+    public Pagination page = new Pagination();
 }

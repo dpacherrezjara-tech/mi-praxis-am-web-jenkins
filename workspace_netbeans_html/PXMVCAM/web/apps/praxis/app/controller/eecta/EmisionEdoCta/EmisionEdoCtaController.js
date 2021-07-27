@@ -176,7 +176,9 @@ Ext.define('Ext.Praxis.controller.eecta.EmisionEdoCta.EmisionEdoCtaController', 
         }
         var bean = {};
         bean.VP_A3981NREDO = this.gridData.get('A3981NREDO');
-        bean.VP_A3981CDCLI = this.gridData.get('A3981CDCLI');        
+        bean.VP_A3981CDCLI = this.gridData.get('A3981CDCLI');    
+//        console.log( 'url:' + prototype.url + '/pdf_EstadoCuenta/?beanString=' );
+//        console.log(encodeURI(JSON.stringify(bean)) );
         this.exportPdf(prototype.url + '/pdf_EstadoCuenta/?beanString=' + encodeURI(JSON.stringify(bean)) );
     },
     onReportEdoCtaDet: function ( grid, rowIndex, colIndex ) {
