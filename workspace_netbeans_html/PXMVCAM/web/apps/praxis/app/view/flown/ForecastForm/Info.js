@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1620,
+                width: 1764,
                 height: 'auto',
                 align: 'center'
             },
@@ -244,134 +244,154 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'ASI', dataIndex: 'ASI', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
+                                                text: 'Domestic',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totASI, '0,000') + '<b>';
-                                                }
+                                                columns: [
+                                                    {
+                                                        text: 'FRO', dataIndex: 'FRO', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totFRO, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'LOC', dataIndex: 'LOC', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totLOC, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'PLA', dataIndex: 'PLA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totPLA, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             {
-                                                text: 'CAM', dataIndex: 'CAM', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
+                                                text: 'International',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
                                                 },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totCAM, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'CAN', dataIndex: 'CAN', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totCAN, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'CAR', dataIndex: 'CAR', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totCAR, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'EUR', dataIndex: 'EUR', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totEUR, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'FRO', dataIndex: 'FRO', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totFRO, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'LOC', dataIndex: 'LOC', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totLOC, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'PLA', dataIndex: 'PLA', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totPLA, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'SUD', dataIndex: 'SUD', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totSUD, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'USA', dataIndex: 'USA', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totUSA, '0,000') + '<b>';
-                                                }
+                                                columns: [
+                                                    {
+                                                        text: 'ASI', dataIndex: 'ASI', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totASI, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'CAM', dataIndex: 'CAM', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totCAM, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'CAN', dataIndex: 'CAN', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totCAN, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'CAR', dataIndex: 'CAR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totCAR, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'EUR', dataIndex: 'EUR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totEUR, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'SUD', dataIndex: 'SUD', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSUD, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'USA', dataIndex: 'USA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totUSA, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'TOTAL', dataIndex: 'totZonas', width: 70,
@@ -678,134 +698,154 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'ASI', dataIndex: 'percentageASI', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
+                                                text: 'Domestic',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
                                                 },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totASI, '0,000') + '<b>';
-                                                 }*/
+                                                columns: [
+                                                    {
+                                                        text: 'FRO', dataIndex: 'percentageFRO', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totFRO, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'LOC', dataIndex: 'percentageLOC', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totLOC, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'PLA', dataIndex: 'percentagePLA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totPLA, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                ]
                                             },
                                             {
-                                                text: 'CAM', dataIndex: 'percentageCAM', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
+                                                text: 'International',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
                                                 },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totCAM, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'CAN', dataIndex: 'percentageCAN', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totCAN, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'CAR', dataIndex: 'percentageCAR', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totCAR, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'EUR', dataIndex: 'percentageEUR', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totEUR, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'FRO', dataIndex: 'percentageFRO', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totFRO, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'LOC', dataIndex: 'percentageLOC', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totLOC, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'PLA', dataIndex: 'percentagePLA', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totPLA, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'SUD', dataIndex: 'percentageSUD', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totSUD, '0,000') + '<b>';
-                                                 }*/
-                                            },
-                                            {
-                                                text: 'USA', dataIndex: 'percentageUSA', width: 70,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                                /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                 var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
-                                                 metaData.style = 'text-align:right; margin-right:3px ';
-                                                 return '<b>' + Ext.util.Format.number(data.totUSA, '0,000') + '<b>';
-                                                 }*/
+                                                columns: [
+                                                    {
+                                                        text: 'ASI', dataIndex: 'percentageASI', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totASI, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'CAM', dataIndex: 'percentageCAM', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totCAM, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'CAN', dataIndex: 'percentageCAN', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totCAN, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'CAR', dataIndex: 'percentageCAR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totCAR, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'EUR', dataIndex: 'percentageEUR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totEUR, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'SUD', dataIndex: 'percentageSUD', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totSUD, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                    {
+                                                        text: 'USA', dataIndex: 'percentageUSA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                        /*summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                         var data = Ext.getCmp(prototype.id + '-gridDataItinerary').getStore().getData().items[0].data;
+                                                         metaData.style = 'text-align:right; margin-right:3px ';
+                                                         return '<b>' + Ext.util.Format.number(data.totUSA, '0,000') + '<b>';
+                                                         }*/
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'TOTAL', dataIndex: 'totalRegistros', width: 70,
@@ -825,7 +865,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                             id: prototype.id + '-panelGridDataForecastZones',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1094,
+                            width: 1549,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -835,7 +875,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataForecastZones',
-                                    width: 1094,
+                                    width: 1549,
                                     height: 600,
                                     columnLines: true,
                                     features: [{
@@ -876,724 +916,744 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     {text: 'Date', dataIndex: 'DFLIGHT', width: 80}
                                                 ]
                                             },
-                                            //ASI
                                             {
-                                                text: 'ASI',
+                                                text: 'Domestic',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXASI', width: 60,
+                                                    //FRO
+                                                    {
+                                                        text: 'FRO',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXFRO', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXFRO, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDFRO', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDFRO, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDFRO', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDFRO, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNFRO', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNFRO, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXASI, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDASI', width: 80,
+                                                            return '<img src=' + '"' + record.data.strImagen_FRO + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_FRO', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //LOC
+                                                    {
+                                                        text: 'LOC',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXLOC', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXLOC, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDLOC', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDLOC, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDLOC', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDLOC, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNLOC', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNLOC, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDASI, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDASI', width: 100,
+                                                            return '<img src=' + '"' + record.data.strImagen_LOC + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_LOC', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //PLA
+                                                    {
+                                                        text: 'PLA',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXPLA', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXPLA, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDPLA', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDPLA, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDPLA', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDPLA, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNPLA', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNPLA, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDASI, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNASI', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNASI, '0,000.00') + '<b>';
-                                                        }},
+                                                            return '<img src=' + '"' + record.data.strImagen_PLA + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_PLA', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
                                                 ]
                                             },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_ASI + '"' + '>';
-                                                }
-                                            },
                                             {
-                                                text: '%Var vs',
+                                                text: 'International',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_ASI', width: 95,
+                                                    //ASI
+                                                    {
+                                                        text: 'ASI',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXASI', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXASI, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDASI', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDASI, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDASI', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDASI, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNASI', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNASI, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //CAM
-                                            {
-                                                text: 'CAM',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXCAM', width: 60,
+                                                            return '<img src=' + '"' + record.data.strImagen_ASI + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_ASI', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //CAM
+                                                    {
+                                                        text: 'CAM',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXCAM', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXCAM, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDCAM', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDCAM, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDCAM', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDCAM, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNCAM', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNCAM, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXCAM, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDCAM', width: 80,
+                                                            return '<img src=' + '"' + record.data.strImagen_CAM + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_CAM', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //CAN
+                                                    {
+                                                        text: 'CAN',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXCAN', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXCAN, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDCAN', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDCAN, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDCAN', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDCAN, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNCAN', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNCAN, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDCAM, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDCAM', width: 100,
+                                                            return '<img src=' + '"' + record.data.strImagen_CAN + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_CAN', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //CAR
+                                                    {
+                                                        text: 'CAR',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXCAR', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXCAR, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDCAR', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDCAR, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDCAR', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDCAR, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNCAR', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNCAR, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDCAM, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNCAM', width: 100,
+                                                            return '<img src=' + '"' + record.data.strImagen_CAR + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_CAR', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //EUR
+                                                    {
+                                                        text: 'EUR',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXEUR', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXEUR, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDEUR', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDEUR, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDEUR', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDEUR, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNEUR', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNEUR, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNCAM, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_CAM + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_CAM', width: 95,
+                                                            return '<img src=' + '"' + record.data.strImagen_EUR + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_EUR', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //SUD
+                                                    {
+                                                        text: 'SUD',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXSUD', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXSUD, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDSUD', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDSUD, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDSUD', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDSUD, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNSUD', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNSUD, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //CAN
-                                            {
-                                                text: 'CAN',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXCAN', width: 60,
+                                                            return '<img src=' + '"' + record.data.strImagen_SUD + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_SUD', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
+                                                    //USA
+                                                    {
+                                                        text: 'USA',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'PAX', dataIndex: 'PAXUSA', width: 60,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTPAXUSA, '0,000') + '<b>';
+                                                                }},
+                                                            {text: 'AVG USD', dataIndex: 'VPROUSDUSA', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVPROUSDUSA, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT USD', dataIndex: 'VCPNUSDUSA', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDUSA, '0,000.00') + '<b>';
+                                                                }},
+                                                            {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNUSA', width: 100,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNUSA, '0,000.00') + '<b>';
+                                                                }},
+                                                        ]
+                                                    },
+                                                    {text: '', dataIndex: '', width: 20,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXCAN, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDCAN', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDCAN, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDCAN', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDCAN, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNCAN', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNCAN, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_CAN + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_CAN', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //CAR
-                                            {
-                                                text: 'CAR',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXCAR', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXCAR, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDCAR', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDCAR, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDCAR', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDCAR, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNCAR', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNCAR, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_CAR + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_CAR', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //EUR
-                                            {
-                                                text: 'EUR',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXEUR', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXEUR, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDEUR', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDEUR, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDEUR', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDEUR, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNEUR', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNEUR, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_EUR + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_EUR', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //FRO
-                                            {
-                                                text: 'FRO',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXFRO', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXFRO, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDFRO', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDFRO, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDFRO', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDFRO, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNFRO', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNFRO, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_FRO + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_FRO', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //LOC
-                                            {
-                                                text: 'LOC',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXLOC', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXLOC, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDLOC', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDLOC, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDLOC', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDLOC, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNLOC', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNLOC, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_LOC + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_LOC', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //PLA
-                                            {
-                                                text: 'PLA',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXPLA', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXPLA, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDPLA', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDPLA, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDPLA', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDPLA, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNPLA', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNPLA, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_PLA + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_PLA', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //SUD
-                                            {
-                                                text: 'SUD',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXSUD', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXSUD, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDSUD', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDSUD, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDSUD', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDSUD, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNSUD', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNSUD, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_SUD + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_SUD', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
-                                                ]
-                                            },
-                                            //USA
-                                            {
-                                                text: 'USA',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'PAX', dataIndex: 'PAXUSA', width: 60,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTPAXUSA, '0,000') + '<b>';
-                                                        }},
-                                                    {text: 'AVG USD', dataIndex: 'VPROUSDUSA', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVPROUSDUSA, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT USD', dataIndex: 'VCPNUSDUSA', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNUSDUSA, '0,000.00') + '<b>';
-                                                        }},
-                                                    {text: 'AMOUNT MXN', dataIndex: 'VCPNMXNUSA', width: 100,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
-                                                            return value;
-                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecastZones').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TOTVCPNMXNUSA, '0,000.00') + '<b>';
-                                                        }},
-                                                ]
-                                            },
-                                            {text: '', dataIndex: '', width: 20,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    return '<img src=' + '"' + record.data.strImagen_USA + '"' + '>';
-                                                }
-                                            },
-                                            {
-                                                text: '%Var vs',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_USA', width: 95,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
-                                                            value = Ext.util.Format.number(value, '0,000.00 %');
-                                                            return value;
-                                                        }}
+                                                            return '<img src=' + '"' + record.data.strImagen_USA + '"' + '>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: '%Var vs',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {text: 'Average Fare', dataIndex: 'AVRG_VCPNMXN_USA', width: 95,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background:";
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }}
+                                                        ]
+                                                    },
                                                 ]
                                             },
                                         ]
@@ -2564,7 +2624,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             //hidden: true,
-                            width: 1600,
+                            width: 1404,
                             height: 'auto',
                             margin: '0 0 0 0 ',
                             layout: {
@@ -2577,12 +2637,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
                                     //hidden: true,
-                                    width: 1428,
+                                    width: 1404,
                                     height: 'auto',
                                     margin: '0 0 0 0 ',
                                     layout: {
                                         type: 'vbox',
-                                        //align: 'center'
+                                        align: 'center'
                                     },
                                     items: [
                                         {//USD & MXN
@@ -2590,7 +2650,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             bodyStyle: 'background-color: #E3EAEF;',
                                             border: true,
                                             //hidden: true,
-                                            width: 1428,
+                                            width: 1102,
                                             height: 'auto',
                                             margin: '0 0 0 0 ',
                                             layout: {
@@ -2628,18 +2688,20 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     bodyStyle: 'background-color: #E3EAEF;',
                                                     border: true,
                                                     //hidden: true,
-                                                    width: 668,
+                                                    width: 338,
                                                     height: 'auto',
                                                     margin: '0 0 0 0 ',
                                                     layout: {
                                                         type: 'hbox',
-                                                        //align: 'center'
+                                                        align: 'center'
                                                     },
                                                     items: [
+                                                        //PreviousYearDomestic
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByPreviousYearDomesticUSD',
                                                             width: 334,
+                                                            hidden: true,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -2725,10 +2787,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                 ]
                                                             }
                                                         },
+                                                        //PreviousYearInternational
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByPreviousYearInternationalUSD',
                                                             width: 334,
+                                                            hidden: true,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -2814,6 +2878,96 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                 ]
                                                             }
                                                         },
+                                                        //PreviousYearGeneral
+                                                        {
+                                                            xtype: 'grid',
+                                                            id: prototype.id + '-gridDataByPreviousYearGeneral',
+                                                            width: 334,
+                                                            height: 'auto',
+                                                            columnLines: true,
+                                                            features: [{
+                                                                    ftype: 'summary',
+                                                                    //dock: 'bottom'
+                                                                }],
+                                                            columns: {
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                items: [
+                                                                    {
+                                                                        text: 'General',
+                                                                        defaults: {
+                                                                            menuDisabled: true,
+                                                                            sortable: false,
+                                                                            align: 'center'
+                                                                        },
+                                                                        columns: [
+                                                                            {
+                                                                                text: 'PAX',
+                                                                                dataIndex: 'QTYPAX',
+                                                                                width: 90,
+                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                    metaData.style = "text-align:right;background:";
+                                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                                    return value;
+                                                                                },
+                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearGeneral').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearGeneral').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByPreviousYearGeneral').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                        ]
+                                                                    },
+                                                                ]
+                                                            }
+                                                        },
                                                     ]
                                                 },
                                                 //Current
@@ -2823,7 +2977,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     bodyStyle: 'background-color: #E3EAEF;',
                                                     border: true,
                                                     //hidden: true,
-                                                    width: 668,
+                                                    width: 338,
                                                     height: 'auto',
                                                     margin: '0 0 0 0 ',
                                                     layout: {
@@ -2831,10 +2985,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         //align: 'center'
                                                     },
                                                     items: [
+                                                        //CurrentYearDomestic
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByCurrentYearDomesticUSD',
                                                             width: 334,
+                                                            hidden: true,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -2920,10 +3076,12 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                 ]
                                                             }
                                                         },
+                                                        //CurrentYearInternational
                                                         {
                                                             xtype: 'grid',
                                                             id: prototype.id + '-gridDataByCurrentYearInternationalUSD',
                                                             width: 334,
+                                                            hidden: true,
                                                             height: 'auto',
                                                             columnLines: true,
                                                             features: [{
@@ -3009,16 +3167,346 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                                 ]
                                                             }
                                                         },
+                                                        //CurrentYearGeneral
+                                                        {
+                                                            xtype: 'grid',
+                                                            id: prototype.id + '-gridDataByCurrentYearGeneral',
+                                                            width: 334,
+                                                            height: 'auto',
+                                                            columnLines: true,
+                                                            features: [{
+                                                                    ftype: 'summary',
+                                                                    //dock: 'bottom'
+                                                                }],
+                                                            columns: {
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                items: [
+                                                                    {
+                                                                        text: 'General',
+                                                                        defaults: {
+                                                                            menuDisabled: true,
+                                                                            sortable: false,
+                                                                            align: 'center'
+                                                                        },
+                                                                        columns: [
+                                                                            {
+                                                                                text: 'PAX',
+                                                                                dataIndex: 'QTYPAX',
+                                                                                width: 90,
+                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                    metaData.style = "text-align:right;background:";
+                                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                                    return value;
+                                                                                },
+                                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                    var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearGeneral').getStore().getData().items[0].data;
+                                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearGeneral').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            metaData.style = "text-align:right;background:";
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                                            var data = Ext.getCmp(prototype.id + '-gridDataByCurrentYearGeneral').getStore().getData().items[0].data;
+                                                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000') + '<b>';
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                        ]
+                                                                    },
+                                                                ]
+                                                            }
+                                                        },
+                                                    ]
+                                                },
+                                                //Balance
+                                                {
+                                                    xtype: 'panel',
+                                                    id: prototype.id + '-panelDataBalanceByYear',
+                                                    bodyStyle: 'background-color: #E3EAEF;',
+                                                    border: true,
+                                                    //hidden: true,
+                                                    width: 338,
+                                                    height: 'auto',
+                                                    margin: '0 0 0 0 ',
+                                                    layout: {
+                                                        type: 'hbox',
+                                                        //align: 'center'
+                                                    },
+                                                    items: [
+                                                        {
+                                                            xtype: 'grid',
+                                                            id: prototype.id + '-gridDataBalanceByYear',
+                                                            width: 334,
+                                                            height: 'auto',
+                                                            columnLines: true,
+                                                            columns: {
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: false,
+                                                                    align: 'center'
+                                                                },
+                                                                items: [
+                                                                    //Domestic Balance
+                                                                    {
+                                                                        text: 'Domestic',
+                                                                        id: prototype.id + '-DataDomesticBalanceByYear',
+                                                                        hidden: true,
+                                                                        defaults: {
+                                                                            menuDisabled: true,
+                                                                            sortable: false,
+                                                                            align: 'center'
+                                                                        },
+                                                                        columns: [
+                                                                            {
+                                                                                text: 'PAX',
+                                                                                dataIndex: 'DOMESTIC_B_QTYPAX',
+                                                                                width: 90,
+                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                    var color = "";
+                                                                                    if (value < 0) {
+                                                                                        color = "#9C0101";
+                                                                                    }
+                                                                                    metaData.style = "text-align:right;color:" + color;
+                                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                                    return value;
+                                                                                },
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue USD', dataIndex: 'DOMESTIC_B_VCPNUSD', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'DOMESTIC_B_VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                        ]
+                                                                    },
+                                                                    //International Balance
+                                                                    {
+                                                                        text: 'International',
+                                                                        id: prototype.id + '-DataInternationalBalanceByYear',
+                                                                        hidden: true,
+                                                                        defaults: {
+                                                                            menuDisabled: true,
+                                                                            sortable: false,
+                                                                            align: 'center'
+                                                                        },
+                                                                        columns: [
+                                                                            {
+                                                                                text: 'PAX',
+                                                                                dataIndex: 'INTERNATIONAL_B_QTYPAX',
+                                                                                width: 90,
+                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                    var color = "";
+                                                                                    if (value < 0) {
+                                                                                        color = "#9C0101";
+                                                                                    }
+                                                                                    metaData.style = "text-align:right;color:" + color;
+                                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                                    return value;
+                                                                                },
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue USD', dataIndex: 'INTERNATIONAL_B_VCPNUSD', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'INTERNATIONAL_B_VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        }
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                        ]
+                                                                    },
+                                                                    //General Balance
+                                                                    {
+                                                                        text: 'General',
+                                                                        id: prototype.id + '-DataGeneralBalanceByYear',
+                                                                        defaults: {
+                                                                            menuDisabled: true,
+                                                                            sortable: false,
+                                                                            align: 'center'
+                                                                        },
+                                                                        columns: [
+                                                                            {
+                                                                                text: 'PAX',
+                                                                                dataIndex: 'GENERAL_B_QTYPAX',
+                                                                                width: 90,
+                                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                    var color = "";
+                                                                                    if (value < 0) {
+                                                                                        color = "#9C0101";
+                                                                                    }
+                                                                                    metaData.style = "text-align:right;color:" + color;
+                                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                                    return value;
+                                                                                },
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue USD', dataIndex: 'GENERAL_B_VCPNUSD', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                text: 'Amount',
+                                                                                defaults: {
+                                                                                    menuDisabled: true,
+                                                                                    sortable: false,
+                                                                                    align: 'center'
+                                                                                },
+                                                                                columns: [
+                                                                                    {text: 'Revenue MXN', dataIndex: 'GENERAL_B_VCPNMXN', width: 120,
+                                                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                                            var color = "";
+                                                                                            if (value < 0) {
+                                                                                                color = "#9C0101";
+                                                                                            }
+                                                                                            metaData.style = "text-align:right;color:" + color;
+                                                                                            value = Ext.util.Format.number(value, '0,000');
+                                                                                            return value;
+                                                                                        },
+                                                                                    },
+                                                                                ]
+                                                                            },
+                                                                        ]
+                                                                    },
+                                                                ]
+                                                            },
+                                                        }
                                                     ]
                                                 },
                                             ]
                                         },
-                                        
                                     ]
                                 },
                                 {xtype: 'tbspacer', height: 20},
-                                {//Gráficos
+                                //Gráficos - GENERAL
+                                {
                                     xtype: 'panel',
+                                    id: prototype.id + '-panelGraphicGeneral',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     border: true,
                                     //hidden: true,
@@ -3039,7 +3527,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             background: '#E0F8F7',
                                             captions: {
                                                 title: {
-                                                    text: 'USD',
+                                                    text: 'Comparison in USD last year with current - General',
                                                     alignTo: 'chart'
                                                 }
                                             },
@@ -3050,7 +3538,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             axes: [{
                                                     type: 'numeric3d',
                                                     position: 'left',
-                                                    fields: ['VCPNUSD_LY', 'VCPNUSD_CY'],
+                                                    fields: ['GENERAL_VCPNUSD_LY', 'GENERAL_VCPNUSD_CY'],
                                                     grid: true,
                                                     title: 'Millions of USD',
                                                     renderer: function(obj, value) {
@@ -3069,7 +3557,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     type: 'bar3d',
                                                     stacked: false,
                                                     xField: 'MES',
-                                                    yField: 'VCPNUSD_LY',
+                                                    yField: 'GENERAL_VCPNUSD_LY',
                                                     colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
                                                     highlight: true,
                                                     style: {
@@ -3078,7 +3566,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         maxBarWidth: 1200
                                                     },
                                                     label: {
-                                                        field: 'VCPNUSD_LY',
+                                                        field: 'GENERAL_VCPNUSD_LY',
 //                                                            display: 'insideEnd',
                                                         display: 'outside',
                                                         calloutLine: {
@@ -3104,7 +3592,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     type: 'line',
                                                     stacked: true,
                                                     xField: 'MES',
-                                                    yField: 'VCPNUSD_CY',
+                                                    yField: 'GENERAL_VCPNUSD_CY',
                                                     style: {
                                                         lineWidth: 2
                                                     },
@@ -3113,7 +3601,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         lineWidth: 2
                                                     },
                                                     label: {
-                                                        field: 'VCPNUSD_CY',
+                                                        field: 'GENERAL_VCPNUSD_CY',
                                                         display: 'over',
                                                         renderer: function(value, b, callout) {
                                                             callout.calloutVertical = false;
@@ -3154,7 +3642,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             background: '#E0F8F7',
                                             captions: {
                                                 title: {
-                                                    text: 'MXN',
+                                                    text: 'Comparison in MXN last year with current - General',
                                                     alignTo: 'chart'
                                                 }
                                             },
@@ -3165,7 +3653,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             axes: [{
                                                     type: 'numeric3d',
                                                     position: 'left',
-                                                    fields: ['VCPNMXN_LY', 'VCPNMXN_CY'],
+                                                    fields: ['GENERAL_VCPNMXN_LY', 'GENERAL_VCPNMXN_CY'],
                                                     grid: true,
                                                     title: 'Millions of MXN',
                                                     renderer: function(obj, value) {
@@ -3184,7 +3672,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     type: 'bar3d',
                                                     stacked: false,
                                                     xField: 'MES',
-                                                    yField: 'VCPNMXN_LY',
+                                                    yField: 'GENERAL_VCPNMXN_LY',
                                                     colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
                                                     highlight: true,
                                                     style: {
@@ -3193,7 +3681,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         maxBarWidth: 1200
                                                     },
                                                     label: {
-                                                        field: 'VCPNMXN_LY',
+                                                        field: 'GENERAL_VCPNMXN_LY',
 //                                                            display: 'insideEnd',
                                                         display: 'outside',
                                                         calloutLine: {
@@ -3219,7 +3707,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     type: 'line',
                                                     stacked: true,
                                                     xField: 'MES',
-                                                    yField: 'VCPNMXN_CY',
+                                                    yField: 'GENERAL_VCPNMXN_CY',
                                                     style: {
                                                         lineWidth: 2
                                                     },
@@ -3228,7 +3716,499 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                         lineWidth: 2
                                                     },
                                                     label: {
-                                                        field: 'VCPNMXN_CY',
+                                                        field: 'GENERAL_VCPNMXN_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                //Gráficos - DOMESTIC
+                                {
+                                    xtype: 'panel',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    id: prototype.id + '-panelGraphicDomestic',
+                                    border: true,
+                                    hidden: true,
+                                    width: 1404,
+                                    height: 'auto',
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart09',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in USD last year with current - Domestic',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['DOMESTIC_VCPNUSD_LY', 'DOMESTIC_VCPNUSD_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of USD',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNUSD_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNUSD_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNUSD_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNUSD_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart10',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in MXN last year with current - Domestic',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['DOMESTIC_VCPNMXN_LY', 'DOMESTIC_VCPNMXN_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of MXN',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNMXN_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNMXN_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'DOMESTIC_VCPNMXN_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'DOMESTIC_VCPNMXN_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                                //Gráficos - INTERNATIONAL
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelGraphicInternational',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    width: 1404,
+                                    height: 'auto',
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart11',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in USD last year with current - International',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['INTERNATIONAL_VCPNUSD_LY', 'INTERNATIONAL_VCPNUSD_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of USD',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNUSD_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNUSD_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNUSD_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNUSD_CY',
+                                                        display: 'over',
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    markerConfig: {
+                                                        radius: 4
+                                                    },
+                                                    highlight: {
+                                                        fill: '#000',
+                                                        radius: 5,
+                                                        'stroke-width': 2,
+                                                        stroke: '#fff'
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        style: 'background: #FFF',
+                                                        height: 20,
+                                                        showDelay: 0,
+                                                        dismissDelay: 0,
+                                                        hideDelay: 0,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                }
+                                            ]
+                                        },
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart12',
+                                            width: 652,
+                                            border: false,
+                                            height: 400,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Comparison in MXN last year with current - International',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            axes: [{
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['INTERNATIONAL_VCPNMXN_LY', 'INTERNATIONAL_VCPNMXN_CY'],
+                                                    grid: true,
+                                                    title: 'Millions of MXN',
+                                                    renderer: function(obj, value) {
+                                                        return ' ' + Ext.util.Format.number((value), '0');
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNMXN_LY',
+                                                    colors: ['#CC0000', '#DBA901', '#70DB70', '#FF9966'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNMXN_LY',
+//                                                            display: 'insideEnd',
+                                                        display: 'outside',
+                                                        calloutLine: {
+                                                            length: 10,
+                                                            width: 0,
+//                                                                color: '#FFFFFF',
+                                                        },
+                                                        renderer: function(value, b, callout) {
+                                                            callout.calloutVertical = false;
+                                                            return Ext.util.Format.number(value, '0')
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function(toolTip, record, ctx) {
+                                                            toolTip.setHtml(record.get('MES') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                        }
+                                                    },
+                                                    renderer: 'onColumnRender'
+                                                },
+                                                {
+                                                    type: 'line',
+                                                    stacked: true,
+                                                    xField: 'MES',
+                                                    yField: 'INTERNATIONAL_VCPNMXN_CY',
+                                                    style: {
+                                                        lineWidth: 2
+                                                    },
+                                                    marker: {
+                                                        radius: 4,
+                                                        lineWidth: 2
+                                                    },
+                                                    label: {
+                                                        field: 'INTERNATIONAL_VCPNMXN_CY',
                                                         display: 'over',
                                                         renderer: function(value, b, callout) {
                                                             callout.calloutVertical = false;

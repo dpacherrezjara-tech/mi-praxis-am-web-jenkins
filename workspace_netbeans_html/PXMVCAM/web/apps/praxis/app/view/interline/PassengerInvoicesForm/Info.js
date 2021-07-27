@@ -253,7 +253,34 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesForm.Info', {
                                                 items: [
                                                     {
                                                         icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-//                                                        tooltip: 'Export Information IS-IDEC',
+                                                        handler: 'openExportManyExcels'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Download <br> by Month',
+                                                xtype: 'actioncolumn',
+                                                width: 75,
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        icon: 'resources/img/botones/16x16/excel.png',
+//                                                        isDisabled: function (grid, rowIndex, colIndex, items, record) {
+//                                                            var rec = grid.getStore().getAt(rowIndex).data;
+//                                                            if (rec.PERNUM === '04') {
+//                                                                 return false;
+//                                                            } else {
+//                                                                return true;
+//                                                            }
+//                                                        },
+                                                        getClass: function(v, meta, rec) {
+                                                            if (rec.data.PERNUM !== '04') {
+//                                                                meta.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
+//                                                                metaData.unselectableAttr = "unselectable='off'";
+                                                                metaData.css = 'x-hide-display';
+                                                                return v;
+                                                            }
+                                                        },
                                                         handler: 'openExportManyExcels'
                                                     }
                                                 ]

@@ -2972,17 +2972,20 @@ public class PassengerInvoicesIpController extends BaseController {
         SFI010Filter filter = new SFI010Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI010Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
             filter.page.LIMIT = 0;
-
+            
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
 
@@ -2995,7 +2998,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_10(filter);
+            lst = logic.loadPX538_register_10(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -3181,12 +3184,15 @@ public class PassengerInvoicesIpController extends BaseController {
         SFI030Filter filter = new SFI030Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI030Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -3204,7 +3210,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_30(filter);
+            lst = logic.loadPX538_register_30(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -3472,12 +3478,15 @@ public class PassengerInvoicesIpController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -3495,7 +3504,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register20(filter);
+            lst = logic.loadPX538_register20(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -3805,19 +3814,22 @@ public class PassengerInvoicesIpController extends BaseController {
     }
     
     
-    // ------------------------------- SFI 21 y 22 ------------------------------------------------------
+    // ------------------------------- SFI 21 y 22 y 23 ------------------------------------------------------
     public List<SFI021> getXLSX_21(HttpServletRequest request, Boolean bExcel) {
 
         List<SFI021> lst = new ArrayList<>(0);
         SFI021Filter filter = new SFI021Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI021Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -3835,7 +3847,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_21(filter);
+            lst = logic.loadPX538_register_21(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -4038,12 +4050,15 @@ public class PassengerInvoicesIpController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -4061,7 +4076,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_32(filter);
+            lst = logic.loadPX538_register_32(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -4350,12 +4365,15 @@ public class PassengerInvoicesIpController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -4373,7 +4391,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_33(filter);
+            lst = logic.loadPX538_register_33(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -4662,12 +4680,15 @@ public class PassengerInvoicesIpController extends BaseController {
         SFI020Filter filter = new SFI020Filter();
         Gson gson = new Gson();
         String beanString = "";
+        String flagMonth = "";
 
         try {
             PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
             logic.setSession(this.serverSession.getServerSession());
 
             beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
             filter = gson.fromJson(beanString, SFI020Filter.class);
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -4685,7 +4706,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadPX538_register_41(filter);
+            lst = logic.loadPX538_register_41(filter, flagMonth);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -5221,7 +5242,7 @@ public class PassengerInvoicesIpController extends BaseController {
     @RequestMapping(value = "/downloadXlsxs")
     public @ResponseBody
     void downloadXlsxs(HttpServletRequest request, HttpServletResponse response) {
-        try {
+        try {            
             ZipFiles zipFiles = new ZipFiles();
             String serverPath = request.getSession().getServletContext().getRealPath("/");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHSS");

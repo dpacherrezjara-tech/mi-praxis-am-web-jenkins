@@ -19,6 +19,8 @@ public class A2324 {
     public String STVAL = "";
     public String SCOUNTRY = "";
     public String SPNR = "";
+    public String DATSET = "";
+    public String WEEKMO = "";
     public String SCARCOD = "";
     public String SCARDN = "";
     public String SAUTHOC = "";

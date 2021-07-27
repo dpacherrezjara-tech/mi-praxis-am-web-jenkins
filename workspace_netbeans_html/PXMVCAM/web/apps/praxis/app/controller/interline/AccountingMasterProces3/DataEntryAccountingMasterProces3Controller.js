@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.DataEntryAcc
                 Ext.getCmp(prototype.id + '-boxFecha').show();
                 Ext.getCmp(prototype.id + '-boxPeriodo').hide();
                 break;
-            case "PAPINT" : case "PARINT" : case 'PIXPEST': case 'PIXCEST':
+            case "PAPINT" : case "PARINT" : case 'PIXPEST': case 'PIXCEST': case 'PIXPREV': case 'PIXCREV': 
                 Ext.getCmp(prototype.id + '-boxFecha').hide();
                 Ext.getCmp(prototype.id + '-boxPeriodo').show();
                 break;
@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.DataEntryAcc
                 Ext.getCmp(prototype.id+'-boxPeriodo').hide();
                 this.setValue('txtProcessDate', Ext.Date.parseDate(rec.get('A1955FPROC'), "Ymd"));
                 break;
-            case 'PAPINT': case 'PARINT': case 'PIXPEST': case 'PIXCEST':
+            case 'PAPINT': case 'PARINT': case 'PIXPEST': case 'PIXCEST': case 'PIXPREV': case 'PIXCREV':
                 Ext.getCmp(prototype.id+'-boxFecha').hide();
                 Ext.getCmp(prototype.id+'-boxPeriodo').show();
                 this.setValue('cbxDateYear', rec.get('A1955FPROC').substring(0,4));
@@ -196,7 +196,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.DataEntryAcc
                         return false;
                     }
                     break;
-                case "PAPINT" : case "PARINT" : case 'PIXPEST': case 'PIXCEST':
+                case "PAPINT" : case "PARINT" : case 'PIXPEST': case 'PIXCEST': case 'PIXPREV': case 'PIXCREV':
                     if (this.getValue('cbxDatePeriod')==='') {
                         this.msjAlert='Enter correct data.';
                         return false;
@@ -277,7 +277,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.DataEntryAcc
             case "PSALES" : case "PFLOWN": case "PADJMA" :
                 IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtProcessDate').getValue(), 'Ymd');
                 break;
-            case "PAPINT" : case "PARINT" : case 'PIXPEST': case 'PIXCEST':
+            case "PAPINT" : case "PARINT" : case 'PIXPEST': case 'PIXCEST': case 'PIXPREV': case 'PIXCREV':
                 IN_FECHA_PROCESO = this.getValue('cbxDateYear')+this.getValue('cbxDateMonth')+this.getValue('cbxDatePeriod');
                 break;
             case "PCADUCOS" :

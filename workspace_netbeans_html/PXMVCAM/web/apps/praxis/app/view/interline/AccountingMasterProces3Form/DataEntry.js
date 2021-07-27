@@ -62,7 +62,9 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterProces3Form.DataEntry',{
                                     ["PAPINT", "Accounting Payable"],
                                     ["PARINT", "Accounting Receivable"],
                                     ["PIXPEST", "Accounting Estimated Payable"],
-                                    ["PIXCEST", "Accounting Estimated Receivable"]
+                                    ["PIXCEST", "Accounting Estimated Receivable"],
+                                    ["PIXPREV", "Accounting Rev Estimated Payable"],
+                                    ["PIXCREV", "Accounting Rev Estimated Receivable"]
                                 ]
                             }),
                             queryMode: 'local',
@@ -71,7 +73,7 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterProces3Form.DataEntry',{
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            width: 194,
+                            width: 254,
                             typeAhead: true,
                             valueField: 'code', displayField: 'name',
                             listConfig: {maxHeight: 111},
