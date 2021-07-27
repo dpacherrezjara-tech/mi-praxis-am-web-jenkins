@@ -144,6 +144,11 @@ public class PassengerInvoicesIpLogic {
         return passengerInvoicesDAO.loadPX538_register_21(filter, flagMonth);
     }
     
+    // ------------------------------- SFI 31 ------------------------------------------------------   
+    public List<SFI031> loadPX538_register_31(SFI020Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_31(filter, flagMonth);
+    }
+    
     // ------------------------------- SFI 32 ------------------------------------------------------   
     public List<SFI032> loadPX538_register_32(SFI020Filter filter, String flagMonth) throws Exception {
         return passengerInvoicesDAO.loadPX538_register_32(filter, flagMonth);
