@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                             id: prototype.id + '-A3959REFPG',
                             fieldLabel: 'Ref. Pago', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
                             width: 475,
-                            readOnly: true,
+                            readOnly: false,
                             enableKeyEvents: true,
                             enforceMaxLength: true,
                             maxLength: 160,
@@ -304,7 +304,58 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                                     }
                                 }
                             ]
-
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'column',
+                            //margin: '1 0 1 0',
+                            border: false,
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-TICKET_NC',
+                                    fieldLabel: 'Boleto NC', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                    width: 215, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
+                                    maskRe: /[0-9/]/,
+                                    //editable: false,
+                                    enableKeyEvents: true,
+                                    enforceMaxLength: true,
+                                    maxLength: 13,
+                                    listeners: {
+                                        keypress: function (obj, e) {
+                                            if (e.getKey() === e.ENTER) {
+                                                Ext.getCmp(prototype.id + '-btn-save').focus();
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {xtype: 'tbspacer', width: 80},
+                        {
+                            xtype: 'toolbar',
+                            dock: 'bottom',
+                            ui: 'footer',
+                            margin: '0 0 0 0',
+                            layout: {
+                                pack: 'center'
+                            },
+                            fieldStyle: 'text-align:center',
+                            defaults: {
+                                scale: 'small'
+                            },
+                            items: [                             
+                                {
+                                    xtype: 'button',
+                                    id: prototype.id + '-btn-consulta-TKT-NC',
+                                    title: 'Buscar',
+                                    icon: 'resources/img/botones/search.png',
+                                    hidden: true,
+                                    listeners: {
+                                        click: ''
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }
