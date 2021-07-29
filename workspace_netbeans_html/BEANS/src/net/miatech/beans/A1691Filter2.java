@@ -26,6 +26,8 @@ public class A1691Filter2 {
     public long totQCPNOD = 0;
     public long QCPNLEG = 0;
     public long totQCPNLEG=0;
+    public long DIFFODSVCR=0;
+    public long totDIFFODSVCR=0;
     public String strFormatFSENDVC = "";
     public long QCPNVC = 0;
     public long totQCPNVC = 0;
