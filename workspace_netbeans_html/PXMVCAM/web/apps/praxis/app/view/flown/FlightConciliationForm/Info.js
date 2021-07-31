@@ -597,7 +597,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {
+                                            /*{
                                                 text: 'Leg', dataIndex: 'QCPNLEG', width: 50, sortable: true,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background:#d5f4d5;";
@@ -607,6 +607,18 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     metaData.style = "text-align:right;";
                                                     var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                     return Ext.util.Format.number(data.totQCPNLEG, '0,000');
+                                                }
+                                            },*/
+                                            {
+                                                text: 'Dif', dataIndex: 'DIFFODSVCR', width: 50, sortable: true,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background:#d5f4d5;";
+                                                    return value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = "text-align:right;";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                                    return Ext.util.Format.number(data.totDIFFODSVCR, '0,000');
                                                 }
                                             },
                                             {

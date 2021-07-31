@@ -60,6 +60,8 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                             width: 210,
                                             height: 24,
                                             format: 'Ymd',
+                                            value: '20210401',
+//                                            value: new Date(),
                                             minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -82,7 +84,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                             fieldLabel: 'Hasta', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 38,
                                             width: 128,
                                             height: 24,
-                                            format: 'Ymd',
+                                            format: 'Ymd',value: new Date(),
                                             minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
@@ -105,7 +107,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                             margin: '1 0 0 10',
                                             icon: 'resources/img/icon/search.png',
                                             listeners: {
-                                                click: 'btnAplPaymentBatch'
+                                                click: 'btnSearch_click'
                                             }
                                         },
                                         {
@@ -136,20 +138,11 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                                     items: [
                                                         {
                                                             xtype: 'button',
-                                                            id: prototype.id + '-btn-load-uatp',
-                                                            text: 'Cargar UATP',
-                                                            icon: 'resources/img/icon/add.png',
-                                                            listeners: {
-                                                                click: 'btnAplPaymentBatch'
-                                                            }
-                                                        },
-                                                        {
-                                                            xtype: 'button',
                                                             id: prototype.id + '-btn-procesar',
                                                             text: 'Procesar',
                                                             icon: 'resources/img/botones/process.png',
                                                             listeners: {
-                                                                click: 'btnApl_pay_click'
+                                                                click: 'btnProcesar_click'
                                                             }
                                                         },
                                                         {
@@ -160,16 +153,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                                             listeners: {
                                                                 click: 'btnApl_pay_click'
                                                             }
-                                                        },
-                                                        {
-                                                            xtype: 'button',
-                                                            id: prototype.id + '-btn-errores',
-                                                            text: 'Resumen Errores',
-                                                            icon: 'resources/img/botones/error.png',
-                                                            listeners: {
-                                                                click: 'btnApl_pay_click'
-                                                            }
-                                                        }
+                                                        }                                                        
                                                     ]
                                                 }
                                             ]

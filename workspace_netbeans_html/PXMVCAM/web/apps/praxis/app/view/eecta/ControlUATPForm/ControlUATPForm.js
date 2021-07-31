@@ -1,8 +1,8 @@
 prototype.widthContenedor = 1200;
 prototype.widthGrid = '100%';
 prototype.id01 = 'Info01';
-//prototype.id02 = 'AplPaymentBoletoEntry';
-//prototype.id03 = 'AplPaymentBatch';
+prototype.id02 = 'ControlUATPProcesarForm';
+
 
 Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
     extend: 'Ext.form.Panel',
@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                                         {
                                                             xtype: 'fieldset',
                                                             border: true,
-                                                            width: '99%',
+                                                            width: '100%',
                                                             padding: '1 1 1 1',
                                                             layout: 'vbox',
                                                             items: [
@@ -110,34 +110,64 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                                                     layout: 'hbox',
                                                                     bodyStyle: 'background: transparent;"',
                                                                     margin: '1 0',
-                                                                    items: [                                                                        
+                                                                    items: [
                                                                         {
-                                                                            xtype:'label',
-                                                                            text:'Filtrar:',
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.id + '-FCONT',
+                                                                            fieldLabel: 'Fecha Contable', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                                                            fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
+                                                                            enableKeyEvents: true,
+                                                                            width: 210, readOnly: true,
+                                                                            height: 24
+                                                                        },
+                                                                        {
+                                                                            xtype: 'label',
+                                                                            text: 'Filtrar:',
                                                                             margin: '1 0 0 10'
                                                                         },
                                                                         {
                                                                             xtype: 'textfield',
+                                                                            id: prototype.id + '-rowIndex',
+                                                                            hidden: true
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
                                                                             id: prototype.id + '-TKT-NUMBER',
-                                                                            fieldLabel: 'Nº Ticket', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
+                                                                            fieldLabel: 'Nº Ticket', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                                                             enableKeyEvents: true,
                                                                             width: 220,
                                                                             height: 24,
                                                                             listeners: {
-                                                                                keypress: 'onTxtFilterKeypress'
+                                                                                keypress: 'onTxtFilterTKTKeypress'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            xtype: 'textfield',
+                                                                            id: prototype.id + '-TKT-NUMBER-SEQ',
+                                                                            fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                                                            enableKeyEvents: true,
+                                                                            width: 30,
+                                                                            value: '00',
+                                                                            height: 24,
+                                                                            padding: '0 0 0 2',
+                                                                            enforceMaxLength: true,
+                                                                            maxLength: 2,
+                                                                            listeners: {
+                                                                                keypress: 'onTxtFilterTKTKeypress'
                                                                             }
                                                                         },
                                                                         {
                                                                             xtype: 'combo',
                                                                             id: prototype.id + '-STSTKT',
-                                                                            fieldLabel: 'Estado TKT', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
+                                                                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 95,
                                                                             store: new Ext.data.SimpleStore({
                                                                                 fields: ['code', 'name'],
                                                                                 data: [
                                                                                     ["", "TODOS"],
                                                                                     ["2", "ERRORES"],
-                                                                                    ["0", "OK"]                                                                                    
+                                                                                    ["0", "OK"]
                                                                                 ]
                                                                             }),
                                                                             queryMode: 'local',
@@ -154,11 +184,21 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                                                             enableKeyEvents: true,
                                                                             padding: '0 0',
                                                                             listeners: {
-                                                                                //change: 'cmbfiltro_clickHandler'
+                                                                                change: 'cmbfiltroSTS_clickHandler'
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            xtype: 'button',
+                                                                            margin: '0 0 0 15',
+                                                                            id: prototype.id + '-btn-errores',
+                                                                            text: 'Resumen Errores',
+                                                                            icon: 'resources/img/botones/error.png',
+                                                                            listeners: {
+                                                                                click: 'btnApl_pay_click'
                                                                             }
                                                                         }
                                                                     ]
-                                                                    //</editor-fold> 
+                                                                            //</editor-fold> 
                                                                 },
                                                                 {
                                                                     xtype: prototype.id01 + '-info01'

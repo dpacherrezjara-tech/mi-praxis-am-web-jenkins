@@ -290,6 +290,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         }));
         cmbFecFiltro.setValue("SDATE");
 
+        this.dataObtain.CARD = 2;
+        this.dataObtain.BANK = 2;
+        this.dataObtain.COUNTRY = 2;
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/obtainData',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify(this.dataObtain)},
+            success: function(response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                me.lstCard = res.lstCard;
+                me.lstBank = res.lstBank;
+                me.lstCountry = res.lstCountry;
+            }
+        });
+
         this.btnSearch_click();
 
     },

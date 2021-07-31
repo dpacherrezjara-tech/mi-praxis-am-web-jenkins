@@ -142,7 +142,7 @@ public class AplPaymentController extends BaseController {
     public @ResponseBody
     String set_ApplyPayment(ModelMap map, HttpServletRequest request) {
         SQP03943Filter filter = new SQP03943Filter();
-        SQP03943Filter objRtn;
+        SQP03943Filter objRtn = new SQP03943Filter();
         logic = new AplPaymentLogic();
         try {
             logic.setSession(this.serverSession.getServerSession());
@@ -151,7 +151,10 @@ public class AplPaymentController extends BaseController {
             map.put("success", true);
             map.put("objRtn", objRtn);
         } catch (Exception ex) {
-            map.put("success", false);
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
             map.put("sesion", ex.getMessage());
             throw new SpringException(ex);
         }
@@ -163,7 +166,7 @@ public class AplPaymentController extends BaseController {
     public @ResponseBody
     String set_ApplyPayment_boleto(ModelMap map, HttpServletRequest request) {
         SQP03952Filter filter = new SQP03952Filter();
-        SQP03952Filter objRtn;
+        SQP03952Filter objRtn = new SQP03952Filter();
         logic = new AplPaymentLogic();
         try {
             logic.setSession(this.serverSession.getServerSession());
@@ -175,7 +178,10 @@ public class AplPaymentController extends BaseController {
             map.put("success", true);
             map.put("objRtn", objRtn);
         } catch (Exception ex) {
-            map.put("success", false);
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
             map.put("sesion", ex.getMessage());
             throw new SpringException(ex);
         }
@@ -350,11 +356,16 @@ public class AplPaymentController extends BaseController {
             map.put("success", true);
             map.put("objRtn",  objRtn);
             
-        } catch (SQLException e) {
-            map.put("success", false);
+        } catch (SQLException err) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = err.toString();           
+            map.put("objRtn",  objRtn);
+            map.put("success", true);
             map.put("sesion", SESSION_CONTROL);
-        } catch (Exception e) {
-            map.put("success", false);
+        } catch (Exception err) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = err.toString();  
+            map.put("success", true);
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);

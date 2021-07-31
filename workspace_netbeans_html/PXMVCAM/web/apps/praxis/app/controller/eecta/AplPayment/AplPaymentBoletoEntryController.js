@@ -54,7 +54,9 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         var VL_A3959NRRPT = Ext.getCmp(prototype.id + '-A3958NRRPT').getValue();
         var VL_A3959CDCLI = Ext.getCmp(prototype.id + '-A3958CDCLI').getValue();
         var VL_A3959BANCO = Ext.getCmp(prototype.id + '-A3959BANCO').getValue();
-        var VL_A3959CTABC = Ext.getCmp(prototype.id + '-A3959CTABC').getValue();        
+        var VL_A3959CTABC = Ext.getCmp(prototype.id + '-A3959CTABC').getValue(); 
+        var VL_TICKET_NC = Ext.getCmp(prototype.id + '-TICKET_NC').getValue(); 
+        
         return {
             VP_ACTION:VP_ACTION,
             A3959REFPG:VL_A3959REFPG,
@@ -65,7 +67,8 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
             A3959NRRPT:VL_A3959NRRPT,
             A3959CDCLI:VL_A3959CDCLI,
             A3959BANCO:VL_A3959BANCO,
-            A3959CTABC:VL_A3959CTABC            
+            A3959CTABC:VL_A3959CTABC,
+            VP_TICKET_NC: VL_TICKET_NC
         };
     },
     get_SelectedRecords:function(){
@@ -219,22 +222,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
     },
     onfocusleaveNumberfield:function(obj, error, eOpts){        
         var val =  obj.getValue().replace(",", "").replace(",", "");
-        obj.setValue( Ext.util.Format.number( val , '0,000.00'));
-        //APLICA PAGOS
-//        var arrayRows = new Array();
-//        var grid = Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto');
-//        if (grid.getSelectionModel().hasSelection()) {
-//            var selection = grid.getSelectionModel().getSelected();
-//            for (var i = 0; i < selection.length; i++) {
-//                var row = grid.getSelectionModel().getSelection()[i];                
-//                //console.log(row);
-//                row.data.A3958TOTAP = 100;
-//                //arrayRows.push( row );
-//                //row.get('A3958CCUST')
-//            }
-//            //Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().setData(arrayRows);
-//            //Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().update();
-//        }
+        obj.setValue( Ext.util.Format.number( val , '0,000.00'));        
     },
     validateForm: function (params) {
         var mensaje = "";
@@ -258,7 +246,13 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         if( params.A3959TOTPG > vl_total_sel ){
             mensaje = 'El importe de pago aplicado no puede ser mayor al total seleccionado';
             return mensaje;
-        }        
+        }
+        if (params.VP_TICKET_NC != '' && params.VP_TICKET_NC.length != 13  ) {
+            mensaje = 'Ingrese Ticket NC valido de 13 digitos';
+            Ext.getCmp(prototype.id + '-A3959FECPG').focus();
+            return mensaje;
+        } 
+        
         return mensaje;
     },
     set_ClearField: function () {

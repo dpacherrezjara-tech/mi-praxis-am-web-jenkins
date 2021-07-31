@@ -383,9 +383,12 @@ Ext.define('Ext.Praxis.controller.discharges.ParametersNoShow.ParametersNoShowEn
             case 'GB': //CATALOGO GOBIERNO 
                 this.winDataEntry01('R', null);
                 break;
-            case 'TD': //CATALOGO CORPORATIVOS
+            case 'TD': //CATALOGO CORPORATIVOS SI CADUCAN
                 this.winDataEntry01('R', null);
                 break;
+            case 'TDN': //CATALOGO CORPORATIVOS NO CADUCAN
+                this.winDataEntry01('R', null);
+                break;    
             case 'PCC': //CATALOGO PRESTACIONES
                 this.winDataEntry02('R', null);
                 break;

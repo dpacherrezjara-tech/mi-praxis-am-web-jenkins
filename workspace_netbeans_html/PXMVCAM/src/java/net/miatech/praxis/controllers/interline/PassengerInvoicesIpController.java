@@ -3018,7 +3018,7 @@ public class PassengerInvoicesIpController extends BaseController {
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
         
-        String fileNameDownload = String.format("Passenger invoices 10 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 10 - Payable" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -3230,7 +3230,7 @@ public class PassengerInvoicesIpController extends BaseController {
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
         
-        String fileNameDownload = String.format("Passenger invoices 30 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 30 - Payable" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -3295,11 +3295,11 @@ public class PassengerInvoicesIpController extends BaseController {
 //            Cell CH1_21 = row1.createCell(21);
 //            Cell CH1_22 = row1.createCell(22);
 
-            CH1_0.setCellValue("Clearing Date");            //BDATE
+            CH1_0.setCellValue("Clearing Date");            //BDATE2
             CH1_1.setCellValue("Listing Billing Rate");     //LBRATE
             CH1_2.setCellValue("Period");                   //PERNUM
             CH1_3.setCellValue("Billing Airline");          //BAIR
-            CH1_4.setCellValue("Billed Airline");           //BDAIR
+            CH1_4.setCellValue("Billed Airline");           //BDAIR2
             CH1_5.setCellValue("Invoice Number");           //BNUMBER
             CH1_6.setCellValue("No. Billing Rec.");         //NUMBILL
             CH1_7.setCellValue("Source Code");              //SOURCOD
@@ -3398,11 +3398,11 @@ public class PassengerInvoicesIpController extends BaseController {
 //                Cell rcell21 = row1.createCell(21);
 //                Cell rcell22 = row1.createCell(22);
 
-                rcell0.setCellValue(listaData.get(vi).BDATE);
+                rcell0.setCellValue(listaData.get(vi).BDATE2);
                 rcell1.setCellValue(df_2.format(listaData.get(vi).LBRATE));
                 rcell2.setCellValue(listaData.get(vi).PERNUM);
                 rcell3.setCellValue(listaData.get(vi).BAIR);
-                rcell4.setCellValue(listaData.get(vi).BDAIR);
+                rcell4.setCellValue(listaData.get(vi).BDAIR2);
                 rcell5.setCellValue(listaData.get(vi).BNUMBER);
                 rcell6.setCellValue(listaData.get(vi).NUMBILL);
                 rcell7.setCellValue(listaData.get(vi).SOURCOD);
@@ -3524,7 +3524,7 @@ public class PassengerInvoicesIpController extends BaseController {
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
         
-        String fileNameDownload = String.format("Passenger invoices 20 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 20 - Payable " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -3597,20 +3597,20 @@ public class PassengerInvoicesIpController extends BaseController {
 //            Cell CH1_28 = row1.createCell(28);
 //            Cell CH1_29 = row1.createCell(29);
 
-            CH1_0.setCellValue("Billing Date");                 //BDATE
+            CH1_0.setCellValue("Billing Date");                 //BDATE2
             CH1_1.setCellValue("Period Number");                //PERNUM
             
             CH1_2.setCellValue("Billing Airline");              //BAIR
             CH1_3.setCellValue("Invoice Number");               //BNUMBER
-            CH1_4.setCellValue("Issuing Airline");              //BDAIR
+            CH1_4.setCellValue("Issuing Airline");              //BDAIR2
             CH1_5.setCellValue("Coupon Number");                //CPNNUM
             CH1_6.setCellValue("Ticket Number");                //TKTNUM
             CH1_7.setCellValue("Listing to Billing Rate");      //LBRATE
             CH1_8.setCellValue("Source Code");                  //SOURCOD
             CH1_9.setCellValue("Coupon Gross Value");           //GROSS
-//            CH1_10.setCellValue("Coupon Gross Sign");           //GROSSSG
+//            CH1_10.setCellValue("Coupon Gross Sign");         //GROSSSG
             CH1_10.setCellValue("Coupon Tax Amount");           //TAX
-//            CH1_12.setCellValue("Coupon Tax Sign");             //TAXSG
+//            CH1_12.setCellValue("Coupon Tax Sign");           //TAXSG
             CH1_11.setCellValue("Flight Number");               //FLIGHTN
             CH1_12.setCellValue("Flight Date");                 //FLIGHTD
             CH1_13.setCellValue("From Airport");                //FROMCPN
@@ -3727,11 +3727,11 @@ public class PassengerInvoicesIpController extends BaseController {
 //                Cell rcell28 = row1.createCell(28);
 //                Cell rcell29 = row1.createCell(29);
 
-                rcell0.setCellValue(listaData.get(vi).BDATE);
+                rcell0.setCellValue(listaData.get(vi).BDATE2);
                 rcell1.setCellValue(listaData.get(vi).PERNUM);
                 rcell2.setCellValue(listaData.get(vi).BAIR);
                 rcell3.setCellValue(listaData.get(vi).BNUMBER);
-                rcell4.setCellValue(listaData.get(vi).BDAIR);
+                rcell4.setCellValue(listaData.get(vi).BDAIR2);
                 rcell5.setCellValue(listaData.get(vi).CPNNUM);
                 rcell6.setCellValue(listaData.get(vi).TKTNUM);
                 rcell7.setCellValue(df_2.format(listaData.get(vi).LBRATE));
@@ -3856,7 +3856,7 @@ public class PassengerInvoicesIpController extends BaseController {
 
     public File downloadXLSX_21(HttpServletRequest request) {
         System.out.println("Report : downloadXLSX_21");
-        String fileNameDownload = String.format("Passenger invoices 21 & 22 & 23 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 21 & 22 & 23 - - Payable" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         
         DecimalFormat df = new DecimalFormat("#,###,##0");
         DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
@@ -3923,7 +3923,7 @@ public class PassengerInvoicesIpController extends BaseController {
             Cell CH1_12 = row1.createCell(12);
             Cell CH1_13 = row1.createCell(13);
 
-            CH1_0.setCellValue("Clearing Date");             //BDATE
+            CH1_0.setCellValue("Clearing Date");             //BDATE2
             CH1_1.setCellValue("Billing Airline");           //BAIR
             CH1_2.setCellValue("Period Number");             //PERNUM
             CH1_3.setCellValue("Source Code");               //SOURCOD
@@ -3989,7 +3989,7 @@ public class PassengerInvoicesIpController extends BaseController {
                 Cell rcell12 = row1.createCell(12);
                 Cell rcell13 = row1.createCell(13);
 
-                rcell0.setCellValue(listaData.get(vi).BDATE);
+                rcell0.setCellValue(listaData.get(vi).BDATE2);
                 rcell1.setCellValue(listaData.get(vi).BAIR);
                 rcell2.setCellValue(listaData.get(vi).PERNUM);
                 rcell3.setCellValue(listaData.get(vi).SOURCOD);
@@ -4042,6 +4042,226 @@ public class PassengerInvoicesIpController extends BaseController {
         }
     }
     
+    // ------------------------------- SFI 31 ------------------------------------------------------
+    public List<SFI031> getXLSX_31(HttpServletRequest request, Boolean bExcel) {
+
+        List<SFI031> lst = new ArrayList<>(0);
+        SFI020Filter filter = new SFI020Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+        String flagMonth = "";
+
+        try {
+            PassengerInvoicesIpLogic logic = new PassengerInvoicesIpLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            flagMonth = request.getParameter("flagByMonth");
+            
+            filter = gson.fromJson(beanString, SFI020Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX538_register_31(filter, flagMonth);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    public File downloadXLSX_31(HttpServletRequest request) {
+        System.out.println("Report : downloadXLSX_31");
+        String fileNameDownload = String.format("Passenger invoices 31 - Payable " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<SFI031> listaData = this.getXLSX_31(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+            // ====== CREANDO TITULOS ======================================
+
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+            Cell CH1_6 = row1.createCell(6);
+            Cell CH1_7 = row1.createCell(7);
+            Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
+//            Cell CH1_12 = row1.createCell(12);
+//            Cell CH1_13 = row1.createCell(13);
+//            Cell CH1_14 = row1.createCell(14);
+
+//            CH1_0.setCellValue("Standar Mess.PB");      //SMI
+//            CH1_1.setCellValue("Rec-Seq.Number");       //RSN
+//            CH1_2.setCellValue("Stand-Field-Id");       //SFI
+            CH1_0.setCellValue("Billing Airline");      //BAIR
+            CH1_1.setCellValue("Billed Airline");       //BDAIR
+            CH1_2.setCellValue("Billing Code");         //BCODE
+            CH1_3.setCellValue("Invoice Number");       //BNUMBER
+            CH1_4.setCellValue("Rej/Bill/Cre Number");  //RBCNUM
+            CH1_5.setCellValue("Remarks Serial");       //NUMRMK
+            CH1_6.setCellValue("Remarks 1");            //REMARK1
+            CH1_7.setCellValue("Remarks 2");           //REMARK2
+            CH1_8.setCellValue("Remarks 3");           //REMARK3
+            CH1_9.setCellValue("Remarks 4");           //REMARK4
+            CH1_10.setCellValue("Remarks 5");           //REMARK5
+            CH1_11.setCellValue("PERNUM");              //PERNUM
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+            CH1_6.setCellStyle(headerStyle);
+            CH1_7.setCellStyle(headerStyle);
+            CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+//            CH1_12.setCellStyle(headerStyle);
+//            CH1_13.setCellStyle(headerStyle);
+//            CH1_14.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+                Cell rcell6 = row1.createCell(6);
+                Cell rcell7 = row1.createCell(7);
+                Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
+//                Cell rcell12 = row1.createCell(12);
+//                Cell rcell13 = row1.createCell(13);
+//                Cell rcell14 = row1.createCell(14);
+
+//                rcell0.setCellValue(listaData.get(vi).SMI);
+//                rcell1.setCellValue(listaData.get(vi).RSN);
+//                rcell2.setCellValue(listaData.get(vi).SFI);
+                rcell0.setCellValue(listaData.get(vi).BAIR);
+                rcell1.setCellValue(listaData.get(vi).BDAIR);
+                rcell2.setCellValue(listaData.get(vi).BCODE);
+                rcell3.setCellValue(listaData.get(vi).BNUMBER);
+                rcell4.setCellValue(listaData.get(vi).RBCNUM);
+                rcell5.setCellValue(listaData.get(vi).NUMRMK);
+                rcell6.setCellValue(listaData.get(vi).REMARK1);
+                rcell7.setCellValue(listaData.get(vi).REMARK2);
+                rcell8.setCellValue(listaData.get(vi).REMARK3);
+                rcell9.setCellValue(listaData.get(vi).REMARK4);
+                rcell10.setCellValue(listaData.get(vi).REMARK5);
+                rcell11.setCellValue(listaData.get(vi).PERNUM);
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+//            sheet.autoSizeColumn(12, true);
+//            sheet.autoSizeColumn(13, true);
+//            sheet.autoSizeColumn(14, true);
+
+            //============================================
+            /*response.setContentType("application/vnd.openxml");
+             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+             FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+             workbook.write(response.getOutputStream());
+             fos.close();*/
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(fos);
+            fos.close();
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
     
     // ------------------------------- SFI 32 ------------------------------------------------------
     public List<SFI032> getXLSX_32(HttpServletRequest request, Boolean bExcel) {
@@ -4096,7 +4316,7 @@ public class PassengerInvoicesIpController extends BaseController {
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
         
-        String fileNameDownload = String.format("Passenger invoices 32 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 32 - Payable" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -4165,11 +4385,11 @@ public class PassengerInvoicesIpController extends BaseController {
 //            Cell CH1_25 = row1.createCell(25);
 //            Cell CH1_26 = row1.createCell(26);
 
-            CH1_0.setCellValue("Clearing Date");                    //BDATE
+            CH1_0.setCellValue("Clearing Date");                    //BDATE2
             CH1_1.setCellValue("Listing Billing Rate");             //LBRATE
             CH1_2.setCellValue("Period");                           //PERNUM
-            CH1_3.setCellValue("Billing Airline");                  //BAIR
-            CH1_4.setCellValue("Billed Airline");                   //BDAIR
+            CH1_3.setCellValue("Billing Airline");                  //BAIR2
+            CH1_4.setCellValue("Billed Airline");                   //BDAIR2
             CH1_5.setCellValue("Invoice Number");                   //BNUMBER
             CH1_6.setCellValue("Rejection Memo");                   //REJNUM
             CH1_7.setCellValue("Tkt Issuing Air");                  //AIRNUM
@@ -4282,11 +4502,11 @@ public class PassengerInvoicesIpController extends BaseController {
 //                Cell rcell25 = row1.createCell(25);
 //                Cell rcell26 = row1.createCell(26);
 
-                rcell0.setCellValue(listaData.get(vi).BDATE);
+                rcell0.setCellValue(listaData.get(vi).BDATE2);
                 rcell1.setCellValue(df_2.format(listaData.get(vi).LBRATE));
                 rcell2.setCellValue(listaData.get(vi).PERNUM);
-                rcell3.setCellValue(listaData.get(vi).BAIR);
-                rcell4.setCellValue(listaData.get(vi).BDAIR);
+                rcell3.setCellValue(listaData.get(vi).BAIR2);
+                rcell4.setCellValue(listaData.get(vi).BDAIR2);
                 rcell5.setCellValue(listaData.get(vi).BNUMBER);
                 rcell6.setCellValue(listaData.get(vi).REJNUM);
                 rcell7.setCellValue(listaData.get(vi).AIRNUM);
@@ -4411,7 +4631,7 @@ public class PassengerInvoicesIpController extends BaseController {
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
         
-        String fileNameDownload = String.format("Passenger invoices 33 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 33 - Payable" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -4480,11 +4700,11 @@ public class PassengerInvoicesIpController extends BaseController {
 //            Cell CH1_25 = row1.createCell(25);
 //            Cell CH1_26 = row1.createCell(26);
 
-            CH1_0.setCellValue("Clearing Date");                //BDATE
+            CH1_0.setCellValue("Clearing Date");                //BDATE2
             CH1_1.setCellValue("Listing Billing Rate");         //LBRATE
             CH1_2.setCellValue("Period");                       //PERNUM
-            CH1_3.setCellValue("Billing Airline");              //BAIR
-            CH1_4.setCellValue("Billed Airline");               //BDAIR
+            CH1_3.setCellValue("Billing Airline");              //BAIR2
+            CH1_4.setCellValue("Billed Airline");               //BDAIR2
             CH1_5.setCellValue("Invoice Number");               //BNUMBER
             CH1_6.setCellValue("Rejection Memo");               //REJNUM
             CH1_7.setCellValue("Tkt Issuing Air");              //AIRNUM
@@ -4597,11 +4817,11 @@ public class PassengerInvoicesIpController extends BaseController {
 //                Cell rcell25 = row1.createCell(25);
 //                Cell rcell26 = row1.createCell(26);
 
-                rcell0.setCellValue(listaData.get(vi).BDATE);
+                rcell0.setCellValue(listaData.get(vi).BDATE2);
                 rcell1.setCellValue(df_2.format(listaData.get(vi).LBRATE));
                 rcell2.setCellValue(listaData.get(vi).PERNUM);
-                rcell3.setCellValue(listaData.get(vi).BAIR);
-                rcell4.setCellValue(listaData.get(vi).BDAIR);
+                rcell3.setCellValue(listaData.get(vi).BAIR2);
+                rcell4.setCellValue(listaData.get(vi).BDAIR2);
                 rcell5.setCellValue(listaData.get(vi).BNUMBER);
                 rcell6.setCellValue(listaData.get(vi).REJNUM);
                 rcell7.setCellValue(listaData.get(vi).AIRNUM);
@@ -4715,7 +4935,7 @@ public class PassengerInvoicesIpController extends BaseController {
 
     public File downloadXLSX_41(HttpServletRequest request) {
         System.out.println("Report : downloadXLSX_41");
-        String fileNameDownload = String.format("Passenger invoices 41 " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Passenger invoices 41 - Payable" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         
         DecimalFormat df = new DecimalFormat("#,###,##0");
         DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
@@ -4786,8 +5006,8 @@ public class PassengerInvoicesIpController extends BaseController {
 //            Cell CH1_16 = row1.createCell(16);
 //            Cell CH1_17 = row1.createCell(17);
 
-            CH1_0.setCellValue("Ticket Issuing Airline");       //BDAIR
-            CH1_1.setCellValue("Ticket/Document Number");       //TKTNUM
+            CH1_0.setCellValue("Ticket Issuing Airline");       //BDAIR2
+            CH1_1.setCellValue("Ticket/Document Number");       //TKTNUM2
             CH1_2.setCellValue("Listing Billing Rate");         //LBRATE
             
             CH1_3.setCellValue("Tax Code (1)");                 //TAXCODE1
@@ -4799,14 +5019,14 @@ public class PassengerInvoicesIpController extends BaseController {
 //            CH1_8.setCellValue("Tax Amount Billed YQ Sign");    //SIGN_YQ
             
             CH1_7.setCellValue("Tax Code YR");                  //CODE_YR
-            CH1_8.setCellValue("Tax Amount Billed YR");        //AMOUNT_YR
+            CH1_8.setCellValue("Tax Amount Billed YR");         //AMOUNT_YR
 //            CH1_11.setCellValue("Tax Amount Billed YR Sign");   //SIGN_YR
             
-            CH1_9.setCellValue("TKT CPN");                     //CPNNUM
+            CH1_9.setCellValue("TKT CPN");                      //CPNNUM2
             CH1_10.setCellValue("Flight Date*");                //FLIGHTD
             CH1_11.setCellValue("From’ Airport of Coupon");     //FROMCPN
             CH1_12.setCellValue("To Airport of Coupon");        //TOCPN
-            CH1_13.setCellValue("Mes De Facturación");          //BDATE
+            CH1_13.setCellValue("Mes De Facturación");          //BDATE2
             CH1_14.setCellValue("Period");                      //PERNUM
 
             CH1_0.setCellStyle(headerStyle);
@@ -4871,8 +5091,8 @@ public class PassengerInvoicesIpController extends BaseController {
 //                Cell rcell16 = row1.createCell(16);
 //                Cell rcell17 = row1.createCell(17);
 
-                rcell0.setCellValue(listaData.get(vi).BDAIR);
-                rcell1.setCellValue(listaData.get(vi).TKTNUM);
+                rcell0.setCellValue(listaData.get(vi).BDAIR2);
+                rcell1.setCellValue(listaData.get(vi).TKTNUM2);
                 rcell2.setCellValue(df_2.format(listaData.get(vi).LBRATE));
                 rcell3.setCellValue(listaData.get(vi).TAXCODE1);
                 rcell4.setCellValue(listaData.get(vi).TAXBILED1);
@@ -4883,11 +5103,11 @@ public class PassengerInvoicesIpController extends BaseController {
                 rcell7.setCellValue(listaData.get(vi).CODE_YR);
                 rcell8.setCellValue(listaData.get(vi).AMOUNT_YR);
 //                rcell11.setCellValue(listaData.get(vi).SIGN_YR);
-                rcell9.setCellValue(listaData.get(vi).CPNNUM);
+                rcell9.setCellValue(listaData.get(vi).CPNNUM2);
                 rcell10.setCellValue(listaData.get(vi).FLIGHTD);
                 rcell11.setCellValue(listaData.get(vi).FROMCPN);
                 rcell12.setCellValue(listaData.get(vi).TOCPN);
-                rcell13.setCellValue(listaData.get(vi).BDATE);
+                rcell13.setCellValue(listaData.get(vi).BDATE2);
                 rcell14.setCellValue(listaData.get(vi).PERNUM);
                 iter.next();
                 ++vi;
@@ -5252,6 +5472,7 @@ public class PassengerInvoicesIpController extends BaseController {
             srcfile.add(downloadXLSX_30(request));
             srcfile.add(downloadXLSX_20(request));
             srcfile.add(downloadXLSX_21(request));
+            srcfile.add(downloadXLSX_31(request));
             srcfile.add(downloadXLSX_32(request));
             srcfile.add(downloadXLSX_33(request));
             srcfile.add(downloadXLSX_41(request));

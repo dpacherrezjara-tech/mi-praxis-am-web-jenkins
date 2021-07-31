@@ -94,29 +94,19 @@ public class ReportEdoCta {
             PdfPTable table = new PdfPTable(3);
             try {
                 table.setWidths(new int[]{24, 24, 2});
-                table.setTotalWidth(700);
+                table.setTotalWidth(560); //700
                 table.setLockedWidth(true);
                 table.getDefaultCell().setFixedHeight(20); 
                 table.getDefaultCell().setBorder(Rectangle.BOTTOM);                
                 table.addCell(header);                
-                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);                
-                
-//                Paragraph Nbr_page = new Paragraph( String.format("Página: %d de ", writer.getPageNumber() ), subFont );                
-//                Nbr_page.getFont().setSize(9);
-//                table.addCell(Nbr_page);          
-                
-                table.addCell(String.format("Página: %d de ", writer.getPageNumber())); //original                                
-                
+                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);                         
+                table.addCell(String.format("Página: %d de ", writer.getPageNumber())); 
                 PdfPCell cell = new PdfPCell(Image.getInstance(total) );                
                 cell.setBorder(Rectangle.BOTTOM);   
                 table.addCell( cell );
-                
-//                Paragraph Nbr_page_total = new Paragraph(  String.format("%d ", Image.getInstance(total) )  , subFont );
-//                Nbr_page_total.getFont().setSize(9);                
-//                table.addCell( Nbr_page_total );
-                
-                table.writeSelectedRows(0, -1, 34, 600, writer.getDirectContent());  
-                
+                //Ubicacion COORDENA Y del contador de pagina
+                table.writeSelectedRows(0, -1, 34, 790, writer.getDirectContent()); //790
+                                
             } catch (DocumentException de) {
                 throw new ExceptionConverter(de);
             }
@@ -133,7 +123,8 @@ public class ReportEdoCta {
 
         }
     }
-
+   
+    
     public static final String[] RESOURCES = {
         "139X.jpg",
         "139X2.png"
@@ -243,61 +234,43 @@ public class ReportEdoCta {
             lstFileTmp.add(fileTmp01);
             //fileTmp02 = File.createTempFile("tmp", FileTXT);            
             //lstFileTmp.add(fileTmp02);            
-            PYi = 550;
+            PYi = 730; //780
             Hlng = 12;
             int PosX1 = 15;
-            int PosX2;
-            int PosXd;
-            int PosX3;
-            int PosX4;
-            int PosX5;
-            int PosX6;
-            int PosX7;
-            int PosX8;
-            int PosX9;
-            int PosX10;
-            int PosX11;
-            int PosX12;
-            int PosX13;
-            int PosX14;
-            int PosX15;
-            int PosX16;
-            int PosX17;
-            int PosX18;
-            int PosX19;
-            int PosX20;
-
             int ItemPage = 0;
             int getPageNumber = 0;
             int PoxT;
 
             int posNewPagex = 0;
             int posNewPagey = 0;
-
-            Document document = new Document(PageSize.LETTER.rotate(), 5, 5, 5, 5);
+                
+            //Document document = new Document(PageSize.LETTER.rotate(), 5, 5, 5, 5); // 792, 612
+            //Document document = new Document(PageSize.A4, 5, 5, 5, 5); //595,842
+            Document document = new Document(PageSize.LETTER, 5, 5, 5, 5); //612,792
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fileTmp01));
             TableHeader event = new TableHeader();
             writer.setPageEvent(event);
             document.open();
 
             //titulo reporte
-            PYi = PYi - 7;
+            PYi = PYi - 16; //7
             Phrase txtTitle = new Phrase(new Paragraph("ESTADO DE CUENTA", catFont));
             PdfContentByte canvas = writer.getDirectContent();
             PdfContentByte under = writer.getDirectContentUnder();
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTitle, 300, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTitle, 240, PYi, 0); //300
 
             // Logo AEROMEXICO
+            int pos_img = 710; //698
             Image img;
             img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
-            img.setAbsolutePosition(PosX1, 530);
+            img.setAbsolutePosition(PosX1, pos_img); //530
             img.scaleToFit(190, 40);
             document.add(new Paragraph(String.format("", RESOURCES[0], img.getClass().getName())));
             document.add(img);
             writer.setCompressionLevel(0);
 
             //datos AEROMEXICO
-            PYi = PYi - 32;
+            PYi = PYi - 20; //32
             int py0 = PYi;
             Phrase txtAMInfo = new Phrase(new Paragraph(Data.get(1).tbl_misl.A3961DESC1, catFont)); //nombre AM
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtAMInfo, PosX1, PYi, 0);
@@ -313,15 +286,15 @@ public class ReportEdoCta {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtAMInfo2, PosX1, PYi, 0);
             //PYi = PYi - Hlng;
             Phrase txtAMInfo3 = new Phrase(new Paragraph( "RFC: " +  Data.get(1).tbl_misl.A3961COME2, NORMAL));  //Clave CITA AM           
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT,  txtAMInfo3, 120, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT,  txtAMInfo3, 115, PYi, 0);
 
-            int px1 = 480; //500
+            int px1 = 400; //480 
             //LOGO CLIENTE   
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
             }
             img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
-            img.setAbsolutePosition(px1, 520);                        
+            img.setAbsolutePosition(px1, pos_img); //520                       
             img.scaleToFit(280, 60);  
             document.add(new Paragraph(String.format("", Data.get(0).tbl_client.A3953LOGO/*RESOURCES[0]*/, img.getClass().getName())));
             document.add(img);            
@@ -332,10 +305,11 @@ public class ReportEdoCta {
             String A3953RSOCI_part1 = "";
             String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
             int length = A3953RSOCI.length(); 
-            if(length > 44 ){
-               A3953RSOCI = A3953RSOCI.substring(0, 44);
-               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
+            if(length > 29 ){
+               A3953RSOCI = A3953RSOCI.substring(0, 29);
+               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(29, length);
             }
+            px1 = px1 - 25; //Inicia datos CLIENTE
             Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
             if (!A3953RSOCI_part1.trim().equals("")){
@@ -364,10 +338,7 @@ public class ReportEdoCta {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, CP, px1, PYi, 0);
                     
             //datos  Contrato
-            int PYi_c = 461;
-//            PYi = PYi + 10;
-//            PYi = PYi - Hlng;
-            
+            int PYi_c = 642; //680
             //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi+10, 400, 0); //LINEA 
                         
             Phrase CONTR = new Phrase(new Paragraph("Contrato Nº: " + Data.get(0).rpteCab.A3981CONTR, NORMAL));
@@ -381,7 +352,7 @@ public class ReportEdoCta {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, FEECC, PosX1, PYi_c, 0);
             
             //Py_c; //vuelve a la altura de "REPORTE Nº:"
-            int PosX1_ = 180;            
+            int PosX1_ = 135;   //180         
 //            Phrase TXTREFBC = new Phrase(new Paragraph("Nº Ref. Bancaria: XXXXXX "  /*+Data.get(0).rpteCab.A3957REFBC */ , NORMAL));                        
 //            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, TXTREFBC, PosX1_, Py_c, 0);
 //            
@@ -390,146 +361,229 @@ public class ReportEdoCta {
 //            if(!Data.get(0).rpteCab.A3981INIPR.equals("")){
 //                VL_PERIODO = Data.get(0).rpteCab.A3981INIPR + " Al " + Data.get(0).rpteCab.A3981FINPR; 
 //            }            
-            Phrase txtPERIODO = new Phrase(new Paragraph("Edo. Cta. al cierre: " + Data.get(0).rpteCab.A3981FINPR  , NORMAL));
+            Phrase txtPERIODO = new Phrase(new Paragraph("Al cierre: " + Data.get(0).rpteCab.A3981FINPR  , NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtPERIODO, PosX1_, Py_c, 0);                                    
             //Py_c = Py_c - Hlng;  
-            PosX1_ = 330; 
-            colorRectangle(under, new GrayColor(0.825f), PosX1_-5, PYi_c, 120, 15);
+            PosX1_ = 270; //330
+            colorRectangle(under, new GrayColor(0.825f), PosX1_-5, PYi_c, 70, 15); //120
             Phrase TXTNACIONAL = new Phrase(new Paragraph( Data.get(0).tbl_client.A3953TORGN , NORMAL));
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, TXTNACIONAL, PosX1_+28, Py_c+4, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, TXTNACIONAL, PosX1_+6, Py_c+4, 0);
             
-            ////
+            // '00' = SALDO ANTERIOR             
+            // '10' = REPORTE VTAS  - SALE/EXCH  
+            // '20' = REPORTE VTAS  - RFND       
+            // '30' = PAGOS  - FA                
+            // '40' = PAGOS  - NC  (AUTO/MAN)
+            ////+++++++++++++++++++++++++++++++++++++++++++++
             //SALDO
-            ////
+            ////+++++++++++++++++++++++++++++++++++++++++++++
             PYi = PYi_c;
             PYi = PYi - 25;
             PosX1 = PosX1+1;            
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO ANTERIOR", subFontT)), PosX1, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFontT)), 670, PYi, 0);            
-            colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 700, 0); //LINEA 
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFontT)), 560, PYi, 0); //670           
+            colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 590, 0); //LINEA 700
             
             PYi = PYi - 14;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total saldo anterior* ", NORMAL)), PosX1, PYi, 0);            
-            //ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("0.00" , NORMAL)), 700, PYi, 0);            
-//            Double VL_EECTA_ANT = 0.0;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total saldo anterior* ", NORMAL)), PosX1, PYi, 0);           
             for (int i = 4; i < Data.size(); i++) {
                 if( Data.get(i).rpteDet.A3982TREG.equals("00")){ 
-                    ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(i).rpteDet.A3982TOT) , NORMAL)), 700, PYi, 0);
-//                    VL_EECTA_ANT=VL_EECTA_ANT+Data.get(i).rpteDet.A3982TOT;
+                    ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(i).rpteDet.A3982TOT) , NORMAL)), 595, PYi, 0); //700
+                    break;
                 }
             }
-            
-            ////
-            //VENTAS
-            ////
+    
+            //+++++++++++++++++++++++++++++++++
+            //VENTAS: 
+            //+++++++++++++++++++++++++++++++++
             PYi = PYi - 25; //saldo entre bloque
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("VENTAS", subFontT)), PosX1, PYi, 0);
             //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 700, 0); //LINEA  
             PYi = PYi - 14; //salto entre linea
-            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), 15, PYi-5, 700, 15);
+            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), 15, PYi-5, 590, 15); //700
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fecha", subFont_1)), PosX1, PYi, 0);            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Nro. Reporte", subFont_1)), 60, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Nº Reporte", subFont_1)), 60, PYi, 0);
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Periodo", subFont_1)), 150, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Ref. Bancaria", subFont_1)), 300, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Ref. Bancaria", subFont_1)), 280, PYi, 0); //300
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 400, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFont_1)), 560, PYi, 0);
             
             PYi = PYi - 15;  
             Double Subtotal_ventas = 0.0;            
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("02")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("10")){                   
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982IDPRO, subFont)), 60, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982INIPR.trim() +'-'+ Data.get(i).rpteDet.A3982FINPR.trim(), subFont)), 150, PYi, 0);                
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982REFBC, subFont)), 300, PYi, 0);                                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982REFBC, subFont)), 280, PYi, 0);  //300                              
                 ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numeroInt(Data.get(i).rpteDet.A3982QTYTX), subFont)), 430, PYi, 0);
-                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(i).rpteDet.A3982TOT), subFont)), 700, PYi, 0);                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(i).rpteDet.A3982TOT), subFont)), 595, PYi, 0); //700               
                 Subtotal_ventas = Subtotal_ventas + Data.get(i).rpteDet.A3982TOT;
                 PYi = PYi - 12;
                }
             }
-            PYi = PYi - 14;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBTOTAL: ", subFontT)), 580, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Subtotal_ventas), subFontT)), 700, PYi, 0);
-             
+            PYi = PYi - 10;
+            int pos_sub_ttl = 460;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBTOTAL: ", subFontT)), pos_sub_ttl, PYi, 0);
+            int pos_sub_ttl_a = pos_sub_ttl + 135;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Subtotal_ventas), subFontT)), pos_sub_ttl_a, PYi, 0);
+            
+            
+            //+++++++++++++++++++++++++++++++++
+            //REEMBOLSOS NO APLICADOS: 
+            //+++++++++++++++++++++++++++++++++
+            PYi = PYi - 25; //saldo entre bloque
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("REEMBOLSOS NO APLICADOS", subFontT)), PosX1, PYi, 0);
+            //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 700, 0); //LINEA  
+            PYi = PYi - 14; //salto entre linea
+            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), 15, PYi-5, 590, 15);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fecha", subFont_1)), PosX1, PYi, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Nro. Reporte", subFont_1)), 60, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Periodo", subFont_1)), 150, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Ref. Bancaria", subFont_1)), 280, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 400, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFont_1)), 560, PYi, 0);
+            
+            PYi = PYi - 15;  
+            Double Subtotal_refund = 0.0;            
+            for (int i = 4; i < Data.size(); i++) {                
+               if( Data.get(i).rpteDet.A3982TREG.equals("20")){                   
+                //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
+                //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982IDPRO, subFont)), 60, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982INIPR.trim() +'-'+ Data.get(i).rpteDet.A3982FINPR.trim(), subFont)), 150, PYi, 0);                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982REFBC, subFont)), 280, PYi, 0);                                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numeroInt(Data.get(i).rpteDet.A3982QTYTX), subFont)), 430, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(i).rpteDet.A3982TOT), subFont)), 595, PYi, 0);                
+                Subtotal_refund = Subtotal_refund + Data.get(i).rpteDet.A3982TOT;
+                PYi = PYi - 12;
+               }
+            }
+            PYi = PYi - 10;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBTOTAL: ", subFontT)), pos_sub_ttl, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Subtotal_refund), subFontT)), pos_sub_ttl_a, PYi, 0);
+            
             ////
-            //PAGOS REALIZADOS
+            //PAGOS APLICADOS (FA)
             ////
             PYi = PYi - 25; //saldo entre bloque
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("PAGOS APLICADOS", subFontT)), PosX1, PYi, 0);
             //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 700, 0); //LINEA 
             PYi = PYi - 14; //salto entre linea
-            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), 15, PYi-5, 700, 15);
+            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), 15, PYi-5, 590, 15);
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fecha", subFont_1)), PosX1, PYi, 0); 
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Nro. Reporte", subFont_1)), 60, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 150, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Ref. bancaria", subFont_1)), 230, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Banco", subFont_1)), 320, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Ref. bancaria", subFont_1)), 150, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Banco", subFont_1)), 230, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 400, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFont_1)), 560, PYi, 0);
             
-            //buclue pagos
+            //buclue pagos (FA)
             PYi = PYi - 15;  
             Double Subtotal_pagos = 0.0;
             
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("01")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("30")){                   
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.NRRPT, subFont)), 60, PYi, 0);
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(formato_numeroInt(Data.get(i).rpteDet.A3982QTYTX), subFont)), 160, PYi, 0);
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982REFBC, subFont)), 230, PYi, 0);
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982BANCO, subFont)), 320, PYi, 0);                
-                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(i).rpteDet.A3982TOT), subFont)), 700, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982REFBC, subFont)), 160, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982BANCO, subFont)), 230, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(formato_numeroInt(Data.get(i).rpteDet.A3982QTYTX), subFont)), 400, PYi, 0);                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(i).rpteDet.A3982TOT), subFont)), 595, PYi, 0);
                 Subtotal_pagos = Subtotal_pagos+ Data.get(i).rpteDet.A3982TOT;
                 PYi = PYi - 12;
                }
             }
-            PYi = PYi - 14;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBTOTAL: ", subFontT)), 580, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Subtotal_pagos), subFontT)), 700, PYi, 0);
+            PYi = PYi - 10;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBTOTAL: ", subFontT)), pos_sub_ttl, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Subtotal_pagos), subFontT)), pos_sub_ttl_a, PYi, 0);
+            
+            ////
+            //PAGOS REALIZADOS (NC)
+            ////
+            PYi = PYi - 25; //saldo entre bloque
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("REEMBOLSOS APLICADOS", subFontT)), PosX1, PYi, 0);
+            //colorRectangle(under, new GrayColor(0.825f), PosX1, PYi-5, 700, 0); //LINEA 
+            PYi = PYi - 14; //salto entre linea
+            colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), 15, PYi-5, 590, 15);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fecha", subFont_1)), PosX1, PYi, 0); 
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Nro. Reporte", subFont_1)), 60, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Referencia", subFont_1)), 150, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Banco", subFont_1)), 230, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 400, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFont_1)), 560, PYi, 0);
+            //buclue pagos (RC)
+            PYi = PYi - 15;  
+            Double Subtotal_pagos_RC = 0.0;
+            
+            for (int i = 4; i < Data.size(); i++) {                
+               if( Data.get(i).rpteDet.A3982TREG.equals("40")){                   
+                //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
+                //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.NRRPT, subFont)), 60, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982REFBC, subFont)), 160, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982BANCO, subFont)), 230, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(formato_numeroInt(Data.get(i).rpteDet.A3982QTYTX), subFont)), 400, PYi, 0);                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(i).rpteDet.A3982TOT), subFont)), 595, PYi, 0);
+                Subtotal_pagos_RC = Subtotal_pagos_RC+ Data.get(i).rpteDet.A3982TOT;
+                PYi = PYi - 12;
+               }
+            }
+            PYi = PYi - 10;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUBTOTAL: ", subFontT)), pos_sub_ttl, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Subtotal_pagos_RC), subFontT)), pos_sub_ttl_a, PYi, 0);
             
                        
             PYi = PYi - 25;
-            colorRectangle(under, new GrayColor(0.825f), 15, PYi + 9, 700, -40); //68
-            Double total_sub_totales = Subtotal_ventas + Subtotal_pagos;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("GRAN TOTAL:", subFontT)), 560, PYi, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(0).rpteCab.A3981TOT /*total_sub_totales*/ ), subFontT)), 700, PYi, 0);            
-            //TOTAL EN LETRAS
-            //PYi = PYi - 18;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 540, PYi, 0);
+            colorRectangle(under, new GrayColor(0.825f), 15, PYi + 9, 590, -40); //68
+            //Double total_sub_totales = Subtotal_ventas + Subtotal_pagos+Subtotal_pagos_RC;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("GRAN TOTAL:", subFontT)), pos_sub_ttl, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(0).rpteCab.A3981TOT ), subFontT)), pos_sub_ttl_a, PYi, 0);            
             
             //REMARK  
-            int posRemark = PYi-15; //25
+            //PYi = PYi - 18;
             String TextRemark = Data.get(2).tbl_misl.A3961DESC1.replaceAll("}", Data.get(0).tbl_client.A3953PLZCR + " DIAS ");
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(TextRemark, subFont_2)), 17, posRemark, 0);
-            posRemark = posRemark - 10;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(2).tbl_misl.A3961DESC2, subFont_2)), 17, posRemark, 0);            
-            //posRemark = posRemark - 10;
-            //ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(2).tbl_misl.A3961COME1, subFont_2)), 17, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(TextRemark, subFont_2)), 17, PYi, 0);
+            PYi = PYi - 10;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(2).tbl_misl.A3961DESC2, subFont_2)), 17, PYi, 0); 
             
+            //TOTAL EN LETRAS
+            //int posRemark = PYi-15; //25
+            PYi = PYi-15;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 590, PYi, 0); //540
+            //PYi = PYi-15;
             //antiguedad de saldos
-            posRemark = posRemark - 18;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("ANTIGUEDAD DE SALDO* ", subFont_2)), 15, posRemark, 0);
-            posRemark = posRemark - 13;
-            colorRectangle(under, new GrayColor(0.825f), 15, posRemark-7, 700, 17); 
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe Pendiente" , subFontT)), 15, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Corriente" , subFontT)), 116, posRemark, 0);            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("1-30 Días", subFontT)), 215, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("31-60 Días", subFontT)), 315, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("61-90 Días", subFontT)), 415, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("91-120 Días", subFontT)), 515, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("+120 Días", subFontT)), 615, posRemark, 0);
+            int posRemark = PYi;
+            posRemark = posRemark - 20;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("ANTIGUEDAD DE SALDOS ", subFontT)), 15, posRemark, 0);
+            posRemark = posRemark - 15;
+            colorRectangle(under, new GrayColor(0.825f), 15, posRemark-7, 590, 20); //700 17
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("Pendiente" , subFontT)), 80, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("Corriente" , subFontT)), 160, posRemark, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("01-30 Días", subFontT)), 240, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("31-60 Días", subFontT)), 320, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("61-90 Días", subFontT)), 400, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("91-120 Días", subFontT)), 480, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph("+120 Días", subFontT)), 560, posRemark, 0);
             //data          
             posRemark = posRemark - 15;
-            colorRectangle(under, GrayColor.GRAYWHITE, 15, posRemark-7, 700, 20);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TOT) , NORMAL)), 90, posRemark, 0);
+            colorRectangle(under, GrayColor.GRAYWHITE, 15, posRemark-7, 590, 20); //700
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TOT) , NORMAL)), 80, posRemark, 0);
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS0), NORMAL)), 160, posRemark, 0);            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS1), NORMAL)), 255, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS2), NORMAL)), 360, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS3), NORMAL)), 460, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS4), NORMAL)), 565, posRemark, 0);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS5 + Data.get(3).tbl_saldos.A3990TTLS6 ), NORMAL)), 658, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS1), NORMAL)), 240, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS2), NORMAL)), 320, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS3), NORMAL)), 400, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS4), NORMAL)), 480, posRemark, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(3).tbl_saldos.A3990TTLS5 + Data.get(3).tbl_saldos.A3990TTLS6 ), NORMAL)), 560, posRemark, 0);
+            
+            //--linea final
+            colorRectangle(under, new GrayColor(0.825f), PosX1, 15, 590, 0); //LINEA 700
             
             // genera Data en txt
             //PrintStream out = new PrintStream(new FileOutputStream(fileTmp02));
@@ -579,46 +633,6 @@ public class ReportEdoCta {
 //                    posNewPagex = 15;
 //                }
 //            }
-
-            // TOTALES                                    
-//            int PosTotal_label = 640;
-//            PYi = PYi - 15;
-//            int posRemark = PYi;
-//            colorRectangle(under, new GrayColor(0.825f), 15, PYi + 9, 750, -73);
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("GRAN TOTAL: ", NORMAL)), PosTotal_label, PYi, 0);
-//            int PosTotal = PosTotal_label + 120;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3981TOT), NORMAL)), PosTotal, PYi, 0);
-//
-//            PYi = PYi - 12;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("TTL IVA: ", NORMAL)), PosTotal_label, PYi, 0);
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3957IVA), NORMAL)), PosTotal, PYi, 0);
-//
-//            PYi = PYi - 12;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("TTL TUA: ", NORMAL)), PosTotal_label, PYi, 0);
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3957TUA), NORMAL)), PosTotal, PYi, 0);
-//
-//            PYi = PYi - 12;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("TTL YR: ", NORMAL)), PosTotal_label, PYi, 0);
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3957YR), NORMAL)), PosTotal, PYi, 0);
-//
-//            PYi = PYi - 12;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("TTL OTR: ", NORMAL)), PosTotal_label, PYi, 0);
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3957OTR), NORMAL)), PosTotal, PYi, 0);
-
-//            PYi = PYi - 12;
-            //ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("GRAN TOTAL: ", NORMAL)), PosTotal_label, PYi, 0);
-            //ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3981TOT), NORMAL)), PosTotal, PYi, 0);
-            
-            //TOTAL EN LETRAS
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 150, PYi, 0);
-//
-//            //REMARK            
-//            String TextRemark = Data.get(2).tbl_misl.A3961DESC1.replaceAll("}", Data.get(0).tbl_client.A3953PLZCR + " DIAS ");
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(TextRemark, subFont_2)), 17, posRemark, 0);
-//            posRemark = posRemark - 10;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(2).tbl_misl.A3961DESC2, subFont_2)), 17, posRemark, 0);
-//            posRemark = posRemark - 10;
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(2).tbl_misl.A3961COME1, subFont_2)), 17, posRemark, 0);
 
             // No PDF, Just a text file                       
             //out.flush();

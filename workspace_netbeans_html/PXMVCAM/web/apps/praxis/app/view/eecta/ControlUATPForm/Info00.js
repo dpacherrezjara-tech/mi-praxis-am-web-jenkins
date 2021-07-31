@@ -49,18 +49,26 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [
-                                    {text: 'Fecha<br>Proceso', dataIndex: 'A3981NREDO', width: 90, align: 'center'},
-                                    {text: 'Estado', dataIndex: 'A3981CDCLI', align: 'center', width: 60},                                    
+                                    {text: 'Fecha<br>Contable', dataIndex: 'A1530FCONT', width: 70, align: 'center'},
+                                    {
+                                        text: 'Estado<br>Carga', dataIndex: 'A1530STS9', align: 'center', width: 70,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                      
+                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="PENDIENTE" >';
+                                            if ( record.get('A1530STS9') === '1' )
+                                            var html = '<img src="resources/img/semaforo/Circle_Green.png" title="PROCESADO" >';
+                                            return html;
+                                        }
+                                    },                                    
                                     {
                                         xtype: 'actioncolumn',
                                         sortable: false,
-                                        width: 40,
+                                        width: 35,
                                         align: 'center',
                                         items: [
                                             {
-                                                iconCls: 'prx-icon-pdf',
+                                                iconCls: 'prx-icon-detail',
                                                 tooltip: 'Detalle',
-                                                handler: 'onReportEdoCta'
+                                                handler: 'onDetalleUATP'
                                             }
                                         ]
                                     }
