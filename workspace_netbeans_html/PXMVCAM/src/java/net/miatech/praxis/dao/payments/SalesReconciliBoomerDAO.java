@@ -763,6 +763,8 @@ public class SalesReconciliBoomerDAO {
 
     public HashMap<String, List<A2324Filter>> loadPX559SQP04013(A2324Filter filter) throws SQLException, Exception {
         double totSVFOPA = 0.0, totSVFOPB = 0.0, totSVFOPAB = 0.0;
+        double totGENCOMIPAY = 0.0, totCOMISIPROV = 0.0, totCOSTVERIFI = 0.0;
+        double totVALCOLLECT = 0.0, totTOTCOMISI = 0.0, totIVA = 0.0, totSVFOPN = 0.0;
         List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
         A2324Filter beanTkt;
         List<A2324Filter> lstSett = new ArrayList<A2324Filter>(0);
@@ -828,6 +830,20 @@ public class SalesReconciliBoomerDAO {
                 beanSett.REFNBR = filter.IN_REFNBR;
                 totSVFOPA = totSVFOPA + beanSett.SVFOPA;
                 totSVFOPAB = totSVFOPAB + beanSett.SVFOPAB;
+                beanSett.GENCOMIPAY = rst.getDouble("GENCOMIPAY");
+                totGENCOMIPAY = totGENCOMIPAY + beanSett.GENCOMIPAY;
+                beanSett.COMISIPROV = rst.getDouble("COMISIPROV");
+                totCOMISIPROV = totCOMISIPROV + beanSett.COMISIPROV;
+                beanSett.COSTVERIFI = rst.getDouble("COSTVERIFI");
+                totCOSTVERIFI = totCOSTVERIFI + beanSett.COSTVERIFI;
+                beanSett.VALCOLLECT = rst.getDouble("VALCOLLECT");
+                totVALCOLLECT = totVALCOLLECT + beanSett.VALCOLLECT;
+                beanSett.TOTCOMISI = rst.getDouble("TOTCOMISI");
+                totTOTCOMISI = totTOTCOMISI + beanSett.TOTCOMISI;
+                beanSett.IVA = rst.getDouble("IVA");
+                totIVA = totIVA + beanSett.IVA;
+                beanSett.SVFOPN = rst.getDouble("SVFOPN");
+                totSVFOPN = totSVFOPN + beanSett.SVFOPN;
                 lstSett.add(beanSett);
             }
 
@@ -891,6 +907,14 @@ public class SalesReconciliBoomerDAO {
         for (int i = 0; i < lstSett.size(); i++) {
             lstSett.get(i).totSVFOPA = totSVFOPA;
             lstSett.get(i).totSVFOPAB = totSVFOPAB;
+            
+            lstSett.get(i).totGENCOMIPAY = totGENCOMIPAY;
+            lstSett.get(i).totCOMISIPROV = totCOMISIPROV;
+            lstSett.get(i).totCOSTVERIFI = totCOSTVERIFI;
+            lstSett.get(i).totVALCOLLECT = totVALCOLLECT;
+            lstSett.get(i).totTOTCOMISI = totTOTCOMISI;
+            lstSett.get(i).totIVA = totIVA;           
+            lstSett.get(i).totSVFOPN = totSVFOPN;           
         }
 
         hmResultado.put("DATA", lstTkts);
