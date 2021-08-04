@@ -25,6 +25,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     beanAccounting: {},
     gloA720TKVOID: '',
     filterTKT: {},
+    URL_VIEWTICKET : '',
     gridDataMemoAC: [],
     gridDataTktRealUsesAC: [],
     init: function (view) {
@@ -32,6 +33,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 //        this.bean.IN_FORMA= this.TicketNumber.substr(0,4); 
 //        this.bean.IN_SERIE= this.TicketNumber.substr(4,6);			
 //        this.bean.IN_SEQ = this.TicketNumber.substr(10,2);
+        URL_VIEWTICKET = prototype.url;
         this.imgClear_clickHandler();
         prototype.ProrrateoNew = {
             id: 'ScrProrrateoNewForm',
@@ -947,6 +949,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     // <editor-fold defaultstate="collapsed" desc="loadTicket">
     loadTicket: function (bean) {
         var me01 = this;
+        console.log('loadTicket');
+        console.log(prototype.url+'/loadTicket');
+        prototype.url = URL_VIEWTICKET;
         Ext.Ajax.request({
             url: prototype.url+'/loadTicket',
             method: 'POST',
@@ -3123,7 +3128,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     // </editor-fold>
     //<editor-fold defaultstate="collapsed" desc="loadSabre">
     loadSabre: function () {
-        
+        prototype.url = URL_VIEWTICKET;
         var Fproc = win.getValue('lblAgencyIATADate').trim();
 	if(Fproc === '' || win.getValue('txtFilterTicketCia').trim().length!== 3 || win.getValue('txtFilterTicketFormSer').trim().length!==10){
             global.Msg({msg: 'Enter the Ticket Number'});
@@ -3198,6 +3203,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         }
     },
     exportSabreTxt: function () {
+        prototype.url = URL_VIEWTICKET;
         var TKT = win.getValue('txtFilterTicketCia').trim()+win.getValue('txtFilterTicketFormSer');
         console.log('exportSabreTxt: ' + prototype.url);
         global.getFile(prototype.url + '/getSabreFile?TKT=' + TKT);
@@ -3206,6 +3212,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //<editor-fold defaultstate="collapsed" desc="loadAccountig">
     loadAccountig: function (beanAccounting) {
         //Ext.getCmp(prototype.id+'-gridDataAccounting').el.setStyle({height: '100%'});
+        prototype.url = URL_VIEWTICKET;
         var me01 = this;
         Ext.Ajax.request({
             url: prototype.url+'/loadAccountig',
@@ -3228,6 +3235,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDelivery">
     searchDelivery: function (bean) {
+        prototype.url = URL_VIEWTICKET;
         console.log(prototype.ProrrateoNew.url + '/searchDelivery');
         var me1 = this;
         Ext.Ajax.request({
@@ -3259,6 +3267,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //<editor-fold defaultstate="collapsed" desc="searchBeanTkt">
     searchBeanTkt: function(strTicket, IN_SEQ, IN_SEQROLL) {
         //alert(strTicket +'/'+ IN_SEQ+ '/' +IN_SEQROLL);
+        prototype.url = URL_VIEWTICKET;
         Ext.getCmp(prototype.id+'-boxDataTkt').el.setStyle({height: '100%'});
         Ext.Ajax.request({
             url: CONTEXTPATH+'/FlightConciliation/searchBeanTkt',
@@ -3314,6 +3323,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchPNR">
     searchPNR: function (FPROC, TRNCU, TKT) {
+        prototype.url = URL_VIEWTICKET;
         var me01 = this;
         Ext.Ajax.request({
             url: prototype.url+'/searchPNR',
@@ -3351,6 +3361,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 	return intRtn;
     },
     cleanFilter: function() {
+        prototype.url = URL_VIEWTICKET;
         win.setValue('txtFilterTicketFormSer', '');
         win.setValue('txtFilterTicketSeq', '');
         win.setValue('txtFilterPassengerName', '');
