@@ -211,7 +211,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                                 align: 'center',
                                                 items: [
                                                     {
-                                                        icon: 'resources/img/botones/16x16/excel.png',
+                                                        icon: 'resources/img/botones/16x16/txt.png',
 //                                                        isDisabled: function (grid, rowIndex, colIndex, items, record) {
 //                                                            var rec = grid.getStore().getAt(rowIndex).data;
 //                                                            if (rec.PERNUM === '04') {
