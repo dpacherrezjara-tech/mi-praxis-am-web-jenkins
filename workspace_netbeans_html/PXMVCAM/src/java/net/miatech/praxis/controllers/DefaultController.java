@@ -394,7 +394,8 @@ public class DefaultController extends BaseController {
             }
 
         } catch (Exception e) {
-            return "-1";
+            //return "-1";
+            return "Please, refresh the page and try again.";
         }
     }
 
