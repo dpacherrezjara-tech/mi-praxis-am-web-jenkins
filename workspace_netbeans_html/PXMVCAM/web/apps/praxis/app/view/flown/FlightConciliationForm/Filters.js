@@ -352,7 +352,44 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
 //                                change: 'onValidarChange',
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
-                        }
+                        },
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype: 'label',
+                            id: prototype.id + '-labelFSabre',
+                            html: 'Scan Sabre:',
+                            hidden: true,
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '7px 7px 6px 0px'
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFSabre',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"], ["0", "Not Found"], ["1", "Found"],
+                                    ["2", "Found but not matching coupon"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            hidden: true,
+                            allowBlank: true,
+                            forceSelection: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            width: 200,
+                            value: "",
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            listeners: {
+                                change: 'cmbFSabre_changeHandler'
+                            }
+                        },
                     ]
                 }
             ]

@@ -719,7 +719,7 @@ public class FlightConciliationDAO {
 
         try {
             
-            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -727,6 +727,7 @@ public class FlightConciliationDAO {
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.DFLIGHT);
             cs.setString(3, filter.NFLIGHT);
+            cs.setString(4, filter.IN_FSABRE);
             
             cs.execute();
 
@@ -753,8 +754,26 @@ public class FlightConciliationDAO {
                     beanCons.desSTVAL = "No conciliado";
                 } else if (rst.getString("STVAL").trim().equals("0")) {
                     beanCons.desSTVAL = "Conciliado";
-                } 
+                }
                 
+                beanCons.FSABRE = rst.getString("FSABRE").trim();
+                if(rst.getString("FSABRE").trim().equals("0")){
+                    beanCons.descFSABRE = "Not Found";
+                } else if (rst.getString("FSABRE").trim().equals("1")) {
+                    beanCons.descFSABRE = "Found";
+                } else if (rst.getString("FSABRE").trim().equals("2")) {
+                    beanCons.descFSABRE = "Found but not matching coupon";
+                }
+                
+                beanCons.STASABR = rst.getString("STASABR").trim();
+                
+                beanCons.FSALES = rst.getString("FSALES").trim();
+                if(rst.getString("FSALES").trim().equals("0")){
+                    beanCons.descFSALES = "Not found";
+                } else if (rst.getString("FSALES").trim().equals("1")) {
+                    beanCons.descFSALES = "Found";
+                }
+                                
                 beanCons.LNKMVLO = rst.getString("LNKMVLO").trim();
                 beanCons.STVCR = rst.getString("STVCR").trim();
                 

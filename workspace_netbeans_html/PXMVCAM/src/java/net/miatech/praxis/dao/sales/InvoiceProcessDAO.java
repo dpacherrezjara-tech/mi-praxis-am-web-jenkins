@@ -254,7 +254,7 @@ public class InvoiceProcessDAO {
         
         Connection cnx = null;
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".QRY_REVERTIR_INTAP(?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04149(?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);            
@@ -281,7 +281,7 @@ public class InvoiceProcessDAO {
         
         Connection cnx = null;
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".QRY_REVERTIR_INTAR(?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04148(?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);            

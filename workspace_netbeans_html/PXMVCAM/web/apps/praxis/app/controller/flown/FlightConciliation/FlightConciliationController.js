@@ -160,9 +160,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         this.bean = x.record.data;
         var cant = 0;
         cant = this.bean.QCPNFI;
-        
+
         if (cant > 0) {
+            var IN_FSABRE = this.getValue("cmbFSabre");
             this.objFLIGHTMANIF = x.record.data;
+            this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -483,6 +485,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         }
     },
     btnBack_click: function() {
+        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
+        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
             if (this.peek() === prototype.id + '-boxMainData') {
                 global.showMenu();
@@ -769,6 +773,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetailFlightManifest">
     searchDetailFlightManifest: function(objFLIGHTMANIF) {
+        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
+        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetailFlightManifest'
@@ -809,7 +815,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     //</editor-fold>
-
+    cmbFSabre_changeHandler: function() {
+        var IN_FSABRE = this.getValue("cmbFSabre");
+        this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
+        this.searchDetailFlightManifest(this.objFLIGHTMANIF);
+    },
     openExport: function(grid, rowIndex, colIndex, a, b, c) {
         var grid = Ext.getCmp(prototype.id + '-gridDetailFlightManifest')
         var RutaF = grid.getStore().getAt(0).data.LNKMVLO;
@@ -1403,16 +1413,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     // </editor-fold>
 
     /*showTicket: function(data, row) {
-
-        console.log(data);
-        if (data.CCIA === '139') {
-            me.viewMasterTkt(data);
-        } else {
-//            me.viewDataEntryTkt(data,row);
-            me.viewProrate(data);
-        }
-
-    },*/
+     
+     console.log(data);
+     if (data.CCIA === '139') {
+     me.viewMasterTkt(data);
+     } else {
+     //            me.viewDataEntryTkt(data,row);
+     me.viewProrate(data);
+     }
+     
+     },*/
     showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         console.log('RowData');
         console.log(rowData.data);

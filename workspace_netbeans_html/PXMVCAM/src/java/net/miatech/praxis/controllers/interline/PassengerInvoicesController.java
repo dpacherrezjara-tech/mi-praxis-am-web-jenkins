@@ -4849,7 +4849,6 @@ public class PassengerInvoicesController extends BaseController {
         }
     }
     
-    
     public List<SFI030> getXLSX_30(HttpServletRequest request, Boolean bExcel) {
 
         List<SFI030> lst = new ArrayList<>(0);
@@ -4888,7 +4887,7 @@ public class PassengerInvoicesController extends BaseController {
         }
         return lst;
     }
-
+    
     public File downloadXLSX_30(HttpServletRequest request) {
         System.out.println("Report : downloadXLSX_30");
         
@@ -5138,6 +5137,427 @@ public class PassengerInvoicesController extends BaseController {
         }
     }
 
+    //   ----------------- TXT -----------------
+    public File downloadTXT_30(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_30");
+        
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
+        String fileNameDownload = String.format("Passenger invoices 30 - Receivables" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+        
+        try {
+            
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<SFI030> lst = this.getXLSX_30(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            
+            cadena = "Clearing Date|Listing Billing Rate|Period|Billing Airline|Billed Airline|Invoice Number|No. Billing Rec.|Source Code|Total Gross Value|Total ISC Amount|"
+                    + "Total TAX Amount|Total VAT Amount|Total Other Comm.|Total Handling Fee|Total UATP Amount|Total NET|";
+            writer.println("" + cadena);
+            
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena +=  lst.get(vi).BDATE2 + "|" ;
+                cadena +=  df_2.format(lst.get(vi).LBRATE) + "|" ;
+                cadena +=  lst.get(vi).PERNUM + "|" ;
+                cadena +=  lst.get(vi).BAIR + "|" ;
+                cadena +=  lst.get(vi).BDAIR2 + "|" ;
+                cadena +=  lst.get(vi).BNUMBER + "|" ;
+                cadena +=  lst.get(vi).NUMBILL + "|" ;
+                cadena +=  lst.get(vi).SOURCOD + "|" ;
+                
+                cadena +=  lst.get(vi).TGROSS + "|" ;
+                cadena +=  lst.get(vi).TISC + "|" ;
+                cadena +=  lst.get(vi).TTAX + "|" ;
+                cadena +=  lst.get(vi).TVAT + "|" ;
+                cadena +=  lst.get(vi).TOHCOM + "|" ;
+                cadena +=  lst.get(vi).HFEEAM + "|" ;
+                cadena +=  lst.get(vi).TUATP + "|" ;
+                cadena +=  lst.get(vi).TNET + "|" ;
+                
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public File downloadTXT_10(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_10");
+        
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
+        String fileNameDownload = String.format("Passenger invoices 10 - Receivables" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+        
+        try {
+            
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<SFI010> lst = this.getXLSX_10(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+           
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            
+            cadena = "Billing Airline|Billed Airline|Invoice Number|Bill-Date|Currency List|Currency Bill|Period|Inv-Date|List. Bill. Rat|Prov. Bill. Mon|"
+                    + "Susp. Inv. Flag|Invoice Type|";
+            writer.println("" + cadena);
+            
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena +=  lst.get(vi).BAIR + "|" ;
+                cadena +=  lst.get(vi).BDAIR + "|" ;
+                cadena +=  lst.get(vi).BNUMBER + "|" ;
+                cadena +=  lst.get(vi).BDATE + "|" ;
+                cadena +=  lst.get(vi).LCURREN + "|" ;
+                cadena +=  lst.get(vi).BCURREN + "|" ;
+                cadena +=  lst.get(vi).PERNUM + "|" ;
+                cadena +=  lst.get(vi).IDATE + "|" ;
+                cadena +=  df_2.format(lst.get(vi).LBRATE) + "|" ;
+                cadena +=  lst.get(vi).PBMONTH + "|" ;
+                cadena +=  lst.get(vi).SINVFLAG + "|" ;
+                cadena +=  lst.get(vi).BTYPE + "|" ;
+                
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public File downloadTXT_20(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_20");
+        
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
+        String fileNameDownload = String.format("Passenger invoices 20 - Receivables " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+        
+        try {
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<SFI020Filter> lst = this.getXLSX_20(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            
+            cadena = "Billing Date|Period Number|Billing Airline|Invoice Number|Issuing Airline|Coupon Number|Ticket Number|Listing to Billing Rate|Source Code|Coupon Gross Value|"
+                    + "Coupon Tax Amount|Flight Number|Flight Date|From Airport|To Airport|Handling Fee Type|Handling fees|VAT Amount|UATP Amount|ISC Amount|"
+                    + "Other Commission Amount|Coupon Total Amount|";
+            writer.println("" + cadena);
+            
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena +=  lst.get(vi).BDATE2 + "|" ;
+                cadena +=  lst.get(vi).PERNUM + "|" ;
+                cadena +=  lst.get(vi).BAIR + "|" ;
+                cadena +=  lst.get(vi).BNUMBER + "|" ;
+                cadena +=  lst.get(vi).BDAIR2 + "|" ;
+                cadena +=  lst.get(vi).CPNNUM + "|" ;
+                cadena +=  lst.get(vi).TKTNUM + "|" ;
+                cadena +=  df_2.format(lst.get(vi).LBRATE) + "|" ;
+                cadena +=  lst.get(vi).SOURCOD + "|" ;
+                cadena +=  lst.get(vi).GROSS + "|" ;
+                cadena +=  lst.get(vi).TAX + "|" ;
+                cadena +=  lst.get(vi).FLIGHTN + "|" ;
+                cadena +=  lst.get(vi).FLIGHTD + "|" ;
+                cadena +=  lst.get(vi).FROMCPN + "|" ;
+                cadena +=  lst.get(vi).TOCPN + "|" ;
+                cadena +=  lst.get(vi).HFEETYPE + "|" ;
+                cadena +=  lst.get(vi).HFEEAM + "|" ;
+                cadena +=  lst.get(vi).VATAMT + "|" ;
+                cadena +=  lst.get(vi).UATPAMT + "|" ;
+                cadena +=  lst.get(vi).ISCAMT + "|" ;
+                cadena +=  lst.get(vi).OTHCOMAM + "|" ;
+                cadena +=  lst.get(vi).CPNTAM + "|" ;
+                
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+            
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public File downloadTXT_21(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_21");
+        String fileNameDownload = String.format("Passenger invoices 21 & 22 & 23 - Receivables" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+        
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
+        try {
+            
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<SFI021> lst = this.getXLSX_21(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            
+            cadena = "Clearing Date|Billing Airline|Period Number|Source Code|Billing/Credit|Listing Billing Rate|Total Gross B/C|ISC B/C|Other Commission|UATP|"
+                    + "Tax Amount B/C|Total Fee Amount|VAT|NET|";
+            writer.println("" + cadena);
+         
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena +=  lst.get(vi).BDATE2 + "|" ;
+                cadena +=  lst.get(vi).BDAIR2 + "|" ;
+                cadena +=  lst.get(vi).PERNUM + "|" ;
+                cadena +=  lst.get(vi).SOURCOD + "|" ;
+                cadena +=  lst.get(vi).REJNUM + "|" ;
+                cadena +=  lst.get(vi).LBRATE + "|" ;
+                
+                cadena +=  lst.get(vi).TGROSSD + "|" ;
+                cadena +=  lst.get(vi).TISCD + "|" ;
+                cadena +=  lst.get(vi).TOTHCD + "|" ;
+                cadena +=  lst.get(vi).TUATPD + "|" ;
+                
+                cadena +=  lst.get(vi).TTAXD + "|" ;
+                cadena +=  lst.get(vi).THDFD + "|" ;
+                cadena +=  lst.get(vi).TVATD + "|" ;
+                cadena +=  lst.get(vi).TNETR + "|" ;
+                
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public File downloadTXT_31(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_31");
+        String fileNameDownload = String.format("Passenger invoices 31 - Receivables " + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+        
+        try {
+            
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<SFI031> lst = this.getXLSX_31(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            
+            cadena = "Billing Airline|Billed Airline|Billing Code|Invoice Number|Rej/Bill/Cre Number|Remarks Serial|Remarks 1|Remarks 2|Remarks 3|Remarks 4|"
+                    + "Remarks 5|PERNUM";
+            writer.println("" + cadena);
+         
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena +=  lst.get(vi).BAIR + "|" ;
+                cadena +=  lst.get(vi).BDAIR + "|" ;
+                cadena +=  lst.get(vi).BCODE + "|" ;
+                cadena +=  lst.get(vi).BNUMBER + "|" ;
+                cadena +=  lst.get(vi).RBCNUM + "|" ;
+                cadena +=  lst.get(vi).NUMRMK + "|" ;
+                cadena +=  lst.get(vi).REMARK1 + "|" ;
+                cadena +=  lst.get(vi).REMARK2 + "|" ;
+                cadena +=  lst.get(vi).REMARK3 + "|" ;
+                cadena +=  lst.get(vi).REMARK4 + "|" ;
+                cadena +=  lst.get(vi).REMARK5 + "|" ;
+                cadena +=  lst.get(vi).PERNUM + "|" ;
+                
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+        
+          
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public File downloadTXT_32(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_32");
+        
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
+        String fileNameDownload = String.format("Passenger invoices 32 - Receivables" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+        
+        try {
+            
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<SFI032> lst = this.getXLSX_32(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            
+            cadena = "Clearing Date|Listing Billing Rate|Period|Billing Airline|Billed Airline|Invoice Number|Rejection Memo|Tkt Issuing Air|Coupon Number|Ticket/Doc Number|"
+                    + "From Airport Cp|To Airport Cpn|Source Code|Gross Amount Difference|ISC Amount Difference|Tax Amount Difference|Other Comission Difference Amount|Handling Fee Amount Difference|UATP Amount Difference|Net Reject Amount|";
+            writer.println("" + cadena);
+    
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena +=  lst.get(vi).BDATE2 + "|" ;
+                cadena +=  df_2.format(lst.get(vi).LBRATE) + "|" ;
+                cadena +=  lst.get(vi).PERNUM + "|" ;
+                cadena +=  lst.get(vi).BAIR2 + "|" ;
+                cadena +=  lst.get(vi).BDAIR2 + "|" ;
+                cadena +=  lst.get(vi).BNUMBER + "|" ;
+                cadena +=  lst.get(vi).REJNUM + "|" ;
+                cadena +=  lst.get(vi).AIRNUM + "|" ;
+                
+                cadena +=  lst.get(vi).CPNNUM + "|" ;
+                cadena +=  lst.get(vi).TKTNUM + "|" ;
+                cadena +=  lst.get(vi).FROMCPN + "|" ;
+                cadena +=  lst.get(vi).TOCPN + "|" ;
+                cadena +=  lst.get(vi).SOURCOD + "|" ;
+                cadena +=  lst.get(vi).GAD + "|" ;
+                cadena +=  lst.get(vi).IAD + "|" ;
+                cadena +=  lst.get(vi).TAD + "|" ;
+                cadena +=  lst.get(vi).OCDA + "|" ;
+                cadena +=  lst.get(vi).HFAD + "|" ;
+                cadena +=  lst.get(vi).UAD + "|" ;
+                cadena +=  lst.get(vi).NRA + "|" ;
+                
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+            
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public File downloadTXT_41(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_41");
+        String fileNameDownload = String.format("Passenger invoices 41 - Receivables" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+        
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00000");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
+        try {
+            
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<SFI041> lst = this.getXLSX_41(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            
+            cadena = "Ticket Issuing Airline|Ticket/Document Number|Listing Billing Rate|Tax Code (1)|Tax Amount Billed (1)|Tax Code YQ|Tax Amount Billed YQ|Tax Code YR|Tax Amount Billed YR|TKT CPN|"
+                    + "Flight Date|From Airport of Coupon|To Airport of Coupon|Mes De Facturación|Period|";
+            writer.println("" + cadena);
+            
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena +=  lst.get(vi).BDAIR2 + "|" ;
+                cadena +=  lst.get(vi).TKTNUM2 + "|" ;
+                cadena +=  df_2.format(lst.get(vi).LBRATE) + "|" ;
+                cadena +=  lst.get(vi).TAXCODE1 + "|" ;
+                cadena +=  lst.get(vi).TAXBILED1 + "|" ;
+                cadena +=  lst.get(vi).CODE_YQ + "|" ;
+                cadena +=  lst.get(vi).AMOUNT_YQ + "|" ;
+                cadena +=  lst.get(vi).CODE_YR + "|" ;
+                cadena +=  lst.get(vi).AMOUNT_YR + "|" ;
+                
+                cadena +=  lst.get(vi).CPNNUM2 + "|" ;
+                cadena +=  lst.get(vi).FLIGHTD + "|" ;
+                cadena +=  lst.get(vi).FROMCPN + "|" ;
+                cadena +=  lst.get(vi).TOCPN + "|" ;
+                cadena +=  lst.get(vi).BDATE2 + "|" ;
+                cadena +=  lst.get(vi).PERNUM + "|" ;
+                
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+           
+
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+    
     @RequestMapping(value = "/downloadXlsxs")
     public @ResponseBody
     void downloadXlsxs(HttpServletRequest request, HttpServletResponse response) {
@@ -5154,6 +5574,32 @@ public class PassengerInvoicesController extends BaseController {
             srcfile.add(downloadXLSX_31(request));
             srcfile.add(downloadXLSX_32(request));
             srcfile.add(downloadXLSX_41(request));
+
+            File zipfile = new File(serverPath + path + ".zip");
+            zipFiles.zipFiles(srcfile, zipfile);
+            zipFiles.downFile(response, serverPath, path + ".zip");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @RequestMapping(value = "/downloadTxt")
+    public @ResponseBody
+    void downloadTxt(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String serverPath = request.getSession().getServletContext().getRealPath("/");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHSS");
+            String path = sdf.format(new Date());
+            ZipFiles zipFiles = new ZipFiles();
+            List<File> srcfile = new ArrayList<File>();
+            
+            srcfile.add(downloadTXT_30(request));
+            srcfile.add(downloadTXT_10(request));
+            srcfile.add(downloadTXT_20(request));
+            srcfile.add(downloadTXT_21(request));
+            srcfile.add(downloadTXT_31(request));
+            srcfile.add(downloadTXT_32(request));
+            srcfile.add(downloadTXT_41(request));
 
             File zipfile = new File(serverPath + path + ".zip");
             zipFiles.zipFiles(srcfile, zipfile);
