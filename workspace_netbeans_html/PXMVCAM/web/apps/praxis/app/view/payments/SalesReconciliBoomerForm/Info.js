@@ -2671,7 +2671,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Boomer',
+                                            {text: 'Settlement Conciliation Header vs Detail',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2881,7 +2881,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Boomer',
+                                            {text: 'Settlement Conciliation Header vs Detail',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -3069,7 +3069,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Boomer',
+                                            {text: 'Settlement Conciliation Header vs Detail',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,

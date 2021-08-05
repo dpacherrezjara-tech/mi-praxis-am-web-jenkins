@@ -27,6 +27,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
 //        this.obtainData();
         switch (this.actionCode) {
             case 'I':
+                this.setData();
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -36,11 +37,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
                 this.getData();
 //                this.DeshabilitarCampoClave();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
+                Ext.getCmp(prototype.id + '-btn-update').show();
+                Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
+    },
+    setData: function(){
+        console.log(meDE.bean);
+        meDE.beanResult.SDATE = meDE.bean.data.IN_SDATE;
+        meDE.beanResult.REFNBR = meDE.bean.data.IN_REFNBR;
+        meDE.beanResult.DATSET = meDE.bean.data.IN_DATSET;
+        meDE.beanResult.WEEKMO = meDE.bean.data.IN_WEEKMO;
+        meDE.beanResult.SPNR = meDE.bean.data.A720PNR;   
+        meDE.mostrarData();
     },
     mostrarData: function() {
 //        console.log(this.beanResult);
@@ -208,13 +218,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
                 var res = Ext.JSON.decode(response.responseText);
 //                console.log(res);
                 meDE.beanResult = res.data;
-                if (meDE.beanResult.STVAL !== '1' && meDE.beanResult.STVAL !== '5') {
+                /*if (meDE.beanResult.STVAL !== '1' && meDE.beanResult.STVAL !== '5') {
                     //Settlement sin Liquidación / Liquidación sin Settlement
                     Ext.getCmp(prototype.id + '-btn-update').show();
                 } else {
                     //Match
                     Ext.getCmp(prototype.id + '-btn-update').hide();
-                }
+                }*/
+                Ext.getCmp(prototype.id + '-btn-update').show();
                 meDE.mostrarData();
             }
         });
@@ -285,11 +296,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
 			//var comentario = (Ext.getCmp(prototype.id + '-de-txtComment').getValue()).trim();
                         //if(msjResult === ''){
                             //if(comentario !== ''){
-                                if(this.beanResult.STVAL !== "1" && this.beanResult.STVAL !== "5"){
+                                /*if(this.beanResult.STVAL !== "1" && this.beanResult.STVAL !== "5"){
                                     this.executeOption(beanTemp);//false(VALIDA Y MODIFICA)
                                 }else{
                                     global.Msg({msg: 'Update can not be applied.'});
-                                }
+                                }*/
+                                this.executeOption(beanTemp);
                             //}else{
                                 //global.Msg({msg: 'Comment field is required.'});
 //                                Ext.getCmp(prototype.id + '-de-txtComment').focus(false, 200);
@@ -314,8 +326,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
                     var beanTemp = {};
                     this.llenarData(beanTemp);
                     beanTemp.option = 'D';
-                    this.maintenanceBean(beanTemp);
-                }
+                    this.executeOption(beanTemp);
+                }               
             }
         });
     },
@@ -345,7 +357,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
                     global.Msg({msg: res.Mensaje});
                     Ext.getCmp(prototype.id + '-dataEntry').unmask();
                     Ext.getCmp(prototype.id + '-dataEntry').close();
-//                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    Ext.getCmp(prototype.id + '-btnRefresh').fireEvent('click', {});
                 } else
                     global.Msg({msg: ''});
             }

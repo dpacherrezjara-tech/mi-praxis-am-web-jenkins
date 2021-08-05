@@ -484,6 +484,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
+    btnRefresh_click: function() {
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+        var STVAL = this.beanDetDay.IN_STVAL;
+        var SPNR = this.beanDetDay.A720PNR;
+        this.setOnGridDetByRefNbr(STVAL);
+        //Ext.Function.defer(function() {
+        if (STVAL === '4' || STVAL === '5') {
+            console.log("Busca por pnr");
+            me.setOnGridDetPNR(SPNR);
+        }
+        if (STVAL === '1') {
+            me.setOnGridDetAccounting();
+        }
+    },
     OnGridDetByRefNbr: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataByRefNbr';
@@ -522,7 +536,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     setOnGridDetByRefNbr: function(STVAL) {
         Ext.getCmp(prototype.id + '-panelPNR').setVisible(false);
         Ext.getCmp(prototype.id + '-panelAccounting').setVisible(false);
-        win.lblUser_toolTip("Estructura: A2286 - A2319");
+        Ext.getCmp(prototype.id + '-btnAdd').setVisible(true);
+        win.lblUser_toolTip("Estructura: A2319 - A4056 - A720");
         me.panelActual = '-panelGridDataByRefNbr';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
@@ -1440,13 +1455,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         return msj;
     },
     btnAdd_click: function() {
-        this.winDataEntry('I');
+        console.log(this.beanDetDay);
+        var rec = {data: this.beanDetDay};
+        this.winDataEntry('I', rec);
     },
 //    onEditClick: function(grid, rowIndex, colIndex) {
 //        var rec = grid.getStore().getAt(rowIndex);
 //        this.winDataEntry('U', rec);
 //    },
-    onEditClick: function(grid, rowIndex, colIndex) {
+    onEditClick: function(grid, rowIndex, colIndex) {        
         var rec = grid.getStore().getAt(rowIndex);
 //        var action = '';
 ////        console.log(rec);
@@ -1457,6 +1474,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //            //Match
 //            action = 'S';
 //        }
+        console.log(rec);
         this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
@@ -1475,7 +1493,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         }).show();
     },
     btnBack_click: function(obj, e) {
-
+        Ext.getCmp(prototype.id + '-btnAdd').setVisible(false);
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);

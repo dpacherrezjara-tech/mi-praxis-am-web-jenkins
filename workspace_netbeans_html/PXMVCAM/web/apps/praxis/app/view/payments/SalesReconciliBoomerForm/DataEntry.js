@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                 {
                                     xtype: 'label',
                                     text: 'Sales Date',
-                                    style: 'font-weight:bold;color:#0B333C;',
+                                    style: 'font-weight:bold;color:#0B333C;',                                    
                                     padding: '3 0',
                                     width: 110
                                 },
@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     width: 70
                                 },
                                 {xtype: 'tbspacer', width: 171},
@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 14,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     padding: '3 0',
                                     width: 100
                                 },
@@ -115,7 +115,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 6,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     width: 70
                                 },
                                 {xtype: 'tbspacer', width: 30},
@@ -139,7 +139,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     width: 70
                                 },
                                 {xtype: 'tbspacer', width: 80},
@@ -396,7 +396,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     maxLength: 6,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     width: 60
                                 },
                                 {xtype: 'tbspacer', width: 500},

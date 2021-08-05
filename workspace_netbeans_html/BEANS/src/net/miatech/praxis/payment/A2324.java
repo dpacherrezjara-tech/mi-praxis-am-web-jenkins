@@ -25,6 +25,7 @@ public class A2324 {
     public String SCARDN = "";
     public String SAUTHOC = "";
     public String TIPOTAR = "";
+    public String COMMENT = "";
     public String SCURRENCY = "";
     public String CODEBANK = "";
     public String FECRFILE = "";

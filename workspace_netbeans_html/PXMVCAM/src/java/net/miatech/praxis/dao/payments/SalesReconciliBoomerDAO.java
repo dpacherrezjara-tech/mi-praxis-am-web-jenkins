@@ -507,6 +507,8 @@ public class SalesReconciliBoomerDAO {
                         beanTkt.desSTVAL = "Sales w/o Payment SB";
                     } else if (beanTkt.STVAL.equals("4")) {
                         beanTkt.desSTVAL = "Match Difference";
+                    } else if (beanTkt.STVAL.equals("5")) {
+                        beanTkt.desSTVAL = "Match Manual";
                     } else {
                         beanTkt.desSTVAL = "";
                     }
@@ -517,6 +519,7 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                     beanTkt.TIPOTAR = rst.getString("TIPOTAR").trim();
+                    beanTkt.COMMENT = rst.getString("COMMENT").trim();
                     beanTkt.CODEBANK = rst.getString("CODEBANK").trim();
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("SDATE").trim());
 
@@ -1229,9 +1232,15 @@ public class SalesReconciliBoomerDAO {
     }
 
     public String loadPX559SQP04122(A2324Filter filter) throws SQLException, Exception {
-
-        //REALIZA EL UPDATE DE UN REGISTRO EN LA TABLA A2298.
-        String strMsj = "SUCCESSFUL. Information Updated.";
+        String strMsj = "";
+        if (filter.option.trim().equals("U")) {
+            strMsj = "SUCCESSFUL. Information Updated.";
+        } else if (filter.option.trim().equals("I")) {
+            strMsj = "SUCCESSFUL. Information Saved.";
+        } else if (filter.option.trim().equals("D")) {
+            strMsj = "SUCCESSFUL. Information Deleted.";
+        }
+        
         //strMsj = "SUCCESSFUL. Information Created.";
         CallableStatement cstmt = null;
         Connection cnx = null;
