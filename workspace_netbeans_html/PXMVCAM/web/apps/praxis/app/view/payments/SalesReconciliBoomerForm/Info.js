@@ -2712,7 +2712,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Settlement <br> vs Boomer',
+                                            {text: 'Settlement vs Boomer',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2720,20 +2720,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Match', dataIndex: 'QTYMATCH', width: 90, //flex: 1
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Match with <br> differences', dataIndex: 'QTYMATDIF', width: 90, //flex: 1
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }
+                                                        text: 'Match',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center',
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Autom.', dataIndex: 'QTYMATCH', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Manual', dataIndex: 'QTYMATMAN', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'diff.', dataIndex: 'QTYMATDIF', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
                                                     },
                                                     {
                                                         text: 'Payment SB <br> w/o Sales', dataIndex: 'QTYSETSAL', width: 90, //flex: 1
@@ -2922,7 +2940,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Settlement <br> vs Boomer',
+                                            {text: 'Settlement vs Boomer',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2930,20 +2948,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Match', dataIndex: 'QTYMATCH', width: 90, //flex: 1
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Match with <br> differences', dataIndex: 'QTYMATDIF', width: 90, //flex: 1
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }
+                                                        text: 'Match',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center',
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Autom.', dataIndex: 'QTYMATCH', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Manual', dataIndex: 'QTYMATMAN', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'diff.', dataIndex: 'QTYMATDIF', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
                                                     },
                                                     {
                                                         text: 'Payment SB <br> w/o Sales', dataIndex: 'QTYSETSAL', width: 90, //flex: 1
@@ -3110,7 +3146,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Settlement <br> vs Boomer',
+                                            {text: 'Settlement vs Boomer',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -3118,20 +3154,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Match', dataIndex: 'QTYMATCH', width: 90, //flex: 1
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: 'Match with <br> differences', dataIndex: 'QTYMATDIF', width: 90, //flex: 1
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return value;
-                                                        }
+                                                        text: 'Match',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center',
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Autom.', dataIndex: 'QTYMATCH', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Manual', dataIndex: 'QTYMATMAN', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'diff.', dataIndex: 'QTYMATDIF', width: 60, //flex: 1
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
                                                     },
                                                     {
                                                         text: 'Payment SB <br> w/o Sales', dataIndex: 'QTYSETSAL', width: 90, //flex: 1

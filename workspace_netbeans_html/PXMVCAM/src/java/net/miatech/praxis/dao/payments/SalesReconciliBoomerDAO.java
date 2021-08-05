@@ -206,6 +206,7 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.AMTSETC = rst.getDouble("AMTSETC");
 
                 beanTkt.QTYMATCH = rst.getInt("QTYMATCH");
+                beanTkt.QTYMATMAN = rst.getInt("QTYMATMAN");
                 beanTkt.QTYMATDIF = rst.getInt("QTYMATDIF");
                 beanTkt.QTYSETSAL = rst.getInt("QTYSETSAL");
 
@@ -334,6 +335,7 @@ public class SalesReconciliBoomerDAO {
                 beanTOTAL.AMTSETC = rst.getDouble("AMTSETC");
 
                 beanTOTAL.QTYMATCH = rst.getInt("QTYMATCH");
+                beanTOTAL.QTYMATMAN = rst.getInt("QTYMATMAN");
                 beanTOTAL.QTYMATDIF = rst.getInt("QTYMATDIF");
                 beanTOTAL.QTYSETSAL = rst.getInt("QTYSETSAL");
 
@@ -382,6 +384,7 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.AMTSETC = rst.getDouble("AMTSETC");
 
                     beanTkt.QTYMATCH = rst.getInt("QTYMATCH");
+                    beanTkt.QTYMATMAN = rst.getInt("QTYMATMAN");
                     beanTkt.QTYMATDIF = rst.getInt("QTYMATDIF");
                     beanTkt.QTYSETSAL = rst.getInt("QTYSETSAL");
 
