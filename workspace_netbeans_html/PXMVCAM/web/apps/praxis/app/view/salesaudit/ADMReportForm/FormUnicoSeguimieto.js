@@ -66,8 +66,8 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMReportForm.FormUnicoSeguimieto', {
                                             metadata.tdAttr = 'data-qtip="' + value + '"';
                                             return value;
                                         }
-                                    },
-                                    {text: 'File',dataIndex: 'A2553ARCHV',width: 100,renderer: 'OnColumnAuditorRenderer'}
+                                    }
+                                   // {text: 'File',dataIndex: 'A2553ARCHV',width: 100,renderer: 'OnColumnAuditorRenderer'}
                                     /*{text: 'File', dataIndex: 'A2553ARCHV', width: 90, cls: 'column_header_double', align: 'center',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             var str = '';
