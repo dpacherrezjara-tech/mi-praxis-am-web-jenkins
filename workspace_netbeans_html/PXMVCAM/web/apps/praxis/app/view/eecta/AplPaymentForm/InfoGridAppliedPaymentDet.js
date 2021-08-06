@@ -106,13 +106,17 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                     }, 
                                     {text: 'Estado', dataIndex: 'A3977STSPG', align: 'left', width: 100},
                                     {
-                                        text: 'Datos de registro',
+                                        text: 'Aplicacion',
                                         columns: [
-                                            {text: 'Registrado', dataIndex: 'A3977APLIC', width: 80, align: 'left'},
+                                            {text: 'Usuario', dataIndex: 'A3977APLIC', width: 80, align: 'left'},
                                             {text: 'Fecha', dataIndex: 'A3977FAPLC', width: 80, align: 'left'},
                                             {text: 'Hora', dataIndex: 'A3977HAPLC', width: 50, align: 'left'}
                                         ]
-                                    }
+                                    },
+                                    {text: 'Tipo', dataIndex: 'A3977TRXPG', align: 'center', width: 60},
+                                    {text: 'Ref. Pago', dataIndex: 'A3977REFPG', align: 'left', width: 130},
+                                    {text: 'Banco', dataIndex: 'A3977BANCO', align: 'left', width: 130},
+                                    {text: 'Cta Bancaria', dataIndex: 'A3977CTABC', align: 'left', width: 100}
                                 ],
                                 defaults: {
                                     sortable: true,

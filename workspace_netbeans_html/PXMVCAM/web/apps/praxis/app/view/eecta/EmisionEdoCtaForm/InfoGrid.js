@@ -108,7 +108,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.InfoGrid', {
                                 enableTextSelection: true,
                                 markDirty: false,
                                 getRowClass: function (record, rowIndex, rowParams, store) {
-                                    if (rowIndex % 2 == 0)
+                                    if (rowIndex % 2 === 0)
                                         return 'rowA';
                                 }
                             },

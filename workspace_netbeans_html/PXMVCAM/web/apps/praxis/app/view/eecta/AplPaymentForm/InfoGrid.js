@@ -202,11 +202,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGrid', {
                             viewConfig: {
                                 stripeRows: true,
                                 enableTextSelection: true,
-                                markDirty: false,
-//                                getRowClass: function (record, rowIndex, rowParams, store) {
-//                                    if (rowIndex % 2 === 0)
-//                                        return 'rowA';
-//                                }
+                                markDirty: false
                             },
                             trackMouseOver: true,
                             scope: this,

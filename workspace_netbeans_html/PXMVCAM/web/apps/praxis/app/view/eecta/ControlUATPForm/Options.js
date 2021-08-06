@@ -113,15 +113,6 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Options', {
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnClear',
-                            iconCls: 'prx-icon-check',
-                            tooltip: 'Aplicar Pago',
-                            listeners: {
-                                click: 'btnApl_pay_click' 
-                            }
-                        },
-                        {
-                            xtype: 'button',
                             id: prototype.id + '-btnBack',
                             iconCls: 'prx-icon-back',
                             tooltip: 'Back',

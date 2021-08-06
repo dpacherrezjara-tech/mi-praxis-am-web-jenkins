@@ -77,27 +77,50 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPController', {
         var bean = {};
         bean.VP_OPCION = "1"; //Ext.getCmp(prototype.id + '-cmbfiltro').getValue();
         bean.VP_FDATE1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
-        bean.VP_FDATE2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');        
-        Ext.Ajax.request({
-            url: prototype.url + '/search',
-            timeout: 60000000,
-            method: 'POST',
-            params: bean,
-            beforerequest: Ext.getCmp(prototype.id + '-ContenedorMain').mask('Cargando...', ''),
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);                
-                Ext.getCmp(prototype.id + '-ContenedorMain').unmask('Loading...', '');
-                if (res.total === 0) {
+        bean.VP_FDATE2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd'); 
+        bean.limit = "-1";
+        bean.page = "-1";
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
+            proxy: {
+                url: prototype.url + '/search'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, records, successful, operation, eOpts) {
+                    //console.log(records);
+                    if (obj.data.length === 0) {
                         global.Msg({
-                            msg: 'No hay registros'
+                            msg: 'Data not found'
                         });
-                    return;
-                }                     
-                Ext.getCmp(prototype.id + '-gridData').setStore(res.data);
-                Ext.getCmp(prototype.id + '-gridData').getStore().reload();
-                Ext.getCmp(prototype.id + '-paggin').setStore(res.data);
+                    }
+                    global.clear();
+                }
             }
-        });        
+        });
+        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').setStore(storeGridDatas);
+//        Ext.Ajax.request({
+//            url: prototype.url + '/search',
+//            timeout: 60000000,
+//            method: 'POST',
+//            params: bean,
+//            beforerequest: Ext.getCmp(prototype.id + '-ContenedorMain').mask('Cargando...', ''),
+//            success: function (response, options) {
+//                var res = Ext.JSON.decode(response.responseText);                
+//                Ext.getCmp(prototype.id + '-ContenedorMain').unmask('Loading...', '');
+//                if (res.total === 0) {
+//                        global.Msg({
+//                            msg: 'No hay registros'
+//                        });
+//                    return;
+//                }                     
+//                Ext.getCmp(prototype.id + '-gridData').setStore(res.data);
+//                Ext.getCmp(prototype.id + '-gridData').getStore().reload();
+//                Ext.getCmp(prototype.id + '-paggin').setStore(res.data);
+//            }
+//        });        
 
     },
     cmbfiltroSTS_clickHandler:function(){
@@ -123,27 +146,49 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPController', {
         bean.VP_ESTADO = Ext.getCmp(prototype.id + '-STSTKT').getValue();
         Ext.getCmp(prototype.id + '-FCONT').setValue( bean.VP_FDATE1);
         Ext.getCmp(prototype.id + '-rowIndex').setValue( rowIndex ); //usado para buscar x estados y ticket
-        
-        Ext.Ajax.request({
-            url: prototype.url + '/search_det',
-            timeout: 60000000,
-            method: 'POST',
-            params: bean,
-            beforerequest: Ext.getCmp(prototype.id + '-ContenedorMain').mask('Cargando...', ''),
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);                
-                Ext.getCmp(prototype.id + '-ContenedorMain').unmask('Loading...', '');
-                if (res.total === 0) {
+        bean.limit = "-1";
+        bean.page = "-1";
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
+            proxy: {
+                url: prototype.url + '/search_det'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, records, successful, operation, eOpts) {
+                    //console.log(records);
+                    if (obj.data.length === 0) {
                         global.Msg({
-                            msg: 'No hay registros'
+                            msg: 'Data not found'
                         });
-                    return;
-                }                     
-                Ext.getCmp(prototype.id01 + '-gridData').setStore(res.data);
-                Ext.getCmp(prototype.id01 + '-gridData').getStore().reload();
-                Ext.getCmp(prototype.id01 + '-paggin').setStore(res.data);                
+                    }
+                    global.clear();
+                }
             }
         });
+        Ext.getCmp(prototype.id01 + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id01 + '-paggin').setStore(storeGridDatas);
+//        Ext.Ajax.request({
+//            url: prototype.url + '/search_det',
+//            timeout: 60000000,
+//            method: 'POST',
+//            params: bean,
+//            beforerequest: Ext.getCmp(prototype.id + '-ContenedorMain').mask('Cargando...', ''),
+//            success: function (response, options) {
+//                var res = Ext.JSON.decode(response.responseText);                
+//                Ext.getCmp(prototype.id + '-ContenedorMain').unmask('Loading...', '');
+//                if (res.total === 0) {
+//                        global.Msg({
+//                            msg: 'No hay registros'
+//                        });
+//                    return;
+//                }                     
+//                Ext.getCmp(prototype.id01 + '-gridData').setStore(res.data);
+//                Ext.getCmp(prototype.id01 + '-gridData').getStore().reload();
+//                Ext.getCmp(prototype.id01 + '-paggin').setStore(res.data);                
+//            }
+//        });
     },
     exportPdf: function (_path) {
         Ext.Msg.show({
@@ -175,7 +220,35 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPController', {
                 rec: rec
             }
         }).show();
-    },        
+    }, 
+    btnUUIDForm_click: function () {
+        this.winDataEntry01('I');
+    }, 
+    winDataEntry01: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;        
+        Ext.create('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
+            id: prototype.id03 + '-ControlUATPUUIDForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    }, 
+    btnFormErrores_click:function(){
+        this.winDataEntry02('I');
+    },
+    winDataEntry02: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;        
+        Ext.create('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPErroresForm', {
+            id: prototype.id04 + '-ControlUATPErroresForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    }, 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function (obj, e) {
