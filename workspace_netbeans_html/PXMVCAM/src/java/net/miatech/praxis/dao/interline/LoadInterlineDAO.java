@@ -5595,7 +5595,9 @@ public class LoadInterlineDAO {
                     objRtn = new SFI021();
 
                     objRtn.BDATE = rs01.getString("BDATE");
+                    objRtn.BDATE2 = rs01.getString("BDATE2");
                     objRtn.BAIR = rs01.getString("BAIR");
+                    objRtn.BDAIR2 = rs01.getString("BDAIR2");
                     objRtn.BDAIR = rs01.getString("BDAIR");
                     objRtn.PERNUM = rs01.getString("PERNUM");
                     objRtn.SOURCOD = rs01.getString("SOURCOD");
@@ -5666,7 +5668,9 @@ public class LoadInterlineDAO {
                         objRtn = new SFI021();
 
                         objRtn.BDATE = rs01.getString("BDATE");
+                        objRtn.BDATE2 = rs01.getString("BDATE2");
                         objRtn.BAIR = rs01.getString("BAIR");
+                        objRtn.BDAIR2 = rs01.getString("BDAIR2");
                         objRtn.BDAIR = rs01.getString("BDAIR");
                         objRtn.PERNUM = rs01.getString("PERNUM");
                         objRtn.SOURCOD = rs01.getString("SOURCOD");
