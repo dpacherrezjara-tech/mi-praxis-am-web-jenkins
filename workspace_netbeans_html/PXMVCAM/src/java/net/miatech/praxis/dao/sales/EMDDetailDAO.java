@@ -141,14 +141,6 @@ public class EMDDetailDAO {
 
                 lstRtn.add(objRtn);
 
-                // A2548EMISION
-                objRtn.page.PAGNUM = filter.page.PAGNUM;
-                objRtn.page.PAGROW = filter.page.PAGROW;
-                objRtn.page.TOTPAG = filter.page.TOTPAG;
-                objRtn.page.TOTROW = filter.page.TOTROW;
-
-                lstRtn.add(objRtn);
-
                 //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
             }
         } finally {

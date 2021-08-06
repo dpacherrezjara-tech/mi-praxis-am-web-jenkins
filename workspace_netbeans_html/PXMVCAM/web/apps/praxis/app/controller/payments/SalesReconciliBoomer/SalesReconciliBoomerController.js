@@ -484,6 +484,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
+    btnRefresh_click: function() {
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+        var STVAL = this.beanDetDay.IN_STVAL;
+        var SPNR = this.beanDetDay.A720PNR;
+        this.setOnGridDetByRefNbr(STVAL);
+        //Ext.Function.defer(function() {
+        if (STVAL === '4' || STVAL === '5') {
+            console.log("Busca por pnr");
+            me.setOnGridDetPNR(SPNR);
+        }
+        if (STVAL === '1') {
+            me.setOnGridDetAccounting();
+        }
+    },
     OnGridDetByRefNbr: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataByRefNbr';
@@ -522,7 +536,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
     setOnGridDetByRefNbr: function(STVAL) {
         Ext.getCmp(prototype.id + '-panelPNR').setVisible(false);
         Ext.getCmp(prototype.id + '-panelAccounting').setVisible(false);
-        win.lblUser_toolTip("Estructura: A2286 - A2319");
+        Ext.getCmp(prototype.id + '-btnAdd').setVisible(true);
+        win.lblUser_toolTip("Estructura: A2319 - A4056 - A720");
         me.panelActual = '-panelGridDataByRefNbr';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
@@ -559,13 +574,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
                         var lstSett = res.lstSett;
                         var settlement = new Array();
-                        console.log(lstSett);
-                        lstSett.forEach(function callback(currentValue, index, array) {
-                            settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, currentValue.CUR, currentValue.SPNR, currentValue.SVFOPAB, currentValue.totSVFOPAB]);
+
+                        /*console.log(lstSett);
+                         lstSett.forEach(function callback(currentValue, index, array) {
+                         settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, currentValue.CUR, currentValue.SPNR, currentValue.SVFOPAB, currentValue.totSVFOPAB]);
+                         });
+                         var store = Ext.create('Ext.data.ArrayStore', {
+                         storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR', 'SPNR', 'SVFOPAB', 'totSVFOPAB']
+                         });*/
+
+                        var store = Ext.create('Ext.data.Store', {
+                            data: lstSett,
+                            autoLoad: true
                         });
-                        var store = Ext.create('Ext.data.ArrayStore', {
-                            storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR', 'SPNR', 'SVFOPAB', 'totSVFOPAB']
-                        });
+
                         console.log(STVAL);
                         if (STVAL === '2') {
                             var sett = lstSett[0];
@@ -710,10 +732,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             var totals = new Array();
                             //totals.push(['SVFOP_SG', 'AMTCOM_SG','AMTIVA_SG','AMTSET_SG','SVFOP_SC','AMTCOM_SC','AMTIVA_SC','AMTSET_SC','SVFOP_SE','AMTCOM_SE','AMTIVA_SE','AMTSET_SE']);
                             lstTotal.forEach(function callback(currentValue, index, array) {
-                                totals.push([currentValue.descSTVAL, currentValue.descTREG, currentValue.SVFOP, currentValue.AMTCOM, currentValue.AMTIVA, currentValue.AMTSET, currentValue.ACCNBR, currentValue.STVAL, currentValue.SVFOPC, currentValue.AMTCOMC, currentValue.AMTIVAC, currentValue.AMTSETC, currentValue.QTYMATCH, currentValue.QTYMATDIF, currentValue.QTYSETSAL]);
+                                totals.push([currentValue.descSTVAL, currentValue.descTREG, currentValue.SVFOP, currentValue.AMTCOM, currentValue.AMTIVA, currentValue.AMTSET, currentValue.ACCNBR, currentValue.STVAL, currentValue.SVFOPC, currentValue.AMTCOMC, currentValue.AMTIVAC, currentValue.AMTSETC, currentValue.QTYMATCH, currentValue.QTYMATDIF, currentValue.QTYSETSAL, currentValue.QTYMATMAN]);
                             });
                             var store = Ext.create('Ext.data.ArrayStore', {
-                                storeId: 'totals', autoLoad: true, data: totals, fields: ['descSTVAL', 'descTREG', 'SVFOP', 'AMTCOM', 'AMTIVA', 'AMTSET', 'ACCNBR', 'STVAL', 'SVFOPC', 'AMTCOMC', 'AMTIVAC', 'AMTSETC', 'QTYMATCH', 'QTYMATDIF', 'QTYSETSAL']
+                                storeId: 'totals', autoLoad: true, data: totals, fields: ['descSTVAL', 'descTREG', 'SVFOP', 'AMTCOM', 'AMTIVA', 'AMTSET', 'ACCNBR', 'STVAL', 'SVFOPC', 'AMTCOMC', 'AMTIVAC', 'AMTSETC', 'QTYMATCH', 'QTYMATDIF', 'QTYSETSAL','QTYMATMAN']
                             });
                             Ext.getCmp(prototype.id + '-gridDataHeaderDetailTotal').bindStore(store);
 
@@ -1433,13 +1455,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         return msj;
     },
     btnAdd_click: function() {
-        this.winDataEntry('I');
+        console.log(this.beanDetDay);
+        var rec = {data: this.beanDetDay};
+        this.winDataEntry('I', rec);
     },
 //    onEditClick: function(grid, rowIndex, colIndex) {
 //        var rec = grid.getStore().getAt(rowIndex);
 //        this.winDataEntry('U', rec);
 //    },
-    onEditClick: function(grid, rowIndex, colIndex) {
+    onEditClick: function(grid, rowIndex, colIndex) {        
         var rec = grid.getStore().getAt(rowIndex);
 //        var action = '';
 ////        console.log(rec);
@@ -1450,6 +1474,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //            //Match
 //            action = 'S';
 //        }
+        console.log(rec);
         this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
@@ -1468,7 +1493,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         }).show();
     },
     btnBack_click: function(obj, e) {
-
+        Ext.getCmp(prototype.id + '-btnAdd').setVisible(false);
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);

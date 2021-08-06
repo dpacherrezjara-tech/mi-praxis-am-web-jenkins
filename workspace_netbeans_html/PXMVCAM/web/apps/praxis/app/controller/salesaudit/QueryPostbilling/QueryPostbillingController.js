@@ -357,7 +357,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
             case 'Agreement not reached - to Agent':
                 color = '#FE9A2E';
                 break;
-
+            case 'Pending Agent':
+                color = '#58FAF4';
+                break;
+            case 'Pending Airline':
+                color = '#F78181';
+                break;
 
 
         }

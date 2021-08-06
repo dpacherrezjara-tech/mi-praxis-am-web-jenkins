@@ -53,6 +53,8 @@ public class A2324Filter extends A2324 {
     public String TDOCA = "";
     public String descTDOCA = "";
     public double SVFOPA = 0.0;
+    public double SVFOPN = 0.0;
+    public double totSVFOPN = 0.0;
     public double SVFOPAB = 0.0;
     public double totSVFOPA = 0.0;
     public double totSVFOPAB = 0.0;
@@ -65,6 +67,18 @@ public class A2324Filter extends A2324 {
     public String ABCDA = "";
     public String SCURRENCYA = "";
     public String FSELECA = "";
+    public double GENCOMIPAY = 0.0;
+    public double totGENCOMIPAY = 0.0;
+    public double COMISIPROV = 0.0;
+    public double totCOMISIPROV = 0.0;
+    public double COSTVERIFI = 0.0;
+    public double totCOSTVERIFI = 0.0;
+    public double VALCOLLECT = 0.0;
+    public double totVALCOLLECT = 0.0;
+    public double TOTCOMISI = 0.0;
+    public double totTOTCOMISI = 0.0;
+    public double IVA = 0.0;    
+    public double totIVA = 0.0;    
 
     //BOOMER
     public String TDOCB = "";

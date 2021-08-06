@@ -1492,7 +1492,8 @@ public class FlightConciliationController extends BaseController {
             cell50.setCellValue("SSIM Data");
             cell57.setCellValue("Information PAX ODS");
             cell61.setCellValue("ODS Data");
-            cell63.setCellValue("Leg");
+            //cell63.setCellValue("Leg");
+            cell63.setCellValue("Dif");
             cell64.setCellValue("VCR Data");
             cell66.setCellValue("OCR");
             cell67.setCellValue("Manual");
@@ -1742,7 +1743,8 @@ public class FlightConciliationController extends BaseController {
                 cell60.setCellValue(listaData.get(vi).QCPTRA);
                 cell61.setCellValue(listaData.get(vi).strFormatFSENDOD);
                 cell62.setCellValue(listaData.get(vi).QCPNOD);
-                cell63.setCellValue(listaData.get(vi).QCPNLEG);
+                //cell63.setCellValue(listaData.get(vi).QCPNLEG);
+                cell63.setCellValue(listaData.get(vi).DIFFODSVCR);
                 cell64.setCellValue(listaData.get(vi).strFormatFSENDVC);
                 cell65.setCellValue(listaData.get(vi).QCPNVC);
                 cell66.setCellValue(listaData.get(vi).QCPNOCR);

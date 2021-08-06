@@ -14,12 +14,14 @@ public class SFI021 {
     public String TTRAN = "";
     public long NAID = 0;
     public String BDATE = "";
+    public String BDATE2 = "";
     public String STCONS = "";
     public String SMI = "";
     public String RSN = "";
     public String SFI = "";
     public String BAIR = "";
     public String BDAIR = "";
+    public String BDAIR2 = "";
     public int BCODE = 0;
     public String BNUMBER = "";
     public String FILLER = "";

@@ -30,6 +30,10 @@ public class A3729 {
     public String LNKMVLO = "";
     public String STVCR = "";
     
+    public String FSABRE = "";
+    public String STASABR = "";
+    public String FSALES = "";
+        
     //Auditoria
     public String USCR = "";
     public String FECR = "";

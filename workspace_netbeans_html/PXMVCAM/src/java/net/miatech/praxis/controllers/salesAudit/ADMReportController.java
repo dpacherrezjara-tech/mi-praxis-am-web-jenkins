@@ -686,7 +686,7 @@ public class ADMReportController extends BaseController {
             sheet.autoSizeColumn(14, true);
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
-            sheet.autoSizeColumn(17, true);
+            //sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true); 
             //sheet.autoSizeColumn(19, true);
             //sheet.autoSizeColumn(20, true);

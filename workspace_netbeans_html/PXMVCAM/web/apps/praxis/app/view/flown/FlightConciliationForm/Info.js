@@ -597,8 +597,20 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     }
                                                 ]
                                             },
+                                            /*{
+                                             text: 'Leg', dataIndex: 'QCPNLEG', width: 50, sortable: true,
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:right;background:#d5f4d5;";
+                                             return value;
+                                             },
+                                             summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                             metaData.style = "text-align:right;";
+                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
+                                             return Ext.util.Format.number(data.totQCPNLEG, '0,000');
+                                             }
+                                             },*/
                                             {
-                                                text: 'Leg', dataIndex: 'QCPNLEG', width: 50, sortable: true,
+                                                text: 'Dif', dataIndex: 'DIFFODSVCR', width: 50, sortable: true,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background:#d5f4d5;";
                                                     return value;
@@ -606,7 +618,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                     metaData.style = "text-align:right;";
                                                     var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
-                                                    return Ext.util.Format.number(data.totQCPNLEG, '0,000');
+                                                    return Ext.util.Format.number(data.totDIFFODSVCR, '0,000');
                                                 }
                                             },
                                             {
@@ -1142,7 +1154,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            width: 994,
+                                            width: 1324,
                                             id: prototype.id + '-setTitulo',
                                             height: '100%',
                                             layout: {
@@ -1208,14 +1220,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                     ]
                                 },
                                 // <editor-fold defaultstate="collapsed" desc="gridDetailFlightManifest">
-                                {   xtype: 'panel',
+                                {xtype: 'panel',
                                     hidden: false,
-                                    layout:'fit',
+                                    layout: 'fit',
                                     items: [
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDetailFlightManifest',
-                                            width: 1064,
+                                            width: 1324,
                                             height: 550,
                                             features: [{
                                                     ftype: 'summary'
@@ -1231,7 +1243,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 items: [
-                                                    {text: 'Nbr', width: 40, dataIndex: 'RN', sortable: true,},
+                                                    {text: 'Nbr', width: 40, dataIndex: 'RN', sortable: true, },
                                                     {text: 'Flight',
                                                         defaults: {
                                                             menuDisabled: true,
@@ -1244,14 +1256,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             {text: 'Number', width: 80, dataIndex: 'NFLIGHT'}
                                                         ]
                                                     },
-                                                    {   
+                                                    {
                                                         text: 'Last Name', dataIndex: 'LNAME', width: 120, sortable: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
                                                         }
                                                     },
-                                                    {   
+                                                    {
                                                         text: 'First Name', dataIndex: 'FNAME', width: 120, sortable: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
@@ -1259,14 +1271,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Type <br> Pax', dataIndex: 'TPAX', width: 70, sortable: true, 
+                                                        text: 'Type <br> Pax', dataIndex: 'TPAX', width: 70, sortable: true,
 //                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 //                                                            metaData.style = "text-align:center;background:#FFF9E0;";
 //                                                            return value;
 //                                                        }
                                                     },
                                                     {
-                                                        text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true, 
+                                                        text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#FFF9E0;";
                                                             return value;
@@ -1298,17 +1310,30 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         columns: [
                                                             {text: 'Manifest', dataIndex: 'desSTVCR', width: 70, sortable: true},
                                                         ]
-                                                    }
+                                                    },
+                                                    {
+                                                        text: 'Process Sabre',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Scan', dataIndex: 'descFSABRE', width: 80, sortable: true},
+                                                            {text: 'Status', dataIndex: 'STASABR', width: 80, sortable: true},
+                                                        ]
+                                                    },
+                                                    {text: 'Flag<br>Sales-PRAXIS', dataIndex: 'descFSALES', width: 100, sortable: true},
                                                 ]
                                             }
                                         },
                                     ]
                                 }
                                 // </editor-fold>
-                                
+
                             ]
                         },
-                        
 //                        {
 //                            region: 'center',
 //                            id: prototype.id + '-boxDetailLeg',
@@ -1496,42 +1521,41 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                                    return value;
 //                                                }
 
-                                                    text: 'Ticket', dataIndex: 'strTicket', width: 110,
-                                                    listeners: {
+                                                text: 'Ticket', dataIndex: 'strTicket', width: 110,
+                                                listeners: {
+                                                    click: 'showTicket'
 
-                                                            click: 'showTicket'
-                                                            
-                                                    },
-                                                    /*editor: {
-                                                        xtype: 'textfield',
-                                                        editable: false,
-                                                        enableKeyEvents: true,
-                                                        listeners: {
-//                                                            keypress: 'eventKey2',
-//                                                            specialkey: 'eventKey2'
-//                                                            keypress: function(cmp, a) {
-//                                                                alert('xx');
-//                                                            },
-                                                            specialkey: function(e, eOpts ) {
-                                                                 if (eOpts.getKey() === 13) {
-                                                                     
-                                                                    var grid = e.up('grid'),
-                                                                    plugin = grid.findPlugin('cellediting');
-                                                            
-                                                                    me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
-                                                                 }
-                                                            }
-                                                            click: function() {
-                                                                me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
-                                                            }
-                                                        }
-                                                    }, */
-                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                        var data = record.data;
-                                                        metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
-                                                        metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
-                                                        return '<b>' + value + '<b>';
-                                                    }                                                
+                                                },
+                                                /*editor: {
+                                                 xtype: 'textfield',
+                                                 editable: false,
+                                                 enableKeyEvents: true,
+                                                 listeners: {
+                                                 //                                                            keypress: 'eventKey2',
+                                                 //                                                            specialkey: 'eventKey2'
+                                                 //                                                            keypress: function(cmp, a) {
+                                                 //                                                                alert('xx');
+                                                 //                                                            },
+                                                 specialkey: function(e, eOpts ) {
+                                                 if (eOpts.getKey() === 13) {
+                                                 
+                                                 var grid = e.up('grid'),
+                                                 plugin = grid.findPlugin('cellediting');
+                                                 
+                                                 me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
+                                                 }
+                                                 }
+                                                 click: function() {
+                                                 me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
+                                                 }
+                                                 }
+                                                 }, */
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
+                                                    return '<b>' + value + '<b>';
+                                                }
                                             },
                                             {
                                                 text: 'Accounting',
@@ -1792,36 +1816,36 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                                    metaData.unselectableAttr = "unselectable='off'";
 //                                                    return value;
 //                                                }
-                                                    text: 'Ticket', dataIndex: 'strTicket', width: 110,
-                                                    listeners: {
-                                                        click: 'showTicket'                                                            
-                                                    },
-                                                    /*editor: {
-                                                        xtype: 'textfield',
-                                                        editable: true,
-                                                        enableKeyEvents: true,
-                                                        listeners: {
-//                                                            keypress: 'eventKey2',
-//                                                            specialkey: 'eventKey2'
-//                                                            keypress: function(cmp, a) {
-//                                                                alert('xx');
-//                                                            },
-                                                            specialkey: function(e, eOpts ) {
-                                                                 if (eOpts.getKey() === 13) {
-                                                                     
-                                                                    var grid = e.up('grid'),
-                                                                    plugin = grid.findPlugin('cellediting');
-                                                            
-                                                                    me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
-                                                                 }
-                                                            }
-                                                    },*/
-                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                        var data = record.data;
-                                                        metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
-                                                        metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
-                                                        return '<b>' + value + '<b>';
-                                                    }                                                
+                                                text: 'Ticket', dataIndex: 'strTicket', width: 110,
+                                                listeners: {
+                                                    click: 'showTicket'
+                                                },
+                                                /*editor: {
+                                                 xtype: 'textfield',
+                                                 editable: true,
+                                                 enableKeyEvents: true,
+                                                 listeners: {
+                                                 //                                                            keypress: 'eventKey2',
+                                                 //                                                            specialkey: 'eventKey2'
+                                                 //                                                            keypress: function(cmp, a) {
+                                                 //                                                                alert('xx');
+                                                 //                                                            },
+                                                 specialkey: function(e, eOpts ) {
+                                                 if (eOpts.getKey() === 13) {
+                                                 
+                                                 var grid = e.up('grid'),
+                                                 plugin = grid.findPlugin('cellediting');
+                                                 
+                                                 me.showTicket(plugin.context.record.data,plugin.context.rowIdx);
+                                                 }
+                                                 }
+                                                 },*/
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.strTicket + ' - Enter to view Image' + '"';
+                                                    return '<b>' + value + '<b>';
+                                                }
                                             },
                                             {
                                                 text: 'Accounting',

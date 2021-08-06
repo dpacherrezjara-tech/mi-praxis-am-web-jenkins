@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
     title: 'Sales Reconciliation by Boomer - Data Entry Form',
     header: true,
 //    height: 575,
-    width: 895,
+    width: 1080,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                     xtype: 'panel',
                     bodyStyle: 'background: transparent;"',
                     layout: 'vbox',
-                    width: 930,
+                    width: 1080,
                     defaults: {
                         anchor: '100%'
                     },
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                 {
                                     xtype: 'label',
                                     text: 'Sales Date',
-                                    style: 'font-weight:bold;color:#0B333C;',
+                                    style: 'font-weight:bold;color:#0B333C;',                                    
                                     padding: '3 0',
                                     width: 110
                                 },
@@ -66,15 +66,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 8,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     width: 70
                                 },
-                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 171},
                                 {
                                     xtype: 'label',
                                     text: 'Ref. Number',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    width: 80,
+                                    width: 120,
                                     padding: '3 0'
                                 },
                                 {
@@ -90,17 +90,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 14,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     padding: '3 0',
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 30},
+                                {xtype: 'tbspacer', width: 58},
                                 {
                                     xtype: 'label',
-                                    text: 'Settlement Date',
+                                    text: 'Sett. Date',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     padding: '3 0',
-                                    width: 110
+                                    width: 70
                                 },
                                 {
                                     xtype: 'label',
@@ -115,7 +115,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 6,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     width: 70
                                 },
                                 {xtype: 'tbspacer', width: 30},
@@ -139,10 +139,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 2,
-                                    //readOnly: true,
+                                    readOnly: true,
                                     width: 70
                                 },
-                                {xtype: 'tbspacer', width: 20},
+                                {xtype: 'tbspacer', width: 80},
                             ]
                         },
                         {
@@ -156,12 +156,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                 width: 1080
                             },
                             items: [
+                                {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
                                     text: 'Ticket Number',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 109,
-                                    margin: '0 0 0 5',
+                                    padding: '3 0',
                                     autoEl: {
                                         tag: 'label',
                                         'data-qtip': 'CCIA(3)+FORMA(4)+SERIE(6)'
@@ -184,7 +185,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     width: 140
 
                                 },
-                                {xtype: 'tbspacer', width: 60},
+                                {xtype: 'tbspacer', width: 96},
                                 {
                                     xtype: 'label',
                                     text: 'Document Type',
@@ -196,6 +197,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     xtype: 'label',
                                     text: '(*)',
                                     style: 'font-weight:bold;color:red;',
+                                    padding: '3 0',
                                     width: 20
                                 },
                                 {
@@ -210,6 +212,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
+                                    padding: '3 0',
                                     //disabled: true,
                                     typeAhead: true,
                                     valueField: 'code',
@@ -217,7 +220,34 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     enableKeyEvents: true,
                                     triggerAction: 'all'
                                 },
-                                {xtype: 'tbspacer', width: 160}
+                                {xtype: 'tbspacer', width: 70},
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    width: 40,
+                                    padding: '3 0'
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'combobox',
+                                    id: prototype.id + '-de-cmbSTVAL',
+                                    fieldStyle: 'color:#074066;',
+                                    queryMode: 'local',
+                                    forceSelection: true,
+                                    selectOnFocus: false,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    editable: false,
+                                    width: 180,
+                                    //disabled: true,
+                                    value: null,
+                                    typeAhead: true,
+                                    valueField: 'code', displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all'
+                                },
+                                {xtype: 'tbspacer', width: 300},
                             ]
                         },
                         {
@@ -256,7 +286,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
-                                    width: 300,
+                                    width: 200,
                                     //disabled: true,
                                     typeAhead: true,
                                     valueField: 'CODE',
@@ -290,26 +320,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     //readOnly: true,
                                     width: 120
                                 },
-                                {xtype: 'tbspacer', width: 40}
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background:#E5ECEF;',
-                            margin: '0 2 2 5',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
-                            items: [
-                                {xtype: 'tbspacer', width: 7},                                
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Authorization Code',
+                                    text: 'Author.',
                                     style: 'font-weight:bold;color:#121E31;',
-                                    width: 120,
+                                    width: 40,
                                     padding: '3 0'
                                 },
                                 {xtype: 'tbspacer', width: 10},
@@ -323,26 +339,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     padding: '3 0',
                                     width: 150
                                 },
-                                {xtype: 'tbspacer', width: 84},
-                                {
-                                    xtype: 'label',
-                                    text: 'PNR',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    padding: '3 0',
-                                    width: 40
-                                },
-                                {xtype: 'tbspacer', width: 41},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSPNR',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    maxLength: 6,
-                                    //readOnly: true,
-                                    width: 210
-                                },
-                                {xtype: 'tbspacer', width: 38}
-                                
+                                {xtype: 'tbspacer', width: 300},
                             ]
                         },
                         {
@@ -375,7 +372,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
-                                    width: 300,
+                                    width: 200,
                                     //disabled: true,
                                     value: null,
                                     typeAhead: true,
@@ -384,35 +381,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     enableKeyEvents: true,
                                     triggerAction: 'all'
                                 },
-                                {xtype: 'tbspacer', width: 39},
+                                {xtype: 'tbspacer', width: 40},                                
                                 {
                                     xtype: 'label',
-                                    text: 'Status',
-                                    style: 'font-weight:bold;color:#121E31;',
-                                    width: 70,
-                                    padding: '3 0'
+                                    text: 'PNR',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    padding: '3 0',
+                                    width: 40
                                 },
-                                {xtype: 'tbspacer', width: 70},
+                                {xtype: 'tbspacer', width: 98},
                                 {
-                                    xtype: 'combobox',
-                                    id: prototype.id + '-de-cmbSTVAL',
-                                    fieldStyle: 'color:#074066;',
-                                    queryMode: 'local',
-                                    forceSelection: true,
-                                    selectOnFocus: false,
-                                    caseSensitive: false,
-                                    autoSelect: true,
-                                    editable: false,
-                                    width: 210,
-                                    //disabled: true,
-                                    value: null,
-                                    typeAhead: true,
-                                    valueField: 'code', displayField: 'name',
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all'
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSPNR',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maxLength: 6,
+                                    readOnly: true,
+                                    width: 60
                                 },
-                                {xtype: 'tbspacer', width: 39}
-
+                                {xtype: 'tbspacer', width: 500},
                             ]
                         },
                         {
@@ -429,7 +416,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
-                                    text: 'Amount',
+                                    text: 'Total Sales',
                                     style: 'font-weight:bold;color:#121E31;',
                                     width: 130,
                                     padding: '3 0'
@@ -444,26 +431,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     //readOnly: false,
                                     maskRe: /[0-9]/,
                                     width: 125
-                                },
-                                {xtype: 'tbspacer', width: 40},
+                                },                                
+                                {xtype: 'tbspacer', width: 115},
                                 {
                                     xtype: 'label',
                                     text: 'Currency',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 80
+                                    padding: '3 0',
+                                    width: 120
                                 },
-                                {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'label',
                                     text: '(*)',
                                     style: 'font-weight:bold;color:red;',
                                     width: 20,
+                                    padding: '3 0',
                                     autoEl: {
                                         tag: 'label',
                                         'data-qtip': 'Mandatory Field'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 4},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtSCURRENCY',
@@ -474,13 +461,214 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntry', {
                                     //readOnly: true,
                                     width: 40
                                 },
-                                {xtype: 'tbspacer', width: 84},
-                                {xtype: 'tbspacer', width: 291},
-                                {xtype: 'tbspacer', width: 38}
+                                {xtype: 'tbspacer', width: 500},
+                                /*{
+                                    xtype: 'label',
+                                    text: 'Total Comission',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    width: 100,
+                                    padding: '3 0'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },
+                                {xtype: 'tbspacer', width: 38},
+                                {
+                                    xtype: 'label',
+                                    text: 'Total Net',
+                                    style: 'font-weight:bold;color:#121E31;',
+                                    width: 80,
+                                    padding: '3 0'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },*/
+                                
                             ]
                         },
                     ]
                 },
+                // <editor-fold defaultstate="collapsed" desc="ComissionData">
+                /*{
+                    xtype: 'label',
+                    html: '<strong style="color:#121E31; text-decoration: underline; ">Comission Information</strong>',
+                    textDecoration: 'underline',
+                    height: 70,
+                    fontSize: '11',
+                    style: 'font-weight:bold;color:#0B333C;',
+                    width: 234,
+                    margin: '8 2 50 10'
+
+                },
+                {
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 4 50',
+                            defaults: {
+                                labelAlign: 'left'
+                            },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'General Comission Pay',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120,
+                                    height: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'label',
+                                    text: 'Comission Provision',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120,
+                                    height: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 4 50',
+                            defaults: {
+                                labelAlign: 'left'
+                            },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Cost Count Verification',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120,
+                                    height: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'label',
+                                    text: 'Value Collection',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120,
+                                    height: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '10 2 4 50',
+                            defaults: {
+                                labelAlign: 'left'
+                            },
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Total Comission',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120,
+                                    height: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'label',
+                                    text: 'IVA Comission',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120,
+                                    height: 20
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    //id: prototype.id + '-de-txtSVFOP',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    maxLength: 15,
+                                    padding: '3 0',
+                                    //readOnly: false,
+                                    maskRe: /[0-9]/,
+                                    width: 125
+                                },
+                            ]
+                        },
+                        
+                    ]
+                },*/
+                // </editor-fold>
                 // <editor-fold defaultstate="collapsed" desc="ControlData">
                 {
                     xtype: 'label',
