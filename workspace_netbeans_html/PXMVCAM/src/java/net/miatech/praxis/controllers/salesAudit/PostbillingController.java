@@ -595,7 +595,8 @@ public class PostbillingController extends BaseController {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             logic = new PostbillingLogic();
             logic.setSession(this.serverSession.getServerSession());
-            filter.IN_OPTION = request.getParameter("IN_OPTION");
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            /*filter.IN_OPTION = request.getParameter("IN_OPTION");
             filter.IN_CIA = request.getParameter("IN_CIA");
             filter.IN_DOCUMET = request.getParameter("IN_DOCUMET");
             filter.IN_DATEFROM = request.getParameter("IN_DATEFROM");
@@ -604,7 +605,7 @@ public class PostbillingController extends BaseController {
             filter.IN_STATUS = request.getParameter("IN_STATUS");
             filter.IN_USER = request.getParameter("IN_USER");
             filter.IN_IATA = request.getParameter("IN_IATA");
-            filter.IN_TRNCU = request.getParameter("IN_TRNCU");
+            filter.IN_TRNCU = request.getParameter("IN_TRNCU");*/
 
             List<A3537Filter> listaData = logic.SearchReportPostbilling(filter);
 
@@ -897,7 +898,8 @@ public class PostbillingController extends BaseController {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             logic = new PostbillingLogic();
             logic.setSession(this.serverSession.getServerSession());
-            filter.IN_OPTION = request.getParameter("IN_OPTION");
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+           /* filter.IN_OPTION = request.getParameter("IN_OPTION");
             filter.IN_CIA = request.getParameter("IN_CIA");
             filter.IN_DOCUMET = request.getParameter("IN_DOCUMET");
             filter.IN_DATEFROM = request.getParameter("IN_DATEFROM");
@@ -906,7 +908,7 @@ public class PostbillingController extends BaseController {
             filter.IN_STATUS = request.getParameter("IN_STATUS");
             filter.IN_USER = request.getParameter("IN_USER");
             filter.IN_IATA = request.getParameter("IN_IATA");
-            filter.IN_TRNCU = request.getParameter("IN_TRNCU");
+            filter.IN_TRNCU = request.getParameter("IN_TRNCU");*/
 
             List<A3537Filter> listaData = logic.SearchQueryPostbilling(filter);
 
