@@ -357,11 +357,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.PostbillingController',
             case 'PBD Issued':
                 color = '#F3F781';
                 break;
-            case 'PENDING AIRLINE':
-                color = '#F78181';
-                break;
-            case 'PENDING AGENT':
+            case 'Pending Agent':
                 color = '#58FAF4';
+                break;
+            case 'Pending Airline':
+                color = '#F78181';
                 break;
         }
 
