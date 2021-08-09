@@ -156,7 +156,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
                 Ext.getCmp(prototype.id + '-AplPaymentBoletoEntry').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
+                    icon: objRtn.dbException.SQLCODE, //var icons = [Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
                     fn: function () {
                         //culmino PROCESO                        
                         //Ext.getCmp(prototype.id + '-SalesListEntry').close();

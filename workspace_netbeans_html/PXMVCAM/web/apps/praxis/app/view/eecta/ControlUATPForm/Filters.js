@@ -113,7 +113,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-subBoxFilter01',
-                                            border: true,
+                                            border: false,
                                             hidden: false,
                                             layout: 'hbox',
                                             bodyStyle: 'background: transparent;"',
@@ -148,10 +148,10 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                                         {
                                                             xtype: 'button',
                                                             id: prototype.id + '-btn-get-UUID',
-                                                            text: 'Obtener UUID',
-                                                            icon: 'resources/img/botones/download.png',
+                                                            text: 'UUID',
+                                                            icon: 'resources/img/botones/1400098721_cv.png',
                                                             listeners: {
-                                                                click: 'btnApl_pay_click'
+                                                                click: 'btnUUIDForm_click'
                                                             }
                                                         }                                                        
                                                     ]

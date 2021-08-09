@@ -1,8 +1,7 @@
 
-Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
+Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info02', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-info00',
-    //layout: 'border',
+    alias: 'widget.' + prototype.id03 + '-info02',
     align: 'left',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -12,7 +11,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
     items: [
         {
             region: 'center',
-            id: prototype.id + '-boxPrincipal',
+            id: prototype.id03 + '-boxPrincipal',
             layout: {
                 type: 'vbox',
                 align: 'left'
@@ -25,7 +24,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
             items: [
                 {
                     region: 'center',
-                    id: prototype.id + '-boxMainData',
+                    id: prototype.id03 + '-boxMainData',
                     border: false,
                     width: prototype.widthContenedor,
                     hidden: false,
@@ -42,36 +41,50 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
                         // <editor-fold defaultstate="collapsed" desc="grid">
                         {
                             xtype: 'grid',
-                            id: prototype.id + '-gridData',
-                            columnLines: true,                            
-                            width: 180,
-                            height: 500,
+                            id: prototype.id03 + '-gridData',
+                            columnLines: true,
+                            width: 780,
+                            height: 310,
                             padding: '0px 5px 1px 5px',
                             columns: {
-                                items: [
-                                    {text: 'Fecha<br>Contable', dataIndex: 'A1530FCONT', width: 70, align: 'center'},
+                                items: [                                    
                                     {
-                                        text: '', dataIndex: 'A1530STS9', align: 'center', width: 30,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                      
-                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="PENDIENTE" >';
-                                            if ( record.get('A1530STS9') === '1' )
-                                            var html = '<img src="resources/img/semaforo/Circle_Green.png" title="PROCESADO" >';
+                                        text: 'Ticket', dataIndex: 'A4054SERIE', width: 110, align: 'center', locked: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return record.get('A4054CIA') + record.get('A4054FORMA') + record.get('A4054SERIE');
+                                        }
+                                    },
+                                    {
+                                        text: 'Seq', dataIndex: 'A4054SEQ', width: 40, align: 'center', locked: true
+                                    },
+                                    {
+                                        text: 'Estado', dataIndex: 'A4054STAT', align: 'center', width: 60, locked: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            var VL_DES = 'Pendiente';
+                                            if (record.get('A4054STAT')==='2') VL_DES = 'Error al obtener UUID';
+                                            if (record.get('A4054STAT')==='1') VL_DES = 'OK';                                            
+                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="' + VL_DES + '">';
+                                            if (value === '1')
+                                                html = '<img src="resources/img/semaforo/Circle_Green.png" title="' + VL_DES + '" >';
+                                            if (value === '2')
+                                                html = '<img src="resources/img/semaforo/Circle_Red.png" title="' + VL_DES + '" >';
                                             return html;
                                         }
                                     },                                    
+                                    {text: 'Trx.', dataIndex: 'A4054TRNCU', align: 'center', width: 60, locked: true},
+                                    {text: 'Fecha<br>Contable', dataIndex: 'A4054FCONT', align: 'center', width: 70, locked: true},
                                     {
-                                        xtype: 'actioncolumn',
-                                        sortable: false,
-                                        width: 35,
-                                        align: 'center',
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-detail',
-                                                tooltip: 'Detalle',
-                                                handler: 'onDetalleUATP'
-                                            }
+                                        text: 'Información Factura',
+                                        columns: [
+                                            {text: 'UUID', dataIndex: 'A4054CFDI', width: 110, align: 'left'},
+                                            {text: 'Fecha', dataIndex: 'A4054FECTB', width: 70, align: 'center'},
+                                            {text: 'FOP', dataIndex: 'A4054FOP', width: 60, align: 'center'},
+                                            {text: 'Metodo', dataIndex: 'A4054MPG', width: 60, align: 'center'},
+                                            {text: 'Tipo', dataIndex: 'A4054TIPO', width: 50, align: 'center'},                                            
+                                            {text: 'RFC', dataIndex: 'A4054RFC', width: 80, align: 'left'},
+                                            {text: 'RFC Name', dataIndex: 'A4054RFCN', width: 110, align: 'left'}
                                         ]
-                                    }
+                                    }                                   
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -101,14 +114,14 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
                         // <editor-fold defaultstate="collapsed" desc="pie">
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-pie',
-                            width: 210,
-                            height: 35,                            
+                            id: prototype.id03 + '-pie',
+                            width: 780,
+                            height: 35,
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
                             },
-                            border: true,                            
+                            border: true,
                             bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                             defaults: {
                                 border: true
@@ -117,8 +130,8 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
                             items: [
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id + '-boxPaginacion',
-                                    width: 210,
+                                    id: prototype.id03 + '-boxPaginacion',
+                                    width: '99%',
                                     border: false,
                                     items: [
                                         {
@@ -127,7 +140,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info00', {
                                             items: [
                                                 {
                                                     xtype: 'pagingtoolbar',
-                                                    id: prototype.id + '-paggin',
+                                                    id: prototype.id03 + '-paggin',
                                                     pageSize: 20,
                                                     border: false,
                                                     displayInfo: true,

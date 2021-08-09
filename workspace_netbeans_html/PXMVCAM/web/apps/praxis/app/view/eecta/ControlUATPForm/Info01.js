@@ -43,8 +43,8 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info01', {
                             xtype: 'grid',
                             id: prototype.id01 + '-gridData',
                             columnLines: true,
-                            width: 965,
-                            height: 450,
+                            width: 990,
+                            height: 475,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [                                    
@@ -164,7 +164,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info01', {
                         {
                             xtype: 'panel',
                             id: prototype.id01 + '-pie',
-                            width: '99%',
+                            width: 990,
                             height: 35,
                             layout: {
                                 type: 'hbox',

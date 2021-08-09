@@ -2,7 +2,8 @@ prototype.widthContenedor = 1200;
 prototype.widthGrid = '100%';
 prototype.id01 = 'Info01';
 prototype.id02 = 'ControlUATPProcesarForm';
-
+prototype.id03 = 'ControlUATPUUIDForm';
+prototype.id04 = 'ControlUATPErroresForm';
 
 Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
     extend: 'Ext.form.Panel',
@@ -69,7 +70,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-panel-contenedor-grid',
-                                            height: 520,
+                                            height: 550,
                                             //border:true,
                                             layout: 'fit',
                                             items: [
@@ -85,7 +86,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                                         {
                                                             xtype: 'fieldset',
                                                             border: true,
-                                                            width: 220,
+                                                            width: 185,
                                                             padding: '1 1 1 1',
                                                             items: [
                                                                 {
@@ -136,7 +137,9 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                                                             fieldLabel: 'Nº Ticket', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                                                             enableKeyEvents: true,
-                                                                            width: 220,
+                                                                            enforceMaxLength: true,
+                                                                            maxLength: 13,
+                                                                            width: 200,
                                                                             height: 24,
                                                                             listeners: {
                                                                                 keypress: 'onTxtFilterTKTKeypress'
@@ -178,7 +181,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                                                             editable: true,
                                                                             typeAhead: true,
                                                                             valueField: 'code', displayField: 'name',
-                                                                            width: 220,
+                                                                            width: 200,
                                                                             height: 24,
                                                                             value: "",
                                                                             enableKeyEvents: true,
@@ -191,10 +194,10 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
                                                                             xtype: 'button',
                                                                             margin: '0 0 0 15',
                                                                             id: prototype.id + '-btn-errores',
-                                                                            text: 'Resumen Errores',
+                                                                            text: 'Errores',
                                                                             icon: 'resources/img/botones/error.png',
                                                                             listeners: {
-                                                                                click: 'btnApl_pay_click'
+                                                                                click: 'btnFormErrores_click'
                                                                             }
                                                                         }
                                                                     ]

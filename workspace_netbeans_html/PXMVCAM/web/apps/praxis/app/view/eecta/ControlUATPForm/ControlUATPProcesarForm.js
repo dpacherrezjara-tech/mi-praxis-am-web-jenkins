@@ -27,7 +27,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPProcesarForm', {
             region: 'center',
             xtype: 'form',
             id: prototype.id02 + '-DataEntry-center',
-            border: true,
+            border: false,
             layout: {
                 type: 'vbox'
             },
@@ -63,37 +63,39 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPProcesarForm', {
                             items: [
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id + '-FECHA1',
+                                    id: prototype.id02 + '-FECHA1',
                                     fieldLabel: 'Desde', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                     width: 180, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                                     format: 'Ymd',
                                     invalidText: 'Ingrese fecha valida en formato Ymd',
                                     minValue: new Date(1990, 00, 01),
                                     maxValue: new Date(),
+                                    value:new Date(),
                                     maskRe: /[0-9/]/,
-                                    editable: false,
+                                    editable: true,
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
                                     maxLength: 12,
                                     listeners: {
                                         keypress: function (obj, e) {
                                             if (e.getKey() === e.ENTER) {
-                                                Ext.getCmp(prototype.id + '-FECHA2').focus();
+                                                Ext.getCmp(prototype.id02 + '-FECHA2').focus();
                                             }
                                         }
                                     }
                                 },
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id + '-FECHA2',
+                                    id: prototype.id02 + '-FECHA2',
                                     fieldLabel: 'Hasta', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
                                     width: 160, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                                     format: 'Ymd',
                                     invalidText: 'Ingrese fecha valida en formato Ymd',
                                     minValue: new Date(1990, 00, 01),
                                     maxValue: new Date(),
+                                    value:new Date(),
                                     maskRe: /[0-9/]/,
-                                    editable: false,
+                                    editable: true,
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
                                     maxLength: 12,
@@ -138,15 +140,16 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPProcesarForm', {
                             items: [
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id + '-FECHEJE01',
+                                    id: prototype.id02 + '-FECHEJE01',
                                     fieldLabel: 'Emisión', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                     width: 180, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                                     format: 'Ymd',
                                     invalidText: 'Ingrese fecha valida en formato Ymd',
                                     minValue: new Date(1990, 00, 01),
                                     maxValue: new Date(),
+                                    value:new Date(),
                                     maskRe: /[0-9/]/,
-                                    editable: false,
+                                    editable: true,
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
                                     maxLength: 12,
@@ -192,15 +195,16 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPProcesarForm', {
                             items: [
                                 {
                                     xtype: 'datefield',
-                                    id: prototype.id + '-FECHEJE02',
+                                    id: prototype.id02 + '-FECHEJE02',
                                     fieldLabel: 'Emisión', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                     width: 180, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                                     format: 'Ymd',
                                     invalidText: 'Ingrese fecha valida en formato Ymd',
                                     minValue: new Date(1990, 00, 01),
                                     maxValue: new Date(),
+                                    value:new Date(),
                                     maskRe: /[0-9/]/,
-                                    editable: false,
+                                    editable: true,
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
                                     maxLength: 12,
@@ -215,6 +219,11 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPProcesarForm', {
                             ]
                         }
                     ]
+                },
+                {
+                    xtype:'label',
+                    padding:'0 0 0 5',
+                    html: '<font color="green"><h3 id="ControlUATPProcesarForm_Msg"></h3></font>'                    
                 }
             ]
         }
@@ -241,7 +250,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPProcesarForm', {
                 },
                 {
                     text: 'Close',
-                    id: prototype.id + '-btn-cancel',
+                    id: prototype.id02 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

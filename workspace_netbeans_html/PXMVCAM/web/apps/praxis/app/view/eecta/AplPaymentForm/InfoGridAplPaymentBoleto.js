@@ -202,7 +202,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAplPaymentBoleto', {
 
                                 }
                             }
-                        },
+                        }
                                 // </editor-fold>
                                 // <editor-fold defaultstate="collapsed" desc="pie">
 //                        {

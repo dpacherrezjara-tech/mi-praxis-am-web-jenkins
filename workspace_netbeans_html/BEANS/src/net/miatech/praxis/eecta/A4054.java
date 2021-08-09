@@ -18,9 +18,11 @@ public class A4054 {
     public String A4054SEQ = "";
     public String A4054TRNCU = "";
     public String A4054GRUPO = "";
+    public String A4054TIPO = "";
     public String A4054FCONT = "";
     public String A4054CFDI = "";
     public String A4054RFC = "";
+    public String A4054RFCN = "";
     public String A4054FECTB = "";
     public String A4054FOP = "";
     public String A4054MPG = "";

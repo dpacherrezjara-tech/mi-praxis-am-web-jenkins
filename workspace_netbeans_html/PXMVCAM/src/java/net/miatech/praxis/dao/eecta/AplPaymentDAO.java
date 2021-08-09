@@ -275,15 +275,15 @@ public class AplPaymentDAO {
                 objRtn = new SQP03955Filter();
                 objRtn.A3959CCUST =  rs01.getString("A3959CCUST");
                 objRtn.A3959IDPG = rs01.getString("A3959IDPG");                
-                objRtn.A3959REFPG = rs01.getString("A3959REFPG");
+                //objRtn.A3959REFPG = rs01.getString("A3959REFPG");
                 objRtn.A3959FECPG = rs01.getString("A3959FECPG");
                 objRtn.A3959MDAPG = rs01.getString("A3959MDAPG");
                 objRtn.A3959TOTPG = rs01.getDouble("A3959TOTPG");                
                 objRtn.A3959TIPPG = rs01.getString("A3959TIPPG_00");
                 objRtn.A3959NRRPT = rs01.getString("A3959NRRPT");
                 objRtn.A3959CDCLI = rs01.getString("A3959CDCLI");
-                objRtn.A3959BANCO = rs01.getString("A3959BANCO");                
-                objRtn.A3959CTABC = rs01.getString("A3959CTABC");
+                //objRtn.A3959BANCO = rs01.getString("A3959BANCO");                
+                //objRtn.A3959CTABC = rs01.getString("A3959CTABC");
                 objRtn.A3959REGIS = rs01.getString("A3959REGIS");
                 objRtn.A3959FREGI = rs01.getString("A3959FREGI");
                 objRtn.A3959HREGI = rs01.getString("A3959HREGI");
@@ -365,6 +365,8 @@ public class AplPaymentDAO {
                 objRtn.A3977FECPG = rs01.getString("A3977FECPG");
                 objRtn.A3977BANCO = rs01.getString("A3977BANCO");
                 objRtn.A3977CTABC = rs01.getString("A3977CTABC");
+                objRtn.A3977TRXPG = rs01.getString("A3977TRXPG");
+                
                 //importe
                 objRtn.A3977TOT = rs01.getDouble("A3977TOT");
                 objRtn.A3977TOTAP = rs01.getDouble("A3977TOTAP");

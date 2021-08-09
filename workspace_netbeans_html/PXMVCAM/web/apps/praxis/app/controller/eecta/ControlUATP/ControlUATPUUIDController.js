@@ -4,16 +4,18 @@
  * and open the template in the editor.
  */
 
-Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarController', {
+Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.' + prototype.id02 + '-controlUATPProcesarController',
+    alias: 'controller.' + prototype.id03 + '-controlUATPUUIDController',
     url: CONTEXTPATH + '/ControlUATP', 
     bean: {},
     init: function (view) {
         var me = this;
     },    
-    afterRender: function () {            
-        //this.search_det_loadbatch('2021062311');
+    afterRender: function () {    
+        Ext.getCmp(prototype.id03 + '-FECHA1').setValue(Ext.getCmp(prototype.id + '-FCONT').getValue());
+        Ext.getCmp(prototype.id03 + '-FECHA2').setValue(Ext.getCmp(prototype.id + '-FCONT').getValue());
+        this.Onsearch();
     },
     handlerEvent_setDisabled: function () {
         
@@ -21,50 +23,74 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
     getDataInputs: function () {
         
     },
+    cmbfiltroSTSUUID_clickHandler:function(){
+        this.Onsearch();
+    },
     getDataEntryValues: function (strOption) {
-        var vl_OP01 = Ext.getCmp(prototype.id02 + '-op01').getValue();
-        var vl_OP02 = Ext.getCmp(prototype.id02 + '-op02').getValue();
-        var vl_OP03 = Ext.getCmp(prototype.id02 + '-op03').getValue();
-        var VL_PROCESO = '';
-        if(vl_OP01)VL_PROCESO = 'UATP';
-        if(vl_OP02)VL_PROCESO = 'REPT';
-        if(vl_OP03)VL_PROCESO = 'EECC'; 
         
         var VL_ACTION = strOption;  
-        var VL_FECHA1 = '';
-        var VL_FECHA2 = '';
-        var VP_FEJEC  = '';
-        var VP_CDCLI  = '';
-        if (VL_PROCESO==='UATP'){
-            VL_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHA1').getValue(), 'Ymd');
-            VL_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHA2').getValue(), 'Ymd');
-        }   
-        if (VL_PROCESO==='REPT')
-        VP_FEJEC = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHEJE01').getValue(), 'Ymd');            
-        
-        if (VL_PROCESO==='EECC'){
-            VP_FEJEC = Ext.util.Format.date(Ext.getCmp(prototype.id02 + '-FECHEJE02').getValue(), 'Ymd');            
-            VP_CDCLI = '';            
-        }                       
+        var VL_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA1').getValue(), 'Ymd');
+        var VL_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA2').getValue(), 'Ymd');                     
         return {
             VP_ACTION:VL_ACTION,
             VP_FDATE1:VL_FECHA1,
-            VP_FDATE2:VL_FECHA2,
-            VP_FEJEC:VP_FEJEC,
-            VP_CDCLI:VP_CDCLI,
-            VP_PROCESO:VL_PROCESO
+            VP_FDATE2:VL_FECHA2
         };
-    },    
+    },  
+    Onsearch: function () {
+        this.search();
+    },
+    search: function ()
+    {
+        me = this;
+        var bean = {};
+        var VL_OPCION = '';  
+        var VL_FDATE1 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA1').getValue(), 'Ymd');
+        var VL_FDATE2 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA2').getValue(), 'Ymd');
+        var VL_STAT = Ext.getCmp(prototype.id03 + '-STSUUID').getValue();
+        var VL_TICKET = ""; //Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA2').getValue(), 'Ymd');
+        bean.VP_OPCION = VL_OPCION; 
+        bean.VP_FDATE1 = VL_FDATE1;
+        bean.VP_FDATE2 = VL_FDATE2;
+        bean.VP_STAT   = VL_STAT;
+        bean.VP_TICKET = VL_TICKET;
+        bean.limit = "-1";
+        bean.page = "-1";
+        if(VL_FDATE1==='' || VL_FDATE2 ==='' ){
+            console.log('return fecha null');
+            return;
+        };
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
+            proxy: {
+                url: prototype.url + '/search_UUID'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, records, successful, operation, eOpts) {
+                    //console.log(records);
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found'
+                        });
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id03 + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id03 + '-paggin').setStore(storeGridDatas);
+        
+    },
     onSaveClick: function (btn) {
         var p = this.view.params;
         var strOption = p.action;
         var params = this.getDataEntryValues(strOption);
         var strMsg = this.validateForm(params);
-        var StrMsgConfirm = ''; 
-        if (params.VP_PROCESO === 'UATP') StrMsgConfirm = '¿Procesar Carga de boletos UATP?';
-        if (params.VP_PROCESO === 'REPT') StrMsgConfirm = '¿Procesar emisión de Reporte de Ventas?';
-        if (params.VP_PROCESO === 'EECC') StrMsgConfirm = '¿Procesar emisión de Estados de Cuenta?';
-        
+        var StrMsgConfirm = '¿Procesar Carga de UUID?'; 
+                
         if (strMsg.trim() !== '') {
             global.Msg({
                 msg: strMsg
@@ -90,30 +116,27 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
         var p = this.view.params;
         var strOption = p.action;
         var me = this;
-        var params = this.getDataEntryValues(strOption);
-//        console.log(this.getDataEntryValues(strOption));
-//        return;        
+        var params = this.getDataEntryValues(strOption);        
         Ext.Ajax.request({
-            url: this.url + '/set_procesar',
+            url: this.url + '/set_procesarUUID',
             method: 'POST',
             timeout: 60000000,
             params: {
                 beanString: JSON.stringify(params)                
             },
-            beforerequest: Ext.getCmp(prototype.id02 + '-ControlUATPProcesarForm').mask('Loading...', ''),
+            beforerequest: Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').mask('Loading...', ''),
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var objRtn = res.objRtn;
-                Ext.getCmp(prototype.id02 + '-ControlUATPProcesarForm').unmask('Loading...', '');
+                Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
                     icon: 1,
                     fn: function () {
-                        //culmino PROCESO   
-                        if(params.VP_PROCESO==='UATP')
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});   
-                        var elem = document.getElementById('ControlUATPProcesarForm_Msg');
-                        elem.innerHTML = objRtn.dbException.MESSAGE;                        
+                        //culmino PROCESO                           
+                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});   
+                        //var elem = document.getElementById('ControlUATPProcesarForm_Msg');
+                        //elem.innerHTML = objRtn.dbException.MESSAGE;                        
                         //me.onCancelClick();   
                         
                     }
@@ -166,7 +189,7 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
         });
     },
     onCancelClick: function (btn) {
-        Ext.getCmp(prototype.id02 + '-ControlUATPProcesarForm').close();
+        Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').close();
     },     
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
@@ -181,22 +204,9 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
     },
     validateForm: function (params) {
         var mensaje = "";
-        if (params.VP_PROCESO === 'UATP') {
-            if(params.VP_FDATE1 === '' || params.VP_FDATE2 === '' )
+        if(params.VP_FDATE1 === '' || params.VP_FDATE2 === '' ){
             mensaje = 'INGRESAR RANGO DE FECHAS ';
-            Ext.getCmp(prototype.id02 + '-FECHA1').focus();
-            return mensaje;
-        }
-        if (params.VP_PROCESO === 'REPT') {
-            if(params.VP_FEJEC === '' )
-            mensaje = 'INGRESAR FECHA DE EMISION ';
-            Ext.getCmp(prototype.id02 + '-FECHEJE01').focus();
-            return mensaje;
-        }
-         if (params.VP_PROCESO === 'EECC') {
-            if(params.VP_FEJEC === '' )
-            mensaje = 'INGRESAR FECHA DE EMISION ';
-            Ext.getCmp(prototype.id02 + '-FECHEJE02').focus();
+            Ext.getCmp(prototype.id03 + '-FECHA1').focus();
             return mensaje;
         }
         return mensaje;

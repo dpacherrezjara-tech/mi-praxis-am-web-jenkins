@@ -156,7 +156,7 @@ public class AplPaymentController extends BaseController {
             map.put("objRtn", objRtn);
             map.put("success", true);
             map.put("sesion", ex.getMessage());
-            throw new SpringException(ex);
+            //throw new SpringException(ex);
         }
         return new Gson().toJson(map);
 
@@ -183,7 +183,7 @@ public class AplPaymentController extends BaseController {
             map.put("objRtn", objRtn);
             map.put("success", true);
             map.put("sesion", ex.getMessage());
-            throw new SpringException(ex);
+            //throw new SpringException(ex);
         }
         return new Gson().toJson(map);
 
