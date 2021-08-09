@@ -340,7 +340,7 @@ public class BwrBSPLINKRFNDController extends BaseController {
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
-            sheet.autoSizeColumn(3, true);
+            //sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
@@ -350,8 +350,8 @@ public class BwrBSPLINKRFNDController extends BaseController {
             sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
             //sheet.autoSizeColumn(12, true);
-            sheet.autoSizeColumn(13, true);
-            sheet.autoSizeColumn(14, true);
+            //sheet.autoSizeColumn(13, true);
+            //sheet.autoSizeColumn(14, true);
 
             String fileNameDownload = String.format("AssociatedRefund - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");
