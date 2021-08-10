@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import com.sun.org.apache.bcel.internal.generic.Type;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -84,6 +85,7 @@ public class SendingcontrolReportFormController extends BaseController {
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         A3949Filter filter = new A3949Filter();
+        String VL_A3949TYPE = "";
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -129,7 +131,7 @@ public class SendingcontrolReportFormController extends BaseController {
             Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05;
 
             row = sheet.createRow(vj);
 
@@ -138,24 +140,28 @@ public class SendingcontrolReportFormController extends BaseController {
             CH_02 = row.createCell(2);
             CH_03 = row.createCell(3);
             CH_04 = row.createCell(4);
+            CH_05 = row.createCell(5);
 
             CH_00.setCellValue("System date");
             CH_01.setCellValue("Execution date");
             CH_02.setCellValue("Country");
             CH_03.setCellValue("Processed");
             CH_04.setCellValue("Status");
+            CH_05.setCellValue("Type");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
             CH_02.setCellStyle(headerStyle);
             CH_03.setCellStyle(headerStyle);
             CH_04.setCellStyle(headerStyle);
+            CH_05.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -167,19 +173,35 @@ public class SendingcontrolReportFormController extends BaseController {
                 CH_02 = row.createCell(2);
                 CH_03 = row.createCell(3);
                 CH_04 = row.createCell(4);
+                CH_05 = row.createCell(5);
 
                 CH_00.setCellValue(lst.get(vi).A3949PAIS);
                 CH_01.setCellValue(lst.get(vi).A3949FDATE);
                 CH_02.setCellValue(lst.get(vi).A3949PAIS);
                 CH_03.setCellValue(lst.get(vi).A3949COUNT2);
-                CH_04.setCellValue(lst.get(vi).A3949ESTAD);
-
+                CH_04.setCellValue(lst.get(vi).A3949DESC);
+                switch (lst.get(vi).A3949TYPE) {
+                    case "DF":
+                        VL_A3949TYPE = "FILE DOWNLOAD";
+                        break;
+                    case "DN":
+                        VL_A3949TYPE = "NON COMPARATIVES";
+                        break;
+                    case "DC":
+                        VL_A3949TYPE = "COMPARATIVES";
+                        break;
+                    default:
+                        VL_A3949TYPE = lst.get(vi).A3949TYPE;
+                        break;
+                }
+                CH_05.setCellValue(VL_A3949TYPE);
+                
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
                 CH_02.setCellStyle(bodyStyle);
                 CH_03.setCellStyle(bodyStyle);
                 CH_04.setCellStyle(bodyStyle);
-
+                CH_05.setCellStyle(bodyStyle);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -190,6 +212,7 @@ public class SendingcontrolReportFormController extends BaseController {
             sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
 
             String fileNameDownload = String.format("SendingFiles - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");
@@ -240,19 +263,19 @@ public class SendingcontrolReportFormController extends BaseController {
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
         String vl_PREFIX = "";
-        String vl_urlREST="";
+        String vl_urlREST = "";
         switch (filter.IN_TYPE) {
             case "DN":
                 vl_PREFIX = "NONCOMPARATIVE/";
-                 vl_urlREST="/api/bsplink/export_salecomparative/";
+                vl_urlREST = "/api/bsplink/export_salecomparative/";
                 break;
             case "DC":
                 vl_PREFIX = "COMPARATIVE/";
-                 vl_urlREST="/api/bsplink/export_salecomparative/";
+                vl_urlREST = "/api/bsplink/export_salecomparative/";
                 break;
             default:
                 vl_PREFIX = "GSA/";
-                vl_urlREST="/api/bsplink/export_salecomparative/";
+                vl_urlREST = "/api/bsplink/export_salecomparative/";
                 break;
         }
         try {
@@ -292,21 +315,21 @@ public class SendingcontrolReportFormController extends BaseController {
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
         filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-        
+
         String vl_PREFIX = "";
-        String vl_urlREST="";
+        String vl_urlREST = "";
         switch (filter.IN_TYPE) {
             case "DN":
                 vl_PREFIX = "NONCOMPARATIVE/";
-                 vl_urlREST="/api/bsplink/export_salecomparative_archi/";
+                vl_urlREST = "/api/bsplink/export_salecomparative_archi/";
                 break;
             case "DC":
                 vl_PREFIX = "COMPARATIVE/";
-                 vl_urlREST="/api/bsplink/export_salecomparative_archi/";
+                vl_urlREST = "/api/bsplink/export_salecomparative_archi/";
                 break;
             default:
                 vl_PREFIX = "GSA/";
-                vl_urlREST="/api/bsplink/export_salecomparative_archi/";
+                vl_urlREST = "/api/bsplink/export_salecomparative_archi/";
                 break;
         }
         try {
@@ -317,7 +340,7 @@ public class SendingcontrolReportFormController extends BaseController {
             bodyData.put("pr_type", filter.IN_TYPE);
             bodyData.put("PREFIX", vl_PREFIX);
 
-           HttpResponse<JsonNode> responses = Unirest.post(urlREST + vl_urlREST)//Sending
+            HttpResponse<JsonNode> responses = Unirest.post(urlREST + vl_urlREST)//Sending
                     .header("content-type", "application/json")
                     .header("cache-control", "no-cache")
                     .body(new Gson().toJson(bodyData))
