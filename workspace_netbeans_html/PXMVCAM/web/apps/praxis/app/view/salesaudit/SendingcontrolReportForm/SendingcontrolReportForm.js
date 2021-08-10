@@ -281,7 +281,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SendingcontrolReportForm.SendingcontrolRe
                             id: prototype.idSendingcontrol + '-gridData',
                             columnLines: true,
                             autoScroll: true,
-                            width: 700,//prototype.widthWindow,
+                            width: 800,//prototype.widthWindow,
                             height: 600,
                             features: [{
                                     //id: 'group',
@@ -306,7 +306,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SendingcontrolReportForm.SendingcontrolRe
                                     {text: 'System </br>date', dataIndex: 'A3949FREGI', width: 75},
                                     {text: 'Execution </br>date', dataIndex: 'A3949FDATE', width: 75},
                                     {text: 'Country', dataIndex: 'A3949PAIS', width: 80, align: 'center', renderer: 'onRendererColumnOnPais'},
-                                    {text: 'Type', dataIndex: 'A3949TYPE', width: 80, align: 'center', renderer: 'onRendererColumn'},
+                                    {text: 'Type', dataIndex: 'A3949TYPE', width: 150, align: 'center', renderer: 'onRendererColumn'},
                                     {text: 'Processed', dataIndex: 'A3949COUNT2', width: 100, align: 'right',
                                         //cls: 'column_header_double',
                                         summaryType: 'sum',
