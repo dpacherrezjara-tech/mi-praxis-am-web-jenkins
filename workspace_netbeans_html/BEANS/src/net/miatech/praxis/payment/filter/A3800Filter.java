@@ -18,6 +18,12 @@ public class A3800Filter extends A3800 {
     public String IN_FECHA_TO = "";
     public String strDescStatus = "";
     public double DIFF = 0.0;
+    public String IN_CARDC = "";
+    public String IN_CARDN1 = "";
+    public String IN_CARDN2 = "";
+    public String IN_SVFOPSG = "";
+    public String IN_SPNR = "";
+    public String IN_SAGENT = "";
     
     public Pagination page = new Pagination();
 }
