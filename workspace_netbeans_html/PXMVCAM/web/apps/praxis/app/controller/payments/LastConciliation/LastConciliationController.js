@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
     me: '',
     dup: '',
     searchParams: {},
+    paramsObtainData: {},
     beanProMasterTicket: {},
     paramsDetail: {},
     paramsDetailCard: {},
@@ -130,6 +131,50 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
 
+        var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbSVFOPSG');
+        cmbFecFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["+", "+"],
+                ["-", "-"],
+            ]
+        }));
+        cmbFecFiltro.setValue("+");
+
+        this.paramsObtainData.BANK = 2;
+        this.paramsObtainData.COUNTRY = 2;
+        this.paramsObtainData.CARD = 2;
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/obtainData',
+            method: 'POST',
+            timeout: 60000000,
+            //beforerequest: Ext.getBody().mask('Loading...'),
+            params: {
+                beanString: JSON.stringify(this.paramsObtainData)
+            },
+            success: function(response, options) {
+                //Ext.getBody().unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+
+
+                me.lstBank = res.lstBank;
+                me.lstCard = res.lstCard;
+                me.lstCountry = res.lstCountry;
+
+                var storeData2 = Ext.create('Ext.data.Store', {
+                    data: me.lstCard,
+                    autoLoad: true
+                });
+
+                Ext.getCmp(prototype.id + '-cmbCardType').bindStore(storeData2);
+                Ext.getCmp(prototype.id + '-cmbCardType').setValue('');
+                global.clear();
+                //me.btnSearch_click();
+            }
+        });
+
         this.btnSearch_click();
     },
     setFormatParameter: function() {
@@ -143,11 +188,70 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
                 Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
+        me.bean.IN_CARDC = Ext.getCmp(prototype.id + '-cmbCardType').getValue();
+        me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
+        me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
+        me.bean.IN_SVFOPSG = Ext.getCmp(prototype.id + '-cmbSVFOPSG').getValue();
+        me.bean.IN_SPNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        me.bean.IN_SAGENT = Ext.getCmp(prototype.id + '-txtSAGENT').getValue();
+
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
             bean: me.bean
         };
+    },
+    BuscarPNR_keyDownHandler: function(obj, e, eOpts) {
+        switch (e.getKey()) {
+            case 13:
+                if (Ext.getCmp(prototype.id + '-txtPNR').getValue().length === 6) {
+                    this.btnSearch_click();
+                } else {
+                    global.Msg({
+                        msg: 'PNR must contain 6 characters.'
+                    });
+                }
+                break;
+        }
+    },
+    txtFilterValue_keyDownHandler: function(obj, e, eOpts) {
+        switch (e.getKey()) {
+            case 13:
+                this.btnSearch_click();
+                break;
+        }
+    },
+    buscarCard_keyDownHandler: function(e, eOpts, a, b, c) {
+        if (Ext.getCmp(prototype.id + '-txtCard1').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCard2').getValue() !== '') {
+//            console.log(eOpts.getKey());
+            switch (eOpts.getKey()) {
+                case 13:
+                    if (Ext.getCmp(prototype.id + '-txtCard1').getValue().trim().length === 6
+                            && Ext.getCmp(prototype.id + '-txtCard2').getValue().trim().length === 4) {
+                        //this.eventKey(e, eOpts);
+                        this.btnSearch_click();
+                    } else {
+                        global.Msg({
+                            msg: 'Credit Card Number must contain 10 digits.'
+                        });
+                        //Ext.getCmp(prototype.id + '-txtCard1').setValue('');
+                        //Ext.getCmp(prototype.id + '-txtCard2').setValue('');
+                    }
+            }
+        } else {
+            global.Msg({
+                msg: 'Credit Card Number must contain 10 digits.'
+            });
+            //Ext.getCmp(prototype.id + '-txtCard1').setValue('');
+            //Ext.getCmp(prototype.id + '-txtCard2').setValue('');
+        }
+    },
+    tarjeta_keyDownHandler: function(e, eOpts) {
+        if (eOpts.getKey() !== 9 && eOpts.getKey() !== 16) {
+            if (Ext.getCmp(prototype.id + '-txtCard1').getValue().length === 6) {
+                Ext.getCmp(prototype.id + '-txtCard2').focus();
+            }
+        }
     },
     btnSearch_click: function(obj, e) {
         this.setFormatParameter();
@@ -304,7 +408,12 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         }
     },
     btnClear_click: function(obj, e) {
-
+        Ext.getCmp(prototype.id + '-txtCard1').setValue('');
+        Ext.getCmp(prototype.id + '-txtCard2').setValue('');
+        Ext.getCmp(prototype.id + '-cmbSVFOPSG').setValue('+');
+        Ext.getCmp(prototype.id + '-txtPNR').setValue('');
+        Ext.getCmp(prototype.id + '-txtSAGENT').setValue('');
+        Ext.getCmp(prototype.id + '-cmbCardType').setValue('');
     },
     btnExcel_click: function(obj, e) {
         Ext.Msg.show({
