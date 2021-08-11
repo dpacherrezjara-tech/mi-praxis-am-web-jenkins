@@ -183,6 +183,10 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.RatesExchangeController', 
                         Ext.getCmp(prototype.id + '-btnAdd').show();
                         Ext.getCmp(prototype.id + '-filterPanel_03').show();
                         break;
+                    case 'A4061':
+                        Ext.getCmp(prototype.id + '-btnAdd').hide();
+                        Ext.getCmp(prototype.id + '-filterPanel_03').show();
+                        break;
                 }
                 break;
             case '2': //Date
@@ -203,6 +207,10 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.RatesExchangeController', 
                         Ext.getCmp(prototype.id + '-btnAdd').show();
                         Ext.getCmp(prototype.id + '-filterPanel_04').show();
                         break;
+                    case 'A4061':
+                        Ext.getCmp(prototype.id + '-btnAdd').hide();
+                        Ext.getCmp(prototype.id + '-filterPanel_04').show();
+                        break;
                 }
                 break;
         }
@@ -218,7 +226,8 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.RatesExchangeController', 
                 ["A018", "IATA Rate"],
                 ["A110", "IATA Variation"],
                 ["A1343", "BSR Rate"],
-                ["A1526", "AM Rate"]
+                ["A1526", "AM Rate"],
+                ["A4061", "AM Filtc"]
             ]
         }));
         cmbSearch.setValue('A018');
@@ -244,7 +253,7 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.RatesExchangeController', 
         var opt1 = Ext.getCmp(prototype.id + '-cmbSearchType').getValue();
         var opt2 = Ext.getCmp(prototype.id + '-cboFilter').getValue();
         var msg = "";
-        if (opt1 === 'A1343' || opt1 === 'A1526') {
+        if (opt1 === 'A1343' || opt1 === 'A1526' || opt1 === 'A4061') {
             if (opt2 === '1') {
                 if (searchParams.currencyFrom.length === 0 || searchParams.currencyTo.length === 0) {
                     msg = 'Please enter Currency From and Currency To';
@@ -301,6 +310,12 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.RatesExchangeController', 
                         dateFrom = Ext.getCmp(prototype.id + '-txt_3_3').getValue();
                         dateTo = Ext.getCmp(prototype.id + '-txt_3_4').getValue();
                         break;
+                    case 'A4061':
+                        currencyFrom = Ext.getCmp(prototype.id + '-txt_3_1').getValue();
+                        currencyTo = Ext.getCmp(prototype.id + '-txt_3_2').getValue();
+                        dateFrom = Ext.getCmp(prototype.id + '-txt_3_3').getValue();
+                        dateTo = Ext.getCmp(prototype.id + '-txt_3_4').getValue();
+                        break;
                 }
                 break;
             case '2': //Date
@@ -324,6 +339,12 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.RatesExchangeController', 
                         dateTo = Ext.getCmp(prototype.id + '-txt_4_2').getValue();
                         break;
                     case 'A1526':
+                        currencyFrom = Ext.getCmp(prototype.id + '-txt_4_3').getValue();
+                        currencyTo = Ext.getCmp(prototype.id + '-txt_4_4').getValue();
+                        dateFrom = Ext.getCmp(prototype.id + '-txt_4_1').getValue();
+                        dateTo = Ext.getCmp(prototype.id + '-txt_4_2').getValue();
+                        break;
+                    case 'A4061':
                         currencyFrom = Ext.getCmp(prototype.id + '-txt_4_3').getValue();
                         currencyTo = Ext.getCmp(prototype.id + '-txt_4_4').getValue();
                         dateFrom = Ext.getCmp(prototype.id + '-txt_4_1').getValue();
@@ -398,6 +419,9 @@ Ext.define('Ext.Praxis.controller.sales.RatesExchange.RatesExchangeController', 
                 break;
             case 'A1526':
                 grid = Ext.getCmp(prototype.id + '-grid_04');
+                break;
+            case 'A4061':
+                grid = Ext.getCmp(prototype.id + '-grid_05');
                 break;
         }
 
