@@ -60,7 +60,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkReasonsRFND.DataEntryBsplink
                 Ext.getCmp(prototype.id01+'-btn-delete').hide();
         }
     },
-    
+    onCloseClick: function (obj) {
+        Ext.getCmp(prototype.id01 + '-win').close();
+    },    
     OnLoadCmbFamily: function(id){
         var cmbFamily = Ext.getCmp(prototype.id01 + '-ComboBy');
 

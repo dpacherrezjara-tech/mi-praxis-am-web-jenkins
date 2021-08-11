@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotRefundControl.RobotRefundContr
                 return;
             }
         }
-        Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
+        //Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
         //datos capturados del texto
         this.bean.IN_OPTION = cmbsearch;
         this.bean.IN_DATEFROM = txtDateFrom;

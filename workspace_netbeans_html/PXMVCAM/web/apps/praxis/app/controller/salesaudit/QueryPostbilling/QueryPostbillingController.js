@@ -200,6 +200,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
                 txtCountry.setValue('');
                 cmbCountry2.setValue('');
                 txtUser.setValue('');
+                txtIATA.setValue('');
                 break;
             default:
                 txtIATA.hide();

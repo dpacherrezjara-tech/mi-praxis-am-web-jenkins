@@ -56,15 +56,15 @@ public class TaxDetailDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".sqp00295(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00295_2(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         session.getCNXIBMDB2().open();
         try {
 
             cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(15, Types.INTEGER);
             cstmt01.registerOutParameter(16, Types.INTEGER);
             cstmt01.registerOutParameter(17, Types.INTEGER);
             cstmt01.registerOutParameter(18, Types.INTEGER);
+            cstmt01.registerOutParameter(19, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.Opcion);
@@ -80,19 +80,19 @@ public class TaxDetailDAO {
             cstmt01.setString(12, filter.IATA);
             cstmt01.setString(13, filter.CHANNEL);
             cstmt01.setString(14, filter.ATO);
+            cstmt01.setString(15, filter.COUNTRYTAX);
 
-            cstmt01.setInt(15, filter.page.PAGNUM);
-            cstmt01.setInt(16, filter.page.PAGROW);
-            cstmt01.setInt(17, filter.page.TOTPAG);
-            cstmt01.setInt(18, filter.page.TOTROW);
-            cstmt01.setString(19, filter.COUNTRYTAX);
+            cstmt01.setInt(16, filter.page.PAGNUM);
+            cstmt01.setInt(17, filter.page.PAGROW);
+            cstmt01.setInt(18, filter.page.TOTPAG);
+            cstmt01.setInt(19, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(15);
-            filter.page.PAGROW = cstmt01.getInt(16);
-            filter.page.TOTPAG = cstmt01.getInt(17);
-            filter.page.TOTROW = cstmt01.getInt(18);
+            filter.page.PAGNUM = cstmt01.getInt(16);
+            filter.page.PAGROW = cstmt01.getInt(17);
+            filter.page.TOTPAG = cstmt01.getInt(18);
+            filter.page.TOTROW = cstmt01.getInt(19);
 
             /* filter.page.TOTPAG = totPAGS;*/
             rs01 = cstmt01.getResultSet();
@@ -102,6 +102,26 @@ public class TaxDetailDAO {
                 pos++;
                 objRtn = new ReportTaxA1530Filter();
                 objRtn.FECPROC = rs01.getString("FECPROC");
+                objRtn.FECVTA = rs01.getString("FVTA");
+                objRtn.IATA = rs01.getString("IATA");
+                objRtn.NOMBRE = rs01.getString("NOMBRE");
+                objRtn.GRUPO = rs01.getString("A1716GRUPO");
+                objRtn.NROBOLETO = rs01.getString("NROBOLETO");
+                objRtn.ITINERARIO = rs01.getString("ITINERARIO");
+                objRtn.TRANSACCION = rs01.getString("TRANSACCION");
+                objRtn.ATO = rs01.getString("ATO");
+                objRtn.CODMONEDA = rs01.getString("CODMONEDA");
+                objRtn.IMPMDAORI = rs01.getDouble("IMPMDAORI");
+                objRtn.IMPMDAREV = rs01.getDouble("IMPMDAREV");
+                objRtn.ACOUNTID = rs01.getString("ACOUNTID");
+                objRtn.Tax = rs01.getString("TAX");
+                objRtn.FECCONT = rs01.getString("FECCONT");
+                objRtn.TOTAL_LOC = rs01.getDouble("MONTO_EMD");
+                objRtn.COUNTRYTAX = rs01.getString("COUNTRYTAX");
+                objRtn.CUENT = rs01.getString("CUENT");
+                objRtn.RN = rs01.getInt("RN");
+
+                /*objRtn.FECPROC = rs01.getString("FECPROC");
                 objRtn.FECVTA = rs01.getString("FECVTA");
                 objRtn.IATA = rs01.getString("IATA");
                 objRtn.NOMBRE = rs01.getString("NOMBRE");
@@ -120,9 +140,8 @@ public class TaxDetailDAO {
                 objRtn.TOTAL_LOC = rs01.getDouble("TOTAL_LOC");
                 objRtn.TOTAL_REV = rs01.getDouble("TOTAL_REV");
                 objRtn.COUNTRYTAX = rs01.getString("COUNTRYTAX");
-                objRtn.FLAG = rs01.getString("FLAG");
-                objRtn.page.PAGNUM = filter.page.PAGNUM; /*/20 + 1;*/
-
+                objRtn.FLAG = rs01.getString("FLAG");*/
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
                 objRtn.page.TOTROW = filter.page.TOTROW;
