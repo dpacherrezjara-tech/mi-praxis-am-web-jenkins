@@ -74,6 +74,76 @@
 
         Ext.tip.QuickTipManager.init();
         Ext.Ajax.timeout = 18000000;
+        
+        /*document.onclick= function(event) {
+            if (event===undefined) event= window.event;
+            var target= 'target' in event? event.target : event.srcElement;
+            console.log('ONCLICK');  
+            console.log(userAccess);
+            console.log(userAccess.length);
+            console.log(optionSelect);
+            console.log(accessSelect);
+            if(userAccess.length>0)
+            {
+                var plusItems = document.querySelectorAll('.prx-icon-add');
+                var createItems = document.querySelectorAll('-btn-save');
+                var updateItems = document.querySelectorAll('.prx-icon-update');
+                //var updateItems = document.querySelector('span').closest(".prx-icon-update");
+                console.log("updateItems");
+                console.log(updateItems);
+                var deleteItems = document.querySelectorAll('-btn-delete');
+                var exportItems = document.querySelectorAll('.prx-icon-excel');
+                // PERML, PERMC, PERMM, PERME, PERMX
+                if(accessSelect.PERMC==='N'){
+                    plusItems.forEach(function(plusItem) {
+                        document.getElementById(plusItem.id).style.display = 'none'; // HIDE
+                    });
+                    createItems.forEach(function(createItem) {
+                        document.getElementById(createItem.id).style.display = 'none'; // HIDE
+                    });
+                }else{
+                    plusItems.forEach(function(plusItem) {
+                        document.getElementById(plusItem.id).style.display = 'block'; // SHOW
+                    });
+                    createItems.forEach(function(createItem) {
+                        document.getElementById(createItem.id).style.display = 'block'; // SHOW
+                    });
+                }
+                if(accessSelect.PERMM==='N'){
+                    updateItems.forEach(function(updateItem) {
+                        console.log("updateItem N");
+                        return;
+                        //console.log(document.getElementById(updateItem.id).parentNode);
+                        //document.getElementById(updateItem.id).style.display = 'none'; // HIDE
+                    });
+                }else{
+                    updateItems.forEach(function(updateItem) {
+                        console.log("updateItems Y");
+                        //console.log(document.getElementById(updateItem.id).parentNode);
+                        //document.getElementById(updateItem.id).style.display = 'block'; // SHOW
+                    });
+                }
+                if(accessSelect.PERME==='N'){
+                    deleteItems.forEach(function(deleteItem) {
+                        document.getElementById(deleteItem.id).style.display = 'none'; // HIDE
+                    });
+                }else{
+                    deleteItems.forEach(function(deleteItem) {
+                        document.getElementById(deleteItem.id).style.display = 'block'; // SHOW
+                    });
+                }
+                if(accessSelect.PERMX==='N'){
+                    exportItems.forEach(function(exportItem) {
+                        document.getElementById(exportItem.id).parentNode.parentNode.style.display = 'none';
+                        //document.getElementById(exportItem.id).style.display = 'none'; // HIDE
+                  });
+                }else{
+                    exportItems.forEach(function(exportItem) {
+                        document.getElementById(exportItem.id).parentNode.parentNode.style.display = 'block';
+                  });
+                }
+            }
+        };*/
     </script>
 
     <script type="text/javascript" src="<c:url value="/resources/js/rainbow/rainbow-custom.min.js" />"></script>
