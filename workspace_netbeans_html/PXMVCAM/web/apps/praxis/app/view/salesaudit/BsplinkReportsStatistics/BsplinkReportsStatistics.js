@@ -701,10 +701,10 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkReportsStatistics.BsplinkReportsSt
                                                 items: [
                                                     {text: 'Country', dataIndex: 'A3389PAIS', flex: 1},
                                                     {text: 'Username', dataIndex: 'A3389REGAS', flex: 1},
-                                                    {text: 'Total', dataIndex: 'A3389TOTAL', flex: 1, align: 'right', summaryType: 'sum', renderer: 'OnColumnAuthoriseRenderer'},
-                                                    {text: 'Parcial', dataIndex: 'A3389PARCIAL', flex: 1, align: 'right', summaryType: 'sum', renderer: 'OnColumnAuthoriseRenderer'},
-                                                    {text: 'Sininfo', dataIndex: 'A3389SINFO', flex: 1, align: 'right', summaryType: 'sum', renderer: 'OnColumnAuthoriseRenderer'},
-                                                    {text: 'Total Request', dataIndex: 'A3389TOTALRFND', flex: 1, align: 'right', summaryType: 'sum', renderer: 'OnColumnAuthoriseRenderer'}
+                                                    {text: 'Total', dataIndex: 'A3389TOTAL', flex: 1, align: 'right', summaryType: 'sum'},//, renderer: 'OnColumnAuthoriseRenderer'
+                                                    {text: 'Parcial', dataIndex: 'A3389PARCIAL', flex: 1, align: 'right', summaryType: 'sum'},//, renderer: 'OnColumnAuthoriseRenderer'
+                                                    {text: 'Sininfo', dataIndex: 'A3389SINFO', flex: 1, align: 'right', summaryType: 'sum'},//, renderer: 'OnColumnAuthoriseRenderer'
+                                                    {text: 'Total Request', dataIndex: 'A3389TOTALRFND', flex: 1, align: 'right', summaryType: 'sum'}//, renderer: 'OnColumnAuthoriseRenderer'
                                                 ]
                                             }
                                         }
