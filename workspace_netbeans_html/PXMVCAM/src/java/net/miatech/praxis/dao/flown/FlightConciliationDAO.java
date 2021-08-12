@@ -938,6 +938,11 @@ public class FlightConciliationDAO {
                         beanTkt.VCPN = rst.getDouble("VCPN");
                         beanTkt.VCPN0 = rst.getDouble("VCPN0");
                         beanTkt.VCPN16 = rst.getDouble("VCPN16");
+                    } else if (beanTkt.FVAL.equals("4")) {
+                        beanTkt.strDescFVAL = "Manual Value";
+                        beanTkt.VCPN = rst.getDouble("VCPN");
+                        beanTkt.VCPN0 = rst.getDouble("VCPN0");
+                        beanTkt.VCPN16 = rst.getDouble("VCPN16");
                     }
 
                     beanTkt.PSVVTA = rst.getString("PSVVTA").trim();
