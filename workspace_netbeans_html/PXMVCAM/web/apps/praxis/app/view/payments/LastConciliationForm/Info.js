@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1324,
+                            width: 1399,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
-                                    width: 1324,
+                                    width: 1399,
                                     columnLines: true,
 //                                    features: [{
 //                                        ftype: 'summary'
@@ -158,6 +158,18 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     },
                                                 ]
                                             },
+                                            {
+                                                text: 'Download',
+                                                xtype: 'actioncolumn',
+                                                width: 75,
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                                        handler: 'getPDF'
+                                                    }
+                                                ]
+                                            },
                                         ]
                                     }
                                 },
@@ -231,7 +243,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                         text: 'Number', width: 120, dataIndex: 'TICKET', //enableTextSelection :true,
                                                         listeners: {
                                                             click: 'showTicket'
-                                                        },renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        }, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
                                                             return '<b>' + value + '<b>';

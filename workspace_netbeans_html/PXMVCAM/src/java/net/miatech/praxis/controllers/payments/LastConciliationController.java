@@ -7,8 +7,10 @@ package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.praxis.classes.ProReportLastConciliation;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -23,6 +26,7 @@ import net.miatech.praxis.logic.payments.LastConciliationLogic;
 import net.miatech.praxis.payment.filter.A2290Filter;
 import net.miatech.praxis.payment.filter.A3800Filter;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -207,5 +211,34 @@ public class LastConciliationController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
+    }
+
+    @RequestMapping(value = "getPDF")
+    public @ResponseBody
+    void getPDF(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Report : getPDF");
+        String fileNameDownload = "Last Conciliation - " + Functions.getFechaActual();
+        ProReportLastConciliation prfd = new ProReportLastConciliation();
+        try {
+            File file = File.createTempFile(fileNameDownload, ".pdf");
+
+            List<A2290Filter> listaData = this.getListCardA2291(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+
+            prfd.createReport(listaData, file);
+
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + ".pdf" + "\"");
+
+            /*FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+             response.getOutputStream();
+             fos.close();*/
+            InputStream is = new FileInputStream(file.getAbsolutePath());
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
     }
 }
