@@ -1950,7 +1950,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Operation', dataIndex: 'TOPUS', width: 70, sortable: true,
+                                                        text: 'Oper.', dataIndex: 'TOPUS', width: 50, sortable: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";//color add viene de la bd
                                                             metaData.tdAttr = 'data-qtip="D=Domestic/I=International"';
@@ -1973,7 +1973,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Value', dataIndex: 'VCPN0', width: 50, sortable: true,
+                                                                text: 'Value', dataIndex: 'VCPN0', width: 60, sortable: true,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";//color add viene de la bd
                                                                     value = Ext.util.Format.number(value, '0,000.00');
@@ -1981,7 +1981,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'YQ', dataIndex: 'VYQ0', width: 50, sortable: true,
+                                                                text: 'YQ', dataIndex: 'VYQ0', width: 60, sortable: true,
                                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000.00');

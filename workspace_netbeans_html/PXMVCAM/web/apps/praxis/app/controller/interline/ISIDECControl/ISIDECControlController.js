@@ -73,6 +73,9 @@ Ext.define('Ext.Praxis.controller.interline.ISIDECControl.ISIDECControlControlle
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Options">
     imgSearch_clickHandler: function(obj, e) {
+        
+        console.log('imgSearch_clickHandler');
+        
         if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
             this.bean.yearFrom = this.getValue("cmbDateFromYear");
             this.bean.monthFrom = this.getValue("cmbDateFromMonth");

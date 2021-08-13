@@ -383,6 +383,19 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
+    getPDF: function(grid, rowIndex, colIndex) {
+
+        this.beanDetail = grid.getStore().getAt(rowIndex).data;
+        
+        this.beanDetCard.IN_SDATE = this.beanDetail.SDATE;
+        this.beanDetCard.IN_CARDN = this.beanDetail.SCARDN;
+        this.beanDetCard.IN_SAUTHOC = this.beanDetail.SAUTHOC;
+        console.log(this.beanDetCard)
+        me.paramsDetailCard.beanString = JSON.stringify(this.beanDetCard);
+
+        global.getFile(prototype.url + '/getPDF?beanString=' + me.paramsDetailCard.beanString);
+
+    },
     validateFields: function() {
         var msj = '';
         var bean = searchParams.bean;

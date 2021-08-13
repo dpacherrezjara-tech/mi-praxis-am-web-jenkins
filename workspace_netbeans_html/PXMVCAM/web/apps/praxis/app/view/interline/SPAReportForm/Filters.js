@@ -258,7 +258,8 @@ Ext.define('Ext.Praxis.view.interline.SPAReportForm.Filters', {
 //                                        focus: function(combo) {
 //                                            combo.expand();
 //                                        },
-                                        keypress: 'onTextKeypress'
+                                        select: 'imgSearch_clickHandler'
+//                                        keypress: 'onTextKeypress'
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 33},
