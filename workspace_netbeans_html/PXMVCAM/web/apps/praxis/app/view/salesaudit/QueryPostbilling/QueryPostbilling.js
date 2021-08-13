@@ -381,179 +381,53 @@ Ext.define('Ext.Praxis.view.salesaudit.QueryPostbilling.QueryPostbilling', {
                             height: 520,
                             columns: {
                                 items: [
-                                    {
-                                        text: 'Origin', dataIndex: 'A3537MODO', align: 'center', width: 75,
-                                    }, {
-                                        text: 'IATA',
-                                        dataIndex: 'A3537IATA',
-                                        width: 65
-                                    },
-                                    {
-                                        text: 'Agency',
-                                        dataIndex: 'A3537NOMAGENCY',
-                                        width: 200,
-                                        align: 'left',
-                                        renderer: 'onRendererColumnAgency'
-                                    },
-                                    {
-                                        text: 'TRNC',
-                                        dataIndex: 'A3537TRNCU',
-                                        width: 60
-                                    },
-                                    {
-                                        text: 'Document',
-                                        dataIndex: 'A3537NMEMO',
-                                        width: 80
-                                    },
-                                    {
-                                        text: 'Connexion',
-                                        dataIndex: 'A3537NUMCONX',
-                                        width: 80,
-                                        renderer: 'onRendererColumnOnCon'
-                                    },
-                                    {
-                                        text: 'SPDR',
-                                        dataIndex: 'A3537PREDR',
-                                        width: 80,
-                                        renderer: 'onRendererColumnOnSPDR'
-                                    },
-                                    {
-                                        text: 'SPCR',
-                                        dataIndex: 'A3537PRECR',
-                                        width: 80,
-                                        renderer: 'onRendererColumnOnSPCR'
-                                    },
-                                    {
-                                        text: 'PBD date',
-                                        dataIndex: 'A3537FPBD',
-                                        width: 80
-                                    },
-                                    {
-                                        text: 'Resolution <br> Date',
-                                        dataIndex: 'A3537RDSTE',
-                                        width: 85,
-                                        align: 'right'
-                                    },
-
-                                    /* {
-                                     text: 'Answer /</br>date',
-                                     dataIndex: 'A3537FREPT',
-                                     width: 75
-                                     },*/
-                                    {
-                                        text: 'Country',
-                                        dataIndex: 'A3537PAIS',
-                                        width: 60
-                                    },
-                                    /* {
-                                     text: 'Dais',
-                                     dataIndex: 'A3537DIAS',
-                                     width: 60
-                                     },    */
-                                    {
-                                        text: 'Cur.',
-                                        dataIndex: 'A3537MDA',
-                                        width: 40
-                                    },
-                                    {
-                                        text: 'Amount <br>ADM/ACM',
-                                        dataIndex: 'A3537NETO',
-                                        width: 85,
-                                        align: 'right',
+                                    {text: 'Origin', dataIndex: 'A3537MODO', align: 'center', width: 75},
+                                    {text: 'IATA', dataIndex: 'A3537IATA', width: 65},
+                                    {text: 'Agency', dataIndex: 'A3537NOMAGENCY', width: 200, align: 'left', renderer: 'onRendererColumnAgency'},
+                                    {text: 'TRNC', dataIndex: 'A3537TRNCU', width: 60},
+                                    {text: 'Document', dataIndex: 'A3537NMEMO', width: 80},
+                                    {text: 'Connexion', dataIndex: 'A3537NUMCONX', width: 80, renderer: 'onRendererColumnOnCon'},
+                                    {text: 'SPDR', dataIndex: 'A3537PREDR', width: 80, renderer: 'onRendererColumnOnSPDR'},
+                                    {text: 'SPCR', dataIndex: 'A3537PRECR', width: 80, renderer: 'onRendererColumnOnSPCR'},
+                                    {text: 'PBD date', dataIndex: 'A3537FPBD', width: 80},
+                                    {text: 'Resolution <br> Date', dataIndex: 'A3537RDSTE', width: 85, align: 'right'},
+                                    {text: 'Country', dataIndex: 'A3537PAIS', width: 60},
+                                    {text: 'Cur.', dataIndex: 'A3537MDA', width: 40},
+                                    {text: 'Amount <br>ADM/ACM', dataIndex: 'A3537NETO', width: 85, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             return win.formatDblNumber(value);
                                         }
                                     },
-                                    {
-                                        text: 'Disputable <br> amount',
-                                        dataIndex: 'A3537NMAX',
-                                        width: 85,
-                                        align: 'right',
+                                    {text: 'Disputable <br> amount', dataIndex: 'A3537NMAX', width: 85, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             return win.formatDblNumber(value);
                                         }
                                     },
-                                    {
-                                        text: 'PBD <br> Amount',
-                                        dataIndex: 'A3537PBDNE',
-                                        width: 70,
-                                        align: 'right',
+                                    {text: 'PBD <br> Amount', dataIndex: 'A3537PBDNE', width: 70, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             return win.formatDblNumber(value);
                                         }
                                     },
-                                    {
-                                        text: 'Amount <br> DIF.',
-                                        dataIndex: 'A3537NETD',
-                                        width: 70,
-                                        align: 'right',
+                                    {text: 'Amount <br> DIF.', dataIndex: 'A3537NETD', width: 70, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align:right;";
                                             return win.formatDblNumber(value);
                                         }
                                     },
-                                    {
-                                        text: 'Auditor',
-                                        dataIndex: 'A3537RAUDI',
-                                        width: 80
-                                    },
-                                    {
-                                        text: 'Answer <br>status',
-                                        dataIndex: 'A3537STAT3',
-                                        width: 100
-                                    },
-                                    /*{
-                                     text: 'Reason <br> PBD',
-                                     dataIndex: 'A3389RAAG',
-                                     flex: 1,
-                                     align: 'left',
-                                     renderer: 'onRendererColumnReason'
-                                     },*/
-                                    {
-                                        text: 'Status',
-                                        dataIndex: 'A3537FLAG',
-                                        width: 150,
-                                        renderer: 'onRendererColumnStatus'
-                                    },
-                                    {
-                                        text: 'Days',
-                                        dataIndex: 'A3537DIAS',
-                                        width: 45
-                                    },
-                                    {
-                                        text: 'On time',
-                                        dataIndex: '',
-                                        width: 60,
-                                        renderer: 'onRendererColumnOnTime'
-                                    },
-                                    {
-                                        text: 'System /</br>date',
-                                        dataIndex: 'A3537FREGI',
-                                        width: 75
-                                    },
-                                    {
-                                        text: 'QTY </br> AM',
-                                        dataIndex: 'A3537CANTAERO',
-                                        width: 40
-                                    },
-                                    {
-                                        text: 'QTY </br> BSP',
-                                        dataIndex: 'A3537CANTANGE',
-                                        width: 40
-                                    },
-                                    {
-                                        text: 'Issue</br>date',
-                                        dataIndex: 'A3537FVTA',
-                                        width: 80
-                                    },
-                                    {
-                                        text: 'Process',
-                                        dataIndex: 'A3537STAT4',
-                                        width: 80
-                                    },
+                                    {text: 'Auditor', dataIndex: 'A3537RAUDI', width: 80},
+                                    {text: 'Answer <br>status', dataIndex: 'A3537STAT3', width: 100},
+                                    {text: 'Status', dataIndex: 'A3537FLAG', width: 150, renderer: 'onRendererColumnStatus'},
+                                    {text: 'Days', dataIndex: 'A3537DIAS', width: 45},
+                                    {text: 'On time', dataIndex: '', width: 60, renderer: 'onRendererColumnOnTime'},
+                                    {text: 'System /</br>date', dataIndex: 'A3537FREGI', width: 75},
+                                    {text: 'QTY </br> AM', dataIndex: 'A3537CANTAERO', width: 40},
+                                    {text: 'QTY </br> BSP', dataIndex: 'A3537CANTANGE', width: 40},
+                                    {text: 'Issue</br>date', dataIndex: 'A3537FVTA', width: 80},
+                                    {text: 'Reference', dataIndex: 'A3537CNREL', width: 120, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Process', dataIndex: 'A3537STAT4', width: 80},
                                     {
                                         sortable: false,
                                         xtype: 'actioncolumn',
