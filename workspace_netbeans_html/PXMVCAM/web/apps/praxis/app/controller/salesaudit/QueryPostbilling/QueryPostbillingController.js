@@ -561,6 +561,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
             }
         });
         win.show();
+    },
+    onRendererColumnAttr: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
     }
 
 
