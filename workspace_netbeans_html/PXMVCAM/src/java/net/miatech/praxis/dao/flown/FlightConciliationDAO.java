@@ -768,11 +768,11 @@ public class FlightConciliationDAO {
                 beanCons.STASABR = rst.getString("STASABR").trim();
                 
                 beanCons.FSALES = rst.getString("FSALES").trim();
-                if(rst.getString("FSALES").trim().equals("0")){
-                    beanCons.descFSALES = "Not found";
-                } else if (rst.getString("FSALES").trim().equals("1")) {
-                    beanCons.descFSALES = "Found";
-                }
+//                if(rst.getString("FSALES").trim().equals("0")){
+//                    beanCons.descFSALES = "Not found";
+//                } else if (rst.getString("FSALES").trim().equals("1")) {
+//                    beanCons.descFSALES = "Found";
+//                }
                                 
                 beanCons.LNKMVLO = rst.getString("LNKMVLO").trim();
                 beanCons.STVCR = rst.getString("STVCR").trim();
@@ -784,6 +784,12 @@ public class FlightConciliationDAO {
                 }
                 
                 beanCons.TPAX = rst.getString("TPAX").trim();
+                beanCons.FA720 = rst.getString("FA720").trim();
+                if(rst.getString("FA720").trim().equals("")){
+                    beanCons.descFSALES = "";
+                } else {
+                    beanCons.descFSALES = "Yes";
+                }
 
                 lstCons.add(beanCons);
                 
