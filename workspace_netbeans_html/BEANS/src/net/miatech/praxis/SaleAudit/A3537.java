@@ -66,6 +66,7 @@ public class A3537 {
     public String A3537FTE;
     public String A3537FVTA;
     public String A3537STAT4;
+    public String A3537CNREL;
 
     public int A3537CANTANGE;
     public int A3537CANTAERO;
@@ -76,6 +77,31 @@ public class A3537 {
     public String A3537ARCHV3;
     public String A3537NUMCONX;
 
+    public String getA3537FVTA() {
+        return A3537FVTA;
+    }
+
+    public void setA3537FVTA(String A3537FVTA) {
+        this.A3537FVTA = A3537FVTA;
+    }
+
+    public String getA3537STAT4() {
+        return A3537STAT4;
+    }
+
+    public void setA3537STAT4(String A3537STAT4) {
+        this.A3537STAT4 = A3537STAT4;
+    }
+
+    public String getA3537CNREL() {
+        return A3537CNREL;
+    }
+
+    public void setA3537CNREL(String A3537CNREL) {
+        this.A3537CNREL = A3537CNREL;
+    }
+
+    
     public String getA3537STAT3() {
         return A3537STAT3;
     }
