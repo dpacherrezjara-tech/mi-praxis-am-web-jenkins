@@ -18,6 +18,9 @@ public class A3800Filter extends A3800 {
     public String IN_FECHA_TO = "";
     public String strDescStatus = "";
     public double DIFF = 0.0;
+    public double totSVFOP = 0.0;
+    public double totSVFOPS = 0.0;
+    public double totDIFSVFOP = 0.0;
     public String IN_CARDC = "";
     public String IN_CARDN1 = "";
     public String IN_CARDN2 = "";

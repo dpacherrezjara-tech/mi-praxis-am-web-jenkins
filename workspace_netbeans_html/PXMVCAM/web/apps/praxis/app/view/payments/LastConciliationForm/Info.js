@@ -51,9 +51,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                     id: prototype.id + '-gridMainData',
                                     width: 1399,
                                     columnLines: true,
-//                                    features: [{
-//                                        ftype: 'summary'
-//                                    }],
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom',
+                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -130,6 +131,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -147,6 +152,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOPS, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {text: 'Difference', dataIndex: 'DIFF', width: 80,
@@ -154,6 +163,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totDIFSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]

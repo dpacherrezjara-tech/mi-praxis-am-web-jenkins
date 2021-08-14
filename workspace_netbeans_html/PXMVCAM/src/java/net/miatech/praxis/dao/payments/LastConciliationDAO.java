@@ -52,6 +52,7 @@ public class LastConciliationDAO {
     public List<A3800Filter> loadPX565SQP04093(A3800Filter filter) throws SQLException, Exception {
         List<A3800Filter> list = new ArrayList<A3800Filter>();
         A3800Filter objRtn;
+        double SVFOP = 0, SVFOPS = 0, DIFSVFOP = 0;
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04093(?,?,?,?,?,?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
@@ -92,7 +93,9 @@ public class LastConciliationDAO {
             rs01 = cstmt.getResultSet();
             while (rs01.next()) {
 
-                //dblAMOUNTDOC = rs01.getDouble("AMOUNTDOC");
+                SVFOP = rs01.getDouble("SVFOP");
+                SVFOPS = rs01.getDouble("SVFOPS");
+                DIFSVFOP = rs01.getDouble("SVFOP") - rs01.getDouble("SVFOPS");
 
             }
             try {
@@ -129,6 +132,10 @@ public class LastConciliationDAO {
                     objRtn.SVFOPS = rs01.getDouble("SVFOPS");
                     objRtn.SCURRENCYS = rs01.getString("SCURRENCYS").trim();
                     objRtn.DIFF = rs01.getDouble("SVFOP") - rs01.getDouble("SVFOPS");
+                    
+                    objRtn.totSVFOP = SVFOP;
+                    objRtn.totSVFOPS = SVFOPS;
+                    objRtn.totDIFSVFOP = DIFSVFOP;
                     
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;
