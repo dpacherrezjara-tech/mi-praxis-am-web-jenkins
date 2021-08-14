@@ -1792,7 +1792,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetTkt2',
-                                    width: 1665,
+                                    width: 1455,
                                     features: [{
                                             ftype: 'summary'
                                         }],
@@ -1968,7 +1968,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {
+                                                    /*{
                                                         text: '0%',
                                                         defaults: {
                                                             menuDisabled: true,
@@ -2019,7 +2019,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                 }
                                                             }
                                                         ]
-                                                    },
+                                                    },*/
                                                     {
                                                         text: 'Total',
                                                         defaults: {
