@@ -207,6 +207,7 @@ public class ProrationFactorPMPController extends BaseController {
             String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             String RUTA_FILE_NAME_SERVER_40 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_40").toString();
             String RUTA_FILE_NAME_SERVER_41 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_41").toString();
+            String RUTA_FILE_NAME_SERVER_33 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_33").toString();
             DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             Date date = new Date();
             
@@ -348,10 +349,13 @@ public class ProrationFactorPMPController extends BaseController {
             if (zip(fileName)){
                 File file1 = new File(RUTA_FILE_NAME_SERVER_40 + "\\" + fileName + ".zip");
                 File file2 = new File(RUTA_FILE_NAME_SERVER_41 + "\\" + fileName + ".zip");
+                File file3 = new File(RUTA_FILE_NAME_SERVER_33 + "\\" + fileName + ".zip");
                 if(!file1.exists())
                     Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_40 + "\\" + fileName + ".zip");
                 if(!file2.exists())
                     Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_41 + "\\" + fileName + ".zip");
+                if(!file3.exists())
+                    Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_33 + "\\" + fileName + ".zip");
             }            
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + ".zip" + "\"");
