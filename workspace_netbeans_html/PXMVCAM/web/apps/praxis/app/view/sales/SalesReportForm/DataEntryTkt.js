@@ -17,8 +17,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
     ],
     title: 'Ticket Information',
     header: true,
-    width: 1420,
-    height: 725,
+    width: 1470,
+    height: 800,
     border: false,
     resizable: false,
     layout: {
@@ -39,14 +39,14 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
                 {
                     xtype: 'panel',
                     layout: 'vbox',
-                    width: 1410,
+                    width: 1460,
                     margin: '5 5 5 5',
                     items: [
                         {
                             xtype: 'tabpanel',
                             id: prototype.idSale + '-det-tabMain',
-                            width: 1410,
-                            height: 685,
+                            width: 1450,
+                            height: 750,
                             anchor: '100%',
                             margin: '1 1 1 1',
                             autoScroll: true,
@@ -2405,8 +2405,8 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
                                         {
                                             xtype: 'panel',
                                             id: prototype.idSale + '-contenedor-form',
-                                            width: 1370,
-                                            height: 680,
+                                            width: 1446,
+                                            height: 740,
                                             items: [
                                                 {
                                                     xtype: 'prorrate',
