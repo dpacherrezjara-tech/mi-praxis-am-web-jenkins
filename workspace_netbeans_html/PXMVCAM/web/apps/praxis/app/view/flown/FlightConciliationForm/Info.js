@@ -1292,10 +1292,14 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
+                                                        listeners: {
+                                                            click: 'viewTicket'
+                                                        },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#d5f4d5;";
-                                                            return value;
-                                                        },
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
                                                     },
                                                     {text: 'Status', dataIndex: 'desSTVAL', width: 110, sortable: true},
                                                     {text: 'Orig', dataIndex: 'CDEPART', width: 70, sortable: true},
@@ -1788,7 +1792,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetTkt2',
-                                    width: 1665,
+                                    width: 1455,
                                     features: [{
                                             ftype: 'summary'
                                         }],
@@ -1964,7 +1968,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {
+                                                    /*{
                                                         text: '0%',
                                                         defaults: {
                                                             menuDisabled: true,
@@ -2015,7 +2019,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                                 }
                                                             }
                                                         ]
-                                                    },
+                                                    },*/
                                                     {
                                                         text: 'Total',
                                                         defaults: {

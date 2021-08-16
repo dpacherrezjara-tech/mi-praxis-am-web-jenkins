@@ -289,6 +289,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         });
         global.clear();
         Ext.getCmp(prototype.id + '-gridMainData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridMainData').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     OnGridDetCard: function(obj, metaData, rowNum, columnNum, obj2, rowData) {

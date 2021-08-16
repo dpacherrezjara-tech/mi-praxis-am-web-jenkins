@@ -510,6 +510,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         this.beanDetDay.A720PNR = rowData.data.SPNR;
         this.beanDetDay.A1716FPRO = rowData.data.SDATE;
         this.beanDetDay.A1716REFE = rowData.data.REFNBR;
+        this.beanDetDay.difSVFOP = rowData.data.difSVFOP;
         console.log(this.beanDetDay);
         //this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
 
