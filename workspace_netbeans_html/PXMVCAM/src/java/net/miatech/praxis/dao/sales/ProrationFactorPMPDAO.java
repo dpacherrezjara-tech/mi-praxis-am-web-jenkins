@@ -59,7 +59,7 @@ public class ProrationFactorPMPDAO {
         ResultSet rs01 = null;
 
         try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX0094S01A007(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04171(?,?,?,?,?,?,?,?,?,?,?,?)}"; // SE REEMPLAZA POR PX0094S01A007
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
