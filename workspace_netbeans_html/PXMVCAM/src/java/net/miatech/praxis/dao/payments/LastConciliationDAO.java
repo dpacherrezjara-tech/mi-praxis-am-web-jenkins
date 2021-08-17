@@ -219,6 +219,7 @@ public class LastConciliationDAO {
 
                     objRtn = new A2290Filter();
                     objRtn.IN_SDATE = filter.IN_SDATE;
+                    objRtn.descSDATE = Functions.getMonthConvert(filter.IN_SDATE);
                     objRtn.IN_CARDN = filter.IN_CARDN;
                     objRtn.IN_SAUTHOC = filter.IN_SAUTHOC;
 
