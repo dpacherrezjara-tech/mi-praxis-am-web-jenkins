@@ -173,7 +173,7 @@ public class ProReportLastConciliation {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
             
-            cell = new PdfPCell(new Phrase("RECHAZO DE LOS BOLETOS\n\n" + Data.TKTS_CONCATENADOS + "\n\nPOR ERROR SE SOLICITO AUTH POR:                                    $ " + df_2.format(Data.totSVFOP_ERROR) + "\nY LA EMISION DE LOS BOLETOS SUMAN UN TOTAL DE: $ " + df_2.format(Data.totSVFOP) + "\nSE REPROCESA EL IMPORTE AUTORIZADO", NORMAL));
+            cell = new PdfPCell(new Phrase("RECHAZO DE LOS BOLETOS\n\n" + Data.TKTS_CONCATENADOS + "\n\nPOR ERROR SE SOLICITO AUTH POR:                                      $ " + df_2.format(Data.totSVFOP_ERROR) + "\nY LA EMISION DE LOS BOLETOS SUMAN UN TOTAL DE:  $ " + df_2.format(Data.totSVFOP) + "\nSE REPROCESA EL IMPORTE AUTORIZADO", NORMAL));
             cell.setFixedHeight(400);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -191,7 +191,13 @@ public class ProReportLastConciliation {
             
             PYi = PYi - 450;
         
-        
+            Phrase txtTotal = new Phrase(new Paragraph("TOTAL", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTotal, PosX1 + 450, PYi, 0);
+            
+            colorRectangle(under, BaseColor.WHITE, PosX1 + 500, PYi - 10, 60, 25);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("$ " + df_2.format(Data.totSVFOP - Data.totSVFOP_ERROR), NORMAL)), PosX1 + 530, PYi, 0);
+            
+            
             //cell.setColspan(2);
             /*colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), PosX1, PYi - 11, 580, 25);
             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Documento", subFont_1)), PosX1 + 15, PYi, 0);

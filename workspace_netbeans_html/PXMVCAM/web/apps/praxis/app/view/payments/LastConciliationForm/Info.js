@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1500,
+                width: 1574,
                 height: 'auto',
                 align: 'center'
             },
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1399,
+                            width: 1574,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
-                                    width: 1399,
+                                    width: 1574,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Date', dataIndex: 'SDATE', width: 100}
+                                                    {text: 'Date', dataIndex: 'SDATE', width: 80}
                                                 ]
                                             },
                                             {
@@ -87,7 +87,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'strDescStatus', width: 80
+                                                text: 'Status', dataIndex: 'strDescStatus', width: 70
                                             },
                                             {
                                                 text: 'Credit Card',
@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: 'SCARCOD', width: 60},
+                                                    {text: 'Code', dataIndex: 'SCARCOD', width: 50},
                                                     {text: 'Number', dataIndex: 'SCARDN', width: 110,
                                                         listeners: {
                                                             click: 'OnGridDetCard'
@@ -114,10 +114,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                             },
                                             {text: 'PNR <br> Sales', dataIndex: 'SPNR', width: 80},
                                             {text: 'Code Trans <br> Usado', dataIndex: 'TRNCU', width: 80},
-                                            {text: 'Country <br> Sales', dataIndex: 'SCOUNTRY', width: 80},
+                                            {text: 'Country <br> Sales', dataIndex: 'SCOUNTRY', width: 70},
                                             {text: 'Agent Code <br> Sales', dataIndex: 'SAGENT', width: 80},
                                             {text: 'Payment Type <br> Sales', dataIndex: 'SPAYMENT', width: 100},
-                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 80},
+                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 70},
                                             {
                                                 text: 'Loc Sales',
                                                 defaults: {
@@ -172,9 +172,22 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Notice<br>Record',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'DATAVIS', width: 80},
+                                                    {text: 'Number', dataIndex: 'NUMAVIS', width: 80},
+                                                    {text: 'Status', dataIndex: 'descSTAAVIS', width: 80},
+                                                ]
+                                            },
+                                            {
                                                 text: 'Download',
                                                 xtype: 'actioncolumn',
-                                                width: 75,
+                                                width: 70,
                                                 align: 'center',
                                                 items: [
                                                     {
