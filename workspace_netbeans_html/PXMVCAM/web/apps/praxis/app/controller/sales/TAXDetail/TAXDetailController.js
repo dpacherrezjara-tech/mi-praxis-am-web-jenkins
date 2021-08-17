@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.controller.sales.TAXDetail.TAXDetailController', {
                 ["1", "Accounting ID"],
                 ["2", "Processing Date"],
                 ["3", "Accounting Date"],
-                ["4", "Sale Date"],
+               // ["4", "Sale Date"],
                 ["5", "Group"]
             ]
         }));
