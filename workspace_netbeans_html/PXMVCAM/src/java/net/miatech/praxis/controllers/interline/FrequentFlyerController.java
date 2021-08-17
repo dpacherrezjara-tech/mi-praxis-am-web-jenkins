@@ -340,7 +340,7 @@ public class FrequentFlyerController extends BaseController {
             Cell CH1_14 = row.createCell(14);
             Cell CH1_15 = row.createCell(15);
             Cell CH1_16 = row.createCell(16);
-            Cell CH1_17 = row.createCell(17);
+//            Cell CH1_17 = row.createCell(17);
 
             CH1_00.setCellValue("Clearing Date");
             CH1_01.setCellValue("Period");
@@ -351,8 +351,8 @@ public class FrequentFlyerController extends BaseController {
             CH1_06.setCellValue("PNR");
             CH1_07.setCellValue("Invoice");
             CH1_12.setCellValue("We Accept");
-            CH1_16.setCellValue("Status");
-            CH1_17.setCellValue("Pre Memo");
+//            CH1_16.setCellValue("Status");
+            CH1_16.setCellValue("Pre Memo");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -371,7 +371,7 @@ public class FrequentFlyerController extends BaseController {
             CH1_14.setCellStyle(headerStyle);
             CH1_15.setCellStyle(headerStyle);
             CH1_16.setCellStyle(headerStyle);
-            CH1_17.setCellStyle(headerStyle);
+//            CH1_17.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -384,7 +384,7 @@ public class FrequentFlyerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 16, 16));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 17, 17));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 17, 17));
 
             //*******************
             ++vj;
@@ -406,7 +406,7 @@ public class FrequentFlyerController extends BaseController {
             Cell CH2_14 = row2.createCell(14);
             Cell CH2_15 = row2.createCell(15);
             Cell CH2_16 = row2.createCell(16);
-            Cell CH2_17 = row2.createCell(17);
+//            Cell CH2_17 = row2.createCell(17);
 
             CH2_07.setCellValue("Date");
             CH2_08.setCellValue("Gross");
@@ -435,7 +435,7 @@ public class FrequentFlyerController extends BaseController {
             CH2_14.setCellStyle(headerStyle);
             CH2_15.setCellStyle(headerStyle);
             CH2_16.setCellStyle(headerStyle);
-            CH2_17.setCellStyle(headerStyle);
+//            CH2_17.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -459,7 +459,7 @@ public class FrequentFlyerController extends BaseController {
                 Cell rcell14 = row.createCell(14);
                 Cell rcell15 = row.createCell(15);
                 Cell rcell16 = row.createCell(16);
-                Cell rcell17 = row.createCell(17);
+//                Cell rcell17 = row.createCell(17);
 
                 rcell0.setCellValue(listaData.get(vi).strFormatDate);
                 rcell1.setCellValue(listaData.get(vi).PERMONT);
@@ -477,8 +477,8 @@ public class FrequentFlyerController extends BaseController {
                 rcell13.setCellValue(listaData.get(vi).ISCIA);
                 rcell14.setCellValue(listaData.get(vi).TAXIA);
                 rcell15.setCellValue(listaData.get(vi).NETIA);
-                rcell16.setCellValue(listaData.get(vi).strDescripcion1);
-                rcell17.setCellValue(listaData.get(vi).NROPRT);
+//                rcell16.setCellValue(listaData.get(vi).strDescripcion1);
+                rcell16.setCellValue(listaData.get(vi).NROPRT);
 
                 iter.next();
                 ++vi;
@@ -501,7 +501,7 @@ public class FrequentFlyerController extends BaseController {
             sheet.autoSizeColumn(14, true);
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
-            sheet.autoSizeColumn(17, true);
+//            sheet.autoSizeColumn(17, true);
 //            sheet.autoSizeColumn(18, true);
 //            sheet.autoSizeColumn(19, true);
 //            sheet.autoSizeColumn(20, true);
