@@ -33,6 +33,10 @@ public class A3800 {
     public String TIPOTAR = "";
     public String TDATE = "";
     public String CERROR = "";
+    public String DATAVIS = "";
+    public String NUMAVIS = "";
+    public String STAAVIS = "";
+    public String descSTAAVIS = "";
 
     //Audiotria
     public String USCR = "";
