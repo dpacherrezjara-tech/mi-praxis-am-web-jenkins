@@ -59,6 +59,11 @@ public class LastConciliationDAO {
         
         HashMap<String, String> hmDescEstadosSTVAL = new HashMap<String, String>();
         hmDescEstadosSTVAL.put("1", "Conciliate");
+        
+        HashMap<String, String> hmDescEstadosSTAAVIS = new HashMap<String, String>();
+        hmDescEstadosSTAAVIS.put("0", "Emitido");
+        hmDescEstadosSTAAVIS.put("1", "Payment");
+        hmDescEstadosSTAAVIS.put("2", "Reject");
 
         Connection cnx = null;
         try {
@@ -132,6 +137,13 @@ public class LastConciliationDAO {
                     objRtn.SVFOPS = rs01.getDouble("SVFOPS");
                     objRtn.SCURRENCYS = rs01.getString("SCURRENCYS").trim();
                     objRtn.DIFF = rs01.getDouble("SVFOP") - rs01.getDouble("SVFOPS");
+                    
+                    objRtn.DATAVIS = rs01.getString("DATAVIS").trim();
+                    objRtn.NUMAVIS = rs01.getString("NUMAVIS").trim();
+                    objRtn.STAAVIS = rs01.getString("STAAVIS").trim();
+                    if (hmDescEstadosSTAAVIS.containsKey(rs01.getString("STAAVIS").trim().toUpperCase())) {
+                        objRtn.descSTAAVIS = hmDescEstadosSTAAVIS.get(rs01.getString("STAAVIS").trim()).toString();
+                    }
                     
                     objRtn.totSVFOP = SVFOP;
                     objRtn.totSVFOPS = SVFOPS;

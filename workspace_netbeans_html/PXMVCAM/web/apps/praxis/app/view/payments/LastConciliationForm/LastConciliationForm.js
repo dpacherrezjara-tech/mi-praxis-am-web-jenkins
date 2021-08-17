@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.LastConciliationForm',
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1500,
+                                        width: 1574,
                                         align: 'center'
                                     },
                                     items: [
@@ -69,13 +69,13 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.LastConciliationForm',
                                         {
                                             xtype: 'panel',
                                             height: 600,
-                                            width: 1500,
+                                            width: 1574,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1500,
+                                                    width: 1574,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
