@@ -219,13 +219,32 @@ public class LastConciliationController extends BaseController {
         System.out.println("Report : getPDF");
         String fileNameDownload = "Last Conciliation - " + Functions.getFechaActual();
         ProReportLastConciliation prfd = new ProReportLastConciliation();
+        A2290Filter Data = new A2290Filter();
         try {
             File file = File.createTempFile(fileNameDownload, ".pdf");
 
-            List<A2290Filter> listaData = this.getListCardA2291(request, true);
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-
-            prfd.createReport(listaData, file);
+            List<A2290Filter> listaDataA2291 = this.getListCardA2291(request, true);
+            System.out.println("Tamaño de lista devuelta A2291: " + listaDataA2291.size());
+            
+            List<A2290Filter> listaDataA2290 = this.getListCardA2290(request, true);
+            System.out.println("Tamaño de lista devuelta A2290: " + listaDataA2290.size());
+            
+            //Armando el objeto Data
+            
+            Data.SAGENT = listaDataA2290.get(0).SAGENT;
+            Data.descSDATE = listaDataA2290.get(0).descSDATE;
+            Data.SCURRENCY = listaDataA2290.get(0).SCURRENCY;
+            Data.totSVFOP = listaDataA2290.get(0).totSVFOP; //TOTAL EMISION DE LOS BOLETOS
+            Data.totSVFOP_ERROR = listaDataA2291.get(0).totSVFOP; //IMPORTE POR ERROR
+            
+            for (int i =0; i < listaDataA2290.size(); i++){
+                Data.TKTS_CONCATENADOS = Data.TKTS_CONCATENADOS + listaDataA2290.get(i).CCIA + " " + listaDataA2290.get(i).FORMA + listaDataA2290.get(i).SERIE + ", ";
+            }
+            
+            Data.TKTS_CONCATENADOS = Data.TKTS_CONCATENADOS.substring(0, Data.TKTS_CONCATENADOS.length()-2);
+            
+            
+            prfd.createReport(Data, file);
 
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + ".pdf" + "\"");

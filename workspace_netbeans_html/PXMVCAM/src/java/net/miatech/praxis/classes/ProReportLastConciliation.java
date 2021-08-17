@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ import net.miatech.praxis.payment.filter.A2290Filter;
 public class ProReportLastConciliation {
 
     private Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD);
+    private Font catFont_u = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.UNDERLINE);
     private Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.NORMAL);
     private Font subFont_1 = new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD, BaseColor.WHITE);
     private Font subFontT = new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.BOLD);
@@ -50,67 +52,167 @@ public class ProReportLastConciliation {
     private int PYi_2 = 0;
     private int Hlng = 0;
 
-    public void createReport(List<A2290Filter> Data, File file) {
+    public void createReport(A2290Filter Data, File file) {
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,###.00");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+        
         try {
-            PYi = 520; // Para A4: 788
+            PYi = 842; // Para A4: 788
             Hlng = 12;
             int PosX1 = 15;
-            int PosX1_2;
-            int PosX5;
-            int PosX9;
-            int PosX13;
-            int PosX2;
-            int PosX6;
-            int PosX10;
-            int PosX14;
-            int PosX3;
-            int PosX7;
-            int PosX11;
-            int PosX15;
-            int PosX4;
-            int PosX8;
-            int PosX12;
-            int PosX16;
-            int PosX17;
-            int PosX18;
-            int PosX19;
-            int PosX20;
-            int PosX21;
-            int ItemPage = 0;
-            int getPageNumber = 0;
-
-            int posNewPagex = 0;
-            int posNewPagey = 0;
-
-            double TOT_A1776VCPLC = 0;
-            double TOT_A1776ACSL = 0;
-            double TOT_A1776GPAGC = 0;
 
             //Document document = new Document(new Rectangle(842, 595));
-            Document document = new Document(PageSize.LETTER.rotate(), 5, 5, 5, 5);
+            Document document = new Document(PageSize.A4, 5, 5, 5, 5);
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
-            TableHeader event = new TableHeader();
-            writer.setPageEvent(event);
             document.open();
+
+            PYi = PYi - 40;
 
             //Agregando logo de AM
             Image img;
             img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
-            img.setAbsolutePosition(PosX1, 540);  //530        
+            img.setAbsolutePosition(PosX1, PYi - 20);
             img.scaleToFit(190, 40);
             document.add(new Paragraph(String.format("", RESOURCES[0], img.getClass().getName())));
             document.add(img);
 
-            //Agregando título de AM
-            PYi = PYi - 25; //10               
+            //Agregando título de AM                          
             Phrase txtTitle = new Phrase(new Paragraph("Aerovias de Mexico, S.A. de C.V.", catFont));
             PdfContentByte canvas = writer.getDirectContent();
             PdfContentByte under = writer.getDirectContentUnder();
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, txtTitle, PosX1 + 270, 550, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, txtTitle, PosX1 + 540, PYi, 0);
 
+            PYi = PYi - 40;
 
-           
+            Phrase txtAviso = new Phrase(new Paragraph("Aviso de irregularidad", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtAviso, PosX1, PYi, 0);
+
+            Phrase txtOficina = new Phrase(new Paragraph("Oficina", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtOficina, PosX1, PYi - 40, 0);
+
+            Phrase txtOficinaValue = new Phrase(new Paragraph(Data.SAGENT, NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtOficinaValue, PosX1 + 160, PYi - 40, 0);
+
+            Phrase txtOficinaUnderline = new Phrase(new Paragraph("_______________", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtOficinaUnderline, PosX1 + 140, PYi - 40, 0);
+
+            Phrase txtNroDocumento = new Phrase(new Paragraph("Número de documento:", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtNroDocumento, PosX1 + 350, PYi - 20, 0);
+            Phrase txtNroDocumentoUnderline = new Phrase(new Paragraph("_______________", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtNroDocumentoUnderline, PosX1 + 480, PYi - 20, 0);
+            Phrase txtNroDocumentoValue = new Phrase(new Paragraph("AR-001328", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, txtNroDocumentoValue, PosX1 + 520, PYi - 20, 0);
+
+            Phrase txtFecEmision = new Phrase(new Paragraph("Fecha de emisión:", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtFecEmision, PosX1 + 350, PYi - 50, 0);
+            Phrase txtFecEmisionUnderline = new Phrase(new Paragraph("_______________", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtFecEmisionUnderline, PosX1 + 480, PYi - 50, 0);
+            Phrase txtFecEmisionValue = new Phrase(new Paragraph(Data.descSDATE, NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, txtFecEmisionValue, PosX1 + 520, PYi - 50, 0);
+
+            Phrase txtMoneda = new Phrase(new Paragraph("Moneda:", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtMoneda, PosX1 + 350, PYi - 80, 0);
+            Phrase txtMonedaUnderline = new Phrase(new Paragraph("_______________", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtMonedaUnderline, PosX1 + 480, PYi - 80, 0);
+            Phrase txtMonedaValue = new Phrase(new Paragraph(Data.SCURRENCY, NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, txtMonedaValue, PosX1 + 520, PYi - 80, 0);
+
+            PYi = PYi - 150;
+
+            PdfPTable table = new PdfPTable(4);
+            table.setTotalWidth(565);
+            table.setWidths(new float[] {60, 50, 385, 70});            
+            table.setLockedWidth(true);            
             
+            // first row
+            PdfPCell cell = new PdfPCell(new Phrase("Documento", subFontT));
+            cell.setFixedHeight(20);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.GRAY);
+            table.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Agente", subFontT));
+            cell.setFixedHeight(20);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.GRAY);
+            table.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Concepto", subFontT));
+            cell.setFixedHeight(20);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.GRAY);
+            table.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Importe", subFontT));
+            cell.setFixedHeight(20);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.GRAY);
+            table.addCell(cell);
+            
+            // Second row
+            cell = new PdfPCell(new Phrase("AVISO DE CARGO", NORMAL));
+            cell.setFixedHeight(400);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase(Data.SAGENT, NORMAL));
+            cell.setFixedHeight(400);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("RECHAZO DE LOS BOLETOS\n\n" + Data.TKTS_CONCATENADOS + "\n\nPOR ERROR SE SOLICITO AUTH POR:                                      $ " + df_2.format(Data.totSVFOP_ERROR) + "\nY LA EMISION DE LOS BOLETOS SUMAN UN TOTAL DE:  $ " + df_2.format(Data.totSVFOP) + "\nSE REPROCESA EL IMPORTE AUTORIZADO", NORMAL));
+            cell.setFixedHeight(400);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("$ " + df_2.format(Data.totSVFOP - Data.totSVFOP_ERROR) + "", NORMAL));
+            cell.setFixedHeight(400);
+            cell.setBorder(Rectangle.BOX);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(cell);
+            
+            // Adding Table to document        
+            //document.add(table); 
+            table.writeSelectedRows(0, -1, PosX1, PYi, canvas);
+            
+            PYi = PYi - 450;
+        
+            Phrase txtTotal = new Phrase(new Paragraph("TOTAL", NORMAL));
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTotal, PosX1 + 450, PYi, 0);
+            
+            colorRectangle(under, BaseColor.WHITE, PosX1 + 500, PYi - 10, 60, 25);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("$ " + df_2.format(Data.totSVFOP - Data.totSVFOP_ERROR), NORMAL)), PosX1 + 530, PYi, 0);
+            
+            
+            //cell.setColspan(2);
+            /*colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), PosX1, PYi - 11, 580, 25);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Documento", subFont_1)), PosX1 + 15, PYi, 0);
+            PosX1 = PosX1 + 40;
+            PosX2 = PosX1;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Agente", subFont_1)), PosX1, PYi, 0);
+
+            PosX1 = PosX1 + 40; //19
+            PosX3 = PosX1;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Concepto", subFont_1)), PosX1, PYi, 0);
+
+            PosX1 = PosX1 + 67;
+            PosX4 = PosX1;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Importe", subFont_1)), PosX1, PYi, 0);*/
+
             document.close();
             writer.close();
         } catch (Exception e) {

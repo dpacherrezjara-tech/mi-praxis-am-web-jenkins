@@ -1223,7 +1223,10 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         if (!boxA1686Formateados.hidden) {
             global.getFile(prototype.url + '/GetXLSXA1686Formateados?IN_TIPOFECHA=' + params.IN_TIPOFECHA
                     + '&FECHA=' + params.FECHA
-                    + '&FUENTE=' + params.FUENTE);
+                    + '&FUENTE=' + params.FUENTE
+                    + '&HOCR=' + params.HOCR
+                    + '&QRECOR=' + params.QRECOR
+                    + '&QRECERR=' + params.QRECERR);
         }
         if (!boxA1696Errores.hidden) {
             global.getFile(prototype.url + '/GetXLSXA1696Errores?FECHA=' + params.FECHA
