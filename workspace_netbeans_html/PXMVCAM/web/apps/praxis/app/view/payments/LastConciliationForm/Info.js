@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Notice<br>Record',
+                                                text: 'Notice Record',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,

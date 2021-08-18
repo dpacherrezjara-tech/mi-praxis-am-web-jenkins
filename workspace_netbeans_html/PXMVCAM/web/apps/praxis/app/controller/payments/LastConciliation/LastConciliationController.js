@@ -155,6 +155,17 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             ]
         }));
         cmbSTAAVIS.setValue("");
+        
+        var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro');
+        cmbFecFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["SDATE", "Sales Date"],
+                ["DATAVIS", "Notice Date"]
+            ]
+        }));
+        cmbFecFiltro.setValue("SDATE");
 
         this.paramsObtainData.BANK = 2;
         this.paramsObtainData.COUNTRY = 2;
@@ -208,6 +219,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         me.bean.IN_STAAVIS = Ext.getCmp(prototype.id + '-cmbSTAAVIS').getValue();
         me.bean.IN_SPNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_SAGENT = Ext.getCmp(prototype.id + '-txtSAGENT').getValue();
+        me.bean.strFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {

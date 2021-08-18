@@ -55,7 +55,7 @@ public class LastConciliationDAO {
         double SVFOP = 0, SVFOPS = 0, DIFSVFOP = 0;
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04093(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04093(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
 
         HashMap<String, String> hmDescEstadosSTVAL = new HashMap<String, String>();
         hmDescEstadosSTVAL.put("1", "Conciliate");
@@ -69,10 +69,10 @@ public class LastConciliationDAO {
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(11, Types.INTEGER);
             cstmt.registerOutParameter(12, Types.INTEGER);
             cstmt.registerOutParameter(13, Types.INTEGER);
             cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_FECHA_FROM.trim());
@@ -88,17 +88,19 @@ public class LastConciliationDAO {
             cstmt.setString(8, filter.IN_SVFOPSG.trim());
             cstmt.setString(9, filter.IN_STAAVIS.trim());
             cstmt.setString(10, filter.IN_SAGENT.trim());
+            cstmt.setString(11, filter.strFecFiltro.trim());
+            
 
-            cstmt.setInt(11, filter.page.PAGNUM);
-            cstmt.setInt(12, filter.page.PAGROW);
-            cstmt.setInt(13, filter.page.TOTPAG);
-            cstmt.setInt(14, filter.page.TOTROW);
+            cstmt.setInt(12, filter.page.PAGNUM);
+            cstmt.setInt(13, filter.page.PAGROW);
+            cstmt.setInt(14, filter.page.TOTPAG);
+            cstmt.setInt(15, filter.page.TOTROW);
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(11);
-            filter.page.PAGROW = cstmt.getInt(12);
-            filter.page.TOTPAG = cstmt.getInt(13);
-            filter.page.TOTROW = cstmt.getInt(14);
+            filter.page.PAGNUM = cstmt.getInt(12);
+            filter.page.PAGROW = cstmt.getInt(13);
+            filter.page.TOTPAG = cstmt.getInt(14);
+            filter.page.TOTROW = cstmt.getInt(15);
 
             rs01 = cstmt.getResultSet();
             while (rs01.next()) {
@@ -148,6 +150,8 @@ public class LastConciliationDAO {
                     objRtn.STAAVIS = rs01.getString("STAAVIS").trim();
                     if (hmDescEstadosSTAAVIS.containsKey(rs01.getString("STAAVIS").trim().toUpperCase())) {
                         objRtn.descSTAAVIS = hmDescEstadosSTAAVIS.get(rs01.getString("STAAVIS").trim()).toString();
+                    } else {
+                        objRtn.descSTAAVIS = "No emitido";
                     }
 
                     objRtn.totSVFOP = SVFOP;

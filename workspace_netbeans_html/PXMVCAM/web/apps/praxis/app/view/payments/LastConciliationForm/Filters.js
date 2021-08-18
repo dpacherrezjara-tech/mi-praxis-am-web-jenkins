@@ -23,13 +23,34 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Filters', {
                 hidden: false,
             },
             items: [
-                {
+                /*{
                     xtype: 'label',
                     html: '<strong style="color:#000;">Sales Date</strong>',
                     align: 'left',
                     fieldStyle: 'text-align: left;',
                     padding: '8px 30px 0px 10px',
                     hidden: false
+                },*/
+                {
+                    xtype: 'combo',
+                    id: prototype.id + '-cmbFecFiltro',
+                    queryMode: 'local',
+                    allowBlank: false,
+                    forceSelection: true,
+                    selectOnFocus: true,
+                    caseSensitive: false,
+                    autoSelect: true,
+                    editable: true,
+                    width: 100,
+//                            value: "ADATE",
+                    typeAhead: true,
+                    valueField: 'code',
+                    displayField: 'name',
+                    listConfig: {minWidth: 130},
+                    enableKeyEvents: true,
+                    triggerAction: 'all',
+                    listeners: {
+                    }
                 },
                 {
                     xtype: 'combo',
