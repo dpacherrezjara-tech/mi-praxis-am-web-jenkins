@@ -142,7 +142,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             ]
         }));
         cmbFecFiltro.setValue("+");
-        
+
         var cmbSTAAVIS = Ext.getCmp(prototype.id + '-cmbSTAAVIS');
         cmbSTAAVIS.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -150,8 +150,8 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             data: [
                 ["", "All"],
                 ["0", "Emitido"],
-                //["1", "Payment"],
-                //["2", "Reject"],
+                        //["1", "Payment"],
+                        //["2", "Reject"],
             ]
         }));
         cmbSTAAVIS.setValue("");
@@ -401,7 +401,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
     getPDF: function(grid, rowIndex, colIndex) {
 
         this.beanDetail = grid.getStore().getAt(rowIndex).data;
-        
+
         this.beanDetCard.IN_SDATE = this.beanDetail.SDATE;
         this.beanDetCard.IN_CARDN = this.beanDetail.SCARDN;
         this.beanDetCard.IN_SAUTHOC = this.beanDetail.SAUTHOC;
@@ -410,6 +410,10 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
 
         global.getFile(prototype.url + '/getPDF?beanString=' + me.paramsDetailCard.beanString);
         
+        setTimeout(function() {
+            me.btnSearch_click();
+        }, 4000);
+
         //setTimeout(this.btnSearch_click(), 5000);
 
     },
