@@ -142,7 +142,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             ]
         }));
         cmbFecFiltro.setValue("+");
-        
+
         var cmbSTAAVIS = Ext.getCmp(prototype.id + '-cmbSTAAVIS');
         cmbSTAAVIS.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -150,11 +150,22 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             data: [
                 ["", "All"],
                 ["0", "Emitido"],
-                //["1", "Payment"],
-                //["2", "Reject"],
+                        //["1", "Payment"],
+                        //["2", "Reject"],
             ]
         }));
         cmbSTAAVIS.setValue("");
+        
+        var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro');
+        cmbFecFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["SDATE", "Sales Date"],
+                ["DATAVIS", "Notice Date"]
+            ]
+        }));
+        cmbFecFiltro.setValue("SDATE");
 
         this.paramsObtainData.BANK = 2;
         this.paramsObtainData.COUNTRY = 2;
@@ -208,6 +219,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         me.bean.IN_STAAVIS = Ext.getCmp(prototype.id + '-cmbSTAAVIS').getValue();
         me.bean.IN_SPNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_SAGENT = Ext.getCmp(prototype.id + '-txtSAGENT').getValue();
+        me.bean.strFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -401,7 +413,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
     getPDF: function(grid, rowIndex, colIndex) {
 
         this.beanDetail = grid.getStore().getAt(rowIndex).data;
-        
+
         this.beanDetCard.IN_SDATE = this.beanDetail.SDATE;
         this.beanDetCard.IN_CARDN = this.beanDetail.SCARDN;
         this.beanDetCard.IN_SAUTHOC = this.beanDetail.SAUTHOC;
@@ -410,6 +422,10 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
 
         global.getFile(prototype.url + '/getPDF?beanString=' + me.paramsDetailCard.beanString);
         
+        setTimeout(function() {
+            me.btnSearch_click();
+        }, 4000);
+
         //setTimeout(this.btnSearch_click(), 5000);
 
     },

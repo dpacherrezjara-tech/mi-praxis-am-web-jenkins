@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.utils.Functions;
 
 /**
  *
@@ -114,7 +115,7 @@ public class ProReportLastConciliation {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtFecEmision, PosX1 + 350, PYi - 50, 0);
             Phrase txtFecEmisionUnderline = new Phrase(new Paragraph("_______________", NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtFecEmisionUnderline, PosX1 + 480, PYi - 50, 0);
-            Phrase txtFecEmisionValue = new Phrase(new Paragraph(Data.descSDATE, NORMAL));
+            Phrase txtFecEmisionValue = new Phrase(new Paragraph(Functions.getMonthConvertX1(Data.descSDATE), NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, txtFecEmisionValue, PosX1 + 520, PYi - 50, 0);
 
             Phrase txtMoneda = new Phrase(new Paragraph("Moneda:", NORMAL));
