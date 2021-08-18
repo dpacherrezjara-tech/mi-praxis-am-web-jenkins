@@ -779,11 +779,19 @@ public class FlightConciliationDAO {
                 
                 if(rst.getString("STVCR").trim().equals("Y")){
                     beanCons.desSTVCR = "Yes";
-                } else if (rst.getString("STVCR").trim().equals("")) {
-                    beanCons.desSTVCR = "";
+                } else if (rst.getString("STVCR").trim().equals("")) { 
+                   beanCons.desSTVCR = "";
                 }
                 
                 beanCons.TPAX = rst.getString("TPAX").trim();
+                if(beanCons.TPAX.equals("A")){
+                    beanCons.desPAX = "Adult";
+                } else if (beanCons.TPAX.equals("C")) {
+                    beanCons.desPAX = "Children";
+                } else if (beanCons.TPAX.equals("I")) {
+                    beanCons.desPAX = "Infant";
+                }
+                
                 beanCons.FA720 = rst.getString("FA720").trim();
                 if(rst.getString("FA720").trim().equals("")){
                     beanCons.descFSALES = "";

@@ -229,10 +229,13 @@ public class LastConciliationController extends BaseController {
             List<A2290Filter> listaDataA2290 = this.getListCardA2290(request, true);
             System.out.println("Tamaño de lista devuelta A2290: " + listaDataA2290.size());
             
+            List<A3800Filter> listaDataA3800 = this.getListA3800(request, true);
+            
             //Armando el objeto Data
             
             Data.SAGENT = listaDataA2290.get(0).SAGENT;
-            Data.descSDATE = listaDataA2290.get(0).descSDATE;
+            Data.NUMAVIS = listaDataA3800.get(0).NUMAVIS;
+            Data.descSDATE = listaDataA3800.get(0).DATAVIS;
             Data.SCURRENCY = listaDataA2290.get(0).SCURRENCY;
             Data.totSVFOP = listaDataA2290.get(0).totSVFOP; //TOTAL EMISION DE LOS BOLETOS
             Data.totSVFOP_ERROR = listaDataA2291.get(0).totSVFOP; //IMPORTE POR ERROR
@@ -259,5 +262,41 @@ public class LastConciliationController extends BaseController {
         } catch (Exception e) {
             throw new SpringException(e);
         }
+    }
+    
+    public List<A3800Filter> getListA3800(HttpServletRequest request, Boolean bExcel) {
+
+        List<A3800Filter> lst = new ArrayList<>(0);
+        A3800Filter filter = new A3800Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new LastConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3800Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX565SQP04125(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
     }
 }

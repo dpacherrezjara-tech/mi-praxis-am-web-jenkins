@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Notice<br>Record',
+                                                text: 'Notice Record',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -180,7 +180,13 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Date', dataIndex: 'DATAVIS', width: 80},
-                                                    {text: 'Number', dataIndex: 'NUMAVIS', width: 80},
+                                                    {text: 'Number', dataIndex: 'NUMAVIS', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0');
+                                                            return  value;
+                                                        }
+                                                    },
                                                     {text: 'Status', dataIndex: 'descSTAAVIS', width: 80},
                                                 ]
                                             },

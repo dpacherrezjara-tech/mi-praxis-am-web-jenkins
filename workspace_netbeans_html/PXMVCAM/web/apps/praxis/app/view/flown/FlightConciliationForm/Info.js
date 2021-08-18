@@ -1271,7 +1271,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Type <br> Pax', dataIndex: 'TPAX', width: 70, sortable: true,
+                                                        text: 'Type <br> Pax', dataIndex: 'desPAX', width: 70, sortable: true,
 //                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 //                                                            metaData.style = "text-align:center;background:#FFF9E0;";
 //                                                            return value;

@@ -23,13 +23,34 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Filters', {
                 hidden: false,
             },
             items: [
-                {
+                /*{
                     xtype: 'label',
                     html: '<strong style="color:#000;">Sales Date</strong>',
                     align: 'left',
                     fieldStyle: 'text-align: left;',
                     padding: '8px 30px 0px 10px',
                     hidden: false
+                },*/
+                {
+                    xtype: 'combo',
+                    id: prototype.id + '-cmbFecFiltro',
+                    queryMode: 'local',
+                    allowBlank: false,
+                    forceSelection: true,
+                    selectOnFocus: true,
+                    caseSensitive: false,
+                    autoSelect: true,
+                    editable: true,
+                    width: 100,
+//                            value: "ADATE",
+                    typeAhead: true,
+                    valueField: 'code',
+                    displayField: 'name',
+                    listConfig: {minWidth: 130},
+                    enableKeyEvents: true,
+                    triggerAction: 'all',
+                    listeners: {
+                    }
                 },
                 {
                     xtype: 'combo',
@@ -211,7 +232,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Filters', {
                     autoSelect: true,
                     editable: true,
                     listConfig: {maxHeight: 111},
-                    width: 240,
+                    width: 150,
                     typeAhead: true,
                     valueField: 'CODE',
                     displayField: 'NAME',
@@ -310,7 +331,31 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Filters', {
                     enableKeyEvents: true,
                     triggerAction: 'all',
                 },
-                {xtype: 'tbspacer', width: 30},
+                {xtype: 'tbspacer', width: 220},
+                {
+                    xtype: 'label',
+                    text: 'Notice Status:',
+                    padding: '8px 00px 0px 00px',
+                    width: 100,
+                },
+                {
+                    xtype: 'combo',
+                    id: prototype.id + '-cmbSTAAVIS',
+                    queryMode: 'local',
+                    allowBlank: false,
+                    forceSelection: true,
+                    selectOnFocus: true,
+                    caseSensitive: false,
+                    autoSelect: true,
+                    editable: true,
+                    listConfig: {maxHeight: 111},
+                    width: 70,
+                    typeAhead: true,
+                    valueField: 'code',
+                    displayField: 'name',
+                    enableKeyEvents: true,
+                    triggerAction: 'all',
+                },
             ]
         },
     ]

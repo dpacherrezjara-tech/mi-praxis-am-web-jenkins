@@ -49,6 +49,7 @@ public class A2290Filter extends A2290 {
     public String IN_COUNTRY = "";
     public String IN_SDATE = "";
     public String descSDATE = "";
+    public String NUMAVIS = "";
     public String IN_TICKET = "";
     public String IN_MERCHN = "";
     public String IN_DATE = "";

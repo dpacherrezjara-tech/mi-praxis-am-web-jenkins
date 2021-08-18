@@ -63,7 +63,7 @@ public class AirlineMasterFileDAO {
             if (filter.intCurrentPg > 0) {
                 PAGINIT = (filter.intCurrentPg - 1) * totRowsPag;
             }
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX020S01PXA005_2(?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04172(?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
             cs.registerOutParameter(4, Types.INTEGER);

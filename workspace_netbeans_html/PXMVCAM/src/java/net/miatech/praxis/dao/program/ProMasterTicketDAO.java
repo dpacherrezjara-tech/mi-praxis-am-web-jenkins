@@ -1166,6 +1166,8 @@ public class ProMasterTicketDAO {
                                             objRtn.A1716TIDOC = rs08.getString("A1716TIDOC");
                                             objRtn.A1716ORIG = rs08.getString("A1716ORIG");
                                             objRtn.A1716FCONT = rs08.getString("A1716FCONT");
+                                            objRtn.A1716ACTRV = rs08.getDouble("A1716ACTRV");
+                                            objRtn.A1716PASRV = rs08.getDouble("A1716PASRV");
 
                                             objRtn.A1716TITU = rs08.getString("A1716TITU");
 

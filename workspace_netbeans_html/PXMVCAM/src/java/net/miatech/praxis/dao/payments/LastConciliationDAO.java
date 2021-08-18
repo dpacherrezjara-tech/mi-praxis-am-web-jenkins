@@ -55,11 +55,11 @@ public class LastConciliationDAO {
         double SVFOP = 0, SVFOPS = 0, DIFSVFOP = 0;
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04093(?,?,?,?,?,?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
-        
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04093(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
+
         HashMap<String, String> hmDescEstadosSTVAL = new HashMap<String, String>();
         hmDescEstadosSTVAL.put("1", "Conciliate");
-        
+
         HashMap<String, String> hmDescEstadosSTAAVIS = new HashMap<String, String>();
         hmDescEstadosSTAAVIS.put("0", "Emitido");
         hmDescEstadosSTAAVIS.put("1", "Payment");
@@ -69,10 +69,10 @@ public class LastConciliationDAO {
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(10, Types.INTEGER);
-            cstmt.registerOutParameter(11, Types.INTEGER);
             cstmt.registerOutParameter(12, Types.INTEGER);
             cstmt.registerOutParameter(13, Types.INTEGER);
+            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_FECHA_FROM.trim());
@@ -80,20 +80,27 @@ public class LastConciliationDAO {
             cstmt.setString(4, filter.IN_SPNR.trim());
             cstmt.setString(5, filter.IN_CARDN1.trim());
             cstmt.setString(6, filter.IN_CARDN2.trim());
-            cstmt.setString(7, filter.IN_CARDC.trim());
+            if (filter.IN_CARDC == null) {
+                cstmt.setString(7, "");
+            } else {
+                cstmt.setString(7, filter.IN_CARDC.trim());
+            }
             cstmt.setString(8, filter.IN_SVFOPSG.trim());
-            cstmt.setString(9, filter.IN_SAGENT.trim());
+            cstmt.setString(9, filter.IN_STAAVIS.trim());
+            cstmt.setString(10, filter.IN_SAGENT.trim());
+            cstmt.setString(11, filter.strFecFiltro.trim());
+            
 
-            cstmt.setInt(10, filter.page.PAGNUM);
-            cstmt.setInt(11, filter.page.PAGROW);
-            cstmt.setInt(12, filter.page.TOTPAG);
-            cstmt.setInt(13, filter.page.TOTROW);
+            cstmt.setInt(12, filter.page.PAGNUM);
+            cstmt.setInt(13, filter.page.PAGROW);
+            cstmt.setInt(14, filter.page.TOTPAG);
+            cstmt.setInt(15, filter.page.TOTROW);
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(10);
-            filter.page.PAGROW = cstmt.getInt(11);
-            filter.page.TOTPAG = cstmt.getInt(12);
-            filter.page.TOTROW = cstmt.getInt(13);
+            filter.page.PAGNUM = cstmt.getInt(12);
+            filter.page.PAGROW = cstmt.getInt(13);
+            filter.page.TOTPAG = cstmt.getInt(14);
+            filter.page.TOTROW = cstmt.getInt(15);
 
             rs01 = cstmt.getResultSet();
             while (rs01.next()) {
@@ -132,23 +139,25 @@ public class LastConciliationDAO {
                     objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
                     objRtn.SAGENT = rs01.getString("SAGENT").trim();
                     objRtn.SPAYMENT = rs01.getString("SPAYMENT").trim();
-                    objRtn.SVFOP = rs01.getDouble("SVFOP");     
+                    objRtn.SVFOP = rs01.getDouble("SVFOP");
                     objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
                     objRtn.SVFOPS = rs01.getDouble("SVFOPS");
                     objRtn.SCURRENCYS = rs01.getString("SCURRENCYS").trim();
                     objRtn.DIFF = rs01.getDouble("SVFOP") - rs01.getDouble("SVFOPS");
-                    
+
                     objRtn.DATAVIS = rs01.getString("DATAVIS").trim();
                     objRtn.NUMAVIS = rs01.getString("NUMAVIS").trim();
                     objRtn.STAAVIS = rs01.getString("STAAVIS").trim();
                     if (hmDescEstadosSTAAVIS.containsKey(rs01.getString("STAAVIS").trim().toUpperCase())) {
                         objRtn.descSTAAVIS = hmDescEstadosSTAAVIS.get(rs01.getString("STAAVIS").trim()).toString();
+                    } else {
+                        objRtn.descSTAAVIS = "No emitido";
                     }
-                    
+
                     objRtn.totSVFOP = SVFOP;
                     objRtn.totSVFOPS = SVFOPS;
                     objRtn.totDIFSVFOP = DIFSVFOP;
-                    
+
                     objRtn.page.PAGNUM = filter.page.PAGNUM;
                     objRtn.page.PAGROW = filter.page.PAGROW;
                     objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -243,7 +252,7 @@ public class LastConciliationDAO {
                     objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
                     objRtn.SPNR = rs01.getString("SPNR").trim();
                     objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
-                    objRtn.STVAL = rs01.getString("STVAL").trim();                    
+                    objRtn.STVAL = rs01.getString("STVAL").trim();
                     objRtn.SAGENT = rs01.getString("SAGENT").trim();
                     if (!rs01.getString("CERROR").trim().equals("")) {
                         objRtn.CERROR = rs01.getString("CERROR").trim() + " : " + rs01.getString("ERROR").trim();
@@ -262,7 +271,7 @@ public class LastConciliationDAO {
                     } else {
                         objRtn.strPEM = "ACCB";
                     }
-                    
+
                     objRtn.totSVFOP = totSVFOP;
 
                     list.add(objRtn);
@@ -313,7 +322,7 @@ public class LastConciliationDAO {
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04095(?,?,?,?)}";//" + session.getMainLibrary() + "
 
         double totSVFOP = 0;
-        
+
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Accepted");
         hmDescEstados.put("2", "Rejected");
@@ -454,11 +463,80 @@ public class LastConciliationDAO {
                             beanTkt.strDescFCONC = "Conciliation by Group";
                         }
                     }
-                    
+
                     beanTkt.totSVFOP = totSVFOP;
 
                     list.add(beanTkt);
                 }
+            }
+
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+            try {
+                cstmt.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return list;
+    }
+
+    public List<A3800Filter> loadPX565SQP04125(A3800Filter filter) throws SQLException, Exception {
+        List<A3800Filter> list = new ArrayList<A3800Filter>();
+        A3800Filter objRtn;
+        CallableStatement cstmt = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04125(?,?,?,?)}";//" + session.getMainLibrary() + "
+        double totSVFOP = 0;
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_SDATE.trim());
+            cstmt.setString(3, filter.IN_CARDN.trim());
+            cstmt.setString(4, filter.IN_SAUTHOC.trim());
+
+            cstmt.execute();
+
+            rs01 = cstmt.getResultSet();
+
+            while (rs01.next()) {
+
+                objRtn = new A3800Filter();
+
+                objRtn.DATAVIS = rs01.getString("DATAVIS");
+                objRtn.NUMAVIS = rs01.getString("NUMAVIS");
+                objRtn.STAAVIS = rs01.getString("STAAVIS");
+
+                list.add(objRtn);
             }
 
             try {
