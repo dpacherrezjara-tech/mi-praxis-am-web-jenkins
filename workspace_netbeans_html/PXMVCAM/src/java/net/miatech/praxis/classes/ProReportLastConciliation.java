@@ -53,7 +53,7 @@ public class ProReportLastConciliation {
     private int Hlng = 0;
 
     public void createReport(A2290Filter Data, File file) {
-        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df = new DecimalFormat("######0");
         DecimalFormat df_2 = new DecimalFormat("#,###,###.00");
 
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
@@ -107,7 +107,7 @@ public class ProReportLastConciliation {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtNroDocumento, PosX1 + 350, PYi - 20, 0);
             Phrase txtNroDocumentoUnderline = new Phrase(new Paragraph("_______________", NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtNroDocumentoUnderline, PosX1 + 480, PYi - 20, 0);
-            Phrase txtNroDocumentoValue = new Phrase(new Paragraph("AR-001328", NORMAL));
+            Phrase txtNroDocumentoValue = new Phrase(new Paragraph(Data.NUMAVIS.replace(".00", ""), NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, txtNroDocumentoValue, PosX1 + 520, PYi - 20, 0);
 
             Phrase txtFecEmision = new Phrase(new Paragraph("Fecha de emisión:", NORMAL));

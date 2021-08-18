@@ -990,6 +990,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_6 = row1.createCell(6);
             Cell CH1_7 = row1.createCell(7);
             Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
 
             CH1_0.setCellValue("Billing Date");
             CH1_1.setCellValue("Period");
@@ -1000,6 +1001,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellValue("Total");
             CH1_7.setCellValue("Total");
             CH1_8.setCellValue("Total");
+            CH1_9.setCellValue("Total");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1010,6 +1012,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellStyle(headerStyle);
             CH1_7.setCellStyle(headerStyle);
             CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -1021,6 +1024,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
 
             ++vj;
                             //============================================
@@ -1034,14 +1038,16 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH2_6 = row2.createCell(6);
             Cell CH2_7 = row2.createCell(7);
             Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
 
             CH2_2.setCellValue("GROSS");
             CH2_3.setCellValue("ISC");
             CH2_4.setCellValue("TAX");
-            CH2_5.setCellValue("Other Commission");
-            CH2_6.setCellValue("FEE");
-            CH2_7.setCellValue("UATP");
-            CH2_8.setCellValue("NET");
+            CH2_5.setCellValue("VAT");
+            CH2_6.setCellValue("Other Commission");
+            CH2_7.setCellValue("FEE");
+            CH2_8.setCellValue("UATP");
+            CH2_9.setCellValue("NET");
 
             CH2_2.setCellStyle(headerStyle);
             CH2_3.setCellStyle(headerStyle);
@@ -1050,6 +1056,7 @@ public class PassengerInvoicesController extends BaseController {
             CH2_6.setCellStyle(headerStyle);
             CH2_7.setCellStyle(headerStyle);
             CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -1067,16 +1074,18 @@ public class PassengerInvoicesController extends BaseController {
                 Cell rcell6 = row1.createCell(6);
                 Cell rcell7 = row1.createCell(7);
                 Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
 
                 rcell0.setCellValue(listaData.get(vi).strFormatDate);
                 rcell1.setCellValue(listaData.get(vi).PERNUM);
                 rcell2.setCellValue(listaData.get(vi).TGROSS);
                 rcell3.setCellValue(listaData.get(vi).TISC);
                 rcell4.setCellValue(listaData.get(vi).TTAX);
-                rcell5.setCellValue(listaData.get(vi).TOHCOM);
-                rcell6.setCellValue(listaData.get(vi).HFEEAM);
-                rcell7.setCellValue(listaData.get(vi).TUATP);
-                rcell8.setCellValue(listaData.get(vi).TNET);
+                rcell5.setCellValue(listaData.get(vi).TVAT);
+                rcell6.setCellValue(listaData.get(vi).TOHCOM);
+                rcell7.setCellValue(listaData.get(vi).HFEEAM);
+                rcell8.setCellValue(listaData.get(vi).TUATP);
+                rcell9.setCellValue(listaData.get(vi).TNET);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1091,6 +1100,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -1380,6 +1390,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_6 = row1.createCell(6);
             Cell CH1_7 = row1.createCell(7);
             Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
 
             CH1_0.setCellValue("Source");
             CH1_1.setCellValue("Source Code");
@@ -1390,6 +1401,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellValue("Total");
             CH1_7.setCellValue("Total");
             CH1_8.setCellValue("Total");
+            CH1_9.setCellValue("Total");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1400,6 +1412,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellStyle(headerStyle);
             CH1_7.setCellStyle(headerStyle);
             CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
@@ -1411,6 +1424,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
             ++vj;
              //============================================
 
@@ -1425,16 +1439,18 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH2_6 = row2.createCell(6);
             Cell CH2_7 = row2.createCell(7);
             Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
 
             CH2_0.setCellValue("Code");
             CH2_1.setCellValue("Description");
             CH2_2.setCellValue("GROSS");
             CH2_3.setCellValue("ISC");
             CH2_4.setCellValue("TAX");
-            CH2_5.setCellValue("Other Commision");
-            CH2_6.setCellValue("FEE");
-            CH2_7.setCellValue("UATP");
-            CH2_8.setCellValue("NET");
+            CH2_5.setCellValue("VAT");
+            CH2_6.setCellValue("Other Commision");
+            CH2_7.setCellValue("FEE");
+            CH2_8.setCellValue("UATP");
+            CH2_9.setCellValue("NET");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -1445,6 +1461,7 @@ public class PassengerInvoicesController extends BaseController {
             CH2_6.setCellStyle(headerStyle);
             CH2_7.setCellStyle(headerStyle);
             CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -1462,16 +1479,18 @@ public class PassengerInvoicesController extends BaseController {
                 Cell rcell6 = row1.createCell(6);
                 Cell rcell7 = row1.createCell(7);
                 Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
 
                 rcell0.setCellValue(listaData.get(vi).SOURCOD);
                 rcell1.setCellValue(listaData.get(vi).IN_FECHA_FROM);
                 rcell2.setCellValue(listaData.get(vi).TGROSS);
                 rcell3.setCellValue(listaData.get(vi).TISC);
                 rcell4.setCellValue(listaData.get(vi).TTAX);
-                rcell5.setCellValue(listaData.get(vi).TOHCOM);
-                rcell6.setCellValue(listaData.get(vi).HFEEAM);
-                rcell7.setCellValue(listaData.get(vi).TUATP);
-                rcell8.setCellValue(listaData.get(vi).TNET);
+                rcell5.setCellValue(listaData.get(vi).TVAT);
+                rcell6.setCellValue(listaData.get(vi).TOHCOM);
+                rcell7.setCellValue(listaData.get(vi).HFEEAM);
+                rcell8.setCellValue(listaData.get(vi).TUATP);
+                rcell9.setCellValue(listaData.get(vi).TNET);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1486,6 +1505,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -1579,6 +1599,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_7 = row1.createCell(7);
             Cell CH1_8 = row1.createCell(8);
             Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
 
             CH1_0.setCellValue("Airline");
             CH1_1.setCellValue("Airline");
@@ -1590,6 +1611,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_7.setCellValue("Total");
             CH1_8.setCellValue("Total");
             CH1_9.setCellValue("Total");
+            CH1_10.setCellValue("Total");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1601,6 +1623,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_7.setCellStyle(headerStyle);
             CH1_8.setCellStyle(headerStyle);
             CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
@@ -1612,6 +1635,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
             ++vj;
              //============================================
 
@@ -1627,6 +1651,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH2_7 = row2.createCell(7);
             Cell CH2_8 = row2.createCell(8);
             Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
 
             CH2_0.setCellValue("Code");
             CH2_1.setCellValue("Name");
@@ -1634,10 +1659,11 @@ public class PassengerInvoicesController extends BaseController {
             CH2_3.setCellValue("GROSS");
             CH2_4.setCellValue("ISC");
             CH2_5.setCellValue("TAX");
-            CH2_6.setCellValue("Other Commision");
-            CH2_7.setCellValue("FEE");
-            CH2_8.setCellValue("UATP");
-            CH2_9.setCellValue("NET");
+            CH2_6.setCellValue("VAT");
+            CH2_7.setCellValue("Other Commision");
+            CH2_8.setCellValue("FEE");
+            CH2_9.setCellValue("UATP");
+            CH2_10.setCellValue("NET");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -1649,6 +1675,7 @@ public class PassengerInvoicesController extends BaseController {
             CH2_7.setCellStyle(headerStyle);
             CH2_8.setCellStyle(headerStyle);
             CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -1667,6 +1694,7 @@ public class PassengerInvoicesController extends BaseController {
                 Cell rcell7 = row1.createCell(7);
                 Cell rcell8 = row1.createCell(8);
                 Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
 
                 rcell0.setCellValue(listaData.get(vi).BDAIR);
                 rcell1.setCellValue(listaData.get(vi).DES_BDAIR);
@@ -1674,10 +1702,11 @@ public class PassengerInvoicesController extends BaseController {
                 rcell3.setCellValue(listaData.get(vi).GROSS);
                 rcell4.setCellValue(listaData.get(vi).ISCAMT);
                 rcell5.setCellValue(listaData.get(vi).TAX);
-                rcell6.setCellValue(listaData.get(vi).OTHCOMAM);
-                rcell7.setCellValue(listaData.get(vi).HFEEAM);
-                rcell8.setCellValue(listaData.get(vi).UATPAMT);
-                rcell9.setCellValue(listaData.get(vi).CPNTAM);
+                rcell6.setCellValue(listaData.get(vi).VATAMT);
+                rcell7.setCellValue(listaData.get(vi).OTHCOMAM);
+                rcell8.setCellValue(listaData.get(vi).HFEEAM);
+                rcell9.setCellValue(listaData.get(vi).UATPAMT);
+                rcell10.setCellValue(listaData.get(vi).CPNTAM);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1693,6 +1722,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -2101,6 +2131,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_6 = row1.createCell(6);
             Cell CH1_7 = row1.createCell(7);
             Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
 
             CH1_0.setCellValue("Airline");
             CH1_1.setCellValue("Airline");
@@ -2111,6 +2142,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellValue("Total");
             CH1_7.setCellValue("Total");
             CH1_8.setCellValue("Total");
+            CH1_9.setCellValue("Total");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -2121,6 +2153,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellStyle(headerStyle);
             CH1_7.setCellStyle(headerStyle);
             CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -2132,6 +2165,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
             ++vj;
              //============================================
 
@@ -2146,16 +2180,18 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH2_6 = row2.createCell(6);
             Cell CH2_7 = row2.createCell(7);
             Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
 
             CH2_0.setCellValue("Code");
             CH2_1.setCellValue("Description");
             CH2_2.setCellValue("GROSS");
             CH2_3.setCellValue("ISC");
             CH2_4.setCellValue("TAX");
-            CH2_5.setCellValue("Other Commision");
-            CH2_6.setCellValue("FEE");
-            CH2_7.setCellValue("UATP");
-            CH2_8.setCellValue("NET");
+            CH2_5.setCellValue("VAT");
+            CH2_6.setCellValue("Other Commision");
+            CH2_7.setCellValue("FEE");
+            CH2_8.setCellValue("UATP");
+            CH2_9.setCellValue("NET");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -2166,6 +2202,7 @@ public class PassengerInvoicesController extends BaseController {
             CH2_6.setCellStyle(headerStyle);
             CH2_7.setCellStyle(headerStyle);
             CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -2183,16 +2220,18 @@ public class PassengerInvoicesController extends BaseController {
                 Cell rcell6 = row1.createCell(6);
                 Cell rcell7 = row1.createCell(7);
                 Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
 
                 rcell0.setCellValue(listaData.get(vi).BDAIR);
                 rcell1.setCellValue(listaData.get(vi).IN_FECHA_FROM);
                 rcell2.setCellValue(listaData.get(vi).TGROSS);
                 rcell3.setCellValue(listaData.get(vi).TISC);
                 rcell4.setCellValue(listaData.get(vi).TTAX);
-                rcell5.setCellValue(listaData.get(vi).TOHCOM);
-                rcell6.setCellValue(listaData.get(vi).HFEEAM);
-                rcell7.setCellValue(listaData.get(vi).TUATP);
-                rcell8.setCellValue(listaData.get(vi).TNET);
+                rcell5.setCellValue(listaData.get(vi).TVAT);
+                rcell6.setCellValue(listaData.get(vi).TOHCOM);
+                rcell7.setCellValue(listaData.get(vi).HFEEAM);
+                rcell8.setCellValue(listaData.get(vi).TUATP);
+                rcell9.setCellValue(listaData.get(vi).TNET);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -2207,6 +2246,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -2499,6 +2539,7 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH1_6 = row1.createCell(6);
             Cell CH1_7 = row1.createCell(7);
             Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
 
             CH1_0.setCellValue("Source");
             CH1_1.setCellValue("Source Code");
@@ -2509,6 +2550,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellValue("Total");
             CH1_7.setCellValue("Total");
             CH1_8.setCellValue("Total");
+            CH1_9.setCellValue("Total");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -2519,6 +2561,7 @@ public class PassengerInvoicesController extends BaseController {
             CH1_6.setCellStyle(headerStyle);
             CH1_7.setCellStyle(headerStyle);
             CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
@@ -2530,6 +2573,7 @@ public class PassengerInvoicesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
             ++vj;
              //============================================
 
@@ -2544,16 +2588,18 @@ public class PassengerInvoicesController extends BaseController {
             Cell CH2_6 = row2.createCell(6);
             Cell CH2_7 = row2.createCell(7);
             Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
 
             CH2_0.setCellValue("Code");
             CH2_1.setCellValue("Description");
             CH2_2.setCellValue("GROSS");
             CH2_3.setCellValue("ISC");
             CH2_4.setCellValue("TAX");
-            CH2_5.setCellValue("Other Commision");
-            CH2_6.setCellValue("FEE");
-            CH2_7.setCellValue("UATP");
-            CH2_8.setCellValue("NET");
+            CH2_5.setCellValue("VAT");
+            CH2_6.setCellValue("Other Commision");
+            CH2_7.setCellValue("FEE");
+            CH2_8.setCellValue("UATP");
+            CH2_9.setCellValue("NET");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -2564,6 +2610,7 @@ public class PassengerInvoicesController extends BaseController {
             CH2_6.setCellStyle(headerStyle);
             CH2_7.setCellStyle(headerStyle);
             CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -2581,16 +2628,18 @@ public class PassengerInvoicesController extends BaseController {
                 Cell rcell6 = row1.createCell(6);
                 Cell rcell7 = row1.createCell(7);
                 Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
 
                 rcell0.setCellValue(listaData.get(vi).BDAIR);
                 rcell1.setCellValue(listaData.get(vi).IN_FECHA_FROM);
                 rcell2.setCellValue(listaData.get(vi).TGROSS);
                 rcell3.setCellValue(listaData.get(vi).TISC);
                 rcell4.setCellValue(listaData.get(vi).TTAX);
-                rcell5.setCellValue(listaData.get(vi).TOHCOM);
-                rcell6.setCellValue(listaData.get(vi).HFEEAM);
-                rcell7.setCellValue(listaData.get(vi).TUATP);
-                rcell8.setCellValue(listaData.get(vi).TNET);
+                rcell5.setCellValue(listaData.get(vi).TVAT);
+                rcell6.setCellValue(listaData.get(vi).TOHCOM);
+                rcell7.setCellValue(listaData.get(vi).HFEEAM);
+                rcell8.setCellValue(listaData.get(vi).TUATP);
+                rcell9.setCellValue(listaData.get(vi).TNET);
                 iter.next();
                 ++vi;
                 ++vj;

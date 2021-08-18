@@ -56,7 +56,7 @@ public class TaxDetailDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00295_2(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00295(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         session.getCNXIBMDB2().open();
         try {
 
