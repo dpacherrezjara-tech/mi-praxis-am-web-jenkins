@@ -142,6 +142,19 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             ]
         }));
         cmbFecFiltro.setValue("+");
+        
+        var cmbSTAAVIS = Ext.getCmp(prototype.id + '-cmbSTAAVIS');
+        cmbSTAAVIS.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["0", "Emitido"],
+                //["1", "Payment"],
+                //["2", "Reject"],
+            ]
+        }));
+        cmbSTAAVIS.setValue("");
 
         this.paramsObtainData.BANK = 2;
         this.paramsObtainData.COUNTRY = 2;
@@ -192,6 +205,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         me.bean.IN_CARDN1 = Ext.getCmp(prototype.id + '-txtCard1').getValue();
         me.bean.IN_CARDN2 = Ext.getCmp(prototype.id + '-txtCard2').getValue();
         me.bean.IN_SVFOPSG = Ext.getCmp(prototype.id + '-cmbSVFOPSG').getValue();
+        me.bean.IN_STAAVIS = Ext.getCmp(prototype.id + '-cmbSTAAVIS').getValue();
         me.bean.IN_SPNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_SAGENT = Ext.getCmp(prototype.id + '-txtSAGENT').getValue();
 
@@ -395,6 +409,8 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         me.paramsDetailCard.beanString = JSON.stringify(this.beanDetCard);
 
         global.getFile(prototype.url + '/getPDF?beanString=' + me.paramsDetailCard.beanString);
+        
+        //setTimeout(this.btnSearch_click(), 5000);
 
     },
     validateFields: function() {
