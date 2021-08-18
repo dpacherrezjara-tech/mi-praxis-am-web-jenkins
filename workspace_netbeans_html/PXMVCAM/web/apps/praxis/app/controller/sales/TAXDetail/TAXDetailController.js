@@ -365,6 +365,9 @@ Ext.define('Ext.Praxis.controller.sales.TAXDetail.TAXDetailController', {
                 if (searchParams.DateFrom.trim() === '') {
                     msj = 'Enter DATE FROM';
                 }
+                if (searchParams.Tax.trim() === '') {
+                    msj = 'Enter Tax';
+                }
                 break;
         }
         return msj;
