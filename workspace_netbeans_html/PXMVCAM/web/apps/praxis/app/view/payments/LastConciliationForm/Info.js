@@ -179,15 +179,25 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Date', dataIndex: 'DATAVIS', width: 80},
+                                                    {text: 'Date', dataIndex: 'DATAVIS', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AED6F1";
+                                                            return  value;
+                                                        }
+                                                    },
                                                     {text: 'Number', dataIndex: 'NUMAVIS', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;";
+                                                            metaData.style = "text-align:right;background-color:#AED6F1";
                                                             value = Ext.util.Format.number(value, '0');
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: 'Status', dataIndex: 'descSTAAVIS', width: 80},
+                                                    {text: 'Status', dataIndex: 'descSTAAVIS', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AED6F1";
+                                                            return  value;
+                                                        }
+                                                    },
                                                 ]
                                             },
                                             {
