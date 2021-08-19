@@ -63,7 +63,7 @@ public class ProReportLastConciliation {
 
         df.setDecimalFormatSymbols(otherSymbols);
         df_2.setDecimalFormatSymbols(otherSymbols);
-        
+
         try {
             PYi = 842; // Para A4: 788
             Hlng = 12;
@@ -108,7 +108,7 @@ public class ProReportLastConciliation {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtNroDocumento, PosX1 + 350, PYi - 20, 0);
             Phrase txtNroDocumentoUnderline = new Phrase(new Paragraph("_______________", NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtNroDocumentoUnderline, PosX1 + 480, PYi - 20, 0);
-            Phrase txtNroDocumentoValue = new Phrase(new Paragraph(Data.NUMAVIS.replace(".00", ""), NORMAL));
+            Phrase txtNroDocumentoValue = new Phrase(new Paragraph(Functions.fillZeros(6, Data.NUMAVIS.trim().replace(".00", "")), NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, txtNroDocumentoValue, PosX1 + 520, PYi - 20, 0);
 
             Phrase txtFecEmision = new Phrase(new Paragraph("Fecha de emisión:", NORMAL));
@@ -129,9 +129,9 @@ public class ProReportLastConciliation {
 
             PdfPTable table = new PdfPTable(4);
             table.setTotalWidth(565);
-            table.setWidths(new float[] {60, 50, 385, 70});            
-            table.setLockedWidth(true);            
-            
+            table.setWidths(new float[]{60, 50, 385, 70});
+            table.setLockedWidth(true);
+
             // first row
             PdfPCell cell = new PdfPCell(new Phrase("Documento", subFontT));
             cell.setFixedHeight(20);
@@ -139,81 +139,79 @@ public class ProReportLastConciliation {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setBackgroundColor(BaseColor.GRAY);
             table.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase("Agente", subFontT));
             cell.setFixedHeight(20);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setBackgroundColor(BaseColor.GRAY);
             table.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase("Concepto", subFontT));
             cell.setFixedHeight(20);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setBackgroundColor(BaseColor.GRAY);
             table.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase("Importe", subFontT));
             cell.setFixedHeight(20);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             cell.setBackgroundColor(BaseColor.GRAY);
             table.addCell(cell);
-            
+
             // Second row
             cell = new PdfPCell(new Phrase("AVISO DE CARGO", NORMAL));
             cell.setFixedHeight(400);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase(Data.SAGENT, NORMAL));
             cell.setFixedHeight(400);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase("RECHAZO DE LOS BOLETOS\n\n" + Data.TKTS_CONCATENADOS + "\n\nPOR ERROR SE SOLICITO AUTH POR:                                      $ " + df_2.format(Data.totSVFOP_ERROR) + "\nY LA EMISION DE LOS BOLETOS SUMAN UN TOTAL DE:  $ " + df_2.format(Data.totSVFOP) + "\nSE REPROCESA EL IMPORTE AUTORIZADO", NORMAL));
             cell.setFixedHeight(400);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_LEFT);
             table.addCell(cell);
-            
+
             cell = new PdfPCell(new Phrase("$ " + df_2.format(Data.totSVFOP - Data.totSVFOP_ERROR) + "", NORMAL));
             cell.setFixedHeight(400);
             cell.setBorder(Rectangle.BOX);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
-            
+
             // Adding Table to document        
             //document.add(table); 
             table.writeSelectedRows(0, -1, PosX1, PYi, canvas);
-            
+
             PYi = PYi - 450;
-        
+
             Phrase txtTotal = new Phrase(new Paragraph("TOTAL", NORMAL));
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTotal, PosX1 + 450, PYi, 0);
-            
+
             colorRectangle(under, BaseColor.WHITE, PosX1 + 500, PYi - 10, 60, 25);
             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("$ " + df_2.format(Data.totSVFOP - Data.totSVFOP_ERROR), NORMAL)), PosX1 + 530, PYi, 0);
-            
-            
+
             //cell.setColspan(2);
             /*colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), PosX1, PYi - 11, 580, 25);
-            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Documento", subFont_1)), PosX1 + 15, PYi, 0);
-            PosX1 = PosX1 + 40;
-            PosX2 = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Agente", subFont_1)), PosX1, PYi, 0);
+             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Documento", subFont_1)), PosX1 + 15, PYi, 0);
+             PosX1 = PosX1 + 40;
+             PosX2 = PosX1;
+             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Agente", subFont_1)), PosX1, PYi, 0);
 
-            PosX1 = PosX1 + 40; //19
-            PosX3 = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Concepto", subFont_1)), PosX1, PYi, 0);
+             PosX1 = PosX1 + 40; //19
+             PosX3 = PosX1;
+             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Concepto", subFont_1)), PosX1, PYi, 0);
 
-            PosX1 = PosX1 + 67;
-            PosX4 = PosX1;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Importe", subFont_1)), PosX1, PYi, 0);*/
-
+             PosX1 = PosX1 + 67;
+             PosX4 = PosX1;
+             ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER, new Phrase(new Paragraph("Importe", subFont_1)), PosX1, PYi, 0);*/
             document.close();
             writer.close();
         } catch (Exception e) {

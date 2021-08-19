@@ -188,7 +188,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     {text: 'Number', dataIndex: 'NUMAVIS', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#AED6F1";
-                                                            value = Ext.util.Format.number(value, '0');
+                                                            //value = Ext.util.Format.number(value, '000000');
                                                             return  value;
                                                         }
                                                     },
