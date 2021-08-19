@@ -61,7 +61,7 @@ public class LastConciliationDAO {
         hmDescEstadosSTVAL.put("1", "Conciliate");
 
         HashMap<String, String> hmDescEstadosSTAAVIS = new HashMap<String, String>();
-        hmDescEstadosSTAAVIS.put("0", "Emitido");
+        hmDescEstadosSTAAVIS.put("0", "Emission");
         hmDescEstadosSTAAVIS.put("1", "Payment");
         hmDescEstadosSTAAVIS.put("2", "Reject");
 
@@ -146,12 +146,12 @@ public class LastConciliationDAO {
                     objRtn.DIFF = rs01.getDouble("SVFOP") - rs01.getDouble("SVFOPS");
 
                     objRtn.DATAVIS = rs01.getString("DATAVIS").trim();
-                    objRtn.NUMAVIS = rs01.getString("NUMAVIS").trim();
+                    objRtn.NUMAVIS = Functions.fillZeros(6, rs01.getString("NUMAVIS").trim().replace(".00", ""));
                     objRtn.STAAVIS = rs01.getString("STAAVIS").trim();
                     if (hmDescEstadosSTAAVIS.containsKey(rs01.getString("STAAVIS").trim().toUpperCase())) {
                         objRtn.descSTAAVIS = hmDescEstadosSTAAVIS.get(rs01.getString("STAAVIS").trim()).toString();
                     } else {
-                        objRtn.descSTAAVIS = "No emitido";
+                        objRtn.descSTAAVIS = "Pending";
                     }
 
                     objRtn.totSVFOP = SVFOP;
