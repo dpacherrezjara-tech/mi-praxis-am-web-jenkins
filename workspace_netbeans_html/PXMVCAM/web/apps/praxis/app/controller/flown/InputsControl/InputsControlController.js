@@ -172,14 +172,14 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             data: [
                 ["SSIM", "SSIM"],
                 ["ODS", "ODS"],
-                ["OCR", "OCR"],
+                //["OCR", "OCR"],
                 ["EMD", "EMD"],
                 ["EMDN", "EMD Delta"],
                 ["VCR", "VCR"],
                 ["VCRJ", "VCRJ"],
-                ["ISR", "TCN (ISR)"],
-                ["SISI", "SIS IB"],
-                ["SISO", "SIS OB"]
+                ["ISR", "TCN (ISR)"]
+//                ["SISI", "SIS IB"],
+//                ["SISO", "SIS OB"]
 
 
             ]}));
@@ -1090,8 +1090,15 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                         console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
                         
 //                        if(mes ==='01'){
-                            Ext.getCmp('lbl' + res[i].fecha).setStyle('backgroundColor', color);
-                            Ext.getCmp('lbl' + res[i].fecha).setStyle('color', '#000000');
+                            if(source === 'VCR'){
+                                if(res[i].fecha < '20210301'){
+                                    Ext.getCmp('lbl' + res[i].fecha).setStyle('backgroundColor', color);
+                                    Ext.getCmp('lbl' + res[i].fecha).setStyle('color', '#000000');
+                                }   
+                            }else{
+                                Ext.getCmp('lbl' + res[i].fecha).setStyle('backgroundColor', color);
+                                Ext.getCmp('lbl' + res[i].fecha).setStyle('color', '#000000');
+                            }
 //                        }
                         
 //                        Ext.getCmp(prototype.id + 'gdiFlag_' + mesf + '_' + dato).setStyle('backgroundColor', colorFlag);
@@ -1216,7 +1223,10 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         if (!boxA1686Formateados.hidden) {
             global.getFile(prototype.url + '/GetXLSXA1686Formateados?IN_TIPOFECHA=' + params.IN_TIPOFECHA
                     + '&FECHA=' + params.FECHA
-                    + '&FUENTE=' + params.FUENTE);
+                    + '&FUENTE=' + params.FUENTE
+                    + '&HOCR=' + params.HOCR
+                    + '&QRECOR=' + params.QRECOR
+                    + '&QRECERR=' + params.QRECERR);
         }
         if (!boxA1696Errores.hidden) {
             global.getFile(prototype.url + '/GetXLSXA1696Errores?FECHA=' + params.FECHA

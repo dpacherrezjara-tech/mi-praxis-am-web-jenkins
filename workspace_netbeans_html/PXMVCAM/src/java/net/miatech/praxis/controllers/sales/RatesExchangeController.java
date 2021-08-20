@@ -97,6 +97,12 @@ public class RatesExchangeController extends BaseController {
                 map.put("data", lst4);
                 System.out.println("A1526 : " + lst4.size());
                 break;
+            case "A4061":
+                List<A1526Filter> lst5 = this.getListA4061(request, false);
+                map.put("total", lst5.size() > 0 ? lst5.get(0).page.TOTROW : 0);
+                map.put("data", lst5);
+                System.out.println("A1526 : " + lst5.size());
+                break;
         }
         return new Gson().toJson(map);
 
@@ -309,6 +315,59 @@ public class RatesExchangeController extends BaseController {
 
         return lst;
     }
+    
+    public List<A1526Filter> getListA4061(HttpServletRequest request, Boolean bExcel) {
+
+        logic = new RatesExchangeLogic();
+
+        List<A1526Filter> lst = new ArrayList<>(0);
+
+        A1526Filter filter = new A1526Filter();
+
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+
+        try {
+
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_TIPO = Integer.parseInt(request.getParameter("IN_TIPO"));
+            filter.IN_CURR_FROM = request.getParameter("IN_CURR_FROM");
+            filter.IN_CURR_TO = request.getParameter("IN_CURR_TO");
+            filter.IN_DATE = request.getParameter("IN_DATE");
+            filter.IN_DATE_2 = request.getParameter("IN_DATE_2");
+
+            System.out.println("----------------- Parametros --------------------- ");
+            System.out.println(" limit : " + request.getParameter("limit"));
+            System.out.println(" start : " + request.getParameter("start"));
+            System.out.println(" IN_TIPO" + filter.IN_TIPO);
+            System.out.println(" IN_CURR_TO" + filter.IN_CURR_TO);
+            System.out.println(" IN_CURR_FROM" + filter.IN_CURR_FROM);
+            System.out.println(" IN_DATE" + filter.IN_DATE);
+            System.out.println(" IN_DATE_2" + filter.IN_DATE_2);
+
+            System.out.println("-------------------------------------------------- ");
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+            lst = logic.loadPX025S01A4061(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        return lst;
+    }
 
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
@@ -332,6 +391,8 @@ public class RatesExchangeController extends BaseController {
                 lst3 = this.getListA1343(request, true);
             } else if (tipo.equals("A1526")) {
                 lst4 = this.getListA1526(request, true);
+            } else if (tipo.equals("A4061")) {
+                lst4 = this.getListA4061(request, true);
             }
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
@@ -378,6 +439,8 @@ public class RatesExchangeController extends BaseController {
             } else if (tipo.equals("A1343")) {
                 iter = lst3.iterator();
             } else if (tipo.equals("A1526")) {
+                iter = lst4.iterator();
+            } else if (tipo.equals("A4061")) {
                 iter = lst4.iterator();
             }
 
@@ -524,6 +587,36 @@ public class RatesExchangeController extends BaseController {
                     ++vj;
                 }
             } else if (tipo.equals("A1526")) {
+                while (iter.hasNext()) {
+                    row = sheet.createRow(vj);
+                    // <editor-fold defaultstate="collapsed" desc="data">
+                    CH_00 = row.createCell(0);
+                    CH_01 = row.createCell(1);
+                    CH_02 = row.createCell(2);
+                    CH_03 = row.createCell(3);
+                    CH_04 = row.createCell(4);
+                    CH_05 = row.createCell(5);
+
+                    CH_00.setCellValue(lst4.get(vi).RN);
+                    CH_01.setCellValue(lst4.get(vi).A1526CUR);
+                    CH_02.setCellValue(lst4.get(vi).A1526CUR2);
+                    CH_03.setCellValue(lst4.get(vi).A1526DIS);
+                    CH_04.setCellValue(lst4.get(vi).A1526RATE);
+                    CH_05.setCellValue("");
+
+                    CH_00.setCellStyle(bodyStyle);
+                    CH_01.setCellStyle(bodyStyle);
+                    CH_02.setCellStyle(bodyStyle);
+                    CH_03.setCellStyle(bodyStyle);
+                    CH_04.setCellStyle(bodyStyle);
+                    CH_05.setCellStyle(bodyStyle);
+
+                    // </editor-fold>
+                    iter.next();
+                    ++vi;
+                    ++vj;
+                }
+            } else if (tipo.equals("A4061")) {
                 while (iter.hasNext()) {
                     row = sheet.createRow(vj);
                     // <editor-fold defaultstate="collapsed" desc="data">

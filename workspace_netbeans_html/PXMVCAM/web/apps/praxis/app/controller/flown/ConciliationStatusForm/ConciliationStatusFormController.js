@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         var store02 = Ext.create('Ext.data.Store', {
             proxy: {
                 type: 'ajax',
-                url: prototype.url + '/Search/',
+                url: prototype.url + '/SearchControl/',
                 timeout: '300000',
                 reader: {
                     type: 'json',
@@ -145,7 +145,39 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
     onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
         obj.setValue('NO');
     },
-    onRendererColumnStatus: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onCmbChange: function (obj, records, eOpts) {
+        var txtLote = Ext.getCmp(prototype.id + '-txtLote');
+        var txtFilterDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom');
+        var txtFilterDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo');
+        //campo_cantidad.hide();
+        if (obj.getValue() === "1") {
+
+            txtFilterDateFrom.show();
+            txtFilterDateTo.show();
+            txtLote.hide();
+
+            Ext.getCmp(prototype.id + '-txtLote').setValue('');
+
+        } else if (obj.getValue() === "2") {
+
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            txtLote.show();
+
+            Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
+            Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
+
+        } else {
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            txtLote.hide();
+
+            Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
+            Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
+            Ext.getCmp(prototype.id + '-txtLote').setValue('');
+        }
+    },
+    onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
         switch (String(record.get('A3676STROB'))) {
             case 'PROCESSED BY THE ROBOT':
@@ -168,15 +200,15 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
                 color = '#FBBF48';
                 value = 'NOT MATCH';
                 break;
-             case 'NOT PROCESSED':
+            case 'NOT PROCESSED':
                 color = '#F5A9A9';
                 value = 'NOT PROCESSED';
                 break;
-             case 'NOT ACTION SABRE':
+            case 'NOT ACTION SABRE':
                 color = '#F3F781';
                 value = 'NOT ACTION SABRE';
                 break;
-             case 'NOT APPLICABLE RULE':
+            case 'NOT APPLICABLE RULE':
                 color = '#F5DA81';
                 value = 'NOT APPLICABLE RULE';
                 break;
@@ -186,7 +218,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
 
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
-        return value
+        return value;
     },
     onRendererColumnStatusContr: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
@@ -209,11 +241,11 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
 
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
-        return value
+        return value;
     },
     onRendererToltip: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
     onRendererColumnOnLote: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "font-weight:bold !important; color:blue !important; cursor: pointer !important; text-decoration: underline;";
@@ -225,17 +257,15 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         var rec = store.getAt(rowIndex);
         Ext.getCmp(prototype.id + '-gridData').setVisible(false);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(false);
-        Ext.getCmp(prototype.id + '-btn-excel').setVisible(false);
-        Ext.getCmp(prototype.id + '-pagginator-01').setVisible(true);
-        Ext.getCmp(prototype.id + '-pagginator-legend').setVisible(true);
-        Ext.getCmp(prototype.id + '-pagginator-pri').setVisible(true); 
+        Ext.getCmp(prototype.id + '-gridDataControl').setVisible(false);
+        Ext.getCmp(prototype.id + '-pagginator-legend').setVisible(false);
+        Ext.getCmp(prototype.id + '-pagginator-DET').setVisible(true);
 
         Ext.getCmp(prototype.id + '-gridDetalle').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-totalDeta').setVisible(true);
         Ext.getCmp(prototype.id + '-btn-back').setVisible(true);
-        Ext.getCmp(prototype.id + '-btn-txt').setVisible(true); 
+        Ext.getCmp(prototype.id + '-btn-excel').setVisible(true);
         ///CARGANDO EL DETALLE DE LA GRTILLA
-
         this.tipo = '2';
         var origen = '';
         if (rec.data.A3676ORIG === 'RFND BSPLINK') {
@@ -247,50 +277,27 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         if (rec.data.A3676ORIG === 'NOGO') {
             origen = 'NO';
         }
-        this.bean2.IN_OPTION = '6';
+        if (rec.data.A3676ORIG === 'RFND CHARGEBACK') {
+            origen = 'CB';
+        }
+        if (rec.data.A3676ORIG === 'EMD RFND') {
+            origen = 'EM';
+        }
+
+        this.bean2.IN_OPTION = '4';
         this.bean2.IN_ORIGEN = origen;
-        this.bean2.IN_DATETO = rec.data.A3676LOTE;
+        this.bean2.IN_LOTE = rec.data.A3676LOTE;
         this.bean2.IN_REFERENCE = rec.data.A3676NARCH;
         this.bean2.IN_DATEFROM = '';
-        this.bean2.IN_CIA = '';
-        this.bean2.IN_FORMA = '';
-         this.bean2.IN_SERIE = '';
-        this.bean2.IN_SEQ = '';
-        this.bean2.IN_HORAINI = '';
-        this.bean2.IN_HORAFIN = '';
-        this.bean2.IN_STATUS = '';
-        this.bean2.IN_CURRENCY = '';
-        this.bean2.IN_COUNTRY = '';
-        this.bean2.IN_STATUSINI = '';
-        this.bean2.IN_STATUSFIN = '';
-        this.bean2.IN_LOTE = '';
-        this.bean2.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
-        
-
-        var grid = Ext.getCmp(prototype.id + '-gridDetalle');
-        var store = grid.getStore();
-        store.removeAll();
-         store.loadPage(1, {
-            params: this.bean2,
-            callback: function(records, operation, success) {
-                if (records.length !== 0) {
-                    Ext.getCmp(prototype.id + '-lbl-totalDeta').setText(records[0].data.A3676TOTPAGI);
-                } else {
-                    Ext.getCmp(prototype.id + '-lbl-totalDeta').setText('0');
-                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                        }});
-
-                }
-            }
-        });
-        
-        /*Ext.getCmp(prototype.id + '-gridDetalle').getStore().loadPage(1, {
+        this.bean2.IN_DATETO = '';
+        Ext.getCmp(prototype.id + '-gridDetalle').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDetalle').getStore().loadPage(1, {
             params: {
                 beanString: JSON.stringify(this.bean2)
                         //beanString: bean
 
             }, callback: function (records, operation, success) {
-                if (records.length != 0) {
+                if (records.length !== 0) {
                     Ext.getCmp(prototype.id + '-lbl-totalDeta').setText(records[0].data.A3676TOTPAGI);
                 } else {
                     Ext.getCmp(prototype.id + '-lbl-totalDeta').setText('0');
@@ -301,7 +308,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
                 //Ext.getCmp(prototype.id + '-country').setValue(records[0].data.A3388TOTALPAG);
 
             }
-        });*/
+        });
 
     },
     onCmbSearchAfterRender: function (obj) {
@@ -314,7 +321,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         obj.setValue('');
     },
     onSearchkey: function (f, e) {
-        if (e.getKey() == e.ENTER) {
+        if (e.getKey() === e.ENTER) {
             this.imgSearch_clickHandler();
         }
 
@@ -326,15 +333,18 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         Ext.getCmp(prototype.id + '-gridData').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(true);
         Ext.getCmp(prototype.id + '-btn-excel').setVisible(true);
+        Ext.getCmp(prototype.id + '-pagginator-legend').setVisible(true);
         this.tipo = '1';
-        Ext.getCmp(prototype.id + '-lbl-total').setText('0');
+        //Ext.getCmp(prototype.id + '-lbl-total').setText('0');
         Ext.getCmp(prototype.id + '-gridDetalle').setVisible(false);
+        Ext.getCmp(prototype.id + '-gridDataControl').setVisible(false);
         Ext.getCmp(prototype.id + '-lbl-totalDeta').setVisible(false);
         Ext.getCmp(prototype.id + '-btn-back').setVisible(false);
         Ext.getCmp(prototype.id + '-pagginator-01').setVisible(false);
         Ext.getCmp(prototype.id + '-pagginator-legend').setVisible(false);
-        Ext.getCmp(prototype.id + '-btn-txt').setVisible(false); 
-        Ext.getCmp(prototype.id + '-pagginator-pri').setVisible(false); 
+        Ext.getCmp(prototype.id + '-btn-txt').setVisible(false);
+        Ext.getCmp(prototype.id + '-pagginator-pri').setVisible(false);
+        Ext.getCmp(prototype.id + '-pagginator-DET').setVisible(false);
     },
     imgSearch_clickHandler: function (obj, records, eOpts) {
         var cmbsearch = Ext.getCmp(prototype.id + '-search-type').getValue();
@@ -342,7 +352,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         var txtDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
         var CmbOrigen = Ext.getCmp(prototype.id + '-CmbOrigen').getValue();
         var CmbType = Ext.getCmp(prototype.id + '-Cmbtype').getValue();
-
+        var txtLote = Ext.getCmp(prototype.id + '-txtLote').getValue();
 
         if (cmbsearch === '') {
             Ext.MessageBox.alert('PRAXIS', "Select Search Type", function (btn, text) {
@@ -351,85 +361,124 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
             });
             return;
         }
-        if (txtDateFrom === '') {
-            Ext.MessageBox.alert('PRAXIS', "Enter Date From", function (btn, text) {
-                if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateFrom').focus();", 100);
-            });
-            return;
-        }
-        if (txtDateTo === '') {
-            Ext.MessageBox.alert('PRAXIS', "Enter Date To", function (btn, text) {
-                if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
-            });
-            return;
-        }
-        if (txtDateFrom !== '' && txtDateTo !== '') {
-
-            if (global.existeFecha(txtDateFrom) !== '') {
-                Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateFrom), function (btn, text) {
+        if (cmbsearch === '1') {
+            if (txtDateFrom === '') {
+                Ext.MessageBox.alert('PRAXIS', "Enter Date From", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
                         setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateFrom').focus();", 100);
                 });
                 return;
             }
-
-            if (global.existeFecha(txtDateTo) !== '') {
-                Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateTo), function (btn, text) {
+            if (txtDateTo === '') {
+                Ext.MessageBox.alert('PRAXIS', "Enter Date To", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
                         setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
                 });
                 return;
             }
-            if (Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getValue()) > Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateTo').getValue())) {
-                Ext.MessageBox.alert('PRAXIS', "the starting date must be less than the end date", function (btn, text) {
+            if (txtDateFrom !== '' && txtDateTo !== '') {
+
+                if (global.existeFecha(txtDateFrom) !== '') {
+                    Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateFrom), function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateFrom').focus();", 100);
+                    });
+                    return;
+                }
+
+                if (global.existeFecha(txtDateTo) !== '') {
+                    Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateTo), function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
+                    });
+                    return;
+                }
+                if (Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getValue()) > Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateTo').getValue())) {
+                    Ext.MessageBox.alert('PRAXIS', "the starting date must be less than the end date", function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
+                    });
+                    return;
+                }
+            }
+        } else {
+            if (txtLote === '') {
+                Ext.MessageBox.alert('PRAXIS', "Enter Lote", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
-                        setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
+                        setTimeout("Ext.getCmp(prototype.id + '-txtLote').focus();", 100);
                 });
                 return;
             }
         }
+
+
         if (CmbType === '1') {
-            Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
             //datos capturados del texto
             this.bean.IN_OPTION = cmbsearch;
             this.bean.IN_DATEFROM = txtDateFrom;
             this.bean.IN_DATETO = txtDateTo;
             this.bean.IN_ORIGEN = CmbOrigen;
-            this.bean.IN_LOTE = '';
+            this.bean.IN_LOTE = txtLote;
             this.bean.IN_REFERENCE = '';
             this.SearchReport(this.bean, obj === true ? obj : false);
         } else {
-            this.bean3.IN_OPTION = cmbsearch;
-            this.bean3.IN_DATEFROM = txtDateFrom;
-            this.bean3.IN_DATETO = txtDateTo;
-            this.bean3.IN_ORIGEN = 'CSCVI';//'CSCVI';
-            this.bean3.IN_LOTE = '';
-            this.bean3.IN_REFERENCE = '';
-            Ext.getCmp(prototype.id + '-gridDataControl').getStore().removeAll();
-            Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
-                params: {
-                    beanString: JSON.stringify(this.bean3)
-                            //beanString: bean
 
-                }, callback: function (records, operation, success) {
-                    if (records.length != 0) {
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(records[0].data.A3676TOTPAGI);
-                    } else {
-                        Ext.getCmp(prototype.id + '-lbl-total').setText('0');
-                        global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                            }});
+            if (obj !== true) {
+                switch (CmbOrigen) {
+                    case 'EM':
+                        this.bean3.IN_TYPE = 'EMD RFND';
+                        break;
+                    case 'PB':
+                        this.bean3.IN_TYPE = 'POST BILLING';
+                        break;
+                    case 'RI':
+                        this.bean3.IN_TYPE = 'RFND BSPLINK';
+                        break;
+                    case 'RD':
+                        this.bean3.IN_TYPE = 'RFND ASR';
+                        break;
+                    case 'CB':
+                        this.bean3.IN_TYPE = 'RFND CHARGEBACK';
+                        break;
 
-                    }
 
                 }
-            });
+
+                this.bean3.IN_OPTION = cmbsearch;
+                this.bean3.IN_DATEFROM = txtDateFrom;
+                this.bean3.IN_DATETO = txtDateTo;
+                this.bean3.IN_ORIGEN = '';//'MEXVN';//'CSCVI';
+                this.bean3.IN_LOTE = '';
+                this.bean3.IN_REFERENCE = txtLote;
+                Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
+                    params: {
+                        beanString: JSON.stringify(this.bean3)
+                                //beanString: bean
+
+                    }, callback: function (records, operation, success) {
+                        if (records.length !== 0) {
+                            Ext.getCmp(prototype.id + '-lbl-total').setText(records[0].data.A3676TOTPAGI);
+                        } else {
+                            Ext.getCmp(prototype.id + '-lbl-total').setText('0');
+                            global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                                }});
+
+                        }
+
+                    }
+                });
+
+            } else {
+                this.SearchReport(this.bean3, obj === true ? obj : false);
+            }
+
+
         }
 
 
     },
     SearchReport: function (bean, bExcel) {
+        var me = this;
         if (bExcel) {
             if (me.tipo === '1') {
                 me.exportExcel(prototype.url + '/getXLSXCAB?beanString=' + encodeURI(JSON.stringify(bean)));
@@ -445,7 +494,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
                             //beanString: bean
 
                 }, callback: function (records, operation, success) {
-                    if (records.length != 0) {
+                    if (records.length !== 0) {
                         Ext.getCmp(prototype.id + '-lbl-total').setText(records[0].data.A3676TOTPAGI);
                     } else {
                         Ext.getCmp(prototype.id + '-lbl-total').setText('0');
@@ -497,7 +546,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         Ext.getCmp(prototype.id + '-lbl-totalDeta').setVisible(false);
         Ext.getCmp(prototype.id + '-btn-back').setVisible(false);
     },
-    onPagingBeforeChange01: function(obj, page, opts) {
+    onPagingBeforeChange01: function (obj, page, opts) {
         obj.store.proxy.extraParams = this.bean2;
     },
 

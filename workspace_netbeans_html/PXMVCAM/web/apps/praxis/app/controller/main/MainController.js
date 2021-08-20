@@ -200,7 +200,7 @@ Ext.define('Ext.Praxis.controller.main.MainController', {
             }
         });
         
-        setInterval(Ext.bind(this.validaSesion,this), 1860000); // 31min = 31*60*1000
+        setInterval(Ext.bind(this.validaSesion,this), 1860000); // 31min = 31*60*1000 = 1860000
     },
     
     validaSesion: function() {

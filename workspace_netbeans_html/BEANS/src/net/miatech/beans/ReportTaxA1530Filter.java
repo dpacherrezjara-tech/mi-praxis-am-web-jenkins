@@ -47,6 +47,8 @@ public class ReportTaxA1530Filter extends A1530 {
     public String FLAG = "";
     public String MDA_LOC = "";
     public double AMOUNT_LOC = 0.00;
+    public String CUENT = "";
+    public int RN = 0;
     public Pagination page = new Pagination();
     public DBException dbException = new DBException();
 

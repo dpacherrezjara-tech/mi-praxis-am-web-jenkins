@@ -178,7 +178,19 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                                 minWidth: 200
                                             },
                                             listeners: {
-                                                afterrender: 'onCmbSearchAfterRender'
+                                                afterrender: 'onCmbSearchAfterRender',
+                                                 change: 'onCmbChange'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtLote',
+                                            fieldLabel: 'Lote',
+                                            labelWidth: 50,
+                                            width: 300,
+                                            listeners: {
+                                                specialkey: 'onSearchkey',
+                                                change: 'onchange'
                                             }
                                         },
                                         {
@@ -395,7 +407,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                                 },
                                 items: [
                                     {text: 'System <br> date', dataIndex: 'A3676FREGI', width: 100, sortable: true, align: 'center'},
-                                    {text: 'Lote', dataIndex: 'A3676NARCH', width: 200, align: 'left', renderer: 'onRendererColumnOnLote'},
+                                    {text: 'Lote', dataIndex: 'A3676NARCH', width: 200, align: 'left'},//renderer: 'onRendererColumnOnLote'
                                     {text: 'Origin', dataIndex: 'A3676ORIG', width: 100, sortable: true, align: 'center'},
                                     {text: 'Total <br> Praxis', dataIndex: 'A3676CNTAM', width: 100, sortable: true, align: 'right'},
                                     {text: 'Total <br> Robot', dataIndex: 'A3676CNTPR', width: 100, sortable: true, align: 'right'},
@@ -421,7 +433,7 @@ Ext.define('Ext.Praxis.view.flown.ConciliationStatusForm.ConciliationStatusForm'
                     ]
                 },
                 {
-                    xtype: 'panel',
+                    xtype: 'panel',hidden: true,id: prototype.id + '-pagginator-DET',
                     layout: {
                         type: 'hbox',
                         pack: 'left'

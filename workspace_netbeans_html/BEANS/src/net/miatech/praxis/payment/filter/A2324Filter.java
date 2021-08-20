@@ -44,6 +44,9 @@ public class A2324Filter extends A2324 {
 
     public String strFormatDate = "";
     public long totSVFOP = 0;
+    public long totSVFOPS = 0;
+    public long difSVFOP = 0;
+    public long totdifSVFOP = 0;
 
     //CAMPOS PARA SETTLEMENT VS BOOMER
     public String IN_SDATE = "";

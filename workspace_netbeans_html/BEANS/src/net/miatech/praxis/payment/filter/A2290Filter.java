@@ -48,6 +48,8 @@ public class A2290Filter extends A2290 {
     public String IN_BSTVAL = "";
     public String IN_COUNTRY = "";
     public String IN_SDATE = "";
+    public String descSDATE = "";
+    public String NUMAVIS = "";
     public String IN_TICKET = "";
     public String IN_MERCHN = "";
     public String IN_DATE = "";
@@ -177,6 +179,7 @@ public class A2290Filter extends A2290 {
     public String strOrden = "";
     public String TYPE = "";
     public String IN_FECHA = "";
+    public String TKTS_CONCATENADOS = "";
     //Perc
     public double dblPerc01 = 0;
     public double dblPerc02 = 0;
@@ -193,6 +196,7 @@ public class A2290Filter extends A2290 {
     //Amount 
     public String SCURRENCYRF = "";
     public double totSVFOP = 0;
+    public double totSVFOP_ERROR = 0;
     public double SVFOPUSD = 0;
     public double totSVFOPUSD = 0;
     public double SVFOPRF = 0;

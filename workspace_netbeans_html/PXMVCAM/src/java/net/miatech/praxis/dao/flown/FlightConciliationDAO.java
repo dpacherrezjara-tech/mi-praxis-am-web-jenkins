@@ -768,22 +768,36 @@ public class FlightConciliationDAO {
                 beanCons.STASABR = rst.getString("STASABR").trim();
                 
                 beanCons.FSALES = rst.getString("FSALES").trim();
-                if(rst.getString("FSALES").trim().equals("0")){
-                    beanCons.descFSALES = "Not found";
-                } else if (rst.getString("FSALES").trim().equals("1")) {
-                    beanCons.descFSALES = "Found";
-                }
+//                if(rst.getString("FSALES").trim().equals("0")){
+//                    beanCons.descFSALES = "Not found";
+//                } else if (rst.getString("FSALES").trim().equals("1")) {
+//                    beanCons.descFSALES = "Found";
+//                }
                                 
                 beanCons.LNKMVLO = rst.getString("LNKMVLO").trim();
                 beanCons.STVCR = rst.getString("STVCR").trim();
                 
                 if(rst.getString("STVCR").trim().equals("Y")){
                     beanCons.desSTVCR = "Yes";
-                } else if (rst.getString("STVCR").trim().equals("")) {
-                    beanCons.desSTVCR = "";
+                } else if (rst.getString("STVCR").trim().equals("")) { 
+                   beanCons.desSTVCR = "";
                 }
                 
                 beanCons.TPAX = rst.getString("TPAX").trim();
+                if(beanCons.TPAX.equals("A")){
+                    beanCons.desPAX = "Adult";
+                } else if (beanCons.TPAX.equals("C")) {
+                    beanCons.desPAX = "Children";
+                } else if (beanCons.TPAX.equals("I")) {
+                    beanCons.desPAX = "Infant";
+                }
+                
+                beanCons.FA720 = rst.getString("FA720").trim();
+                if(rst.getString("FA720").trim().equals("")){
+                    beanCons.descFSALES = "";
+                } else {
+                    beanCons.descFSALES = "Yes";
+                }
 
                 lstCons.add(beanCons);
                 
@@ -935,6 +949,11 @@ public class FlightConciliationDAO {
                         beanTkt.VCPN16 = rst.getDouble("VCPN16");
                     } else if (beanTkt.FVAL.equals("3")) {
                         beanTkt.strDescFVAL = "VTR";
+                        beanTkt.VCPN = rst.getDouble("VCPN");
+                        beanTkt.VCPN0 = rst.getDouble("VCPN0");
+                        beanTkt.VCPN16 = rst.getDouble("VCPN16");
+                    } else if (beanTkt.FVAL.equals("4")) {
+                        beanTkt.strDescFVAL = "Manual Value";
                         beanTkt.VCPN = rst.getDouble("VCPN");
                         beanTkt.VCPN0 = rst.getDouble("VCPN0");
                         beanTkt.VCPN16 = rst.getDouble("VCPN16");

@@ -1957,24 +1957,24 @@ Ext.define('Ext.Praxis.view.widgets.prorrate', {
     
     me.callParent();
   },
-  setParam : function(params){
-      var me = this;            
-      var NPROG = '';      
-      //console.log(params);  
-      switch(params.IN_TRX){
-          case 'RFND':
-              NPROG = 'BX00000004';
-              break;          
-      }      
-       
-      me.setStoresGrids();
-      me.validateProgram(NPROG);            
+setParam : function(params){
+    var me = this;
+    var NPROG = '';
+    //console.log(params);
+    switch(params.IN_TRX){
+        case 'RFND':
+            NPROG = 'BX00000004';
+            break;
+    }
+    
+    me.setStoresGrids();
+    me.validateProgram(NPROG);
+    
+    meParentP = this; 
+    
+    Ext.getCmp(me.id + 'Facsimil').setParam(params);
       
-      meParentP = this; 
-      
-      Ext.getCmp(me.id + 'Facsimil').setParam(params);
-      
-      //console.log(params.IN_TIPOCAP);
+    //console.log(params.IN_TIPOCAP);
     //console.log(params.IN_AIRLIN);
     //console.log(params.IN_GRUPO);
     //console.log(params.IN_CIA);
@@ -1987,7 +1987,7 @@ Ext.define('Ext.Praxis.view.widgets.prorrate', {
     //console.log(params.IN_TCAMB);  
     //console.log(params.IN_REVENUE);  
     
-      var beanParam = {
+    var beanParam = {
         VP_GRUPO : params.IN_GRUPO,
         VP_CIA : params.IN_CIA,
         VP_FORMA : params.IN_FORMA,
@@ -2005,38 +2005,67 @@ Ext.define('Ext.Praxis.view.widgets.prorrate', {
         IN_CUPON2 : params.IN_CUPON2,
         IN_CUPON3 : params.IN_CUPON3,
         IN_CUPON4 : params.IN_CUPON4
-      };      
+    };      
       
-      me.beanP = beanParam; 
-
-      Ext.Ajax.request({
-        url: CONTEXTPATH+'/Prorate/searchData',
-        method: 'POST',
-        timeout: 60000000,
-        params: {beanString: JSON.stringify(beanParam)},
-        beforerequest: Ext.getCmp(me.id + '-form').mask('Loading...'),
-        success: function(response, opts){
-            var res = Ext.JSON.decode(response.responseText);
-            if (res.success) {
-                if(res.beanProrate !== undefined) {
-                    bean = res.beanProrate;                    
-                    lstA713 = res.lstA713;
-                    me.mostrarData(params.IN_TCAMB,params.IN_REVENUE);
-                    me.setVisibleDefault(params.IN_TRX,params.IN_EDITABLE);
-                    me.setEditable(params.IN_TRX,params.IN_EDITABLE);
-                    Ext.getCmp(me.id + '-form').unmask('Loading...', '');
-                } else {
-                    global.Msg({msg: 'Data not Found.'});
-                }
-            } else global.Msg({ msg: res.sesion });
-        },
-        failure: function(response, opts) {
-            Ext.getBody().unmask();
-            console.log('server-side failure with status code '+response.status);
-        }
-    });              
-  },    
-  mostrarData : function(TCamb,CurrRevenue){
+    me.beanP = beanParam; 
+      
+    if(params.IN_TRX === 'RFND'){
+        Ext.Ajax.request({
+            url: CONTEXTPATH+'/Prorate/searchData',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(beanParam)},
+            beforerequest: Ext.getCmp(me.id + '-form').mask('Loading...'),
+            success: function(response, opts){
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    if(res.beanProrate !== undefined) {
+                        bean = res.beanProrate;                    
+                        lstA713 = res.lstA713;
+                        me.mostrarData(params.IN_TCAMB,params.IN_REVENUE);
+                        me.setVisibleDefault(params.IN_TRX,params.IN_EDITABLE);
+                        me.setEditable(params.IN_TRX,params.IN_EDITABLE);
+                        Ext.getCmp(me.id + '-form').unmask('Loading...', '');
+                    } else {
+                        global.Msg({msg: 'Data not Found.'});
+                    }
+                } else global.Msg({ msg: res.sesion });
+            },
+            failure: function(response, opts) {
+                Ext.getBody().unmask();
+                console.log('server-side failure with status code '+response.status);
+            }
+        });
+    }else{
+        Ext.Ajax.request({
+            url: CONTEXTPATH+'/Prorate/searchDataVenta',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(beanParam)},
+            beforerequest: Ext.getCmp(me.id + '-form').mask('Loading...'),
+            success: function(response, opts){
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    if(res.beanProrate !== undefined) {
+                        bean = res.beanProrate;                    
+                        lstA713 = res.lstA713;
+                        me.mostrarData(params.IN_TCAMB,params.IN_REVENUE);
+                        //me.setVisibleDefault(params.IN_TRX,params.IN_EDITABLE);
+                        //me.setEditable(params.IN_TRX,params.IN_EDITABLE);
+                        Ext.getCmp(me.id + '-form').unmask('Loading...', '');
+                    } else {
+                        global.Msg({msg: 'Data not Found.'});
+                    }
+                } else global.Msg({ msg: res.sesion });
+            },
+            failure: function(response, opts) {
+                Ext.getBody().unmask();
+                console.log('server-side failure with status code '+response.status);
+            }
+        });
+    }
+},    
+mostrarData : function(TCamb,CurrRevenue){
     var me = this;
     
     Ext.getCmp(me.id + '-btnDelivery').setText('<span style="color: white; font-weight: bold;">'+ me.beanP.IN_FTE + ' Delivery</span>');
@@ -2107,9 +2136,9 @@ Ext.define('Ext.Praxis.view.widgets.prorrate', {
         Ext.getCmp(me.id + '-lblTitMiaErr').setVisible(false);
     }      
     
-    Ext.getCmp(me.id + '-DgView').getStore().removeAll();            
-    Ext.getCmp(me.id + '-DgView').getStore().loadData(lstA713);              
-    
+    Ext.getCmp(me.id + '-DgView').getStore().removeAll();
+    Ext.getCmp(me.id + '-DgView').getStore().loadData(lstA713);
+        
     me.calculateFare(TCamb,CurrRevenue);
     me.calculateTotals(lstA713);        
   },

@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1500,
+                width: 1574,
                 height: 'auto',
                 align: 'center'
             },
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1324,
+                            width: 1574,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -49,11 +49,12 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
-                                    width: 1324,
+                                    width: 1574,
                                     columnLines: true,
-//                                    features: [{
-//                                        ftype: 'summary'
-//                                    }],
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom',
+                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -69,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Date', dataIndex: 'SDATE', width: 100}
+                                                    {text: 'Date', dataIndex: 'SDATE', width: 80}
                                                 ]
                                             },
                                             {
@@ -86,7 +87,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'strDescStatus', width: 80
+                                                text: 'Status', dataIndex: 'strDescStatus', width: 70
                                             },
                                             {
                                                 text: 'Credit Card',
@@ -96,7 +97,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: 'SCARCOD', width: 60},
+                                                    {text: 'Code', dataIndex: 'SCARCOD', width: 50},
                                                     {text: 'Number', dataIndex: 'SCARDN', width: 110,
                                                         listeners: {
                                                             click: 'OnGridDetCard'
@@ -113,10 +114,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                             },
                                             {text: 'PNR <br> Sales', dataIndex: 'SPNR', width: 80},
                                             {text: 'Code Trans <br> Usado', dataIndex: 'TRNCU', width: 80},
-                                            {text: 'Country <br> Sales', dataIndex: 'SCOUNTRY', width: 80},
+                                            {text: 'Country <br> Sales', dataIndex: 'SCOUNTRY', width: 70},
                                             {text: 'Agent Code <br> Sales', dataIndex: 'SAGENT', width: 80},
                                             {text: 'Payment Type <br> Sales', dataIndex: 'SPAYMENT', width: 100},
-                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 80},
+                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 70},
                                             {
                                                 text: 'Loc Sales',
                                                 defaults: {
@@ -130,6 +131,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -147,6 +152,10 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOPS, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {text: 'Difference', dataIndex: 'DIFF', width: 80,
@@ -154,8 +163,53 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return  value;
+                                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totDIFSVFOP, '0,000.00') + '<b>';
                                                         }
                                                     },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Notice Record',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'DATAVIS', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AED6F1";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Number', dataIndex: 'NUMAVIS', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#AED6F1";
+                                                            //value = Ext.util.Format.number(value, '000000');
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Status', dataIndex: 'descSTAAVIS', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AED6F1";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Download',
+                                                xtype: 'actioncolumn',
+                                                width: 70,
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                                        handler: 'getPDF'
+                                                    }
                                                 ]
                                             },
                                         ]
@@ -231,7 +285,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                         text: 'Number', width: 120, dataIndex: 'TICKET', //enableTextSelection :true,
                                                         listeners: {
                                                             click: 'showTicket'
-                                                        },renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        }, renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "color:#057ECB;background-color:#FFFFFF;cursor: pointer;";
                                                             return '<b>' + value + '<b>';

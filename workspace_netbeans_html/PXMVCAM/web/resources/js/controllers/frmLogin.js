@@ -81,7 +81,7 @@ function fnLogin(){
 }
 
 function fnChangePassword() {
-    if ($('#txtAuthName').val().length === 0 || $('#txtAuthPass').val().length === 0 || $('#txtNewPass').val() .length < 6 || $('#txtConfirmPass').val().length < 6) {
+    if ($('#txtAuthName').val().length === 0 || $('#txtAuthPass').val().length === 0 || $('#txtNewPass').val() .length < 8 || $('#txtConfirmPass').val().length < 8) {
         showMessage('The following fields are mandatories:<br/>User.<br/>Password.<br/>New Password (Alphanumeric between 8 and 11 characters).<br/>Confirm Password.<br/>Do not use old passwords');
         //alert('You must enter a Username/Password.');
     } else {

@@ -389,13 +389,13 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                                     {text: 'Status', dataIndex: 'A3388FLAG', width: 200, align: 'right'},
                                     {text: '', dataIndex: 'A3388FLAG', width: 40, align: 'right',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            if (value == 'ASSIGNED TO THE AUDITOR' || value == 'REJECTED' || value == 'AUTHORISED') {
+                                            if (value === 'ASSIGNED TO THE AUDITOR' || value === 'REJECTED' || value === 'AUTHORISED' || value === 'UNDER INVESTIGATION') {
                                                 return '<img src="resources/img/semaforo/Circle_Green.png" />';
-                                            } else if (value == 'CHANGE FOR ANOTHER') {
+                                            } else if (value === 'CHANGE FOR ANOTHER') {
                                                 return '<img src="resources/img/semaforo/Circle_Yellow.png" />';
-                                            } else if (value == 'REJECTED') {
+                                            } else if (value === 'REJECTED') {
                                                 return '<img src="resources/img/semaforo/Circle_Yellow.png" />';
-                                            } else if (value == 'PENDING') {
+                                            } else if (value === 'PENDING') {
                                                 return '<img src="resources/img/semaforo/Circle_Orange.png" />';
                                             } else if (value === 'PREVIOUSLY DOWNLOADED') {
                                                 return '<img src="resources/img/semaforo/Circle_Silver.png" />';

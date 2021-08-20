@@ -1423,6 +1423,25 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
      }
      
      },*/
+    viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+        var strTkt = rowData.data.strTicket;
+        
+        prototypeProgram.view = 'flown-flight-conciliation-form';
+        prototypeProgram.nprog = 'PX00000095';
+        prototypeProgram.title = 'Flight Conciliation';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+        
+        console.log(beanProMasterTicket);
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },                                                                                                                          
     showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         console.log('RowData');
         console.log(rowData.data);

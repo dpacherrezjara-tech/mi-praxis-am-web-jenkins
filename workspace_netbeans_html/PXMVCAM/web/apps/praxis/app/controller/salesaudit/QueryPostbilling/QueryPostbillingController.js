@@ -200,6 +200,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
                 txtCountry.setValue('');
                 cmbCountry2.setValue('');
                 txtUser.setValue('');
+                txtIATA.setValue('');
                 break;
             default:
                 txtIATA.hide();
@@ -560,6 +561,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
             }
         });
         win.show();
+    },
+    onRendererColumnAttr: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
     }
 
 

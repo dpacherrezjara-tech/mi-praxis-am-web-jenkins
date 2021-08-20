@@ -132,7 +132,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkReasonsRFND.BsplinkReasonsRF
         var selectedValue = String(Ext.getCmp(prototype.id + '-cbxFiltro').getValue());
 
         this.beanTMP.IN_OPTION = selectedValue;
-        this.beanTMP.IN_CODRAZ = '';
+        this.beanTMP.IN_CODRAZ = Ext.getCmp(prototype.id + '-txtcod').getValue();
         this.beanTMP.IN_STATUS = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
         this.beanTMP.A3404FAMIL = Ext.getCmp(prototype.id + '-txtFamilia').getValue();
         this.beanTMP.IN_COMENT = '';
@@ -156,26 +156,25 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkReasonsRFND.BsplinkReasonsRF
 
     onRendererColumDescription: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+        return value;
     },
 
-    OnEditActionDisabled: function () {
-
-    },
-
+    /* OnEditActionDisabled: function () {
+     
+     },*/
     onEditActionColumnClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('U', rec);
     },
 
     winDataEntry: function (action, rec) {
-        action = action == null || action == undefined ? 'I' : action;
-        rec = rec == null || rec == undefined ? {} : rec;
+        action = action === null || action === undefined ? 'I' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
         var win = new Ext.Praxis.view.salesaudit.BsplinkReasonsRFND.DataEntryBsplinkReasonsRFND({
             params: {
                 action: action,
                 rec: rec,
-                url01: prototype.url,
+                url01: prototype.url
             }
         });
         win.show();
@@ -184,7 +183,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkReasonsRFND.BsplinkReasonsRF
     onAddClick: function (obj) {
         this.winDataEntry('I', {});
     },
+    onCmbSearchChange: function (obj, records, eOpts) {
+        prototype.id + '-txtcod'
+        if (obj.getValue() === "C"){
+            Ext.getCmp(prototype.id + '-txtcod').setValue('');
+             Ext.getCmp(prototype.id + '-txtcod').show();             
+            
+        }else{
+            Ext.getCmp(prototype.id + '-txtcod').setValue('');
+            Ext.getCmp(prototype.id + '-txtcod').hide();
+        }
+    },
+    onSearchkey: function (f, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onSearchClick();
+        }
 
+    },
     OnEditActionDisabled: function (view, rowIndex, colIndex, item, record) {
         return false;
     },

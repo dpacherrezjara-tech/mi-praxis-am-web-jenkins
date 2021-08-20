@@ -47,6 +47,206 @@ public class ProrateDAO {
         session = ss;
     }
     
+    public S0001A713Filter searchA720Data(S0001A713Filter filter) throws SQLException, Exception {
+
+        S0001A713Filter beanA720 = new S0001A713Filter();
+
+        CallableStatement cstmt01 = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04169(?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_GRUPO);
+            cstmt01.setString(3, filter.VP_CIA.trim());
+            cstmt01.setString(4, filter.VP_FORMA);
+            cstmt01.setString(5, filter.VP_SERIE);
+            cstmt01.setString(6, filter.VP_SEQ);
+
+            cstmt01.execute();
+
+            rst = cstmt01.getResultSet();
+            while (rst.next()) {
+                beanA720 = new S0001A713Filter();
+                beanA720.A713CIA = rst.getString("A720CIA").trim();
+                beanA720.A713FORMA = rst.getString("A720FORMA").trim();
+                beanA720.A713SERIE = rst.getString("A720SERIE").trim();
+                beanA720.A713GRUPO = rst.getString("A720GRUPO").trim();
+                beanA720.A713ORIG = rst.getString("A720ORIG").trim();
+                beanA720.A713FLAG = rst.getString("A720FLAG").trim();
+                beanA720.A713NSTOCK = rst.getString("A720NSTOCK").trim();
+                beanA720.A713RPDA = rst.getString("A720RPDA").trim();
+                beanA720.A713CTKTC = rst.getInt("A720CTKTC");
+                beanA720.A713PRO = rst.getString("A720PRO").trim();
+                beanA720.A713BASE = rst.getString("A720BASE").trim();
+                beanA720.A713MONREG = rst.getString("A720MONREG").trim();
+                beanA720.A713MONSYS = rst.getString("A720MONSYS").trim();
+                beanA720.A713FECVTA = rst.getString("A720FECVTA").trim();
+                beanA720.A713CODIT = rst.getString("A720CODIT").trim();
+                beanA720.A713CIUVTA = rst.getString("A720CIUVTA").trim();
+                beanA720.A713PAIVTA = rst.getString("A720PAIVTA").trim();
+                beanA720.A713CIUEMI = rst.getString("A720CIUEMI").trim();
+                beanA720.A713PAIEMI = rst.getString("A720PAIEMI").trim();
+                beanA720.A713TARIFA = rst.getDouble("A720TARIFA");
+                beanA720.A713MONEDA = rst.getString("A720MONEDA").trim();
+                beanA720.A713TRFPAG = rst.getDouble("A720TRFPAG");
+                beanA720.A713MDAPAG = rst.getString("A720MDAPAG").trim();
+                beanA720.A713TAJUST = rst.getDouble("A720TAJUST");
+                beanA720.A713TRFNUC = rst.getDouble("A720TRFNUC");
+                beanA720.A713ROE = rst.getDouble("A720ROE");
+                beanA720.A713CSOVER = rst.getDouble("A720CSOVER");
+                beanA720.A713QSOVER = rst.getInt("A720QSOVER");
+                beanA720.A713CPLUSS = rst.getDouble("A720CPLUSS");
+                beanA720.A713TAJUSQ = rst.getDouble("A720TAJUSQ");
+                beanA720.A713COMMIS = rst.getDouble("A720COMMIS");
+                beanA720.A713MDACOM = rst.getString("A720MDACOM").trim();
+                beanA720.A713PORCOM = rst.getDouble("A720PORCOM");
+                beanA720.A713FARE = rst.getDouble("A720FARE");
+                beanA720.A713MDAFA = rst.getString("A720MDAFA").trim();
+                beanA720.A713MDARV = rst.getString("A720MDARV").trim();
+                beanA720.A713FARERV = rst.getDouble("A720FARERV");
+                beanA720.A713SUBPA1 = rst.getString("A720SUBPA1").trim();
+                beanA720.A713CIAS = rst.getString("A720CIAS").trim();
+                beanA720.A713FORMAS = rst.getString("A720FORMAS").trim();
+                beanA720.A713SERIES = rst.getString("A720SERIES").trim();
+                beanA720.A713TVENTA = rst.getString("A720TVENTA").trim();
+                beanA720.A713AGENTE = rst.getString("A720AGENTE").trim();
+                beanA720.A713INITRA = rst.getString("A720INITRA").trim();
+                beanA720.A713TCAPAG = rst.getDouble("A720TCAPAG");
+                beanA720.A713REGIST = rst.getString("A720REGIST").trim();
+                beanA720.A713FREGIS = rst.getString("A720FREGIS").trim();
+                beanA720.A713REVISA = rst.getString("A720REVISA").trim();
+                beanA720.A713FREVIS = rst.getString("A720FREVIS").trim();
+            }
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return beanA720;
+    }
+    
+    public List<S0001A713Filter> searchA720ListaCupon(S0001A713Filter filter) throws SQLException, Exception {
+
+        S0001A713Filter beanA720 = new S0001A713Filter();
+        List<S0001A713Filter> lstA720 = new ArrayList<>();
+        
+        CallableStatement cstmt01 = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04170(?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_CIA.trim());
+            cstmt01.setString(3, filter.VP_FORMA);
+            cstmt01.setString(4, filter.VP_SERIE);
+            cstmt01.setString(5, filter.VP_SEQ);
+
+            cstmt01.execute();
+
+            rst = cstmt01.getResultSet();
+            while (rst.next()) {
+
+                beanA720 = new S0001A713Filter();
+                beanA720.A713CIA = rst.getString("A720CIA").trim();
+                beanA720.A713FORMA = rst.getString("A720FORMA").trim();
+                beanA720.A713SERIE = rst.getString("A720SERIE").trim();
+                beanA720.A713CUPON = rst.getString("A720CUPON").trim();
+                beanA720.TICKET = rst.getString("A720CIA").trim() + rst.getString("A720FORMA").trim() + rst.getString("A720SERIE").trim();
+                beanA720.A713CONEX1 = rst.getString("A720CONEX1").trim();
+                beanA720.A713RUTA0 = rst.getString("A720RUTA0").trim();
+                beanA720.A713RUTA1 = rst.getString("A720RUTA1").trim();
+                beanA720.A713CARRA1 = rst.getString("A720CARRA1").trim();
+                beanA720.A713NVLO1 = rst.getString("A720NVLO1").trim();
+                beanA720.A713FVLO1 = rst.getString("A720FVLO1").trim();
+                beanA720.A713HVLO1 = rst.getString("A720HVLO1").trim();
+                beanA720.A713BOOKI1 = rst.getString("A720BOOKI1").trim();
+                beanA720.A713CLASE1 = rst.getString("A720CLASE1").trim();
+                beanA720.A713FBUSO1 = rst.getString("A720FBUSO1").trim();
+                beanA720.A713FBORI1 = rst.getString("A720FBORI1").trim();
+                beanA720.A713LOHO1 = rst.getString("A720LOHO1").trim();
+                beanA720.A713TBASE1 = rst.getString("A720TBASE1").trim();
+                beanA720.A713STBAS1 = rst.getString("A720STBAS1").trim();
+                beanA720.A713TDESC1 = rst.getString("A720TDESC1").trim();
+                beanA720.A713PORDS1 = rst.getDouble("A720PORDS1");
+                beanA720.A713VIA1 = rst.getString("A720VIA1").trim();
+                beanA720.A713FARE1 = rst.getDouble("A720FARE1");
+                beanA720.A713TFARE1 = rst.getString("A720TFARE1").trim();
+                beanA720.A713SS1 = rst.getDouble("A720SS1");
+                beanA720.A713DIFER1 = rst.getDouble("A720DIFER1");
+                beanA720.A713FDIFE1 = rst.getString("A720FDIFE1").trim();
+                beanA720.A713CFARE1 = rst.getString("A720CFARE1").trim();
+                beanA720.A713TRFM1 = rst.getDouble("A720TRFM1");
+                beanA720.A713MNTFM1 = rst.getString("A720MNTFM1").trim();
+                beanA720.A713VLSRP1 = rst.getDouble("A720VLSRP1");
+                beanA720.A713VLMPA1 = rst.getDouble("A720VLMPA1");
+                beanA720.A713ACUE1 = rst.getDouble("A720ACUE1");
+                beanA720.A713ACUEO1 = rst.getDouble("A720ACUEO1");
+                beanA720.A713ISC1 = rst.getDouble("A720ISC1");
+                beanA720.A713AJUST1 = rst.getDouble("A720AJUST1");
+                beanA720.A713VALOR1 = rst.getDouble("A720VALOR1");
+                beanA720.A713QIN1 = rst.getDouble("A720QIN1");
+                beanA720.A713Q1 = rst.getDouble("A720Q1");
+                beanA720.A713FACT1 = rst.getDouble("A720FACT1");
+                beanA720.A713PPRO1 = rst.getDouble("A720PPRO1");
+                beanA720.A713PROV1 = rst.getDouble("A720PROV1");
+                beanA720.A713YQ1 = rst.getDouble("A720YQ1");
+                beanA720.A713IV1 = rst.getDouble("A720IV1");
+                beanA720.A713PRRCM1 = rst.getDouble("A720PRRCM1");
+                beanA720.A713PRSCM1 = rst.getDouble("A720PRSCM1");
+                beanA720.A713INDPR1 = rst.getString("A720INDPR1").trim();
+                beanA720.A713CIAI = rst.getString("A720CIAI").trim();
+                beanA720.A713FORMAI = rst.getString("A720FORMAI").trim();
+                beanA720.A713SERIEI = rst.getString("A720SERIEI").trim();
+                
+                lstA720.add(beanA720);
+            }
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstA720;
+    }
+    
     public S0001A713Filter searchA713Data(S0001A713Filter filter) throws SQLException, Exception {
 
         S0001A713Filter beanA713 = new S0001A713Filter();
@@ -246,7 +446,7 @@ public class ProrateDAO {
             pasarGarbageCollector();
         }
         return lstA713;
-    }       
+    }
     
     public A1526Filter searchA1526(A1526Filter filter) throws SQLException, Exception {
 

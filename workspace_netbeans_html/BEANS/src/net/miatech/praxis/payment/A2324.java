@@ -40,6 +40,7 @@ public class A2324 {
     
 //    public long lngQMATCH = 0;
     public long SVFOP = 0;
+    public long SVFOPS = 0;
     public int MERCHN = 0;
     
     

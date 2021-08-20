@@ -31,6 +31,14 @@ public class ProrateLogic {
         loadProrateDAO.setSession(ss);
     }
     
+    public S0001A713Filter searchA720Data(S0001A713Filter filter) throws SQLException, Exception {
+        return loadProrateDAO.searchA720Data(filter);
+    }
+    
+    public List<S0001A713Filter> searchA720ListaCupon(S0001A713Filter filter) throws SQLException, Exception {
+        return loadProrateDAO.searchA720ListaCupon(filter);
+    }
+    
     public S0001A713Filter searchA713Data(S0001A713Filter filter) throws SQLException, Exception {
         return loadProrateDAO.searchA713Data(filter);
     }

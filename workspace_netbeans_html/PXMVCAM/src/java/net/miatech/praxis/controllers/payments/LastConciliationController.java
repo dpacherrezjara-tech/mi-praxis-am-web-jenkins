@@ -7,8 +7,10 @@ package net.miatech.praxis.controllers.payments;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.praxis.classes.ProReportLastConciliation;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -23,6 +26,7 @@ import net.miatech.praxis.logic.payments.LastConciliationLogic;
 import net.miatech.praxis.payment.filter.A2290Filter;
 import net.miatech.praxis.payment.filter.A3800Filter;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -203,6 +207,93 @@ public class LastConciliationController extends BaseController {
             }
 
             lst = logic.loadPX565SQP04095(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "getPDF")
+    public @ResponseBody
+    void getPDF(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Report : getPDF");
+        String fileNameDownload = "Last Conciliation - " + Functions.getFechaActual();
+        ProReportLastConciliation prfd = new ProReportLastConciliation();
+        A2290Filter Data = new A2290Filter();
+        try {
+            File file = File.createTempFile(fileNameDownload, ".pdf");
+
+            List<A2290Filter> listaDataA2291 = this.getListCardA2291(request, true);
+            System.out.println("Tamaño de lista devuelta A2291: " + listaDataA2291.size());
+            
+            List<A2290Filter> listaDataA2290 = this.getListCardA2290(request, true);
+            System.out.println("Tamaño de lista devuelta A2290: " + listaDataA2290.size());
+            
+            List<A3800Filter> listaDataA3800 = this.getListA3800(request, true);
+            
+            //Armando el objeto Data
+            
+            Data.SAGENT = listaDataA2290.get(0).SAGENT;
+            Data.NUMAVIS = listaDataA3800.get(0).NUMAVIS;
+            Data.descSDATE = listaDataA3800.get(0).DATAVIS;
+            Data.SCURRENCY = listaDataA2290.get(0).SCURRENCY;
+            Data.totSVFOP = listaDataA2290.get(0).totSVFOP; //TOTAL EMISION DE LOS BOLETOS
+            Data.totSVFOP_ERROR = listaDataA2291.get(0).totSVFOP; //IMPORTE POR ERROR
+            
+            for (int i =0; i < listaDataA2290.size(); i++){
+                Data.TKTS_CONCATENADOS = Data.TKTS_CONCATENADOS + listaDataA2290.get(i).CCIA + " " + listaDataA2290.get(i).FORMA + listaDataA2290.get(i).SERIE + ", ";
+            }
+            
+            Data.TKTS_CONCATENADOS = Data.TKTS_CONCATENADOS.substring(0, Data.TKTS_CONCATENADOS.length()-2);
+            
+            
+            prfd.createReport(Data, file);
+
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + ".pdf" + "\"");
+
+            /*FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+             response.getOutputStream();
+             fos.close();*/
+            InputStream is = new FileInputStream(file.getAbsolutePath());
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public List<A3800Filter> getListA3800(HttpServletRequest request, Boolean bExcel) {
+
+        List<A3800Filter> lst = new ArrayList<>(0);
+        A3800Filter filter = new A3800Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new LastConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3800Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX565SQP04125(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }

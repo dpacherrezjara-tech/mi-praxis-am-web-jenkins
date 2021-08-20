@@ -4,6 +4,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkTicketControlRFND.BsplinkTic
     alias: 'controller.BsplinkTicketControlRFNDController',
     
     beanTMP: {},
+    beanEXCEL: {},
 
     /**
      * Constructor
@@ -115,7 +116,57 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkTicketControlRFND.BsplinkTic
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
     },
-    
+    onExcelClick: function () {
+        var me = this;
+        var comboBy = String(Ext.getCmp(prototype.id+'-search-type').getValue());
+        if ( comboBy === '1' ){
+            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue()) !== '' ){
+                if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) === '' ){
+                    Ext.Msg.alert('.: PRAXIS :.', 'Enter Date To');
+                    return;
+                }
+            }
+            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) !== '' ){
+                if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue()) === '' ){
+                    Ext.Msg.alert('.: PRAXIS :.', 'Enter Date From');
+                    return;
+                }
+            }
+        }        
+        if ( comboBy === '2' ){
+            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFrmaSerie').getValue()) === '' ){
+                Ext.Msg.alert('.: PRAXIS :.', 'Enter TKT');
+                return;
+            }
+        }
+        
+        me.beanEXCEL.IN_OPTION = comboBy;
+        me.beanEXCEL.IN_DATEFROM = Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue();
+        me.beanEXCEL.IN_DATETO = Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue();
+        me.beanEXCEL.IN_CIA = Ext.String.trim(Ext.getCmp(prototype.id+'-txtCia').getValue());
+        me.beanEXCEL.IN_FORMA = Ext.String.trim(Ext.getCmp(prototype.id+'-txtFrmaSerie').getValue().substr(0,4));
+        me.beanEXCEL.IN_SERIE = Ext.String.trim(Ext.getCmp(prototype.id+'-txtFrmaSerie').getValue().substr(4,10));
+        me.beanEXCEL.IN_SEQ = Ext.String.trim(Ext.getCmp(prototype.id+'-txtSeq').getValue());
+        me.beanEXCEL.IN_COUNTRY = Ext.String.trim(Ext.getCmp(prototype.id+'-cmbCountry').getValue());
+        
+        
+
+        if (Ext.Object.getSize(me.beanEXCEL) > 0) {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Download Excel ?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'ok') {
+                        global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(me.beanEXCEL)));
+                    }
+                }
+            });
+        }
+    },
     onSearchClick: function(btn){
         var me = this;
         var form = Ext.getCmp(prototype.id + '-contenedor-filters-form').getForm();
@@ -126,15 +177,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkTicketControlRFND.BsplinkTic
         
         var comboBy = String(Ext.getCmp(prototype.id+'-search-type').getValue());
 
-        if ( comboBy == '1' ){
-            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue()) != '' ){
-                if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) == '' ){
+        if ( comboBy === '1' ){
+            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue()) !== '' ){
+                if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) === '' ){
                     Ext.Msg.alert('.: PRAXIS :.', 'Enter Date To');
                     return;
                 }
             }
-            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) != '' ){
-                if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue()) == '' ){
+            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateTo').getRawValue()) !== '' ){
+                if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFilterDateFrom').getRawValue()) === '' ){
                     Ext.Msg.alert('.: PRAXIS :.', 'Enter Date From');
                     return;
                 }
@@ -149,8 +200,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkTicketControlRFND.BsplinkTic
             }*/
         }
         
-        if ( comboBy == '2' ){
-            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFrmaSerie').getValue()) == '' ){
+        if ( comboBy === '2' ){
+            if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txtFrmaSerie').getValue()) === '' ){
                 Ext.Msg.alert('.: PRAXIS :.', 'Enter TKT');
                 return;
             }

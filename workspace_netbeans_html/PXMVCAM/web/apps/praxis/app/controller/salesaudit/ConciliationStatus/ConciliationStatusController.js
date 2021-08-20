@@ -10,12 +10,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
      * Constructor
      */
 
-    init: function(view) {
+    init: function (view) {
         var me = this;
         this.setStoresFilters();
 
     },
-    OnBeforeShow: function() {
+    OnBeforeShow: function () {
         prototype.id = 'ConciliationStatus';
         prototype.url = CONTEXTPATH + '/ChangeOfStatusForm';
         prototype.url2 = CONTEXTPATH + '/ConciliationStatus';
@@ -25,11 +25,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    afterRender: function () {
         // alert('Controlador cargado correctamente')
         this.setStores();
     },
-    onRendererColumnOnTime: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
         switch (String(record.get('A3536FINA'))) {
             case 'D':
                 value = 'silver';
@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
     },
-    setStores: function() {
+    setStores: function () {
         var grid01 = Ext.getCmp(prototype.id + '-gridData');
         var grid02 = Ext.getCmp(prototype.id + '-gridDetalle');
         var grid03 = Ext.getCmp(prototype.id + '-gridDataControl');
@@ -97,7 +97,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         //pager01.setStore(store01);
 
     },
-    setStoresFilters: function() {
+    setStoresFilters: function () {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
         var cmbOrigen = Ext.getCmp(prototype.id + '-CmbOrigen');
         var cmbType = Ext.getCmp(prototype.id + '-Cmbtype');
@@ -111,10 +111,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
 
         cmbOrigen.bindStore(Ext.create('Ext.data.Store', {
             data: [
+                {"code": "EM", "name": "EMD RFND"},
+                {"code": "PB", "name": "POST BILLING"},
                 {"code": "RI", "name": "RFND BSPLINK"},
                 {"code": "RD", "name": "RFND ASR"},
-                {"code": "CB", "name": "RFND CHARGEBACK"},
-                {"code": "EM", "name": "EMD RFND"}
+                {"code": "CB", "name": "RFND CHARGEBACK"}
             ]
         }));
 
@@ -125,7 +126,39 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
             ]
         }));
     },
-    onCmbSearchChange: function(obj, newValue, oldValue, eOpts) {
+    onCmbChange: function (obj, records, eOpts) {
+        var txtLote = Ext.getCmp(prototype.id + '-txtLote');
+        var txtFilterDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom');
+        var txtFilterDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo');
+        //campo_cantidad.hide();
+        if (obj.getValue() === "1") {
+
+            txtFilterDateFrom.show();
+            txtFilterDateTo.show();
+            txtLote.hide();
+
+            Ext.getCmp(prototype.id + '-txtLote').setValue('');
+
+        } else if (obj.getValue() === "2") {
+
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            txtLote.show();
+
+            Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
+            Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
+
+        } else {
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            txtLote.hide();
+
+            Ext.getCmp(prototype.id + '-txtFilterDateFrom').setValue('');
+            Ext.getCmp(prototype.id + '-txtFilterDateTo').setValue('');
+            Ext.getCmp(prototype.id + '-txtLote').setValue('');
+        }
+    },
+    onCmbSearchChange: function (obj, newValue, oldValue, eOpts) {
         var grid01 = Ext.getCmp(prototype.id + '-gridData');
         var grid02 = Ext.getCmp(prototype.id + '-gridDetalle');
         var grid03 = Ext.getCmp(prototype.id + '-gridDataControl');
@@ -143,10 +176,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
                 break;
         }
     },
-    onCmbStatusOrigen: function(obj, newValue, oldValue, eOpts) {
+    onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
         obj.setValue('RI');
     },
-    onRendererColumnStatus: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
         switch (String(record.get('A3676STROB'))) {
             case 'PROCESSED BY THE ROBOT':
@@ -181,27 +214,27 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
-    onRendererToltip: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererToltip: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;
     },
-    onRendererColumnOnLote: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererColumnOnLote: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "font-weight:bold !important; color:blue !important; cursor: pointer !important; text-decoration: underline;";
         return '<span onclick="Ext.getCmp(prototype.id + \'-Contenedor\').getController().OnDetail01(' + rowIndex + ');">' + value + '</span>';
     },
-    OnDetail01: function(rowIndex) {
+    OnDetail01: function (rowIndex) {
         var grid = Ext.getCmp(prototype.id + '-gridData');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         Ext.getCmp(prototype.id + '-gridData').setVisible(false);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(false);
+        Ext.getCmp(prototype.id + '-gridDataControl').setVisible(false);
 
         Ext.getCmp(prototype.id + '-gridDetalle').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-totalDeta').setVisible(true);
         Ext.getCmp(prototype.id + '-btn-back').setVisible(true);
         Ext.getCmp(prototype.id + '-btn-excel').setVisible(true);
         ///CARGANDO EL DETALLE DE LA GRTILLA
-
         this.tipo = '2';
         var origen = '';
         if (rec.data.A3676ORIG === 'RFND BSPLINK') {
@@ -232,12 +265,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
                 beanString: JSON.stringify(this.bean2)
                         //beanString: bean
 
-            }, callback: function(records, operation, success) {
+            }, callback: function (records, operation, success) {
                 if (records.length !== 0) {
                     Ext.getCmp(prototype.id + '-lbl-totalDeta').setText(records[0].data.A3676TOTPAGI);
                 } else {
                     Ext.getCmp(prototype.id + '-lbl-totalDeta').setText('0');
-                    global.Msg({msg: "Data not found.", icon: 2, fn: function() {
+                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                         }});
 
                 }
@@ -247,7 +280,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         });
 
     },
-    onRendererColumnStatusContr: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    onRendererColumnStatusContr: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
         switch (String(record.get('A3676STROB'))) {
             case 'Processed':
@@ -270,25 +303,25 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
-    onCmbSearchAfterRender: function(obj) {
+    onCmbSearchAfterRender: function (obj) {
         obj.setValue('1');
     },
-    onCmbRobotAfterRender: function(obj) {
+    onCmbRobotAfterRender: function (obj) {
         obj.setValue('1');
     },
-    onCmbStatusAfterRender: function(obj) {
+    onCmbStatusAfterRender: function (obj) {
         obj.setValue('');
     },
-    onSearchkey: function(f, e) {
+    onSearchkey: function (f, e) {
         if (e.getKey() === e.ENTER) {
             this.imgSearch_clickHandler();
         }
 
     },
-    onchange: function(field, newValue, oldValue) {
+    onchange: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onBackClick: function(obj, e) {
+    onBackClick: function (obj, e) {
         Ext.getCmp(prototype.id + '-gridData').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(true);
         this.tipo = '1';
@@ -297,89 +330,120 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
         Ext.getCmp(prototype.id + '-lbl-totalDeta').setVisible(false);
         Ext.getCmp(prototype.id + '-btn-back').setVisible(false);
     },
-    imgSearch_clickHandler: function(obj, records, eOpts) {
+    imgSearch_clickHandler: function (obj, records, eOpts) {
         var cmbsearch = Ext.getCmp(prototype.id + '-search-type').getValue();
         var txtDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
         var txtDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
         var CmbOrigen = Ext.getCmp(prototype.id + '-CmbOrigen').getValue();
         var CmbType = Ext.getCmp(prototype.id + '-Cmbtype').getValue();
+        var txtLote = Ext.getCmp(prototype.id + '-txtLote').getValue();
 
         if (cmbsearch === '') {
-            Ext.MessageBox.alert('PRAXIS', "Select Search Type", function(btn, text) {
+            Ext.MessageBox.alert('PRAXIS', "Select Search Type", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
                     setTimeout("Ext.getCmp(prototype.id + '-search-type').focus();", 100);
             });
             return;
         }
-        if (txtDateFrom === '') {
-            Ext.MessageBox.alert('PRAXIS', "Enter Date From", function(btn, text) {
-                if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateFrom').focus();", 100);
-            });
-            return;
-        }
-        if (txtDateTo === '') {
-            Ext.MessageBox.alert('PRAXIS', "Enter Date To", function(btn, text) {
-                if (btn === 'ok' || btn === 'cancel')
-                    setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
-            });
-            return;
-        }
-        if (txtDateFrom !== '' && txtDateTo !== '') {
-
-            if (global.existeFecha(txtDateFrom) !== '') {
-                Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateFrom), function(btn, text) {
+        if (cmbsearch === '1') {
+            if (txtDateFrom === '') {
+                Ext.MessageBox.alert('PRAXIS', "Enter Date From", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
                         setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateFrom').focus();", 100);
                 });
                 return;
             }
-
-            if (global.existeFecha(txtDateTo) !== '') {
-                Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateTo), function(btn, text) {
+            if (txtDateTo === '') {
+                Ext.MessageBox.alert('PRAXIS', "Enter Date To", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
                         setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
                 });
                 return;
             }
-            if (Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getValue()) > Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateTo').getValue())) {
-                Ext.MessageBox.alert('PRAXIS', "the starting date must be less than the end date", function(btn, text) {
+            if (txtDateFrom !== '' && txtDateTo !== '') {
+
+                if (global.existeFecha(txtDateFrom) !== '') {
+                    Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateFrom), function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateFrom').focus();", 100);
+                    });
+                    return;
+                }
+
+                if (global.existeFecha(txtDateTo) !== '') {
+                    Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateTo), function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
+                    });
+                    return;
+                }
+                if (Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getValue()) > Date.parse(Ext.getCmp(prototype.id + '-txtFilterDateTo').getValue())) {
+                    Ext.MessageBox.alert('PRAXIS', "the starting date must be less than the end date", function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
+                    });
+                    return;
+                }
+            }
+        } else {
+            if (txtLote === '') {
+                Ext.MessageBox.alert('PRAXIS', "Enter Lote", function (btn, text) {
                     if (btn === 'ok' || btn === 'cancel')
-                        setTimeout("Ext.getCmp(prototype.id + '-txtFilterDateTo').focus();", 100);
+                        setTimeout("Ext.getCmp(prototype.id + '-txtLote').focus();", 100);
                 });
                 return;
             }
         }
 
+
         if (CmbType === '1') {
-            Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
             //datos capturados del texto
             this.bean.IN_OPTION = cmbsearch;
             this.bean.IN_DATEFROM = txtDateFrom;
             this.bean.IN_DATETO = txtDateTo;
             this.bean.IN_ORIGEN = CmbOrigen;
-            this.bean.IN_LOTE = '';
+            this.bean.IN_LOTE = txtLote;
             this.bean.IN_REFERENCE = '';
             this.SearchReport(this.bean, obj === true ? obj : false);
         } else {
+
+            switch (CmbOrigen) {
+                case 'EM':
+                    this.bean3.IN_TYPE = 'EMD RFND';
+                    break;
+                case 'PB':
+                    this.bean3.IN_TYPE = 'POST BILLING';
+                    break;
+                case 'RI':
+                    this.bean3.IN_TYPE = 'RFND BSPLINK';
+                    break;
+                case 'RD':
+                    this.bean3.IN_TYPE = 'RFND ASR';
+                    break;
+                case 'CB':
+                    this.bean3.IN_TYPE = 'RFND CHARGEBACK';
+                    break;
+
+
+            }
+
             this.bean3.IN_OPTION = cmbsearch;
             this.bean3.IN_DATEFROM = txtDateFrom;
             this.bean3.IN_DATETO = txtDateTo;
-            this.bean3.IN_ORIGEN = 'MEXVN';//'CSCVI';
+            this.bean3.IN_ORIGEN = '';//'MEXVN';//'CSCVI';
             this.bean3.IN_LOTE = '';
-            this.bean3.IN_REFERENCE = '';
-            Ext.getCmp(prototype.id + '-gridDataControl').getStore().removeAll();
+            this.bean3.IN_REFERENCE = txtLote;            
             Ext.getCmp(prototype.id + '-gridDataControl').getStore().loadPage(1, {
                 params: {
                     beanString: JSON.stringify(this.bean3)
                             //beanString: bean
 
-                }, callback: function(records, operation, success) {
+                }, callback: function (records, operation, success) {
                     if (records.length != 0) {
                         Ext.getCmp(prototype.id + '-lbl-total').setText(records[0].data.A3676TOTPAGI);
                     } else {
                         Ext.getCmp(prototype.id + '-lbl-total').setText('0');
-                        global.Msg({msg: "Data not found.", icon: 2, fn: function() {
+                        global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                             }});
 
                     }
@@ -390,7 +454,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
 
 
     },
-    SearchReport: function(bean, bExcel) {
+    SearchReport: function (bean, bExcel) {
         if (bExcel) {
             if (me.tipo === '1') {
                 me.exportExcel(prototype.url + '/getXLSXCAB?beanString=' + encodeURI(JSON.stringify(bean)));
@@ -405,12 +469,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
                     beanString: JSON.stringify(bean)
                             //beanString: bean
 
-                }, callback: function(records, operation, success) {
+                }, callback: function (records, operation, success) {
                     if (records.length != 0) {
                         Ext.getCmp(prototype.id + '-lbl-total').setText(records[0].data.A3676TOTPAGI);
                     } else {
                         Ext.getCmp(prototype.id + '-lbl-total').setText('0');
-                        global.Msg({msg: "Data not found.", icon: 2, fn: function() {
+                        global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                             }});
 
                     }
@@ -421,7 +485,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
 
 
     },
-    exportExcel: function(_path) {
+    exportExcel: function (_path) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Download Excel ?',
@@ -429,24 +493,24 @@ Ext.define('Ext.Praxis.controller.salesaudit.ConciliationStatus.ConciliationStat
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'ok') {
                     global.getFile(_path);
                 }
             }
         });
     },
-    onExcelClick: function(obj, e) {
+    onExcelClick: function (obj, e) {
         this.imgSearch_clickHandler(true);
     },
-    onFilterClick: function() {
+    onFilterClick: function () {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible())
             option.hide();
         else
             option.show();
     },
-    onClearClick: function(obj, e) {
+    onClearClick: function (obj, e) {
         Ext.getCmp(prototype.id + '-gridData').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-total').setVisible(true);
         Ext.getCmp(prototype.id + '-lbl-total').setText('0');

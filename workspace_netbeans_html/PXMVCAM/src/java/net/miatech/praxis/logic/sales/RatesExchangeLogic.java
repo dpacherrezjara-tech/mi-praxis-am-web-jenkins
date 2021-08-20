@@ -42,6 +42,10 @@ public class RatesExchangeLogic {
     public List<A1526Filter> loadPX025S01A1526(A1526Filter filter) throws SQLException, Exception {
         return ratesExchangeDAO.loadPX025S01A1526(filter);
     }
+    public List<A1526Filter> loadPX025S01A4061(A1526Filter filter) throws SQLException, Exception {
+        return ratesExchangeDAO.loadPX025S01A4061(filter);
+    }
+    
 
     public String SQP00820(A1526Filter filter, String opcion) throws SQLException, Exception {
         return ratesExchangeDAO.SQP00820(filter, opcion);

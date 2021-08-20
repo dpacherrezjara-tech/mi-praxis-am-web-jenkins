@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.controller.sales.CalendarBSP.CalendarBSPController', {
         });
     },
     afterRender: function () {
-//        this.setStoreData();
+        this.setStoreData();
 //        this.btnClear_click();
 //        this.btnSearch_click();
     },

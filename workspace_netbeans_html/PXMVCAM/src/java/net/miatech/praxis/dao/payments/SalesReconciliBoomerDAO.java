@@ -443,6 +443,7 @@ public class SalesReconciliBoomerDAO {
         List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
         A2324Filter beanTkt;
         long totSVFOP = 0;
+        long totSVFOPS = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -484,6 +485,7 @@ public class SalesReconciliBoomerDAO {
 
             while (rst.next()) {
                 totSVFOP = rst.getLong("SVFOP");
+                totSVFOPS = rst.getLong("SVFOPS");
             }
             rst.close();
 
@@ -527,8 +529,12 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("SDATE").trim());
 
                     beanTkt.SVFOP = rst.getLong("SVFOP");
+                    beanTkt.SVFOPS = rst.getLong("SVFOPS");
+                    beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
 
                     beanTkt.totSVFOP = totSVFOP;
+                    beanTkt.totSVFOPS = totSVFOPS;
+                    beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
 
 //                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
 //                    beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -876,10 +882,12 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SAUTHOCB = rst.getString("SAUTHOCB");
                     beanTkt.SCARDNB = rst.getString("SCARDNB");
                     beanTkt.SPNRB = rst.getString("SPNRB");
-                    beanTkt.estadoTitulo = filter.estadoTitulo;
+                    beanTkt.SPNRB = rst.getString("SPNRB");
+                    beanTkt.difSVFOP = filter.difSVFOP;
                     beanTkt.IN_STVAL = filter.IN_STVAL;
                     totSVFOPB = totSVFOPB + beanTkt.SVFOPB;
                     lstTkts.add(beanTkt);
+                    
                 }
                 rst.close();
             }

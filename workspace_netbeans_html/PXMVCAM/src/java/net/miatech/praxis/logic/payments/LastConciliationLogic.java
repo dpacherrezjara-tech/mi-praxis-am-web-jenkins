@@ -37,4 +37,7 @@ public class LastConciliationLogic {
         return LastConciliationDAO.loadPX565SQP04095(filter);
     }
 
+        public List<A3800Filter> loadPX565SQP04125(A3800Filter filter) throws SQLException, Exception {
+        return LastConciliationDAO.loadPX565SQP04125(filter);
+    }
 }
