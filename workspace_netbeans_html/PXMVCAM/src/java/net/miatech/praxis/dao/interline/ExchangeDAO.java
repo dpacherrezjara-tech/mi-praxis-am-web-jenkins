@@ -51,6 +51,8 @@ public class ExchangeDAO {
 
         List<A720Filter> lstRtn = new ArrayList<>(0);
         A720Filter objRtn;
+        
+        int contador = 0;
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
@@ -84,6 +86,7 @@ public class ExchangeDAO {
             filter.page.TOTROW = cstmt01.getInt(9);
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
+                
                 objRtn = new A720Filter();
                 objRtn.A720CIA = rs01.getString("A730CIA");
                 objRtn.A720FORMA = rs01.getString("A730FORMA");
@@ -138,12 +141,21 @@ public class ExchangeDAO {
                 }
 
                 objRtn.strDescripcion5 = rs01.getString("A730CIA720") + " " + rs01.getString("A730FOR720") + rs01.getString("A730SER720");
+                
+                if(contador != 0){
+                    if(lstRtn.get(contador - 1).strDescripcion5.equals(objRtn.strDescripcion5)){
+                        objRtn.A720MONEDA = lstRtn.get(contador - 1).A720MONEDA;
+                        objRtn.A720TARIFA = lstRtn.get(contador - 1).A720TARIFA;
+                    }
+                }
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
                 objRtn.page.TOTROW = filter.page.TOTROW;
                 lstRtn.add(objRtn);
+                
+                contador++;
             }
         } catch (Exception e) {
             e.getMessage();
