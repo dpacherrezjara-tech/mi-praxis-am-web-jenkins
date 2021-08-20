@@ -125,7 +125,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                                 renderer: function(value, meta, record, row, col) {
                                                     var color = record.data['COLOR'].trim();
                                                     //console.log('LOG : **' + color + '**');
-                                                    meta.style = 'text-align:left;color:'+color+';';
+                                                    meta.style = 'text-align:left;color:' + color + ';';
                                                     return value;
                                                 }
                                             },
@@ -173,9 +173,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                                 }
                                             }
                                         ]
-                                    }
-                                },  
-                                
+                                    }                               },
                                 {
                                     xtype: 'grid',
                                     padding: '20 0 0 0',
@@ -193,9 +191,9 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                         preserveScrollOnRefresh: true,
                                         preserveScrollOnReload: true,
                                         listeners: {
-                                           drop: function(node, data, dropRec, dropPosition) {
-                                              var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('DESCRIPT') : ' on empty view';
-                                           }
+                                            drop: function(node, data, dropRec, dropPosition) {
+                                                var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('DESCRIPT') : ' on empty view';
+                                            }
                                         }
                                     },
                                     columns: {
@@ -209,39 +207,39 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                                 renderer: function(value, meta, record, row, col) {
                                                     var color = record.data['COLOR'].trim();
                                                     //console.log('LOG : **' + color + '**');
-                                                    meta.style = 'text-align:left;color:'+color+';';
+                                                    meta.style = 'text-align:left;color:' + color + ';';
                                                     return value;
                                                 }
                                             }
                                         ]
                                     }
-                                }  
-                                
+                                }
+
                                 /*{
-                                    xtype: 'panel',
-                                    //title: 'Columns',
-                                    align: 'center',
-                                    margin: '20 10 0 10',
-                                    bodyStyle: 'background: #E6F4FF;border: 1px solid #486A80',
-                                    border: true,
-                                    layout: 'hbox',
-                                    items: [
-                                        {
-                                            xtype: 'dataview',
-                                            id: prototype.id + '-panelListColumns',
-                                            bodyStyle: 'background: #E6F4FF',
-                                            border: true,
-                                            margin: '5 5 0 5',
-                                            padding: '0 5 0 5',
-                                            height: 530,
-                                            layout: 'fit',
-                                            width: 220,
-                                            cls: 'dataview-basic',
-                                            itemTpl: '<div > <li style="color:#244066">{DESCRIPT}</li></div>',
-                                            store: storeList
-                                        }
-                                    ]
-                                }*/
+                                 xtype: 'panel',
+                                 //title: 'Columns',
+                                 align: 'center',
+                                 margin: '20 10 0 10',
+                                 bodyStyle: 'background: #E6F4FF;border: 1px solid #486A80',
+                                 border: true,
+                                 layout: 'hbox',
+                                 items: [
+                                 {
+                                 xtype: 'dataview',
+                                 id: prototype.id + '-panelListColumns',
+                                 bodyStyle: 'background: #E6F4FF',
+                                 border: true,
+                                 margin: '5 5 0 5',
+                                 padding: '0 5 0 5',
+                                 height: 530,
+                                 layout: 'fit',
+                                 width: 220,
+                                 cls: 'dataview-basic',
+                                 itemTpl: '<div > <li style="color:#244066">{DESCRIPT}</li></div>',
+                                 store: storeList
+                                 }
+                                 ]
+                                 }*/
                             ]
                         },
                         {
@@ -263,6 +261,10 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                     width: 500,
                                     resizable: true,
                                     columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -273,69 +275,384 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                             hidden: true
                                         },
                                         items: [
-                                            {dataIndex: 'column1', id: prototype.id + '-campo1'},
-                                            {dataIndex: 'column2', id: prototype.id + '-campo2'},
-                                            {dataIndex: 'column3', id: prototype.id + '-campo3'},
-                                            {dataIndex: 'column4', id: prototype.id + '-campo4'},
-                                            {dataIndex: 'column5', id: prototype.id + '-campo5'},
-                                            {dataIndex: 'column6', id: prototype.id + '-campo6'},
-                                            {dataIndex: 'column7', id: prototype.id + '-campo7'},
-                                            {dataIndex: 'column8', id: prototype.id + '-campo8'},
-                                            {dataIndex: 'column9', id: prototype.id + '-campo9'},
-                                            {dataIndex: 'column10', id: prototype.id + '-campo10'},
-                                            {dataIndex: 'column11', id: prototype.id + '-campo11'},
-                                            {dataIndex: 'column12', id: prototype.id + '-campo12'},
-                                            {dataIndex: 'column13', id: prototype.id + '-campo13'},
-                                            {dataIndex: 'column14', id: prototype.id + '-campo14'},
-                                            {dataIndex: 'column15', id: prototype.id + '-campo15'},
-                                            {dataIndex: 'column16', id: prototype.id + '-campo16'},
-                                            {dataIndex: 'column17', id: prototype.id + '-campo17'},
-                                            {dataIndex: 'column18', id: prototype.id + '-campo18'},
-                                            {dataIndex: 'column19', id: prototype.id + '-campo19'},
-                                            {dataIndex: 'column20', id: prototype.id + '-campo20'},
-                                            {dataIndex: 'column21', id: prototype.id + '-campo21'},
-                                            {dataIndex: 'column22', id: prototype.id + '-campo22'},
-                                            {dataIndex: 'column23', id: prototype.id + '-campo23'},
-                                            {dataIndex: 'column24', id: prototype.id + '-campo24'},
-                                            {dataIndex: 'column25', id: prototype.id + '-campo25'},
-                                            {dataIndex: 'column26', id: prototype.id + '-campo26'},
-                                            {dataIndex: 'column27', id: prototype.id + '-campo27'},
-                                            {dataIndex: 'column28', id: prototype.id + '-campo28'},
-                                            {dataIndex: 'column29', id: prototype.id + '-campo29'},
-                                            {dataIndex: 'column30', id: prototype.id + '-campo30'},
-                                            {dataIndex: 'column31', id: prototype.id + '-campo31'},
-                                            {dataIndex: 'column32', id: prototype.id + '-campo32'},
-                                            {dataIndex: 'column33', id: prototype.id + '-campo33'},
-                                            {dataIndex: 'column34', id: prototype.id + '-campo34'},
-                                            {dataIndex: 'column35', id: prototype.id + '-campo35'},
-                                            {dataIndex: 'column36', id: prototype.id + '-campo36'},
-                                            {dataIndex: 'column37', id: prototype.id + '-campo37'},
-                                            {dataIndex: 'column38', id: prototype.id + '-campo38'},
-                                            {dataIndex: 'column39', id: prototype.id + '-campo39'},
-                                            {dataIndex: 'column40', id: prototype.id + '-campo40'},
-                                            {dataIndex: 'column41', id: prototype.id + '-campo41'},
-                                            {dataIndex: 'column42', id: prototype.id + '-campo42'},
-                                            {dataIndex: 'column43', id: prototype.id + '-campo43'},
-                                            {dataIndex: 'column44', id: prototype.id + '-campo44'},
-                                            {dataIndex: 'column45', id: prototype.id + '-campo45'},
-                                            {dataIndex: 'column46', id: prototype.id + '-campo46'},
-                                            {dataIndex: 'column47', id: prototype.id + '-campo47'},
-                                            {dataIndex: 'column48', id: prototype.id + '-campo48'},
-                                            {dataIndex: 'column49', id: prototype.id + '-campo49'},
-                                            {dataIndex: 'column50', id: prototype.id + '-campo50'},
-                                            {dataIndex: 'column51', id: prototype.id + '-campo51'},
-                                            {dataIndex: 'column52', id: prototype.id + '-campo52'},
-                                            {dataIndex: 'column53', id: prototype.id + '-campo53'},
-                                            {dataIndex: 'column54', id: prototype.id + '-campo54'},
-                                            {dataIndex: 'column55', id: prototype.id + '-campo55'},
-                                            {dataIndex: 'column56', id: prototype.id + '-campo56'},
-                                            {dataIndex: 'column57', id: prototype.id + '-campo57'},
-                                            {dataIndex: 'column58', id: prototype.id + '-campo58'},
-                                            {dataIndex: 'column59', id: prototype.id + '-campo59'},
-                                            {dataIndex: 'column60', id: prototype.id + '-campo60'},
-                                            {dataIndex: 'column60', id: prototype.id + '-campo61'},
-                                            {dataIndex: 'column60', id: prototype.id + '-campo62'},
-                                            {dataIndex: 'column60', id: prototype.id + '-campo63'},
+                                            {dataIndex: 'column1', id: prototype.id + '-campo1',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot1, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column2', id: prototype.id + '-campo2',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot2, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column3', id: prototype.id + '-campo3',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot3, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column4', id: prototype.id + '-campo4',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot4, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column5', id: prototype.id + '-campo5',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot5, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column6', id: prototype.id + '-campo6',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot6, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column7', id: prototype.id + '-campo7',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot7, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column8', id: prototype.id + '-campo8',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot8, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column9', id: prototype.id + '-campo9',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot9, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column10', id: prototype.id + '-campo10',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot10, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column11', id: prototype.id + '-campo11',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot11, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column12', id: prototype.id + '-campo12',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot12, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column13', id: prototype.id + '-campo13',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot13, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column14', id: prototype.id + '-campo14',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot14, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column15', id: prototype.id + '-campo15',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot15, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column16', id: prototype.id + '-campo16',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot16, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column17', id: prototype.id + '-campo17',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot17, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column18', id: prototype.id + '-campo18',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot18, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column19', id: prototype.id + '-campo19',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot19, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column20', id: prototype.id + '-campo20',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot20, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column21', id: prototype.id + '-campo21',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot21, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column22', id: prototype.id + '-campo22',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot22, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column23', id: prototype.id + '-campo23',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot23, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column24', id: prototype.id + '-campo24',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot24, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column25', id: prototype.id + '-campo25',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot25, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column26', id: prototype.id + '-campo26',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot26, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column27', id: prototype.id + '-campo27',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot27, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column28', id: prototype.id + '-campo28',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot28, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column29', id: prototype.id + '-campo29',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot29, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column30', id: prototype.id + '-campo30',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot30, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column31', id: prototype.id + '-campo31',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot31, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column32', id: prototype.id + '-campo32',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot32, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column33', id: prototype.id + '-campo33',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot33, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column34', id: prototype.id + '-campo34',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot34, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column35', id: prototype.id + '-campo35',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot35, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column36', id: prototype.id + '-campo36',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot36, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column37', id: prototype.id + '-campo37',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot37, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column38', id: prototype.id + '-campo38',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot38, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column39', id: prototype.id + '-campo39',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot39, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column40', id: prototype.id + '-campo40',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot40, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column41', id: prototype.id + '-campo41',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot41, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column42', id: prototype.id + '-campo42',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot42, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column43', id: prototype.id + '-campo43',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot43, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column44', id: prototype.id + '-campo44',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot44, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column45', id: prototype.id + '-campo45',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot45, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column46', id: prototype.id + '-campo46',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot46, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column47', id: prototype.id + '-campo47',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot47, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column48', id: prototype.id + '-campo48',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot48, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column49', id: prototype.id + '-campo49',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot49, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column50', id: prototype.id + '-campo50',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot50, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column51', id: prototype.id + '-campo51',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot51, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column52', id: prototype.id + '-campo52',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot52, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column53', id: prototype.id + '-campo53',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot53, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column54', id: prototype.id + '-campo54',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot54, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column55', id: prototype.id + '-campo55',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot55, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column56', id: prototype.id + '-campo56',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot56, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column57', id: prototype.id + '-campo57',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot57, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column58', id: prototype.id + '-campo58',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot58, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column59', id: prototype.id + '-campo59',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot59, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column60', id: prototype.id + '-campo60',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot60, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column60', id: prototype.id + '-campo61',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot61, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column60', id: prototype.id + '-campo62',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot62, '0,000') + '<b>';
+                                                }},
+                                            {dataIndex: 'column60', id: prototype.id + '-campo63',
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                    //metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.tot63, '0,000') + '<b>';
+                                                }},
                                             {dataIndex: 'QTY', id: prototype.id + '-QTY'}
 
                                         ]
