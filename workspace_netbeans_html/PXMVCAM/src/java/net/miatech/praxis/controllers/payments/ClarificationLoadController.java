@@ -101,11 +101,10 @@ public class ClarificationLoadController extends BaseController {
                 msjResult = uploadFile(dataFile, banco);
 
             }else{
-                // ------------------------------------------------------------------------
-                // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
-                // ------------------------------------------------------------------------
-                
-                msjUpload = uploadPrev(excelfile, banco, input);
+                    // ------------------------------------------------------------------------
+                    // -------------- CONVERTIR EXCEL a version 97-2003(*xls) -----------------
+                    // ------------------------------------------------------------------------
+                    msjUpload = uploadPrev(excelfile, banco, input);
                 map.put("successUp", true);
                 map.put("msjUpload", msjUpload);
             }
@@ -258,7 +257,7 @@ public class ClarificationLoadController extends BaseController {
         return mensaje;
         
     }
-        
+           
     private String uploadPrev(MultipartFile excelfile, String banco, String input) {
         
         String msj = "";
@@ -302,16 +301,76 @@ public class ClarificationLoadController extends BaseController {
                 if(banco.equals("**" )){
                     System.out.println("***************");
                 }else if(banco.equals("ST")){
-                    //==================================================================================
-                    //INICIO SANTANDER =================================================================
-                    // convertir el excel en la version de 95
-                    
                     if(input.equals("N")){
                         //Avisos
                         msjError = "Under Construction";
                     }else{
-                        msjError = "Error. File Load";
                         // <editor-fold defaultstate="collapsed" desc="SANTANDEEEER - Aclaraciones()">
+                            
+                            int rowS = -1;
+                            boolean flag = false;
+                            int numberCol = 0;
+                            
+                            while (rowIterator.hasNext()) {
+                                Row row = rowIterator.next();
+                                rowS++;
+                                i++;
+                                
+                                String valueS = formatter.formatCellValue(row.getCell(0));
+                                if(valueS.trim().toUpperCase().equals("FOLIO")  ){
+                                   numberCol = row.getLastCellNum();
+                                   flag = true;
+                                }
+                                filaCompleta = "";
+                                
+                                if(flag){
+                                    for (int colS = 0; colS < numberCol; colS++) {
+                                        String cellValueS = "";
+                                        
+                                        if(row.getCell(colS) != null){
+                                            msjError = "";
+                                            tmp = "";
+                                            
+                                            if(row.getCell(colS).getCellType() == 0){
+                                                tmp = new SimpleDateFormat("dd/MM/yyyy").format(row.getCell(colS).getDateCellValue()) + "";
+                                            }else{
+                                                tmp = formatter.formatCellValue(row.getCell(colS));
+                                            }
+                                            
+
+                                            if(colS == 0 && tmp.equals("")){
+                                                filaTotal = true;
+                                            }
+                                            
+                                            if(filaTotal == false){
+                                                System.out.println("IF");
+                                                cellValueS = tmp;
+                                            }else {
+                                                break;
+                                            }
+                                            
+                                            if(msjError != ""){
+                                                break;
+                                            }else{
+//                                                filaCompleta += tmp + ',';
+                                                filaCompleta += cellValueS + ',';
+                                            }
+                                        } // end cell is null
+                                        else{
+                                            filaCompleta +=  ',';
+                                        }
+                                    } // end for colS
+                                    
+                                    if(!msjError.equals("")){
+                                        break;
+                                    }else{
+                                        listaExcelString.add(filaCompleta);
+                                    }
+                                    
+                                } else {
+                                    msjError = "Error.Excel file has an invalid format.";
+                                } // end Flag
+                            } // end While
                         //</editor-fold>
                     }
                 }else if(banco.equals("PP")){                    
