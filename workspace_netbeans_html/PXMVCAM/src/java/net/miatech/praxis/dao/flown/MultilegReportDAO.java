@@ -282,6 +282,9 @@ public class MultilegReportDAO {
                     } else if (beanTkt.FVAL.equals("3")) {
                         beanTkt.strDescFVAL = "VTR";
                         beanTkt.VCPN = rst.getDouble("VCPN");
+                    } else if (beanTkt.FVAL.equals("4")) {
+                        beanTkt.strDescFVAL = "Manual Value";
+                        beanTkt.VCPN = rst.getDouble("VCPN");
                     }
 
                     beanTkt.PSVVTA = rst.getString("PSVVTA").trim();

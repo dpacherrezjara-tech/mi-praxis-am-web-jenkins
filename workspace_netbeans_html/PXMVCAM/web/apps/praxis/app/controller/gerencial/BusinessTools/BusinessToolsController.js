@@ -951,6 +951,7 @@ Ext.define('Ext.Praxis.controller.gerencial.BusinessTools.BusinessToolsControlle
         lg(storeGridDatas);    
         
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
         
         var objitems = Ext.getCmp(prototype.id + '-gridData').getStore().data.items;
         lg('-ttt');

@@ -349,7 +349,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Filters', {
                     autoSelect: true,
                     editable: true,
                     listConfig: {maxHeight: 111},
-                    width: 70,
+                    width: 90,
                     typeAhead: true,
                     valueField: 'code',
                     displayField: 'name',

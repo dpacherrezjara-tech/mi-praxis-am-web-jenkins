@@ -148,13 +148,14 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", "All"],
-                ["0", "Emitido"],
+                ["9", "All"],
+                ["", "Pending"],
+                ["0", "Emission"],
                         //["1", "Payment"],
                         //["2", "Reject"],
             ]
         }));
-        cmbSTAAVIS.setValue("");
+        cmbSTAAVIS.setValue("9");
         
         var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro');
         cmbFecFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
