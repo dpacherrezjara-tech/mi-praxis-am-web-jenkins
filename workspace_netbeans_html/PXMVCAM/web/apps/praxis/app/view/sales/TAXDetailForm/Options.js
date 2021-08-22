@@ -85,12 +85,12 @@ Ext.define('Ext.Praxis.view.sales.TAXDetailForm.Options', {
 //                            icon: 'resources/img/botones/FalseChart.png',
 //                            tooltip: 'Display Charts'
 //                        },
-                        {
+                        /*{
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel'
-                        },
+                        },*/
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnSend',
