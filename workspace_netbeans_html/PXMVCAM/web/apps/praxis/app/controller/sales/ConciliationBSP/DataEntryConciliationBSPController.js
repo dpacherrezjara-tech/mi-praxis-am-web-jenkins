@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    afterRender: function() { global.AccessControlMaganer();
         var p = this.view.params;
         this.getDataInputs();
     },

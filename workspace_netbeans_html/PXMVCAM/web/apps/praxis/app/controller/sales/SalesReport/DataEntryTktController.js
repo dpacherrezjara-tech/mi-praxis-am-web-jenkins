@@ -33,7 +33,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
      */
 
 
-    afterRender: function () {
+    afterRender: function () { global.AccessControlMaganer();
         var params = this.view.params;
         var mode = params.mode;
         if(mode==='POPUP')

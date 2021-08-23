@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterPagaTodo.DataEntryAccoun
                 Ext.getCmp(prototype.id + '-cbxSource').setValue("1");
                 break;
         }
+        global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
 //        this.setComboBoxItemData(rec.get('A1740TIPO'));

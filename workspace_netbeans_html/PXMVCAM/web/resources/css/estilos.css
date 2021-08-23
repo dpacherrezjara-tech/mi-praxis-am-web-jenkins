@@ -646,12 +646,7 @@ ul.tabs li a:hover {
 body {
     display: block;
     background-color: #14437D;
-    background: -webkit-linear-gradient(top,#14437D,#FFFFFF);
-    background: -moz-linear-gradient(top,#14437D,#FFFFFF);
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#14437D), to(#FFFFFF));
-    background: linear-gradient(to bottom,  #14437D 0%,rgba(0,0,0,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF14437D', endColorstr='#FFFFFF', GradientType=0);    
-}
+    }
 
 input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus {
     border-color: #e9322d;

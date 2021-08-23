@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterBINES.DataEntryAccountin
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
-
+        global.AccessControlMaganer();
 
     },
     setDataStore: function() {

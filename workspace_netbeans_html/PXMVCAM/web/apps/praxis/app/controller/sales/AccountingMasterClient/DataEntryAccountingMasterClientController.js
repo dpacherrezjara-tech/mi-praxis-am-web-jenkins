@@ -34,6 +34,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterClient.DataEntryAccounti
                 Ext.getCmp(prototype.id + '-cboFP2').setValue("");
                 break;
         }
+        global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
 //        this.setComboBoxItemData(rec.get('A1740TIPO'));

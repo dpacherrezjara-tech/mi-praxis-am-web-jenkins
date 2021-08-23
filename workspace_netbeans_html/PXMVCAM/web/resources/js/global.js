@@ -865,7 +865,7 @@ win = {
                 break;
         }
         return "";
-    }
+    }   
 }
 
 var LarSyrExt = function () {
@@ -1395,7 +1395,43 @@ var LarSyrExt = function () {
         mapForm.submit();
     };
 
-
+    this.AccessControlMaganer = function() {
+        if(userAccess.length>0)
+        {
+            /*var plusItems = document.querySelectorAll('.prx-icon-add');
+            var createItems = document.querySelectorAll('-btn-save');
+            var updateItems = document.querySelectorAll('.prx-icon-update');
+            var editItems = document.querySelectorAll('.prx-icon-edit');
+            var deleteItems = document.querySelectorAll('-btn-delete');
+            var exportItems = document.querySelectorAll('.prx-icon-excel');
+            console.log("updateItems");
+            if(plusItems === null) plusItems = [];
+            console.log(updateItems);*/
+            // PERML, PERMC, PERMM, PERME, PERMX
+            console.log("AccessControlMaganer");
+            console.log(prototype.id);
+            console.log(accessSelect);
+            if(accessSelect.PERMC==='N'){
+                if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').hide();
+                if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').hide();
+            }/*else{
+                if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').show();
+                if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').show();
+            }*/
+            if(accessSelect.PERMM==='N'){
+                //if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').hide();
+                if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').hide();
+            }/*else{
+                //if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').show();
+                if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').show();
+            }*/
+            if(accessSelect.PERME==='N'){
+                if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').hide();
+            }/*else{
+                if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').show();
+            }*/
+        }
+    };
     this.PX_UTILS_URL = 'js/praxis.ui-1.0/praxis.utils-1.0.js';
 };
 
