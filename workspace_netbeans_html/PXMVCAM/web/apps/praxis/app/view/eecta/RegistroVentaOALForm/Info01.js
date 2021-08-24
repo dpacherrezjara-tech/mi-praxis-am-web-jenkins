@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.Info01', {
                                             editable: true,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 8,
+                                            maxLength: 12,
                                             //padding: '2 0 0 2 ',
                                             listeners: {
                                                 keypress: function (obj, e) {

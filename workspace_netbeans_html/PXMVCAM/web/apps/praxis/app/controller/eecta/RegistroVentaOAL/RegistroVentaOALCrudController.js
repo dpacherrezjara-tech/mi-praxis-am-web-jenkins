@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALCrudCon
         Ext.getCmp(prototype.id01 + '-A4069MDLOC').setValue(data.A4069MDLOC); 
         Ext.getCmp(prototype.id01 + '-A4069FARE').setValue(Ext.util.Format.number(data.A4069FARE, '0,000.00'));
         Ext.getCmp(prototype.id01 + '-A4069IVA').setValue(Ext.util.Format.number(data.A4069IVA, '0,000.00'));                                                          
-        Ext.getCmp(prototype.id01 + '-A4069IVAP').setValue(data.A4069IVAP + '%');
+        Ext.getCmp(prototype.id01 + '-A4069IVAP').setValue(data.A4069IVAP);
         Ext.getCmp(prototype.id01 + '-A4069TUA').setValue(Ext.util.Format.number(data.A4069TUA, '0,000.00'));
         Ext.getCmp(prototype.id01 + '-A4069YR').setValue(Ext.util.Format.number(data.A4069YR, '0,000.00'));
         Ext.getCmp(prototype.id01 + '-A4069YQ').setValue(Ext.util.Format.number(data.A4069YQ, '0,000.00'));
@@ -78,8 +78,10 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALCrudCon
         Ext.getCmp(prototype.id01 + '-A4069ACCNB').setValue(data.A4069ACCNB);
         Ext.getCmp(prototype.id01 + '-A4069ACCNM').setValue(data.A4069ACCNM);
         Ext.getCmp(prototype.id01 + '-A4069CRDNB').setValue(data.A4069CRDNB);
-        Ext.getCmp(prototype.id01 + '-A4069TTARJ').setValue(data.A4069TTARJ);
-        Ext.getCmp(prototype.id01 + '-A4069NTARJ').setValue(data.A4069NTARJ);
+        Ext.getCmp(prototype.id01 + '-A4069TTARJ').setValue(data.A4069TTARJ);       
+        //console.log(data.A4069NTARJ.split("XXXXX"));
+        Ext.getCmp(prototype.id01 + '-A4069NTARJ').setValue(data.A4069NTARJ.split("XXXXX")[0]);
+        Ext.getCmp(prototype.id01 + '-A4069NTARJ2').setValue(data.A4069NTARJ.split("XXXXX")[1]);
         
         Ext.getCmp(prototype.id01 + '-A4069IDCON').setValue(data.A4069IDCON);
         Ext.getCmp(prototype.id01 + '-A4069FCONT').setValue(data.A4069FCONT);
@@ -87,8 +89,8 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALCrudCon
         Ext.getCmp(prototype.id01 + '-A4069FOP').setValue(data.A4069FOP);
         Ext.getCmp(prototype.id01 + '-A4069MPG').setValue(data.A4069MPG);
         Ext.getCmp(prototype.id01 + '-A4069CFDI').setValue(data.A4069CFDI);
-        //Ext.getCmp(prototype.id01 + '-A4069RFC').setValue(data.A4069RFC);
-        //Ext.getCmp(prototype.id01 + '-A4069FECTB').setValue(data.A4069FECTB);
+        Ext.getCmp(prototype.id01 + '-A4069RFC').setValue(data.A4069RFC);
+        Ext.getCmp(prototype.id01 + '-A4069FECTB').setValue(data.A4069FECTB);
         
         Ext.getCmp(prototype.id01 + '-A4069REGIS').setValue(data.A4069REGIS);
         Ext.getCmp(prototype.id01 + '-A4069FREGI').setValue(data.A4069FREGI);
@@ -134,7 +136,9 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALCrudCon
         var VL_A4069ACCNM = Ext.getCmp(prototype.id01 + '-A4069ACCNM').getValue();
         var VL_A4069CRDNB = Ext.getCmp(prototype.id01 + '-A4069CRDNB').getValue();
         var VL_A4069TTARJ = Ext.getCmp(prototype.id01 + '-A4069TTARJ').getValue();
-        var VL_A4069NTARJ = Ext.getCmp(prototype.id01 + '-A4069NTARJ').getValue();
+        var VL_A4069NTARJ = '';
+        if(Ext.getCmp(prototype.id01 + '-A4069NTARJ').getValue() !=='' ) 
+        VL_A4069NTARJ = Ext.getCmp(prototype.id01 + '-A4069NTARJ').getValue()+Ext.getCmp(prototype.id01 + '-A4069NTARJ1').getValue()+Ext.getCmp(prototype.id01 + '-A4069NTARJ2').getValue();
         var VL_A4069IDCON = Ext.getCmp(prototype.id01 + '-A4069IDCON').getValue();
         var VL_A4069FCONT = Ext.getCmp(prototype.id01 + '-A4069FCONT').getValue();
         var VL_A4069PCONT = Ext.getCmp(prototype.id01 + '-A4069PCONT').getValue();        
@@ -325,7 +329,7 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALCrudCon
                         if (strOption === "I") {
                             Ext.getCmp(prototype.id01 + '-btn-save').hide();
                             Ext.getCmp(prototype.id01 + '-btn-update').show();
-                            this.view.params.action = "U";
+                            me.view.params.action = "U";
                         }
                         //Ext.getCmp(prototype.id01 + '-RegistroVentaOALEntry').close();
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
@@ -442,47 +446,6 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALCrudCon
             Ext.getCmp(prototype.id01 + '-A4069PAX1').focus();
             return mensaje;
         }
-//        if (params.A3953PLZCR === 0) {
-//            mensaje = 'INGRESE DIAS PLAZO CREDITO';
-//            Ext.getCmp(prototype.id01 + '-A3953PLZCR').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953INDPL === null) {
-//            mensaje = 'SELECCIONE INDICADOR PERIODO REPORTE VENTA';
-//            Ext.getCmp(prototype.id01 + '-A3953INDPL').focus();
-//            return mensaje;
-//        }
-//        if (params.A3953INDPE === null) {
-//            mensaje = 'SELECCIONE INDICADOR PERIODO EECC';
-//            Ext.getCmp(prototype.id01 + '-A3953INDPE').focus();
-//            return mensaje;
-//        }
-//
-//        if (params.A3953INDPP === null) {
-//            mensaje = 'SELECCIONE INDICADOR PERIODO COMPLEMENTO PAGO';
-//            Ext.getCmp(prototype.id01 + '-A3953INDPP').focus();
-//            return mensaje;
-//        }
-//
-//        var Count = Ext.getCmp(prototype.id01 + '-gridData-uatp').getStore().getCount();
-//        if (Count === 0) {
-//            mensaje = 'INGRESE DETALLE TARJETA UATP';
-//            return mensaje;
-//        }
-//
-//        if (Ext.getCmp(prototype.id01 + '-A3953STSID').getValue()) {
-//            var Count1 = Ext.getCmp(prototype.id01 + '-gridData-identif').getStore().getCount();
-//            if (Count1 === 0) {
-//                mensaje = 'INGRESE DETALLE IDENTIFICADOR';
-//                Ext.getCmp(prototype.id01 + '-panel-contenedor-grid-detalles').setActiveTab(1);
-//                return mensaje;
-//            }
-////            if (Count1 < 2) {
-////                mensaje = 'INGRESE AL MENOS 2 REGISTROS DE IDENTIFICADOR';
-////                return mensaje;
-////            }
-//        }
-
         return mensaje;
     },
     get_ClearField: function () {
@@ -491,39 +454,7 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALCrudCon
 //        Ext.getCmp(prototype.id01 + '-A3953RSOCI').setValue('');
 //        Ext.getCmp(prototype.id01 + '-A3953NCOME').setValue('');
 //        Ext.getCmp(prototype.id01 + '-A3953RFC').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953DIRE1').setValue('');
-//        //""; //Ext.getCmp(prototype.id01 + '-A3953DIRE2').getValue();                          
-//        //""; //Ext.getCmp(prototype.id01 + '-A3953REFER').getValue();                          
-//        Ext.getCmp(prototype.id01 + '-A3953COLON').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953DELEG').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953CIUDA').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953ESTAD').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953PAIS').setValue('');
-//        //A3953NPAIS; //Ext.getCmp(prototype.id01 + '-A3953NPAIS').getValue();                          
-//        Ext.getCmp(prototype.id01 + '-A3953CP').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953TELE1').setValue('');
-//        //A3953TELE2;
-//        Ext.getCmp(prototype.id01 + '-A3953CDMTR').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953TCLIN').setValue('C'); //DEFAULT
-//        Ext.getCmp(prototype.id01 + '-A3953TORGN').setValue('NAC');
-//        Ext.getCmp(prototype.id01 + '-A3953CONTR').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953CTAMA').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953CDORA').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953BANCO').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953CTABC').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953INDPE').setValue('S');
-//        Ext.getCmp(prototype.id01 + '-A3953INDPL').setValue('S');
-//        Ext.getCmp(prototype.id01 + '-A3953INDPP').setValue('M');
-//        Ext.getCmp(prototype.id01 + '-A3953DIAPP').setValue(10);
-//        Ext.getCmp(prototype.id01 + '-A3953PLZCR').setValue(20);
-//        Ext.getCmp(prototype.id01 + '-A3953FALTA').setValue(new Date());
-//        Ext.getCmp(prototype.id01 + '-A3953FBAJA').setValue('20991231');
-//        //Check    
-//        Ext.getCmp(prototype.id01 + '-A3953ARCPD').setValue(false);
-//        Ext.getCmp(prototype.id01 + '-A3953ARCTX').setValue(false);
-//        Ext.getCmp(prototype.id01 + '-A3953ARCEC').setValue(false);
-//        Ext.getCmp(prototype.id01 + '-A3953ARCFZ').setValue(false);
-//        Ext.getCmp(prototype.id01 + '-A3953ARCFX').setValue(false);        
+//        Ext.getCmp(prototype.id01 + '-A3953DIRE1').setValue('');      
     },
 
     /*

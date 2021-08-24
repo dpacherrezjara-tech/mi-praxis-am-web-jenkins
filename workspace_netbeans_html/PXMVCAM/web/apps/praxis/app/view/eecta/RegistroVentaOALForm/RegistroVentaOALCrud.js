@@ -234,7 +234,7 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
-                                                    ["", "ALL"],
+                                                    //["", "ALL"],
                                                     ["OA", "OAL"],
                                                     ["HO", "HOSPEDAJE"]
                                                 ]
@@ -358,7 +358,7 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                             maxLength: 3,
                                             maskRe: /[a-z,A-Z]/,
                                             listeners: {
-                                                //change: 'onUpperValue',
+                                                change: 'onUpperValue',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
                                                         Ext.getCmp(prototype.id01 + '-A4069IVA').focus();
@@ -397,11 +397,11 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4069IVAP',
                                             fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
-                                            width: 50, labelSeparator: ' ', value: '16%', fieldStyle: 'text-align:right',
+                                            width: 40, labelSeparator: ' ', value: '16', fieldStyle: 'text-align:right',
                                             enableKeyEvents: true,
                                             padding: '0 0 0 2',
                                             enforceMaxLength: true,
-                                            maskRe: /[1234567890\.%]/,
+                                            maskRe: /[16\8\%]/,
                                             listeners: {
                                                 focus: 'onFocusNumberfield',
                                                 focusleave: 'onfocusleaveNumberfield',
@@ -411,6 +411,14 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                                     }
                                                 }
                                             }
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            labelWidth: 125,
+                                            text: '%',
+                                            labelAlign: 'right',
+                                            style: 'font-weight:bold;',
+                                            margin: '5 0 0 5'
                                         }
                                     ]
                                 },
@@ -740,13 +748,12 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4069TTARJ',
-                                            width: 170,
+                                            width: 150,
                                             fieldLabel: 'FOP', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                            maxLength: 2,
+                                            maxLength: 2, value:'TP',
                                             fieldStyle: 'text-align:center',
                                             enableKeyEvents: true,
-                                            //padding: '2px 5px 2px 3px',
-                                            //maskRe: /[1234567890\.]/,
+                                            enforceMaxLength: true,
                                             listeners: {
                                                 //focus: 'onFocusNumberfield',
                                                 // focusleave: '',
@@ -760,13 +767,54 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4069NTARJ',
-                                            width: 110,
+                                            width: 50,
                                             fieldLabel: ' ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
-                                            maxLength: 19,
+                                            maxLength: 6,
                                             fieldStyle: 'text-align:left', labelSeparator: ' ',
                                             enableKeyEvents: true,
                                             padding: '0 0 0 2',
-                                            //maskRe: /[1234567890\.]/,
+                                            enforceMaxLength: true,
+                                            listeners: {
+                                                //focus: 'onFocusNumberfield',
+                                                // focusleave: '',
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id01 + '-A4069NTARJ2').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id01 + '-A4069NTARJ1',
+                                            width: 60,
+                                            fieldLabel: '', labelAlign: 'center', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                            maxLength: 19, value:'XXXXX',
+                                            fieldStyle: 'text-align:left', labelSeparator: ' ',
+                                            enableKeyEvents: true,
+                                            padding: '0 0 0 2',
+                                            enforceMaxLength: true,
+                                            readOnly:true,
+                                            listeners: {
+                                                //focus: 'onFocusNumberfield',
+                                                // focusleave: '',
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        //Ext.getCmp(prototype.id01 + '-A4069TOTAL').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id01 + '-A4069NTARJ2',
+                                            width: 40,
+                                            fieldLabel: ' ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                            maxLength: 4,
+                                            fieldStyle: 'text-align:left', labelSeparator: ' ',
+                                            enableKeyEvents: true,
+                                            padding: '0 0 0 2',
+                                            enforceMaxLength: true,
                                             listeners: {
                                                 //focus: 'onFocusNumberfield',
                                                 // focusleave: '',
