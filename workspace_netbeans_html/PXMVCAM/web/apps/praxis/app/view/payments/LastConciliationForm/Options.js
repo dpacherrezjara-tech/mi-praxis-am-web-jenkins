@@ -89,10 +89,16 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnMassiveEmission',
+                            icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                            tooltip: 'Massive Emission'
+                        },                        
+                        /*{
+                            xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel'
-                        },
+                        },*/
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnClear',

@@ -31,6 +31,7 @@ public class A3800Filter extends A3800 {
     public String IN_STAAVIS = "";
     public String IN_SPNR = "";
     public String IN_SAGENT = "";
+    public String option = "";
     public String strFecFiltro = "";
     
     public Pagination page = new Pagination();

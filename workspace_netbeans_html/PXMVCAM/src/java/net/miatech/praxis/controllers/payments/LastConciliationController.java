@@ -225,28 +225,26 @@ public class LastConciliationController extends BaseController {
 
             List<A2290Filter> listaDataA2291 = this.getListCardA2291(request, true);
             System.out.println("Tamaño de lista devuelta A2291: " + listaDataA2291.size());
-            
+
             List<A2290Filter> listaDataA2290 = this.getListCardA2290(request, true);
             System.out.println("Tamaño de lista devuelta A2290: " + listaDataA2290.size());
-            
+
             List<A3800Filter> listaDataA3800 = this.getListA3800(request, true);
-            
+
             //Armando el objeto Data
-            
             Data.SAGENT = listaDataA2290.get(0).SAGENT;
             Data.NUMAVIS = listaDataA3800.get(0).NUMAVIS;
             Data.descSDATE = listaDataA3800.get(0).DATAVIS;
             Data.SCURRENCY = listaDataA2290.get(0).SCURRENCY;
             Data.totSVFOP = listaDataA2290.get(0).totSVFOP; //TOTAL EMISION DE LOS BOLETOS
             Data.totSVFOP_ERROR = listaDataA2291.get(0).totSVFOP; //IMPORTE POR ERROR
-            
-            for (int i =0; i < listaDataA2290.size(); i++){
+
+            for (int i = 0; i < listaDataA2290.size(); i++) {
                 Data.TKTS_CONCATENADOS = Data.TKTS_CONCATENADOS + listaDataA2290.get(i).CCIA + " " + listaDataA2290.get(i).FORMA + listaDataA2290.get(i).SERIE + ", ";
             }
-            
-            Data.TKTS_CONCATENADOS = Data.TKTS_CONCATENADOS.substring(0, Data.TKTS_CONCATENADOS.length()-2);
-            
-            
+
+            Data.TKTS_CONCATENADOS = Data.TKTS_CONCATENADOS.substring(0, Data.TKTS_CONCATENADOS.length() - 2);
+
             prfd.createReport(Data, file);
 
             response.setContentType("application/pdf");
@@ -263,7 +261,7 @@ public class LastConciliationController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
     public List<A3800Filter> getListA3800(HttpServletRequest request, Boolean bExcel) {
 
         List<A3800Filter> lst = new ArrayList<>(0);
@@ -298,5 +296,71 @@ public class LastConciliationController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
+    }
+
+    @RequestMapping(value = "/searchBean")
+    public @ResponseBody
+    String searchBean(ModelMap map, HttpServletRequest request) {
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            A3800Filter bean;
+            A3800Filter filter;
+            Gson gson = new Gson();
+            String beanString;
+
+            logic = new LastConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3800Filter.class);
+
+            bean = logic.loadPX559SQP04126(filter);
+
+            map.put("success", true);
+            map.put("data", bean);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+
+    }
+
+    @RequestMapping(value = "/executeOption")
+    public @ResponseBody
+    String executeOption(ModelMap map, HttpServletRequest request) {
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String msj = "";
+            A3800Filter filter;
+            Gson gson = new Gson();
+            String beanString;
+
+            logic = new LastConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3800Filter.class);
+
+            msj = logic.loadPX565SQP04127 (filter);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+
     }
 }
