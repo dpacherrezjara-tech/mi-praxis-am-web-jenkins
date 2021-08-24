@@ -45,6 +45,7 @@ public class A3800 {
     public String PGMCR = "";
     public String USUP = "";
     public String FEAC = "";
+    public String FEUP = "";
     public String HOUP = "";
     public String PGMUP = "";
 }

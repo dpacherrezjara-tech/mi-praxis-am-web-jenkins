@@ -75,6 +75,17 @@ Ext.define('Ext.Praxis.controller.Root', {
                         me.NPROG = nprog;
                         cmps[i].show();
                         console.log('mostrarContenedor 1');
+                        
+                        $.each(userAccess, function(x, y) {
+                            if (y.NPROG === optionSelect.nprog) {                
+                                boAccess = false;
+                                accessSelect = y;
+                                console.log(boAccess);
+                                console.log(optionSelect);                                                                                      
+                            }
+                        });
+                        
+                        me1.AccessControlRoot();
                         Ext.getCmp(id_main).getController().mostrarContenedor();
                         flag = true;
                     } else {
@@ -148,6 +159,8 @@ Ext.define('Ext.Praxis.controller.Root', {
                                         cmp.show();
                                         Ext.getCmp(id_main).getController().mostrarContenedor();
                                         contentPanel.add(cmp);
+                                        
+                                        me1.AccessControlRoot();
                                     });
                                     
                                 } catch (err) {
@@ -200,6 +213,8 @@ Ext.define('Ext.Praxis.controller.Root', {
                             cmp.show();
                             Ext.getCmp(id_main).getController().mostrarContenedor();
                             contentPanel.add(cmp);
+                            
+                            me1.AccessControlRoot();
                         });
                     }
                     
@@ -227,6 +242,37 @@ Ext.define('Ext.Praxis.controller.Root', {
     showUI: function() {
         this.viewport = new Ext.Praxis.view.main.Main({
         });
+    },
+    AccessControlRoot: function() {
+        if(userAccess.length>0)
+        {
+            var plusItems = document.querySelectorAll('.prx-icon-add');
+            var exportItems = document.querySelectorAll('.prx-icon-excel');
+            if(plusItems === null) plusItems = [];
+            if(exportItems === null) exportItems = [];
+            console.log('AccessControlRoot');
+            console.log(accessSelect);
+            if(accessSelect.NPROG === "PX00000018") return;
+            // PERML, PERMC, PERMM, PERME, PERMX
+            if(accessSelect.PERMC==='N'){
+                plusItems.forEach(function(plusItem) {
+                    document.getElementById(plusItem.id).parentNode.parentNode.parentNode.style.display = 'none';
+                });
+            }else{
+                plusItems.forEach(function(plusItem) {
+                    document.getElementById(plusItem.id).parentNode.parentNode.parentNode.style.display = 'block';
+                });
+            }
+            if(accessSelect.PERMX==='N'){
+                exportItems.forEach(function(exportItem) {
+                    document.getElementById(exportItem.id).parentNode.parentNode.parentNode.style.display = 'none';
+              });
+            }else{
+                exportItems.forEach(function(exportItem) {
+                    document.getElementById(exportItem.id).parentNode.parentNode.parentNode.style.display = 'block';
+              });
+            }
+        }
     }
 
 });

@@ -151,12 +151,12 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
                 ["9", "All"],
                 ["", "Pending"],
                 ["0", "Emission"],
-                        //["1", "Payment"],
-                        //["2", "Reject"],
+                ["1", "Payment"],
+                ["2", "Reject"],
             ]
         }));
         cmbSTAAVIS.setValue("9");
-        
+
         var cmbFecFiltro = Ext.getCmp(prototype.id + '-cmbFecFiltro');
         cmbFecFiltro.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -422,13 +422,33 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         me.paramsDetailCard.beanString = JSON.stringify(this.beanDetCard);
 
         global.getFile(prototype.url + '/getPDF?beanString=' + me.paramsDetailCard.beanString);
-        
+
         setTimeout(function() {
             me.btnSearch_click();
         }, 4000);
 
         //setTimeout(this.btnSearch_click(), 5000);
 
+    },
+    onEditClick: function(grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        console.log(rec);
+        this.winDataEntry('U', rec);
+    },
+    winDataEntry: function(action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.LastConciliationForm.DataEntry', {
+            id: prototype.id + '-dataEntry',
+            params: {
+                action: action,
+                rec: rec,
+                lstCountry: me.lstCountry,
+                lstCard: me.lstCard,
+                lstBank: me.lstBank
+            }
+        }).show();
     },
     validateFields: function() {
         var msj = '';

@@ -20,6 +20,7 @@ Ext.define('Ext.Praxis.controller.sales.CommissionBSPASR.DataEntryAcuseCommissio
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
                 break;
         }
+        global.AccessControlMaganer();
     },
     onDateChange: function(cmp, newDate, oldDate, eOpts) {
         if (cmp.isValid()) {

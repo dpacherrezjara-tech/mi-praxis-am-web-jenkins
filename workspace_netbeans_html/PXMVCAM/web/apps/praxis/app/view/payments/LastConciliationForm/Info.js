@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1574,
+                width: 1620,
                 height: 'auto',
                 align: 'center'
             },
@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1574,
+                            width: 1620,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
-                                    width: 1574,
+                                    width: 1620,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -209,6 +209,20 @@ Ext.define('Ext.Praxis.view.payments.LastConciliationForm.Info', {
                                                     {
                                                         icon: 'resources/img/botones/16x16/1384382451_window_new.png',
                                                         handler: 'getPDF'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 40,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'onEditClick'
                                                     }
                                                 ]
                                             },

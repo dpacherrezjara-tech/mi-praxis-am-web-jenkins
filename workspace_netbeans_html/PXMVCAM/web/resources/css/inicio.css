@@ -8,7 +8,8 @@
     background-image:url("../img/menu/BANNER_MAIN_r1_c2.jpg");
     background-repeat: no-repeat;
     background-size:cover;
-    background-position-y:-117px;
+    background-attachment: fixed;
+    
 }
 
 /*.page-am-logo{

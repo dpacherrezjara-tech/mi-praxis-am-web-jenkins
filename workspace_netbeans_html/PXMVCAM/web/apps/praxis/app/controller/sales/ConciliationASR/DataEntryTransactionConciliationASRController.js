@@ -5,7 +5,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.DataEntryTransactionConc
     init: function(view) {
         this.strToday = win.getFechaFormat();
     },
-    afterRender: function(){
+    afterRender: function(){ global.AccessControlMaganer();
         this.p = this.view.params;
         this.clearDty();
         switch (this.p.action) {
