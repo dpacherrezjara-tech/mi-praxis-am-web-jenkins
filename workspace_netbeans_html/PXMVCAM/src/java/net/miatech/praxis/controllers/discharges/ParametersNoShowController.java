@@ -207,5 +207,27 @@ public class ParametersNoShowController extends BaseController {
         return new Gson().toJson(map);
 
     }
+    
+    @RequestMapping(value = "set_crud_micelanea")
+    public @ResponseBody
+    String set_crud_micelanea(ModelMap map,  HttpServletRequest request) {        
+        SQP03923Filter filter = new SQP03923Filter();
+        SQP03923Filter objRtn = null;        
+        try {
+            logic = new ParametersNoShowLogic();
+            logic.setSession(this.serverSession.getServerSession()); 
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());                   
+            objRtn = logic.setSQP03923(filter);                                        
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "1";
+            objRtn.dbException.MESSAGE = ex.getMessage();
+            map.put("objRtn", objRtn);
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());            
+        }
+        return new Gson().toJson(map);
 
+    }
 }
