@@ -29,6 +29,7 @@ Ext.define('Ext.Praxis.controller.flown.PassengerConciliation.DataEntryPassenger
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
+        global.AccessControlMaganer();
     },
     setStoreData: function() {
 

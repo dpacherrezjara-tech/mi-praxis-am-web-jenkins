@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
     afterRender: function() { global.AccessControlMaganer();
         var p = this.view.params;
         this.getDataInputs();
+        global.AccessControlMaganer();
     },
     getDataInputs: function() {
 

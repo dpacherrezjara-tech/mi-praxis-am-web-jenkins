@@ -39,6 +39,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.DataEntryAcc
                 }
                 break;
         }
+        global.AccessControlMaganer();
     },
     mostrarCampo: function() {
         var strModulo = this.getValue("cbxModulo");

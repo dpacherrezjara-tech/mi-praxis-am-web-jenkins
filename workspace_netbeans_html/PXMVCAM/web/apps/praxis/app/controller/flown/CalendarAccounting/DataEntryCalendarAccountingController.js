@@ -49,6 +49,7 @@ Ext.define('Ext.Praxis.controller.flown.CalendarAccounting.DataEntryCalendarAcco
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
+        global.AccessControlMaganer();
     },
     setStoreData: function () {
 

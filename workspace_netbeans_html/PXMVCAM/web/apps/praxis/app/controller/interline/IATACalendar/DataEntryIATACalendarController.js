@@ -37,6 +37,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.DataEntryIATACalendarCo
                 Ext.getCmp(prototype.id + '-btnDelete').hide();
                 break;
         }
+        global.AccessControlMaganer();
     },
     //<editor-fold defaultstate="collapsed" desc="toolbar">
     onSaveClick: function () {

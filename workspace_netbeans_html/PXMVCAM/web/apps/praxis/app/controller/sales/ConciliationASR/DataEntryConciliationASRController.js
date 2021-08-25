@@ -14,6 +14,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.DataEntryConciliationASR
     afterRender: function(){ global.AccessControlMaganer();
         this.get_ClearField();
         this.get_data();
+        global.AccessControlMaganer();
     },
     get_ClearField: function() {
         win.setValue('DataEntry-txtWKSTAT', '');
