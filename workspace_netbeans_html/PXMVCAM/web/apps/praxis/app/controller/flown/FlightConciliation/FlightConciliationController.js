@@ -8,6 +8,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     objANFLIGHT: {},
     objFLIGHTMANIF: {},
     objA1691: {},
+    objA3729: {},
     gloTipoTkt: '',
     g_nflight: '',
     status: '',
@@ -15,6 +16,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     _path: '',
     _pathDetail: '',
     _pathDetTkt: '',
+    _pathDetFlight: '',
     me: '',
     NPROG: 'PX00000095',
     init: function(view) {
@@ -404,6 +406,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
             } else if (this.peek() === prototype.id + '-boxDetTicket') {
                 this.exportExcel(_pathDetTkt);
+            } else if (this.peek() === prototype.id + '-boxDetailFlightManifest') {
+                this.exportExcel(_pathDetFlight);
             }
         } else if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
 
@@ -812,12 +816,18 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
         Ext.getCmp(prototype.id + '-gridDetailFlightManifest').bindStore(storeGridDatas);
+        _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     //</editor-fold>
     cmbFSabre_changeHandler: function() {
+        
+        objA3729 = {};
         var IN_FSABRE = this.getValue("cmbFSabre");
         this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
+        
+        this.objA3729 = this.objFLIGHTMANIF;
+        
         this.searchDetailFlightManifest(this.objFLIGHTMANIF);
     },
     openExport: function(grid, rowIndex, colIndex, a, b, c) {
@@ -1238,6 +1248,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     //</editor-fold>
 
     exportExcel: function(_path) {
+        console.log('exportExcel');
+        console.log(_path);
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Download Excel ?',

@@ -723,7 +723,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.Info', {
                                                         },
                                                         {
                                                             id: prototype.id + '-lbl-total',
-                                                            text: '0', width: 50
+                                                            text: '0', width: 100
                                                         }
                                                     ]
                                                 }
