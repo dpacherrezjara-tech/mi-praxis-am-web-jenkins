@@ -620,7 +620,6 @@ public class LastConciliationDAO {
                 beanTkt.NUMAVIS = Functions.fillZeros(6, rst.getString("NUMAVIS").trim().replace(".00", ""));
                 beanTkt.STAAVIS = rst.getString("STAAVIS").trim();
 
-
                 beanTkt.USCR = rst.getString("USCR").trim();
                 beanTkt.FECR = rst.getString("FECR").trim();
                 beanTkt.HOCR = rst.getString("HOCR").trim();
@@ -654,7 +653,7 @@ public class LastConciliationDAO {
 
         return beanTkt;
     }
-    
+
     public String loadPX565SQP04127(A3800Filter filter) throws SQLException, Exception {
         String strMsj = "";
         if (filter.option.trim().equals("U")) {
@@ -664,7 +663,7 @@ public class LastConciliationDAO {
         } else if (filter.option.trim().equals("D")) {
             strMsj = "SUCCESSFUL. Information Deleted.";
         }
-        
+
         //strMsj = "SUCCESSFUL. Information Created.";
         CallableStatement cstmt = null;
         Connection cnx = null;
@@ -680,13 +679,48 @@ public class LastConciliationDAO {
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(3, filter.IN_SDATE);
             cstmt.setString(4, filter.IN_CARDN);
-            cstmt.setString(5, filter.IN_SAUTHOC);            
+            cstmt.setString(5, filter.IN_SAUTHOC);
             cstmt.setString(6, filter.IN_STAAVIS);
             //Campos para auditoria
             cstmt.setString(7, session.getUserView().getUserInfo().USR);
             cstmt.setString(8, Functions.getFechaActual());
             cstmt.setString(9, Functions.getHoraActual());
-            
+
+            cstmt.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            strMsj = e.getMessage();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+    }
+
+    public String loadPX565SQP04157(A3800Filter filter) throws SQLException, Exception {
+        String strMsj = "SUCCESSFUL. Notices emited";
+
+        CallableStatement cstmt = null;
+        Connection cnx = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04157(?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
             cstmt.execute();
 
         } catch (Exception e) {

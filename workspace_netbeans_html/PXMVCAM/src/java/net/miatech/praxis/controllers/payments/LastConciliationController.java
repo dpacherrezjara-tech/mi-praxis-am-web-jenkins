@@ -349,7 +349,40 @@ public class LastConciliationController extends BaseController {
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A3800Filter.class);
 
-            msj = logic.loadPX565SQP04127 (filter);
+            msj = logic.loadPX565SQP04127(filter);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+
+    }
+
+    @RequestMapping(value = "/massiveEmission")
+    public @ResponseBody
+    String massiveEmission(ModelMap map, HttpServletRequest request) {
+
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String msj = "";
+            A3800Filter filter;
+            Gson gson = new Gson();
+            String beanString;
+
+            logic = new LastConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3800Filter.class);
+
+            msj = logic.loadPX565SQP04157(filter);
 
             map.put("success", true);
             map.put("Mensaje", msj);

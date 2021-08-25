@@ -32,7 +32,7 @@ public class LastConciliationLogic {
     public List<A2290Filter> loadPX565SQP04094(A2290Filter filter) throws SQLException, Exception {
         return LastConciliationDAO.loadPX565SQP04094(filter);
     }
-    
+
     public List<A2290Filter> loadPX565SQP04095(A2290Filter filter) throws SQLException, Exception {
         return LastConciliationDAO.loadPX565SQP04095(filter);
     }
@@ -40,12 +40,16 @@ public class LastConciliationLogic {
     public List<A3800Filter> loadPX565SQP04125(A3800Filter filter) throws SQLException, Exception {
         return LastConciliationDAO.loadPX565SQP04125(filter);
     }
-    
+
     public A3800Filter loadPX559SQP04126(A3800Filter filter) throws SQLException, Exception {
         return LastConciliationDAO.loadPX559SQP04126(filter);
     }
-    
+
     public String loadPX565SQP04127(A3800Filter filter) throws SQLException, Exception {
         return LastConciliationDAO.loadPX565SQP04127(filter);
+    }
+
+    public String loadPX565SQP04157(A3800Filter filter) throws SQLException, Exception {
+        return LastConciliationDAO.loadPX565SQP04157(filter);
     }
 }
