@@ -3,7 +3,8 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
     alias: 'widget.' + prototype.id + '-info',
     requires: [
           'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrAVSales',
-          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl'
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDBIataControl',
+          'Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare'
     ],
     layout: 'border',
     align: 'center',
@@ -39,7 +40,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                     bodyStyle: 'background: transparent', 
                     listeners: {
                         'tabchange': function (tabPanel, tab) {
-//                            console.log(tabPanel.id + ' ' + tab.id);
+                            console.log(tabPanel.id + ' ' + tab.id);
                             me.changeTab_clickHandler(tab.id);
 
                         }
@@ -166,19 +167,12 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrDifferenceFare',
+                            id: prototype.id + '-ScrDifferenceFare_tab',
                             title: 'Analysis of Differences by Exchange Rate',
-                            layout: {
-                                type: 'vbox',
-                                align: 'center'
-                            },
-                            margin: '10 10 10 10',
-                            defaults: {
-                                labelAlign: 'left'
-                            },
                             items: [
                                 {
-//                                    xtype:prototype.id + '-ScrDBIataControl'
+                                    id: prototype.id+ '-ScrDifferenceFare_screen',
+                                    xtype:prototype.id + '-ScrDifferenceFare'
                                 }
                             ]
                         }    
