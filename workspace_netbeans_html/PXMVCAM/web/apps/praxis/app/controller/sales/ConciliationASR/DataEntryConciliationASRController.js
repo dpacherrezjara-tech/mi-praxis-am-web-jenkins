@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.DataEntryConciliationASR
         this.bean = this.p.bean;
         this.action = this.p.action;
     },
-    afterRender: function(){ global.AccessControlMaganer();
+    afterRender: function(){ 
         this.get_ClearField();
         this.get_data();
         global.AccessControlMaganer();

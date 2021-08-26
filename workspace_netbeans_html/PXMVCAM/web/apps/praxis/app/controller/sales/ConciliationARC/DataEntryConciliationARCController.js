@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationARC.DataEntryConciliationARC
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() { global.AccessControlMaganer();
+    afterRender: function() { 
         var p = this.view.params;
         this.getDataInputs();
         global.AccessControlMaganer();
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationARC.DataEntryConciliationARC
         Ext.getCmp(prototype.id + '-de-txtA1698REMMP').setValue(Ext.util.Format.number(data.TOT_REMITTENCE_PX, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698TAXP').setValue(Ext.util.Format.number(data.PRAXIS_TAX, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698COMMP').setValue(Ext.util.Format.number(data.PRAXIS_COMM, '0,000.00'));        
-        Ext.getCmp(prototype.id + '-de-txtA1698COMEN').setValue(data.A1698COMEN);
+        Ext.getCmp(prototype.id + '-de-txtA1698COMEN').setValue(data.A1698COMEN.trim());
 
         var sum = data.TOT_REMITTENCE + data.ARC_COMM;
         var sum2 = data.TOT_REMITTENCE_PX + data.PRAXIS_COMM;
@@ -107,12 +107,27 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationARC.DataEntryConciliationARC
         };
     },
     onSaveClick: function(btn) {
-
-
-
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Are you sure to insert?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    this.view.params.action = "I";
+                    this.crud();
+                }
+            }
+        });
+
+    },
+    onUpdateClick: function(btn) {
+
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to update?',
             buttons: Ext.MessageBox.YESNO,
             scope: this,
             icon: Ext.MessageBox.QUESTION,

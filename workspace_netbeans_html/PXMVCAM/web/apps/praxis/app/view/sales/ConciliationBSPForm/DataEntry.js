@@ -498,6 +498,9 @@ Ext.define('Ext.Praxis.view.sales.ConciliationBSPForm.DataEntry', {
                                             xtype: 'textareafield',
                                             width: 420,
                                             height: 60,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 80,
                                             id: prototype.id + '-de-txtA1698COMEN',
                                             fieldStyle: 'color: #0B333C; font-size: 11px;'
                                         }
@@ -579,7 +582,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationBSPForm.DataEntry', {
                     text: 'Save',
                     id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    //hidden: true,
+                    hidden: true,
                     listeners: {
                         click: 'onSaveClick'
                     }
@@ -588,7 +591,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationBSPForm.DataEntry', {
                     text: 'Update',
                     id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    hidden: true,
+                    //hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }
