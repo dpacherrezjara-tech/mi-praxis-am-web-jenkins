@@ -157,7 +157,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
                     fn: function() {
                         //exito
                         Ext.getCmp(prototype.id + '-dataEntry').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        //NO ACTUALIZAR EN AUTOMATICO A PEDIDO DE BPO, SE HARA DE FORMA MANUAL AL FINALIZAR.
+                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }
                 });
             }
