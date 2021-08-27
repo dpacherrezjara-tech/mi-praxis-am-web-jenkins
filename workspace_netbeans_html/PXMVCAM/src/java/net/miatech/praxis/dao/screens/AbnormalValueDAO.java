@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package net.miatech.praxis.dao.screens;
 
 import java.sql.CallableStatement;
@@ -15,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.IMF111Filter;
+import net.miatech.beans.IMF121Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1007;
 import net.miatech.utils.Functions;
@@ -39,15 +39,12 @@ public class AbnormalValueDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
-    
-     public static void pasarGarbageCollector() {
+
+    public static void pasarGarbageCollector() {
         System.gc();
         System.runFinalization();
         System.gc();
     }
-
-     
 
     public List<A1007> loadPX037S05A1007() throws SQLException, Exception {
 
@@ -78,14 +75,12 @@ public class AbnormalValueDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            setClose(rs01,cstmt01,cnx);
+            setClose(rs01, cstmt01, cnx);
         }
 
         return lstRtn;
     }
-     
-     
-     
+
     // =========================================================================
     // =============================== SALES ===================================
     // =========================================================================
@@ -210,7 +205,7 @@ public class AbnormalValueDAO {
             e.printStackTrace();
             e.getMessage();
         } finally {
-            setClose(rs01,cstmt01,cnx);
+            setClose(rs01, cstmt01, cnx);
 //            if (rs01 != null) {
 //                try {
 //                    rs01.close();
@@ -462,7 +457,7 @@ public class AbnormalValueDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            setClose(rs01,cstmt01,cnx);
+            setClose(rs01, cstmt01, cnx);
         }
 
         return lstRtn;
@@ -578,15 +573,228 @@ public class AbnormalValueDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            setClose(rs01,cstmt01,cnx);
+            setClose(rs01, cstmt01, cnx);
         }
 
         return lstRtn;
     }
-    
-    
-    public void setClose(ResultSet rs,CallableStatement cstmt,Connection cnx){
-     
+
+    public List<IMF121Filter> loadPX414SQPGG121(IMF121Filter filter) throws SQLException, Exception {
+
+        List<IMF121Filter> lstRtn = new ArrayList<>(0);
+        IMF121Filter objRtn;
+        long QTKTSH = 0;
+        double VALORH = 0;
+        long QTKTSL = 0;
+        double VALORL = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        NumberFormat nfDbl = NumberFormat.getInstance(java.util.Locale.US);
+        nfDbl.setMinimumFractionDigits(2);
+        nfDbl.setMaximumFractionDigits(2);
+        NumberFormat nfLng = NumberFormat.getInstance(java.util.Locale.US);
+        nfLng.setMaximumFractionDigits(0);
+
+        String SQLCLL01 = "{CALL PRAXIS.GG121(?,?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            
+            cstmt01.registerOutParameter(4, Types.INTEGER);
+            cstmt01.registerOutParameter(5, Types.INTEGER);
+            cstmt01.registerOutParameter(6, Types.INTEGER);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+
+            cstmt01.setInt(4, filter.page.PAGNUM);
+            cstmt01.setInt(5, filter.page.PAGROW);
+            cstmt01.setInt(6, filter.page.TOTPAG);
+            cstmt01.setInt(7, filter.page.TOTROW);
+
+            System.out.println(filter.DSALES);
+            System.out.println("");
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(4);
+            filter.page.PAGROW = cstmt01.getInt(5);
+            filter.page.TOTPAG = cstmt01.getInt(6);
+            filter.page.TOTROW = cstmt01.getInt(7);
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                QTKTSH = rs01.getLong("QTKTSH");
+                VALORH = rs01.getDouble("VALORH");
+                QTKTSL = rs01.getLong("QTKTSL");
+                VALORL = rs01.getDouble("VALORL");
+            }
+
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+
+                while (rs01.next()) {
+
+                    objRtn = new IMF121Filter();
+                    objRtn.DSALES = rs01.getString("DSALES").trim();
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+
+                    objRtn.QTTKT = rs01.getLong("QTKTSH") + rs01.getLong("QTKTSL");
+                    objRtn.VALORT = rs01.getDouble("VALORH") + rs01.getDouble("VALORL");
+
+                    objRtn.QTKTSH = rs01.getLong("QTKTSH");
+                    objRtn.QTKTSL = rs01.getLong("QTKTSL");
+                    objRtn.VALORH = rs01.getDouble("VALORH");
+                    objRtn.VALORL = rs01.getDouble("VALORL");
+
+                    objRtn.totQTKTSH = QTKTSH;
+                    objRtn.totQTKTSL = QTKTSL;
+                    objRtn.totVALORH = VALORH;
+                    objRtn.totVALORL = VALORL;
+
+                    objRtn.totQTTKT = QTKTSH + QTKTSL;
+                    objRtn.totVALORT = VALORH + VALORL;
+
+//                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+//                    objRtn.page.PAGROW = filter.page.PAGROW;
+//                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+//                    objRtn.page.TOTROW = filter.page.TOTROW;
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+
+    public List<IMF121Filter> loadPX414SQPGG122(IMF121Filter filter) throws SQLException, Exception  {
+
+        List<IMF121Filter> lstRtn = new ArrayList<>(0);
+        IMF121Filter objRtn;
+        long QTKTSH = 0;
+        double VALORH = 0;
+        long QTKTSL = 0;
+        double VALORL = 0;
+        String strTitulo = "Sales Date : " + filter.strFormatDate;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        NumberFormat nfDbl = NumberFormat.getInstance(java.util.Locale.US);
+        nfDbl.setMinimumFractionDigits(2);
+        nfDbl.setMaximumFractionDigits(2);
+        NumberFormat nfLng = NumberFormat.getInstance(java.util.Locale.US);
+        nfLng.setMaximumFractionDigits(0);
+
+        String SQLCLL01 = "{CALL PRAXIS.GG122(?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DSALES.trim());
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                QTKTSH = rs01.getLong("QTKTSH");
+                VALORH = rs01.getDouble("VALORH");
+                QTKTSL = rs01.getLong("QTKTSL");
+                VALORL = rs01.getDouble("VALORL");
+            }
+
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+
+                while (rs01.next()) {
+
+                    objRtn = new IMF121Filter();
+                    objRtn.COUNTRYS = rs01.getString("COUNTRYS").trim();
+                    objRtn.strTitulo = strTitulo;
+
+                    objRtn.QTTKT = rs01.getLong("QTKTSH") + rs01.getLong("QTKTSL");
+                    objRtn.VALORT = rs01.getLong("VALORH") + rs01.getLong("VALORL");
+
+                    objRtn.QTKTSH = rs01.getLong("QTKTSH");
+                    objRtn.QTKTSL = rs01.getLong("QTKTSL");
+                    objRtn.VALORH = rs01.getLong("VALORH");
+                    objRtn.VALORL = rs01.getLong("VALORL");
+
+                    objRtn.totQTKTSH = QTKTSH;
+                    objRtn.totQTKTSL = QTKTSL;
+                    objRtn.totVALORH = VALORH;
+                    objRtn.totVALORL = VALORL;
+
+                    objRtn.totQTTKT = QTKTSH + QTKTSL;
+                    objRtn.totVALORT = VALORH + VALORL;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+
+    public void setClose(ResultSet rs, CallableStatement cstmt, Connection cnx) {
+
         try {
             if (rs != null) {
                 try {
@@ -605,11 +813,9 @@ public class AbnormalValueDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         } catch (Exception e) {
-            
+
         }
-        
-        
+
     }
-    
-    
+
 }

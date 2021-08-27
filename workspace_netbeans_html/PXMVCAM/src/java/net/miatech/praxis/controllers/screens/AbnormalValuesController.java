@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package net.miatech.praxis.controllers.screens;
 
 import java.sql.SQLException;
@@ -32,6 +31,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.IMF121Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.utils.ExportSchema;
 import org.apache.poi.ss.usermodel.Cell;
@@ -63,15 +63,12 @@ public class AbnormalValuesController extends BaseController {
 //        map.put("vp_serverTime", Functions.getHoraActual());
 //        return "cargo/BusinessTools/form_index";
 //    }
-    
-
     // =========================================================================
     // ========================== SALES ========================================
     // =========================================================================
-
     @RequestMapping(value = "searchSales")
     public @ResponseBody
-    String searchSales(ModelMap map, HttpServletRequest request,HttpServletResponse response) {
+    String searchSales(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         List<IMF111Filter> lstData;
         IMF111Filter filter = new IMF111Filter();
         try {
@@ -83,17 +80,15 @@ public class AbnormalValuesController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             lstData = logic.loadPX414SQP02393(filter);
 
-            
             map.put("success", true);
-            
-            if(Boolean.parseBoolean(request.getParameter("dw_excel"))){
-                String nameExcel = exportFieldsCompleto(request, response,lstData);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
                 map.put("nameExcel", nameExcel);
-            }else{
+            } else {
                 map.put("lstData", lstData);
             }
-            
-            
+
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -108,37 +103,34 @@ public class AbnormalValuesController extends BaseController {
 
     @RequestMapping(value = "searchDetSales")
     public @ResponseBody
-    String searchDetSales(ModelMap map, HttpServletRequest request,HttpServletResponse response) {
+    String searchDetSales(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
         List<IMF111Filter> lstData;
         IMF111Filter filter = new IMF111Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
-            
-            
+
             int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
-            
+
             filter.page.PAGROW = limit;
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
             lstData = logic.loadPX414SQP02394(filter);
-            
+
             map.put("success", true);
-            if(Boolean.parseBoolean(request.getParameter("dw_excel"))){
-                String nameExcel = exportFieldsCompleto(request, response,lstData);
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
                 map.put("nameExcel", nameExcel);
-            }else{
-                
+            } else {
+
                 map.put("data", lstData);
                 map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
             }
-            
 
-            
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
@@ -161,13 +153,12 @@ public class AbnormalValuesController extends BaseController {
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
 
-            
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-            
+
             filter.page.PAGROW = limit;
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             logic = new AbnormalValueLogic();
             logic.setSession(this.serverSession.getServerSession());
             lstData = logic.loadPX414SQP02395(filter);
@@ -186,26 +177,90 @@ public class AbnormalValuesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-    
-    
-    
-    public String  exportFieldsCompleto(HttpServletRequest request, HttpServletResponse response,List<?> lstDataObjects) throws IOException {
-        
-        
+
+    @RequestMapping(value = "searchDifferenceFare")
+    public @ResponseBody
+    String searchDifferenceFare(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF121Filter> lstData;
+        IMF121Filter filter = new IMF121Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQPGG121(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "searchDifferenceByWeek")
+    public @ResponseBody
+    String searchDifferenceByWeek(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<IMF121Filter> lstData;
+        IMF121Filter filter = new IMF121Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX414SQPGG122(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    public String exportFieldsCompleto(HttpServletRequest request, HttpServletResponse response, List<?> lstDataObjects) throws IOException {
+
         String downloadName = String.format("Reporte_%1$s.xlsx", UUID.randomUUID().toString().toLowerCase());
-        
+
         ExportSchema filter = new ExportSchema();
         ExportSchema filterTemp = new ExportSchema();
         ArrayList<ExportSchema> listaColRow = new ArrayList<>();
-        
-        
+
 //        String beanString = "{'columns':[{'text':'Sales','columns':[{'text':'Date','dataIndex':'strFormatDate','width':90,'align':'center','listeners':{'click':'viewDetSales_colHandler','args':['MIN']}}]},"
 //                + "           {'text':'Totals','columns':[{'text':'Coupons','dataIndex':'QTKTS','width':80,'align':'center','listeners':{'click':'viewDetSales_colHandler','args':['MIN']}}]},"
 //                + "           {'text':'Fare','columns':[{'text':'USD','dataIndex':'AMOUNT','width':90,'align':'center'}]},"
 //                + "           {'text':'Percent','dataIndex':'perMim','width':70},"
 //                + "           {'text':'AVG','dataIndex':'avgMim','width':70}] }";
-        
 //        String beanString = "{'columns':[{'text':'Agent','columns':[{'text':'Code','dataIndex':'VENDOR','width':90,'align':'center'},{'text':'Name','dataIndex':'strDescription','width':200,'align':'left'}]},"
 //                + "{'text':'Ctry','dataIndex':'COUNTRYS','width':50,'align':'center'},"
 //                + "{'text':'Scr','dataIndex':'strDescription2','width':50,'align':'center'},"
@@ -221,18 +276,12 @@ public class AbnormalValuesController extends BaseController {
 //                + "{'text':'Ultima','dataIndex':'PMP','width':80}"
 //                + "]}";
         String columns = "{\"columns\":" + request.getParameter("columns") + "}";
-        
+
 //        String columns = "{'text':'2020','text':'2020','level':20,'columns':[{'text':'USD','dataIndex':'AMOUNT','width':90,'align':'center'}]} ";
-                
         filter = new Gson().fromJson(columns, filter.getClass());
-        
-                
+
         ExportSchema[] column = filter.columns;
-        
-        
-        
-        
-        
+
         // Creamos el archivo donde almacenaremos la hoja
         // de calculo, recuerde usar la extension correcta,
         // en este caso .xlsx
@@ -241,7 +290,7 @@ public class AbnormalValuesController extends BaseController {
         // Creamos el libro de trabajo de Excel formato OOXML
         Workbook workbook = new XSSFWorkbook();
         //Workbook workbook = new HSSFWorkbook();
-        
+
         // La hoja donde pondremos los datos
         Sheet pagina = workbook.createSheet("Reporte de productos");
 
@@ -251,37 +300,35 @@ public class AbnormalValuesController extends BaseController {
         style.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
 
-        
-
         int nivel = 0;//Fila 0
-        
-        int q_lvl1= -1;
-        int q_lvl2= -1;
-        int q_lvl3= -1;
+
+        int q_lvl1 = -1;
+        int q_lvl2 = -1;
+        int q_lvl3 = -1;
         for (ExportSchema obj1 : filter.columns) {
             q_lvl1 = q_lvl1 + 1;
             if (obj1.columns != null) {
-                nivel = 1 ;
+                nivel = 1;
                 q_lvl1 = q_lvl1 + obj1.columns.length;
-                
+
                 for (ExportSchema obj2 : obj1.columns) {
                     q_lvl2 = q_lvl2 + 1;
                     if (obj2.columns != null) {
-                        nivel = 2 ;
+                        nivel = 2;
                         q_lvl2 = q_lvl2 + obj2.columns.length;
-                        
+
                         for (ExportSchema obj3 : obj2.columns) {
                             q_lvl3 = q_lvl3 + 1;
                             if (obj3.columns != null) {
-                                nivel = 3 ;
+                                nivel = 3;
                                 q_lvl3 = q_lvl3 + obj3.columns.length;
                             }
                         }
                     }
                 }
             }
-            
-            switch(nivel){
+
+            switch (nivel) {
                 case 1:
                     obj1.index = q_lvl1;
                     break;
@@ -294,27 +341,26 @@ public class AbnormalValuesController extends BaseController {
                 default:
                     obj1.index = -20;
                     break;
-                    
+
             }
-            q_lvl1= -1;
-            q_lvl2= -1;
-            q_lvl3= -1;
+            q_lvl1 = -1;
+            q_lvl2 = -1;
+            q_lvl3 = -1;
         }
-        
-        
+
         System.out.println(nivel);
-        Row fila ;
+        Row fila;
         for (int r = 0; r <= nivel; r++) {
             // Creamos una fila en la hoja en la posicion 0
             fila = pagina.createRow(r);
-            
-            if(r == 0){
-                int ini_col=0; 
-                int end_col=0; 
-                int ini_row=0; 
-                int end_row=0; 
+
+            if (r == 0) {
+                int ini_col = 0;
+                int end_col = 0;
+                int ini_row = 0;
+                int end_row = 0;
                 filterTemp = filter;
-                
+
                 // Creamos el encabezado
                 for (int i = 0; i < filterTemp.columns.length; i++) {
                     // Creamos una celda en esa fila, en la posicion 
@@ -325,166 +371,149 @@ public class AbnormalValuesController extends BaseController {
                     // usar en la celda, en este caso el unico 
                     // que hemos creado
                     celda.setCellStyle(style);
-        //            celda.setCellValue(titulos[i]);
+                    //            celda.setCellValue(titulos[i]);
                     celda.setCellValue(filterTemp.columns[i].text);
 
-
-
-                    if(filterTemp.columns[i].columns != null ){
+                    if (filterTemp.columns[i].columns != null) {
                         System.out.println(filterTemp.columns[i].columns.length);
                         end_col = ini_col + filterTemp.columns[i].index - 1;
 //                        pagina.addMergedRegion(new CellRangeAddress(ini_row, end_row, ini_col, end_col));
-                        formatcelRegion(ini_row, end_row, ini_col, end_col,workbook,pagina,listaColRow,filterTemp.columns[i].dataIndex);
-                        System.out.println("row_ini: "+ini_row + " row_end: "+end_row + " col_init : " +  ini_col + " col_end : " + end_col+ "  text : " + filterTemp.columns[i].text);
-                    }else{
-                        end_col = ini_col  ;
+                        formatcelRegion(ini_row, end_row, ini_col, end_col, workbook, pagina, listaColRow, filterTemp.columns[i].dataIndex);
+                        System.out.println("row_ini: " + ini_row + " row_end: " + end_row + " col_init : " + ini_col + " col_end : " + end_col + "  text : " + filterTemp.columns[i].text);
+                    } else {
+                        end_col = ini_col;
 //                        pagina.addMergedRegion(new CellRangeAddress(ini_row, nivel, ini_col, end_col));
-                        formatcelRegion(ini_row, nivel, ini_col, end_col,workbook,pagina,listaColRow,filterTemp.columns[i].dataIndex);
-                        System.out.println("row_ini: "+ini_row + " row_end: "+nivel + " col_init : " +  ini_col + " col_end : " + end_col+ "  text : " + filterTemp.columns[i].text);
+                        formatcelRegion(ini_row, nivel, ini_col, end_col, workbook, pagina, listaColRow, filterTemp.columns[i].dataIndex);
+                        System.out.println("row_ini: " + ini_row + " row_end: " + nivel + " col_init : " + ini_col + " col_end : " + end_col + "  text : " + filterTemp.columns[i].text);
                     }
-
-
-
 
                     ini_col = end_col + 1;
                     /*
 
-                            //rowFrom,rowTo,colFrom,colTo
-            //                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 10));*/
+                     //rowFrom,rowTo,colFrom,colTo
+                     //                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 10));*/
                 }
-            }
-            else if(r == 1){
+            } else if (r == 1) {
                 System.out.println("");
-                System.out.println("row"  + r + " : ---*************************************");
-                int ini_col=0; 
-                int end_col=0; 
-                int ini_row=0; 
-                int end_row=0; 
+                System.out.println("row" + r + " : ---*************************************");
+                int ini_col = 0;
+                int end_col = 0;
+                int ini_row = 0;
+                int end_row = 0;
                 // Creamos el encabezado
                 for (int i = 0; i < filterTemp.columns.length; i++) {
 
-                    if(filterTemp.columns[i].columns != null ){
-                        
+                    if (filterTemp.columns[i].columns != null) {
+
                         ExportSchema[] columns_nvl1 = filterTemp.columns[i].columns;
                         for (ExportSchema col_nvl1 : columns_nvl1) {
-                            
+
                             // Creamos una celda en esa fila, en la posicion 
-                            
                             Cell celda = fila.createCell(ini_col);
                             celda.setCellStyle(style);
                             celda.setCellValue(col_nvl1.text);
 
-
-
-                            if(col_nvl1.columns != null ){
+                            if (col_nvl1.columns != null) {
                                 System.out.println(col_nvl1.columns.length);
                                 end_col = ini_col + col_nvl1.columns.length - 1;
-                                System.out.println("row_ini: "+r + " row_end: "+nivel + " col_init : " +  ini_col + " col_end : " + end_col + "  text : " + col_nvl1.text);
+                                System.out.println("row_ini: " + r + " row_end: " + nivel + " col_init : " + ini_col + " col_end : " + end_col + "  text : " + col_nvl1.text);
 //                                pagina.addMergedRegion(new CellRangeAddress(r, r, ini_col, end_col));
-                                formatcelRegion(r, r, ini_col, end_col,workbook,pagina,listaColRow,col_nvl1.dataIndex);
+                                formatcelRegion(r, r, ini_col, end_col, workbook, pagina, listaColRow, col_nvl1.dataIndex);
 
-                            }else{
-                                end_col = ini_col  ;
-                                System.out.println("row_ini: "+r + " row_end: "+nivel + " col_init : " +  ini_col + " col_end : " + end_col + "  text : " + col_nvl1.text);
+                            } else {
+                                end_col = ini_col;
+                                System.out.println("row_ini: " + r + " row_end: " + nivel + " col_init : " + ini_col + " col_end : " + end_col + "  text : " + col_nvl1.text);
 //                                pagina.addMergedRegion(new CellRangeAddress(r, nivel, ini_col, end_col));
-                                    formatcelRegion(r, nivel, ini_col, end_col,workbook,pagina,listaColRow,col_nvl1.dataIndex);
+                                formatcelRegion(r, nivel, ini_col, end_col, workbook, pagina, listaColRow, col_nvl1.dataIndex);
                             }
 
-
                             ini_col = end_col + 1;
-                            
+
                         }
-                    }else{
-                        ini_col = ini_col +1;
+                    } else {
+                        ini_col = ini_col + 1;
                     }
 
                 }
-                
-            }
-            else if(r == 2){
+
+            } else if (r == 2) {
                 System.out.println("");
-                System.out.println("row"  + r + " : ---*************************************");
-                int ini_col=0; 
-                int end_col=0; 
-                int ini_row=0; 
-                int end_row=0; 
+                System.out.println("row" + r + " : ---*************************************");
+                int ini_col = 0;
+                int end_col = 0;
+                int ini_row = 0;
+                int end_row = 0;
                 // Creamos el encabezado
                 for (int i = 0; i < filterTemp.columns.length; i++) {
 
-                    if(filterTemp.columns[i].columns != null ){
-                        
+                    if (filterTemp.columns[i].columns != null) {
+
                         ExportSchema[] columns_nvl1 = filterTemp.columns[i].columns;
                         for (ExportSchema col_nvl1 : columns_nvl1) {
 
-                            if(col_nvl1.columns != null ){
+                            if (col_nvl1.columns != null) {
                                 ExportSchema[] columns_nvl2 = col_nvl1.columns;
                                 for (ExportSchema col_nvl2 : columns_nvl2) {
 
                                     // Creamos una celda en esa fila, en la posicion 
-
                                     Cell celda = fila.createCell(ini_col);
                                     celda.setCellStyle(style);
                                     celda.setCellValue(col_nvl2.text);
 
-
-
-                                    if(col_nvl2.columns != null ){
+                                    if (col_nvl2.columns != null) {
                                         System.out.println(col_nvl2.columns.length);
                                         end_col = ini_col + col_nvl2.columns.length - 1;
-                                    }else{
-                                        end_col = ini_col  ;
+                                    } else {
+                                        end_col = ini_col;
                                     }
 
-                                    System.out.println("row_ini: "+r + " row_end: "+nivel + " col_init : " +  ini_col + " col_end : " + end_col + "  text : " + col_nvl2.text);
+                                    System.out.println("row_ini: " + r + " row_end: " + nivel + " col_init : " + ini_col + " col_end : " + end_col + "  text : " + col_nvl2.text);
 
 //                                    pagina.addMergedRegion(new CellRangeAddress(r, nivel, ini_col, end_col));
-                                    formatcelRegion(r, nivel, ini_col, end_col,workbook,pagina,listaColRow,col_nvl2.dataIndex);
+                                    formatcelRegion(r, nivel, ini_col, end_col, workbook, pagina, listaColRow, col_nvl2.dataIndex);
 
                                     ini_col = end_col + 1;
 
                                 }
-                                
-                            }else{
-                                 ini_col = ini_col +1;
+
+                            } else {
+                                ini_col = ini_col + 1;
                             }
-                            
+
                         }
-                    }else{
-                        ini_col = ini_col +1;
+                    } else {
+                        ini_col = ini_col + 1;
                     }
 
                 }
-                
+
             }
-            
-            
+
         }
-        
-        Collections.sort(listaColRow, new Comparator<ExportSchema>(){
-            public int compare(ExportSchema o1, ExportSchema o2){
-                if(o1.colFrom == o2.colFrom)
+
+        Collections.sort(listaColRow, new Comparator<ExportSchema>() {
+            public int compare(ExportSchema o1, ExportSchema o2) {
+                if (o1.colFrom == o2.colFrom) {
                     return 0;
+                }
                 return o1.colFrom < o2.colFrom ? -1 : 1;
             }
-       });
+        });
 
         System.out.println("***************************");
-        for(ExportSchema obj : listaColRow){
-
+        for (ExportSchema obj : listaColRow) {
 
             RegionUtil.setBorderBottom(CellStyle.BORDER_THIN, new CellRangeAddress(obj.rowFrom, obj.rowTo, obj.colFrom, obj.colTo), pagina, workbook);
             RegionUtil.setBorderTop(CellStyle.BORDER_THIN, new CellRangeAddress(obj.rowFrom, obj.rowTo, obj.colFrom, obj.colTo), pagina, workbook);
             RegionUtil.setBorderRight(CellStyle.BORDER_THIN, new CellRangeAddress(obj.rowFrom, obj.rowTo, obj.colFrom, obj.colTo), pagina, workbook);
             RegionUtil.setBorderLeft(CellStyle.BORDER_THIN, new CellRangeAddress(obj.rowFrom, obj.rowTo, obj.colFrom, obj.colTo), pagina, workbook);
 
-            if(obj.colFrom == obj.colTo && !obj.dataIndex.trim().equals("")){
-                System.out.println("*************************** " + obj.colFrom + " " + obj.colTo + " == " +  obj.dataIndex);
+            if (obj.colFrom == obj.colTo && !obj.dataIndex.trim().equals("")) {
+                System.out.println("*************************** " + obj.colFrom + " " + obj.colTo + " == " + obj.dataIndex);
             }
-            
+
         }
-            
-        
-        
+
 //        Class clasePrincipal;
 //        Set<Class<?>> classes = getAllExtendedOrImplementedTypesRecursively(IMF111Filter.class);
 //
@@ -492,7 +521,6 @@ public class AbnormalValuesController extends BaseController {
 //            System.out.println(clazz.getName());
 //            clasePrincipal = clazz;
 //        }
-        
         CellStyle rowStyle = workbook.createCellStyle();
 
         rowStyle.setBorderRight(CellStyle.BORDER_THIN);
@@ -503,66 +531,72 @@ public class AbnormalValuesController extends BaseController {
         rowStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
         rowStyle.setBorderTop(CellStyle.BORDER_THIN);
         rowStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        
+
         // Y colocamos los datos en esa fila
         for (int i = 0; i < lstDataObjects.size(); i++) {
-            
+
             // Ahora creamos una fila en la posicion 1
-            fila = pagina.createRow((nivel+1) + i);
-            
+            fila = pagina.createRow((nivel + 1) + i);
+
             int j = 0;
-            for(ExportSchema obj : listaColRow){
-                if(obj.colFrom == obj.colTo && !obj.dataIndex.trim().equals("")){
+            for (ExportSchema obj : listaColRow) {
+                if (obj.colFrom == obj.colTo && !obj.dataIndex.trim().equals("")) {
                     // Creamos una celda en esa fila, en la
                     // posicion indicada por el contador del ciclo
                     Cell celda = fila.createCell(j);
-                    
-                     
+
                     Object ob = lstDataObjects.get(i);
                     //Obtengo Clase
-                    Class cls = ob.getClass(); 
-                    
-                    
+                    Class cls = ob.getClass();
+
                     Field f;
                     try {
-                        
+
 //                        System.out.println(obj.dataIndex);
-                        
                         //Obtengo la Clase a la que pertenece (Clase Normal o extendida)
                         Class<?> x = cls.getField(obj.dataIndex).getDeclaringClass();
-                        
-                        
+
                         f = x.getDeclaredField(obj.dataIndex);
                         Class tipo = f.getType();
-                        
-                        
-                        String type= tipo.getSimpleName();
-                        
-                        
+
+                        String type = tipo.getSimpleName();
+
 //                        if(tipo.getCanonicalName()){
 //                            System.out.println("----" + obj.dataIndex);
 //                        }
                         f.setAccessible(true);
-                        
-                        rowStyle.setAlignment(CellStyle.ALIGN_RIGHT); 
-                        switch(type){
-                            case "int": celda.setCellValue(Integer.parseInt(String.valueOf(f.get(ob)))); break;
-                            case "long": celda.setCellValue(Long.parseLong(String.valueOf(f.get(ob)))); break;
-                            case "double": celda.setCellValue(Double.parseDouble(String.valueOf(f.get(ob)))); break;
-                            case "float": celda.setCellValue(Float.parseFloat(String.valueOf(f.get(ob)))); break;
-                            case "String": celda.setCellValue(String.valueOf(f.get(ob)));
-                                           rowStyle.setAlignment(CellStyle.ALIGN_CENTER); break;
-                            default: celda.setCellValue(String.valueOf(f.get(ob))); break;
+
+                        rowStyle.setAlignment(CellStyle.ALIGN_RIGHT);
+                        switch (type) {
+                            case "int":
+                                celda.setCellValue(Integer.parseInt(String.valueOf(f.get(ob))));
+                                break;
+                            case "long":
+                                celda.setCellValue(Long.parseLong(String.valueOf(f.get(ob))));
+                                break;
+                            case "double":
+                                celda.setCellValue(Double.parseDouble(String.valueOf(f.get(ob))));
+                                break;
+                            case "float":
+                                celda.setCellValue(Float.parseFloat(String.valueOf(f.get(ob))));
+                                break;
+                            case "String":
+                                celda.setCellValue(String.valueOf(f.get(ob)));
+                                rowStyle.setAlignment(CellStyle.ALIGN_CENTER);
+                                break;
+                            default:
+                                celda.setCellValue(String.valueOf(f.get(ob)));
+                                break;
                         }
                         celda.setCellStyle(rowStyle);
 //                        String valor = String.valueOf(f.get(ob));
 //                        celda.setCellValue(valor);
-                        
+
                     } catch (Exception ex) {
 //                        java.util.logging.Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-                        
+
                     }
-                    
+
                     j++;
                 }
             }
@@ -597,71 +631,65 @@ public class AbnormalValuesController extends BaseController {
 //            LOGGER.log(Level.SEVERE, "Error de entrada/salida");
             System.out.print(ex.getMessage());
         }
-        
+
         return downloadName;
     }
-    
-    
-    public String  exportFields(HttpServletRequest request, HttpServletResponse response,List<?> lstDataObjects) {
-        
-        
+
+    public String exportFields(HttpServletRequest request, HttpServletResponse response, List<?> lstDataObjects) {
+
         String downloadName = String.format("Reporte_%1$s.xlsx", UUID.randomUUID().toString().toLowerCase());
-        
-        
-            
+
         try {
-            
-            
+
             // Creamos el archivo donde almacenaremos la hoja
-        // de calculo, recuerde usar la extension correcta,
-        // en este caso .xlsx
+            // de calculo, recuerde usar la extension correcta,
+            // en este caso .xlsx
 //        File archivo = new File("C:\\Dumps\\" + downloadName);
-
-        // Creamos el libro de trabajo de Excel formato OOXML
-        Workbook workbook = new XSSFWorkbook();
+            // Creamos el libro de trabajo de Excel formato OOXML
+            Workbook workbook = new XSSFWorkbook();
         //Workbook workbook = new HSSFWorkbook();
-        
-        // La hoja donde pondremos los datos
-        Sheet pagina = workbook.createSheet("Reporte de productos");
 
-        // Creamos el estilo paga las celdas del encabezado
-        CellStyle style = workbook.createCellStyle();
-        // Indicamos que tendra un fondo azul aqua
-        // con patron solido del color indicado
-        style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
-        style.setFillPattern(style.SOLID_FOREGROUND);
+            // La hoja donde pondremos los datos
+            Sheet pagina = workbook.createSheet("Reporte de productos");
 
-        String[] titulos = {"Identificador", "Consumos",
-            "Precio Venta", "Precio Compra"};
-        Double[] datos = {1.0, 10.0, 45.5, 25.50};
+            // Creamos el estilo paga las celdas del encabezado
+            CellStyle style = workbook.createCellStyle();
+            // Indicamos que tendra un fondo azul aqua
+            // con patron solido del color indicado
+            style.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+            style.setFillPattern(style.SOLID_FOREGROUND);
 
-        // Creamos una fila en la hoja en la posicion 0
-        Row fila = pagina.createRow(0);
+            String[] titulos = {"Identificador", "Consumos",
+                "Precio Venta", "Precio Compra"};
+            Double[] datos = {1.0, 10.0, 45.5, 25.50};
 
-        // Creamos el encabezado
-        for (int i = 0; i < titulos.length; i++) {
-            // Creamos una celda en esa fila, en la posicion 
-            // indicada por el contador del ciclo
-            Cell celda = fila.createCell(i);
+            // Creamos una fila en la hoja en la posicion 0
+            Row fila = pagina.createRow(0);
 
-            // Indicamos el estilo que deseamos 
-            // usar en la celda, en este caso el unico 
-            // que hemos creado
-            celda.setCellStyle(style);
-            celda.setCellValue(titulos[i]);
-        }
+            // Creamos el encabezado
+            for (int i = 0; i < titulos.length; i++) {
+                // Creamos una celda en esa fila, en la posicion 
+                // indicada por el contador del ciclo
+                Cell celda = fila.createCell(i);
 
-        // Ahora creamos una fila en la posicion 1
-        fila = pagina.createRow(1);
+                // Indicamos el estilo que deseamos 
+                // usar en la celda, en este caso el unico 
+                // que hemos creado
+                celda.setCellStyle(style);
+                celda.setCellValue(titulos[i]);
+            }
 
-        // Y colocamos los datos en esa fila
-        for (int i = 0; i < datos.length; i++) {
-            // Creamos una celda en esa fila, en la
-            // posicion indicada por el contador del ciclo
-            Cell celda = fila.createCell(i);
+            // Ahora creamos una fila en la posicion 1
+            fila = pagina.createRow(1);
 
-            celda.setCellValue(datos[i]);
-        }
+            // Y colocamos los datos en esa fila
+            for (int i = 0; i < datos.length; i++) {
+                // Creamos una celda en esa fila, en la
+                // posicion indicada por el contador del ciclo
+                Cell celda = fila.createCell(i);
+
+                celda.setCellValue(datos[i]);
+            }
 
 //            // Creamos el flujo de salida de datos,
 //            // apuntando al archivo donde queremos 
@@ -675,42 +703,36 @@ public class AbnormalValuesController extends BaseController {
 //
 //            // Cerramos el libro para concluir operaciones
 //            salida.close();
-
 //            LOGGER.log(Level.INFO, "Archivo creado existosamente en {0}", archivo.getAbsolutePath());
-            
-            
             //Especificando cabeceras para exportar en formato Excel
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + downloadName + "\"");
 
             //Redireccionando el stream hacia el response
             workbook.write(response.getOutputStream());
-            
-            
+
         } catch (Exception e) {
             throw new SpringException(e);
         }
-        
+
         return downloadName;
     }
-    
-        
-    public void formatcelRegion(int rowFrom,int rowTo,int colFrom,int colTo,Workbook workbook,Sheet pagina,ArrayList<ExportSchema> listaColRow,String dataIndex) throws IOException{
-        
-            pagina.addMergedRegion(new CellRangeAddress(rowFrom, rowTo, colFrom, colTo));
-    //        RegionUtil.setBorderBottom(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
-    //        RegionUtil.setBorderTop(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
-    //        RegionUtil.setBorderRight(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
-    //        RegionUtil.setBorderLeft(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
 
+    public void formatcelRegion(int rowFrom, int rowTo, int colFrom, int colTo, Workbook workbook, Sheet pagina, ArrayList<ExportSchema> listaColRow, String dataIndex) throws IOException {
 
-            ExportSchema obj = new ExportSchema();
-            obj.rowFrom = rowFrom;
-            obj.rowTo = rowTo;
-            obj.colFrom = colFrom;
-            obj.colTo = colTo;
-            obj.dataIndex = dataIndex;
-            listaColRow.add(obj);
-        
+        pagina.addMergedRegion(new CellRangeAddress(rowFrom, rowTo, colFrom, colTo));
+        //        RegionUtil.setBorderBottom(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
+        //        RegionUtil.setBorderTop(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
+        //        RegionUtil.setBorderRight(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
+        //        RegionUtil.setBorderLeft(CellStyle.BORDER_THIN, new CellRangeAddress(rowFrom, rowTo, colFrom, colTo), pagina, workbook);
+
+        ExportSchema obj = new ExportSchema();
+        obj.rowFrom = rowFrom;
+        obj.rowTo = rowTo;
+        obj.colFrom = colFrom;
+        obj.colTo = colTo;
+        obj.dataIndex = dataIndex;
+        listaColRow.add(obj);
+
     }
 }
