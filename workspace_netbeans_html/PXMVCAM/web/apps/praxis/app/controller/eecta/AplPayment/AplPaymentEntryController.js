@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentEntryController', {
                     fn: function () {
                         //culmino PROCESO                        
                         me.onCancelClick();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }
                 });
             }
