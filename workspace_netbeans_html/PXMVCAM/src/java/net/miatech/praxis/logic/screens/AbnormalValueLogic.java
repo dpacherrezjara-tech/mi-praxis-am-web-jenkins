@@ -46,11 +46,11 @@ public class AbnormalValueLogic {
         return AbnormalValueDAO.loadPX414SQP02395(filter);
     }
 
-    public List<IMF121Filter> loadPX414SQPGG121(IMF121Filter filter) throws SQLException {
+    public List<IMF121Filter> loadPX414SQPGG121(IMF121Filter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQPGG121(filter);
     }
 
-    public List<IMF121Filter> loadPX414SQPGG122(IMF121Filter filter) throws SQLException {
+    public List<IMF121Filter> loadPX414SQPGG122(IMF121Filter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQPGG122(filter);
     }
 
