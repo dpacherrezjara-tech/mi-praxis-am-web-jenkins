@@ -190,6 +190,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare', 
 
                         {
                             xtype: 'panel',
+                            id: prototype.id + '-panelGridDetWeek',
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -205,7 +206,7 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.tabs.ScrDifferenceFare', 
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
-                                            //dock: 'bottom'
+                                            dock: 'bottom'
                                         }],
                                     columns: {
                                         defaults: {
