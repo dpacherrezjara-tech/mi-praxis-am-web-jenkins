@@ -295,13 +295,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                                     },
                                     {text: 'Country', dataIndex: 'A3388PAIS', width: 80, align: 'center',
                                          renderer: 'onRendererColumnOnPais'
-                                        /*listeners: {
-                                            click: 'searchform_detalle_RFND'
-                                        },
-                                        renderer: function(value, metaData, record, rowIndex) {
-                                            var vhtml = '<a href="#salesaudit-RFND-report-form" >' + value + '</a>';
-                                            return vhtml;
-                                        }*/
                                     },
                                     {text: 'Total', dataIndex: 'A3388CANTI', width: 120, align: 'right',
                                         cls: 'column_header_double',
