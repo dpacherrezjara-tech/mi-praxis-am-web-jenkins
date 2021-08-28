@@ -31,8 +31,10 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF121Filter;
 import net.miatech.praxis.exceptions.SpringException;
+import net.miatech.praxis.interline.filter.WRF016Filterwk;
 import net.miatech.utils.ExportSchema;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -178,6 +180,47 @@ public class AbnormalValuesController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    // ========================================================================
+    // ====================== Sales Agent Control =============================
+    // ========================================================================
+    @RequestMapping(value = "loadTotalControlTotal_Abnormal_Country_ONE")
+    public @ResponseBody
+    String loadTotalControlTotal_Abnormal_Country_ONE(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<WRF016Filterwk> lstData;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new AbnormalValueLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX109SQP02476_COUNTRY(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData_Abnormal_CS", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    // ========================================================================
+    // ========================== Difference Fare =============================
+    // ========================================================================
     @RequestMapping(value = "searchDifferenceFare")
     public @ResponseBody
     String searchDifferenceFare(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -248,6 +291,9 @@ public class AbnormalValuesController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    // ========================================================================
+    // ==========================                 =============================
+    // ========================================================================
     public String exportFieldsCompleto(HttpServletRequest request, HttpServletResponse response, List<?> lstDataObjects) throws IOException {
 
         String downloadName = String.format("Reporte_%1$s.xlsx", UUID.randomUUID().toString().toLowerCase());

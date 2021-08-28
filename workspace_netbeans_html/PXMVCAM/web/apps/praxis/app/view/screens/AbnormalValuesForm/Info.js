@@ -73,14 +73,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-ScrDBIataControl_tab',
                             title: 'Sales Agent Control',
-                            layout: {
+                            /*layout: {
                                 type: 'vbox',
                                 align: 'center'
                             },
                             margin: '10 10 10 10',
                             defaults: {
                                 labelAlign: 'left'
-                            },
+                            },*/
                             items: [
                                 {                                    
                                     id: prototype.id+ '-ScrDBIataControl_screen',
@@ -93,14 +93,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-tabScrAVCreditCard',
                             title: 'Credit Card Analysis',
-                            layout: {
+                            /*layout: {
                                 type: 'vbox',
                                 align: 'center'
                             },
                             margin: '10 10 10 10',
                             defaults: {
                                 labelAlign: 'left'
-                            },
+                            },*/
                             items: [
                                 {
 //                                    xtype:prototype.id + '-ScrDBIataControl'
@@ -112,14 +112,6 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-tabScrExchange',
                             title: 'Exchange Analysis',
-                            layout: {
-                                type: 'vbox',
-                                align: 'center'
-                            },
-                            margin: '10 10 10 10',
-                            defaults: {
-                                labelAlign: 'left'
-                            },
                             items: [
                                 {
 //                                    xtype:prototype.id + '-ScrDBIataControl'
@@ -131,14 +123,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-tabScrRefund',
                             title: 'Refund Analysis',
-                            layout: {
+                            /*layout: {
                                 type: 'vbox',
                                 align: 'center'
                             },
                             margin: '10 10 10 10',
                             defaults: {
                                 labelAlign: 'left'
-                            },
+                            },*/
                             items: [
                                 {
 //                                    xtype:prototype.id + '-ScrDBIataControl'
@@ -150,14 +142,14 @@ Ext.define('Ext.Praxis.view.screens.AbnormalValuesForm.Info', {
                             bodyStyle: 'background: transparent',
                             id: prototype.id + '-tabScrOALParticipation',
                             title: 'Participation OAL',
-                            layout: {
+                            /*layout: {
                                 type: 'vbox',
                                 align: 'center'
                             },
                             margin: '10 10 10 10',
                             defaults: {
                                 labelAlign: 'left'
-                            },
+                            },*/
                             items: [
                                 {
 //                                    xtype:prototype.id + '-ScrDBIataControl'
