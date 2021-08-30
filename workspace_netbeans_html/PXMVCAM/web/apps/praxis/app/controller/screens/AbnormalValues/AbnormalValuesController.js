@@ -72,7 +72,7 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
     changeTab_clickHandler: function(obj) {
         
 //        console.log('changeTab_clickHandler');
-//        console.log(obj);
+        console.log(obj);
         var component = Ext.getCmp(obj.replace('_tab','_screen'));
 //        if(obj === prototype.id + '-ScrAVSales_tab'){
 //            
@@ -159,6 +159,10 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.AbnormalValuesControlle
         }else if(tab_id === prototype.id + '-ScrDBIataControl_tab'){
             
             component = Ext.getCmp(prototype.id + '-ScrDBIataControl_screen');
+            
+        }else if(tab_id === prototype.id + '-ScrDifferenceFare_tab'){
+            
+            component = Ext.getCmp(prototype.id + '-ScrDifferenceFare_screen');
         }
         
         var controller = component.getController();

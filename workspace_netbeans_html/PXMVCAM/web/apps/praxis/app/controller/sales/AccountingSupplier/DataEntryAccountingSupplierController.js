@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingSupplier.DataEntryAccountingSu
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
-
+        global.AccessControlMaganer();
 
     },
     setDataStore: function() {

@@ -18,9 +18,10 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() { global.AccessControlMaganer();
+    afterRender: function() { 
         var p = this.view.params;
         this.getDataInputs();
+        global.AccessControlMaganer();
     },
     getDataInputs: function() {
 
@@ -42,7 +43,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
         Ext.getCmp(prototype.id + '-de-txtCASHP').setValue(Ext.util.Format.number(data.TOT_CASH_PX, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtCREDIT').setValue(Ext.util.Format.number(data.TOT_CREDIT_BSP, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtCREDITP').setValue(Ext.util.Format.number(data.TOT_CREDIT_PX, '0,000.00'));
-        Ext.getCmp(prototype.id + '-de-txtA1698COMEN').setValue(data.A1698COMEN);
+        Ext.getCmp(prototype.id + '-de-txtA1698COMEN').setValue(data.A1698COMEN.trim());
         //console.log(data);
         Ext.getCmp(prototype.id + '-de-txtA1698UCONC').setValue(data.A1698UCONC);
         Ext.getCmp(prototype.id + '-de-txtA1698FCONC').setValue(data.A1698FCONC);
@@ -104,12 +105,25 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
         };
     },
     onSaveClick: function(btn) {
-
-
-
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Are you sure to insert?',
+            msg: 'Are you sure to insert?',            
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    this.view.params.action = "I";
+                    this.crud();
+                }
+            }
+        });
+    },
+    onUpdateClick: function(btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',            
+            msg: 'Are you sure to update',
             buttons: Ext.MessageBox.YESNO,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
@@ -121,7 +135,6 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
                 }
             }
         });
-
     },
     crud: function() {
         var p = this.view.params;
@@ -136,7 +149,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var objRtn = res.objRtn;
-                console.log(objRtn);
+                //console.log(objRtn);
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
@@ -144,7 +157,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationBSP.DataEntryConciliationBSP
                     fn: function() {
                         //exito
                         Ext.getCmp(prototype.id + '-dataEntry').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        //NO ACTUALIZAR EN AUTOMATICO A PEDIDO DE BPO, SE HARA DE FORMA MANUAL AL FINALIZAR.
+                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }
                 });
             }

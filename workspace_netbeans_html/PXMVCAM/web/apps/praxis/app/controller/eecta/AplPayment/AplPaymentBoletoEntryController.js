@@ -130,6 +130,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         }
     },
     crud: function () {
+        var me = this;
         var p = this.view.params;
         var strOption = p.action;        
         //var me = this;
@@ -160,8 +161,9 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
                     fn: function () {
                         //culmino PROCESO                        
                         //Ext.getCmp(prototype.id + '-SalesListEntry').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                        Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().reload();
+                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        me.get_detalle_boleto();
+                        //Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().reload();
                     }
                 });
             }

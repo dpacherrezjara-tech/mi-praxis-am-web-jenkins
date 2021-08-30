@@ -46,6 +46,7 @@ Ext.define('Ext.Praxis.controller.flown.AverageFareEMD.DataEntryAverageFareEMDCo
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
+        global.AccessControlMaganer();
     },
     setStoreData: function() {
         var cmbCurrency = Ext.getCmp(prototype.id + '-cmbCurrency');

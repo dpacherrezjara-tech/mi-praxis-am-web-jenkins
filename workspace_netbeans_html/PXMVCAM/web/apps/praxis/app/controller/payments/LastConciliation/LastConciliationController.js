@@ -57,6 +57,9 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
             '#LastConciliationForm-btnExcel': {
                 click: this.btnExcel_click
             },
+            '#LastConciliationForm-btnMassiveEmission': {
+                click: this.btnMassiveEmission_click
+            },
             '#LastConciliationForm-btnFilter': {
                 click: this.btnFilter_click
             },
@@ -115,7 +118,7 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(false);
         var storeComboDataDay = win.getStoreDays(true);
-
+        
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
@@ -496,6 +499,10 @@ Ext.define('Ext.Praxis.controller.payments.LastConciliation.LastConciliationCont
                 }
             }
         });
+    },
+    btnMassiveEmission_click: function(obj, e){
+        Ext.create('Ext.Praxis.view.payments.LastConciliationForm.DataEntryMassiveEmission', {
+            id: prototype.id + '-dataEntryMassiveEmission' }).show();
     },
     exportExcel: function() {
         me.bean = {};

@@ -38,6 +38,7 @@ Ext.define('Ext.Praxis.controller.flown.CodesAncillaries.DataEntryCodesAncillari
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
+        global.AccessControlMaganer();
     },
     obtainData: function () {
 

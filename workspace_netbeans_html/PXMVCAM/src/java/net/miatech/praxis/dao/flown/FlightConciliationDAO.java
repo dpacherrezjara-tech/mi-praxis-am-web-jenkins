@@ -1109,6 +1109,7 @@ public class FlightConciliationDAO {
                 beanCons.FSTAPO = rst.getString("FSTAPO").trim();
                 beanCons.FSENDFI = rst.getString("FSENDFI").trim();
                 beanCons.QCPNFI = rst.getInt("QCPNFI");
+                beanCons.QCPNFRE = rst.getInt("QCPNFRE");
                 beanCons.FSTAFI = rst.getString("FSTAFI").trim();
                 beanCons.USCR = rst.getString("USCR").trim();
                 beanCons.FECR = rst.getString("FECR").trim();
@@ -1196,7 +1197,7 @@ public class FlightConciliationDAO {
             strSQL = "{CALL " + session.getMainLibrary() + ".PX095S03A1691(?,?,?,?,?,?,?,?,?,?"
                                                                        + ",?,?,?,?,?,?,?,?,?,?"
                                                                        + ",?,?,?,?,?,?,?,?,?,?"
-                                                                       + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                                                                       + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -1229,23 +1230,24 @@ public class FlightConciliationDAO {
             cs.setInt(26, Integer.parseInt(String.valueOf(filter.QCPHARB)));
             cs.setString(27, filter.FSENDFI.trim());
             cs.setInt(28, filter.QCPNFI);
-            cs.setString(29, filter.FSTAFI.trim());
-            cs.setString(30, filter.FSTAPO.trim());
-            cs.setString(31, filter.LOCDEP);
-            cs.setString(32, filter.LOCARR);
-            cs.setString(33, filter.UTCDEP);
-            cs.setString(34, filter.UTCARR);
-            cs.setString(35, session.getUserView().getCustomerInfo().USR.trim());
-            cs.setString(36, Functions.getFechaActual());
-            cs.setString(37, Functions.getHoraActual());
-            cs.setString(38, filter.FOPERZUL.trim());
-            cs.setInt(39, Integer.parseInt(String.valueOf(filter.QCPTRA)));
-            cs.setInt(40, Integer.parseInt(String.valueOf(filter.QCPAD)));
-            cs.setInt(41, Integer.parseInt(String.valueOf(filter.QCPCHD)));
-            cs.setInt(42, Integer.parseInt(String.valueOf(filter.QCPINF)));
+            cs.setInt(29, filter.QCPNFRE);
+            cs.setString(30, filter.FSTAFI.trim());
+            cs.setString(31, filter.FSTAPO.trim());
+            cs.setString(32, filter.LOCDEP);
+            cs.setString(33, filter.LOCARR);
+            cs.setString(34, filter.UTCDEP);
+            cs.setString(35, filter.UTCARR);
+            cs.setString(36, session.getUserView().getCustomerInfo().USR.trim());
+            cs.setString(37, Functions.getFechaActual());
+            cs.setString(38, Functions.getHoraActual());
+            cs.setString(39, filter.FOPERZUL.trim());
+            cs.setInt(40, Integer.parseInt(String.valueOf(filter.QCPTRA)));
+            cs.setInt(41, Integer.parseInt(String.valueOf(filter.QCPAD)));
+            cs.setInt(42, Integer.parseInt(String.valueOf(filter.QCPCHD)));
+            cs.setInt(43, Integer.parseInt(String.valueOf(filter.QCPINF)));
             
-            cs.setString(43, filter.strDescripcion.trim());
-            cs.setString(44, filter.FMULTI.trim());
+            cs.setString(44, filter.strDescripcion.trim());
+            cs.setString(45, filter.FMULTI.trim());
             cs.execute();
 
         } catch (Exception e) {

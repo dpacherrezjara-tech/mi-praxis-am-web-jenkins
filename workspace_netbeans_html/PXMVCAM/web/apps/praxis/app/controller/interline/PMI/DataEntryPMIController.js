@@ -28,6 +28,7 @@
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
         }
+        global.AccessControlMaganer();
     },
     mostrarData: function() {
         this.setValue('txtAGREEINDS', this.bean.AGREEINDS);

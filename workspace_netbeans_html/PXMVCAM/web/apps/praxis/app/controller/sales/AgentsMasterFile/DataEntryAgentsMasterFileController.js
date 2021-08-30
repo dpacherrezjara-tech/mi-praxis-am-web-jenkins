@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.DataEntryAgentsMasterFi
                  Ext.getCmp(prototype.id + '-txtA003KEY').setReadOnly(true);
                 break;
         }
-
+        global.AccessControlMaganer();
     },
     setDataStore: function() {
         var p = this.view.params;
