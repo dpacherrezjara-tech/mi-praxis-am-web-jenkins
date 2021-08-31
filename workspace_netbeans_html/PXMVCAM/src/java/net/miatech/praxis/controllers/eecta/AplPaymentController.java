@@ -232,7 +232,8 @@ public class AplPaymentController extends BaseController {
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         try {                        
-            filter.VP_IDPG = request.getParameter("VP_IDPG");                        
+            filter.VP_IDPG = request.getParameter("VP_IDPG");
+            filter.TICKET_NUMBER = request.getParameter("VP_TICKET");
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = -1;            
             start = (start != 0 ? start : 0);
