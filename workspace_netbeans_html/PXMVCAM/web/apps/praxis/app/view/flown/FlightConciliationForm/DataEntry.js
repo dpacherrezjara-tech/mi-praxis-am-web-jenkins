@@ -649,7 +649,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     xtype: 'label',
                                     id: prototype.id + '-txtDESCRIP-label',
                                     text: '(*)',
-                                    hidden: true,
+                                    hidden: false,
                                     style: 'font-weight:bold;color:red;',
                                     width: 20,
                                     autoEl: {
@@ -665,7 +665,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     maxLength: 50,
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
                                     width: 400,
-                                    hidden: true
+                                    hidden: false
                                 }
                             ]
                         },
@@ -706,7 +706,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     text: 'Qty Coupons',
                                     tooltip: 'Qty ODS Coupons',
                                     width: 120,
-                                    listeners: {
+                                    /*listeners: {
 //                                        click: 'onQtyCouponsClick'
                                         click: function() {
                                             if (Ext.getCmp(prototype.id + '-txtDESCRIP').isVisible()) {
@@ -717,7 +717,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                                 Ext.getCmp(prototype.id + '-txtDESCRIP').show();
                                             }
                                         }
-                                    }
+                                    }*/
                                 },
                                 {
                                     xtype: 'textfield',

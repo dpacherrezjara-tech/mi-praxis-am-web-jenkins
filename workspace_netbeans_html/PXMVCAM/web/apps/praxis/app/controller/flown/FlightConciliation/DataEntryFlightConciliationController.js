@@ -14,8 +14,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         this.p = this.view.params;
     },
     afterRender: function(){
-        Ext.getCmp(prototype.id+'-txtDESCRIP-label').hide();
-        Ext.getCmp(prototype.id+'-txtDESCRIP').hide();
+        //Ext.getCmp(prototype.id+'-txtDESCRIP-label').hide();
+        //Ext.getCmp(prototype.id+'-txtDESCRIP').hide();
         switch( this.p.actionCode ){
             case 'V':
                 this.mostrarData(this.p.bean);
