@@ -158,12 +158,27 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AppliedPaymentsController', {
         Ext.getCmp(prototype.id + '-infoGridAppliedPaymentCab').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-infoGridAppliedPaymentCab').getStore().reload();
     },
-    get_aplpago_detalle: function ( grid, rowIndex, colIndex ) {        
-        var rec = grid.getStore().getAt(rowIndex);                
-        //console.log(rec);        
-        Ext.getCmp(prototype.id + '-infoGridAppliedPaymentDet').setTitle( 'Detalle Id pago nº: ' + rec.data.A3959IDPG );        
+    get_aplpago_detalle: function ( grid, rowIndex, colIndex ) { 
+        var rec = [];
+        Ext.getCmp(prototype.id + '-infoGridAppliedPaymentDet').setTitle( '' );
+        var VL_IDPG = '';
+        console.log('rowIndex: '  + rowIndex);
+        if(rowIndex>0){
+            rec = grid.getStore().getAt(rowIndex); 
+            VL_IDPG = rec.data.A3959IDPG;              
+            Ext.getCmp(prototype.id + '-infoGridAppliedPaymentDet').setTitle( 'Detalle Id pago nº: ' + rec.data.A3959IDPG ); 
+            Ext.getCmp(prototype.id + '-TICKET-NUMB').setValue("");
+        }
         var bean = {};        
-        bean.VP_IDPG = rec.data.A3959IDPG;
+        bean.VP_IDPG = VL_IDPG;        
+        var vl_ticket_cia = Ext.getCmp(prototype.id + '-TICKET-CIA').getValue();
+        var vl_ticket_num = Ext.getCmp(prototype.id + '-TICKET-NUMB').getValue();
+        var vl_ticket_seq = Ext.getCmp(prototype.id + '-TICKET-SEQ').getValue();
+        bean.VP_TICKET =  "";
+        if (vl_ticket_num !== ""){
+            bean.VP_TICKET = vl_ticket_cia + vl_ticket_num + vl_ticket_seq;
+        }
+                
         bean.limit = "-1";
         bean.page = "-1";
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.AplPayment.GridData', {        
@@ -197,8 +212,12 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AppliedPaymentsController', {
         });
         Ext.getCmp(prototype.id + '-infoGridAppliedPaymentDet').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-infoGridAppliedPaymentDet').getStore().reload();
+    },
+    onTxtFilterKeypress01: function (obj, e, eOpts) {
+        if (e.getKey() === e.ENTER) {
+            this.get_aplpago_detalle();
+        }
     }
-    
     
 });
 
