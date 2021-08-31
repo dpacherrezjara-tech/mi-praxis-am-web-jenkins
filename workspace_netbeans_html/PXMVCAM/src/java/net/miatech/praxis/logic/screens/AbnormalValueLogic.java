@@ -7,10 +7,12 @@ package net.miatech.praxis.logic.screens;
 
 import java.sql.SQLException;
 import java.util.List;
+import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF111Filter;
 import net.miatech.beans.IMF121Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.screens.AbnormalValueDAO;
+import net.miatech.praxis.interline.filter.WRF016Filterwk;
 
 /**
  *
@@ -46,11 +48,25 @@ public class AbnormalValueLogic {
         return AbnormalValueDAO.loadPX414SQP02395(filter);
     }
 
-    public List<IMF121Filter> loadPX414SQPGG121(IMF121Filter filter) throws SQLException {
+    // =========================================================================
+    // ================= SALES AGENT CONTROL ===================================
+    // =========================================================================
+    public List<WRF016Filterwk> loadPX109SQP01230_MESES(DashboardFilter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX109SQP01230_MESES(filter);
+    }
+
+    public List<WRF016Filterwk> loadPX109SQP02476_COUNTRY(DashboardFilter filter) throws SQLException, Exception {
+        return AbnormalValueDAO.loadPX109SQP02476_COUNTRY(filter);
+    }
+
+    // =========================================================================
+    // ======================= Difference Fare =================================
+    // =========================================================================
+    public List<IMF121Filter> loadPX414SQPGG121(IMF121Filter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQPGG121(filter);
     }
 
-    public List<IMF121Filter> loadPX414SQPGG122(IMF121Filter filter) throws SQLException {
+    public List<IMF121Filter> loadPX414SQPGG122(IMF121Filter filter) throws SQLException, Exception {
         return AbnormalValueDAO.loadPX414SQPGG122(filter);
     }
 

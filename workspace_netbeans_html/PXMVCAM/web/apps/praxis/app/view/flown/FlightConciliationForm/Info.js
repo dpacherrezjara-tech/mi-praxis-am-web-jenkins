@@ -738,7 +738,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             metaData.style = "text-align:right;";
                                                             var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
-                                                            return Ext.util.Format.number(data.totDiff, '0,000');
+                                                            return Ext.util.Format.number(data.totQCPNVAL, '0,000');
                                                         }
                                                     }
                                                 ]

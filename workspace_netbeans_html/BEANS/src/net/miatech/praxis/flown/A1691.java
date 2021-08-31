@@ -65,6 +65,7 @@ public class A1691 {
     //INFORMATION FLIGHT FISICO   
     public String FSENDFI = "";
     public int QCPNFI = 0;
+    public int QCPNFRE = 0;
     public String FSTAFI = "";
     
     //tot
