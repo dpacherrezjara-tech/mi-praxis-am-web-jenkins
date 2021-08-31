@@ -484,7 +484,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
-    btnRefresh_click: function() {
+    /*btnRefresh_click: function() {
         me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
         var STVAL = this.beanDetDay.IN_STVAL;
         var SPNR = this.beanDetDay.A720PNR;
@@ -497,7 +497,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         if (STVAL === '1') {
             me.setOnGridDetAccounting();
         }
-    },
+    },*/
     OnGridDetByRefNbr: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataByRefNbr';
