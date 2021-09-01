@@ -526,6 +526,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                                             ["1", "Pending/Without Sale"],
                                             ["2", "Valued"],
                                             ["3", "Closed"],
+                                            ["7", "Average Value"],
                                             ["9", "Reprocessing"]
                                         ]
                                     }),
