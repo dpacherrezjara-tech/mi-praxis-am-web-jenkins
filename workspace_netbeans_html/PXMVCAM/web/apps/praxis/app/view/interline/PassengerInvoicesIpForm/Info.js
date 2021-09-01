@@ -2471,11 +2471,11 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                                     },
                                                     {text: 'TAX', width: 80, dataIndex: 'TAX',
                                                         listeners: {
-                                                            click: 'viewDataDetailSFI41'
+                                                            click: 'onViewDataDetailSFI41'
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = 'color:#057ECB;text-align:right;text-decoration:none;font-weight:bold;';
-                                                            return '<a href="#interline-passenger-invoices-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + Ext.util.Format.number(value, '0,000.00') + '</a>';
+                                                            return '<a href="#interline-passenger-invoices-ip-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + Ext.util.Format.number(value, '0,000.00') + '</a>';
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridBoxTKT').getStore().getData().items[0].data;
