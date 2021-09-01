@@ -115,7 +115,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         } else {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
-                msg: 'Are you sure to insert?',
+                msg: '¿Seguro de procesar aplicacion de pago?',
                 buttons: Ext.MessageBox.YESNO,
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
@@ -182,7 +182,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         } else {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
+                msg: '¿Seguro de realizar la actualizacion?',
                 scope: this,
                 buttons: Ext.MessageBox.YESNO,
                 icon: Ext.MessageBox.QUESTION,
@@ -200,7 +200,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Are you sure to delete ?',
+            msg: '¿Seguro de borrar registro ?',
             buttons: Ext.MessageBox.YESNO,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
@@ -238,19 +238,22 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
             Ext.getCmp(prototype.id + '-A3959TOTPG').focus();
             return mensaje;
         }
-        if (params.A3959FECPG === '') {
-            mensaje = 'Ingrese la fecha de pago';
-            Ext.getCmp(prototype.id + '-A3959FECPG').focus();
-            return mensaje;
-        }                                
+        //Fecha de pago para NC debe tomar del refund(fecha de emision) 
+        if (params.VP_TICKET_NC === ''){
+            if (params.A3959FECPG === '') {
+                mensaje = 'Ingrese la fecha de pago';
+                Ext.getCmp(prototype.id + '-A3959FECPG').focus();
+                return mensaje;
+            }                               
+        }
         var arrayRec = this.get_SelectedRecords();        
         var vl_total_sel = arrayRec[1];        
         if( params.A3959TOTPG > vl_total_sel ){
             mensaje = 'El importe de pago aplicado no puede ser mayor al total seleccionado';
             return mensaje;
         }
-        if (params.VP_TICKET_NC != '' && params.VP_TICKET_NC.length != 13  ) {
-            mensaje = 'Ingrese Ticket NC valido de 13 digitos';
+        if (params.VP_TICKET_NC !== '' && params.VP_TICKET_NC.length !== 13  ) {
+            mensaje = 'Ingrese Ticket(NC) valido de 13 digitos';
             Ext.getCmp(prototype.id + '-A3959FECPG').focus();
             return mensaje;
         } 

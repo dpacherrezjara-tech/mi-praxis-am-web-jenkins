@@ -127,6 +127,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                     },
                                     {text: 'Trx.', dataIndex: 'A3977TRNCU', align: 'center', width: 50, locked: true},
                                     {text: 'Sec.<br>Apl.', dataIndex: 'A3977SQAPL', align: 'center', width: 40},
+                                    {text: 'Fecha<br>Pago', dataIndex: 'A3977FECPG', align: 'center', width: 70},
                                     {text: 'Mda<br>Pago', dataIndex: 'A3977MDA', align: 'center', width: 60},
                                     {
                                         text: 'Total', dataIndex: 'A3977TOT', width: 80, align: 'right',
