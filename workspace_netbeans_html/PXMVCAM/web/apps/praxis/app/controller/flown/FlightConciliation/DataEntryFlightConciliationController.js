@@ -445,12 +445,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
                     if(beanOption.FSENDFI !== '' && beanOption.QCPNFI > 0 && beanOption.QCPNFRE > 0 && beanOption.FSTAFI !== ''){
                         hayVFI = true;
                     }else if(beanOption.FSENDFI !== '' && beanOption.QCPNFI > 0 && beanOption.QCPNFRE > 0 && beanOption.FSTAFI === ''){
-                        console.log(beanOption.FSENDFI);
-                        console.log(beanOption.QCPNFI);
-                        console.log(beanOption.QCPNFRE);
-                        console.log(beanOption.FSTAFI);
-                        console.log('-----------');
-                        console.log(beanOption.FSTAVC);
                         msjResult = "The Physical Flight Manifest Flag can not be 'Stand By'.";
                     }else if(beanOption.FSENDFI === '' && beanOption.QCPNFI <= 0 && beanOption.QCPNFRE <= 0 && beanOption.FSTAFI !== ''){
                         //Cuando todos los campos son vacío y el estado es 'Received'
@@ -482,7 +476,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
                     }
                 }
                 
-                if(msjResult === ''){
+                if(msjResult === '' && this.p.actionCode !== 'I'){
                     //Validando si se han modificado los campos del Manifiesto de Vuelo
                     if(this.p.bean.FSENDFI.trim() !== beanOption.FSENDFI.trim() || this.p.bean.QCPNFI !== beanOption.QCPNFI || this.p.bean.QCPNFRE !== beanOption.QCPNFRE
                         || this.p.bean.FSTAFI.trim() !== beanOption.FSTAFI.trim()){
