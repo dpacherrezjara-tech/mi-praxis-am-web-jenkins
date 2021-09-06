@@ -283,12 +283,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RejectedReportForm.RejectedReportFo
             this.bean2.IN_DATEFROM = rec.data.A3456FDATE;
             this.bean2.IN_DATETO = rec.data.A3456FDATE;
         } else {
-            this.bean2.IN_DATEFROM = cmbDateFromYear + "" + cmbDateFromMonth + "" + cmbPer1;
-            this.bean2.IN_DATETO = cmbDateToYear + "" + cmbDateToMonth + "" + cmbPer2;
+            // win.getMonthAbbreviation(cmbDateFromMonth)
+            this.bean2.IN_DATEFROM = cmbDateFromYear + "" + win.getMonthAbbreviation(cmbDateFromMonth)+ "" + cmbPer1;
+            this.bean2.IN_DATETO = cmbDateToYear + "" + win.getMonthAbbreviation(cmbDateToMonth) + "" + cmbPer2;
             this.bean2.IN_OPTION = '8';
         }
         this.bean2.IN_COUNTRY = rec.data.A3456PAIS;
         this.bean2.IN_SEQ = rec.data.A3456SEQ;
+        this.bean2.IN_STATUS ='';
+        this.bean2.IN_NAME ='';
         Ext.getCmp(prototype.idRejecte + '-gridDetalle').getStore().removeAll();
         Ext.getCmp(prototype.idRejecte + '-Contenedor').mask('Please Wait....');
         Ext.Ajax.request({
@@ -583,6 +586,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.RejectedReportForm.RejectedReportFo
     },
     imgSerech_clickHandler: function () {
         this.imgSearch_clickHandler(false);
+    },
+    onClearClick: function (obj, e) {
+        Ext.getCmp(prototype.idRejecte + '-gridData').getStore().removeAll();
+        Ext.getCmp(prototype.idRejecte + '-gridDetalle').getStore().removeAll();
     }
 
 });
