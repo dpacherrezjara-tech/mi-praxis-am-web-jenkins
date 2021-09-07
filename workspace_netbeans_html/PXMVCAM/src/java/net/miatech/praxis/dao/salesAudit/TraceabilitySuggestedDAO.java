@@ -306,11 +306,11 @@ public class TraceabilitySuggestedDAO {
                 objRtn.CANTTOTALACM = rs01.getInt("CANTTOTALACM");
                 objRtn.TTIVACARGO = rs01.getDouble("TTIVACARGO");
                 objRtn.TTCARGO = rs01.getDouble("TTCARGO"); 
-                cont++;
                 if (objRtn.A2548FLAG.equals("Approved") || objRtn.A2548FLAG.equals("Billed")) {
-                    if (cont == 1) {
+                    if (cont == 0) {
                         objRtn.PENDIGROUP = rs01.getDouble("PENDIGROUP");
                         objRtn.PENDISCLIE = rs01.getDouble("PENDISCLIE");
+                        cont++;
                     } else {
                         objRtn.PENDIGROUP = 0.00;
                         objRtn.PENDISCLIE = 0.00;
