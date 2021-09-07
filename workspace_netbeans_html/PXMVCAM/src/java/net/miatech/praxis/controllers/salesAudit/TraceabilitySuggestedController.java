@@ -966,6 +966,7 @@ public class TraceabilitySuggestedController extends BaseController {
     public @ResponseBody
     void getXLSXProcessingDate(HttpServletRequest request, HttpServletResponse response) {
         A1672Filter filter = new A1672Filter();
+        int cant=0;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -1013,7 +1014,7 @@ public class TraceabilitySuggestedController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -1028,19 +1029,23 @@ public class TraceabilitySuggestedController extends BaseController {
             CH_08 = row.createCell(8);
             CH_09 = row.createCell(9);
             CH_10 = row.createCell(10);
+            CH_11 = row.createCell(11);
+            CH_12 = row.createCell(12);
+            CH_13 = row.createCell(13);
+            CH_14 = row.createCell(14);
             String vl_campo = "";
             String vl_campo1 = "";
             String vl_agencia = "";
             if (filter.VP_OPTION.equals("1")) {
                 vl_campo = "Status";
-                vl_campo1="Date";
+                vl_campo1 = "Date";
             } else if (filter.VP_OPTION.equals("2")) {
                 vl_campo = "Reason";
-                vl_campo1="Date";
+                vl_campo1 = "Date";
             } else {
                 vl_campo = "IATA";
                 vl_agencia = "Agency";
-                vl_campo1="Date";
+                vl_campo1 = "Date";
             }
             //Reason
             //me.beandetail.VP_OPTION
@@ -1054,8 +1059,13 @@ public class TraceabilitySuggestedController extends BaseController {
             CH_06.setCellValue("Ticket amount USD ARC");
             CH_07.setCellValue("Ticket amount USD ASR");
             CH_08.setCellValue("Ticket amount USD BSP");
-            CH_09.setCellValue("Total");
-            CH_10.setCellValue(vl_agencia);
+            CH_09.setCellValue("Charges");
+            CH_10.setCellValue("Iva Charges");
+            CH_11.setCellValue("Pending Grouping");
+            CH_12.setCellValue("Unregistered Client");
+
+            CH_13.setCellValue("Total");
+            CH_14.setCellValue(vl_agencia);
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -1068,6 +1078,10 @@ public class TraceabilitySuggestedController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -1080,6 +1094,10 @@ public class TraceabilitySuggestedController extends BaseController {
             CH_08.setCellStyle(headerStyle);
             CH_09.setCellStyle(headerStyle);
             CH_10.setCellStyle(headerStyle);
+            CH_11.setCellStyle(headerStyle);
+            CH_12.setCellStyle(headerStyle);
+            CH_13.setCellStyle(headerStyle);
+            CH_14.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -1098,6 +1116,10 @@ public class TraceabilitySuggestedController extends BaseController {
                 CH_08 = row.createCell(8);
                 CH_09 = row.createCell(9);
                 CH_10 = row.createCell(10);
+                CH_11 = row.createCell(11);
+                CH_12 = row.createCell(12);
+                CH_13 = row.createCell(13);
+                CH_14 = row.createCell(14);
 
                 CH_00.setCellValue(listaData.get(vi).A2548FREGI);
                 if (!filter.VP_OPTION.equals("3")) {
@@ -1113,9 +1135,14 @@ public class TraceabilitySuggestedController extends BaseController {
                 CH_06.setCellValue(listaData.get(vi).A2548IVACA);
                 CH_07.setCellValue(listaData.get(vi).A2548IVACS);
                 CH_08.setCellValue(listaData.get(vi).A2548IVACD);
-                CH_09.setCellValue(listaData.get(vi).A2548TOTAA);
+                CH_09.setCellValue(listaData.get(vi).TTCARGO);
+                CH_10.setCellValue(listaData.get(vi).TTIVACARGO);
+                CH_11.setCellValue(listaData.get(vi).PENDIGROUP);
+                CH_12.setCellValue(listaData.get(vi).PENDISCLIE);
+
+                CH_13.setCellValue(listaData.get(vi).A2548TOTAA);
                 if (filter.VP_OPTION.equals("3")) {
-                    CH_10.setCellValue(listaData.get(vi).AGENCY);
+                    CH_14.setCellValue(listaData.get(vi).AGENCY);
                 }
 
                 // </editor-fold>
@@ -1134,6 +1161,10 @@ public class TraceabilitySuggestedController extends BaseController {
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
 
             String fileNameDownload = String.format("Traceability Suggested - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");
