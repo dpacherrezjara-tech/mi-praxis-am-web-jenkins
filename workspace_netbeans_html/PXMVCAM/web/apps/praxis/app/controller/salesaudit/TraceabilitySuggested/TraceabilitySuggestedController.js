@@ -660,6 +660,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.TraceabilitySuggested.TraceabilityS
                 Ext.getCmp(prototype.id + '-Contenedor').unmask();
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.length !== 0) {
+                   // var Objtemp = res[0].data;
+                    //var Objtemp = records[0].data;
                     if (gridType === '1') {
                         Ext.getCmp(prototype.id + '-gridReport3').getStore().loadData(res.data);
                     }

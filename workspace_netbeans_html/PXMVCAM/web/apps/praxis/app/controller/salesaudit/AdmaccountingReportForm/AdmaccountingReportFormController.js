@@ -487,6 +487,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.AdmaccountingReportForm.Admaccounti
     },
     imgSerech_clickHandler: function () {
         this.imgSearch_clickHandler(false);
+    },
+    onClearClick: function (obj, e) {
+        Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
     }
 
 });

@@ -174,6 +174,43 @@ public class SQP00911 {
     public String A2548NRCOR;
     public String A2548PNR;
     public String A2548EPR;
+    
+    public Double TTIVACARGO;
+    public Double TTCARGO;
+    public Double PENDIGROUP;
+    public Double PENDISCLIE;
+
+    public Double getPENDIGROUP() {
+        return PENDIGROUP;
+    }
+
+    public void setPENDIGROUP(Double PENDIGROUP) {
+        this.PENDIGROUP = PENDIGROUP;
+    }
+
+    public Double getPENDISCLIE() {
+        return PENDISCLIE;
+    }
+
+    public void setPENDISCLIE(Double PENDISCLIE) {
+        this.PENDISCLIE = PENDISCLIE;
+    }
+    
+    public Double getTTIVACARGO() {
+        return TTIVACARGO;
+    }
+
+    public void setTTIVACARGO(Double TTIVACARGO) {
+        this.TTIVACARGO = TTIVACARGO;
+    }
+
+    public Double getTTCARGO() {
+        return TTCARGO;
+    }
+
+    public void setTTCARGO(Double TTCARGO) {
+        this.TTCARGO = TTCARGO;
+    }
 
     public String getA2548CNREL() {
         return A2548CNREL;

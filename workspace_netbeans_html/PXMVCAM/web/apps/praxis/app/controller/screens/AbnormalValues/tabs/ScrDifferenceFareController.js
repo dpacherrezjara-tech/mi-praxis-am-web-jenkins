@@ -75,8 +75,9 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDifferenceFareC
         this.viewgridDetWeek_colHandler();
     },
     viewgridDetWeek_colHandler: function() {
-        
-       win.lblUser_toolTip("Estructura: IMF121");
+
+        win.lblUser_toolTip("Estructura: IMF121");
+
         Ext.Ajax.request({
             url: prototype.url + '/searchDifferenceByWeek',
             method: 'POST',
@@ -92,13 +93,14 @@ Ext.define('Ext.Praxis.controller.screens.AbnormalValues.tabs.ScrDifferenceFareC
                 var lstData = res.lstData;
                 console.log(lstData);
                 Ext.getCmp(prototype.id + '-titgridDetWeekS').setText(lstData[0].strTitulo);
-                
+
                 var storeData = Ext.create('Ext.data.Store', {
                     data: lstData,
                     autoLoad: true
                 });
                 Ext.getCmp(prototype.id + '-gridDetWeek').bindStore(storeData);
-                //Ext.getCmp(prototype.id + '-gridDetWeek').setStore(storeData);
+                Ext.getCmp(prototype.id + '-gridDetWeek').setStore(storeData);
+                Ext.getCmp(prototype.id + '-gridDetWeek').getStore().reload();
             }
         });
     },

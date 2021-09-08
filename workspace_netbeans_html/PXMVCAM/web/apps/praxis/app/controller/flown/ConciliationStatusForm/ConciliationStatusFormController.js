@@ -4,6 +4,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
     alias: 'controller.ConciliationStatusFormController',
     bean: {},
     bean3: {},
+    bean4: {},
     bean2: {},
     tipo: '1',
     /**
@@ -290,6 +291,36 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
         this.bean2.IN_REFERENCE = rec.data.A3676NARCH;
         this.bean2.IN_DATEFROM = '';
         this.bean2.IN_DATETO = '';
+        this.bean2.IN_CIA= '';
+        this.bean2.IN_FORMA= '';
+        this.bean2.IN_SERIE= '';
+        this.bean2.IN_SEQ= '';
+        this.bean2.IN_HORAINI= '';
+        this.bean2.IN_HORAFIN= '';
+        this.bean2.IN_STATUS= '';
+        this.bean2.IN_CURRENCY= '';
+        this.bean2.IN_COUNTRY= '';
+        this.bean2.IN_STATUSINI= '';
+        this.bean2.IN_STATUSFIN= '';
+        /*PARA EXPORTA*/
+        this.bean4.IN_OPTION = '6';
+        this.bean4.IN_ORIGEN = origen;
+        this.bean4.IN_LOTE = '';
+        this.bean4.IN_REFERENCE = rec.data.A3676NARCH;
+        this.bean4.IN_DATEFROM = '';
+        this.bean4.IN_DATETO = rec.data.A3676LOTE;
+        this.bean4.IN_CIA= '';
+        this.bean4.IN_FORMA= '';
+        this.bean4.IN_SERIE= '';
+        this.bean4.IN_SEQ= '';
+        this.bean4.IN_HORAINI= '';
+        this.bean4.IN_HORAFIN= '';
+        this.bean4.IN_STATUS= '';
+        this.bean4.IN_CURRENCY= '';
+        this.bean4.IN_COUNTRY= '';
+        this.bean4.IN_STATUSINI= '';
+        this.bean4.IN_STATUSFIN= '';
+        
         Ext.getCmp(prototype.id + '-gridDetalle').getStore().removeAll();
         Ext.getCmp(prototype.id + '-gridDetalle').getStore().loadPage(1, {
             params: {
@@ -483,7 +514,7 @@ Ext.define('Ext.Praxis.controller.flown.ConciliationStatusForm.ConciliationStatu
             if (me.tipo === '1') {
                 me.exportExcel(prototype.url + '/getXLSXCAB?beanString=' + encodeURI(JSON.stringify(bean)));
             } else {
-                me.exportExcel(prototype.url + '/getFileTxt?beanString=' + encodeURI(JSON.stringify(this.bean2)));
+                me.exportExcel(prototype.url + '/getFileTxt?beanString=' + encodeURI(JSON.stringify(this.bean4)));
             }
 
         } else {
