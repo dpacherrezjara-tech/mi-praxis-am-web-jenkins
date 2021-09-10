@@ -1920,17 +1920,21 @@ public class FlightConciliationController extends BaseController {
             cell16 = row.createCell(16);
             cell17 = row.createCell(17);
             cell18 = row.createCell(18);
-            cell19 = row.createCell(19);
+//            cell19 = row.createCell(19);
 
             cell00.setCellValue("Ticket");
-            cell01.setCellValue("Sale");
-            cell06.setCellValue("Coupon");
-            cell17.setCellValue("Accounting Information");
+            cell01.setCellValue("Seq");
+            cell02.setCellValue("Rolling");
+            cell03.setCellValue("Sale");
+            cell08.setCellValue("Coupon");
+            cell15.setCellValue("Accounting Information");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 16));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 19));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 18));
 
             cell00.setCellStyle(headerStyle);
             cell01.setCellStyle(headerStyle);
@@ -1951,7 +1955,7 @@ public class FlightConciliationController extends BaseController {
             cell16.setCellStyle(headerStyle);
             cell17.setCellStyle(headerStyle);
             cell18.setCellStyle(headerStyle);
-            cell19.setCellStyle(headerStyle);
+//            cell19.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -1977,41 +1981,42 @@ public class FlightConciliationController extends BaseController {
             cell16 = row.createCell(16);
             cell17 = row.createCell(17);
             cell18 = row.createCell(18);
-            cell19 = row.createCell(19);
+//            cell19 = row.createCell(19);
 
-            cell01.setCellValue("Date");
-            cell02.setCellValue("Country");
-            cell03.setCellValue("Fare");
-            cell04.setCellValue("RBD");
-            cell05.setCellValue("Pax");
-            cell06.setCellValue("Operation");
-            cell07.setCellValue("Carrier");
-            cell08.setCellValue("0%");
-            cell10.setCellValue("16%");
-            cell12.setCellValue("Total");
-            cell14.setCellValue("Com.");
-            cell15.setCellValue("Curr.");
-            cell16.setCellValue("Status");
-            cell17.setCellValue("Date");
-            cell18.setCellValue("Id");
-            cell19.setCellValue("Status");
+            cell03.setCellValue("Date");
+            cell04.setCellValue("Country");
+            cell05.setCellValue("Fare");
+            cell06.setCellValue("RBD");
+            cell07.setCellValue("Pax");
+            cell08.setCellValue("Operation");
+            cell09.setCellValue("Carrier");
+//            cell08.setCellValue("0%");
+//            cell10.setCellValue("16%");
+            cell10.setCellValue("Total");
+            cell12.setCellValue("Com.");
+            cell13.setCellValue("Curr.");
+            cell14.setCellValue("Status");
+            cell15.setCellValue("Date");
+            cell16.setCellValue("Id");
+            cell17.setCellValue("Status");
+            cell18.setCellValue("Service Type");
 
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 11));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 13));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 19));
 
             cell00.setCellStyle(headerStyle);
             cell01.setCellStyle(headerStyle);
@@ -2032,7 +2037,7 @@ public class FlightConciliationController extends BaseController {
             cell16.setCellStyle(headerStyle);
             cell17.setCellStyle(headerStyle);
             cell18.setCellStyle(headerStyle);
-            cell19.setCellStyle(headerStyle);
+//            cell19.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -2058,25 +2063,25 @@ public class FlightConciliationController extends BaseController {
             cell16 = row.createCell(16);
             cell17 = row.createCell(17);
             cell18 = row.createCell(18);
-            cell19 = row.createCell(19);
+//            cell19 = row.createCell(19);
 
-            cell03.setCellValue("Basis");
-            cell08.setCellValue("Value");
-            cell09.setCellValue("YQ");
+            cell05.setCellValue("Basis");
             cell10.setCellValue("Value");
             cell11.setCellValue("YQ");
-            cell12.setCellValue("Value");
-            cell13.setCellValue("YQ");
-            cell16.setCellValue("Valoration");
+//            cell10.setCellValue("Value");
+//            cell11.setCellValue("YQ");
+//            cell12.setCellValue("Value");
+//            cell13.setCellValue("YQ");
+            cell14.setCellValue("Valoration");
 
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 13, 13));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 16, 16));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 10, 10));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 11, 11));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 12, 12));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 14));
 
             cell00.setCellStyle(headerStyle);
             cell01.setCellStyle(headerStyle);
@@ -2097,7 +2102,7 @@ public class FlightConciliationController extends BaseController {
             cell16.setCellStyle(headerStyle);
             cell17.setCellStyle(headerStyle);
             cell18.setCellStyle(headerStyle);
-            cell19.setCellStyle(headerStyle);
+//            cell19.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -2124,28 +2129,31 @@ public class FlightConciliationController extends BaseController {
                 cell16 = row.createCell(16);
                 cell17 = row.createCell(17);
                 cell18 = row.createCell(18);
-                cell19 = row.createCell(19);
+//                cell19 = row.createCell(19);
 
                 cell00.setCellValue(listaData.get(vi).strTicket);
-                cell01.setCellValue(listaData.get(vi).strFormatFVTA);
-                cell02.setCellValue(listaData.get(vi).PSVVTA);
-                cell03.setCellValue(listaData.get(vi).FBASE);
-                cell04.setCellValue(listaData.get(vi).CLAS);
-                cell05.setCellValue(listaData.get(vi).QTYPAX);
-                cell06.setCellValue(listaData.get(vi).TOPUS);
-                cell07.setCellValue(listaData.get(vi).CARR);
-                cell08.setCellValue(listaData.get(vi).VCPN0);
-                cell09.setCellValue(listaData.get(vi).VYQ0);
-                cell10.setCellValue(listaData.get(vi).VCPN16);
-                cell11.setCellValue(listaData.get(vi).VYQ16);
-                cell12.setCellValue(listaData.get(vi).VCPN);
-                cell13.setCellValue(listaData.get(vi).VYQ);
-                cell14.setCellValue(listaData.get(vi).COMISI);
-                cell15.setCellValue(listaData.get(vi).MDACP);
-                cell16.setCellValue(listaData.get(vi).strDescFVAL);
-                cell17.setCellValue(listaData.get(vi).strFCON);
-                cell18.setCellValue(listaData.get(vi).IDCON);
-                cell19.setCellValue(listaData.get(vi).strDescSTCON);
+                cell01.setCellValue(listaData.get(vi).SEQ);
+                cell02.setCellValue(listaData.get(vi).SEQRO);
+                cell03.setCellValue(listaData.get(vi).strFormatFVTA);
+                cell04.setCellValue(listaData.get(vi).PSVVTA);
+                cell05.setCellValue(listaData.get(vi).FBASE);
+                cell06.setCellValue(listaData.get(vi).CLAS);
+                cell07.setCellValue(listaData.get(vi).QTYPAX);
+                cell08.setCellValue(listaData.get(vi).TOPUS);
+                cell09.setCellValue(listaData.get(vi).CARR);
+//                cell08.setCellValue(listaData.get(vi).VCPN0);
+//                cell09.setCellValue(listaData.get(vi).VYQ0);
+//                cell10.setCellValue(listaData.get(vi).VCPN16);
+//                cell11.setCellValue(listaData.get(vi).VYQ16);
+                cell10.setCellValue(listaData.get(vi).VCPN);
+                cell11.setCellValue(listaData.get(vi).VYQ);
+                cell12.setCellValue(listaData.get(vi).COMISI);
+                cell13.setCellValue(listaData.get(vi).MDACP);
+                cell14.setCellValue(listaData.get(vi).strDescFVAL);
+                cell15.setCellValue(listaData.get(vi).strFCON);
+                cell16.setCellValue(listaData.get(vi).IDCON);
+                cell17.setCellValue(listaData.get(vi).strDescSTCON);
+                cell18.setCellValue(listaData.get(vi).strFFLOW);
 
                 cell00.setCellStyle(bodyStyle);
                 cell01.setCellStyle(bodyStyle);
@@ -2166,7 +2174,7 @@ public class FlightConciliationController extends BaseController {
                 cell16.setCellStyle(bodyStyle);
                 cell17.setCellStyle(bodyStyle);
                 cell18.setCellStyle(bodyStyle);
-                cell19.setCellStyle(bodyStyle);
+//                cell19.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -2192,7 +2200,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true);
-            sheet.autoSizeColumn(19, true);
+//            sheet.autoSizeColumn(19, true);
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
