@@ -200,13 +200,17 @@ public class OwnerlessCouponController extends BaseController {
             filter.IN_FECHA_FROM = request.getParameter("dateFrom");
             filter.IN_FECHA_TO = request.getParameter("dateTo");
             filter.IN_TKT = request.getParameter("ticketNumber");
+            filter.IN_STCRU = request.getParameter("cmbStatus");
+            filter.IN_NVLOB = request.getParameter("txtNVLO");
 
             System.out.println("----------------- Parametros --------------------- ");
             System.out.println(" limit : " + request.getParameter("limit"));
             System.out.println(" start : " + request.getParameter("start"));
             System.out.println(" dateFrom : " + request.getParameter("dateFrom"));
             System.out.println(" dateTo : " + request.getParameter("dateTo"));
-            System.out.println(" IN_TKT : " + request.getParameter("IN_TKT"));
+            System.out.println(" IN_TKT : " + request.getParameter("ticketNumber"));
+            System.out.println(" IN_STCRU : " + request.getParameter("cmbStatus"));
+            System.out.println(" IN_NVLOB : " + request.getParameter("txtNVLO"));
             System.out.println("-------------------------------------------------- ");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
@@ -364,11 +368,11 @@ public class OwnerlessCouponController extends BaseController {
                     CH1_01 = row.createCell(1);
                     CH1_01.setCellValue("Flight Date");
                     CH1_02 = row.createCell(2);
-                    CH1_02.setCellValue("Transaction Date");
+                    CH1_02.setCellValue("Flight Number");
                     CH1_03 = row.createCell(3);
-                    CH1_03.setCellValue("Join Date");
+                    CH1_03.setCellValue("Transaction Date");
                     CH1_04 = row.createCell(4);
-                    CH1_04.setCellValue("Flight Number");
+                    CH1_04.setCellValue("Join Date");
                     CH1_05 = row.createCell(5);
                     CH1_05.setCellValue("Orig");
                     CH1_06 = row.createCell(6);
@@ -423,9 +427,9 @@ public class OwnerlessCouponController extends BaseController {
 
                         rcell0.setCellValue(listaData.get(vi).strTicket);
                         rcell1.setCellValue(listaData.get(vi).strFormatDate);
-                        rcell2.setCellValue(listaData.get(vi).strFormatDate2);
-                        rcell3.setCellValue(listaData.get(vi).strDescripcion);
-                        rcell4.setCellValue(listaData.get(vi).A1413NVLOB);
+                        rcell2.setCellValue(listaData.get(vi).A1413NVLOB);
+                        rcell3.setCellValue(listaData.get(vi).strFormatDate2);
+                        rcell4.setCellValue(listaData.get(vi).strDescripcion);
                         rcell5.setCellValue(listaData.get(vi).A1413FROM);
                         rcell6.setCellValue(listaData.get(vi).A1413TO);
 
