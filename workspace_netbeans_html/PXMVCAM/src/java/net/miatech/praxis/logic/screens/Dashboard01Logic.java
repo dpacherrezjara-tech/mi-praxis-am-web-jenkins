@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.miatech.beans.A050Filter;
+import net.miatech.beans.A1971Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
@@ -99,6 +100,11 @@ public class Dashboard01Logic {
 
     public List<IMF053Filter> PX109SQP03560(IMF053Filter filter) throws SQLException, Exception, Exception {
         return Dashboard01DAO.PX109SQP03560(filter);
+    }
+    
+    //* ***************************Flown Analysis*******************************
+    public List<A1971Filter> loadPX109SQP00556(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556(filter);
     }
 
 }
