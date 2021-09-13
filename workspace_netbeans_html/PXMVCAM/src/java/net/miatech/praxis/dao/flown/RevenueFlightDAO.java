@@ -823,7 +823,8 @@ public class RevenueFlightDAO {
         long totPAX = 0;
 
         //PX07900004
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX079S05A1692(?,?,?,?,?,?,?,?,?,?,?,?)}";
+//        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX079S05A1692(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04189(?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
 
         try {
