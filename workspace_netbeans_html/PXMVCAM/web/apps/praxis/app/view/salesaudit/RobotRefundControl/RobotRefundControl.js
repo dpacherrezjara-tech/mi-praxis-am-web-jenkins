@@ -295,13 +295,6 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                                     },
                                     {text: 'Country', dataIndex: 'A3388PAIS', width: 80, align: 'center',
                                          renderer: 'onRendererColumnOnPais'
-                                        /*listeners: {
-                                            click: 'searchform_detalle_RFND'
-                                        },
-                                        renderer: function(value, metaData, record, rowIndex) {
-                                            var vhtml = '<a href="#salesaudit-RFND-report-form" >' + value + '</a>';
-                                            return vhtml;
-                                        }*/
                                     },
                                     {text: 'Total', dataIndex: 'A3388CANTI', width: 120, align: 'right',
                                         cls: 'column_header_double',
@@ -389,13 +382,13 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotRefundControl.RobotRefundControl', {
                                     {text: 'Status', dataIndex: 'A3388FLAG', width: 200, align: 'right'},
                                     {text: '', dataIndex: 'A3388FLAG', width: 40, align: 'right',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            if (value == 'ASSIGNED TO THE AUDITOR' || value == 'REJECTED' || value == 'AUTHORISED') {
+                                            if (value === 'ASSIGNED TO THE AUDITOR' || value === 'REJECTED' || value === 'AUTHORISED' || value === 'UNDER INVESTIGATION') {
                                                 return '<img src="resources/img/semaforo/Circle_Green.png" />';
-                                            } else if (value == 'CHANGE FOR ANOTHER') {
+                                            } else if (value === 'CHANGE FOR ANOTHER') {
                                                 return '<img src="resources/img/semaforo/Circle_Yellow.png" />';
-                                            } else if (value == 'REJECTED') {
+                                            } else if (value === 'REJECTED') {
                                                 return '<img src="resources/img/semaforo/Circle_Yellow.png" />';
-                                            } else if (value == 'PENDING') {
+                                            } else if (value === 'PENDING') {
                                                 return '<img src="resources/img/semaforo/Circle_Orange.png" />';
                                             } else if (value === 'PREVIOUSLY DOWNLOADED') {
                                                 return '<img src="resources/img/semaforo/Circle_Silver.png" />';

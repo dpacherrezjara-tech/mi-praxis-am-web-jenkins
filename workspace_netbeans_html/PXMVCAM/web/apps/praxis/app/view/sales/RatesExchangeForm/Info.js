@@ -214,31 +214,38 @@ Ext.define('Ext.Praxis.view.sales.RatesExchangeForm.Info', {
 
                         ]
                     }
-                }
+                },
+                {
+                    xtype: 'grid',
+                    padding: '0 0 0 0',
+                    id: prototype.id + '-grid_05',
+                    width: 630,
+                    height: 520,
+                    hidden: false,
+                    columnLines: true,
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: true,
+                            align: 'center'
 
+                        },
+                        items: [
+                            {text: 'Nbr', width: 60, dataIndex: 'RN'},
+                            {text: 'Currency From', width: 100, dataIndex: 'A1526CUR'},
+                            {text: 'Currency To', width: 100, dataIndex: 'A1526CUR2'},
+                            {text: 'Date', width: 100, dataIndex: 'A1526DIS'},
+                            {text: 'Rate', width: 270, dataIndex: 'A1526RATE',
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align :right ; margin-right : 5px ";
+                                    return Ext.util.Format.number(value, '0.000000000');
+                                }
 
+                            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                ,
+                        ]
+                    }
+                },
                 {
                     xtype: 'panel',
                     id: prototype.id + '-pie',

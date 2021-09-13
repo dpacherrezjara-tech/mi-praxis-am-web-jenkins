@@ -169,39 +169,42 @@ public class LoadInterlineLogic {
         return loadInterlineDAO.loadPX185S01SFI031(filter);
     }
     
-    public List<SFI020Filter> loadPX538_register20(SFI020Filter filter) throws Exception {
-        return loadInterlineDAO.loadPX538_register20(filter);
-    }
-
-    public List<SFI041> loadPX538_register_41(SFI020Filter filter) throws Exception {
-        return loadInterlineDAO.loadPX538_register_41(filter);
-    }
-
-    public List<SFI010> loadPX538_register_10(SFI010Filter filter) throws Exception {
-        return loadInterlineDAO.loadPX538_register_10(filter);
-    }
-
-    public List<SFI021> loadPX538_register_21(SFI021Filter filter) throws Exception {
-        return loadInterlineDAO.loadPX538_register_21(filter);
-    }
-
-    public List<SFI031> loadPX538_register_31(SFI020Filter filter) throws Exception {
-        return loadInterlineDAO.loadPX538_register_31(filter);
-    }
-    
-    public List<SFI032> loadPX538_register_32(SFI020Filter filter) throws Exception {
-        return loadInterlineDAO.loadPX538_register_32(filter);
-    }
-    
     // ------------------------------- SFI 22 ------------------------------------------------------   
     public List<SFI022> loadPX538_register_22(SFI020Filter filter) throws Exception {
         return loadInterlineDAO.loadPX538_register_22(filter);
     }
     
-    // ------------------------------- SFI 30 ------------------------------------------------------   
-    public List<SFI030> loadPX538_register_30(SFI030Filter filter) throws Exception {
-        return loadInterlineDAO.loadPX538_register_30(filter);
+    // ----------------------------------------------------------------------------------------------   
+    // ----------------------------------------------------------------------------------------------   
+    // ------------------------------- SFI 30 -------------------------------------------------------   
+    
+    public List<SFI030> loadPX538_register_30(SFI030Filter filter, String flagMonth) throws Exception {
+        return loadInterlineDAO.loadPX538_register_30(filter, flagMonth);
     }
     
+    public List<SFI010> loadPX538_register_10(SFI010Filter filter, String flagMonth) throws Exception {
+        return loadInterlineDAO.loadPX538_register_10(filter, flagMonth);
+    }
+    
+    public List<SFI020Filter> loadPX538_register20(SFI020Filter filter, String flagMonth) throws Exception {
+        return loadInterlineDAO.loadPX538_register20(filter, flagMonth);
+    }
+    
+    // 21 22 23
+    public List<SFI021> loadPX538_register_21(SFI021Filter filter, String flagMonth) throws Exception {
+        return loadInterlineDAO.loadPX538_register_21(filter, flagMonth);
+    }
+    
+    public List<SFI031> loadPX538_register_31(SFI020Filter filter, String flagMonth) throws Exception {
+        return loadInterlineDAO.loadPX538_register_31(filter, flagMonth);
+    }
+    
+    public List<SFI032> loadPX538_register_32(SFI020Filter filter, String flagMonth) throws Exception {
+        return loadInterlineDAO.loadPX538_register_32(filter, flagMonth);
+    }
+    
+    public List<SFI041> loadPX538_register_41(SFI020Filter filter, String flagMonth) throws Exception {
+        return loadInterlineDAO.loadPX538_register_41(filter, flagMonth);
+    }
     
 }

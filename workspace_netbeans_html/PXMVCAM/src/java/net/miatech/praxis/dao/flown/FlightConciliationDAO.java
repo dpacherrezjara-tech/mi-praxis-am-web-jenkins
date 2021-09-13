@@ -344,8 +344,8 @@ public class FlightConciliationDAO {
         List<A1691Filter2> lstCons = new ArrayList<>(0);
         A1691Filter2 beanCons;
         String strDesc = "";
-        long QCPNOD = 0, QCPNVC = 0, QCPAD = 0, QCPCHD = 0, QCPINF = 0, QCPTRA = 0, QCPNOCR = 0, QCPNMA = 0, QCPNTOT = 0, QCPNLEG = 0, QCPNVAL = 0;
-        int QCPNFI = 0;
+        long QCPNOD = 0, QCPNVC = 0, QCPAD = 0, QCPCHD = 0, QCPINF = 0, QCPTRA = 0, QCPNOCR = 0, QCPNMA = 0, QCPNTOT = 0, QCPNLEG = 0, QCPNVAL = 0, DIFFODSVCR = 0;
+        int QCPNFI = 0, QCPNFRE = 0;
         if (strTipo.equals("QPRO")) {
             strDesc = " Detail of Quantity Pending";
         } else if (strTipo.equals("QCLO")) {
@@ -414,12 +414,15 @@ public class FlightConciliationDAO {
                 QCPNMA = rst.getLong("QCPNMA");
                 QCPNTOT = rst.getLong("QCPNTOT");
                 QCPNFI = rst.getInt("QCPNFI");
+                QCPNFRE = rst.getInt("QCPNFRE");
 
                 QCPAD = rst.getLong("QCPAD");
                 QCPCHD = rst.getLong("QCPCHD");
                 QCPINF = rst.getLong("QCPINF");
                 QCPTRA = rst.getLong("QCPTRA");
                 QCPNVAL = rst.getLong("QCPNVAL");
+                
+                DIFFODSVCR = QCPNOD - QCPNVC;
             }
 
             if (cs.getMoreResults()) {
@@ -486,6 +489,7 @@ public class FlightConciliationDAO {
 
                     beanCons.QCPNOD = rst.getLong("QCPNOD");
                     beanCons.QCPNFI = rst.getInt("QCPNFI");
+                    beanCons.QCPNFRE = rst.getInt("QCPNFRE");
                     beanCons.QCPNOCR = rst.getLong("QCPNOCR");
                     beanCons.QCPNVC = rst.getLong("QCPNVC");
                     beanCons.QCPNLEG = rst.getLong("QCPNLEG");
@@ -493,6 +497,7 @@ public class FlightConciliationDAO {
                     beanCons.QCPNTOT = rst.getLong("QCPNTOT");
                     beanCons.QCPNVAL = rst.getLong("QCPNVAL");
                     beanCons.lngQDIFF = rst.getLong("QCPNTOT") - rst.getInt("QCPNFI");
+                    beanCons.DIFFODSVCR = rst.getLong("QCPNOD") - rst.getInt("QCPNVC");
                     
                     /*if(rst.getString("FMULTI").trim().equals("L")){
                      beanCons.lngQVCR = rst.getLong("QTOT");
@@ -514,8 +519,10 @@ public class FlightConciliationDAO {
                     beanCons.totQCPINF = QCPINF;
                     beanCons.totQCPTRA = QCPTRA;
                     beanCons.totQCPNFI = QCPNFI;
+                    beanCons.totQCPNFRE = QCPNFRE;
                     beanCons.totQCPNVAL = QCPNVAL;
                     beanCons.totQCPNVAL = QCPNVAL;
+                    beanCons.totDIFFODSVCR = DIFFODSVCR;
                     
                     beanCons.totDiff = QCPNTOT - QCPNFI;
 
@@ -712,7 +719,8 @@ public class FlightConciliationDAO {
 
         try {
             
-            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?)}";
+//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG_1(?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -720,6 +728,7 @@ public class FlightConciliationDAO {
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.DFLIGHT);
             cs.setString(3, filter.NFLIGHT);
+            cs.setString(4, filter.IN_FSABRE);
             
             cs.execute();
 
@@ -746,18 +755,58 @@ public class FlightConciliationDAO {
                     beanCons.desSTVAL = "No conciliado";
                 } else if (rst.getString("STVAL").trim().equals("0")) {
                     beanCons.desSTVAL = "Conciliado";
-                } 
+                }
                 
+                beanCons.FSABRE = rst.getString("FSABRE").trim();
+                if(rst.getString("FSABRE").trim().equals("0")){
+                    beanCons.descFSABRE = "Not Found";
+                } else if (rst.getString("FSABRE").trim().equals("1")) {
+                    beanCons.descFSABRE = "Found";
+                } else if (rst.getString("FSABRE").trim().equals("2")) {
+                    beanCons.descFSABRE = "Found but not matching coupon";
+                }
+                
+                beanCons.STASABR = rst.getString("STASABR").trim();
+                
+                beanCons.FSALES = rst.getString("FSALES").trim();
+//                if(rst.getString("FSALES").trim().equals("0")){
+//                    beanCons.descFSALES = "Not found";
+//                } else if (rst.getString("FSALES").trim().equals("1")) {
+//                    beanCons.descFSALES = "Found";
+//                }
+                                
                 beanCons.LNKMVLO = rst.getString("LNKMVLO").trim();
                 beanCons.STVCR = rst.getString("STVCR").trim();
                 
                 if(rst.getString("STVCR").trim().equals("Y")){
                     beanCons.desSTVCR = "Yes";
-                } else if (rst.getString("STVCR").trim().equals("")) {
-                    beanCons.desSTVCR = "";
+                } else if (rst.getString("STVCR").trim().equals("")) { 
+                   beanCons.desSTVCR = "";
                 }
                 
                 beanCons.TPAX = rst.getString("TPAX").trim();
+                beanCons.TPAX_V = rst.getString("TPAX_V").trim();
+                
+                if(!beanCons.TPAX_V.equals("")) {
+                    beanCons.TPAX = beanCons.TPAX_V;
+                }
+                
+                if(beanCons.TPAX.equals("A")){
+                    beanCons.desPAX = "Adult";
+                } else if (beanCons.TPAX.equals("C")) {
+                    beanCons.desPAX = "Children";
+                } else if (beanCons.TPAX.equals("I")) {
+                    beanCons.desPAX = "Infant";
+                } else if (beanCons.TPAX.equals("INF")) {
+                    beanCons.desPAX = "Infant";
+                }
+                
+                beanCons.FA720 = rst.getString("FA720").trim();
+                if(rst.getString("FA720").trim().equals("")){
+                    beanCons.descFSALES = "";
+                } else {
+                    beanCons.descFSALES = "Yes";
+                }
 
                 lstCons.add(beanCons);
                 
@@ -909,6 +958,11 @@ public class FlightConciliationDAO {
                         beanTkt.VCPN16 = rst.getDouble("VCPN16");
                     } else if (beanTkt.FVAL.equals("3")) {
                         beanTkt.strDescFVAL = "VTR";
+                        beanTkt.VCPN = rst.getDouble("VCPN");
+                        beanTkt.VCPN0 = rst.getDouble("VCPN0");
+                        beanTkt.VCPN16 = rst.getDouble("VCPN16");
+                    } else if (beanTkt.FVAL.equals("4")) {
+                        beanTkt.strDescFVAL = "Manual Value";
                         beanTkt.VCPN = rst.getDouble("VCPN");
                         beanTkt.VCPN0 = rst.getDouble("VCPN0");
                         beanTkt.VCPN16 = rst.getDouble("VCPN16");
@@ -1064,6 +1118,7 @@ public class FlightConciliationDAO {
                 beanCons.FSTAPO = rst.getString("FSTAPO").trim();
                 beanCons.FSENDFI = rst.getString("FSENDFI").trim();
                 beanCons.QCPNFI = rst.getInt("QCPNFI");
+                beanCons.QCPNFRE = rst.getInt("QCPNFRE");
                 beanCons.FSTAFI = rst.getString("FSTAFI").trim();
                 beanCons.USCR = rst.getString("USCR").trim();
                 beanCons.FECR = rst.getString("FECR").trim();
@@ -1151,7 +1206,7 @@ public class FlightConciliationDAO {
             strSQL = "{CALL " + session.getMainLibrary() + ".PX095S03A1691(?,?,?,?,?,?,?,?,?,?"
                                                                        + ",?,?,?,?,?,?,?,?,?,?"
                                                                        + ",?,?,?,?,?,?,?,?,?,?"
-                                                                       + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                                                                       + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -1184,23 +1239,24 @@ public class FlightConciliationDAO {
             cs.setInt(26, Integer.parseInt(String.valueOf(filter.QCPHARB)));
             cs.setString(27, filter.FSENDFI.trim());
             cs.setInt(28, filter.QCPNFI);
-            cs.setString(29, filter.FSTAFI.trim());
-            cs.setString(30, filter.FSTAPO.trim());
-            cs.setString(31, filter.LOCDEP);
-            cs.setString(32, filter.LOCARR);
-            cs.setString(33, filter.UTCDEP);
-            cs.setString(34, filter.UTCARR);
-            cs.setString(35, session.getUserView().getCustomerInfo().USR.trim());
-            cs.setString(36, Functions.getFechaActual());
-            cs.setString(37, Functions.getHoraActual());
-            cs.setString(38, filter.FOPERZUL.trim());
-            cs.setInt(39, Integer.parseInt(String.valueOf(filter.QCPTRA)));
-            cs.setInt(40, Integer.parseInt(String.valueOf(filter.QCPAD)));
-            cs.setInt(41, Integer.parseInt(String.valueOf(filter.QCPCHD)));
-            cs.setInt(42, Integer.parseInt(String.valueOf(filter.QCPINF)));
+            cs.setInt(29, filter.QCPNFRE);
+            cs.setString(30, filter.FSTAFI.trim());
+            cs.setString(31, filter.FSTAPO.trim());
+            cs.setString(32, filter.LOCDEP);
+            cs.setString(33, filter.LOCARR);
+            cs.setString(34, filter.UTCDEP);
+            cs.setString(35, filter.UTCARR);
+            cs.setString(36, session.getUserView().getCustomerInfo().USR.trim());
+            cs.setString(37, Functions.getFechaActual());
+            cs.setString(38, Functions.getHoraActual());
+            cs.setString(39, filter.FOPERZUL.trim());
+            cs.setInt(40, Integer.parseInt(String.valueOf(filter.QCPTRA)));
+            cs.setInt(41, Integer.parseInt(String.valueOf(filter.QCPAD)));
+            cs.setInt(42, Integer.parseInt(String.valueOf(filter.QCPCHD)));
+            cs.setInt(43, Integer.parseInt(String.valueOf(filter.QCPINF)));
             
-            cs.setString(43, filter.strDescripcion.trim());
-            cs.setString(44, filter.FMULTI.trim());
+            cs.setString(44, filter.strDescripcion.trim());
+            cs.setString(45, filter.FMULTI.trim());
             cs.execute();
 
         } catch (Exception e) {

@@ -19,10 +19,13 @@ public class A2324 {
     public String STVAL = "";
     public String SCOUNTRY = "";
     public String SPNR = "";
+    public String DATSET = "";
+    public String WEEKMO = "";
     public String SCARCOD = "";
     public String SCARDN = "";
     public String SAUTHOC = "";
     public String TIPOTAR = "";
+    public String COMMENT = "";
     public String SCURRENCY = "";
     public String CODEBANK = "";
     public String FECRFILE = "";
@@ -37,6 +40,7 @@ public class A2324 {
     
 //    public long lngQMATCH = 0;
     public long SVFOP = 0;
+    public long SVFOPS = 0;
     public int MERCHN = 0;
     
     

@@ -2665,38 +2665,39 @@ public class PassengerInvoicesIpDAO {
     }
 
     
-    public List<SFI010> loadPX538_register_10(SFI010Filter filter) throws SQLException, Exception {
+    public List<SFI010> loadPX538_register_10(SFI010Filter filter, String flagMonth) throws SQLException, Exception {
         List<SFI010> lstRtn = new ArrayList<SFI010>(0);
         SFI010 objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03907(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03907_M(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
 
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -2761,38 +2762,39 @@ public class PassengerInvoicesIpDAO {
         return lstRtn;
     }
     
-    public List<SFI030> loadPX538_register_30(SFI030Filter filter) throws SQLException, Exception {
+    public List<SFI030> loadPX538_register_30(SFI030Filter filter, String flagMonth) throws SQLException, Exception {
         List<SFI030> lstRtn = new ArrayList<SFI030>(0);
         SFI030 objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03908(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03908_M(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
 
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -2800,10 +2802,12 @@ public class PassengerInvoicesIpDAO {
                 objRtn = new SFI030();
 
                 objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.BDATE2 = rs01.getString("BDATE2");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
                 objRtn.BAIR = rs01.getString("BAIR");
                 objRtn.BDAIR = rs01.getString("BDAIR");
+                objRtn.BDAIR2 = rs01.getString("BDAIR2");
                 objRtn.BNUMBER = rs01.getString("BNUMBER");
                 objRtn.NUMBILL = rs01.getInt("NUMBILL");
                 objRtn.BCODE = rs01.getInt("BCODE");
@@ -2895,38 +2899,39 @@ public class PassengerInvoicesIpDAO {
     
     
     // ------------------------------- SFI 20 ------------------------------------------------------
-    public List<SFI020Filter> loadPX538_register20(SFI020Filter filter) throws SQLException, Exception {
+    public List<SFI020Filter> loadPX538_register20(SFI020Filter filter, String flagMonth) throws SQLException, Exception {
         List<SFI020Filter> lstRtn = new ArrayList<SFI020Filter>(0);
         SFI020Filter objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03933(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03933_M(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
 
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -2953,11 +2958,12 @@ public class PassengerInvoicesIpDAO {
                 objRtn.CPNTAM = rs01.getDouble("CPNTAM");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 
-                objRtn.BDAIR = rs01.getString("BDAIR");
                 objRtn.CPNNUM = rs01.getString("CPNNUM");
                 objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.BDATE2 = rs01.getString("BDATE2");
                 
                 objRtn.BDAIR = rs01.getString("BDAIR");
+                objRtn.BDAIR2 = rs01.getString("BDAIR2");
                 objRtn.CPNNUM = rs01.getString("CPNNUM");
                 objRtn.BDATE = rs01.getString("BDATE");
                 objRtn.BAIR = rs01.getString("BAIR");
@@ -3044,14 +3050,14 @@ public class PassengerInvoicesIpDAO {
     }
 
     
-    // ------------------------------- SFI 21 y 22 ------------------------------------------------------
-    public List<SFI021> loadPX538_register_21(SFI021Filter filter) throws SQLException, Exception {
+    // ------------------------------- SFI 21 y 22 y 23------------------------------------------------------
+    public List<SFI021> loadPX538_register_21(SFI021Filter filter, String flagMonth) throws SQLException, Exception {
         List<SFI021> lstRtn = new ArrayList<SFI021>(0);
         SFI021 objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03934(?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03934_M(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3061,6 +3067,7 @@ public class PassengerInvoicesIpDAO {
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
             cstmt01.execute();
 
             rs01 = cstmt01.getResultSet();
@@ -3069,6 +3076,7 @@ public class PassengerInvoicesIpDAO {
                 objRtn = new SFI021();
                                 
                 objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.BDATE2 = rs01.getString("BDATE2");
                 objRtn.BAIR = rs01.getString("BAIR");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.SOURCOD = rs01.getString("SOURCOD");
@@ -3138,6 +3146,7 @@ public class PassengerInvoicesIpDAO {
                     objRtn = new SFI021();
 
                     objRtn.BDATE = rs01.getString("BDATE");
+                    objRtn.BDATE2 = rs01.getString("BDATE2");
                     objRtn.BAIR = rs01.getString("BAIR");
                     objRtn.PERNUM = rs01.getString("PERNUM");
                     objRtn.SOURCOD = rs01.getString("SOURCOD");
@@ -3209,6 +3218,7 @@ public class PassengerInvoicesIpDAO {
                     objRtn = new SFI021();
 
                     objRtn.BDATE = rs01.getString("BDATE");
+                    objRtn.BDATE2 = rs01.getString("BDATE2");
                     objRtn.BAIR = rs01.getString("BAIR");
                     objRtn.PERNUM = rs01.getString("PERNUM");
                     objRtn.SOURCOD = rs01.getString("SOURCOD");
@@ -3293,40 +3303,135 @@ public class PassengerInvoicesIpDAO {
         return lstRtn;
     }
 
-    
-    // ------------------------------- SFI 32 ------------------------------------------------------
-    public List<SFI032> loadPX538_register_32(SFI020Filter filter) throws SQLException, Exception {
-        List<SFI032> lstRtn = new ArrayList<SFI032>(0);
-        SFI032 objRtn;
+    // ------------------------------- SFI 31 ------------------------------------------------------
+    public List<SFI031> loadPX538_register_31(SFI020Filter filter, String flagMonth) throws SQLException, Exception {
+        List<SFI031> lstRtn = new ArrayList<SFI031>(0);
+        SFI031 objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03935(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03905_MP(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
 
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                objRtn = new SFI031();
+
+                objRtn.SMI = rs01.getString("SMI");
+                objRtn.RSN = rs01.getInt("RSN");
+                objRtn.SFI = rs01.getString("SFI");
+                objRtn.BAIR = rs01.getString("BAIR");
+                objRtn.BDAIR = rs01.getString("BDAIR");
+                objRtn.BCODE = rs01.getInt("BCODE");
+                objRtn.BNUMBER = rs01.getString("BNUMBER");
+                objRtn.RBCNUM = rs01.getString("RBCNUM");
+                objRtn.NUMRMK = rs01.getString("NUMRMK");
+                objRtn.REMARK1 = rs01.getString("REMARK1");
+                objRtn.REMARK2 = rs01.getString("REMARK2");
+                objRtn.REMARK3 = rs01.getString("REMARK3");
+                objRtn.REMARK4 = rs01.getString("REMARK4");
+                objRtn.REMARK5 = rs01.getString("REMARK5");
+                objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.PERNUM = rs01.getString("PERNUM");
+
+//                objRtn.page.PAGNUM = filter.page.PAGNUM;
+//                objRtn.page.PAGROW = filter.page.PAGROW;
+//                objRtn.page.TOTPAG = filter.page.TOTPAG;
+//                objRtn.page.TOTROW = filter.page.TOTROW;
+                lstRtn.add(objRtn);
+
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //  System.out.println( e.getMessage());
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
+    // ------------------------------- SFI 32 ------------------------------------------------------
+    public List<SFI032> loadPX538_register_32(SFI020Filter filter, String flagMonth) throws SQLException, Exception {
+        List<SFI032> lstRtn = new ArrayList<SFI032>(0);
+        SFI032 objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03935_M(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(5, Types.INTEGER);
+            cstmt01.registerOutParameter(6, Types.INTEGER);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.BDATE);
+            cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
+
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -3337,7 +3442,9 @@ public class PassengerInvoicesIpDAO {
                 objRtn.RSN = rs01.getInt("RSN");
                 objRtn.SFI = rs01.getString("SFI");
                 objRtn.BAIR = rs01.getString("BAIR");
+                objRtn.BAIR2 = rs01.getString("BAIR2");
                 objRtn.BDAIR = rs01.getString("BDAIR");
+                objRtn.BDAIR2 = rs01.getString("BDAIR2");
                 objRtn.BCODE = rs01.getInt("BCODE");
                 objRtn.BNUMBER = rs01.getString("BNUMBER");
                 objRtn.REJNUM = rs01.getString("REJNUM");
@@ -3350,6 +3457,7 @@ public class PassengerInvoicesIpDAO {
                 objRtn.TOCPN = rs01.getString("TOCPN");
                 objRtn.TGROSSB = rs01.getDouble("TGROSSB");
                 objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.BDATE2 = rs01.getString("BDATE2");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
                 
@@ -3441,38 +3549,39 @@ public class PassengerInvoicesIpDAO {
     }
     
     // ------------------------------- SFI 33 ------------------------------------------------------
-    public List<SFI033> loadPX538_register_33(SFI020Filter filter) throws SQLException, Exception {
+    public List<SFI033> loadPX538_register_33(SFI020Filter filter, String flagMonth) throws SQLException, Exception {
         List<SFI033> lstRtn = new ArrayList<SFI033>(0);
         SFI033 objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03939(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03939_M(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
 
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -3483,7 +3592,9 @@ public class PassengerInvoicesIpDAO {
                 objRtn.RSN = rs01.getInt("RSN");
                 objRtn.SFI = rs01.getString("SFI");
                 objRtn.BAIR = rs01.getString("BAIR");
+                objRtn.BAIR2 = rs01.getString("BAIR2");
                 objRtn.BDAIR = rs01.getString("BDAIR");
+                objRtn.BDAIR2 = rs01.getString("BDAIR2");
                 objRtn.BCODE = rs01.getInt("BCODE");
                 objRtn.BNUMBER = rs01.getString("BNUMBER");
                 objRtn.REJNUM = rs01.getString("REJNUM");
@@ -3495,6 +3606,7 @@ public class PassengerInvoicesIpDAO {
                 objRtn.FROMCPN = rs01.getString("FROMCPN");
                 objRtn.TOCPN = rs01.getString("TOCPN");
                 objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.BDATE2 = rs01.getString("BDATE2");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 objRtn.LBRATE = rs01.getDouble("LBRATE");
                 
@@ -3581,38 +3693,39 @@ public class PassengerInvoicesIpDAO {
     }
     
     // ------------------------------- SFI 41 ------------------------------------------------------
-    public List<SFI041> loadPX538_register_41(SFI020Filter filter) throws SQLException, Exception {
+    public List<SFI041> loadPX538_register_41(SFI020Filter filter, String flagMonth) throws SQLException, Exception {
         List<SFI041> lstRtn = new ArrayList<SFI041>(0);
         SFI041 objRtn;
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03938(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03938_M(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(4, Types.INTEGER);
             cstmt01.registerOutParameter(5, Types.INTEGER);
             cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.BDATE);
             cstmt01.setString(3, filter.PERNUM);
+            cstmt01.setString(4, flagMonth);
 
-            cstmt01.setInt(4, filter.page.PAGNUM);
-            cstmt01.setInt(5, filter.page.PAGROW);
-            cstmt01.setInt(6, filter.page.TOTPAG);
-            cstmt01.setInt(7, filter.page.TOTROW);
+            cstmt01.setInt(5, filter.page.PAGNUM);
+            cstmt01.setInt(6, filter.page.PAGROW);
+            cstmt01.setInt(7, filter.page.TOTPAG);
+            cstmt01.setInt(8, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(4);
-            filter.page.PAGROW = cstmt01.getInt(5);
-            filter.page.TOTPAG = cstmt01.getInt(6);
-            filter.page.TOTROW = cstmt01.getInt(7);
+            filter.page.PAGNUM = cstmt01.getInt(5);
+            filter.page.PAGROW = cstmt01.getInt(6);
+            filter.page.TOTPAG = cstmt01.getInt(7);
+            filter.page.TOTROW = cstmt01.getInt(8);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -3620,18 +3733,22 @@ public class PassengerInvoicesIpDAO {
                 objRtn = new SFI041();
 
                 objRtn.TKTNUM = rs01.getString("TKTNUM");
+                objRtn.TKTNUM2 = rs01.getString("TKTNUM2");
                 objRtn.TAXCODE1 = rs01.getString("TAXCODE1");
                 objRtn.TAXBILED1 = rs01.getDouble("TAXBILED1");
                 objRtn.CPNNUM = rs01.getString("CPNNUM");
+                objRtn.CPNNUM2 = rs01.getString("CPNNUM2");
                 
                 objRtn.FLIGHTD = rs01.getString("FLIGHTD");
                 objRtn.FROMCPN = rs01.getString("FROMCPN");
                 objRtn.TOCPN = rs01.getString("TOCPN");
 
                 objRtn.BDATE = rs01.getString("BDATE");
+                objRtn.BDATE2 = rs01.getString("BDATE2");
                 objRtn.PERNUM = rs01.getString("PERNUM");
                 
                 objRtn.BDAIR = rs01.getString("BDAIR");
+                objRtn.BDAIR2 = rs01.getString("BDAIR2");
                 
                 objRtn.CODE_YQ = rs01.getString("CODE_YQ");
                 objRtn.CODE_YR = rs01.getString("CODE_YR");

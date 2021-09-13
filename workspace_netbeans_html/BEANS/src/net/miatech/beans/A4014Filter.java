@@ -23,6 +23,7 @@ public class A4014Filter extends A4014 {
     public String IN_TPOLI = "";
     public String IN_PRAXID = "";
     public String IN_STATO = "";
+    public String IN_ORACLESTATU = "";
 
     public net.miatech.beans.Pagination page = new net.miatech.beans.Pagination();
     public DBException dbException = new DBException();

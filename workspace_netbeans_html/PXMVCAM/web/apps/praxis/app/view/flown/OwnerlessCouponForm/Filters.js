@@ -145,6 +145,31 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Filters', {
                 },
                 {
                     xtype: 'textfield',
+                    id: prototype.id + '-txtNVLO',
+                    fieldLabel: '<strong style="color:#000;">Flight Number</strong>',
+                    labelAlign: 'right',
+                    labelWidth: 130,
+                    width: 190,
+                    maxLength: 4,
+                    enforceMaxLength: true,
+                    maskRe: /[0-9]/
+                },
+                {
+                    xtype: 'combo',
+                    id: prototype.id + '-cmbStatus',
+                    required: true,
+                    fieldLabel: 'Status',
+                    width: 160,
+                    labelWidth: 70,
+                    labelAlign: 'right',
+                    queryMode: 'local',
+                    triggerAction: 'all',
+                    valueField: 'code',
+                    displayField: 'name'
+
+                },
+                {
+                    xtype: 'textfield',
                     id: prototype.id + '-textTicket',
                     fieldLabel: '<strong style="color:#000;">Ticket</strong>',
                     labelAlign: 'right',

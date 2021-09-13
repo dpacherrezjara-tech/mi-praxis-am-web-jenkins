@@ -248,7 +248,7 @@ Ext.define('Ext.Praxis.view.eecta.EmisionEdoCtaForm.Filters', {
                                             id: prototype.id + '-btn-genera-eecc',
                                             text: 'Generar EECC',
                                             icon: 'resources/img/botones/16x16/Processing_1.png',                                            
-                                            disabled: true,
+                                            hidden: true,
                                             listeners: {
                                                 click: 'onbtn_generaEECCClick'
                                             }

@@ -56,9 +56,9 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                                     return value;
                                 }},
                             {text: 'Flight <br> Date', width: 150, dataIndex: 'strFormatDate'},
+                            {text: 'Flight <br> Number', width: 150, dataIndex: 'A1413NVLOB'},
                             {text: 'Transaction <br> Date', width: 150, dataIndex: 'strFormatDate2'},
                             {text: 'Join <br> Date', width: 150, dataIndex: 'strDescripcion'},
-                            {text: 'Flight <br> Number', width: 150, dataIndex: 'A1413NVLOB'},
                             {text: 'Orig', width: 90, dataIndex: 'A1413FROM',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     var tool = record.data['strFROM'].trim();

@@ -32,6 +32,7 @@
                 Ext.getCmp(prototype.id + '-btnDelete').hide();
                 break;
         }
+        global.AccessControlMaganer();
     },
     onUpdateClick: function () {
         Ext.Msg.show({

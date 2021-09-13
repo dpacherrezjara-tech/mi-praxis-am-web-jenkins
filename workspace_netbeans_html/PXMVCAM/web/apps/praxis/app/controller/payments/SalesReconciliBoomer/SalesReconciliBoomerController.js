@@ -290,6 +290,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         }));
         cmbFecFiltro.setValue("SDATE");
 
+        this.dataObtain.CARD = 2;
+        this.dataObtain.BANK = 2;
+        this.dataObtain.COUNTRY = 2;
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/obtainData',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify(this.dataObtain)},
+            success: function(response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                me.lstCard = res.lstCard;
+                me.lstBank = res.lstBank;
+                me.lstCountry = res.lstCountry;
+            }
+        });
+
         this.btnSearch_click();
 
     },
@@ -467,6 +484,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
+    /*btnRefresh_click: function() {
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+        var STVAL = this.beanDetDay.IN_STVAL;
+        var SPNR = this.beanDetDay.A720PNR;
+        this.setOnGridDetByRefNbr(STVAL);
+        //Ext.Function.defer(function() {
+        if (STVAL === '4' || STVAL === '5') {
+            console.log("Busca por pnr");
+            me.setOnGridDetPNR(SPNR);
+        }
+        if (STVAL === '1') {
+            me.setOnGridDetAccounting();
+        }
+    },*/
     OnGridDetByRefNbr: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataByRefNbr';
@@ -479,14 +510,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         this.beanDetDay.A720PNR = rowData.data.SPNR;
         this.beanDetDay.A1716FPRO = rowData.data.SDATE;
         this.beanDetDay.A1716REFE = rowData.data.REFNBR;
+        this.beanDetDay.difSVFOP = rowData.data.difSVFOP;
         console.log(this.beanDetDay);
         //this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
 
         me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
 
-        this.setOnGridDetByRefNbr();
+        this.setOnGridDetByRefNbr(rowData.data.STVAL);
         //Ext.Function.defer(function() {
         if (rowData.data.STVAL === '4') {
+            console.log("Busca por pnr");
             me.setOnGridDetPNR(rowData.data.SPNR);
         }
         if (rowData.data.STVAL === '1') {
@@ -495,10 +528,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         //}, 5000);
 
     },
-    setOnGridDetByRefNbr: function() {
+    OnGridDetByPnr: function(spnr) {
+        this.beanDetDay.A720PNR = spnr;
+        console.log(this.beanDetDay);
+        //this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+    },
+    setOnGridDetByRefNbr: function(STVAL) {
         Ext.getCmp(prototype.id + '-panelPNR').setVisible(false);
         Ext.getCmp(prototype.id + '-panelAccounting').setVisible(false);
-        win.lblUser_toolTip("Estructura: A2286 - A2319");
+        Ext.getCmp(prototype.id + '-btnAdd').setVisible(true);
+        win.lblUser_toolTip("Estructura: A2319 - A4056 - A720");
         me.panelActual = '-panelGridDataByRefNbr';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
@@ -536,12 +576,32 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                         var lstSett = res.lstSett;
                         var settlement = new Array();
 
-                        lstSett.forEach(function callback(currentValue, index, array) {
-                            settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, , currentValue.CUR]);
+                        /*console.log(lstSett);
+                         lstSett.forEach(function callback(currentValue, index, array) {
+                         settlement.push([currentValue.TDOCA, currentValue.descTDOCA, currentValue.SVFOPA, currentValue.totSVFOPA, currentValue.SCARCODA, currentValue.SCARDNA, currentValue.SAUTHOCA, currentValue.TPAYA, currentValue.BANKA, currentValue.ABCDA, currentValue.SCURRENCYA, currentValue.CUR, currentValue.SPNR, currentValue.SVFOPAB, currentValue.totSVFOPAB]);
+                         });
+                         var store = Ext.create('Ext.data.ArrayStore', {
+                         storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR', 'SPNR', 'SVFOPAB', 'totSVFOPAB']
+                         });*/
+
+                        var store = Ext.create('Ext.data.Store', {
+                            data: lstSett,
+                            autoLoad: true
                         });
-                        var store = Ext.create('Ext.data.ArrayStore', {
-                            storeId: 'settlement', autoLoad: true, data: settlement, fields: ['TDOCA', 'descTDOCA', 'SVFOPA', 'totSVFOPA', 'SCARCODA', 'SCARDNA', 'SAUTHOCA', 'TPAYA', 'BANKA', 'ABCDA', 'SCURRENCYA', 'CUR']
-                        });
+
+                        console.log(STVAL);
+                        if (STVAL === '2') {
+                            var sett = lstSett[0];
+                            console.log(sett.SPNR);
+                            if (sett.SPNR.trim() != "") {
+                                console.log("Busca por PNR");
+                                console.log(sett.SPNR.trim());
+                                me.OnGridDetByPnr(sett.SPNR.trim())
+                                me.setOnGridDetPNR(sett.SPNR.trim());
+                            }
+                        }
+
+
                         Ext.getCmp(prototype.id + '-gridDataSettlement').bindStore(store);
                     }
 
@@ -594,7 +654,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                     autoLoad: false
                 });
                 //Ext.getCmp(prototype.id + '-panelPNR').setTitle('<center style="font-size:12px;">' + ' PNR : ' + pnr + ' </center>');                
-                Ext.getCmp(prototype.id + '-gridDataAccounting').setTitle('<center style="font-size:12px;"> Accounting </center>');                
+                Ext.getCmp(prototype.id + '-gridDataAccounting').setTitle('<center style="font-size:12px;"> Accounting </center>');
                 Ext.getCmp(prototype.id + '-gridDataAccounting').bindStore(storeData);
 
             }
@@ -673,10 +733,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             var totals = new Array();
                             //totals.push(['SVFOP_SG', 'AMTCOM_SG','AMTIVA_SG','AMTSET_SG','SVFOP_SC','AMTCOM_SC','AMTIVA_SC','AMTSET_SC','SVFOP_SE','AMTCOM_SE','AMTIVA_SE','AMTSET_SE']);
                             lstTotal.forEach(function callback(currentValue, index, array) {
-                                totals.push([currentValue.descSTVAL, currentValue.descTREG, currentValue.SVFOP, currentValue.AMTCOM, currentValue.AMTIVA, currentValue.AMTSET, currentValue.ACCNBR, currentValue.STVAL, currentValue.SVFOPC, currentValue.AMTCOMC, currentValue.AMTIVAC, currentValue.AMTSETC, currentValue.QTYMATCH, currentValue.QTYMATDIF, currentValue.QTYSETSAL]);
+                                totals.push([currentValue.descSTVAL, currentValue.descTREG, currentValue.SVFOP, currentValue.AMTCOM, currentValue.AMTIVA, currentValue.AMTSET, currentValue.ACCNBR, currentValue.STVAL, currentValue.SVFOPC, currentValue.AMTCOMC, currentValue.AMTIVAC, currentValue.AMTSETC, currentValue.QTYMATCH, currentValue.QTYMATDIF, currentValue.QTYSETSAL, currentValue.QTYMATMAN]);
                             });
                             var store = Ext.create('Ext.data.ArrayStore', {
-                                storeId: 'totals', autoLoad: true, data: totals, fields: ['descSTVAL', 'descTREG', 'SVFOP', 'AMTCOM', 'AMTIVA', 'AMTSET', 'ACCNBR', 'STVAL', 'SVFOPC', 'AMTCOMC', 'AMTIVAC', 'AMTSETC', 'QTYMATCH','QTYMATDIF','QTYSETSAL']
+                                storeId: 'totals', autoLoad: true, data: totals, fields: ['descSTVAL', 'descTREG', 'SVFOP', 'AMTCOM', 'AMTIVA', 'AMTSET', 'ACCNBR', 'STVAL', 'SVFOPC', 'AMTCOMC', 'AMTIVAC', 'AMTSETC', 'QTYMATCH', 'QTYMATDIF', 'QTYSETSAL','QTYMATMAN']
                             });
                             Ext.getCmp(prototype.id + '-gridDataHeaderDetailTotal').bindStore(store);
 
@@ -716,6 +776,57 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataHeaderDetail').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+
+    },
+    OnGridDetHeaderByPeriod: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataHeaderDetailByPeriod';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.IN_DATSET = rowData.data.DATSET;
+        this.beanDetDay.IN_WEEKMO = rowData.data.WEEKMO;
+        this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
+
+        me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
+
+        this.SetOnGridDetHeaderByPeriod();
+    },
+    SetOnGridDetHeaderByPeriod: function() {
+        win.lblUser_toolTip("Estructura: A2324");
+//        this.setFormatParameter();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetHeaderByPeriod'
+            }, listeners: {
+                beforeload: function(obj) {
+//                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+
+                    obj.proxy.extraParams = me.paramsDetailDay;
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+
+                    if (res.success) {
+                        var gridDetHeader = res.data;
+                        if (gridDetHeader.length > 0) {
+                            var data = {};
+                            data = gridDetHeader[0];
+                            Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + '</center>');
+
+                        } else {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
@@ -1345,13 +1456,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         return msj;
     },
     btnAdd_click: function() {
-        this.winDataEntry('I');
+        console.log(this.beanDetDay);
+        var rec = {data: this.beanDetDay};
+        this.winDataEntry('I', rec);
     },
 //    onEditClick: function(grid, rowIndex, colIndex) {
 //        var rec = grid.getStore().getAt(rowIndex);
 //        this.winDataEntry('U', rec);
 //    },
-    onEditClick: function(grid, rowIndex, colIndex) {
+    onEditClick: function(grid, rowIndex, colIndex) {        
         var rec = grid.getStore().getAt(rowIndex);
 //        var action = '';
 ////        console.log(rec);
@@ -1362,6 +1475,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 //            //Match
 //            action = 'S';
 //        }
+        console.log(rec);
         this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
@@ -1380,7 +1494,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         }).show();
     },
     btnBack_click: function(obj, e) {
-
+        Ext.getCmp(prototype.id + '-btnAdd').setVisible(false);
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -1460,6 +1574,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                 break;
             case  '-boxDetCardNbrByS':
                 global.getFile(prototype.url + '/getXLSXCardNbrByS?beanString=' + me.paramsDetailCardNbrS.beanString);
+                break;
+            case  '-panelGridDataHeaderDetailByPeriod':
+                global.getFile(prototype.url + '/getXLSXDetHeaderByPeriod?beanString=' + me.paramsDetailDay.beanString);
                 break;
         }
     },

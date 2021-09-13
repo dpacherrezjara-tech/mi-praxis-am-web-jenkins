@@ -25,6 +25,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     beanAccounting: {},
     gloA720TKVOID: '',
     filterTKT: {},
+    URL_VIEWTICKET : '',
     gridDataMemoAC: [],
     gridDataTktRealUsesAC: [],
     init: function (view) {
@@ -32,6 +33,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 //        this.bean.IN_FORMA= this.TicketNumber.substr(0,4); 
 //        this.bean.IN_SERIE= this.TicketNumber.substr(4,6);			
 //        this.bean.IN_SEQ = this.TicketNumber.substr(10,2);
+        URL_VIEWTICKET = prototype.url;
         this.imgClear_clickHandler();
         prototype.ProrrateoNew = {
             id: 'ScrProrrateoNewForm',
@@ -835,7 +837,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         if(PERMC === 'Y'){
             Ext.getCmp(prototype.id+'-btnTicket').hide();
             Ext.getCmp(prototype.id+'-btnAccounting').hide();
-            Ext.getCmp(prototype.id+'-btnProrrate').hide();
+            //Ext.getCmp(prototype.id+'-btnProrrate').hide();
             Ext.getCmp(prototype.id+'-btnDelivery').hide();
             Ext.getCmp(prototype.id+'-btnUsage').hide();
             Ext.getCmp(prototype.id+'-btnHistory').hide();
@@ -947,6 +949,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     // <editor-fold defaultstate="collapsed" desc="loadTicket">
     loadTicket: function (bean) {
         var me01 = this;
+        console.log('loadTicket');
+        console.log(prototype.url+'/loadTicket');
+        prototype.url = URL_VIEWTICKET;
         Ext.Ajax.request({
             url: prototype.url+'/loadTicket',
             method: 'POST',
@@ -1433,7 +1438,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         });
                                         //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                         //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                        intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                        //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                         //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                         intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                         //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -1467,7 +1472,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -1501,7 +1506,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -1534,7 +1539,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -1580,7 +1585,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            ///intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -1615,7 +1620,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -1650,7 +1655,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -1685,7 +1690,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -1725,7 +1730,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -1734,7 +1739,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                           // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -1743,7 +1748,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -1752,7 +1757,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -1793,7 +1798,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -1802,7 +1807,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                           // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -1811,7 +1816,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -1820,7 +1825,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -1861,7 +1866,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                           // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -1870,7 +1875,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -1879,7 +1884,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -1888,7 +1893,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -1928,7 +1933,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -1937,7 +1942,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -1946,7 +1951,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -1955,7 +1960,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                           // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822 
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -2080,7 +2085,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                          });
                                          //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                          //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                         intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                         //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                          //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                          intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                          //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -2114,7 +2119,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 
                                              //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                              //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                             intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                              //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                              intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                              //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -2148,7 +2153,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                              });
                                              //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                              //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                             intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                              //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                              intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                              //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -2181,7 +2186,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                              });
                                              //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                              //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                             intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                             //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                              //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                              intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                              //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -2227,7 +2232,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -2262,7 +2267,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -2297,7 +2302,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -2332,7 +2337,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                             });
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -2372,7 +2377,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -2381,7 +2386,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -2390,7 +2395,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -2399,7 +2404,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -2440,7 +2445,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822 
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -2449,7 +2454,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -2458,7 +2463,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); xpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -2467,7 +2472,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -2508,7 +2513,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -2517,7 +2522,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -2526,7 +2531,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -2535,7 +2540,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -2575,7 +2580,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '1':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR1 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL1;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1');
+                                            // intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '1'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ1 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ1;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM1+beanResultSet01.fileA720.A720PRSCM1) / beanResultSet01.fileA720.A720TCAMB;
@@ -2584,7 +2589,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '2':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR2 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL2;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '2'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ2 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ2;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM2+beanResultSet01.fileA720.A720PRSCM2) / beanResultSet01.fileA720.A720TCAMB;
@@ -2593,7 +2598,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '3':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR3 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL3;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '3'); zpp 20210822
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ3 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ3;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM3+beanResultSet01.fileA720.A720PRSCM3) / beanResultSet01.fileA720.A720TCAMB;
@@ -2602,7 +2607,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         case '4':
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOR4 / beanResultSet01.fileA720.A720TCAMB;
                                             //intRemainingFare += beanResultSet01.fileA720.A720VALOL4;
-                                            intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4');
+                                            //intRemainingFare += me01.getTKTS_VALOL(strTKTIND, '4'); zpp 
                                             //intRemainingSurcharge += beanResultSet01.fileA720.A720YQ4 / beanResultSet01.fileA720.A720TCAMB;
                                             intRemainingSurcharge += me01.beanResultSet01.fileA720.A720LYQ4;
                                             //intRemainingCommision += (beanResultSet01.fileA720.A720PRRCM4+beanResultSet01.fileA720.A720PRSCM4) / beanResultSet01.fileA720.A720TCAMB;
@@ -3050,6 +3055,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         }
                         if(Ext.getCmp(prototype.id+'-gridDataTktRealUses').getStore().data.length > 0){ //Si existe cupones usados.
                             //var intBalanceRemainingFare:Number = ((beanResultSet01.fileA720.A720TRFPAG > 0) ? beanResultSet01.fileA720.A720TRFPAG : beanResultSet01.fileA720.A720TARIFA) - intRemainingFare;
+                           intRemainingFare= me01.getTKTS_VALOL(); 
                             console.log('intRemainingFare');
                             console.log(intRemainingFare);
                             console.log(me01.beanResultSet01.fileA720.A720FARE);
@@ -3123,7 +3129,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     // </editor-fold>
     //<editor-fold defaultstate="collapsed" desc="loadSabre">
     loadSabre: function () {
-        
+        prototype.url = URL_VIEWTICKET;
         var Fproc = win.getValue('lblAgencyIATADate').trim();
 	if(Fproc === '' || win.getValue('txtFilterTicketCia').trim().length!== 3 || win.getValue('txtFilterTicketFormSer').trim().length!==10){
             global.Msg({msg: 'Enter the Ticket Number'});
@@ -3198,6 +3204,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         }
     },
     exportSabreTxt: function () {
+        prototype.url = URL_VIEWTICKET;
         var TKT = win.getValue('txtFilterTicketCia').trim()+win.getValue('txtFilterTicketFormSer');
         console.log('exportSabreTxt: ' + prototype.url);
         global.getFile(prototype.url + '/getSabreFile?TKT=' + TKT);
@@ -3206,6 +3213,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //<editor-fold defaultstate="collapsed" desc="loadAccountig">
     loadAccountig: function (beanAccounting) {
         //Ext.getCmp(prototype.id+'-gridDataAccounting').el.setStyle({height: '100%'});
+        prototype.url = URL_VIEWTICKET;
         var me01 = this;
         Ext.Ajax.request({
             url: prototype.url+'/loadAccountig',
@@ -3228,6 +3236,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDelivery">
     searchDelivery: function (bean) {
+        prototype.url = URL_VIEWTICKET;
         console.log(prototype.ProrrateoNew.url + '/searchDelivery');
         var me1 = this;
         Ext.Ajax.request({
@@ -3259,6 +3268,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //<editor-fold defaultstate="collapsed" desc="searchBeanTkt">
     searchBeanTkt: function(strTicket, IN_SEQ, IN_SEQROLL) {
         //alert(strTicket +'/'+ IN_SEQ+ '/' +IN_SEQROLL);
+        prototype.url = URL_VIEWTICKET;
         Ext.getCmp(prototype.id+'-boxDataTkt').el.setStyle({height: '100%'});
         Ext.Ajax.request({
             url: CONTEXTPATH+'/FlightConciliation/searchBeanTkt',
@@ -3314,6 +3324,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchPNR">
     searchPNR: function (FPROC, TRNCU, TKT) {
+        prototype.url = URL_VIEWTICKET;
         var me01 = this;
         Ext.Ajax.request({
             url: prototype.url+'/searchPNR',
@@ -3339,18 +3350,31 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         });
     },
     //</editor-fold>
-    getTKTS_VALOL: function(strTKTIND, strCPN) {
+    /*getTKTS_VALOL: function(strTKTIND, strCPN) { zpp 20210822
         var store = Ext.getCmp(prototype.id+'-gridDataTkt').getStore();
         var intRtn = 0;
+       // console.log(strTKTIND +'novo'+ strCPN);
         for(var k = 0; k < store.data.length; k++){
             if(strTKTIND === String(store.data.items[k].data.TKTIND) && strCPN === String(store.data.items[k].data.CPN)) {
                 intRtn = Number(store.data.items[k].data.VALOL);
+                console.log(intRtn);
                 break;
-            }
+           }
 	}
 	return intRtn;
-    },
+    },*/
+    getTKTS_VALOL: function() {
+        var store = Ext.getCmp(prototype.id+'-gridDataTkt').getStore();
+        var intRtn = 0;
+         var intRtn2 = 0;
+        for(var k = 0; k < store.data.length; k++){
+          intRtn = Number(store.data.items[k].data.VALOL);
+          intRtn2=(intRtn2+intRtn);
+	}
+	return intRtn2;
+    },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     cleanFilter: function() {
+        prototype.url = URL_VIEWTICKET;
         win.setValue('txtFilterTicketFormSer', '');
         win.setValue('txtFilterTicketSeq', '');
         win.setValue('txtFilterPassengerName', '');

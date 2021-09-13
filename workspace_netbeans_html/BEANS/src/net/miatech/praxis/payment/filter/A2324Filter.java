@@ -24,6 +24,9 @@ public class A2324Filter extends A2324 {
     public String IN_PNR = "";
     public String IN_REFNUMBER = "";
     public String IN_STVAL = "";
+    public String IN_DATSET = "";
+    public String IN_WEEKMO = "";
+    public double tot_SVFOP = 0.0;
 
     // Qty
     public long QMATCH = 0;
@@ -41,6 +44,9 @@ public class A2324Filter extends A2324 {
 
     public String strFormatDate = "";
     public long totSVFOP = 0;
+    public long totSVFOPS = 0;
+    public long difSVFOP = 0;
+    public long totdifSVFOP = 0;
 
     //CAMPOS PARA SETTLEMENT VS BOOMER
     public String IN_SDATE = "";
@@ -50,7 +56,11 @@ public class A2324Filter extends A2324 {
     public String TDOCA = "";
     public String descTDOCA = "";
     public double SVFOPA = 0.0;
+    public double SVFOPN = 0.0;
+    public double totSVFOPN = 0.0;
+    public double SVFOPAB = 0.0;
     public double totSVFOPA = 0.0;
+    public double totSVFOPAB = 0.0;
     public String SCARCODA = "";
     public String CUR = "";
     public String SCARDNA = "";
@@ -60,6 +70,18 @@ public class A2324Filter extends A2324 {
     public String ABCDA = "";
     public String SCURRENCYA = "";
     public String FSELECA = "";
+    public double GENCOMIPAY = 0.0;
+    public double totGENCOMIPAY = 0.0;
+    public double COMISIPROV = 0.0;
+    public double totCOMISIPROV = 0.0;
+    public double COSTVERIFI = 0.0;
+    public double totCOSTVERIFI = 0.0;
+    public double VALCOLLECT = 0.0;
+    public double totVALCOLLECT = 0.0;
+    public double TOTCOMISI = 0.0;
+    public double totTOTCOMISI = 0.0;
+    public double IVA = 0.0;    
+    public double totIVA = 0.0;    
 
     //BOOMER
     public String TDOCB = "";
@@ -72,11 +94,31 @@ public class A2324Filter extends A2324 {
     public String FORMAB = "";
     public String SERIEB = "";
     public String TKT = "";
+    public String SEQNUM = "";
     public String SCARCODB = "";
     public String SCARDNB = "";
     public String SAUTHOCB = "";
     public String SPNRB = "";
+    public String option = "";
     public String estadoTitulo = "";
+    
+    //BOOMER UPDATE
+    public String NEW_SDATE = "";
+    public String NEW_REFNBR = "";
+    public String NEW_DATSET = "";
+    public String NEW_WEEKMO = "";
+    public String NEW_CCIA = "";
+    public String NEW_FORMA = "";
+    public String NEW_SERIE = "";
+    public String NEW_TDOC = "";
+    public String NEW_SCARCOD = "";
+    public String NEW_SCARDN = "";
+    public String NEW_SAUTHOC = "";
+    public String NEW_SPNR = "";
+    public String NEW_SCOUNTRY = "";
+    public String NEW_STVAL = "";
+    public String NEW_SCURRENCY = "";
+    public long NEW_SVFOP = 0;
 
     //TABLA PNR
     public String TICKET = "";

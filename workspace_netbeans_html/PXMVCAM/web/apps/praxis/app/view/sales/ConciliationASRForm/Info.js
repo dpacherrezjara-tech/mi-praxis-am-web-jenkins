@@ -286,7 +286,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.Info', {
                                                     {
                                                         text: 'Station', dataIndex: 'WKSTAT', width: 75, locked: true,
                                                         listeners: {
-                                                            click: 'gridDataByCurrency_act1_clickHandler',
+                                                            click: 'gridDataByCurrency_act1_clickHandler'
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "font-weight:bold;text-decoration:underline;";
@@ -446,36 +446,37 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.Info', {
                                                         ]
                                                     },
                                                     {
-                                                        text: 'Status', dataIndex: 'STATUS_RECORD', width: 58,
+                                                        text: 'Status', dataIndex: 'STATUS_RECORD', width: 58, 
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            var data = record.data;
-                                                            var intA1530_A1720_CA_SUM = Number(data.SCASH) - Number(data.RCASH);
-                                                            var intA1530_A1720_CC_SUM = Number(data.SCREDIT) - Number(data.RCREDIT);
-                                                            switch (data.STATUS) {
-                                                                case 'A':
-                                                                    value = 'MATCH'; //MATCH AUTOMATIC.
-                                                                    break;
-                                                                case 'M':
-                                                                    value = 'MATCH'; //MATCH MANUAL.
-                                                                    break;
-                                                                case 'D':
-                                                                    value = 'DIFF'; //DIFFERENCE.
-                                                                    break;
-                                                                case '': //CALCULATE.
-                                                                    if (intA1530_A1720_CA_SUM === Number(data.A1530_A1720_CA_SUM) && intA1530_A1720_CC_SUM === Number(data.A1530_A1720_CC_SUM)) {
-                                                                        value = 'MATCH';
-                                                                    } else {
-                                                                        value = 'DIFF';
-                                                                    }
-                                                                    break;
-                                                                default:
-                                                                    value = data.STATUS;
-                                                            }
+//                                                            var data = record.data;
+//                                                            var intA1530_A1720_CA_SUM = Number(data.SCASH) - Number(data.RCASH);
+//                                                            var intA1530_A1720_CC_SUM = Number(data.SCREDIT) - Number(data.RCREDIT);
+//                                                            switch (data.STATUS) {
+//                                                                case 'A':
+//                                                                    value = 'MATCH'; //MATCH AUTOMATIC.
+//                                                                    break;
+//                                                                case 'M':
+//                                                                    value = 'MATCH'; //MATCH MANUAL.
+//                                                                    break;
+//                                                                case 'D':
+//                                                                    value = 'DIFF'; //DIFFERENCE.
+//                                                                    break;
+//                                                                case '': //CALCULATE.
+//                                                                    if (intA1530_A1720_CA_SUM === Number(data.A1530_A1720_CA_SUM) && intA1530_A1720_CC_SUM === Number(data.A1530_A1720_CC_SUM)) {
+//                                                                        value = 'MATCH';
+//                                                                    } else {
+//                                                                        value = 'DIFF';
+//                                                                    }
+//                                                                    break;
+//                                                                default:
+//                                                                    value = data.STATUS;
+//                                                            }
                                                             if (value !== "MATCH") metaData.style = "font-weight:bold;color:#FF0000;";
                                                             else metaData.style = "font-weight:bold;color:#339900;";
                                                             return value;
                                                         }
                                                     },
+                                                    
                                                     {
                                                         xtype: 'actioncolumn',
                                                         text: 'Action',

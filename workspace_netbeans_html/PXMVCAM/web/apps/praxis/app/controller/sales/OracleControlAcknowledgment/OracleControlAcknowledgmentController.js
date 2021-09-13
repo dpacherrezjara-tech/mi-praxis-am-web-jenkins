@@ -111,7 +111,9 @@ Ext.define('Ext.Praxis.controller.sales.OracleControlAcknowledgment.OracleContro
                 ["FOB", "FOB"],
                 ["CONSORTIA", "CONSORTIA"],
                 ["IXPEST", "IXP Estimated"],
-                ["IXCEST", "IXC Estimated"]
+                ["IXCEST", "IXC Estimated"],
+                ["IXPREV", "IXP REV Estimated"],
+                ["IXCREV", "IXC REV Estimated"]
             ]
         }));
         cboModulo.setValue("");

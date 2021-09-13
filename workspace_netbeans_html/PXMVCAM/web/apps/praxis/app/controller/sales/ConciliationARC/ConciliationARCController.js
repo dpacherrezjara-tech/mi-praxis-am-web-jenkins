@@ -18,6 +18,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationARC.ConciliationARCControlle
         prototype.id = 'ConciliationARCForm';
         prototype.url = CONTEXTPATH + '/ConciliationARC';
         me = this;
+                
         this.control({
             // -------------------Eventos Genericos --------------------
             '#ConciliationARCForm-xpanel': {
@@ -160,6 +161,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationARC.ConciliationARCControlle
             global.clear();
             Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+            
         }
     },
     validateFields: function() {

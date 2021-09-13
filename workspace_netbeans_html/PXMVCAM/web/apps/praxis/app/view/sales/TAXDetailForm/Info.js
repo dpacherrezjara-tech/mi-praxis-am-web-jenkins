@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.sales.TAXDetailForm.Info', {
                         defaults: {
                             menuDisabled: true,
                             sortable: true,
-                            resizable: false,
+                            //resizable: false,
                             align: 'center'
                         },
                         items: [
@@ -88,7 +88,8 @@ Ext.define('Ext.Praxis.view.sales.TAXDetailForm.Info', {
                                 }
                             },
                             {text: 'Accounting<br>Date', width: 120, dataIndex: 'FECCONT'},
-                            {text: 'Accounting<br>ID', width: 140, dataIndex: 'ACOUNTID'}
+                            {text: 'Accounting<br>ID', width: 140, dataIndex: 'ACOUNTID'},
+                            {text: 'Account', width: 140, dataIndex: 'CUENT'}
 
 
                         ]

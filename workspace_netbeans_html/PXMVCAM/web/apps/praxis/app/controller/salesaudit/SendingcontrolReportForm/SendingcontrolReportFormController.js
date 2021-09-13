@@ -307,7 +307,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SendingcontrolReportForm.Sendingcon
         }
     },
     onRendererColumn: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        switch (String(record.get('A2548BASE'))) {
+        switch (String(record.get('A3949TYPE'))) {
             case 'DF':
                 value = 'FILE DOWNLOAD';
                 break;

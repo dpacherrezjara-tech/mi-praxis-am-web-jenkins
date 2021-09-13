@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.controller.sales.TAXDetail.TAXDetailController', {
                 ["1", "Accounting ID"],
                 ["2", "Processing Date"],
                 ["3", "Accounting Date"],
-                ["4", "Sale Date"],
+               // ["4", "Sale Date"],
                 ["5", "Group"]
             ]
         }));
@@ -297,7 +297,7 @@ Ext.define('Ext.Praxis.controller.sales.TAXDetail.TAXDetailController', {
             Currency: Currency,
             COUNTRYTAX: COUNTRYTAX
         };
-        console.log(searchParams);
+       // console.log(searchParams);
     },
     setGridData: function(obj, val) {
         win.lblUser_toolTip("Estructura: A1530");
@@ -330,12 +330,12 @@ Ext.define('Ext.Praxis.controller.sales.TAXDetail.TAXDetailController', {
                             });
                         } else {
                             var data = obj.data.items[0].data;
-                            if (Ext.getCmp(prototype.id + '-txtFilterGRUPO').getValue() !== '') {
+                            /*if (Ext.getCmp(prototype.id + '-txtFilterGRUPO').getValue() !== '') {
                                 Ext.getCmp(prototype.id + '-txtTotalLoc').show();
                                 Ext.getCmp(prototype.id + '-txtTotalLoc').setValue(Ext.util.Format.number(data.TOTAL_LOC, '0,000.00'));
                             }
                             Ext.getCmp(prototype.id + '-txtTotalRev').show();
-                            Ext.getCmp(prototype.id + '-txtTotalRev').setValue(Ext.util.Format.number(data.TOTAL_REV, '0,000.00'));
+                            Ext.getCmp(prototype.id + '-txtTotalRev').setValue(Ext.util.Format.number(data.TOTAL_REV, '0,000.00'));*/
                         }
                     }
                 }
@@ -364,6 +364,9 @@ Ext.define('Ext.Praxis.controller.sales.TAXDetail.TAXDetailController', {
             case '4':
                 if (searchParams.DateFrom.trim() === '') {
                     msj = 'Enter DATE FROM';
+                }
+                if (searchParams.Tax.trim() === '') {
+                    msj = 'Enter Tax';
                 }
                 break;
         }

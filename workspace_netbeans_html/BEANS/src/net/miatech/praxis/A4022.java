@@ -20,7 +20,7 @@ public class A4022 {
     public String A4022PROGR = "";
     public String A4022DESCR = "";
     public String A4022FFILE = "";
-    public String A4022NARCH = "";
+    //public String A4022NARCH = "";
     public String A4022STAT = "";
     public Integer A4022QTYAF = 0;
     public Double A4022CARGO = 0.0;

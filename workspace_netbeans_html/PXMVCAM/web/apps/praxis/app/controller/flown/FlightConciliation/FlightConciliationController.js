@@ -8,6 +8,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     objANFLIGHT: {},
     objFLIGHTMANIF: {},
     objA1691: {},
+    objA3729: {},
     gloTipoTkt: '',
     g_nflight: '',
     status: '',
@@ -15,6 +16,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     _path: '',
     _pathDetail: '',
     _pathDetTkt: '',
+    _pathDetFlight: '',
     me: '',
     NPROG: 'PX00000095',
     init: function(view) {
@@ -160,9 +162,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         this.bean = x.record.data;
         var cant = 0;
         cant = this.bean.QCPNFI;
-        
+
         if (cant > 0) {
+            var IN_FSABRE = this.getValue("cmbFSabre");
             this.objFLIGHTMANIF = x.record.data;
+            this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -402,6 +406,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
             } else if (this.peek() === prototype.id + '-boxDetTicket') {
                 this.exportExcel(_pathDetTkt);
+            } else if (this.peek() === prototype.id + '-boxDetailFlightManifest') {
+                this.exportExcel(_pathDetFlight);
             }
         } else if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
 
@@ -483,6 +489,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         }
     },
     btnBack_click: function() {
+        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
+        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
             if (this.peek() === prototype.id + '-boxMainData') {
                 global.showMenu();
@@ -769,6 +777,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetailFlightManifest">
     searchDetailFlightManifest: function(objFLIGHTMANIF) {
+        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
+        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetailFlightManifest'
@@ -806,10 +816,20 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
         Ext.getCmp(prototype.id + '-gridDetailFlightManifest').bindStore(storeGridDatas);
+        _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     //</editor-fold>
-
+    cmbFSabre_changeHandler: function() {
+        
+        objA3729 = {};
+        var IN_FSABRE = this.getValue("cmbFSabre");
+        this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
+        
+        this.objA3729 = this.objFLIGHTMANIF;
+        
+        this.searchDetailFlightManifest(this.objFLIGHTMANIF);
+    },
     openExport: function(grid, rowIndex, colIndex, a, b, c) {
         var grid = Ext.getCmp(prototype.id + '-gridDetailFlightManifest')
         var RutaF = grid.getStore().getAt(0).data.LNKMVLO;
@@ -1228,6 +1248,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     //</editor-fold>
 
     exportExcel: function(_path) {
+        console.log('exportExcel');
+        console.log(_path);
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Download Excel ?',
@@ -1403,16 +1425,35 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     // </editor-fold>
 
     /*showTicket: function(data, row) {
+     
+     console.log(data);
+     if (data.CCIA === '139') {
+     me.viewMasterTkt(data);
+     } else {
+     //            me.viewDataEntryTkt(data,row);
+     me.viewProrate(data);
+     }
+     
+     },*/
+    viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+        var strTkt = rowData.data.strTicket;
+        
+        prototypeProgram.view = 'flown-flight-conciliation-form';
+        prototypeProgram.nprog = 'PX00000095';
+        prototypeProgram.title = 'Flight Conciliation';
+        prototypeProgram.modulo = '';
 
-        console.log(data);
-        if (data.CCIA === '139') {
-            me.viewMasterTkt(data);
-        } else {
-//            me.viewDataEntryTkt(data,row);
-            me.viewProrate(data);
-        }
+        var beanProMasterTicket = {};
+        
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+        
+        console.log(beanProMasterTicket);
 
-    },*/
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },                                                                                                                          
     showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         console.log('RowData');
         console.log(rowData.data);

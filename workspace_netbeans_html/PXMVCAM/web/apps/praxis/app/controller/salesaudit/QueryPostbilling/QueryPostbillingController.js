@@ -200,6 +200,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
                 txtCountry.setValue('');
                 cmbCountry2.setValue('');
                 txtUser.setValue('');
+                txtIATA.setValue('');
                 break;
             default:
                 txtIATA.hide();
@@ -357,7 +358,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
             case 'Agreement not reached - to Agent':
                 color = '#FE9A2E';
                 break;
-
+            case 'Pending Agent':
+                color = '#58FAF4';
+                break;
+            case 'Pending Airline':
+                color = '#F78181';
+                break;
 
 
         }
@@ -555,6 +561,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
             }
         });
         win.show();
+    },
+    onRendererColumnAttr: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
+    },
+    onClearClick:function(){
+        var grid = Ext.getCmp(prototype.id + '-grid');
+        var store = grid.getStore();
+        store.removeAll();
     }
 
 

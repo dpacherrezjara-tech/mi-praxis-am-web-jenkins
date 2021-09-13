@@ -54,7 +54,9 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         var VL_A3959NRRPT = Ext.getCmp(prototype.id + '-A3958NRRPT').getValue();
         var VL_A3959CDCLI = Ext.getCmp(prototype.id + '-A3958CDCLI').getValue();
         var VL_A3959BANCO = Ext.getCmp(prototype.id + '-A3959BANCO').getValue();
-        var VL_A3959CTABC = Ext.getCmp(prototype.id + '-A3959CTABC').getValue();        
+        var VL_A3959CTABC = Ext.getCmp(prototype.id + '-A3959CTABC').getValue(); 
+        var VL_TICKET_NC = Ext.getCmp(prototype.id + '-TICKET_NC').getValue(); 
+        
         return {
             VP_ACTION:VP_ACTION,
             A3959REFPG:VL_A3959REFPG,
@@ -65,7 +67,8 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
             A3959NRRPT:VL_A3959NRRPT,
             A3959CDCLI:VL_A3959CDCLI,
             A3959BANCO:VL_A3959BANCO,
-            A3959CTABC:VL_A3959CTABC            
+            A3959CTABC:VL_A3959CTABC,
+            VP_TICKET_NC: VL_TICKET_NC
         };
     },
     get_SelectedRecords:function(){
@@ -112,7 +115,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         } else {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
-                msg: 'Are you sure to insert?',
+                msg: '¿Seguro de procesar aplicacion de pago?',
                 buttons: Ext.MessageBox.YESNO,
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
@@ -127,6 +130,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         }
     },
     crud: function () {
+        var me = this;
         var p = this.view.params;
         var strOption = p.action;        
         //var me = this;
@@ -153,12 +157,13 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
                 Ext.getCmp(prototype.id + '-AplPaymentBoletoEntry').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
+                    icon: objRtn.dbException.SQLCODE, //var icons = [Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
                     fn: function () {
                         //culmino PROCESO                        
                         //Ext.getCmp(prototype.id + '-SalesListEntry').close();
-                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                        Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().reload();
+                        //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                        me.get_detalle_boleto();
+                        //Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().reload();
                     }
                 });
             }
@@ -177,7 +182,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         } else {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
+                msg: '¿Seguro de realizar la actualizacion?',
                 scope: this,
                 buttons: Ext.MessageBox.YESNO,
                 icon: Ext.MessageBox.QUESTION,
@@ -195,7 +200,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Are you sure to delete ?',
+            msg: '¿Seguro de borrar registro ?',
             buttons: Ext.MessageBox.YESNO,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
@@ -219,22 +224,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
     },
     onfocusleaveNumberfield:function(obj, error, eOpts){        
         var val =  obj.getValue().replace(",", "").replace(",", "");
-        obj.setValue( Ext.util.Format.number( val , '0,000.00'));
-        //APLICA PAGOS
-//        var arrayRows = new Array();
-//        var grid = Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto');
-//        if (grid.getSelectionModel().hasSelection()) {
-//            var selection = grid.getSelectionModel().getSelected();
-//            for (var i = 0; i < selection.length; i++) {
-//                var row = grid.getSelectionModel().getSelection()[i];                
-//                //console.log(row);
-//                row.data.A3958TOTAP = 100;
-//                //arrayRows.push( row );
-//                //row.get('A3958CCUST')
-//            }
-//            //Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().setData(arrayRows);
-//            //Ext.getCmp(prototype.id + '-infoGridAplPaymentBoleto').getStore().update();
-//        }
+        obj.setValue( Ext.util.Format.number( val , '0,000.00'));        
     },
     validateForm: function (params) {
         var mensaje = "";
@@ -248,17 +238,26 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
             Ext.getCmp(prototype.id + '-A3959TOTPG').focus();
             return mensaje;
         }
-        if (params.A3959FECPG === '') {
-            mensaje = 'Ingrese la fecha de pago';
-            Ext.getCmp(prototype.id + '-A3959FECPG').focus();
-            return mensaje;
-        }                                
+        //Fecha de pago para NC debe tomar del refund(fecha de emision) 
+        if (params.VP_TICKET_NC === ''){
+            if (params.A3959FECPG === '') {
+                mensaje = 'Ingrese la fecha de pago';
+                Ext.getCmp(prototype.id + '-A3959FECPG').focus();
+                return mensaje;
+            }                               
+        }
         var arrayRec = this.get_SelectedRecords();        
         var vl_total_sel = arrayRec[1];        
         if( params.A3959TOTPG > vl_total_sel ){
             mensaje = 'El importe de pago aplicado no puede ser mayor al total seleccionado';
             return mensaje;
-        }        
+        }
+        if (params.VP_TICKET_NC !== '' && params.VP_TICKET_NC.length !== 13  ) {
+            mensaje = 'Ingrese Ticket(NC) valido de 13 digitos';
+            Ext.getCmp(prototype.id + '-A3959FECPG').focus();
+            return mensaje;
+        } 
+        
         return mensaje;
     },
     set_ClearField: function () {

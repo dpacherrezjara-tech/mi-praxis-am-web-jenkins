@@ -976,6 +976,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMReportForm.ADMReportFormControll
     },
     imgSerech_clickHandler: function () {
         this.imgSearch_clickHandler(false);
+    },
+    onClearClick: function (obj, e) {
+        Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
     }
 
 });

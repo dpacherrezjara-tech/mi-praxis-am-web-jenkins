@@ -684,6 +684,7 @@ public class PostbillingDAO {
                 objRtn.A3537PBDNE = rs01.getDouble("A3537PBDNE");
                 objRtn.A3537NETD = rs01.getDouble("A3537NETD");
                 objRtn.A3537STAT3 = rs01.getString("A3537STAT3");
+                objRtn.A3537CNREL = rs01.getString("A3537CNREL");
 
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;

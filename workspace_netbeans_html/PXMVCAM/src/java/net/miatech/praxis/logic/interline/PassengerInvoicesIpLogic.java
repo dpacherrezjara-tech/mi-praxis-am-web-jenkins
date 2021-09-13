@@ -126,37 +126,42 @@ public class PassengerInvoicesIpLogic {
     }
     
 
-    public List<SFI010> loadPX538_register_10(SFI010Filter filter) throws Exception {
-        return passengerInvoicesDAO.loadPX538_register_10(filter);
+    public List<SFI010> loadPX538_register_10(SFI010Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_10(filter, flagMonth);
     }
 
-    public List<SFI030> loadPX538_register_30(SFI030Filter filter) throws Exception {
-        return passengerInvoicesDAO.loadPX538_register_30(filter);
+    public List<SFI030> loadPX538_register_30(SFI030Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_30(filter, flagMonth);
     }
     
     // ------------------------------- SFI 20 ------------------------------------------------------   
-    public List<SFI020Filter> loadPX538_register20(SFI020Filter filter) throws Exception {
-        return passengerInvoicesDAO.loadPX538_register20(filter);
+    public List<SFI020Filter> loadPX538_register20(SFI020Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register20(filter, flagMonth);
     }
     
-    // ------------------------------- SFI 21 ------------------------------------------------------   
-    public List<SFI021> loadPX538_register_21(SFI021Filter filter) throws Exception {
-        return passengerInvoicesDAO.loadPX538_register_21(filter);
+    // ------------------------------- SFI 21 & 22 & 23 ------------------------------------------------------   
+    public List<SFI021> loadPX538_register_21(SFI021Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_21(filter, flagMonth);
+    }
+    
+    // ------------------------------- SFI 31 ------------------------------------------------------   
+    public List<SFI031> loadPX538_register_31(SFI020Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_31(filter, flagMonth);
     }
     
     // ------------------------------- SFI 32 ------------------------------------------------------   
-    public List<SFI032> loadPX538_register_32(SFI020Filter filter) throws Exception {
-        return passengerInvoicesDAO.loadPX538_register_32(filter);
+    public List<SFI032> loadPX538_register_32(SFI020Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_32(filter, flagMonth);
     }
     
     // ------------------------------- SFI 33 ------------------------------------------------------   
-    public List<SFI033> loadPX538_register_33(SFI020Filter filter) throws Exception {
-        return passengerInvoicesDAO.loadPX538_register_33(filter);
+    public List<SFI033> loadPX538_register_33(SFI020Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_33(filter, flagMonth);
     }
     
     // ------------------------------- SFI 41 ------------------------------------------------------   
-    public List<SFI041> loadPX538_register_41(SFI020Filter filter) throws Exception {
-        return passengerInvoicesDAO.loadPX538_register_41(filter);
+    public List<SFI041> loadPX538_register_41(SFI020Filter filter, String flagMonth) throws Exception {
+        return passengerInvoicesDAO.loadPX538_register_41(filter, flagMonth);
     }
     
     // ------------------------------- SFI 22 ------------------------------------------------------   

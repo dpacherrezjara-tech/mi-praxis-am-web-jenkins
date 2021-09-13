@@ -192,7 +192,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotRefundControl.RobotRefundContr
                 return;
             }
         }
-        Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
+        //Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
         //datos capturados del texto
         this.bean.IN_OPTION = cmbsearch;
         this.bean.IN_DATEFROM = txtDateFrom;
@@ -312,14 +312,46 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotRefundControl.RobotRefundContr
 
 
         } else {
-            Ext.MessageBox.alert('PRAXIS', "Pending Execution or in Error");
-            return;
+            Ext.getCmp(prototype.id + '-gridData').setVisible(false);
+            Ext.getCmp(prototype.id + '-lbl-total').setVisible(false);
+
+            Ext.getCmp(prototype.id + '-gridDetalle').setVisible(true);
+            Ext.getCmp(prototype.id + '-lbl-totalDeta').setVisible(true);
+            Ext.getCmp(prototype.id + '-btn-back').setVisible(true);
+            ///CARGANDO EL DETALLE DE LA GRTILLA 
+            var CmbRobot = Ext.getCmp(prototype.id + '-ComboRobot').getValue();
+            this.bean2.IN_OPTION = '5';
+            this.bean2.IN_DATEFROM = rec.data.A3388FREGI;
+            this.bean2.IN_COUNTRY = rec.data.A3388PAIS;
+            this.bean2.IN_ROBOT = CmbRobot;
+            this.bean2.IN_USER = '';
+            Ext.getCmp(prototype.id + '-gridDetalle').getStore().removeAll();
+            Ext.getCmp(prototype.id + '-gridDetalle').getStore().loadPage(1, {
+                params: {
+                    beanString: JSON.stringify(this.bean2)
+                            //beanString: bean
+
+                }, callback: function(records, operation, success) {
+                    if (records.length !== 0) {
+                        Ext.getCmp(prototype.id + '-lbl-totalDeta').setText(records[0].data.A3388TOTALPAG);
+                    } else {
+                        Ext.getCmp(prototype.id + '-lbl-totalDeta').setText('0');
+                        global.Msg({msg: "Data not found.", icon: 2, fn: function() {
+                            }});
+
+                    }
+                    //Ext.getCmp(prototype.id + '-country').setValue(records[0].data.A3388TOTALPAG);
+
+                }
+            });
+            //Ext.MessageBox.alert('PRAXIS', "Pending Execution or in Error");
+            //return;
         }
 
     },
     onCmbStatusChange: function(obj, newValue, oldValue, eOpts) {
 
-    }
+    },
 
 
 });

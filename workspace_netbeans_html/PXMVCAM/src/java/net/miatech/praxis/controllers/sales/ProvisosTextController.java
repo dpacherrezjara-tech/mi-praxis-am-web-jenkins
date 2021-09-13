@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1952Filter;
 import net.miatech.beans.PX019S01A823Filter;
+import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.flown.CatalogueFlightLogic;
@@ -89,7 +90,7 @@ public class ProvisosTextController extends BaseController {
 
         try {
 
-            logic.setSession(this.serverSession.getServerSession());
+            logic.setSession((IServerSession) serverSession.getServerSession());
 
             filter.IN_A823LINAER = request.getParameter("IN_A823LINAER");
             filter.IN_A823VIGDES = request.getParameter("IN_A823VIGDES");

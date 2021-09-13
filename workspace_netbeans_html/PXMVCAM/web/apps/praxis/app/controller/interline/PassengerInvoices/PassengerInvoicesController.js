@@ -1647,14 +1647,22 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoices.PassengerInvoicesC
         mapForm.submit();
     },
     openExportManyExcels: function(grid, rowIndex, colIndex) {
+        
+        var flagByMonth = "";
+        
         this.beanDetail = grid.getStore().getAt(rowIndex).data;
         this.beanExcel.BDATE = this.beanDetail.BDATE;
         this.beanExcel.PERNUM = this.beanDetail.PERNUM;
 //        
         me.paramsDetailExcel.beanString = JSON.stringify(this.beanExcel);
-        var flag = false;
-        global.getFile(prototype.url + '/downloadXlsxs?beanString=' + me.paramsDetailExcel.beanString);
-//       
+        
+        if(colIndex === 12){
+            flagByMonth = "Y";
+            global.getFile(prototype.url + '/downloadTxt?beanString=' + me.paramsDetailExcel.beanString + '&flagByMonth=' + flagByMonth);
+        }else{
+            flagByMonth = "";
+            global.getFile(prototype.url + '/downloadXlsxs?beanString=' + me.paramsDetailExcel.beanString + '&flagByMonth=' + flagByMonth);
+        }
     },    
     // </editor-fold>
 });

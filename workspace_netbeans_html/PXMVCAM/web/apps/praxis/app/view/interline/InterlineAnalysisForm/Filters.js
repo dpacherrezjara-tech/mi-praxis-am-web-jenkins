@@ -67,9 +67,9 @@ Ext.define('Ext.Praxis.view.interline.InterlineAnalysisForm.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromYear_changeHandler'
                                     }
                                 },
@@ -89,9 +89,9 @@ Ext.define('Ext.Praxis.view.interline.InterlineAnalysisForm.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromMonth_changeHandler'
                                     }
                                 },
@@ -118,9 +118,9 @@ Ext.define('Ext.Praxis.view.interline.InterlineAnalysisForm.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 4},
@@ -138,9 +138,9 @@ Ext.define('Ext.Praxis.view.interline.InterlineAnalysisForm.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 // </editor-fold>
@@ -174,9 +174,9 @@ Ext.define('Ext.Praxis.view.interline.InterlineAnalysisForm.Filters', {
                                         afterrender: function (combo, eOpts) {
                                             combo.setValue("");
                                         },
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         keypress: 'onTextKeypress'
                                     }
                                 },
@@ -202,9 +202,9 @@ Ext.define('Ext.Praxis.view.interline.InterlineAnalysisForm.Filters', {
                                     width: 260,
                                     enableKeyEvents: true,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         keypress: 'onTextKeypress'
                                     }
                                 },
@@ -235,9 +235,9 @@ Ext.define('Ext.Praxis.view.interline.InterlineAnalysisForm.Filters', {
                                     width: 200,
                                     enableKeyEvents: true,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         keypress: 'onTextKeypress'
                                     }
                                 }

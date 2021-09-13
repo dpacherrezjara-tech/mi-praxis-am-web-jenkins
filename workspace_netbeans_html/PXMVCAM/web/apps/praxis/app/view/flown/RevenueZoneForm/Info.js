@@ -623,8 +623,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueZoneForm.Info', {
                                     },
                                     {text: 'Curr', width: 80, dataIndex: 'MDACP',
                                     summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                            return '<b>' + 'MXN' + '<b>';
+                                            metaData.style = 'text-align:center; margin-center:3px ';
+                                            return '<b>' + 'USD' + '<b>';
                                         }
                                     }
                                 ]

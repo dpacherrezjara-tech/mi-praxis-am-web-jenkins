@@ -6,6 +6,12 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
     beanFilter: {},
     bean_by_amount_excel: {},
     init: function(view) {
+        //console.log('PERMX-ACCESS');
+        if(accessSelect.PERMX==='N'){
+            Ext.getCmp(prototype.id+'-btnExcel').hide();
+	}else{
+            Ext.getCmp(prototype.id+'-btnExcel').show();
+        }
     },
     afterRender: function () {
         this.setStoreData();
@@ -278,7 +284,9 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
         }
     },
     loadPX108S02PXF053: function(filter) {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.GridData', {
+        
+        //var storeGridDatas = Ext.create('Ext.Praxis.store.sales.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.ConciliationASR.GridDataPX031S03A1530', {
             proxy: {
                 url: prototype.url+'/loadPX108S02PXF053'
             },
@@ -295,15 +303,16 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.ConciliationASRControlle
         Ext.getCmp(prototype.id+'-gridDataByCurrency').setStore(storeGridDatas);
     },
     gridTransactions_itemClickHandler: function(grid, x, colIndex, e, x, rowIndex, z) {
-        if (this.gloGridTransactionsSelectedIndex === -1) {
-            this.gloGridTransactionsSelectedIndex = rowIndex;
-        } else {
-            if (rowIndex === this.gloGridTransactionsSelectedIndex) {
-                this.gloGridTransactionsSelectedIndex = -1;
-            } else {
-                this.gloGridTransactionsSelectedIndex = rowIndex;
-            }
-        }
+          this.gloGridTransactionsSelectedIndex = rowIndex;
+//        if (this.gloGridTransactionsSelectedIndex === -1) {
+//            this.gloGridTransactionsSelectedIndex = rowIndex;
+//        } else {
+//            if (rowIndex === this.gloGridTransactionsSelectedIndex) {
+//                this.gloGridTransactionsSelectedIndex = -1;
+//            } else {
+//                this.gloGridTransactionsSelectedIndex = rowIndex;
+//            }
+//        }
     },
     
     // <editor-fold defaultstate="collapsed" desc="onViewClick">

@@ -393,6 +393,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.SpdrspcrQuery.SpdrspcrQueryControll
             });
         }
     },
+    onClearClick:function(){
+        var grid = Ext.getCmp(prototype.id + '-grid');
+        var store = grid.getStore();
+        store.removeAll();
+    }
+
 });
 
 

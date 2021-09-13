@@ -463,8 +463,19 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                                             id: prototype.id + '-de-txtA1698STCON',
                                             width: 100,
                                             labelWidth: 0,
-                                            readOnly: true
-
+                                            readOnly: true,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 1,
+                                            maskRe: /[A/M/D/a/m/d]/,
+                                            listeners: {
+                                                change: 'onUpperValue',                                                
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id + '-de-txtA1698COMEN').focus();
+                                                    }
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'label',
@@ -498,6 +509,9 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                                             xtype: 'textareafield',
                                             width: 420,
                                             height: 60,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 80,
                                             id: prototype.id + '-de-txtA1698COMEN',
                                             fieldStyle: 'color: #0B333C; font-size: 11px;'
                                         }
@@ -579,7 +593,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                     text: 'Save',
                     id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    //hidden: true,
+                    hidden: true,
                     listeners: {
                         click: 'onSaveClick'
                     }
@@ -588,7 +602,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationARCForm.DataEntry', {
                     text: 'Update',
                     id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    hidden: true,
+                    //hidden: true,
                     listeners: {
                         click: 'onUpdateClick'
                     }

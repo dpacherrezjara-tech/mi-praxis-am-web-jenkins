@@ -12,10 +12,12 @@ public class SFI020 {
 
     public String CCUST = "";
     public String BDAIR = "";
+    public String BDAIR2 = "";
     public String BAIR = "";
     public String PERNUM = "";
     public String BNUMBER = "";
     public String BDATE = "";
+    public String BDATE2 = "";
     public long NAID = 0;
     public int BCODE = 0;
     public int BATSEQ = 0;

@@ -142,6 +142,9 @@ Ext.define('Ext.Praxis.controller.discharges.NoShow.NoShowFormController', {
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry03('U', rec);
     },
+    onDetailClick04: function () {
+        this.winDataEntry04('I');
+    },
     winDataEntry01: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
@@ -169,6 +172,17 @@ Ext.define('Ext.Praxis.controller.discharges.NoShow.NoShowFormController', {
         rec = rec === null || rec === undefined ? {} : rec;
         Ext.create('Ext.Praxis.view.discharges.NoShowForm.NoShowFormDetLog', {
             id: prototype.id06 + '-NoShowFormDetLog',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
+    winDataEntry04: function(action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+        Ext.create('Ext.Praxis.view.discharges.NoShowForm.NoShowFormLoadInput', {
+            id: prototype.id07 + '-NoShowFormLoadInput',
             params: {
                 action: action,
                 rec: rec

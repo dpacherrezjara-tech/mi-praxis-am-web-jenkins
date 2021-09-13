@@ -142,7 +142,7 @@ public class AplPaymentController extends BaseController {
     public @ResponseBody
     String set_ApplyPayment(ModelMap map, HttpServletRequest request) {
         SQP03943Filter filter = new SQP03943Filter();
-        SQP03943Filter objRtn;
+        SQP03943Filter objRtn = new SQP03943Filter();
         logic = new AplPaymentLogic();
         try {
             logic.setSession(this.serverSession.getServerSession());
@@ -151,9 +151,12 @@ public class AplPaymentController extends BaseController {
             map.put("success", true);
             map.put("objRtn", objRtn);
         } catch (Exception ex) {
-            map.put("success", false);
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
             map.put("sesion", ex.getMessage());
-            throw new SpringException(ex);
+            //throw new SpringException(ex);
         }
         return new Gson().toJson(map);
 
@@ -163,7 +166,7 @@ public class AplPaymentController extends BaseController {
     public @ResponseBody
     String set_ApplyPayment_boleto(ModelMap map, HttpServletRequest request) {
         SQP03952Filter filter = new SQP03952Filter();
-        SQP03952Filter objRtn;
+        SQP03952Filter objRtn = new SQP03952Filter();
         logic = new AplPaymentLogic();
         try {
             logic.setSession(this.serverSession.getServerSession());
@@ -175,9 +178,12 @@ public class AplPaymentController extends BaseController {
             map.put("success", true);
             map.put("objRtn", objRtn);
         } catch (Exception ex) {
-            map.put("success", false);
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
             map.put("sesion", ex.getMessage());
-            throw new SpringException(ex);
+            //throw new SpringException(ex);
         }
         return new Gson().toJson(map);
 
@@ -226,7 +232,8 @@ public class AplPaymentController extends BaseController {
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         try {                        
-            filter.VP_IDPG = request.getParameter("VP_IDPG");                        
+            filter.VP_IDPG = request.getParameter("VP_IDPG");
+            filter.TICKET_NUMBER = request.getParameter("VP_TICKET");
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = -1;            
             start = (start != 0 ? start : 0);
@@ -268,6 +275,7 @@ public class AplPaymentController extends BaseController {
             String IMPORTE;
             String MONEDA;
             String REFPAG;
+            String TIPO;
             //json object
             String json_texto1;
             String json_texto = "";
@@ -314,6 +322,12 @@ public class AplPaymentController extends BaseController {
                             break;
                         }                        
                         REFPAG=  sheet.getCell(5)== null ? "" : sheet.getCell(5).toString(); 
+                        TIPO=  sheet.getCell(6)== null ? "" : sheet.getCell(6).toString(); 
+                        if( TIPO == ""){
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 5;
+                            break;
+                        } 
                         //crear obj json
                         HashMap obj=new HashMap();    
                         obj.put("FPAGO", FPAGO );    
@@ -321,7 +335,8 @@ public class AplPaymentController extends BaseController {
                         obj.put("UUID", UUID );
                         obj.put("IMPORTE",new Double(IMPORTE)); 
                         obj.put("MONEDA",MONEDA); 
-                        obj.put("REFPAG",REFPAG); 
+                        obj.put("REFPAG",REFPAG);
+                        obj.put("TIPO", TIPO);
                         String jsonText = JSONValue.toJSONString(obj);                          
                         json_texto += jsonText + ",";                        
                     }
@@ -342,11 +357,16 @@ public class AplPaymentController extends BaseController {
             map.put("success", true);
             map.put("objRtn",  objRtn);
             
-        } catch (SQLException e) {
-            map.put("success", false);
+        } catch (SQLException err) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = err.toString();           
+            map.put("objRtn",  objRtn);
+            map.put("success", true);
             map.put("sesion", SESSION_CONTROL);
-        } catch (Exception e) {
-            map.put("success", false);
+        } catch (Exception err) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = err.toString();  
+            map.put("success", true);
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
@@ -358,7 +378,8 @@ public class AplPaymentController extends BaseController {
             "COLUMNA FECHA DE APLICACION DEL PAGO EN BLANCO",   //1
             "FORMATO NO VALIDO PARA COLUMNA BOLETO",            //2
             "COLUMNA IMPORTE INVALIDO O EN BLANCO",             //3
-            "COLUMNA MONEDA EN BLANCO"                          //4
+            "COLUMNA MONEDA EN BLANCO",                         //4
+            "COLUMNA TIPO EN BLANCO"                            //5
         };        
         return MESSAGE_ERROR[INDICE];
     }

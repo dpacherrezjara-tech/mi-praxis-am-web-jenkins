@@ -115,11 +115,11 @@ Ext.define('Ext.Praxis.view.interline.TAXRATD2Form.Filters', {
                                             width: 75,
                                             typeAhead: true,
                                             listConfig: {maxHeight: 111},
-                                            listeners: {
-                                                focus: function(combo) {
-                                                    combo.expand();
-                                                }
-                                            }
+//                                            listeners: {
+//                                                focus: function(combo) {
+//                                                    combo.expand();
+//                                                }
+//                                            }
                                         },
                                         {xtype: 'tbspacer', width: 10},
                                         {
@@ -142,11 +142,11 @@ Ext.define('Ext.Praxis.view.interline.TAXRATD2Form.Filters', {
                                             typeAhead: true,
                                             valueField: 'code', displayField: 'name',
                                             width: 65,
-                                            listeners: {
-                                                focus: function(combo) {
-                                                    combo.expand();
-                                                }
-                                            }
+//                                            listeners: {
+//                                                focus: function(combo) {
+//                                                    combo.expand();
+//                                                }
+//                                            }
                                         }
                                         // </editor-fold>
                                     ]

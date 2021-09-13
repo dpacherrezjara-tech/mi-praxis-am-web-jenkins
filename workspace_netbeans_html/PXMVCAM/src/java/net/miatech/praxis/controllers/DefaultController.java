@@ -389,12 +389,13 @@ public class DefaultController extends BaseController {
                 }
                 return msg;
             } else {
-                //msg = app.getMsgLogin();
-                return "-1";
+                msg = app.getMsgLogin();
+                return msg;
             }
 
         } catch (Exception e) {
-            return "-1";
+            //return "-1";
+            return "Please, refresh the page and try again.";
         }
     }
 

@@ -322,7 +322,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController{
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
-            sheet.autoSizeColumn(2, true);
+            //sheet.autoSizeColumn(2, true);
             sheet.autoSizeColumn(3, true);
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);

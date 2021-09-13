@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                     id: prototype.id + '-gridData',
                                     bodyStyle: 'background-color: #E3EAEF;',
                                     height: 570,
-                                    width: 1137,
+                                    width: 1212,
                                     columnLines: true,
                                     resizable: false,
                                     features: [{
@@ -200,7 +200,34 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                                 items: [
                                                     {
                                                         icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-//                                                        tooltip: 'Export Information IS-IDEC',
+                                                        handler: 'openExportManyExcels'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Download <br> by Month',
+                                                xtype: 'actioncolumn',
+                                                width: 75,
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        icon: 'resources/img/botones/16x16/txt.png',
+//                                                        isDisabled: function (grid, rowIndex, colIndex, items, record) {
+//                                                            var rec = grid.getStore().getAt(rowIndex).data;
+//                                                            if (rec.PERNUM === '04') {
+//                                                                 return false;
+//                                                            } else {
+//                                                                return true;
+//                                                            }
+//                                                        },
+                                                        getClass: function(v, meta, rec) {
+                                                            if (rec.data.PERNUM !== '04') {
+//                                                                meta.tdCls = "x-grid-cell x-grid-td x-grid-cell-actioncolumn-1609 x-grid-cell-last x-selectable";
+//                                                                metaData.unselectableAttr = "unselectable='off'";
+                                                                metaData.css = 'x-hide-display';
+                                                                return v;
+                                                            }
+                                                        },
                                                         handler: 'openExportManyExcels'
                                                     }
                                                 ]
@@ -2444,11 +2471,11 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Info', {
                                                     },
                                                     {text: 'TAX', width: 80, dataIndex: 'TAX',
                                                         listeners: {
-                                                            click: 'viewDataDetailSFI41'
+                                                            click: 'onViewDataDetailSFI41'
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = 'color:#057ECB;text-align:right;text-decoration:none;font-weight:bold;';
-                                                            return '<a href="#interline-passenger-invoices-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + Ext.util.Format.number(value, '0,000.00') + '</a>';
+                                                            return '<a href="#interline-passenger-invoices-ip-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + Ext.util.Format.number(value, '0,000.00') + '</a>';
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridBoxTKT').getStore().getData().items[0].data;

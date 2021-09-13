@@ -26,6 +26,8 @@ public class A1691Filter2 {
     public long totQCPNOD = 0;
     public long QCPNLEG = 0;
     public long totQCPNLEG=0;
+    public long DIFFODSVCR=0;
+    public long totDIFFODSVCR=0;
     public String strFormatFSENDVC = "";
     public long QCPNVC = 0;
     public long totQCPNVC = 0;
@@ -39,6 +41,7 @@ public class A1691Filter2 {
     public long totQCPNVAL = 0;
     public String strFormatDate3 = "";
     public int QCPNFI = 0;
+    public int QCPNFRE = 0;
     public String yearFrom = "";
     public String monthFrom = "";
     public String dayFrom = "";
@@ -53,6 +56,7 @@ public class A1691Filter2 {
     public String strDescCARRIVA = "";
     public String strSQL = "";
     public int totQCPNFI = 0;
+    public int totQCPNFRE = 0;
     
     public long lngQDIFF = 0;
     public double totDiff = 0;

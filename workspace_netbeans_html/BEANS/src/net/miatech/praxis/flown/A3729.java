@@ -27,9 +27,14 @@ public class A3729 {
     public String STVAL = "";
     
     public String TPAX = "";
+    public String TPAX_V = "";
     public String LNKMVLO = "";
     public String STVCR = "";
     
+    public String FSABRE = "";
+    public String STASABR = "";
+    public String FSALES = "";
+        
     //Auditoria
     public String USCR = "";
     public String FECR = "";

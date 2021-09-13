@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.ForecastForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1650,
+                                        width: 1764,
                                         align: 'center'
                                     },
                                     items: [
@@ -68,14 +68,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.ForecastForm', {
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 720,
-                                            width: 1650,
+                                            height: 820,
+                                            width: 1764,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1650,
+                                                    width: 1764,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

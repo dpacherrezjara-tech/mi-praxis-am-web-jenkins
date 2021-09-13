@@ -47,8 +47,7 @@ Ext.define('Ext.Praxis.view.discharges.ParametersNoShowForm.InfoGridPrestaciones
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [
-                                    {text: 'Pseudo <br>City Code', dataIndex: 'A3975KEY2', align: 'left', width: 120},
-                                    //{text: 'Descripción', dataIndex: 'A3975DESC1', align: 'left', flex: 1},
+                                    {text: 'Pseudo <br>City Code', dataIndex: 'A3975KEY2', align: 'center', width: 90},                                    
                                     {
                                         text: 'Activo', dataIndex: 'A3975STATU', width: 50, align: 'center',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -57,6 +56,19 @@ Ext.define('Ext.Praxis.view.discharges.ParametersNoShowForm.InfoGridPrestaciones
                                                 var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="Parametro desactivado" >';
                                             return html;
                                         }
+                                    },
+                                    {
+                                        xtype: 'actioncolumn',
+                                        sortable: false,
+                                        width: 40,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Click for view detail',
+                                                handler: 'onDetailClick01'                                                
+                                            }                                            
+                                        ]
                                     }
                                 ],
                                 defaults: {

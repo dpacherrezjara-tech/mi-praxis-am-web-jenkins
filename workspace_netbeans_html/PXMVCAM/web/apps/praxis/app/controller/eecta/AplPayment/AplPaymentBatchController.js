@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBatchController', {
                             Ext.getCmp(prototype.id03 + '-A4021LOTE').setValue(objRtn.OU_A4021LOTE);
                             me.search_det_loadbatch();
                             //Ext.getCmp(prototype.id03 + '-AplPaymentBatch').close();
-                            Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                            //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                         }                        
                     }
                 });

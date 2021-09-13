@@ -17,6 +17,7 @@ Ext.define('Ext.Praxis.controller.interline.EstimationReverseAP.DataEntryReverse
                 this.limpiarData();
                 break;
         }
+        global.AccessControlMaganer();
     },
     // <editor-fold defaultstate="collapsed" desc="Botones">
     btnInsert_clickHandler: function () {

@@ -204,7 +204,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Filters', {
                             fieldStyle: 'text-align:center;',
                             enableKeyEvents: true,
                             enforceMaxLength: true,
-//                            maxLength: 13,
+                            maxLength: 13,
                             maskRe: /[0-9]/,
                             width: 150,
                             hidden: true,

@@ -55,11 +55,11 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.AccountingMa
                 Ext.getCmp(prototype.id+'-boxDateFilter').show();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
                 break;
-            case 'PAPINT': case 'PIXPEST':
+            case 'PAPINT': case 'PIXPEST': case 'PIXPREV':
                 Ext.getCmp(prototype.id+'-boxDateFilter').hide();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
                 break;
-            case 'PARINT': case 'PIXCEST':
+            case 'PARINT': case 'PIXCEST': case 'PIXCREV':
                 Ext.getCmp(prototype.id+'-boxDateFilter').hide();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
                 break;
@@ -176,7 +176,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterProces3.AccountingMa
                 searchParams.IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateFrom').getValue(), 'Ymd');
                 searchParams.IN_FECHA_ACUSE = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateTo').getValue(), 'Ymd');
                 break;
-            case 'PAPINT': case 'PARINT': case 'PIXPEST': case 'PIXCEST':
+            case 'PAPINT': case 'PARINT': case 'PIXPEST': case 'PIXCEST': case 'PIXPREV': case 'PIXCREV':
                 // <editor-fold defaultstate="collapsed" desc="Combo Date">
                 var fyear = Ext.getCmp(prototype.id+'-cmbDateYearFrom').getValue();
                 var fmonth = Ext.getCmp(prototype.id+'-cmbDateMonthFrom').getValue();

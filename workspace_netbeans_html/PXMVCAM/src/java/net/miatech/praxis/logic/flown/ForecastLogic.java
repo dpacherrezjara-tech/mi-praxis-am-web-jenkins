@@ -56,4 +56,20 @@ public class ForecastLogic {
     public HashMap<String, List<IMF140Filter>> loadPX551SQP04017(IMF140Filter filter) throws SQLException, Exception {
         return ForecastDAO.loadPX551SQP04017(filter);
     }
+
+    public HashMap<String, List<IMF140Filter>> loadPX551SQP04096(IMF140Filter filter) throws SQLException, Exception {
+        return ForecastDAO.loadPX551SQP04096(filter);
+    }
+
+    public List<IMF140Filter> loadPX551SQP04097(IMF140Filter filter) throws SQLException, Exception {
+        return ForecastDAO.loadPX551SQP04097(filter);
+    }
+
+    public List<IMF140Filter> loadPX551SQP04118(IMF140Filter filter) throws SQLException, Exception {
+        return ForecastDAO.loadPX551SQP04118(filter);
+    }
+
+    public List<IMF140Filter> loadPX551SQP04119(IMF140Filter filter) throws SQLException, Exception {
+        return ForecastDAO.loadPX551SQP04119(filter);
+    }
 }

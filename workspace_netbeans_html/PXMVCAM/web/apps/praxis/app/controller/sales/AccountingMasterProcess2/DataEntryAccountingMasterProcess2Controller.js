@@ -34,6 +34,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.DataEntryAccoun
                 break;
                 
         }
+        global.AccessControlMaganer();
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
         this.limpiarCampos();

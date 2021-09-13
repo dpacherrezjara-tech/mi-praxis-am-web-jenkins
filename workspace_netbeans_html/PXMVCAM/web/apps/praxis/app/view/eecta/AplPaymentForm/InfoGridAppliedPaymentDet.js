@@ -42,10 +42,67 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                             xtype: 'grid',
                             id: prototype.id + '-infoGridAppliedPaymentDet',
                             columnLines: true,
-                            title:'Detalle',
+                            title: 'Detalle',
                             width: 890,
                             height: 280,
                             padding: '0px 5px 1px 5px',
+                            tbar: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-TICKET-CIA',
+                                    fieldLabel: 'Consultar Boleto', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 130,
+                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                    enableKeyEvents: true,
+                                    width: 170,
+                                    value: '139',
+                                    enforceMaxLength: true,
+                                    maxLength: 3,
+                                    height: 24,
+                                    listeners: {
+                                        keypress: 'onTxtFilterKeypress01'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-TICKET-NUMB',
+                                    fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                    fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
+                                    enableKeyEvents: true,
+                                    padding: '0 0 0 2',
+                                    width: 110,
+                                    enforceMaxLength: true,
+                                    maxLength: 10,
+                                    height: 24,
+                                    listeners: {
+                                        keypress: 'onTxtFilterKeypress01'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-TICKET-SEQ',
+                                    fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                    enableKeyEvents: true,
+                                    width: 30,
+                                    value: '00',
+                                    height: 24,
+                                    padding: '0 0 0 2',
+                                    enforceMaxLength: true,
+                                    maxLength: 2,
+                                    listeners: {
+                                        keypress: 'onTxtFilterKeypress01'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.id + '-btn-apl-consulta-tkt',
+                                    text: 'Consultar',
+                                    icon: 'resources/img/icon/search.png',                                                    
+                                    listeners: {
+                                        click: 'get_aplpago_detalle'
+                                    }
+                                }
+                            ],
                             features: [
                                 {
                                     dock: 'bottom',
@@ -58,7 +115,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                     {text: 'Boleto', dataIndex: 'TICKET_NUMBER', width: 105, align: 'center', locked: true,
                                         summaryType: 'count',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000') + ' Boleto (s)' ;
+                                            return Ext.util.Format.number(value, '0,000') + ' Boleto (s)';
                                         }
 //                                        filter: {                                            
 //                                            type: 'string',                                            
@@ -67,10 +124,11 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
 //                                                // any Ext.form.field.Text configs accepted
 //                                            }
 //                                        }
-                                    },                                                                        
+                                    },
                                     {text: 'Trx.', dataIndex: 'A3977TRNCU', align: 'center', width: 50, locked: true},
                                     {text: 'Sec.<br>Apl.', dataIndex: 'A3977SQAPL', align: 'center', width: 40},
-                                    {text: 'Mda<br>Pago', dataIndex: 'A3977MDA', align: 'center', width: 60},                                                                        
+                                    {text: 'Fecha<br>Pago', dataIndex: 'A3977FECPG', align: 'center', width: 70},
+                                    {text: 'Mda<br>Pago', dataIndex: 'A3977MDA', align: 'center', width: 60},
                                     {
                                         text: 'Total', dataIndex: 'A3977TOT', width: 80, align: 'right',
                                         summaryType: 'sum',
@@ -81,18 +139,18 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                             //metaData.style = 'font-weight:bold;color:green;';     
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
-                                    }, 
-                                     {
+                                    },
+                                    {
                                         text: 'Pago', dataIndex: 'A3977TOTAP', width: 80, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            metaData.style = 'font-weight:bold;color:green;';     
+                                            metaData.style = 'font-weight:bold;color:green;';
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
-                                    }, 
+                                    },
                                     {
                                         text: 'Saldo', dataIndex: 'A3977SALD', width: 80, align: 'right',
                                         summaryType: 'sum',
@@ -103,16 +161,20 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                             //metaData.style = 'font-weight:bold;color:green;';     
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
-                                    }, 
+                                    },
                                     {text: 'Estado', dataIndex: 'A3977STSPG', align: 'left', width: 100},
                                     {
-                                        text: 'Datos de registro',
+                                        text: 'Aplicacion',
                                         columns: [
-                                            {text: 'Registrado', dataIndex: 'A3977APLIC', width: 80, align: 'left'},
+                                            {text: 'Usuario', dataIndex: 'A3977APLIC', width: 80, align: 'left'},
                                             {text: 'Fecha', dataIndex: 'A3977FAPLC', width: 80, align: 'left'},
                                             {text: 'Hora', dataIndex: 'A3977HAPLC', width: 50, align: 'left'}
                                         ]
-                                    }
+                                    },
+                                    {text: 'Tipo', dataIndex: 'A3977TRXPG', align: 'center', width: 60},
+                                    {text: 'Ref. Pago', dataIndex: 'A3977REFPG', align: 'left', width: 130},
+                                    {text: 'Banco', dataIndex: 'A3977BANCO', align: 'left', width: 130},
+                                    {text: 'Cta Bancaria', dataIndex: 'A3977CTABC', align: 'left', width: 100}
                                 ],
                                 defaults: {
                                     sortable: true,
@@ -141,8 +203,8 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                 }
                             }
                         }
-                                // </editor-fold>
-                                // <editor-fold defaultstate="collapsed" desc="pie">
+                        // </editor-fold>
+                        // <editor-fold defaultstate="collapsed" desc="pie">
 //                        {
 //                            xtype: 'panel',
 //                            id: prototype.id + '-pie',
@@ -204,7 +266,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
 //                                }
 //                            ]
 //                        }
-                                // </editor-fold>
+                        // </editor-fold>
                     ]
                 }
             ]

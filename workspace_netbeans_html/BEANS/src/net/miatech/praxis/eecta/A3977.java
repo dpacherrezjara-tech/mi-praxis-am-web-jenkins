@@ -29,6 +29,7 @@ public class A3977 {
     public String A3977FECPG = "";
     public String A3977BANCO = "";
     public String A3977CTABC = "";
+    public String A3977TRXPG = "";
     public Double A3977TOT = 0.0;
     public Double A3977TOTAP = 0.0;
     public Double A3977SALD = 0.0;

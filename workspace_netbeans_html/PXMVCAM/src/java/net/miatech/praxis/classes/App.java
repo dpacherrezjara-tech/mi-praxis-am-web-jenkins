@@ -199,7 +199,7 @@ public class App extends Application {
             String msg = ase.getMessage();
             setMsgLogin(msg);
             validateUser = false;
-            throw new SpringException(ase);
+            //throw new SpringException(ase);
         } catch (java.io.IOException ase) {
             validateUser = false;
             throw new SpringException(ase);

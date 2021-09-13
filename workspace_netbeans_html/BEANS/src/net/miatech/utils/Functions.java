@@ -344,6 +344,28 @@ public class Functions {
 
         return fecha;
     }
+    
+    public static String getMonthConvertX1(String strDate) {
+        String fecha = strDate.trim();
+
+        try {
+            if (!fecha.contains("*")) {
+                if (fecha.contains("-")) {
+                    fecha = fecha.replace("-", "");
+                }
+                if (fecha.length() == 8) {
+                    fecha = fecha.substring(6, 8) + "-" + getAbreviaturaMes(fecha.substring(4, 6)) + "-" + fecha.substring(2, 4);
+                } else if (fecha.length() == 6) {
+                    fecha = fecha.substring(0, 4) + "-" + getAbreviaturaMes(fecha.substring(4, 6));
+                }
+            } else {
+                fecha = fecha.replace("*", "");
+            }
+        } catch (Exception e) {
+        }
+
+        return fecha;
+    }
 
     public static String getMonthConvert2(String strDate) {
         String fecha = strDate.trim();

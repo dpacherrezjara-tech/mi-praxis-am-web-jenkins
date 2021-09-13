@@ -468,6 +468,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.NocomparativeReportForm.Nocomparati
         Ext.getCmp(prototype.id + '-lbl-totalDeta2').setVisible(true);
         Ext.getCmp(prototype.id + '-btn-back').setVisible(false);
         Ext.getCmp(prototype.id + '-btn-excel').setVisible(false);
+    },
+    onClearClick: function (obj, e) {
+        Ext.getCmp(prototype.idnocompara + '-gridData').getStore().removeAll();
+        Ext.getCmp(prototype.idnocompara + '-gridDetalle').getStore().removeAll();
+        Ext.getCmp(prototype.idnocompara + '-gridDetalle2').getStore().removeAll();
     }
 
 });

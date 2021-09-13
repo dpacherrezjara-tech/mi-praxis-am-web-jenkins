@@ -13,8 +13,11 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
     seq: '',
     ORIG:'',
     exch: '',
+    revCurr: 'USD',
     locCurr: '',
+    cant: 0,
     paramsDET: {},
+    paramsProrrate: {},
     /**
      * Constructor
      */
@@ -30,7 +33,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
      */
 
 
-    afterRender: function () {
+    afterRender: function () { global.AccessControlMaganer();
         var params = this.view.params;
         var mode = params.mode;
         if(mode==='POPUP')
@@ -207,6 +210,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 Ext.getCmp(prototype.idSale + '-det-gridDetCpn').bindStore(storeData);
 
                 fileGrilla = lstTKTGrilla[0];
+                meDET.revCurr = fileGrilla.A720MDARV.trim();
                 Ext.getCmp(prototype.idSale + '-det-lblTotalCpnCur').setValue(fileGrilla.A720MONREG);
                 Ext.getCmp(prototype.idSale + '-det-lblTotalQCur').setValue(fileGrilla.A720MONREG);
                 //Ext.getCmp(prototype.idSale + '-det-lblTotalYQCur').setValue(fileGrilla.A720MONREG);
@@ -226,6 +230,32 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 Ext.getCmp(prototype.idSale + '-det-lblTotalCOM').setValue(Ext.util.Format.number(fileGrilla.A720TTCMRV, '0,000.00'));
                 Ext.getCmp(prototype.idSale + '-det-lblTotalOVERCOM').setValue(Ext.util.Format.number(fileGrilla.A720TTSCRV, '0,000.00'));
             }
+            
+            var IN_TIPOCAP = Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);
+            var IN_ERROR = Ext.getCmp(prototype.idSale + '-det-lblError').text;
+            paramsProrrate = {
+                IN_TIPOCAP: IN_TIPOCAP,
+                IN_AIRLIN: file.A720AIRLIN,
+                IN_GRUPO: file.A720GRUPO,
+                IN_CIA: file.A720CIAI,
+                IN_FORMA: file.A720FORMAI,
+                IN_SERIE: file.A720SERIEI,
+                IN_SEQ: file.A720SEQ,
+                IN_FTE: file.A720ORIG,
+                IN_TRX: file.A720TRNCU,
+                IN_EDITABLE: false,
+                IN_TCAMB: meDET.exch,
+                IN_REVENUE: meDET.revCurr,
+                IN_STATUS: Ext.String.trim(Ext.getCmp(prototype.idGr + '-de-lblStatus').getValue()),
+                IN_ERROR: IN_ERROR,
+                IN_TDOC: Ext.String.trim(Ext.getCmp(prototype.idSale + '-det-lblDocType').getValue()),
+                IN_ISSUEDATE: file.A720FECVTA,
+                IN_CUPON1: '',
+                IN_CUPON2: '',
+                IN_CUPON3: '',
+                IN_CUPON4: '',
+                IN_FORCE: ''
+            };
 
             Ext.Ajax.request({
                 url: prototype.url + '/loadTotales',
@@ -480,6 +510,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
             DataEntryFareCalc.show();
         }
     },
+    onChangeTab: function (obj) {
+        var idTab = obj.id;
+        meDET.cant++;
+        if (Ext.getCmp(idTab).getActiveTab().id === 'SalesReportFormSale-det-tabProrrateo' && meDET.cant === 1) {
+            Ext.getCmp(prototype.idSale + '-widget-prorrate').setParam(paramsProrrate);
+        }
+    },
     onClickSearchFOP: function (obj) {
         //console.clear();
         var id = obj.id;
@@ -551,6 +588,55 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
             });
             DataEntryBalance.show();
         }
+    },
+    onFacsimil: function () {
+        /*if(Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().trim() !== ''){
+         var params = {};
+         
+         var bean104 = {};
+         bean104.FUENTE = Ext.getCmp(prototype.idSale + '-det-lblSource').getValue().trim().substr(0,3);
+         bean104.TDNR = Ext.getCmp(prototype.idSale + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().trim();
+         bean104.AGTN = Ext.getCmp(prototype.idSale + '-det-lblIata').getValue().trim();
+         
+         params.bean = bean104;
+         params.typeModal = 'FACSIMIL';
+         Ext.create('Ext.Praxis.view.screens.ScrProrrateoNewForm', {
+         id: 'ScrProrrateoNewForm',
+         params: params
+         }).show();
+         }*/
+
+        prototype.idFacsimil = prototype.idSale + 'compFacsimil';
+        var viewFacsimil = Ext.create('Ext.Praxis.view.program.ProFacsimilForm.FacsimilNew', {
+            id: prototype.idSale + '-facsimilComponent',
+            params: paramsProrrate
+        });
+        viewFacsimil.show();
+    },
+    onProrrate: function () {
+        /*if(Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().trim() !== ''){
+         var params = {};
+         
+         var bean104 = {};
+         bean104.FUENTE = Ext.getCmp(prototype.idSale + '-det-lblSource').getValue().trim().substr(0,3);
+         bean104.TDNR = Ext.getCmp(prototype.idSale + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().trim();
+         bean104.AGTN = Ext.getCmp(prototype.idSale + '-det-lblIata').getValue().trim();
+         
+         params.bean = bean104;
+         params.strVoid = '';//this.gloA720TKVOID;
+         params.typeModal = 'PRORATE';
+         Ext.create('Ext.Praxis.view.screens.ScrProrrateoNewForm', {
+         id: 'ScrProrrateoNewForm',
+         params: params
+         }).show();
+         }*/
+        prototype.idProrrate = prototype.idSale + 'compProrrate';
+        var viewProrate = Ext.create('Ext.Praxis.view.program.ProrrateoForm.ProrrateoNew', {
+            id: prototype.idSale + '-widget-prorratewin',
+            params: paramsProrrate
+        });
+        //viewProrate.setParam(paramsProrrate);
+        viewProrate.show();
     },
     onDelivery: function () {
         var bean = {};

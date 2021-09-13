@@ -203,6 +203,9 @@ Ext.define('Ext.Praxis.view.interline.ISIDECControlForm.Filters', {
                                             listConfig: {maxHeight: 111},
                                             enableKeyEvents: true,
                                             triggerAction: 'all',
+                                            listeners:{
+                                                select: 'imgSearch_clickHandler'
+                                            }
 //                                            listeners:{
 //                                                focus: function(combo) {
 //                                                    combo.expand();

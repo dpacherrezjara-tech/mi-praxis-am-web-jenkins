@@ -89,7 +89,9 @@ Ext.define('Ext.Praxis.view.sales.OracleAccountingReportForm.Filters', {
                                     ["FOB", "FOB"],
                                     ["CONSORTIA", "CONSORTIA"],
                                     ["IXPEST", "IXP Estimated"],
-                                    ["IXCEST", "IXC Estimated"]
+                                    ["IXCEST", "IXC Estimated"],
+                                    ["IXPREV", "IXP REV Estimated"],
+                                    ["IXCREV", "IXC REV Estimated"]
                                 ]
                             }),
                             queryMode: 'local',

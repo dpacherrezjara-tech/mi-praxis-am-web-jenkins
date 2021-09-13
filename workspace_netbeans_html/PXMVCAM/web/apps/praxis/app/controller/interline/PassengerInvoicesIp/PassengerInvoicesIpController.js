@@ -188,38 +188,32 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoicesIp.PassengerInvoice
     },
     btnSearch_click: function(obj, e) {
         Ext.getCmp(prototype.id + '-panelPie').show();
+        
+        var cmbFindBy = Ext.getCmp(prototype.id + '-cmbFindBy').getValue();
+        if(cmbFindBy === ''){
+            Ext.getCmp(prototype.id + '-txtTKT').setValue('');
+            Ext.getCmp(prototype.id + '-txtRej').setValue('');
+        }
+        
         this.setFormatParameter();
-//        if (me.bean.IN_TKT !== '') {
-//            if (me.bean.IN_TKT.length === 13) {
-//                this.searchTKT();
-//            } else {
-//                global.Msg({
-//                    msg: 'Ticket number must contain 13 digits.'
-//                });
-//            }
-//
-//        } else {
+        
         if (me.bean.chckBtn) {
             this.setGridDataBySource();
         } else {
-//                if (vskConsulta.selectedChild == boxMainDataDetail20) {
-//                    if (String(cmbPMI.selectedItem.label) != '') {
-//                        Reiniciar_Pag(bean20);
-//                        bean20.VALDPMI = String(cmbPMI.selectedItem.data);
-//                        roBwrPassengerInvoicesIpIP.searchdDetail20(bean20);
-//                    } else {
-//                        Reiniciar_Pag(bean);
-//                        roBwrPassengerInvoicesIpIP.search(bean);
-//                    }
-//                } else {
-//                    Reiniciar_Pag(bean);
-//                    roBwrPassengerInvoicesIpIP.search(bean);
-            this.setGridData();
-//                }
+            var ticket = Ext.getCmp(prototype.id + '-txtTKT').getValue();
+            if(ticket !== ''){
+                if (ticket.length === 13) {
+                    this.searchTKT();
+                } else {
+                    global.Msg({msg: 'Ticket number must contain 13 digits.'});
+                }
+            }else{
+                this.setGridData();
+            }
         }
-//        }
 
-//        this.setGridData(obj, e);
+//        this.BuscarTKT_keyDownHandler();
+
     },
     setFormatParameter: function() {
 
@@ -1402,14 +1396,24 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoicesIp.PassengerInvoice
         });
     },
     openExportManyExcels: function(grid, rowIndex, colIndex) {
+        
+        var flagByMonth = "";
+        
         this.beanDetail = grid.getStore().getAt(rowIndex).data;
         this.beanExcel.BDATE = this.beanDetail.BDATE;
         this.beanExcel.PERNUM = this.beanDetail.PERNUM;
-//        
+        
         me.paramsDetailExcel.beanString = JSON.stringify(this.beanExcel);
-        var flag = false;
-        global.getFile(prototype.url + '/downloadXlsxs?beanString=' + me.paramsDetailExcel.beanString);
-//       
+        
+        if(colIndex === 12){
+            flagByMonth = "Y";
+            global.getFile(prototype.url + '/downloadTxt?beanString=' + me.paramsDetailExcel.beanString + '&flagByMonth=' + flagByMonth);
+        }else{
+            flagByMonth = "";
+            global.getFile(prototype.url + '/downloadXlsxs?beanString=' + me.paramsDetailExcel.beanString + '&flagByMonth=' + flagByMonth);
+        }
+        
+       
     },
     openExport20: function(grid, rowIndex, colIndex) {
         this.beanDetail = grid.getStore().getAt(rowIndex).data;
@@ -1470,6 +1474,8 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoicesIp.PassengerInvoice
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbAerolinea').setValue('');
         Ext.getCmp(prototype.id + '-cmbPeriod').setValue('');
+        Ext.getCmp(prototype.id + '-cmbFindBy').setValue('');
+        Ext.getCmp(prototype.id + '-txtTKT').setValue('');
 
     },
     btnExcel_click: function(obj, e) {

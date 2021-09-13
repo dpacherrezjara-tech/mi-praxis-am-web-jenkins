@@ -16,6 +16,7 @@ public class IMF140Filter extends IMF140{
     public long RN;
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String IN_YEAR = "";
     public String IN_TREG = "";
     public String strImagen1 = "";
     public String strImagen2 = "";
@@ -154,8 +155,37 @@ public class IMF140Filter extends IMF140{
     public double TOTVCPNMXNSUD = 0.00;
     public double TOTVCPNMXNUSA = 0.00;
     
-    //Avg Fare
+    //Comparacion anio a anio
+    public String MES = "";
+    public double VCPNUSD_CY = 0.00;
+    public double VCPNMXN_CY = 0.00;
+    public double VCPNUSD_LY = 0.00;
+    public double VCPNMXN_LY = 0.00;
     
+    //Balances  
+    public double DOMESTIC_B_QTYPAX = 0.00;
+    public double DOMESTIC_B_VCPNUSD = 0.00;
+    public double DOMESTIC_B_VCPNMXN = 0.00;
+    public double INTERNATIONAL_B_QTYPAX = 0.00;
+    public double INTERNATIONAL_B_VCPNUSD = 0.00;
+    public double INTERNATIONAL_B_VCPNMXN = 0.00;
+    public double GENERAL_B_QTYPAX = 0.00;
+    public double GENERAL_B_VCPNUSD = 0.00;
+    public double GENERAL_B_VCPNMXN = 0.00;
+    
+    //Graficas anio a anio
+    public double DOMESTIC_VCPNUSD_CY = 0.00;
+    public double DOMESTIC_VCPNMXN_CY = 0.00;
+    public double DOMESTIC_VCPNUSD_LY = 0.00;
+    public double DOMESTIC_VCPNMXN_LY = 0.00;
+    public double INTERNATIONAL_VCPNUSD_CY = 0.00;
+    public double INTERNATIONAL_VCPNMXN_CY = 0.00;
+    public double INTERNATIONAL_VCPNUSD_LY = 0.00;
+    public double INTERNATIONAL_VCPNMXN_LY = 0.00;
+    public double GENERAL_VCPNUSD_CY = 0.00;
+    public double GENERAL_VCPNMXN_CY = 0.00;
+    public double GENERAL_VCPNUSD_LY = 0.00;
+    public double GENERAL_VCPNMXN_LY = 0.00;
     
     public Pagination page = new Pagination();
     

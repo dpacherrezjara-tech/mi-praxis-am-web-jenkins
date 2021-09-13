@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentCab', {
                                             }
                                         }
                                     },                                                                        
-                                    {text: 'Ref. Pago', dataIndex: 'A3959REFPG', align: 'left', width: 130, locked: true},
+                                    //{text: 'Ref. Pago', dataIndex: 'A3959REFPG', align: 'left', width: 130, locked: true},
                                     {text: 'Fecha<br>Pago', dataIndex: 'A3959FECPG', align: 'left', width: 70},
                                     {text: 'Mda<br>Pago', dataIndex: 'A3959MDAPG', align: 'center', width: 60},                                                                        
                                     {
@@ -96,9 +96,12 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentCab', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },                                                                        
-                                    {text: 'Tipo Pago', dataIndex: 'A3959TIPPG', align: 'left', width: 100},
-                                    {text: 'Banco', dataIndex: 'A3959BANCO', align: 'left', width: 130},
-                                    {text: 'Cta Bancaria', dataIndex: 'A3959CTABC', align: 'left', width: 100}
+                                    {text: 'Tipo<br>Aplicacion', dataIndex: 'A3959TIPPG', align: 'left', width: 100},
+                                    {text: 'Usuario', dataIndex: 'A3959REGIS', width: 80, align: 'left'},
+                                    {text: 'Fecha', dataIndex: 'A3959FREGI', width: 80, align: 'left'},
+                                    {text: 'Hora', dataIndex: 'A3959HREGI', width: 50, align: 'left'}
+                                    //{text: 'Banco', dataIndex: 'A3959BANCO', align: 'left', width: 130},
+                                    //{text: 'Cta Bancaria', dataIndex: 'A3959CTABC', align: 'left', width: 100}
                                 ],
                                 defaults: {
                                     sortable: true,

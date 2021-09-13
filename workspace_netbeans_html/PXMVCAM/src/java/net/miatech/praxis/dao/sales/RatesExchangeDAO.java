@@ -470,6 +470,117 @@ public class RatesExchangeDAO {
 
         return lstRtn;
     }
+    
+    public List<A1526Filter> loadPX025S01A4061(A1526Filter filter) throws SQLException, Exception {
+        List<A1526Filter> lstRtn = new ArrayList<>(0);
+        A1526Filter objRtn;
+        int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        try {
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04162(?,?,?,?,?,?,?,?,?)}";
+            if (filter.page.PAGNUM > 0) {
+                PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
+            }
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.registerOutParameter("IO_PAGNUM", Types.INTEGER);
+            cstmt01.registerOutParameter("IO_PAGROW", Types.INTEGER);
+            cstmt01.registerOutParameter("IO_TOTPAG", Types.INTEGER);
+            cstmt01.registerOutParameter("IO_TOTROW", Types.INTEGER);
+
+            cstmt01.setInt("IN_TIPO", filter.IN_TIPO);
+            cstmt01.setString("IN_CURR_FROM", filter.IN_CURR_FROM);
+            cstmt01.setString("IN_CURR_TO", filter.IN_CURR_TO);
+            cstmt01.setString("IN_DATE", filter.IN_DATE);
+            cstmt01.setString("IN_DATE_2", filter.IN_DATE_2);
+
+            //Paginado
+            cstmt01.setInt("IO_PAGNUM", PAGINIT);
+            cstmt01.setInt("IO_PAGROW", totRowsPag);
+            cstmt01.setInt("IO_TOTPAG", totRows);
+            cstmt01.setInt("IO_TOTROW", filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt("IO_PAGNUM");
+            filter.page.PAGROW = cstmt01.getInt("IO_PAGROW");
+            filter.page.TOTPAG = cstmt01.getInt("IO_TOTPAG");
+            filter.page.TOTROW = cstmt01.getInt("IO_TOTROW");
+
+            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt("IO_PAGROW")) {
+                totRows = filter.page.TOTROW;
+                totPAGS = filter.page.TOTPAG;
+            } else {
+                try {
+                    totRows = cstmt01.getInt("IO_TOTROW");
+                    int total = (int) (totRows / totRowsPag);
+                    int resto = (totRows % totRowsPag);
+
+                    if (resto > 0) {
+                        totPAGS = total + 1;
+                    } else {
+                        totPAGS = total;
+                    }
+
+                } catch (Exception e) {
+                    totPAGS = totRows / totRowsPag;
+                }
+            }
+
+            filter.page.TOTPAG = totPAGS;
+
+            rs01 = cstmt01.getResultSet();
+            int i = 0;
+            while (rs01.next()) {
+                objRtn = new A1526Filter();
+                objRtn.RN = rs01.getLong("RN");
+                objRtn.A1526CUR = rs01.getString("A1526CUR");
+                objRtn.A1526CUR2 = rs01.getString("A1526CUR2");
+                objRtn.A1526DIS = rs01.getString("A1526DIS");
+                objRtn.A1526RATE = rs01.getDouble("A1526RATE");
+
+                objRtn.A1526UCRE = rs01.getString("A1526UCRE");
+                objRtn.A1526DCRE = rs01.getString("A1526DCRE");
+                objRtn.A1526TCRE = rs01.getString("A1526TCRE");
+
+                objRtn.A1526UUPD = rs01.getString("A1526UUPD");
+                objRtn.A1526DUPD = rs01.getString("A1526DUPD");
+                objRtn.A1526TUPD = rs01.getString("A1526TUPD");
+
+                objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
+                lstRtn.add(objRtn);
+            }
+        } catch (Exception e) {
+            String err = e.toString();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
 
     public String SQP00820(A1526Filter filter, String strOption) throws SQLException, Exception {
 

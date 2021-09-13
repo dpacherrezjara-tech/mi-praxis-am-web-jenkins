@@ -14,8 +14,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         this.p = this.view.params;
     },
     afterRender: function(){
-        Ext.getCmp(prototype.id+'-txtDESCRIP-label').hide();
-        Ext.getCmp(prototype.id+'-txtDESCRIP').hide();
+        //Ext.getCmp(prototype.id+'-txtDESCRIP-label').hide();
+        //Ext.getCmp(prototype.id+'-txtDESCRIP').hide();
         switch( this.p.actionCode ){
             case 'V':
                 this.mostrarData(this.p.bean);
@@ -33,6 +33,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
                             fn: function(btn) {
                                 if (btn === 'ok') {
                                     me.executeOption(this.p.bean, 'U', 'DataEntryFlightConciliationForm');
+                                    //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                                 } else {
                                     this.STVAL = '';
                                 }
@@ -140,6 +141,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         Ext.getCmp(prototype.id+'-cmbFSTAVC').setValue('');
         Ext.getCmp(prototype.id+'-txtFSENDFI').setValue('');
         Ext.getCmp(prototype.id+'-txtQCPNFI').setValue('0');
+        Ext.getCmp(prototype.id+'-txtQCPNFRE').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPTRA').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPAD').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPCHD').setValue('0');
@@ -221,11 +223,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         Ext.getCmp(prototype.id+"-txtQCPCHD").setValue(bean.QCPCHD);
         Ext.getCmp(prototype.id+"-txtQCPINF").setValue(bean.QCPINF);
         Ext.getCmp(prototype.id+"-cmbFSTAVC").setValue(bean.FSTAVC);
-        if (bean.FSTAVC === '') {
+        /*if (bean.FSTAVC === '') {
             Ext.getCmp(prototype.id+"-cmbFSTAVC").enable(true);
         } else if (bean.FSTAVC === '1') {
             Ext.getCmp(prototype.id+"-cmbFSTAVC").disable(true);
-        }
+        }*/
         Ext.getCmp(prototype.id+"-txtFCLOSE").setValue(bean.FCLOSE);
         Ext.getCmp(prototype.id+"-txtQCPNVAL").setValue(bean.QCPNVAL);
         Ext.getCmp(prototype.id+"-cmbFSTAPO").setValue(bean.FSTAPO);
@@ -237,13 +239,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         
         Ext.getCmp(prototype.id+"-txtFSENDFI").setValue(bean.FSENDFI);
         Ext.getCmp(prototype.id+"-txtQCPNFI").setValue(bean.QCPNFI);
+        Ext.getCmp(prototype.id+"-txtQCPNFRE").setValue(bean.QCPNFRE);
         
         Ext.getCmp(prototype.id+"-cmbFSTAFI").setValue(bean.FSTAFI);
-        if (bean.FSTAFI === '') {
+        /*if (bean.FSTAFI === '') {
             Ext.getCmp(prototype.id+"-cmbFSTAFI").enable(true);
         } else if (bean.FSTAVC === '1') {
             Ext.getCmp(prototype.id+"-cmbFSTAFI").disable(true);
-        }
+        }*/
         
         Ext.getCmp(prototype.id+'-USCR').setValue(bean.USCR);
         Ext.getCmp(prototype.id+'-FECR').setValue(bean.FECR);
@@ -397,6 +400,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             if (Ext.getCmp(prototype.id+'-txtQCPNFI').getErrors().length>0) {
                 msjResult = 'Invalid Physical File quantity coupons.';
             }
+            if (Ext.getCmp(prototype.id+'-txtQCPNFRE').getErrors().length>0) {
+                msjResult = 'Invalid Physical File quantity coupons NR.';
+            }
             // </editor-fold>
             if(msjResult === ''){
                 //Validación SSIM =========================================================
@@ -436,16 +442,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
                 
                 if(msjResult === ''){
                     //Validación physical ===================================================
-                    if(beanOption.FSENDFI !== '' && beanOption.QCPNFI > 0 && beanOption.FSTAFI !== ''){
+                    if(beanOption.FSENDFI !== '' && beanOption.QCPNFI > 0 && beanOption.QCPNFRE > 0 && beanOption.FSTAFI !== ''){
                         hayVFI = true;
-                    }else if(beanOption.FSENDFI !== '' && beanOption.QCPNFI > 0 && beanOption.FSTAFI === ''){
-                        console.log(beanOption.FSENDFI);
-                        console.log(beanOption.QCPNFI);
-                        console.log(beanOption.FSTAFI);
-                        console.log('-----------');
-                        console.log(beanOption.FSTAVC);
+                    }else if(beanOption.FSENDFI !== '' && beanOption.QCPNFI > 0 && beanOption.QCPNFRE > 0 && beanOption.FSTAFI === ''){
                         msjResult = "The Physical Flight Manifest Flag can not be 'Stand By'.";
-                    }else if(beanOption.FSENDFI === '' && beanOption.QCPNFI <= 0 && beanOption.FSTAFI !== ''){
+                    }else if(beanOption.FSENDFI === '' && beanOption.QCPNFI <= 0 && beanOption.QCPNFRE <= 0 && beanOption.FSTAFI !== ''){
                         //Cuando todos los campos son vacío y el estado es 'Received'
                         msjResult = "The Physical Flight Manifest Flag must be 'Stand By' or you must enter all fields of physical File.";
                     }
@@ -470,14 +471,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
                     if(beanOption.FFLOW === 'X' && (beanOption.FSENDOD !== '' || beanOption.QCPNOD > 0 || beanOption.FSTAOD !== ''
                         || beanOption.FSENDVC !== '' || beanOption.QCPNVC > 0 || beanOption.QCPNOAL > 0 || beanOption.QCPNMA > 0 
                         || beanOption.FSTAVC !== '' || beanOption.FSENDFI !== '' || beanOption.QCPNOCR > 0 || beanOption.QCPNTOT > 0 
-                        || beanOption.QCPNFI > 0  || beanOption.FSTAFI !== '')){
+                        || beanOption.QCPNFI > 0 || beanOption.QCPNFRE > 0 || beanOption.FSTAFI !== '')){
                         msjResult = "If Flag Flown is 'Canceled' then ODS, VCR and Physical Flight Manifest Information must be empty and Status 'Stand By'.";
                     }
                 }
                 
-                if(msjResult === ''){
+                if(msjResult === '' && this.p.actionCode !== 'I'){
                     //Validando si se han modificado los campos del Manifiesto de Vuelo
-                    if(this.p.bean.FSENDFI.trim() !== beanOption.FSENDFI.trim() || this.p.bean.QCPNFI !== beanOption.QCPNFI
+                    if(this.p.bean.FSENDFI.trim() !== beanOption.FSENDFI.trim() || this.p.bean.QCPNFI !== beanOption.QCPNFI || this.p.bean.QCPNFRE !== beanOption.QCPNFRE
                         || this.p.bean.FSTAFI.trim() !== beanOption.FSTAFI.trim()){
 
                         //Si el usuario modificó sólo los datos del manifiesto de vuelo físico entonces NO debe obligar a que cierre el vuelo
@@ -597,6 +598,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             beanOption.QCPNFI = Number(this.getValue('txtQCPNFI').replace(',', '').trim());
         } else {
             beanOption.QCPNFI = 0;
+        }
+        if (this.getValue("txtQCPNFRE").trim() !== '') {
+            console.log(beanOption.QCPNFRE);
+            beanOption.QCPNFRE = Number(this.getValue('txtQCPNFRE').replace(',', '').trim());
+        } else {
+            beanOption.QCPNFRE = 0;
         }
         beanOption.FSTAFI = this.getValue('cmbFSTAFI');
         beanOption.FCLOSE = this.getValue('txtFCLOSE').trim();

@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.Filters', {
                                     hidden: false,
                                     layout: 'hbox',
                                     bodyStyle: 'background: transparent;"',
-                                    margin: '1 0',
+                                    //margin: '1 0',
                                     defaults: {
                                         anchor: '100%',
                                         padding: '1 0'
@@ -67,7 +67,7 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.Filters', {
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 10,
-                                            //padding:'2 2 2 2 ',                                            
+                                            padding:'2 0 0 0 ',                                            
                                             listeners: {
                                                 //change: 'onUpperValue',
                                                 keypress: function (obj, e) {
@@ -128,10 +128,35 @@ Ext.define('Ext.Praxis.view.discharges.NoShowForm.Filters', {
 //                                                maxHeight: 111
 //                                            },
                                             enableKeyEvents: true,
-                                            padding: '0 0',
+                                            padding: '2 0 0 0',
                                             listeners: {
                                                 //change: 'cmbfiltro_clickHandler'
                                             }
+                                        },
+                                        {
+                                            xtype: 'toolbar',
+                                            dock: 'bottom',
+                                            ui: 'footer',
+                                            margin: '2 0 2 25',
+                                            layout: {
+                                                pack: 'center'
+                                            },
+                                            fieldStyle: 'text-align:center',
+                                            defaults: {
+                                                scale: 'medium'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id + '-btn-apl-batch',
+                                                    text: 'Cargar Insumo',
+                                                    hidden:true,
+                                                    icon: 'resources/img/icon/single_format.png',                                                    
+                                                    listeners: {
+                                                        click: 'onDetailClick04'
+                                                    }
+                                                }                                                
+                                            ]
                                         }
                                     ]
                                 },

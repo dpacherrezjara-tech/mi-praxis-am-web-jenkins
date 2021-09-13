@@ -265,6 +265,7 @@ public class TraceabilitySuggestedDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
+        int cont = 0;
 
         String SQLCLL01 = "{CALL PXSAUDIT.SQP03764(?,?,?,?,?)}";
 
@@ -303,6 +304,21 @@ public class TraceabilitySuggestedDAO {
                 objRtn.CANTARCACM = rs01.getInt("CANTARCACM");
                 objRtn.CANTASRACM = rs01.getInt("CANTASRACM");
                 objRtn.CANTTOTALACM = rs01.getInt("CANTTOTALACM");
+                objRtn.TTIVACARGO = rs01.getDouble("TTIVACARGO");
+                objRtn.TTCARGO = rs01.getDouble("TTCARGO"); 
+                if (objRtn.A2548FLAG.equals("Approved") || objRtn.A2548FLAG.equals("Billed")) {
+                    if (cont == 0) {
+                        objRtn.PENDIGROUP = rs01.getDouble("PENDIGROUP");
+                        objRtn.PENDISCLIE = rs01.getDouble("PENDISCLIE");
+                        cont++;
+                    } else {
+                        objRtn.PENDIGROUP = 0.00;
+                        objRtn.PENDISCLIE = 0.00;
+                    }
+                } else {
+                    objRtn.PENDIGROUP = 0.00;
+                    objRtn.PENDISCLIE = 0.00;
+                }
 
                 objRtn.CANTGROUP = filter.VP_GROUP;
                 objRtn.CANTCLIE = filter.VP_CLIE;

@@ -420,6 +420,33 @@ public class ConciliationASRDAO {
                 objRtn.A1530_A1720_TV_SUM = rs01.getDouble("A1530_A1720_TV_SUM");
 
                 objRtn.STATUS = rs01.getString("STATUS");
+                objRtn.STATUS_RECORD = "";
+                
+                double intA1530_A1720_CA_SUM = rs01.getDouble("SCASH") - rs01.getDouble("RCASH");
+                double intA1530_A1720_CC_SUM = rs01.getDouble("SCREDIT") -  rs01.getDouble("RCREDIT");
+                double diff_CA_SUM = intA1530_A1720_CA_SUM - rs01.getDouble("A1530_A1720_CA_SUM"); 
+                double diff_CC_SUM = intA1530_A1720_CC_SUM - rs01.getDouble("A1530_A1720_CC_SUM");
+                switch (objRtn.STATUS) {
+                    case "A":
+                        objRtn.STATUS_RECORD = "MATCH"; //MATCH AUTOMATIC.
+                        break;
+                    case "M":
+                        objRtn.STATUS_RECORD = "MATCH"; //MATCH MANUAL.
+                        break;
+                    case "D":
+                        objRtn.STATUS_RECORD = "DIFF"; //DIFFERENCE.
+                        break;
+                    case "": //CALCULATE.
+                        if ( diff_CA_SUM == 0 && diff_CC_SUM == 0 ){
+                                objRtn.STATUS_RECORD = "MATCH";                            
+                        } else {
+                            objRtn.STATUS_RECORD = "DIFF";
+                        }
+                        break;
+                    default:
+                        objRtn.STATUS_RECORD = objRtn.STATUS;
+                }
+                        
                 objRtn.COMENT = rs01.getString("COMENT");
 
                 objRtn.USRC = rs01.getString("USRC");

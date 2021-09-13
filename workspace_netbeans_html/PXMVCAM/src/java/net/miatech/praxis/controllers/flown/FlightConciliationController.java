@@ -1460,7 +1460,7 @@ public class FlightConciliationController extends BaseController {
             Cell cell50, cell51, cell52, cell53, cell54, cell55, cell56;
             Cell cell57, cell58, cell59, cell60, cell61, cell62, cell63;
             Cell cell64, cell65, cell66, cell67, cell68, cell69, cell70;
-            Cell cell71, cell72;
+            Cell cell71, cell72, cell73;
 
             // <editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
@@ -1488,18 +1488,20 @@ public class FlightConciliationController extends BaseController {
             cell70 = row.createCell(20);
             cell71 = row.createCell(21);
             cell72 = row.createCell(22);
+            cell73 = row.createCell(23);
             
             cell50.setCellValue("SSIM Data");
             cell57.setCellValue("Information PAX ODS");
             cell61.setCellValue("ODS Data");
-            cell63.setCellValue("Leg");
+            //cell63.setCellValue("Leg");
+            cell63.setCellValue("Dif");
             cell64.setCellValue("VCR Data");
             cell66.setCellValue("OCR");
             cell67.setCellValue("Manual");
             cell68.setCellValue("Total");
             cell69.setCellValue("Coupons");
             cell70.setCellValue("Flight Manifest");
-            cell72.setCellValue("Coupon");
+            cell73.setCellValue("Coupon");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 10));
@@ -1510,8 +1512,8 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 21));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 22));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
 
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
@@ -1536,6 +1538,7 @@ public class FlightConciliationController extends BaseController {
             cell70.setCellStyle(headerStyle);
             cell71.setCellStyle(headerStyle);
             cell72.setCellStyle(headerStyle);
+            cell73.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1565,6 +1568,7 @@ public class FlightConciliationController extends BaseController {
             cell70 = row.createCell(20);
             cell71 = row.createCell(21);
             cell72 = row.createCell(22);
+            cell73 = row.createCell(23);
 
             cell50.setCellValue("Flight");
             cell52.setCellValue("Carrier");
@@ -1584,7 +1588,7 @@ public class FlightConciliationController extends BaseController {
             cell67.setCellValue("Qty");
             cell69.setCellValue("Valued");
             cell70.setCellValue("Received");
-            cell72.setCellValue("Diff");
+            cell73.setCellValue("Diff");
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 1));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
@@ -1604,7 +1608,7 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 20, 20));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
             
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
@@ -1629,6 +1633,7 @@ public class FlightConciliationController extends BaseController {
             cell70.setCellStyle(headerStyle);
             cell71.setCellStyle(headerStyle);
             cell72.setCellStyle(headerStyle);
+            cell73.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1658,6 +1663,7 @@ public class FlightConciliationController extends BaseController {
             cell70 = row.createCell(20);
             cell71 = row.createCell(21);
             cell72 = row.createCell(22);
+            cell73 = row.createCell(23);
 
             cell50.setCellValue("Date");
             cell51.setCellValue("Number");
@@ -1666,6 +1672,7 @@ public class FlightConciliationController extends BaseController {
             cell64.setCellValue("Date");
             cell70.setCellValue("Date");
             cell71.setCellValue("Qty");
+            cell72.setCellValue("Qty NR");
 
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 1));
@@ -1728,6 +1735,7 @@ public class FlightConciliationController extends BaseController {
                 cell70 = row.createCell(20);
                 cell71 = row.createCell(21);
                 cell72 = row.createCell(22);
+                cell73 = row.createCell(23);
 
                 cell50.setCellValue(listaData.get(vi).strFormatDate);
                 cell51.setCellValue(listaData.get(vi).NFLIGHT);
@@ -1742,7 +1750,8 @@ public class FlightConciliationController extends BaseController {
                 cell60.setCellValue(listaData.get(vi).QCPTRA);
                 cell61.setCellValue(listaData.get(vi).strFormatFSENDOD);
                 cell62.setCellValue(listaData.get(vi).QCPNOD);
-                cell63.setCellValue(listaData.get(vi).QCPNLEG);
+                //cell63.setCellValue(listaData.get(vi).QCPNLEG);
+                cell63.setCellValue(listaData.get(vi).DIFFODSVCR);
                 cell64.setCellValue(listaData.get(vi).strFormatFSENDVC);
                 cell65.setCellValue(listaData.get(vi).QCPNVC);
                 cell66.setCellValue(listaData.get(vi).QCPNOCR);
@@ -1751,7 +1760,8 @@ public class FlightConciliationController extends BaseController {
                 cell69.setCellValue(listaData.get(vi).QCPNVAL);
                 cell70.setCellValue(listaData.get(vi).strFormatDate3);
                 cell71.setCellValue(listaData.get(vi).QCPNFI);
-                cell72.setCellValue(listaData.get(vi).lngQDIFF);
+                cell72.setCellValue(listaData.get(vi).QCPNFRE);
+                cell73.setCellValue(listaData.get(vi).lngQDIFF);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
@@ -1776,6 +1786,7 @@ public class FlightConciliationController extends BaseController {
                 cell70.setCellStyle(bodyStyle);
                 cell71.setCellStyle(bodyStyle);
                 cell72.setCellStyle(bodyStyle);
+                cell73.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -1805,6 +1816,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(20, true);
             sheet.autoSizeColumn(21, true);
             sheet.autoSizeColumn(22, true);
+            sheet.autoSizeColumn(23, true);
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
@@ -1908,17 +1920,21 @@ public class FlightConciliationController extends BaseController {
             cell16 = row.createCell(16);
             cell17 = row.createCell(17);
             cell18 = row.createCell(18);
-            cell19 = row.createCell(19);
+//            cell19 = row.createCell(19);
 
             cell00.setCellValue("Ticket");
-            cell01.setCellValue("Sale");
-            cell06.setCellValue("Coupon");
-            cell17.setCellValue("Accounting Information");
+            cell01.setCellValue("Seq");
+            cell02.setCellValue("Rolling");
+            cell03.setCellValue("Sale");
+            cell08.setCellValue("Coupon");
+            cell15.setCellValue("Accounting Information");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 16));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 19));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 18));
 
             cell00.setCellStyle(headerStyle);
             cell01.setCellStyle(headerStyle);
@@ -1939,7 +1955,7 @@ public class FlightConciliationController extends BaseController {
             cell16.setCellStyle(headerStyle);
             cell17.setCellStyle(headerStyle);
             cell18.setCellStyle(headerStyle);
-            cell19.setCellStyle(headerStyle);
+//            cell19.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -1965,41 +1981,42 @@ public class FlightConciliationController extends BaseController {
             cell16 = row.createCell(16);
             cell17 = row.createCell(17);
             cell18 = row.createCell(18);
-            cell19 = row.createCell(19);
+//            cell19 = row.createCell(19);
 
-            cell01.setCellValue("Date");
-            cell02.setCellValue("Country");
-            cell03.setCellValue("Fare");
-            cell04.setCellValue("RBD");
-            cell05.setCellValue("Pax");
-            cell06.setCellValue("Operation");
-            cell07.setCellValue("Carrier");
-            cell08.setCellValue("0%");
-            cell10.setCellValue("16%");
-            cell12.setCellValue("Total");
-            cell14.setCellValue("Com.");
-            cell15.setCellValue("Curr.");
-            cell16.setCellValue("Status");
-            cell17.setCellValue("Date");
-            cell18.setCellValue("Id");
-            cell19.setCellValue("Status");
+            cell03.setCellValue("Date");
+            cell04.setCellValue("Country");
+            cell05.setCellValue("Fare");
+            cell06.setCellValue("RBD");
+            cell07.setCellValue("Pax");
+            cell08.setCellValue("Operation");
+            cell09.setCellValue("Carrier");
+//            cell08.setCellValue("0%");
+//            cell10.setCellValue("16%");
+            cell10.setCellValue("Total");
+            cell12.setCellValue("Com.");
+            cell13.setCellValue("Curr.");
+            cell14.setCellValue("Status");
+            cell15.setCellValue("Date");
+            cell16.setCellValue("Id");
+            cell17.setCellValue("Status");
+            cell18.setCellValue("Service Type");
 
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 11));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 13));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
-            sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
+//            sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 19));
 
             cell00.setCellStyle(headerStyle);
             cell01.setCellStyle(headerStyle);
@@ -2020,7 +2037,7 @@ public class FlightConciliationController extends BaseController {
             cell16.setCellStyle(headerStyle);
             cell17.setCellStyle(headerStyle);
             cell18.setCellStyle(headerStyle);
-            cell19.setCellStyle(headerStyle);
+//            cell19.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -2046,25 +2063,25 @@ public class FlightConciliationController extends BaseController {
             cell16 = row.createCell(16);
             cell17 = row.createCell(17);
             cell18 = row.createCell(18);
-            cell19 = row.createCell(19);
+//            cell19 = row.createCell(19);
 
-            cell03.setCellValue("Basis");
-            cell08.setCellValue("Value");
-            cell09.setCellValue("YQ");
+            cell05.setCellValue("Basis");
             cell10.setCellValue("Value");
             cell11.setCellValue("YQ");
-            cell12.setCellValue("Value");
-            cell13.setCellValue("YQ");
-            cell16.setCellValue("Valoration");
+//            cell10.setCellValue("Value");
+//            cell11.setCellValue("YQ");
+//            cell12.setCellValue("Value");
+//            cell13.setCellValue("YQ");
+            cell14.setCellValue("Valoration");
 
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 12, 12));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 13, 13));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 16, 16));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 10, 10));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 11, 11));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 12, 12));
+//            sheet.addMergedRegion(new CellRangeAddress(2, 2, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 14));
 
             cell00.setCellStyle(headerStyle);
             cell01.setCellStyle(headerStyle);
@@ -2085,7 +2102,7 @@ public class FlightConciliationController extends BaseController {
             cell16.setCellStyle(headerStyle);
             cell17.setCellStyle(headerStyle);
             cell18.setCellStyle(headerStyle);
-            cell19.setCellStyle(headerStyle);
+//            cell19.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -2112,28 +2129,31 @@ public class FlightConciliationController extends BaseController {
                 cell16 = row.createCell(16);
                 cell17 = row.createCell(17);
                 cell18 = row.createCell(18);
-                cell19 = row.createCell(19);
+//                cell19 = row.createCell(19);
 
                 cell00.setCellValue(listaData.get(vi).strTicket);
-                cell01.setCellValue(listaData.get(vi).strFormatFVTA);
-                cell02.setCellValue(listaData.get(vi).PSVVTA);
-                cell03.setCellValue(listaData.get(vi).FBASE);
-                cell04.setCellValue(listaData.get(vi).CLAS);
-                cell05.setCellValue(listaData.get(vi).QTYPAX);
-                cell06.setCellValue(listaData.get(vi).TOPUS);
-                cell07.setCellValue(listaData.get(vi).CARR);
-                cell08.setCellValue(listaData.get(vi).VCPN0);
-                cell09.setCellValue(listaData.get(vi).VYQ0);
-                cell10.setCellValue(listaData.get(vi).VCPN16);
-                cell11.setCellValue(listaData.get(vi).VYQ16);
-                cell12.setCellValue(listaData.get(vi).VCPN);
-                cell13.setCellValue(listaData.get(vi).VYQ);
-                cell14.setCellValue(listaData.get(vi).COMISI);
-                cell15.setCellValue(listaData.get(vi).MDACP);
-                cell16.setCellValue(listaData.get(vi).strDescFVAL);
-                cell17.setCellValue(listaData.get(vi).strFCON);
-                cell18.setCellValue(listaData.get(vi).IDCON);
-                cell19.setCellValue(listaData.get(vi).strDescSTCON);
+                cell01.setCellValue(listaData.get(vi).SEQ);
+                cell02.setCellValue(listaData.get(vi).SEQRO);
+                cell03.setCellValue(listaData.get(vi).strFormatFVTA);
+                cell04.setCellValue(listaData.get(vi).PSVVTA);
+                cell05.setCellValue(listaData.get(vi).FBASE);
+                cell06.setCellValue(listaData.get(vi).CLAS);
+                cell07.setCellValue(listaData.get(vi).QTYPAX);
+                cell08.setCellValue(listaData.get(vi).TOPUS);
+                cell09.setCellValue(listaData.get(vi).CARR);
+//                cell08.setCellValue(listaData.get(vi).VCPN0);
+//                cell09.setCellValue(listaData.get(vi).VYQ0);
+//                cell10.setCellValue(listaData.get(vi).VCPN16);
+//                cell11.setCellValue(listaData.get(vi).VYQ16);
+                cell10.setCellValue(listaData.get(vi).VCPN);
+                cell11.setCellValue(listaData.get(vi).VYQ);
+                cell12.setCellValue(listaData.get(vi).COMISI);
+                cell13.setCellValue(listaData.get(vi).MDACP);
+                cell14.setCellValue(listaData.get(vi).strDescFVAL);
+                cell15.setCellValue(listaData.get(vi).strFCON);
+                cell16.setCellValue(listaData.get(vi).IDCON);
+                cell17.setCellValue(listaData.get(vi).strDescSTCON);
+                cell18.setCellValue(listaData.get(vi).strFFLOW);
 
                 cell00.setCellStyle(bodyStyle);
                 cell01.setCellStyle(bodyStyle);
@@ -2154,7 +2174,7 @@ public class FlightConciliationController extends BaseController {
                 cell16.setCellStyle(bodyStyle);
                 cell17.setCellStyle(bodyStyle);
                 cell18.setCellStyle(bodyStyle);
-                cell19.setCellStyle(bodyStyle);
+//                cell19.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -2180,7 +2200,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true);
-            sheet.autoSizeColumn(19, true);
+//            sheet.autoSizeColumn(19, true);
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
@@ -2515,6 +2535,248 @@ public class FlightConciliationController extends BaseController {
             throw new SpringException(e);
         }
     }
+    
+    @RequestMapping(value = "getXLSX_Flight_Manifest")
+    public @ResponseBody
+    void getXLSX_Flight_Manifest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        System.out.println("Report : getXLSX_Flight_Manifest");
+        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        A3729Filter filter = new A3729Filter();
+            Gson gson = new Gson();
+            String beanString;
+
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");                        
+            
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A3729Filter> listaData = logic.loadPX095SGGA3729(filter);
+                        
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+             // ====== CREANDO TITULOS ======================================
+
+
+             // ======  Nivel 1 ==========
+
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+            Cell CH1_6 = row1.createCell(6);
+            Cell CH1_7 = row1.createCell(7);
+            Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
+            Cell CH1_12 = row1.createCell(12);
+            Cell CH1_13 = row1.createCell(13);
+            Cell CH1_14 = row1.createCell(14);
+
+            CH1_0.setCellValue("Nbr");
+            CH1_1.setCellValue("Flight");
+//            CH1_2.setCellValue("");
+            CH1_3.setCellValue("Last Name");
+            CH1_4.setCellValue("First Name");
+            CH1_5.setCellValue("Type Pax");
+            CH1_6.setCellValue("Seat");
+            CH1_7.setCellValue("Ticket");
+            CH1_8.setCellValue("Status");
+            CH1_9.setCellValue("Orig");
+            CH1_10.setCellValue("Dest");
+            CH1_11.setCellValue("VCR vs");
+            CH1_12.setCellValue("Process Sabre");
+//            CH1_13.setCellValue("");
+            CH1_14.setCellValue("Flag");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+            CH1_6.setCellStyle(headerStyle);
+            CH1_7.setCellStyle(headerStyle);
+            CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+            CH1_12.setCellStyle(headerStyle);
+            CH1_13.setCellStyle(headerStyle);
+            CH1_14.setCellStyle(headerStyle);
+
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            ++vj;
+             //============================================
+
+             // ======  Nivel 2 ==========
+
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+            Cell CH2_6 = row2.createCell(6);
+            Cell CH2_7 = row2.createCell(7);
+            Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+            Cell CH2_12 = row2.createCell(12);
+            Cell CH2_13 = row2.createCell(13);
+            Cell CH2_14 = row2.createCell(14);
+
+            CH2_1.setCellValue("Date");
+            CH2_2.setCellValue("Number");
+            CH2_11.setCellValue("Manifest");
+            CH2_12.setCellValue("Scan");
+            CH2_13.setCellValue("Status");
+            CH2_14.setCellValue("Sales-PRAXIS");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+            CH2_6.setCellStyle(headerStyle);
+            CH2_7.setCellStyle(headerStyle);
+            CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_12.setCellStyle(headerStyle);
+            CH2_13.setCellStyle(headerStyle);
+            CH2_14.setCellStyle(headerStyle);
+
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            ++vj;
+             //============================================
+
+
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+                Cell rcell6 = row1.createCell(6);
+                Cell rcell7 = row1.createCell(7);
+                Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
+                Cell rcell12 = row1.createCell(12);
+                Cell rcell13 = row1.createCell(13);
+                Cell rcell14 = row1.createCell(14);
+
+                rcell0.setCellValue(listaData.get(vi).RN);
+                rcell1.setCellValue(listaData.get(vi).DFLIGHT);
+                rcell2.setCellValue(listaData.get(vi).NFLIGHT);
+                rcell3.setCellValue(listaData.get(vi).LNAME);
+                rcell4.setCellValue(listaData.get(vi).FNAME);
+                rcell5.setCellValue(listaData.get(vi).desPAX);
+                rcell6.setCellValue(listaData.get(vi).CHAIR);
+                rcell7.setCellValue(listaData.get(vi).strTicket);
+                rcell8.setCellValue(listaData.get(vi).desSTVAL);
+                rcell9.setCellValue(listaData.get(vi).CDEPART);
+                rcell10.setCellValue(listaData.get(vi).CARRIVA);
+                rcell11.setCellValue(listaData.get(vi).desSTVCR);
+                rcell12.setCellValue(listaData.get(vi).descFSABRE);
+                rcell13.setCellValue(listaData.get(vi).STASABR);
+                rcell14.setCellValue(listaData.get(vi).descFSALES);
+                iter.next();
+                 ++vi;
+                ++vj;
+             }
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+
+             //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+
 
     /**
      * Añadir y eliminar de favoritos

@@ -1189,6 +1189,7 @@ public class SalesReportDAO {
                 for (int i = 1; i <= 4; i++) {
                     objRtn = new S0007A720Filter();
                     objRtn.A720MONREG = rs01.getString("A720MONREG");
+                    objRtn.A720MDARV = rs01.getString("A720MDARV");
                     objRtn.TICKET = rs01.getString("A720CIA") + rs01.getString("A720FORMA") + rs01.getString("A720SERIE");
                     objRtn.CPUI = "";
                     objRtn.CUPON = i+"";

@@ -22,6 +22,7 @@
                 Ext.getCmp(prototype.id + '-txtA1007CTATO').focus();
                 break;
         }
+        global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
 

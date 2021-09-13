@@ -56,6 +56,7 @@ Ext.define('Ext.Praxis.controller.flown.OCRLoad.DataEntryOCRLoadController',{
                 Ext.getCmp(prototype.id+'-cmbType').setValue("T");
                 break;
         }
+        global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
         var txtTKT = rec.get('strTicket').replace(/\s/g, "");

@@ -91,7 +91,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.PostbillingController',
                 //{"code": "DAG", "name": "DISAGREE WITH AGENT"},
                 {"code": "DAA", "name": "DISAGREE WITH AIRLINE"},
                 //{"code": "PRS", "name": "NEW REASON RECEIVED"},
-                {"code": "PRS", "name": "PBD REASON SENT"}
+                {"code": "PRS", "name": "PBD REASON SENT"},
+                {"code": "PAG", "name": "PENDING AGENT"},
+                {"code": "PAA", "name": "PENDING AIRLINE"}
                 //{"code": "PRA", "name": "ASK AGENCY QUESTIONS"}
                 // {"code": "AAG", "name": "AGREE WITH AGENT"},
                 //{"code": "AAA", "name": "AGREE WITH AIRLINE"}
@@ -206,6 +208,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.PostbillingController',
                 txtCountry.setValue('');
                 cmbCountry2.setValue('');
                 txtUser.setValue('');
+                txtIATA.setValue('');
                 break;
             default:
                 txtIATA.hide();
@@ -354,6 +357,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.PostbillingController',
                 break;
             case 'PBD Issued':
                 color = '#F3F781';
+                break;
+            case 'Pending Agent':
+                color = '#58FAF4';
+                break;
+            case 'Pending Airline':
+                color = '#F78181';
                 break;
         }
 
