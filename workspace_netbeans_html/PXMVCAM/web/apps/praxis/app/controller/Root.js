@@ -246,13 +246,17 @@ Ext.define('Ext.Praxis.controller.Root', {
     AccessControlRoot: function() {
         if(userAccess.length>0)
         {
-            var plusItems = document.querySelectorAll('.prx-icon-add');
+            /*var plusItems = document.querySelectorAll('.prx-icon-add');
             var exportItems = document.querySelectorAll('.prx-icon-excel');
             if(plusItems === null) plusItems = [];
             if(exportItems === null) exportItems = [];
             console.log('AccessControlRoot');
             console.log(accessSelect);
             if(accessSelect.NPROG === "PX00000018") return;
+            if(accessSelect.NPROG === "PX00000523") return;
+            if(accessSelect.NPROG === "PX00000552") return;
+            if(accessSelect.NPROG === "PX00000553") return;
+            if(accessSelect.NPROG === "PX00000464") return;
             // PERML, PERMC, PERMM, PERME, PERMX
             if(accessSelect.PERMC==='N'){
                 plusItems.forEach(function(plusItem) {
@@ -271,7 +275,7 @@ Ext.define('Ext.Praxis.controller.Root', {
                 exportItems.forEach(function(exportItem) {
                     document.getElementById(exportItem.id).parentNode.parentNode.parentNode.style.display = 'block';
               });
-            }
+            }*/
         }
     }
 

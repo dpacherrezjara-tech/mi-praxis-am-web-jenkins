@@ -181,7 +181,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 3,
-                            width: 45
+                            width: 45,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         { xtype: 'tbspacer', width: 60 },
                         {
@@ -291,56 +294,80 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             id: prototype.id + '-txtA1741CIA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            width: 30
+                            width: 30,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741UNIDA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            width: 30
+                            width: 30,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741CECOS',
                             enforceMaxLength: true,
                             maxLength: 6,
-                            width: 50
+                            width: 50,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741UBICA',
                             enforceMaxLength: true,
                             maxLength: 4,
-                            width: 40
+                            width: 40,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741CTA',
                             enforceMaxLength: true,
                             maxLength: 4,
-                            width: 40
+                            width: 40,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741SCTA',
                             enforceMaxLength: true,
                             maxLength: 5,
-                            width: 50
+                            width: 50,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741EQUI',
                             enforceMaxLength: true,
                             maxLength: 4,
-                            width: 40
+                            width: 40,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741ICIA',
                             enforceMaxLength: true,
                             maxLength: 2,
-                            width: 30
+                            width: 30,
+                            listeners:{
+                                change: 'onUpperValue'
+                            }
                         }
                     ]
                 },
