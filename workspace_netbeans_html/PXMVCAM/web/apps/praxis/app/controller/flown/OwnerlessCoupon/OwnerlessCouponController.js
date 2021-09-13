@@ -174,7 +174,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
             fields: ['code', 'name'],
             data: [
                 ["P", "Pending"],
-                ["F", "Loaded"],
+                ["F", "Extraido al Flown"], //Loaded
                 ["D", "Duplicate"],
                 ["C", "Cancelled"]
             ]
