@@ -104,6 +104,7 @@ public class OwnerlessCouponDAO {
                 beanTkt.strDescripcion = Functions.getMonthConvert(beanTkt.A1413FREGI);//Fecha de Ingreso
 
                 beanTkt.A1413FROM = rst.getString("A1413FROM");
+                beanTkt.FFLOWN = rst.getString("FFLOWN");
                 beanTkt.A1413TO = rst.getString("A1413TO");
                 beanTkt.strFROM = rst.getString("DES_ORIG");
                 beanTkt.strTO = rst.getString("DES_DEST");
