@@ -188,7 +188,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     fieldStyle: 'text-align:right',
                     enforceMaxLength: true,
                     maxLength: 4,
-                    width: 60
+                    width: 60,
+                    listeners:{
+                        change: 'onUpperValue'
+                    }
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
@@ -205,7 +208,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Filters', {
                     fieldStyle: 'text-align:right',
                     enforceMaxLength: true,
                     maxLength: 5,
-                    width: 60
+                    width: 60,
+                    listeners:{
+                        change: 'onUpperValue'
+                    }
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {

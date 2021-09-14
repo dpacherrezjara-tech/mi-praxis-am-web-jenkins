@@ -837,7 +837,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         if(PERMC === 'Y'){
             Ext.getCmp(prototype.id+'-btnTicket').hide();
             Ext.getCmp(prototype.id+'-btnAccounting').hide();
-            Ext.getCmp(prototype.id+'-btnProrrate').hide();
+            //Ext.getCmp(prototype.id+'-btnProrrate').hide();
             Ext.getCmp(prototype.id+'-btnDelivery').hide();
             Ext.getCmp(prototype.id+'-btnUsage').hide();
             Ext.getCmp(prototype.id+'-btnHistory').hide();

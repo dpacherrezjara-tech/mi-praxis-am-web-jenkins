@@ -1156,7 +1156,7 @@ public class InputsControlController extends BaseController {
             CH1_01.setCellValue("Processing Date");
             CH1_02.setCellValue("Transaction Number");
             CH1_03.setCellValue("Processing Time");
-            CH1_04.setCellValue("SIMM Information");
+            CH1_04.setCellValue("SSIM Information");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);

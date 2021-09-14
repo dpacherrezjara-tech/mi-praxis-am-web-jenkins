@@ -719,7 +719,8 @@ public class FlightConciliationDAO {
 
         try {
             
-            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
+//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG_1(?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -784,11 +785,19 @@ public class FlightConciliationDAO {
                 }
                 
                 beanCons.TPAX = rst.getString("TPAX").trim();
+                beanCons.TPAX_V = rst.getString("TPAX_V").trim();
+                
+                if(!beanCons.TPAX_V.equals("")) {
+                    beanCons.TPAX = beanCons.TPAX_V;
+                }
+                
                 if(beanCons.TPAX.equals("A")){
                     beanCons.desPAX = "Adult";
                 } else if (beanCons.TPAX.equals("C")) {
                     beanCons.desPAX = "Children";
                 } else if (beanCons.TPAX.equals("I")) {
+                    beanCons.desPAX = "Infant";
+                } else if (beanCons.TPAX.equals("INF")) {
                     beanCons.desPAX = "Infant";
                 }
                 

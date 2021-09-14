@@ -49,7 +49,9 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
             data: [
                 ["", "Pendiente"],
                 ["M", "Macht con venta"],
-                ["F", "Extraido al Flown"]
+                ["F", "Extraido al Flown"],
+                ["D", "Duplicate"],
+                ["C", "Cancelled"]
             ]}));
         cmbRegType.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,

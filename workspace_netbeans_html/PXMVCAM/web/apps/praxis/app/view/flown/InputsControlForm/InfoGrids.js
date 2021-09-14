@@ -345,7 +345,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                     {text: 'Processing <br> Date', width: 90, dataIndex: 'strFormatDate'},
                                     {text: 'Transaction <br> Number', width: 100, dataIndex: 'TRNN'},
                                     {text: 'Processing <br> Time', width: 90, dataIndex: 'TTIME'},
-                                    {text: 'SIMM Information', width: 800, dataIndex: 'SSIMDATA',
+                                    {text: 'SSIM Information', width: 800, dataIndex: 'SSIMDATA',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = "text-align :left ; margin-left : 1px ";
                                             return value;

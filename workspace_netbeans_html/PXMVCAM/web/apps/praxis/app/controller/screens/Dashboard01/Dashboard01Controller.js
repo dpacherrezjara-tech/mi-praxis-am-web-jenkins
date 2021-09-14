@@ -250,7 +250,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 break
             case  prototype.id + '-ScrEMD_tab':
                 this.setValue('cmbDateToMonth_EMD', this.getValue("cmbDateFromMonth_EMD"));
-                break                
+                break
         }
 
     },
@@ -292,6 +292,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
 
             case  prototype.id + '-ScrDBIataControl_tab':
                 Ext.getCmp(prototype.id + '-SalesAnalysis_filter').show();
+                break;
+
+            case  prototype.id + '-FlownAnalysis_tab':
+                //Ext.getCmp(prototype.id + '-FlownAnalysis_filter').show();
+                controller.inicio();
                 break;
 
             case  prototype.id + '-ScrInterline_tab':

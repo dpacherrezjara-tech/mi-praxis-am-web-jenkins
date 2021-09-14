@@ -5,7 +5,7 @@ prototype.id1 = 'SeguimietoFormUnico';
 prototype.id5 = 'FormUnicoSeguimietoSubiArchivo';
 prototype.id4 = 'FormUnicoSeguimieto';
 prototype.id6 = 'ADMSeguimietoSubiArchivo';
-prototype.widthWindow = 1430;
+prototype.widthWindow = 1500;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.TraceabilitySuggested.TraceabilitySuggested', {
@@ -902,11 +902,52 @@ Ext.define('Ext.Praxis.view.salesaudit.TraceabilitySuggested.TraceabilitySuggest
                                                     },
                                                     {
                                                         text: 'BSP',
-                                                        dataIndex: 'A2548IVACD',
-                                                        width: 130,
+                                                        columns: [
+                                                            {
+                                                                text: 'BSP',
+                                                                dataIndex: 'A2548IVACD',
+                                                                width: 130,
+                                                                align: 'right',
+                                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                            },
+                                                            {
+                                                                text: 'Charges',
+                                                                dataIndex: 'TTCARGO',
+                                                                width: 130,
+                                                                align: 'right',
+                                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                            },
+                                                            {
+                                                                text: 'Iva Char.',
+                                                                dataIndex: 'TTIVACARGO',
+                                                                width: 130,
+                                                                align: 'right',
+                                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                            }
+
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Pending <br> Grouping',
+                                                        dataIndex: 'PENDIGROUP',
+                                                        width: 80,
                                                         align: 'right',
                                                         summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
                                                     },
+                                                    {
+                                                        text: 'Unregistered <br> Client',
+                                                        dataIndex: 'PENDISCLIE',
+                                                        width: 80,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                    },
+                                                    /*{
+                                                     text: 'BSP',
+                                                     dataIndex: 'A2548IVACD',
+                                                     width: 130,
+                                                     align: 'right',
+                                                     summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                     },*/
                                                     {
                                                         text: 'Total',
                                                         dataIndex: 'A2548TOTAA',

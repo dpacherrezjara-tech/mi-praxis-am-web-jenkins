@@ -200,13 +200,17 @@ public class OwnerlessCouponController extends BaseController {
             filter.IN_FECHA_FROM = request.getParameter("dateFrom");
             filter.IN_FECHA_TO = request.getParameter("dateTo");
             filter.IN_TKT = request.getParameter("ticketNumber");
+            filter.IN_STCRU = request.getParameter("cmbStatus");
+            filter.IN_NVLOB = request.getParameter("txtNVLO");
 
             System.out.println("----------------- Parametros --------------------- ");
             System.out.println(" limit : " + request.getParameter("limit"));
             System.out.println(" start : " + request.getParameter("start"));
             System.out.println(" dateFrom : " + request.getParameter("dateFrom"));
             System.out.println(" dateTo : " + request.getParameter("dateTo"));
-            System.out.println(" IN_TKT : " + request.getParameter("IN_TKT"));
+            System.out.println(" IN_TKT : " + request.getParameter("ticketNumber"));
+            System.out.println(" IN_STCRU : " + request.getParameter("cmbStatus"));
+            System.out.println(" IN_NVLOB : " + request.getParameter("txtNVLO"));
             System.out.println("-------------------------------------------------- ");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
@@ -364,15 +368,17 @@ public class OwnerlessCouponController extends BaseController {
                     CH1_01 = row.createCell(1);
                     CH1_01.setCellValue("Flight Date");
                     CH1_02 = row.createCell(2);
-                    CH1_02.setCellValue("Transaction Date");
+                    CH1_02.setCellValue("Flight Number");
                     CH1_03 = row.createCell(3);
-                    CH1_03.setCellValue("Join Date");
+                    CH1_03.setCellValue("Transaction Date");
                     CH1_04 = row.createCell(4);
-                    CH1_04.setCellValue("Flight Number");
+                    CH1_04.setCellValue("Join Date");
                     CH1_05 = row.createCell(5);
                     CH1_05.setCellValue("Orig");
                     CH1_06 = row.createCell(6);
                     CH1_06.setCellValue("Dest");
+                    CH1_07 = row.createCell(7);
+                    CH1_07.setCellValue("Flag Flown");
 
                     //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -382,6 +388,7 @@ public class OwnerlessCouponController extends BaseController {
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
 
                     CH1_00.setCellStyle(headerStyle);
                     CH1_01.setCellStyle(headerStyle);
@@ -390,6 +397,7 @@ public class OwnerlessCouponController extends BaseController {
                     CH1_04.setCellStyle(headerStyle);
                     CH1_05.setCellStyle(headerStyle);
                     CH1_06.setCellStyle(headerStyle);
+                    CH1_07.setCellStyle(headerStyle);
 
                     ++vj;
                     row2 = sheet.createRow(vj);
@@ -400,6 +408,7 @@ public class OwnerlessCouponController extends BaseController {
                     CH2_04 = row2.createCell(4);
                     CH2_05 = row2.createCell(5);
                     CH2_06 = row2.createCell(6);
+                    CH2_07 = row2.createCell(7);
 
                     CH2_00.setCellStyle(headerStyle);
                     CH2_01.setCellStyle(headerStyle);
@@ -408,6 +417,7 @@ public class OwnerlessCouponController extends BaseController {
                     CH2_04.setCellStyle(headerStyle);
                     CH2_05.setCellStyle(headerStyle);
                     CH2_06.setCellStyle(headerStyle);
+                    CH2_07.setCellStyle(headerStyle);
 
                     ++vj;
                     while (iter.hasNext()) {
@@ -420,14 +430,16 @@ public class OwnerlessCouponController extends BaseController {
                         Cell rcell4 = row.createCell(4);
                         Cell rcell5 = row.createCell(5);
                         Cell rcell6 = row.createCell(6);
+                        Cell rcell7 = row.createCell(7);
 
                         rcell0.setCellValue(listaData.get(vi).strTicket);
                         rcell1.setCellValue(listaData.get(vi).strFormatDate);
-                        rcell2.setCellValue(listaData.get(vi).strFormatDate2);
-                        rcell3.setCellValue(listaData.get(vi).strDescripcion);
-                        rcell4.setCellValue(listaData.get(vi).A1413NVLOB);
+                        rcell2.setCellValue(listaData.get(vi).A1413NVLOB);
+                        rcell3.setCellValue(listaData.get(vi).strFormatDate2);
+                        rcell4.setCellValue(listaData.get(vi).strDescripcion);
                         rcell5.setCellValue(listaData.get(vi).A1413FROM);
                         rcell6.setCellValue(listaData.get(vi).A1413TO);
+                        rcell7.setCellValue(listaData.get(vi).FFLOWN);
 
                         rcell0.setCellStyle(bodyStyle);
                         rcell1.setCellStyle(bodyStyle);
@@ -436,6 +448,7 @@ public class OwnerlessCouponController extends BaseController {
                         rcell4.setCellStyle(bodyStyle);
                         rcell5.setCellStyle(bodyStyle);
                         rcell6.setCellStyle(bodyStyle);
+                        rcell7.setCellStyle(bodyStyle);
 
                         iter.next();
                         ++vi;
@@ -448,6 +461,7 @@ public class OwnerlessCouponController extends BaseController {
                     sheet.autoSizeColumn(4, true);
                     sheet.autoSizeColumn(5, true);
                     sheet.autoSizeColumn(6, true);
+                    sheet.autoSizeColumn(7, true);
 
                     break;
                 case "1":

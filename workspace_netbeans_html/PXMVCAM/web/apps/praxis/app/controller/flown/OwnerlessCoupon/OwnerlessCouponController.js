@@ -167,6 +167,20 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
+        
+        var cmbStatus = Ext.getCmp(prototype.id + '-cmbStatus');
+        cmbStatus.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["P", "Pending"],
+                ["F", "Extraido al Flown"], //Loaded
+                ["D", "Duplicate"],
+                ["C", "Cancelled"]
+            ]
+        }));
+        cmbStatus.setValue("P");
+        
     }
     ,
     btnSearch_click: function(obj, e) {
@@ -216,7 +230,9 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
         var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
         var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
+        var txtNVLO = Ext.getCmp(prototype.id + '-txtNVLO');
         var ticketNumber = Ext.getCmp(prototype.id + '-textTicket');
+        var cmbStatus = Ext.getCmp(prototype.id + '-cmbStatus');
 
         if (dayFrom.getValue() === null || dayFrom.getValue() === '') {
             dayFrom.setValue('');
@@ -230,17 +246,23 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         this.dateFrom = yearFrom.getValue() + monthFrom.getValue() + dayFrom.getValue();
         this.dateTo = yearTo.getValue() + monthTo.getValue() + dayTo.getValue();
         this.ticketNumber = ticketNumber.getValue();
+        this.cmbStatus = cmbStatus.getValue();
+        this.txtNVLO = txtNVLO.getValue();
 
         searchParams = {
             dateFrom: this.dateFrom,
             dateTo: this.dateTo,
             ticketNumber: this.ticketNumber,
+            txtNVLO: this.txtNVLO,
+            cmbStatus: this.cmbStatus,
             option: this.optionCheck
         };
 
         console.log("DateFrom : " + this.dateFrom);
         console.log("DateTo : " + this.dateTo);
         console.log("ticketNumber : " + this.ticketNumber);
+        console.log("txtNVLO : " + this.txtNVLO);
+        console.log("cmbStatus : " + this.cmbStatus);
         console.log("option : " + this.optionCheck);
 
     },
@@ -313,6 +335,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
         var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
         var ticketNumber = Ext.getCmp(prototype.id + '-textTicket');
+        var txtNVLO = Ext.getCmp(prototype.id + '-txtNVLO');
 
         yearFrom.setValue(this.fecha.getFullYear());
         var storeComboDataYear = win.getStoreYear2(false, yearFrom.getValue());
@@ -323,6 +346,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         dayFrom.setValue("");
         dayTo.setValue("");
         ticketNumber.setValue("");
+        txtNVLO.setValue("");
     },
     btnExcel_click: function(obj, e) {
         Ext.Msg.show({
@@ -341,7 +365,8 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
     },
     exportExcel: function() {
         this.setFormatParameter();
-        global.getFile(prototype.url + '/getXLSX?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&ticketNumber=' + searchParams.ticketNumber + '&option=' + searchParams.option);
+        global.getFile(prototype.url + '/getXLSX?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&ticketNumber=' + searchParams.ticketNumber 
+                                                            + '&txtNVLO=' + searchParams.txtNVLO + '&cmbStatus=' + searchParams.cmbStatus +  '&option=' + searchParams.option);
     }
     ,
     btnFilter_click: function(obj) {

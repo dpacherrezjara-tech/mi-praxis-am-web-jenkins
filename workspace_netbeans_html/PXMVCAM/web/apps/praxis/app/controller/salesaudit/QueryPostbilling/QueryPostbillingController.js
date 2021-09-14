@@ -565,6 +565,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.QueryPostbilling.QueryPostbillingCo
     onRendererColumnAttr: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
         return value;
+    },
+    onClearClick:function(){
+        var grid = Ext.getCmp(prototype.id + '-grid');
+        var store = grid.getStore();
+        store.removeAll();
     }
 
 
