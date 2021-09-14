@@ -38,7 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 @Scope("request")
-@RequestMapping("/LoadticketReportForm")
+@RequestMapping("/MassiveRefunduatpForm")
 public class MassiveRefunduatpFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
