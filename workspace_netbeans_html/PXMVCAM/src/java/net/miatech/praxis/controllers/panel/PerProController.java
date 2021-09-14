@@ -55,7 +55,7 @@ public class PerProController extends BaseController {
         return "panel/Management/PerPro";
     }    
     
-    @RequestMapping(value = "search", method = RequestMethod.GET)
+    @RequestMapping(value = "search")
     public @ResponseBody String search(ModelMap map, HttpServletRequest request) {
         
         PX041S01INF001Filter filter = new PX041S01INF001Filter();
