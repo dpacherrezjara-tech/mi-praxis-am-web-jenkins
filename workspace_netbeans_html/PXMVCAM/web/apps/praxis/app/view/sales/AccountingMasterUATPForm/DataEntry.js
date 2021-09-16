@@ -78,7 +78,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             fieldStyle: 'text-align: center;',
                                             labelWidth: 0,
                                             labelAlign: 'left',
-                                            padding: '2px 5px 2px 3px'
+                                            padding: '2px 5px 2px 3px',
+                                            listeners:{
+                                                change: 'onUpperValue'
+                                            }
 
                                         },
                                         {
@@ -121,7 +124,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             fieldStyle: 'text-align: center;',
                                             labelWidth: 0,
                                             labelAlign: 'left',
-                                            padding: '2px 5px 2px 3px'
+                                            padding: '2px 5px 2px 3px',
+                                            listeners:{
+                                                change: 'onUpperValue'
+                                            }
 
                                         },
                                         {
@@ -173,7 +179,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             fieldStyle: 'text-align: center;',
                                             labelWidth: 0,
                                             labelAlign: 'left',
-                                            padding: '2px 5px 2px 3px'
+                                            padding: '2px 5px 2px 3px',
+                                            listeners:{
+                                                change: 'onUpperValue'
+                                            }
 
                                         }
 
@@ -206,7 +215,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             fieldStyle: 'text-align: left;',
                                             labelWidth: 0,
                                             labelAlign: 'left',
-                                            padding: '2px 5px 2px 3px'
+                                            padding: '2px 5px 2px 3px',
+                                            listeners:{
+                                                change: 'onUpperValue'
+                                            }
 
                                         },
                                         {
@@ -227,7 +239,10 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.DataEntry', {
                                             fieldStyle: 'text-align: left;',
                                             labelWidth: 0,
                                             labelAlign: 'left',
-                                            padding: '2px 5px 2px 3px'
+                                            padding: '2px 5px 2px 3px',
+                                            listeners:{
+                                                change: 'onUpperValue'
+                                            }
 
                                         }
                                     ]
