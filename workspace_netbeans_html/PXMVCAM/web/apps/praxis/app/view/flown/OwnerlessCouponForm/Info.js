@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                     id: prototype.id + '-gridData',
                     height: 500,
                     hidden: false,
-                    width: 1100,
+                    width: 1200,
                     columnLines: true,
                     columns: {
                         defaults: {
@@ -75,7 +75,8 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Info', {
                                     }
                                     return value;
                                 }},
-                            {text: 'Flag <br> Flown', width: 100, dataIndex: 'FFLOWN'},
+                            {text: 'Flag <br> Flown', width: 80, dataIndex: 'FFLOWN'},
+                            {text: 'Status', width: 120, dataIndex: 'A1413STCRU'},
                             {
                                 sortable: false,
                                 xtype: 'actioncolumn',
