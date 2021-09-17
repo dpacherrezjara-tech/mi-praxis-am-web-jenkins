@@ -90,6 +90,17 @@ public class OwnerlessCouponDAO {
 
             while (rst.next()) {
                 beanTkt = new A1413Filter();
+                beanTkt.A1413STCRU = rst.getString("A1413STCRU").trim();
+                
+                if(beanTkt.A1413STCRU.equals("")){
+                    beanTkt.A1413STCRU = "Pending";
+                }else if(beanTkt.A1413STCRU.equals("F")){
+                    beanTkt.A1413STCRU = "Extraido al Flown";
+                }else if(beanTkt.A1413STCRU.equals("D")){
+                    beanTkt.A1413STCRU = "Duplicate";
+                }else if(beanTkt.A1413STCRU.equals("C")){
+                    beanTkt.A1413STCRU = "Cancelled";
+                }
 
                 beanTkt.A1413CIA = rst.getString("A1413CIA");
                 beanTkt.A1413FORSE = rst.getString("A1413FORSE");
@@ -340,6 +351,19 @@ public class OwnerlessCouponDAO {
             while (rst.next()) {
                 beanTkt = new A1413Filter();
                 beanTkt.A1413CIA = rst.getString("A1413CIA");
+                
+                beanTkt.A1413STCRU = rst.getString("A1413STCRU").trim();
+                
+                if(beanTkt.A1413STCRU.equals("")){
+                    beanTkt.A1413STCRU = "Pending";
+                }else if(beanTkt.A1413STCRU.equals("F")){
+                    beanTkt.A1413STCRU = "Extraido al Flown";
+                }else if(beanTkt.A1413STCRU.equals("D")){
+                    beanTkt.A1413STCRU = "Duplicate";
+                }else if(beanTkt.A1413STCRU.equals("C")){
+                    beanTkt.A1413STCRU = "Cancelled";
+                }
+                
                 beanTkt.A1413FORSE = rst.getString("A1413FORSE");
                 beanTkt.A1413CUPON = rst.getString("A1413CUPON");
                 beanTkt.strTicket = rst.getString("A1413CIA") + " " + rst.getString("A1413FORSE") + " " + rst.getString("A1413CUPON");
@@ -355,6 +379,7 @@ public class OwnerlessCouponDAO {
                 beanTkt.A1413TO = rst.getString("A1413TO");
                 beanTkt.strFROM = rst.getString("DES_ORIG");
                 beanTkt.strTO = rst.getString("DES_DEST");
+                beanTkt.FFLOWN = rst.getString("FFLOWN");
 
                 beanTkt.page.PAGNUM = filter.page.PAGNUM;
                 beanTkt.page.PAGROW = filter.page.PAGROW;
