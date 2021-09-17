@@ -163,10 +163,17 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
                         global.Msg({
                             msg: 'Data not found'
                         });
+                    }else {
+                        var data = obj.data.items[0].data;
+                        console.log('data_load');
+                        console.log(data);
                     }
+                    //me.setWidthPie();
                 }
             }
         });
+        console.log('storeGridDatas');
+        console.log(storeGridDatas);
         Ext.getCmp(prototype.id+'-gridData').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id+'-paggin').bindStore(storeGridDatas);
     },
