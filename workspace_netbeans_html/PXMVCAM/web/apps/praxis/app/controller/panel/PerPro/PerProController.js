@@ -22,40 +22,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
         this.btnSearch_click();
     },
     onMostrarFiltrosChange: function(cmp, newValue, oldValue, eOpts) {
-        //this.limpiarFiltros();
-        
-        var strModulo = this.getValue('cboModulo');
-        
-        switch (strModulo) {
-            case 'PSALES':
-            case 'PADM':
-            case 'PFOB':
-            case 'PCONSORTIA':
-            case 'PPSALES':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PFLOWN':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PAPINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;
-            case 'PARINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;            
-            case 'PADJMA':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;
-        }
+                
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     setStoreData: function() {
