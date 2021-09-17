@@ -379,6 +379,8 @@ public class OwnerlessCouponController extends BaseController {
                     CH1_06.setCellValue("Dest");
                     CH1_07 = row.createCell(7);
                     CH1_07.setCellValue("Flag Flown");
+                    CH1_08 = row.createCell(7);
+                    CH1_08.setCellValue("Status");
 
                     //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -389,6 +391,7 @@ public class OwnerlessCouponController extends BaseController {
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
                     sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
+                    sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
 
                     CH1_00.setCellStyle(headerStyle);
                     CH1_01.setCellStyle(headerStyle);
@@ -398,6 +401,7 @@ public class OwnerlessCouponController extends BaseController {
                     CH1_05.setCellStyle(headerStyle);
                     CH1_06.setCellStyle(headerStyle);
                     CH1_07.setCellStyle(headerStyle);
+                    CH1_08.setCellStyle(headerStyle);
 
                     ++vj;
                     row2 = sheet.createRow(vj);
@@ -409,6 +413,7 @@ public class OwnerlessCouponController extends BaseController {
                     CH2_05 = row2.createCell(5);
                     CH2_06 = row2.createCell(6);
                     CH2_07 = row2.createCell(7);
+                    CH2_08 = row2.createCell(8);
 
                     CH2_00.setCellStyle(headerStyle);
                     CH2_01.setCellStyle(headerStyle);
@@ -418,6 +423,7 @@ public class OwnerlessCouponController extends BaseController {
                     CH2_05.setCellStyle(headerStyle);
                     CH2_06.setCellStyle(headerStyle);
                     CH2_07.setCellStyle(headerStyle);
+                    CH2_08.setCellStyle(headerStyle);
 
                     ++vj;
                     while (iter.hasNext()) {
@@ -431,6 +437,7 @@ public class OwnerlessCouponController extends BaseController {
                         Cell rcell5 = row.createCell(5);
                         Cell rcell6 = row.createCell(6);
                         Cell rcell7 = row.createCell(7);
+                        Cell rcell8 = row.createCell(8);
 
                         rcell0.setCellValue(listaData.get(vi).strTicket);
                         rcell1.setCellValue(listaData.get(vi).strFormatDate);
@@ -440,6 +447,7 @@ public class OwnerlessCouponController extends BaseController {
                         rcell5.setCellValue(listaData.get(vi).A1413FROM);
                         rcell6.setCellValue(listaData.get(vi).A1413TO);
                         rcell7.setCellValue(listaData.get(vi).FFLOWN);
+                        rcell8.setCellValue(listaData.get(vi).A1413STCRU);
 
                         rcell0.setCellStyle(bodyStyle);
                         rcell1.setCellStyle(bodyStyle);
@@ -449,6 +457,7 @@ public class OwnerlessCouponController extends BaseController {
                         rcell5.setCellStyle(bodyStyle);
                         rcell6.setCellStyle(bodyStyle);
                         rcell7.setCellStyle(bodyStyle);
+                        rcell8.setCellStyle(bodyStyle);
 
                         iter.next();
                         ++vi;
@@ -462,6 +471,7 @@ public class OwnerlessCouponController extends BaseController {
                     sheet.autoSizeColumn(5, true);
                     sheet.autoSizeColumn(6, true);
                     sheet.autoSizeColumn(7, true);
+                    sheet.autoSizeColumn(8, true);
 
                     break;
                 case "1":
