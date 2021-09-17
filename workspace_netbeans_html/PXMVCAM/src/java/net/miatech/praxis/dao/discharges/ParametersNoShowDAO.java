@@ -250,7 +250,13 @@ public class ParametersNoShowDAO {
                 objRtn.A3975KEY1 = rs01.getString("A3975KEY1");
                 objRtn.A3975KEY2 = rs01.getString("A3975KEY2").trim();
                 objRtn.A3975DESC1 = rs01.getString("A3975DESC1").trim();
-                objRtn.A3975STATU = rs01.getString("A3975STATU").trim();                                
+                objRtn.A3975STATU = rs01.getString("A3975STATU").trim();
+                objRtn.A3975REGIS = rs01.getString("A3975REGIS").trim();
+                objRtn.A3975FREGI = rs01.getString("A3975FREGI").trim();
+                objRtn.A3975HREGI = rs01.getString("A3975HREGI").trim();
+                objRtn.A3975REVIS = rs01.getString("A3975REVIS").trim();
+                objRtn.A3975FREVI = rs01.getString("A3975FREVI").trim();
+                objRtn.A3975HREVI = rs01.getString("A3975HREVI").trim();                    
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;

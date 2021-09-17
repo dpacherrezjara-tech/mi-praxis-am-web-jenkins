@@ -27,6 +27,9 @@ public class A1413Filter extends A1413 {
     public String IN_CUPON = "";
     public String IN_DATE = "";
     public String IN_TKT = "";
+    public String IN_STCRU = "";
+    public String IN_NVLOB = "";
+    public String FFLOWN   = "";
     public String strTicket = "";
     public String strDescripcion = "";
     
