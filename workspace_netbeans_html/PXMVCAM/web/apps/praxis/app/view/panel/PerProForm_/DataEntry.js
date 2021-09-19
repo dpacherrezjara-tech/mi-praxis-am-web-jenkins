@@ -10,7 +10,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
 
     title:'Permits / Programs Management - Data Entry Form',
     header:true,
-    height:340,
+    height:330,
     width:815,
     border:false,
     resizable:false,
@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             width: 70
                         },
                         {
-                            xtype: 'textfield',
+                            xtype: 'label',
                             id: prototype.id + '-USR',
                             text: '',
                             //style: 'font-weight:bold;color:red;',
@@ -50,9 +50,6 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
                             }
                         },
                         { xtype: 'tbspacer', width: 7 },
@@ -82,7 +79,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             width: 70
                         },
                         {
-                            xtype: 'textfield',
+                            xtype: 'label',
                             id: prototype.id + '-NPROG',                            
                             text: '',
                             //style: 'font-weight:bold;color:red;',
@@ -90,24 +87,18 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
                             }
                         },
                         { xtype: 'tbspacer', width: 7 },
                         {
-                            xtype: 'textfield',
+                            xtype: 'label',
                             id: prototype.id + '-PROG',
                             text: '',
                             //style: 'font-weight:bold;color:red;',
-                            width: 300,
+                            width: 120,
                             autoEl: {
                                 tag: 'label',
                                 'data-qtip': 'Mandatory Field'
-                            },
-                            listeners:{
-                                change: 'onUpperValue'
                             }
                         },
                     ]
@@ -389,7 +380,28 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                     style: 'font-weight:bold;color:red;',
                     width: 120
                 }
-
+//                ,
+//                { xtype: 'tbspacer', width: 30 },
+//                {
+//                    xtype: 'button',
+//                    id:prototype.id+'-btn-prev',
+//                    icon: 'resources/img/botones/prev.png',
+//                    tooltip: 'View Previous Flight Manifest',
+//                    border: false,
+//                    listeners:{
+//                        click: 'onPrevClick'
+//                    }
+//                },
+//                {
+//                    xtype: 'button',
+//                    id:prototype.id+'-btn-next',
+//                    icon: 'resources/img/botones/next2.png',
+//                    tooltip: 'View Next Flight Manifest',
+//                    border: false,
+//                    listeners:{
+//                        click: 'onNextClick'
+//                    }
+//                }
             ]
         }
     ]

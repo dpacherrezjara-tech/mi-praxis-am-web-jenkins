@@ -19,10 +19,10 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     afterRender: function () {
         this.setStoreData();
         this.btnClear_click();
-//        this.btnSearch_click();
+        this.btnSearch_click();
     },
     onMostrarFiltrosChange: function(cmp, newValue, oldValue, eOpts) {
-        
+                
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     setStoreData: function() {
@@ -42,8 +42,9 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     onEditClick: function(grid, rowIndex, colIndex) {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
-        console.log(rec);        
-        this.winDataEntry('U', rec);
+        console.log(rec);
+        if(rec.data.A1955MODUL!=='PADM')
+            this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
@@ -63,7 +64,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
-        this.setFormatParameter();
+            this.setFormatParameter();
             this.setGridData();
     },
     btnFilter_click: function(obj) {
@@ -136,7 +137,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.panel.PerPro.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.panel.PerProForm.GridData', {
             proxy: {
                 url: prototype.url+'/search'
             },
@@ -162,10 +163,17 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
                         global.Msg({
                             msg: 'Data not found'
                         });
+                    }else {
+                        var data = obj.data.items[0].data;
+                        console.log('data_load');
+                        console.log(data);
                     }
+                    //me.setWidthPie();
                 }
             }
         });
+        console.log('storeGridDatas');
+        console.log(storeGridDatas);
         Ext.getCmp(prototype.id+'-gridData').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id+'-paggin').bindStore(storeGridDatas);
     },
@@ -181,7 +189,6 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
         Ext.getCmp(prototype.id+'-cboGroup').setValue('1');
         Ext.getCmp(prototype.id+'-codigo-option').setValue('');        
         // </editor-fold>        
-      
     },
 
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
@@ -209,13 +216,13 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function(id) {
-        return Ext.getCmp(prototype.id+'-'+id).getValue();
+        //return Ext.getCmp(prototype.id+'-'+id).getValue();
     },
     focus: function(id) {
         Ext.getCmp(prototype.id+'-'+id).focus();
     },
     setValue: function(id, txt) {
-        return Ext.getCmp(prototype.id+'-'+id).setValue(txt);
+        //return Ext.getCmp(prototype.id+'-'+id).setValue(txt);
     },
     onUpperValue: function(field, newValue, oldValue){
         field.setValue(newValue.toUpperCase());

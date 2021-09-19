@@ -54,20 +54,21 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Info', {
                                     align: 'center'
                                 },
                                 items: [
-                                    { text:'User', dataIndex: 'USR', type: 'string', width: 100, align: 'C' },
-                                    { text:'Program', dataIndex: 'NPROG', type: 'string', width: 100, align: 'C' },
-                                    { text:'Description', dataIndex: 'PROG', type: 'string', width: 200, align: 'L' },
+                                    { text:'User', name: 'USR', type: 'string', width: 100, align: 'C' },
+                                    { text:'Program', name: 'NPROG', type: 'string', width: 100, align: 'C' },
+                                    { text:'Description', name: 'PROG', type: 'string', width: 200, align: 'L' },
                                     { text: 'Authorization',
                                         columns: [
-                                            { text:'Access', dataIndex: 'PERMA', type: 'string', width: 80, align: 'C' },
-                                            { text:'Read', dataIndex: 'PERML', type: 'string', width: 80, align: 'C' },
-                                            { text:'Insert', dataIndex: 'PERMC', type: 'string', width: 80, align: 'C' },
-                                            { text:'Update', dataIndex: 'PERMM', type: 'string', width: 80, align: 'C' },
-                                            { text:'Delete', dataIndex: 'PERME', type: 'string', width: 80, align: 'C' },
-                                            { text:'Export', dataIndex: 'PERMX', type: 'string', width: 80, align: 'C' }
+                                            { text:'Access', name: 'PERMA', type: 'string', width: 80, align: 'C' },
+                                            { text:'Read', name: 'PERML', type: 'string', width: 80, align: 'C' },
+                                            { text:'Insert', name: 'PERMC', type: 'string', width: 80, align: 'C' },
+                                            { text:'Update', name: 'PERMM', type: 'string', width: 80, align: 'C' },
+                                            { text:'Delete', name: 'PERME', type: 'string', width: 80, align: 'C' },
+                                            { text:'Export', name: 'PERMX', type: 'string', width: 80, align: 'C' }
                                         ]
                                     },
-                                    { text:'Status', dataIndex: 'STAT', type: 'string', width: 80, align: 'C', align: 'C' },
+                                    { text:'Status', name: 'STAT', type: 'string', width: 80, align: 'C', align: 'C' },
+                                    { text:'Edit', name: '', type: 'float', width: 50, align: 'C' },
                                     {
                                         text: 'Edit',
                                         sortable: false,
