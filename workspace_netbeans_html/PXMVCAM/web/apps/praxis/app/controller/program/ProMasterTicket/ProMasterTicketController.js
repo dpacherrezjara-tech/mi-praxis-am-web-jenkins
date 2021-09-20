@@ -807,6 +807,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         this.loadSabre();
     },
     imgBrowser_clickHandler: function () {
+        console.log('this.dataEntry');
+        console.log(this.dataEntry);
         var controller = this.dataEntry.getController();
         controller.ticketNumber = "";
         controller.actionCode = this.actionCode2;
