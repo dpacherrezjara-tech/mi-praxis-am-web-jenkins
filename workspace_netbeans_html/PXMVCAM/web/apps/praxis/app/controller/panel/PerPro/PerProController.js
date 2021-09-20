@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
         prototype.id = 'PerProForm';
         prototype.url = CONTEXTPATH+'/PerPro';
         prototype.widthContenedor = 1300;
-        prototype.widthGrid = 863;
+        prototype.widthGrid = 1200;
         // </editor-fold>
         this.control({
         });
@@ -63,8 +63,16 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.PerProController', {
     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
+        var option = Ext.getCmp(prototype.id+'-codigo-option').getValue();
+        if (option==='') {
+            this.msjAlert='Enter data';
+            global.Msg({
+                msg: this.msjAlert
+            });
+            return false;
+        }
         this.setFormatParameter();
-            this.setGridData();
+        this.setGridData();
     },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id+'-boxSearchFilter');

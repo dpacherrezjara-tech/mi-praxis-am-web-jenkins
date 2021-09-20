@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
+                width: 1200,
 //                height: 570,
                 align: 'center'
             },
@@ -35,7 +36,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Info', {
                     defaults: {
                         bodyStyle: 'background: transparent;',
                         border: false,
-                        width: prototype.widthGrid,
+                        width: 1200,
 //                        height: 545,
                         align: 'center'
                     },
@@ -44,7 +45,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
-                            width: prototype.widthGrid,
+                            width: 1100,
                             height: 510,
                             columnLines: true,
                             columns: {
@@ -59,20 +60,24 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Info', {
                                     { text:'Description', dataIndex: 'PROG', type: 'string', width: 200, align: 'L' },
                                     { text: 'Authorization',
                                         columns: [
-                                            { text:'Access', dataIndex: 'PERMA', type: 'string', width: 80, align: 'C' },
-                                            { text:'Read', dataIndex: 'PERML', type: 'string', width: 80, align: 'C' },
-                                            { text:'Insert', dataIndex: 'PERMC', type: 'string', width: 80, align: 'C' },
-                                            { text:'Update', dataIndex: 'PERMM', type: 'string', width: 80, align: 'C' },
-                                            { text:'Delete', dataIndex: 'PERME', type: 'string', width: 80, align: 'C' },
-                                            { text:'Export', dataIndex: 'PERMX', type: 'string', width: 80, align: 'C' }
+                                            { text:'Access', dataIndex: 'PERMA', type: 'string', width: 60, align: 'C' },
+                                            { text:'Read', dataIndex: 'PERML', type: 'string', width: 60, align: 'C' },
+                                            { text:'Insert', dataIndex: 'PERMC', type: 'string', width: 60, align: 'C' },
+                                            { text:'Update', dataIndex: 'PERMM', type: 'string', width: 60, align: 'C' },
+                                            { text:'Delete', dataIndex: 'PERME', type: 'string', width: 60, align: 'C' },
+                                            { text:'Export', dataIndex: 'PERMX', type: 'string', width: 60, align: 'C' }
                                         ]
                                     },
-                                    { text:'Status', dataIndex: 'STAT', type: 'string', width: 80, align: 'C', align: 'C' },
+                                    { text:'Status', dataIndex: 'STAT', type: 'string', width: 60, align: 'C'},
+                                    { text:'USCR', dataIndex: 'USCR', type: 'string', width: 100, align: 'L' },
+                                    { text:'DTCR', dataIndex: 'DTCR', type: 'string', width: 110, align: 'L'},
+                                    { text:'USUP', dataIndex: 'USUP', type: 'string', width: 100, align: 'L'},
+                                    { text:'DTUP', dataIndex: 'DTUP', type: 'string', width: 110, align: 'L'},
                                     {
                                         text: 'Edit',
                                         sortable: false,
                                         xtype: 'actioncolumn',
-                                        width: 90,
+                                        width: 60,
                                         align: 'center',
                                         items: [
                                             {
@@ -90,6 +95,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.Info', {
                         {
                             xtype: 'panel',
                             id: prototype.id + '-pie',
+                            hidden: true,
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'

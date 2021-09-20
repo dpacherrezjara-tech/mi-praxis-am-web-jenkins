@@ -45,6 +45,8 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-USR',
                             text: '',
+                            maxLength: 10,
+                            enforceMaxLength: true,
                             //style: 'font-weight:bold;color:red;',
                             width: 120,
                             autoEl: {
@@ -85,6 +87,8 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-NPROG',                            
                             text: '',
+                            maxLength: 10,
+                            enforceMaxLength: true,
                             //style: 'font-weight:bold;color:red;',
                             width: 120,
                             autoEl: {
@@ -99,6 +103,7 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-PROG',
+                            readOnly: true,
                             text: '',
                             //style: 'font-weight:bold;color:red;',
                             width: 300,
@@ -249,27 +254,13 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                                     xtype: 'textfield',
                                     id:prototype.id+'-FECR',
                                     readOnly: true,
-                                    width: 80,
+                                    width: 150,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
                                 { xtype: 'tbspacer', width: 60 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Creation Time',
-                                    style: 'font-weight:bold;color:#000;',
-                                    width: 120
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-HOCR',
-                                    readOnly: true,
-                                    width: 80,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                }
+                                
                             ]
                         },
                         {
@@ -307,27 +298,13 @@ Ext.define('Ext.Praxis.view.panel.PerProForm.DataEntry',{
                                     xtype: 'textfield',
                                     id:prototype.id+'-FEUP',
                                     readOnly: true,
-                                    width: 80,
+                                    width: 150,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
                                 { xtype: 'tbspacer', width: 60 },
-                                {
-                                    xtype: 'label',
-                                    text: 'Update Time',
-                                    style: 'font-weight:bold;color:#000;',
-                                    width: 120
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id:prototype.id+'-HOUP',
-                                    readOnly: true,
-                                    width: 80,
-                                    listeners:{
-                                        change: 'onUpperValue'
-                                    }
-                                }
+                                
                             ]
                         }
                     ]

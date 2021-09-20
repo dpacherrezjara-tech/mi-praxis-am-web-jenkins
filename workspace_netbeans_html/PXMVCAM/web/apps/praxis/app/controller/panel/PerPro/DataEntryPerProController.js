@@ -44,6 +44,8 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
     
     // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(rec) {
+        console.log('log rec');
+        console.log(rec);
         this.setValue('USR', rec.get('USR'));
         this.setValue('NPROG', rec.get('NPROG'));
         this.setValue('PROG', rec.get('PROG'));
@@ -56,11 +58,11 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
         Ext.getCmp(prototype.id+'-chkDelete').setValue(rec.get('PERME') === 'Y' ? true : false);
         // <editor-fold defaultstate="collapsed" desc="ControlData">
         this.setValue('USCR', rec.get('USCR'));
-        this.setValue('FECR', rec.get('FECR'));
-        this.setValue('HOCR', rec.get('HOCR'));
+        this.setValue('FECR', rec.get('DTCR'));
+        //this.setValue('HOCR', rec.get('HOCR'));
         this.setValue('USUP', rec.get('USUP'));
-        this.setValue('FEUP', rec.get('FEUP'));
-        this.setValue('HOUP', rec.get('HOUP'));
+        this.setValue('FEUP', rec.get('DTUP'));
+        //this.setValue('HOUP', rec.get('HOUP'));
         // </editor-fold>
     },
     // </editor-fold>   
@@ -150,7 +152,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
     crud: function() {
         var mod = this;
         Ext.Ajax.request({
-            url: prototype.url + '/Maintance',
+            url: prototype.url + '/crud',
             method: 'POST',
             timeout: 60000000,
             params: this.beanOption,
@@ -159,16 +161,13 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                    var msg = res.intResult;                    
+                    var msg = res.response;                    
                     var icon=1;
-                    if(msg==='RECORD EXISTS'){
-                        icon=2;
-                    }
                     global.Msg({
                         msg: msg,
                         icon: icon,
                         fn: function() {
-                            if (msg==='RECORD INSERTED') {
+                            if (msg==='Operation was successful') {
                                 Ext.getCmp('DataEntryPerProForm').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
@@ -208,7 +207,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
         
         var USR = this.getValue('USR');
         var NPROG = this.getValue('NPROG');
-        var STAT =  Ext.getCmp(prototype.id+'-chkStatus').getValue() ? 'Y' : 'N';
+        var STAT =  Ext.getCmp(prototype.id+'-chkStatus').getValue() ? 'A' : 'L';
         var PERMA =  Ext.getCmp(prototype.id+'-chkAccess').getValue() ? 'Y' : 'N';
         var PERML =  Ext.getCmp(prototype.id+'-chkRead').getValue() ? 'Y' : 'N';
         var PERMC =  Ext.getCmp(prototype.id+'-chkInsert').getValue() ? 'Y' : 'N';
@@ -228,7 +227,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
             strOption: this.view.params.action
         };
         console.log('beanOption');
-        console.log(beanOption);        
+        console.log(this.beanOption);        
     },
     limpiarCampos: function() {
                      
