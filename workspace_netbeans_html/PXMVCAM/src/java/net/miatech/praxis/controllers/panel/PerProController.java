@@ -92,7 +92,7 @@ public class PerProController extends BaseController {
     public @ResponseBody String crud(HttpServletRequest request) {
         //REALIZA INSERT, UPDATE O DELETE 
         PX076S01INF053Filter filter = new PX076S01INF053Filter(); 
-        filter.VP_CCUST = "808";
+        filter.VP_CCUST = "139";
         filter.VP_APLICA = "PX";
         String response = "";
         try {

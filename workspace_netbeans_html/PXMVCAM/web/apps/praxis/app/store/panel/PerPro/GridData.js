@@ -1,7 +1,7 @@
-Ext.define('Ext.Praxis.store.panel.PerProForm.GridData', {
+Ext.define('Ext.Praxis.store.panel.PerPro.GridData', {
     extend: 'Ext.data.Store',
-    model: 'Ext.Praxis.model.panel.GridData',
-    autoLoad: true,
+    model: 'Ext.Praxis.model.panel.PerPro.GridData',
+    autoLoad:true,
     pageSize: 20,
     proxy: {
         type: 'ajax',
