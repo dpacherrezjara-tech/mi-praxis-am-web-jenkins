@@ -848,6 +848,7 @@ public class ProMasterTicketDAO {
                     objRtn.A1716CUR = rs02.getString("A1716CUR");
                     objRtn.A1716ACTIV = rs02.getDouble("A1716ACTIV");
                     objRtn.A1716PASIV = rs02.getDouble("A1716PASIV");
+                    objRtn.A1716CURRV = rs02.getString("A1716CURRV");
                     objRtn.A1716ACTRV = rs02.getDouble("A1716ACTRV");
                     objRtn.A1716PASRV = rs02.getDouble("A1716PASRV");
                     objRtn.A1716CUENT = rs02.getString("A1716CUENT");
@@ -901,6 +902,7 @@ public class ProMasterTicketDAO {
                         objRtn.A1716CUR = rs03.getString("A1716CUR");
                         objRtn.A1716ACTIV = rs03.getDouble("A1716ACTIV");
                         objRtn.A1716PASIV = rs03.getDouble("A1716PASIV");
+                        objRtn.A1716CURRV = rs03.getString("A1716CURRV");
                         objRtn.A1716ACTRV = rs03.getDouble("A1716ACTRV");
                         objRtn.A1716PASRV = rs03.getDouble("A1716PASRV");
                         objRtn.A1716CUENT = rs03.getString("A1716CUENT");
@@ -954,6 +956,9 @@ public class ProMasterTicketDAO {
                             objRtn.A1716CUR = rs04.getString("A1716CUR");
                             objRtn.A1716ACTIV = rs04.getDouble("A1716ACTIV");
                             objRtn.A1716PASIV = rs04.getDouble("A1716PASIV");
+                            objRtn.A1716CURRV = rs04.getString("A1716CURRV");
+                            objRtn.A1716ACTRV = rs04.getDouble("A1716ACTRV");
+                            objRtn.A1716PASRV = rs04.getDouble("A1716PASRV");
                             objRtn.A1716CUENT = rs04.getString("A1716CUENT");
                             objRtn.A1716SUBCU = rs04.getString("A1716SUBCU");
                             objRtn.A1716IDFIL = rs04.getString("A1716IDFIL");
@@ -1005,6 +1010,9 @@ public class ProMasterTicketDAO {
                                 objRtn.A1716CUR = rs05.getString("A1716CUR");
                                 objRtn.A1716ACTIV = rs05.getDouble("A1716ACTIV");
                                 objRtn.A1716PASIV = rs05.getDouble("A1716PASIV");
+                                objRtn.A1716CURRV = rs05.getString("A1716CURRV");
+                                objRtn.A1716ACTRV = rs05.getDouble("A1716ACTRV");
+                                objRtn.A1716PASRV = rs05.getDouble("A1716PASRV");
                                 objRtn.A1716CUENT = rs05.getString("A1716CUENT");
                                 objRtn.A1716SUBCU = rs05.getString("A1716SUBCU");
                                 objRtn.A1716IDFIL = rs05.getString("A1716IDFIL");
@@ -1109,6 +1117,9 @@ public class ProMasterTicketDAO {
                                         objRtn.A1716CUR = rs07.getString("A1716CUR");
                                         objRtn.A1716ACTIV = rs07.getDouble("A1716ACTIV");
                                         objRtn.A1716PASIV = rs07.getDouble("A1716PASIV");
+                                        objRtn.A1716CURRV = rs07.getString("A1716CURRV");
+                                        objRtn.A1716ACTRV = rs07.getDouble("A1716ACTRV");
+                                        objRtn.A1716PASRV = rs07.getDouble("A1716PASRV");
                                         objRtn.A1716CUENT = rs07.getString("A1716CUENT");
                                         objRtn.A1716SUBCU = rs07.getString("A1716SUBCU");
                                         objRtn.A1716IDFIL = rs07.getString("A1716IDFIL");
