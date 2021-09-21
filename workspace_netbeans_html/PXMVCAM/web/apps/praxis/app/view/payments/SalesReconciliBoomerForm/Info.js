@@ -839,7 +839,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     border: true,
                                     //hidden: true,
 //                            height: 'auto',
-                                    width: 540,
+                                    width: 580,
                                     margin: '0 0 0 0 ',
                                     layout: {
                                         type: 'hbox',
@@ -849,7 +849,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataPNRInHeader',
-                                            width: 594,
+                                            width: 634,
                                             height: 'auto',
                                             columnLines: true,
                                             features: [{
@@ -910,6 +910,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totA1531VFOP, '0,000.00') + '<b>';
                                                         }
+                                                    },
+                                                    {
+                                                        sortable: false,
+                                                        xtype: 'actioncolumn',
+                                                        width: 40,
+                                                        text: 'Edit',
+                                                        align: 'center',
+                                                        items: [
+                                                            {
+                                                                iconCls: 'prx-icon-edit',
+                                                                tooltip: 'Edit',
+                                                                handler: 'onEditClickOnPNR'
+                                                            }
+                                                        ]
                                                     },
                                                     /*{
                                                      text: 'Cur', dataIndex: 'A720MONEDA', width: 40
