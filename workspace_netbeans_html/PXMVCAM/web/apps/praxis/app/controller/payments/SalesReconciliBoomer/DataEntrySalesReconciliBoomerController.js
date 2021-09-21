@@ -52,6 +52,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
         meDE.beanResult.SPNR = meDE.bean.data.A720PNR;   
         meDE.beanResult.TICKET = meDE.bean.data.TKT;   
         meDE.beanResult.SVFOPB = meDE.bean.data.SVFOPB;   
+        meDE.beanResult.SCARDN = meDE.bean.data.A1531NREF;   
+        meDE.beanResult.SCURRENCY = 'MXN';   
+        meDE.beanResult.SCOUNTRY = 'MX';   
+        meDE.beanResult.SCARCOD = 'SB';   
+        meDE.beanResult.TDOC = 'S';   
+        meDE.beanResult.STVAL = '5';   
         meDE.mostrarData();
     },
     mostrarData: function() {

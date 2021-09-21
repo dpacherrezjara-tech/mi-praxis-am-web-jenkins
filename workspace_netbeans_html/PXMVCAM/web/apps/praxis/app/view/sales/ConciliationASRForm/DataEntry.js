@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntry', {
+Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntryDataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryConciliationASRForm',
     requires:[
@@ -186,8 +186,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntry', {
                                     xtype: 'textfield',
                                     id: prototype.id+'-DataEntry-txtSaleCash',
                                     fieldStyle: 'font-size:13px;text-align:right;',
-                                    enforceMaxLength: true,
-                                    maxLength: 13,
+                                    //enforceMaxLength: true,
+                                    //maxLength: 10,
                                     width: 95
                                 }
                             ]
@@ -199,8 +199,8 @@ Ext.define('Ext.Praxis.view.sales.ConciliationASRForm.DataEntry', {
                                     xtype: 'textfield',
                                     id: prototype.id+'-DataEntry-txtSaleCredit',
                                     fieldStyle: 'font-size:13px;text-align:right;',
-                                    enforceMaxLength: true,
-                                    maxLength: 13,
+                                    //enforceMaxLength: true,
+                                    //maxLength: 10,
                                     width: 95
                                 }]
                         }

@@ -1483,6 +1483,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         var rec = grid.getStore().getAt(rowIndex);
         this.beanDetDay.SVFOPB = rec.data.A1531VFOP;
         this.beanDetDay.TKT = rec.data.TICKET;
+        this.beanDetDay.A1531NREF = rec.data.A1531NREF;
         console.log(this.beanDetDay);
         var rec = {data: this.beanDetDay};
         this.winDataEntry('I', rec);
