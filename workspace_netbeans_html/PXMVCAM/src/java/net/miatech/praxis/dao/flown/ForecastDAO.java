@@ -427,7 +427,17 @@ public class ForecastDAO {
 
             while (rst.next()) {
                 bean = new IMF140Filter();
+                bean.TREG = rst.getString("TREG").trim();
                 bean.DWEEK = rst.getString("DWEEK").trim();
+
+                if (bean.TREG.equals("0")) {
+//                        objRtn.strImagen1 = "assets/icons/16x16/greenP.png";
+                    bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
+
+                } else if (bean.TREG.equals("2")) {
+//                        objRtn.strImagen1 = "assets/icons/16x16/redP.png";
+                    bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
+                }
                 bean.DFLIGHT = rst.getString("DFLIGHT").trim();
 
                 bean.percentageASI = rst.getDouble("ASI");
@@ -1653,12 +1663,12 @@ public class ForecastDAO {
 
         return lst;
     }
-    
+
     public List<IMF140Filter> loadPX551SQP04119(IMF140Filter filter) throws SQLException, Exception {
 
         List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
         IMF140Filter bean;
-        
+
         double VCPNMXN = 0.0, VCPNUSD = 0.0;
         long QTYPAX = 0;
 
@@ -1718,7 +1728,7 @@ public class ForecastDAO {
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
         }
-        
+
         for (int i = 0; i < lst.size(); i++) { //lstDomestic.size()
 
             lst.get(i).totVCPNMXN = VCPNMXN;
