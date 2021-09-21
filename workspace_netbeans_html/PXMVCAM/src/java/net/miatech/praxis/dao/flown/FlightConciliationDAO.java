@@ -176,7 +176,7 @@ public class FlightConciliationDAO {
                 if (rst.getString("FSTAOD").trim().equals("1")) {
                     QODS += rst.getLong("QREC");
                 }
-                if (rst.getString("STVAL").trim().equals("5") && rst.getString("FSTAOD").equals("3")) {
+                if (rst.getString("STVAL").trim().equals("5") || rst.getString("FSTAOD").equals("3")) {
                     QtyCANCEL += rst.getLong("QtyCANCEL");
                 }
                 //Status VCR
@@ -185,7 +185,7 @@ public class FlightConciliationDAO {
                 }
                 //Status PHY
                 if (rst.getString("FSTAFI").trim().equals("1")) {
-                    QPHY += rst.getLong("QREC");
+                    QPHY += rst.getLong("QFMA");
                 }
                 //Status FFLOW
                 if (rst.getString("FFLOW").trim().equals("U")) {
