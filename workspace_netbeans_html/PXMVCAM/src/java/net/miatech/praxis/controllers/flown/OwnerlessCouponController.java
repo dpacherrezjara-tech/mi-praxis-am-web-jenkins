@@ -379,7 +379,7 @@ public class OwnerlessCouponController extends BaseController {
                     CH1_06.setCellValue("Dest");
                     CH1_07 = row.createCell(7);
                     CH1_07.setCellValue("Flag Flown");
-                    CH1_08 = row.createCell(7);
+                    CH1_08 = row.createCell(8);
                     CH1_08.setCellValue("Status");
 
                     //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
