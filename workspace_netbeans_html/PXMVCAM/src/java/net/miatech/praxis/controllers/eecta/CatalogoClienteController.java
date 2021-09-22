@@ -32,6 +32,8 @@ import net.miatech.praxis.eecta.SQP03960Filter;
 import net.miatech.praxis.eecta.SQP04006Filter;
 import net.miatech.praxis.eecta.SQP04038Filter;
 import net.miatech.praxis.eecta.SQP04039Filter;
+import net.miatech.praxis.eecta.SQP04198Filter;
+import net.miatech.praxis.eecta.SQP04199Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CatalogoClienteLogic;
 import org.springframework.context.annotation.Scope;
@@ -457,6 +459,61 @@ public class CatalogoClienteController extends BaseController {
             map.put("success", false);
             map.put("sesion", ex.getMessage());
             throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
+    }
+    
+    @RequestMapping(value = "/search_ref", method = RequestMethod.POST)
+    public @ResponseBody
+    String search_ref(ModelMap map, HttpServletRequest request) {
+        List<SQP04198Filter> listaData;
+        SQP04198Filter filter;
+        filter = new SQP04198Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_RSOCI = request.getParameter("VP_RSOCI");            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new CatalogoClienteLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04198Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "ref_bancaria_crud")
+    public @ResponseBody
+            
+    String ref_bancaria_crud(ModelMap map, HttpServletRequest request) {
+        SQP04199Filter objRtn = null;
+        logic = new CatalogoClienteLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04199Filter filter = new SQP04199Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            objRtn = logic.setSQP04199Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());            
         }
         return new Gson().toJson(map);
 
