@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         padding: '1 0'
                                     },
                                     items: [
-                                        
+
                                         {
                                             xtype: 'datefield',
                                             id: prototype.id + '-fecha1',
@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                             fieldLabel: 'Trx. Origen', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 110,
                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
-                                            width: 280,
+                                            width: 250,
                                             height: 24,
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
@@ -117,8 +117,8 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                             fieldLabel: 'Lote', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
-                                            width: 200,
-                                            value:'',
+                                            width: 180,
+                                            value: '',
                                             enforceMaxLength: true,
                                             maxLength: 10,
                                             height: 24,
@@ -146,7 +146,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                             editable: true,
                                             typeAhead: true,
                                             valueField: 'code', displayField: 'name',
-                                            width: 200,
+                                            width: 190,
                                             height: 24,
                                             value: "",
 //                                            listConfig: {
@@ -175,18 +175,27 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                                     xtype: 'button',
                                                     id: prototype.id + '-btn-apl-batch',
                                                     text: 'Cargar recibos',
-                                                    icon: 'resources/img/icon/single_format.png',                                                    
+                                                    icon: 'resources/img/icon/single_format.png',
                                                     listeners: {
                                                         click: 'btnCargaRecibosBatch'
                                                     }
+                                                },
+                                                {
+                                                    xtype: 'button',
+                                                    id: prototype.id + '-btn-ref-bank',
+                                                    text: 'Catalgo Ref.',
+                                                    icon: 'resources/img/icon/single_format.png',
+                                                    listeners: {
+                                                        click: 'btnCargaRecibosRefBank'
+                                                    }
                                                 }
                                             ]
-                                        }                                        
+                                        }
                                     ]
                                 }
                                 // </editor-fold>
                                 // <editor-fold defaultstate="collapsed" desc="BoxFilter02">
-                                
+
                                 // </editor-fold>                                
                             ]
                         }

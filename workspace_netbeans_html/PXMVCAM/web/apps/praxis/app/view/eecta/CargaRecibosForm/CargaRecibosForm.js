@@ -1,6 +1,7 @@
 prototype.widthContenedor = 1200;   
 prototype.widthGrid = '100%';
 prototype.id02 = 'CargaRecibosBatch';
+prototype.id03 = 'CatalogoClienteRef';
 
 //console.log(prototype.id);
 

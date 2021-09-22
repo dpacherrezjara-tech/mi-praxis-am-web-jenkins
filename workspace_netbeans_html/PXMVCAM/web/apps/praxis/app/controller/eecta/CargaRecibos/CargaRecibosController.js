@@ -158,6 +158,21 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
             }
         }).show();
     },
+    //invoca a catalogo de ref bancaria (clientes)
+    btnCargaRecibosRefBank:function () {
+        this.winDataEntry01('I');
+    },
+    winDataEntry01:function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;       
+        Ext.create('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
+            id: prototype.id03 + '-CatalogoClienteRef',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function (obj, e) {
