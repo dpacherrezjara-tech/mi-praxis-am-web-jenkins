@@ -20,6 +20,7 @@ public class A4097 {
     public String A4097REF2 = "";
     public Integer A4097REF3 = 0;
     public String A4097REF4 = "";
+    public String A4097STAT = "";
     public String A4097REGIS = "";
     public String A4097FREGI = "";
     public String A4097HREGI = "";
