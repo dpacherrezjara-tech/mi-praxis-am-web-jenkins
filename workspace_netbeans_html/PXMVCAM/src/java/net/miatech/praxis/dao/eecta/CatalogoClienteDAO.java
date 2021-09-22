@@ -800,6 +800,7 @@ public class CatalogoClienteDAO {
                 objRtn.A4097REF2 = rs01.getString("A4097REF2");
                 objRtn.A4097REF3 = rs01.getInt("A4097REF3");
                 objRtn.A4097REF4 = rs01.getString("A4097REF4");
+                objRtn.A4097STAT = rs01.getString("A4097STAT");
                 objRtn.A4097REGIS = rs01.getString("A4097REGIS");
                 objRtn.A4097FREGI = rs01.getString("A4097FREGI");
                 objRtn.A4097HREGI = rs01.getString("A4097HREGI");
@@ -856,8 +857,8 @@ public class CatalogoClienteDAO {
             cstmt01.setInt(9, filter.A4097REF3);
             cstmt01.setString(10, filter.A4097REF4);
             cstmt01.execute();            
-            filter.dbException.SQLCODE = cstmt01.getString(10);
-            filter.dbException.MESSAGE = cstmt01.getString(11);
+            filter.dbException.SQLCODE = cstmt01.getString(11);
+            filter.dbException.MESSAGE = cstmt01.getString(12);
             
         } finally {
             if (cstmt01 != null) {

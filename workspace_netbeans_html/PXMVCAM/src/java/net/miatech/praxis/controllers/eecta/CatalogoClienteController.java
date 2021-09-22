@@ -500,7 +500,7 @@ public class CatalogoClienteController extends BaseController {
     public @ResponseBody
             
     String ref_bancaria_crud(ModelMap map, HttpServletRequest request) {
-        SQP04199Filter objRtn = null;
+        SQP04199Filter objRtn = new SQP04199Filter();        
         logic = new CatalogoClienteLogic();
         try {
             logic.setSession(this.serverSession.getServerSession());
@@ -512,7 +512,8 @@ public class CatalogoClienteController extends BaseController {
         } catch (Exception ex) {
             objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
             objRtn.dbException.MESSAGE = ex.toString(); 
-            map.put("success", false);
+            map.put("objRtn", objRtn);
+            map.put("success", true);
             map.put("sesion", ex.getMessage());            
         }
         return new Gson().toJson(map);
