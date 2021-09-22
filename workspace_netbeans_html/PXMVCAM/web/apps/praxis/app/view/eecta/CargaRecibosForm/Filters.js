@@ -183,8 +183,8 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                                 {
                                                     xtype: 'button',
                                                     id: prototype.id + '-btn-ref-bank',
-                                                    text: 'Catalgo Ref.',
-                                                    icon: 'resources/img/icon/single_format.png',
+                                                    text: 'Catalogo Ref.',
+                                                    icon: 'resources/img/icon/process.png',
                                                     listeners: {
                                                         click: 'btnCargaRecibosRefBank'
                                                     }

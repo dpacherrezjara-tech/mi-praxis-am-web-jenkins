@@ -13,8 +13,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
     },    
     afterRender: function () {
         //SET store Grid
-        var p = this.view.params;                
-        //Ext.getCmp(prototype.id03 + '-A4007CDCLI').setValue(p.rec.CDCLI);
+        var p = this.view.params;        
         var grid01 = Ext.getCmp(prototype.id03 + '-gridData');
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {});
         grid01.setStore(storeGridDatas);
@@ -33,7 +32,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-btn-new').hide();
         Ext.getCmp(prototype.id03 + '-btn-save').show();
         Ext.getCmp(prototype.id03 + '-btn-cancel').show(); 
-        Ext.getCmp(prototype.id03 + '-A4097REF4').focus();
+        Ext.getCmp(prototype.id03 + '-A4097CDCLI').setReadOnly(false); 
+        Ext.getCmp(prototype.id03 + '-A4097CDCLI').focus();
     },
     onCancelClick_id03:function(){
         Ext.getCmp(prototype.id03 + '-btn-delete').hide();
@@ -41,6 +41,13 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-btn-save').hide();
         Ext.getCmp(prototype.id03 + '-btn-new').show();
         Ext.getCmp(prototype.id03 + '-btn-cancel').hide();
+        //enable
+        Ext.getCmp(prototype.id03 + '-A4097REF1').setReadOnly(true);
+        Ext.getCmp(prototype.id03 + '-A4097REF2').setReadOnly(true);
+        Ext.getCmp(prototype.id03 + '-A4097REF3').setReadOnly(true);
+        Ext.getCmp(prototype.id03 + '-A4097REF4').setReadOnly(true);
+        Ext.getCmp(prototype.id03 + '-A4097STAT').setReadOnly(true);
+        
     },
     onEditClick_id03:function(){
         Ext.getCmp(prototype.id03 + '-btn-delete').show();
@@ -49,6 +56,12 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-btn-save').hide();
         Ext.getCmp(prototype.id03 + '-btn-new').hide();
         Ext.getCmp(prototype.id03 + '-btn-edit').hide();
+        //enable
+        Ext.getCmp(prototype.id03 + '-A4097REF1').setReadOnly(false);
+        Ext.getCmp(prototype.id03 + '-A4097REF2').setReadOnly(false);
+        Ext.getCmp(prototype.id03 + '-A4097REF3').setReadOnly(false);
+        Ext.getCmp(prototype.id03 + '-A4097REF4').setReadOnly(false);
+        Ext.getCmp(prototype.id03 + '-A4097STAT').setReadOnly(false);
         Ext.getCmp(prototype.id03 + '-A4097REF4').focus();
     },
     getDataInputs: function () {      
@@ -119,9 +132,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
                 Ext.getCmp(prototype.id03 + '-CatalogoClienteRef').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
+                    icon: objRtn.dbException.SQLCODE,
                     fn: function () {                                                
                         me.search_ref();
+                        me.onCancelClick_id03();
+                        me.get_ClearField();
                     }
                 });
             }
@@ -173,6 +188,11 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
 //    onCancelClick: function (btn) {
 //        Ext.getCmp(prototype.id + '-CatalogoClienteEntry').close();
 //    },
+    onTxtFilterKeypress: function(obj, e, eOpts) {
+        if (e.getKey() === e.ENTER) {
+            this.search_ref();
+        }
+    },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
@@ -206,17 +226,20 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
     },
     get_ClearField: function () {
         //Initialize data INPUTS                                
-        Ext.getCmp(prototype.id03 + '-A4007CONTR').setValue('');
-        Ext.getCmp(prototype.id03 + '-A4007DESCR').setValue('');
-        Ext.getCmp(prototype.id03 + '-A4007TCTR').setValue('O');
-        Ext.getCmp(prototype.id03 + '-A4007FALTA').setValue(new Date());
-        Ext.getCmp(prototype.id03 + '-A4007FBAJA').setValue('20991231');
-        Ext.getCmp(prototype.id03 + '-A4007REGIS').setValue('');
-        Ext.getCmp(prototype.id03 + '-A4007FREGI').setValue('');
-        Ext.getCmp(prototype.id03 + '-A4007HREGI').setValue('');        
-        Ext.getCmp(prototype.id03 + '-A4007REVIS').setValue('');
-        Ext.getCmp(prototype.id03 + '-A4007FREVI').setValue('');
-        Ext.getCmp(prototype.id03 + '-A4007HREVI').setValue('');        
+        Ext.getCmp(prototype.id03 + '-A4097CDCLI').setValue('');
+        Ext.getCmp(prototype.id03 + '-A3953RSOCI').setValue('');
+        Ext.getCmp(prototype.id03 + '-A4097SEQ').setValue();
+        Ext.getCmp(prototype.id03 + '-A4097REF4').setValue('*');
+        Ext.getCmp(prototype.id03 + '-A4097REF3').setValue('0');
+        Ext.getCmp(prototype.id03 + '-A4097REF1').setValue('');
+        Ext.getCmp(prototype.id03 + '-A4097REF2').setValue('');
+        Ext.getCmp(prototype.id03 + '-A4097STAT').setValue('');
+        Ext.getCmp(prototype.id03 + '-A4097REGIS').setValue('');        
+        Ext.getCmp(prototype.id03 + '-A4097FREGI').setValue('');
+        Ext.getCmp(prototype.id03 + '-A4097HREGI').setValue('');
+        Ext.getCmp(prototype.id03 + '-A4097REVIS').setValue('');    
+        Ext.getCmp(prototype.id03 + '-A4097FREVI').setValue('');    
+        Ext.getCmp(prototype.id03 + '-A4097HREVI').setValue(''); 
     },    
     search_ref: function ( ) {
         var me = this;
@@ -278,11 +301,12 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-A4097CDCLI').setValue(rec.data.A4097CDCLI);
         Ext.getCmp(prototype.id03 + '-A3953RSOCI').setValue(rec.data.A3953RSOCI );
         Ext.getCmp(prototype.id03 + '-A4097SEQ').setValue(rec.data.A4097SEQ);
-        Ext.getCmp(prototype.id03 + '-A4097REF1').setValue(rec.data.A4097REF1);
-        Ext.getCmp(prototype.id03 + '-A4097REF2').setValue(rec.data.A4097REF2);
+        Ext.getCmp(prototype.id03 + '-A4097REF1').setValue(rec.data.A4097REF1.trim());
+        Ext.getCmp(prototype.id03 + '-A4097REF2').setValue(rec.data.A4097REF2.trim());
         Ext.getCmp(prototype.id03 + '-A4097REF3').setValue(rec.data.A4097REF3);
-        Ext.getCmp(prototype.id03 + '-A4097REF4').setValue(rec.data.A4097REF4);
-//        //datos audit
+        Ext.getCmp(prototype.id03 + '-A4097REF4').setValue(rec.data.A4097REF4.trim()); 
+        Ext.getCmp(prototype.id03 + '-A4097STAT').setValue(rec.data.A4097STAT);         
+        //datos audit
         Ext.getCmp(prototype.id03 + '-A4097REGIS').setValue(rec.data.A4097REGIS);
         Ext.getCmp(prototype.id03 + '-A4097FREGI').setValue(rec.data.A4097FREGI);
         Ext.getCmp(prototype.id03 + '-A4097HREGI').setValue(rec.data.A4097HREGI);
@@ -290,6 +314,44 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-A4097FREVI').setValue(rec.data.A4097FREVI);
         Ext.getCmp(prototype.id03 + '-A4097HREVI').setValue(rec.data.A4097HREVI);        
         Ext.getCmp(prototype.id03 + '-btn-edit').show();                
+    },
+    event_buscarCliente: function(obj, e, eOpts) {
+        if (e.getKey() === e.ENTER) {
+            this.buscarCliente();
+        }
+    },
+    buscarCliente:function(){
+        var me = this;
+        var bean = {};        
+        bean.VP_OPCION = "1";
+        bean.VP_CDCLI = Ext.getCmp(prototype.id03+'-A4097CDCLI').getValue();
+        bean.VP_PARAM1 = "";        
+        Ext.Ajax.request({
+            url: me.url + '/search',
+            timeout: 60000000,
+            method: 'POST',
+            params: bean,
+            beforerequest: Ext.getCmp(prototype.id03 + '-CatalogoClienteRef').mask('Buscando cliente...', ''),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);                
+                Ext.getCmp(prototype.id03 + '-CatalogoClienteRef').unmask('Loading...', '');
+                if (res.total === 0) {
+                        global.Msg({
+                            msg: 'No se econtro cliente'
+                        });
+                    return;
+                }                                
+                //console.log(res.data[0].A3953RSOCI);
+                Ext.getCmp(prototype.id03 + '-A3953RSOCI').setValue(res.data[0].A3953RSOCI);
+                Ext.getCmp(prototype.id03 + '-A4097CDCLI').setValue(res.data[0].A3953CDCLI);
+                Ext.getCmp(prototype.id03 + '-A4097SEQ').setValue('0');
+                Ext.getCmp(prototype.id03 + '-A4097REF1').setReadOnly(false);
+                Ext.getCmp(prototype.id03 + '-A4097REF2').setReadOnly(false);
+                Ext.getCmp(prototype.id03 + '-A4097REF3').setReadOnly(false);
+                Ext.getCmp(prototype.id03 + '-A4097REF4').setReadOnly(false);
+                Ext.getCmp(prototype.id03 + '-A4097REF1').focus();
+            }
+        });   
     }
 
 });

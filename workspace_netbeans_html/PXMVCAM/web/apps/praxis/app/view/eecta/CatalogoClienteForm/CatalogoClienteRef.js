@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
     ],
     title: 'Catalogo Referencias',
     header: true,
-    width: 800,
+    width: 820,
     height: 500,
     border: false,
     resizable: false,
@@ -37,13 +37,13 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                     xtype: 'panel',
                     layout: 'vbox',
                     margin: '1 1 1 1',
-                    width: 350,
+                    width: 370,
                     items: [
                         {
                             // <editor-fold defaultstate="collapsed" desc="filter01"> 
-                            xtype: 'panel',
+                            xtype: 'fieldset', title: 'Filtrar',
                             id: prototype.id03 + '-BoxFilter01',
-                            border: false,
+                            border: true,
                             hidden: false,
                             layout: 'hbox',
                             bodyStyle: 'background: transparent;"',
@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                     xtype: 'textfield',
                                     id: prototype.id03 + '-CDCLI',
                                     fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 0,
-                                    emptyText: 'Código', margin: '1 0 1 1',
+                                    emptyText: 'Código', margin: '1 1 5 1',
                                     fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                     enableKeyEvents: true,
                                     width: 100,
@@ -85,11 +85,10 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                 {
                                     xtype: 'button',
                                     id: prototype.id03 + '-btn-consultar',
-                                    //text: 'Buscar',
                                     margin: '1 0 0 7',
                                     icon: 'resources/img/icon/search.png',
                                     listeners: {
-                                        //click: 'btnSearch_click'
+                                        click: 'search_ref'
                                     }
                                 }
                             ]
@@ -111,7 +110,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                 {
                     xtype: 'panel',
                     layout: 'vbox',
-                    width: 420,
+                    width: 430,
                     margin: '2 2 2 2',
                     items: [
                         {
@@ -132,7 +131,13 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                             fieldLabel: 'Código Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 100,
                                             readOnly: true,
-                                            width: 180
+                                            width: 180,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 9,
+                                            listeners: {
+                                                keypress: 'event_buscarCliente'
+                                            }
                                         }
                                     ]
                                 },
@@ -180,10 +185,10 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                             id: prototype.id03 + '-A4097SEQ',
                                             fieldLabel: 'Nº', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 100,
-                                            width: 160, readOnly:true
+                                            width: 160, readOnly: true
                                         }
                                     ]
-                                },                                
+                                },
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
@@ -194,7 +199,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                             xtype: 'combo',
                                             id: prototype.id03 + '-A4097REF4',
                                             fieldLabel: 'Coincidencia', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
-                                            width: 290,
+                                            width: 290, readOnly: true,
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
@@ -214,6 +219,11 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                             value: "*",
                                             enableKeyEvents: true,
                                             listeners: {
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id + '-A4097REF3').focus();
+                                                    }
+                                                }
                                                 //keypress: 'onTextKeypress',
                                                 //change: 'cmbfiltro_clickHandler'
                                             }//   
@@ -223,8 +233,16 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                             id: prototype.id03 + '-A4097REF3',
                                             fieldLabel: 'Cantidad', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 60,
-                                            //readOnly: true,
-                                            width: 100
+                                            readOnly: true,
+                                            width: 100,
+                                            enableKeyEvents: true,
+                                            listeners: {
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id + '-A4097REF2').focus();
+                                                    }
+                                                }
+                                            }
                                         }
                                     ]
                                 },
@@ -238,8 +256,16 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                             xtype: 'textfield',
                                             id: prototype.id03 + '-A4097REF1',
                                             fieldLabel: 'Ref1', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                                            labelWidth: 100,
-                                            width: 380
+                                            labelWidth: 100, readOnly: true,
+                                            width: 380,
+                                            enableKeyEvents: true,
+                                            listeners: {
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id + '-A4097REF2').focus();
+                                                    }
+                                                }
+                                            }
                                         }
                                     ]
                                 },
@@ -253,17 +279,57 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                             xtype: 'textfield',
                                             id: prototype.id03 + '-A4097REF2',
                                             fieldLabel: 'Ref2', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
-                                            width: 380, //readOnly: true,
+                                            width: 380, readOnly: true,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 150,
                                             listeners: {
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
-                                                        //Ext.getCmp(prototype.id + '-A3953NCOME').focus();
+
                                                     }
                                                 }
                                             }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    items: [
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id03 + '-A4097STAT',
+                                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
+                                            width: 290, readOnly: true,
+                                            store: new Ext.data.SimpleStore({
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ["1", "Activo"],
+                                                    ["0", "Inactivo"]
+                                                ]
+                                            }),
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: true,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            value: "1",
+                                            enableKeyEvents: true,
+                                            listeners: {
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        //Ext.getCmp(prototype.id + '-A4097REF3').focus();
+                                                    }
+                                                }
+                                                //keypress: 'onTextKeypress',
+                                                //change: 'cmbfiltro_clickHandler'
+                                            }//   
                                         }
                                     ]
                                 }

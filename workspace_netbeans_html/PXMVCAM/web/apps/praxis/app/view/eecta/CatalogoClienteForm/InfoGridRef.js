@@ -45,12 +45,12 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridRef', {
                             autoScroll: true,
                             width: '100%',
                             border: false,
-                            height: 330,
+                            height: 320,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [
                                     {
-                                        text: 'Nº', dataIndex: 'A4097SEQ', locked: true, align: 'left', width: 40
+                                        text: 'Código', dataIndex: 'A4097CDCLI', locked: true, align: 'left', width: 70
                                     },
                                     {
                                         text: 'Nombre Cliente', dataIndex: 'A3953RSOCI', locked: true, align: 'left', width: 220
@@ -79,9 +79,16 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridRef', {
                                 stripeRows: true,
                                 enableTextSelection: true,
                                 markDirty: false,
+//                                getRowClass: function (record, rowIndex, rowParams, store) {
+//                                    if (rowIndex % 2 === 0)
+//                                        return 'rowA';
+//                                }
                                 getRowClass: function (record, rowIndex, rowParams, store) {
-                                    if (rowIndex % 2 === 0)
-                                        return 'rowA';
+                                    //console.log(record.data.A3958STSPG); 
+                                    if ( record.data.A4097STAT === "0" )                  
+                                         return 'rowC';                                        
+//                                    if (rowIndex % 2 === 0)
+//                                        return 'rowA';
                                 }
                             },
                             trackMouseOver: true,
