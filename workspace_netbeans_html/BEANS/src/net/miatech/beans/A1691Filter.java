@@ -103,6 +103,16 @@ public class A1691Filter extends A1691 {
     public String strNOMFILE = "";
     public String NOMFILE = "";
     
+    public String A3778STVAL = "";
+    public String A3778USCR = "";
+    public String A3778FECR = "";
+    public String A3778HOCR = "";
+    public String A1688USCR = "";
+    public String A1688FECR = "";
+    public String A1688HOCR = "";
+    public long PAXTOTAL = 0;
+    public long totPAXTOTAL = 0;
+    
     public long totLngQPHY=0;
     public long totLngQCLO=0;
     public long totLngQPRO=0;

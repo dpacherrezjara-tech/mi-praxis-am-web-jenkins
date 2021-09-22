@@ -303,6 +303,69 @@ public class OwnerlessCouponController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "searchCanceled")
+    public @ResponseBody
+    String searchCanceled(ModelMap map, HttpServletRequest request) {
+        map.put("success", true);
+        List<A1691Filter> lst = this.getListCanceled(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1691Filter> getListCanceled(HttpServletRequest request, Boolean bExcel) {
+
+        logic = new OwnerlessCouponLogic();
+        masterDAO = new MasterDAO();
+
+        List<A1691Filter> lst = new ArrayList<>(0);
+        A1691Filter filter = new A1691Filter();
+
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+
+        try {
+
+            logic.setSession(this.serverSession.getServerSession());
+            masterDAO.setSession(this.serverSession.getServerSession());
+
+            HashMap<String, String> hmAeropuertos = masterDAO.loadCiudadesHash();
+
+            filter.IN_FECHA_FROM = request.getParameter("dateFrom");
+            filter.IN_FECHA_TO = request.getParameter("dateTo");
+            filter.IN_NFLIGHT = request.getParameter("txtNVLO");
+
+            System.out.println("----------------- Parametros --------------------- ");
+            System.out.println(" limit : " + request.getParameter("limit"));
+            System.out.println(" start : " + request.getParameter("start"));
+            System.out.println(" dateFrom : " + request.getParameter("dateFrom"));
+            System.out.println(" dateTo : " + request.getParameter("dateTo"));
+            System.out.println("-------------------------------------------------- ");
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX235SQP04158(filter, hmAeropuertos);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        return lst;
+    }
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -840,7 +903,6 @@ public class OwnerlessCouponController extends BaseController {
             filter.A1413NVLOB = request.getParameter("A1413NVLOB");
             filter.A1413CITYB = request.getParameter("A1413CITYB");
             filter.A1413FCONT = request.getParameter("A1413FCONT");
- 
 
             msj = logic.loadPX235SQP00257ENTRY(filter, strOption);
 
