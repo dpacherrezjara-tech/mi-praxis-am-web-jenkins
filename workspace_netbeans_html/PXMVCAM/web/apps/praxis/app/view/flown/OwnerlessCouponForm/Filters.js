@@ -183,12 +183,21 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Filters', {
                 {
                     xtype: 'checkboxfield',
                     id: prototype.id + '-differentCarrier',
-                    margin:'0 0 0 30',
-                    width: 150,
+                    margin: '0 0 0 15',
+                    width: 120,
                     boxLabel: 'Different Carrier',
                     inputValue: '1'
                 }
-
+                ,
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-canceledFlight',
+                    margin: '0 0 0 15',
+                    width: 120,
+                    boxLabel: 'Canceled Flight',
+                    inputValue: '1'
+                }
+                
             ]
         }
     ]
