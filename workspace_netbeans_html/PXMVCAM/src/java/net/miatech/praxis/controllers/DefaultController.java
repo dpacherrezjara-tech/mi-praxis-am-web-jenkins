@@ -28,8 +28,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
 import net.miatech.beans.PX041S01INF001Filter;
+import net.miatech.libmiatec.A006;
+import net.miatech.libmiatec.A1007;
+import net.miatech.praxis.A003;
+import net.miatech.praxis.controllers.sales.AgentsMasterFileController;
 import net.miatech.praxis.logic.program.UserLogic;
+import net.miatech.praxis.logic.sales.AgentsMasterFileLogic;
 import net.miatech.praxis.persistence.facade.UserFacade;
 import net.miatech.praxis.persistence.facadeimpl.UserFacadeImpl;
 import net.miatech.utils.Functions;
@@ -420,6 +426,34 @@ public class DefaultController extends BaseController {
     public @ResponseBody
     String getCustomerInfo(HttpServletRequest request, HttpSession session) throws Exception {
         return new Gson().toJson(getCustomerInfo());
+    }
+    
+    @RequestMapping(value = "getTables")
+    public @ResponseBody
+    String getTables(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- getTables : Controller-------------");
+        map.put("success", true);
+        AgentsMasterFileLogic logic = new AgentsMasterFileLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        List<A1007> lstCiudades;
+        List<A006> lstPaises;
+        try {
+            lstCiudades = logic.loadCiudades3();
+            lstPaises = logic.loadPaises();
+            map.put("dataPaises", lstPaises);
+            map.put("dataCity", lstCiudades);            
+            
+            if (serverSession.getServerSession() != null) {
+                serverSession.setPaises(lstPaises);
+                serverSession.setCiudades(lstCiudades);
+            }            
+            
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(AgentsMasterFileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return new Gson().toJson(map);
+
     }
 
     @RequestMapping(value = "/getMenu0", method = RequestMethod.POST)

@@ -461,8 +461,8 @@ public class AgentsMasterFileController extends BaseController {
         List<A1007> lstCiudades;
         List<A006> lstPaises;
         try {
-            lstCiudades = logic.loadCiudades3();
-            lstPaises = logic.loadPaises();
+            lstCiudades = this.serverSession.getCiudades(); // logic.loadCiudades3();
+            lstPaises = this.serverSession.getPaises(); //logic.loadPaises();
             map.put("dataPaises", lstPaises);
             map.put("dataCity", lstCiudades);
         } catch (Exception ex) {
