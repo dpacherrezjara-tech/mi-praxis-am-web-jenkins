@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
             win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
-        } else if (this.actionCode === 'ViewDashboard' || this.actionCode === 'ViewConciliation' || this.actionCode === 'BankConciliation' || this.actionCode === 'BoomerConciliation'  || this.actionCode === 'Unmatched' 
+        } else if (this.actionCode === 'ViewDashboard' || this.actionCode === 'ViewConciliation' || this.actionCode === 'BankConciliation' || this.actionCode === 'BoomerConciliation' || this.actionCode === 'Forecast' || this.actionCode === 'Unmatched' 
 		|| this.actionCode === 'VIEWTICKET_FOR_BWRMASTERTICKET' || this.actionCode === 'ViewBalance' || this.actionCode === 'ABValues' || this.actionCode === 'ViewRedempPLM' || this.actionCode === 'ViewDOT' 
 		|| this.actionCode === 'ViewDBNew' || this.actionCode === 'ANTI_FRAUD_REFUND' || this.actionCode === 'DETERMINATE_OF_COMMISSION' || this.actionCode ==='ViewProMatchTkt'
 		|| this.actionCode === 'IntConciliation' || this.actionCode === 'DuplicACCB' || this.actionCode === 'WorkProgAudit' || this.actionCode === 'VIEW_ERROR_MSN'

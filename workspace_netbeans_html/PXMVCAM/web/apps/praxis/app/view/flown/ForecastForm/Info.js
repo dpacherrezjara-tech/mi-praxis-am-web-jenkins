@@ -4250,20 +4250,110 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                         },
                         {
                             xtype: 'panel',
+                            id: prototype.id + '-panelGridDataFareDetail',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            width: 800,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataFareDetail',
+                                    width: 605,
+                                    height: 550,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Flight', dataIndex: 'DFLIGHT', width: 100
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Ticket', dataIndex: 'TICKET', width: 100,
+                                                listeners: {
+                                                    click: 'gridData_VIEWTKT_clickHandler'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background-color:#d5f4d5;";
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#flown-forecast-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Coupon', dataIndex: 'CUPON', width: 60
+                                            },
+                                            {
+                                                text: 'Zone', dataIndex: 'ZONA', width: 80
+                                            },
+                                            {
+                                                text: 'Flight',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Number', dataIndex: 'NFLIGHT', width: 80
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'TRNCU', dataIndex: 'TRNCU', width: 80, },
+                                            {text: 'Value', dataIndex: 'VALOR', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataFareDetail').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totVALOR, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
                             id: prototype.id + '-pie',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
                             },
                             border: true,
-                            width: 1132,
+                            width: 800,
                             hidden: true,
                             height: 25,
                             bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                             items: [
                                 {
                                     xtype: 'panel',
-                                    width: 1132,
+                                    width: 800,
                                     height: 25,
                                     layout: {
                                         type: 'hbox',
