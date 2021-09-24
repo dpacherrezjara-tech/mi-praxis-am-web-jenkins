@@ -109,4 +109,8 @@ public class DataRequestedByBankLogic {
         return DataRequestedByBankDAO.loadPX404SQP03580(filter,TRFND);
     }
     
+    public List<A2331Filter> loadPX404SQP02680(A2331Filter filter) throws SQLException, Exception {
+        return DataRequestedByBankDAO.loadPX404SQP02680(filter);
+    }
+    
 }
