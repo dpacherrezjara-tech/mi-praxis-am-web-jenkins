@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Filters', {
                         {boxLabel: '<b style="color:#148D28;">Forecast</b>', inputValue: 'FC', name: 'rbgTypeForecast', checked: true},
                         {boxLabel: '<b style="color:#148D28;">Occupation factor</b>', inputValue: 'FP', name: 'rbgTypeForecast', width: 150},
                         {boxLabel: '<b style="color:#148D28;">Forecast Zones</b>', inputValue: 'FZ', name: 'rbgTypeForecast', width: 150},
-                        {boxLabel: '<b style="color:#148D28;">Average Fare Detail</b>', inputValue: 'FD', name: 'rbgTypeForecast', width: 150},
+                        {boxLabel: '<b style="color:#148D28;">Forecast Coupon Detail</b>', inputValue: 'FD', name: 'rbgTypeForecast', width: 200},
                     ],
                     listeners: {
                         change: 'onChangeRadioForecast'

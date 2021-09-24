@@ -56,7 +56,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         prototypeProgram.nprog = 'PX00000551';
         prototypeProgram.title = 'Forecast';
         prototypeProgram.modulo = '';
-        
+
         this.control({
 //            //   -------------------Eventos Genericos --------------------
             '#ForecastForm-xpanel': {
@@ -272,6 +272,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecast();
+                this.setGridDataForecastTotals();
                 break;
             case 'FP':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
@@ -400,6 +401,42 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataForecast').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataForecast').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setGridDataForecastTotals: function() {
+        win.lblUser_toolTip("Estructura: IMF140");
+        //me.panelActual = '-panelGridDataForecast';
+        //global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastTotals'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                            var data = obj.data.items[0].data;
+                    }
+//                        me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataForecastTotals').setTitle('<center style="font-size:12px;">' + 'Forecast Totals' + ' </center>');
+        Ext.getCmp(prototype.id + '-gridDataForecastTotals').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataForecast').setStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     setGridDataForecastZones: function() {
@@ -1359,12 +1396,12 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
 
         win.displayProMasterTicket(this, 'Forecast', beanProMasterTicket);
     },
-            validateFields: function() {
-                var msj = '';
-                var bean = searchParams.bean;
+    validateFields: function() {
+        var msj = '';
+        var bean = searchParams.bean;
 
-                return msj;
-            },
+        return msj;
+    },
     btnAdd_click: function() {
         this.winDataEntry('I');
     },
@@ -1449,6 +1486,9 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 break;
             case  '-panelGridDataAmountByZones':
                 global.getFile(prototype.url + '/getXLSXAmountByZones?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataFareDetail':
+                global.getFile(prototype.url + '/getXLSXFareDetail?beanString=' + searchParams.beanString);
                 break;
 //            case  '-boxDetTicket':
 //                global.getFile(prototype.url + '/getXLSXTicket?beanString=' + me.paramsDetail.beanString);
