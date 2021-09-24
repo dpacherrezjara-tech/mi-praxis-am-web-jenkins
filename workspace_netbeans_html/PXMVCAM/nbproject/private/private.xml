@@ -193,17 +193,18 @@
             <file>file:/D:/repository/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/ConciliationARC/DataEntryConciliationARCController.js</file>
         </group>
         <group name="PRAXIS AM GIT">
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/AccountingMasterTAXController.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/AgentsMasterFileController.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AgentsMasterFile/DataEntryAgentsMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AgentsMasterFile/AgentsMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/payments/DataRequestedByBank/DataRequestedByBankController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/classes/CurrentSession.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/ProMasterTicketController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/master/MasterDAO.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProMasterTicketForm/DataEntry.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/AgentsMasterFileController.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/main/MainController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AgentsMasterFile/DataEntryAgentsMasterFileController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AgentsMasterFile/AgentsMasterFileController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/DataEntryProMasterTicketController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/classes/CurrentSession.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/AgentsMasterFileDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/DefaultController.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
         </group>
     </open-files>
