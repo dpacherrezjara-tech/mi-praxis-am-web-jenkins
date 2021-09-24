@@ -425,80 +425,62 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteRef', {
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            xtype: 'toolbar',
+                            dock: 'bottom',
+                            border: true,
+                            ui: 'footer',
+                            margin: '5 5 7 7', // left/right/top/botton
+                            defaults: {
+                                scale: 'medium'
+                            },
+                            style: 'aling:center padding: 5px;',
+                            items: [
+                                {
+                                    text: 'New',
+                                    id: prototype.id03 + '-btn-new',
+                                    iconCls: 'prx-icon-add',
+                                    listeners: {
+                                        click: 'onNewClick_id03'
+                                    }
+                                },
+                                {
+                                    text: 'Save',
+                                    id: prototype.id03 + '-btn-save',
+                                    iconCls: 'prx-icon-save',
+                                    listeners: {
+                                        click: 'onSaveClick_id03'
+                                    }
+                                },
+                                {
+                                    text: 'Edit',
+                                    id: prototype.id03 + '-btn-edit',
+                                    iconCls: 'prx-icon-edit',
+                                    listeners: {
+                                        click: 'onEditClick_id03'
+                                    }
+                                },
+                                {
+                                    text: 'Update',
+                                    id: prototype.id03 + '-btn-update',
+                                    iconCls: 'prx-icon-update',
+                                    listeners: {
+                                        click: 'onUpdateClick_id03'
+                                    }
+                                },                                
+                                {
+                                    text: 'Cancelar',
+                                    id: prototype.id03 + '-btn-cancel',
+                                    iconCls: 'prx-icon-cancel',
+                                    listeners: {
+                                        click: 'onCancelClick_id03'
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }
-            ]
-        }
-    ],
-    dockedItems: [
-        {
-            xtype: 'toolbar',
-            dock: 'bottom',
-            border: true,
-            ui: 'footer',
-            margin: '5 5 10 10', // left/right/top/botton
-            defaults: {
-                scale: 'medium'
-            },
-            style: 'aling:center padding: 5px;',
-            items: [
-                {
-                    text: 'New',
-                    id: prototype.id03 + '-btn-new',
-                    iconCls: 'prx-icon-add',
-                    listeners: {
-                        click: 'onNewClick_id03'
-                    }
-                },
-                {
-                    text: 'Save',
-                    id: prototype.id03 + '-btn-save',
-                    iconCls: 'prx-icon-save',
-                    listeners: {
-                        click: 'onSaveClick_id03'
-                    }
-                },
-                {
-                    text: 'Edit',
-                    id: prototype.id03 + '-btn-edit',
-                    iconCls: 'prx-icon-edit',
-                    listeners: {
-                        click: 'onEditClick_id03'
-                    }
-                },
-                {
-                    text: 'Update',
-                    id: prototype.id03 + '-btn-update',
-                    iconCls: 'prx-icon-update',
-                    listeners: {
-                        click: 'onUpdateClick_id03'
-                    }
-                },
-                {
-                    text: 'Delete',
-                    id: prototype.id03 + '-btn-delete',
-                    iconCls: 'prx-icon-delete',
-                    listeners: {
-                        click: 'onDeleteClick_id03'
-                    }
-                },
-                {
-                    text: 'Cancelar',
-                    id: prototype.id03 + '-btn-cancel',
-                    iconCls: 'prx-icon-cancel',
-                    listeners: {
-                        click: 'onCancelClick_id03'
-                    }
-                }
-//                {
-//                    xtype: 'label',
-//                    labelAlign: 'center',
-//                    width: 150,
-//                    padding: '2px 5px 2px 3px',
-//                    html: '<strong style="color:#AC4546;font-size:13px;">(*)Required Fields</strong>'
-//
-//                }
             ]
         }
     ]

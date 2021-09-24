@@ -60,47 +60,9 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                             listeners: {
                                 //change: 'onUploadChange'
                             }
-                        },
-                        {
-                            xtype: 'toolbar',
-                            dock: 'bottom',
-                            ui: 'footer',
-                            margin: '2 0 2 10',
-                            layout: {
-                                pack: 'center'
-                            },
-                            fieldStyle: 'text-align:center',
-                            defaults: {
-                                scale: 'medium'
-                            },
-                            items: [
-                                {xtype: 'tbseparator'},
-                                {
-                                    xtype: 'button',
-                                    id: prototype.id02 + '-btn-save',
-                                    text: 'Procesar',
-                                    icon: 'resources/img/botones/process.png',
-                                    listeners: {
-                                        click: 'onSaveClick'
-                                    }
-                                }
-                            ]
-                        }
+                        }                        
                     ]
                 }
-//                {
-//                    // <editor-fold defaultstate="collapsed" desc="grid">
-//                    xtype: 'panel',
-//                    id: prototype.id02 + '-contenedor-info',
-//                    width: 840,
-//                    layout: 'fit',
-//                    items: [
-//                        {
-//                            xtype: prototype.id02 + '-infoGridCargaRecibosBatch'
-//                        }
-//                    ]
-//                            // </editor-fold>
-//                }
             ]
         }
     ],
@@ -117,8 +79,17 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
             style: 'aling:center padding: 5px;',
             items: [
                 {
+                    xtype: 'button',
+                    id: prototype.id02 + '-btn-save',
+                    text: 'Procesar',
+                    icon: 'resources/img/botones/process.png',
+                    listeners: {
+                        click: 'onSaveClick'
+                    }
+                },
+                {
                     text: 'Close',
-                    id: prototype.id + '-btn-cancel',
+                    id: prototype.id02 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.InfoGridRef', {
                             autoScroll: true,
                             width: '100%',
                             border: false,
-                            height: 320,
+                            height: 360,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [

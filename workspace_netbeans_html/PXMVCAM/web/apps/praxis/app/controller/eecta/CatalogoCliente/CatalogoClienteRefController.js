@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {});
         grid01.setStore(storeGridDatas);
         this.getDataInputs();        
-        Ext.getCmp(prototype.id03 + '-btn-delete').hide();
+        //Ext.getCmp(prototype.id03 + '-btn-delete').hide();
         Ext.getCmp(prototype.id03 + '-btn-update').hide();
         Ext.getCmp(prototype.id03 + '-btn-save').hide();
         Ext.getCmp(prototype.id03 + '-btn-new').show();
@@ -27,7 +27,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
     },
     onNewClick_id03: function () {        
         this.get_ClearField();
-        Ext.getCmp(prototype.id03 + '-btn-delete').hide();
+        //Ext.getCmp(prototype.id03 + '-btn-delete').hide();
         Ext.getCmp(prototype.id03 + '-btn-update').hide();
         Ext.getCmp(prototype.id03 + '-btn-new').hide();
         Ext.getCmp(prototype.id03 + '-btn-save').show();
@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-A4097CDCLI').focus();
     },
     onCancelClick_id03:function(){
-        Ext.getCmp(prototype.id03 + '-btn-delete').hide();
+        //Ext.getCmp(prototype.id03 + '-btn-delete').hide();
         Ext.getCmp(prototype.id03 + '-btn-update').hide();
         Ext.getCmp(prototype.id03 + '-btn-save').hide();
         Ext.getCmp(prototype.id03 + '-btn-new').show();
@@ -46,11 +46,10 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-A4097REF2').setReadOnly(true);
         Ext.getCmp(prototype.id03 + '-A4097REF3').setReadOnly(true);
         Ext.getCmp(prototype.id03 + '-A4097REF4').setReadOnly(true);
-        Ext.getCmp(prototype.id03 + '-A4097STAT').setReadOnly(true);
-        
+        Ext.getCmp(prototype.id03 + '-A4097STAT').setReadOnly(true);        
     },
     onEditClick_id03:function(){
-        Ext.getCmp(prototype.id03 + '-btn-delete').show();
+        //Ext.getCmp(prototype.id03 + '-btn-delete').show();
         Ext.getCmp(prototype.id03 + '-btn-update').show();
         Ext.getCmp(prototype.id03 + '-btn-cancel').show();
         Ext.getCmp(prototype.id03 + '-btn-save').hide();
@@ -74,7 +73,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         var VL_A4097REF1 = Ext.getCmp(prototype.id03 + '-A4097REF1').getValue();
         var VL_A4097REF2 = Ext.getCmp(prototype.id03 + '-A4097REF2').getValue(); 
         var VL_A4097REF3 = Ext.getCmp(prototype.id03 + '-A4097REF3').getValue(); 
-        var VL_A4097REF4 = Ext.getCmp(prototype.id03 + '-A4097REF4').getValue();      
+        var VL_A4097REF4 = Ext.getCmp(prototype.id03 + '-A4097REF4').getValue(); 
+        var VL_A4097STAT = Ext.getCmp(prototype.id03 + '-A4097STAT').getValue();         
         return {
             VP_ACTION: VP_ACTION,
             A4097CDCLI: VL_A4097CDCLI,
@@ -84,7 +84,8 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
             A4097REF1: VL_A4097REF1,
             A4097REF2: VL_A4097REF2,            
             A4097REF3: VL_A4097REF3,
-            A4097REF4: VL_A4097REF4
+            A4097REF4: VL_A4097REF4,
+            A4097STAT: VL_A4097STAT
         };
     },
     onSaveClick_id03: function (btn) {
@@ -202,7 +203,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
     validateForm: function (params) {
 //        console.log(params);
         var mensaje = "";
-        if (params.A4097REF1 === ''  || params.A4097REF2 === '' ) {
+        if (params.A4097REF1 === '' && params.A4097REF2 === '' ) {
             mensaje = 'Ingresar al menos un campo de Referencia';
             Ext.getCmp(prototype.id03 + '-A4097REF1').focus();
             return mensaje;
@@ -233,7 +234,7 @@ Ext.define('Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteRefContro
         Ext.getCmp(prototype.id03 + '-A4097REF3').setValue('0');
         Ext.getCmp(prototype.id03 + '-A4097REF1').setValue('');
         Ext.getCmp(prototype.id03 + '-A4097REF2').setValue('');
-        Ext.getCmp(prototype.id03 + '-A4097STAT').setValue('');
+        Ext.getCmp(prototype.id03 + '-A4097STAT').setValue('1');
         Ext.getCmp(prototype.id03 + '-A4097REGIS').setValue('');        
         Ext.getCmp(prototype.id03 + '-A4097FREGI').setValue('');
         Ext.getCmp(prototype.id03 + '-A4097HREGI').setValue('');

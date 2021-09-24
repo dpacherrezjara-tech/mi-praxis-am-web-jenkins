@@ -67,8 +67,11 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
                                 items: [                                    
                                     {text: 'Nº Lote', dataIndex: 'A4096LOTE', width: 80, align: 'center', locked: true},
                                     {text: 'Fecha<br>Carga', dataIndex: 'A4096FCARG', align: 'center', width: 70, locked: true},
+                                    {text: 'Fecha<br>Recibo', dataIndex: 'A4096FRCBO', align: 'center', width: 70, locked: true},
+                                    {text: 'Fecha<br>Deposito', dataIndex: 'A4096FDPTO', align: 'center', width: 70, locked: true},
+                                    {text: 'No', dataIndex: 'A4096NRO', align: 'center', width: 40, locked: true},                                    
                                     {text: 'Unidad Ope.', dataIndex: 'A4096UNDOP', align: 'left', width: 120, locked: true},
-                                    {text: 'Trn. Origen', dataIndex: 'A4096TRXOR', width: 90, align: 'left', locked: true},
+                                    {text: 'Trx. Origen', dataIndex: 'A4096TRXOR', width: 90, align: 'left', locked: true},
                                     {text: 'Mda.', dataIndex: 'A4096MDATX', width: 50, align: 'center', locked: true},
                                     {text: 'Monto<br>Disponible', dataIndex: 'A4096MONTO', width: 90, align: 'right',locked: true,
 //                                        summaryType: 'sum',
@@ -84,7 +87,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
                                     {text: 'Cuenta', dataIndex: 'A4096CUENT', width: 80, align: 'center'},
                                     {text: 'Descripcion', dataIndex: 'A4096DESCR', width: 120, align: 'left'},                                   
                                     {text: 'Referencia', dataIndex: 'A4096REFER', width: 120, align: 'left'}, 
-                                    {text: 'Estado<br>Recibo', dataIndex: 'A4079STSRC', width: 90, align: 'left'},                                     
+                                    //{text: 'Estado<br>Recibo', dataIndex: 'A4079STSRC', width: 90, align: 'left'},                                     
                                     {
                                         text: 'Monto<br>Aplicado', dataIndex: 'A4096TOTAP', width: 90, align: 'right',
 //                                        summaryType: 'sum',

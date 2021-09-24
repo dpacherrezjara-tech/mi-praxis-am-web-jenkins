@@ -104,6 +104,16 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btntxt',
+                            //iconCls: 'prx-icon-plainText',
+                            icon: 'resources/img/botones/txt.png',
+                            tooltip: 'Descargar archivo IDENTIFICAR PAGO ',                            
+                            listeners: {
+                                click: 'btnDescargaFileIdentPago_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnClear',
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options',

@@ -57,11 +57,12 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         {
                                             xtype: 'datefield',
                                             id: prototype.id + '-fecha1',
-                                            fieldLabel: 'Fecha desde', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
-                                            width: 190,
+                                            fieldLabel: 'Del', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 40,
+                                            width: 130,
                                             height: 24,
                                             format: 'Ymd',
-                                            minValue: new Date(1990, 00, 01),
+                                            minValue: new Date(200, 00, 01),
+                                            value:new Date(2021, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
                                             enableKeyEvents: true,
@@ -80,11 +81,12 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         {
                                             xtype: 'datefield',
                                             id: prototype.id + '-fecha2',
-                                            fieldLabel: 'Hasta', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 38,
-                                            width: 128,
+                                            fieldLabel: 'Al', labelAlign: 'left', labelStyle: 'font-weight: bold;', labelWidth: 20,
+                                            width: 110,
                                             height: 24,
                                             format: 'Ymd',
-                                            minValue: new Date(1990, 00, 01),
+                                            minValue: new Date(2000, 00, 01),
+                                            value:new Date(),
                                             maskRe: /[0-9/]/,
                                             editable: true,
                                             enableKeyEvents: true,
@@ -102,10 +104,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-TRXOR',
-                                            fieldLabel: 'Trx. Origen', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 110,
+                                            fieldLabel: 'Trx. Origen', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
-                                            width: 250,
+                                            width: 200,
                                             height: 24,
                                             listeners: {
                                                 keypress: 'onTxtFilterKeypress'
@@ -114,10 +116,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-LOTE',
-                                            fieldLabel: 'Lote', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
+                                            fieldLabel: 'Lote', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
-                                            width: 180,
+                                            width: 170,
                                             value: '',
                                             enforceMaxLength: true,
                                             maxLength: 10,
@@ -129,7 +131,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-ESTAD',
-                                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 100,
+                                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
@@ -146,12 +148,41 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                             editable: true,
                                             typeAhead: true,
                                             valueField: 'code', displayField: 'name',
-                                            width: 190,
+                                            width: 150,
                                             height: 24,
                                             value: "",
 //                                            listConfig: {
 //                                                maxHeight: 111
 //                                            },
+                                            enableKeyEvents: true,
+                                            padding: '0 0',
+                                            listeners: {
+                                                //change: 'cmbfiltro_clickHandler'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-STREF',
+                                            fieldLabel: 'Estado Ref.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
+                                            store: new Ext.data.SimpleStore({
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ["", "TODOS"],
+                                                    ["1", "MATCH"],
+                                                    ["0", "UNMATCH"]
+                                                ]
+                                            }),
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: true,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 150,
+                                            height: 24,
+                                            value: "",
                                             enableKeyEvents: true,
                                             padding: '0 0',
                                             listeners: {
@@ -174,7 +205,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                                 {
                                                     xtype: 'button',
                                                     id: prototype.id + '-btn-apl-batch',
-                                                    text: 'Cargar recibos',
+                                                    text: 'Cargar',
                                                     icon: 'resources/img/icon/single_format.png',
                                                     listeners: {
                                                         click: 'btnCargaRecibosBatch'
@@ -182,8 +213,17 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                                 },
                                                 {
                                                     xtype: 'button',
+                                                    id: prototype.id + '-btn-proc-ref-bank',
+                                                    text: 'Procesar Ref.',
+                                                    icon: 'resources/img/icon/next.png',
+                                                    listeners: {
+                                                        click: 'btnCargaRecibosProcesarRefBank'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'button',
                                                     id: prototype.id + '-btn-ref-bank',
-                                                    text: 'Catalogo Ref.',
+                                                    text: 'Config. Ref.',
                                                     icon: 'resources/img/icon/process.png',
                                                     listeners: {
                                                         click: 'btnCargaRecibosRefBank'
