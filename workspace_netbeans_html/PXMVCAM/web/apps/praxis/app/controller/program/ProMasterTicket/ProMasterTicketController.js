@@ -807,11 +807,39 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         this.loadSabre();
     },
     imgBrowser_clickHandler: function () {
+        console.log('this.dataEntry');
+        console.log(this.dataEntry);
+        console.log(prototype.id);
         var controller = this.dataEntry.getController();
         controller.ticketNumber = "";
         controller.actionCode = this.actionCode2;
         controller.startDisplay();
         this.dataEntry.show();
+        
+        /*var DataEntryLog = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {id: 'DataEntryProMasterTicketForm'} );
+        var controller = DataEntryLog.getController();
+        controller.ticketNumber = "";
+        controller.actionCode = this.actionCode2;
+        controller.startDisplay();
+        DataEntryLog.show();*/
+        
+        /*if(typeof Ext.getCmp(prototype.id+'-DataEntryProMasterTicketForm') !== 'undefined'){
+            console.log('DataEntryProMasterTicketForm-undefined');
+            Ext.getCmp(prototype.id+'-DataEntryProMasterTicketForm').destroy();
+        }
+        if(this.dataEntry.getController()===null)
+        {
+            var option = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {id: 'DataEntryProMasterTicketForm'} );
+            option.show();
+        }
+        else
+        {
+            var controller = this.dataEntry.getController();
+            controller.ticketNumber = "";
+            controller.actionCode = this.actionCode2;
+            controller.startDisplay();
+            this.dataEntry.show();            
+        }*/
     },
     imgFilter_clickHandler: function () {
         var option = Ext.getCmp(prototype.id+'-contentFilter');
