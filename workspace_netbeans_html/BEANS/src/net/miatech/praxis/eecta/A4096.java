@@ -15,6 +15,8 @@ public class A4096 {
     public String A4096LOTE = "";
     public Integer A4096SQCG = 0;
     public String A4096FCARG = "";
+    public String A4096FRCBO = "";
+    public String A4096FDPTO = "";     
     public Integer A4096NRO = 0;
     public String A4096UNDOP = "";
     public String A4096TRXOR = "";
@@ -26,7 +28,8 @@ public class A4096 {
     public String A4096NRCLO = "";
     public String A4096DESCR = "";
     public String A4096REFER = "";
-    public String A4079STSRC = "";
+    public String A4096STREF = "";
+    public String A4096STSRC = "";
     public Double A4096TOTAP = 0.0;
     public Double A4096SALDP = 0.0;
     public String A4096CDCLI = "";

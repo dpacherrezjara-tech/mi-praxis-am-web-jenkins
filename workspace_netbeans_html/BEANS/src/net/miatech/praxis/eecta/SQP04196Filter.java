@@ -19,5 +19,6 @@ public class SQP04196Filter extends A4096 {
     public String VP_LOTE = "";
     public String VP_STAT = "";
     public String VP_TRXOR = "";
+    public String VP_STREF= "";
     public Pagination page = new Pagination();
 }
