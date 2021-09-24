@@ -1,18 +1,20 @@
 prototype.widthContenedor = 1200;   
 prototype.widthGrid = '100%';
-prototype.id01 = 'CatalogoClienteUatpAdd';
-prototype.id02 = 'CatalogoClienteContrato';
+prototype.id02 = 'CargaRecibosBatch';
 prototype.id03 = 'CatalogoClienteRef';
+prototype.id04 = 'CargaRecibosRef';
 
-Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteForm', {
+//console.log(prototype.id);
+
+Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.CatalogoClienteForm',
+    alias: 'widget.CargaRecibosForm',
     requires: [
-        'Ext.Praxis.controller.eecta.CatalogoCliente.CatalogoClienteController',
-        'Ext.Praxis.view.eecta.CatalogoClienteForm.Options',
-        'Ext.Praxis.view.eecta.CatalogoClienteForm.Filters'
+        'Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController',
+        'Ext.Praxis.view.eecta.CargaRecibosForm.Options',
+        'Ext.Praxis.view.eecta.CargaRecibosForm.Filters'
     ],
-    controller: 'CatalogoClienteController',
+    controller: 'CargaRecibosController',
     id: prototype.id + '-ContenedorMain',  
     layout: {
         type: 'fit'
@@ -67,7 +69,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteForm', {
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-panel-contenedor-grid',                                            
-                                            height: 550,                                            
+                                            height: 520, 
                                             layout: 'fit',
                                             items: [
                                                 // <editor-fold defaultstate="collapsed" desc="setGridData">
@@ -80,10 +82,7 @@ Ext.define('Ext.Praxis.view.eecta.CatalogoClienteForm.CatalogoClienteForm', {
                                                     defaults: {
                                                         border: true
                                                     },
-                                                    bodyStyle: 'background: transparent'
-//                                                    listeners: {
-//                                                        afterrender: 'onGridLoad'
-//                                                    }
+                                                    bodyStyle: 'background: transparent'                                                    
                                                 }
                                                 // </editor-fold>                                                 
                                             ]
