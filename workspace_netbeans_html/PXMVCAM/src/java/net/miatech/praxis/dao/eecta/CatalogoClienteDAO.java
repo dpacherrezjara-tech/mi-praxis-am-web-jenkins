@@ -839,13 +839,13 @@ public class CatalogoClienteDAO {
     }
      public SQP04199Filter setSQP04199Filter(SQP04199Filter filter ) throws SQLException, Exception {
         CallableStatement cstmt01 = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP04199(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP04199(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(11, Types.VARCHAR);
-            cstmt01.registerOutParameter(12, Types.VARCHAR);                        
+            cstmt01.registerOutParameter(12, Types.VARCHAR);
+            cstmt01.registerOutParameter(13, Types.VARCHAR);                        
             cstmt01.setString(1, filter.VP_ACTION);
             cstmt01.setString(2, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(3, filter.A4097CDCLI);
@@ -856,9 +856,10 @@ public class CatalogoClienteDAO {
             cstmt01.setString(8, filter.A4097REF2);
             cstmt01.setInt(9, filter.A4097REF3);
             cstmt01.setString(10, filter.A4097REF4);
+            cstmt01.setString(11, filter.A4097STAT);
             cstmt01.execute();            
-            filter.dbException.SQLCODE = cstmt01.getString(11);
-            filter.dbException.MESSAGE = cstmt01.getString(12);
+            filter.dbException.SQLCODE = cstmt01.getString(12);
+            filter.dbException.MESSAGE = cstmt01.getString(13);
             
         } finally {
             if (cstmt01 != null) {

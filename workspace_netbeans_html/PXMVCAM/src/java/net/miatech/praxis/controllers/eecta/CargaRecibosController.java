@@ -6,17 +6,33 @@
 package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04195Filter;
 import net.miatech.praxis.eecta.SQP04196Filter;
+import net.miatech.praxis.eecta.SQP04197Filter;
+import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
+import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -28,7 +44,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartFile; 
+
+
 /**
  *
  * @author vhidalgo
@@ -54,6 +72,8 @@ public class CargaRecibosController extends BaseController {
             filter.VP_LOTE = request.getParameter("VP_LOTE");
             filter.VP_STAT = request.getParameter("VP_STAT");
             filter.VP_TRXOR = request.getParameter("VP_TRXOR");
+            filter.VP_STREF = request.getParameter("VP_STREF");
+            
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 18;
             start = (start != 0 ? start : 0);
@@ -144,8 +164,8 @@ public class CargaRecibosController extends BaseController {
                         A4096ESTAD=  sheet.getCell(6)== null ? "" : sheet.getCell(6).toString(); 
                         A4096CUENT=sheet.getCell(7)== null ? "" : sheet.getCell(7).toString(); 
                         A4096NRCLO=sheet.getCell(8)== null ? "" : sheet.getCell(8).toString(); 
-                        A4096DESCR=sheet.getCell(9)== null ? "" : sheet.getCell(9).toString(); 
-                        A4096REFER=sheet.getCell(10)== null ? "" : sheet.getCell(10).toString(); 
+                        A4096DESCR=sheet.getCell(17)== null ? "" : sheet.getCell(17).toString(); 
+                        A4096REFER=sheet.getCell(18)== null ? "" : sheet.getCell(18).toString(); 
                         //crear obj json
                         HashMap obj=new HashMap();    
                         obj.put("A4096NRO", A4096NRO );    
@@ -203,4 +223,147 @@ public class CargaRecibosController extends BaseController {
         return MESSAGE_ERROR[INDICE];
     }
     
+    @RequestMapping(value = "setCargaRecibosProcesarRef", method = RequestMethod.POST)
+    public @ResponseBody            
+    String setCargaRecibosProcesarRef(ModelMap map, HttpServletRequest request) {
+        SQP04197Filter objRtn = new SQP04197Filter();        
+        logic = new CargaRecibosLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04197Filter filter = new SQP04197Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            objRtn = logic.setSQP04197Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());            
+        }
+        return new Gson().toJson(map);
+
+    }
+   
+    @RequestMapping(value = "getDescargaFileIdentPago")
+    public @ResponseBody        
+    void getDescargaFileIdentPago(HttpServletRequest request, HttpServletResponse response) {
+        SQP04196Filter filter = new SQP04196Filter();
+        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Date date = new Date();        
+        LocalDateTime myDateObj = LocalDateTime.now();
+//        System.out.println("Before formatting: " + myDateObj);
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        String formattedDate = myDateObj.format(myFormatObj);
+//        System.out.println("After formatting: " + formattedDate);
+        
+        try{
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<SQP04196Filter> lst = logic.getSQP04196Filter(filter);
+            
+            int len = lst.size();
+            Integer vi = 0;            
+            String vl_fileName = "IDENTIFICAR_PAGOS_"+ formattedDate; // +"_"+date.getHours()+date.getMinutes()+date.getSeconds();
+            File file = new File(rutaFile + "\\" + vl_fileName + ".txt");
+            
+            if (file.exists())
+                file.delete();
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            String cadena;
+               																		
+
+            cadena = "NO_CONTROL|UNIDAD_OPERATIVA|TRANSACCION_ORIGEN|MONTO_DISPONIBLE|MONEDA_TRX_ORIGEN|TIPO|ESTADO|CUENTA|NUMERO_CLIENTE_ORIGEN|";
+            cadena += "TRANSACCION_DESTINO|TIPO_DOCUMENTO|MONEDA|NUMERO CLIENTE DESTINO|MONTO A APLICAR|TIPO DE CAMBIO|VALOR TIPO|FECHA(DD-MM-YYYY)";
+            cadena += "DESCRIPCION|REFERENCIA";
+            writer.println("" + cadena );
+            
+            for (vi = 0; vi < len; vi++) {                
+                cadena = "";                                
+                //cadena += "" + lst.get(vi).A4096NRO + "|";
+                cadena += "" + vi + "|";
+                cadena += "" + lst.get(vi).A4096UNDOP + "|";
+                cadena += "" + lst.get(vi).A4096TRXOR + "|";
+                cadena += "" + lst.get(vi).A4096MONTO + "|";
+                cadena += "" + lst.get(vi).A4096MDATX + "|";
+                cadena += "" + lst.get(vi).A4096TIPO + "|";               
+                cadena += "" + lst.get(vi).A4096ESTAD + "|";
+                cadena += "" + lst.get(vi).A4096CUENT + "|";
+                cadena += "" + lst.get(vi).A4096NRCLO + "||||";
+                cadena += "" + lst.get(vi).A4096NRCLO + "|||||";
+                cadena += "" + lst.get(vi).A4096DESCR + "|";
+                cadena += "" + lst.get(vi).A4096REFER;                            
+                writer.println("" + cadena );
+            }
+            writer.flush();
+            writer.close();
+            
+            /**
+             * Comprimimos archivo generado para su optima descarga
+             */
+//            if (!zip(vl_fileName))            
+//            response.setContentType("application/zip");
+//            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + vl_fileName + ".zip" + "\"");
+//            InputStream is = new FileInputStream(rutaFile + "\\" + vl_fileName + ".zip");
+//            IOUtils.copy(is, response.getOutputStream());
+//            response.flushBuffer();
+
+            response.setContentType("application/text");
+            response.setHeader("Content-Disposition", "attachment;filename=\""+ vl_fileName + ".txt" + "\"");
+            InputStream is = new FileInputStream(rutaFile + "\\" + vl_fileName + ".txt");
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+            
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+            e.printStackTrace();
+            throw new SpringException(e);
+        }
+        
+    }    
+    
+    public Boolean zip(String fileName){
+        String path = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Boolean existe = false;
+        try {
+            File fileZip = new File( path + "\\" + fileName + ".zip");
+            
+            if (fileZip.exists())
+                fileZip.delete();
+            
+            zipFile(new File(path + "\\" + fileName + ".txt"), path + "\\" + fileName + ".zip");
+            
+            existe = true;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return existe;
+    }
+    
+    public static void zipFile(File inputFile, String zipFilePath) throws FileNotFoundException, IOException{
+        FileOutputStream fileOutputStream = new FileOutputStream(zipFilePath);
+        ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
+        zipOutputStream.setMethod(ZipOutputStream.DEFLATED);
+        ZipEntry zipEntry = new ZipEntry(inputFile.getName());
+        zipOutputStream.putNextEntry(zipEntry);
+        FileInputStream fileInputStream = new FileInputStream(inputFile);
+        byte[] buf = new byte[4096];
+        int bytesRead;
+
+        while ((bytesRead = fileInputStream.read(buf)) > 0) {
+            zipOutputStream.write(buf, 0, bytesRead);
+        }
+        fileInputStream.close();
+        zipOutputStream.flush();
+        zipOutputStream.closeEntry();
+        zipOutputStream.close();
+        fileOutputStream.close();
+    }
 }

@@ -94,9 +94,9 @@ public class CatalogoClienteController extends BaseController {
     public @ResponseBody
     String mantenimiento(ModelMap map, HttpServletRequest request) {
         SQP03879Filter filter = new SQP03879Filter();
-        SQP03879Filter objRtn;
-        SQP03888Filter objRtn01 = null;
-        SQP03960Filter objRtn02 = null;
+        SQP03879Filter objRtn = new SQP03879Filter();
+        SQP03888Filter objRtn01 = new SQP03888Filter();
+        SQP03960Filter objRtn02 = new SQP03960Filter();
         logic = new CatalogoClienteLogic();
         try {
             logic.setSession(this.serverSession.getServerSession());
@@ -122,7 +122,7 @@ public class CatalogoClienteController extends BaseController {
                     filter01.A3954FALTA = gsonObj.get("A3954FALTA").getAsString();
                     filter01.A3954FBAJA = gsonObj.get("A3954FBAJA").getAsString();
                     objRtn01 = logic.setSQP03888(filter01);
-                    if (objRtn01.dbException.SQLCODE.equals("1")) {
+                    if (objRtn01.dbException.SQLCODE.equals("0")) {
                         SQLCODE_uatp = "E";
                         MESSAGE_uatp = objRtn01.dbException.MESSAGE;
                     }
@@ -141,7 +141,8 @@ public class CatalogoClienteController extends BaseController {
                     filter02.A3979FALTA = gsonObj.get("A3979FALTA").getAsString();
                     filter02.A3979FBAJA = gsonObj.get("A3979FBAJA").getAsString();
                     objRtn02 = logic.setSQP03960(filter02);
-                    if (objRtn02.dbException.SQLCODE.equals("1")) {
+                    // 1=OK , 0 = ERROR 
+                    if (objRtn02.dbException.SQLCODE.equals("0")) {
                         SQLCODE_identif = "E";
                         MESSAGE_identif = objRtn02.dbException.MESSAGE;
                     }
@@ -149,19 +150,22 @@ public class CatalogoClienteController extends BaseController {
             }
             //Existe MESSAGE al INSERTAR DETALLES
             if (SQLCODE_uatp.equals("E")) {
-                objRtn.dbException.SQLCODE = "1";
+                objRtn.dbException.SQLCODE = "0";
                 objRtn.dbException.MESSAGE = MESSAGE_uatp;
             }
              if (SQLCODE_identif.equals("E")) {
-                objRtn.dbException.SQLCODE = "1";
+                objRtn.dbException.SQLCODE = "0";
                 objRtn.dbException.MESSAGE = MESSAGE_identif;
             }
             map.put("success", true);
             map.put("objRtn", objRtn);
         } catch (Exception ex) {
-            map.put("success", false);
-            map.put("sesion", ex.getMessage());
-            throw new SpringException(ex);
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());            
+            //throw new SpringException(ex);
         }
         return new Gson().toJson(map);
 
