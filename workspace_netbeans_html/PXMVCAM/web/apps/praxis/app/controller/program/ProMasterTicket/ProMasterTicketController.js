@@ -807,6 +807,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         this.loadSabre();
     },
     imgBrowser_clickHandler: function () {
+        prototype.url = URL_VIEWTICKET;
         console.log('this.dataEntry');
         console.log(this.dataEntry);
         console.log(prototype.id);
