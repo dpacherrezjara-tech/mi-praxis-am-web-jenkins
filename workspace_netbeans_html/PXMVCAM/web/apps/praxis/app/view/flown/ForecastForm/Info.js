@@ -615,6 +615,113 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                         ]
                                     }
                                 },
+                                {xtype: 'tbspacer', height: 20},
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataForecastTotals',
+                                    width: 670,
+                                    height: 140,
+                                    columnLines: true,
+                                    /*features: [{
+                                     ftype: 'summary',
+                                     dock: 'bottom'
+                                     }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'TYPE', dataIndex: 'TREG', width: 90},
+                                            {
+                                                text: 'PAX',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'ML', dataIndex: 'QTYPAX', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Average',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Revenue USD', dataIndex: 'VPROUSD', width: 120,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Average',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Revenue MXN', dataIndex: 'VPROMXN', width: 120,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
                             ]
                         },
                         {
@@ -4320,8 +4427,8 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'TRNCU', dataIndex: 'TRNCU', width: 80, },
-                                            {text: 'Value', dataIndex: 'VALOR', width: 100,
+                                            {text: 'Document<br>Type', dataIndex: 'TRNCU', width: 80, },
+                                            {text: 'Value USD', dataIndex: 'VALOR', width: 100,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');

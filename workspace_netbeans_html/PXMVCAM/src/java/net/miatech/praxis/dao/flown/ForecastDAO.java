@@ -188,7 +188,7 @@ public class ForecastDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                VALOR = rst.getLong("VALOR");
+                VALOR = rst.getDouble("VALOR");
             }
             rst.close();
             if (cstmt.getMoreResults()) {
@@ -455,6 +455,70 @@ public class ForecastDAO {
 
                     lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
                 }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<IMF140Filter> loadPX551SQP04160(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04160(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new IMF140Filter();
+                bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                bean.IN_TREG = filter.IN_TREG.trim();
+
+                bean.QTYPAX = rst.getInt("QTYPAX");
+                bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                bean.VPROUSD = rst.getDouble("VPROUSD");
+                bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                bean.VPROMXN = rst.getDouble("VPROMXN");
+                bean.TREG = rst.getString("TREG").trim();
+
+                lst.add(bean);
             }
 
         } catch (Exception e) {
