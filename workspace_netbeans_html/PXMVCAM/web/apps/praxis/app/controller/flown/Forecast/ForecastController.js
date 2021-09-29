@@ -427,6 +427,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                             msg: 'Data not found.'
                         });
                     } else {
+                        //console.log(obj.data);
 //                            var data = obj.data.items[0].data;
                     }
 //                        me.setWidthPie();
@@ -481,7 +482,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
-                url: prototype.url + '/searchFareDetail'
+                url: prototype.url + '/searchForecastCouponDetail'
             }, listeners: {
                 beforeload: function(obj) {
                     obj.proxy.extraParams = searchParams;
@@ -1452,7 +1453,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download Excel ?',
+            msg: 'Download File ?',
             buttons: Ext.MessageBox.OKCANCEL,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
@@ -1488,7 +1489,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 global.getFile(prototype.url + '/getXLSXAmountByZones?beanString=' + searchParams.beanString);
                 break;
             case  '-panelGridDataFareDetail':
-                global.getFile(prototype.url + '/getXLSXFareDetail?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getTXTForecastCouponDetail?beanString=' + searchParams.beanString);
                 break;
 //            case  '-boxDetTicket':
 //                global.getFile(prototype.url + '/getXLSXTicket?beanString=' + me.paramsDetail.beanString);

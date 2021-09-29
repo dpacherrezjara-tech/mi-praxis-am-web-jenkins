@@ -518,6 +518,13 @@ public class ForecastDAO {
                 bean.VPROMXN = rst.getDouble("VPROMXN");
                 bean.TREG = rst.getString("TREG").trim();
 
+                if (bean.TREG.trim().equals("REAL")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
+
+                } else if (bean.TREG.trim().equals("FUTURE")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
+                }
+
                 lst.add(bean);
             }
 

@@ -619,7 +619,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataForecastTotals',
-                                    width: 670,
+                                    width: 690,
                                     height: 140,
                                     columnLines: true,
                                     /*features: [{
@@ -633,6 +633,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
+                                            {text: '', dataIndex: 'strImagen1', width: 20,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return '<img src=' + '"' + record.data.strImagen1 + '"' + '>';
+                                                }
+                                            },
                                             {text: 'TYPE', dataIndex: 'TREG', width: 90},
                                             {
                                                 text: 'PAX',
