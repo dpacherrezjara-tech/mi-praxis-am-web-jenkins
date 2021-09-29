@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
         'Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController',
         'Ext.Praxis.view.eecta.ControlUATPForm.Info02'
     ],
-    title: 'Obetener UUID',
+    title: 'Procesar UUID',
     header: true,
     width: 800,
     height: 480,
