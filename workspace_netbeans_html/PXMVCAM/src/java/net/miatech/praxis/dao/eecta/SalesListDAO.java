@@ -179,8 +179,11 @@ public class SalesListDAO {
                 //Fetch BLOB from DB
                 Blob blb= rs01.getBlob("LOGOBLOB");                
                 if( blb != null){
-                    byte barr[]=blb.getBytes(1,(int)blb.length());
-                    FileOutputStream fout=new FileOutputStream("/Dumps/"+ rs01.getString("A3953LOGO"));                
+                    byte barr[]=blb.getBytes(1,(int)blb.length());                                                                          
+                    String Rutatmp = session.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
+                    FileOutputStream fout=new FileOutputStream( Rutatmp + rs01.getString("A3953LOGO") );                
+                    //FileOutputStream fout=new FileOutputStream("/Dumps/"+ rs01.getString("A3953LOGO"));                
+                    
                     fout.write(barr);                
                     fout.close();  
                 }                                
