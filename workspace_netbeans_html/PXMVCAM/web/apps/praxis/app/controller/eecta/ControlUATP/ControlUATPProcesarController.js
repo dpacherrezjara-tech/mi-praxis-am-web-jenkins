@@ -107,15 +107,14 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPProcesarControlle
                 Ext.getCmp(prototype.id02 + '-ControlUATPProcesarForm').unmask('Loading...', '');
                 global.Msg({
                     msg: objRtn.dbException.MESSAGE,
-                    icon: 1,
+                    icon: objRtn.dbException.SQLCODE,
                     fn: function () {
                         //culmino PROCESO   
                         if(params.VP_PROCESO==='UATP')
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});   
                         var elem = document.getElementById('ControlUATPProcesarForm_Msg');
                         elem.innerHTML = objRtn.dbException.MESSAGE;                        
-                        //me.onCancelClick();   
-                        
+                        //me.onCancelClick();                           
                     }
                 });
             }

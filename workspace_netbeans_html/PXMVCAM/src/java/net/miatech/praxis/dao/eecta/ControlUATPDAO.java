@@ -294,24 +294,18 @@ public class ControlUATPDAO {
     
     public SQP03348Filter setSQP03348Filter(SQP03348Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP03348(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP03348(?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(9, Types.VARCHAR);
-            cstmt.registerOutParameter(10, Types.VARCHAR);                        
-            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.VP_CCIA);
-            cstmt.setString(3, filter.VP_FORMA);
-            cstmt.setString(4, filter.VP_SERIE);
-            cstmt.setString(5, filter.VP_SEQ);
-            cstmt.setString(6, filter.VP_TRNCU);
-            cstmt.setString(7, filter.VP_GRUPO);
-            cstmt.setString(8, filter.vp_json);
+            cstmt.registerOutParameter(3, Types.VARCHAR);
+            cstmt.registerOutParameter(4, Types.VARCHAR);                        
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);           
+            cstmt.setString(2, filter.vp_json);
             cstmt.execute();
-            filter.dbException.SQLCODE = cstmt.getString(9);
-            filter.dbException.MESSAGE = cstmt.getString(10);
+            filter.dbException.SQLCODE = cstmt.getString(3);
+            filter.dbException.MESSAGE = cstmt.getString(4);
                         
         } finally {
             if (cstmt != null) {
