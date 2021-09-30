@@ -225,7 +225,7 @@ public class ReportEdoCta {
             
     }
 
-    public File createReport(List<SQP03976Filter> Data) {
+    public File createReport(List<SQP03976Filter> Data, String Rutatmp ) {
 
         try {
 
@@ -262,7 +262,8 @@ public class ReportEdoCta {
             // Logo AEROMEXICO
             int pos_img = 710; //698
             Image img;
-            img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
+            img = Image.getInstance(String.format(Rutatmp+"%s", RESOURCES[0]));
+            //img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
             img.setAbsolutePosition(PosX1, pos_img); //530
             img.scaleToFit(190, 40);
             document.add(new Paragraph(String.format("", RESOURCES[0], img.getClass().getName())));
@@ -292,8 +293,9 @@ public class ReportEdoCta {
             //LOGO CLIENTE   
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
-            }
-            img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            }            
+            img = Image.getInstance(String.format(Rutatmp+"%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            //img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
             img.setAbsolutePosition(px1, pos_img); //520                       
             img.scaleToFit(280, 60);  
             document.add(new Paragraph(String.format("", Data.get(0).tbl_client.A3953LOGO/*RESOURCES[0]*/, img.getClass().getName())));

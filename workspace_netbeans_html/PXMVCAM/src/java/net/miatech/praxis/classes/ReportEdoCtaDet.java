@@ -203,7 +203,7 @@ public class ReportEdoCtaDet {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("(días)", subFont_1)), PosX1+30, PYi, 0);            
     }
 
-    public File createReport(List<SQP04001Filter> Data) {
+    public File createReport(List<SQP04001Filter> Data, String Rutatmp ) {
 
         try {
 
@@ -260,8 +260,9 @@ public class ReportEdoCtaDet {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTitle1, 300, PYi, 0);
 
             // Logo AEROMEXICO
-            Image img;
-            img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
+            Image img; 
+            img = Image.getInstance(String.format(Rutatmp+ "%s", RESOURCES[0]));
+            //img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
             img.setAbsolutePosition(PosX1, 530);
             img.scaleToFit(190, 40);
             document.add(new Paragraph(String.format("", RESOURCES[0], img.getClass().getName())));
@@ -292,7 +293,8 @@ public class ReportEdoCtaDet {
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
             }
-            img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            img = Image.getInstance(String.format(Rutatmp + "%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            //img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
             img.setAbsolutePosition(px1, 520);
             img.scaleToFit(280, 60);
             document.add(new Paragraph(String.format("", Data.get(0).tbl_client.A3953LOGO/*RESOURCES[0]*/, img.getClass().getName())));

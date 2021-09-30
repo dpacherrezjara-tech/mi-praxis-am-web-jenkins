@@ -110,8 +110,9 @@ public class EmisionEdoCtaController extends BaseController {
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
             listaData = logic.getSQP03976Filter(filter);
+            String Rutatmp = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
             ReportEdoCta reportEdoCta = new ReportEdoCta();
-            File archivo = reportEdoCta.createReport(listaData);
+            File archivo = reportEdoCta.createReport(listaData, Rutatmp );
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
             response.setHeader("Pragma", "public");
@@ -147,7 +148,8 @@ public class EmisionEdoCtaController extends BaseController {
             filter = new Gson().fromJson(beanString, filter.getClass());
             listaData = logic.getSQP04001(filter);
             ReportEdoCtaDet reportEdoCtaDet = new ReportEdoCtaDet();
-            File archivo = reportEdoCtaDet.createReport(listaData);
+            String Rutatmp = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
+            File archivo = reportEdoCtaDet.createReport(listaData, Rutatmp);
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
             response.setHeader("Pragma", "public");

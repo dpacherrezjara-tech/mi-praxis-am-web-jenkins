@@ -176,7 +176,7 @@ public class EmisionEdoCtaDAO {
                 objRtn.tbl_client.A3953TORGN = rs01.getString("A3953TORGN");                                                                                                                      
                 //Fetch BLOB from DB
                 Blob blb= rs01.getBlob("LOGOBLOB");                
-                if( blb != null){
+                if( blb != null && !rs01.getString("A3953LOGO").equals("") ){
                     byte barr[]=blb.getBytes(1,(int)blb.length());
                     String Rutatmp = session.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
                     FileOutputStream fout=new FileOutputStream( Rutatmp + rs01.getString("A3953LOGO") ); 

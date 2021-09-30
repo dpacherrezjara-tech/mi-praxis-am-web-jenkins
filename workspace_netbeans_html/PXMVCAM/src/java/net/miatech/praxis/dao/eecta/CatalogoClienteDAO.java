@@ -316,7 +316,7 @@ public class CatalogoClienteDAO {
             filter.OU_CIMG = cstmt01.getBlob(7);
             filter.OU_NOMBRE=cstmt01.getString(8);                        
             //Fetch BLOB from DB
-            if( filter.OU_CIMG != null ){
+            if( filter.OU_CIMG != null && filter.OU_NOMBRE != "" ){
                 Blob blb= filter.OU_CIMG; 
                 byte barr[]=blb.getBytes(1,(int)blb.length());                
                 String Rutatmp = session.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
