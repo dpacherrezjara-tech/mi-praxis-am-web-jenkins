@@ -603,7 +603,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                             border: true,
                             hidden: false,
                             height: 516,
-                            width: 1012,
+                            width: 1072,
                             margin: '10 0 0 150',
                             layout: {
                                 type: 'vbox',
@@ -614,7 +614,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataDetailAll',
                                     height: 510,
-                                    width: 1012,
+                                    width: 1072,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -700,7 +700,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Status', width: 100, dataIndex: 'TRFSTAT'}
+                                                    {text: 'Status', width: 160, dataIndex: 'TRFSTAT'}
                                                 ]
                                             },
                                             {text: 'Qty',
