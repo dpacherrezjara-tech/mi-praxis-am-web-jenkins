@@ -34,6 +34,10 @@ public class OwnerlessCouponLogic {
     public List<A1691Filter> loadPX235SQP00905(A1691Filter filter, HashMap hmAeropuertos) throws SQLException, Exception {
         return ownerlessCouponDAO.loadPX235SQP00905(filter, hmAeropuertos);
     }
+    
+    public List<A1691Filter> loadPX235SQP04158(A1691Filter filter, HashMap hmAeropuertos) throws SQLException, Exception {
+        return ownerlessCouponDAO.loadPX235SQP04158(filter, hmAeropuertos);
+    }
 
     public List<A1413Filter> loadPX235SQP00253(A1413Filter filter) throws SQLException, Exception {
         return ownerlessCouponDAO.loadPX235SQP00253(filter);

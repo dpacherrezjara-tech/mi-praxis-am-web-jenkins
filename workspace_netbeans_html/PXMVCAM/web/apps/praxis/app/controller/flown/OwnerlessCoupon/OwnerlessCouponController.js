@@ -84,6 +84,9 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
             },
             '#OwnerlessCouponForm-differentCarrier': {
                 change: this.checkEvent
+            },
+            '#OwnerlessCouponForm-canceledFlight': {
+                change: this.checkEvent_canceledFlight
             }
         });
     },
@@ -108,8 +111,23 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
     // ---------- Eventos de consistencia de los combos---------------
     checkEvent: function(obj, e) {
         //true : check ; false : uncheck
+        console.log('checkEvent')
         if (obj.getValue()) {
             this.optionCheck = 1;
+            Ext.getCmp(prototype.id + '-textTicket').setValue('');
+            Ext.getCmp(prototype.id + '-canceledFlight').setValue(0);
+        } else {
+            this.optionCheck = 0;
+        }
+        this.btnSearch_click();
+
+    },
+    checkEvent_canceledFlight: function(obj, e) {
+        //true : check ; false : uncheck
+        console.log('checkEvent_canceledFlight')
+        if (obj.getValue()) {            
+            this.optionCheck = 2;
+            Ext.getCmp(prototype.id + '-differentCarrier').setValue(0);
             Ext.getCmp(prototype.id + '-textTicket').setValue('');
         } else {
             this.optionCheck = 0;
@@ -167,7 +185,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
-        
+
         var cmbStatus = Ext.getCmp(prototype.id + '-cmbStatus');
         cmbStatus.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -180,7 +198,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
             ]
         }));
         cmbStatus.setValue("P");
-        
+
     }
     ,
     btnSearch_click: function(obj, e) {
@@ -198,30 +216,38 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
                 });
             } else {
                 Ext.getCmp(prototype.id + '-differentCarrier').setValue(0);
+                Ext.getCmp(prototype.id + '-canceledFlight').setValue(0);
                 Ext.getCmp(prototype.id + '-gridData').show();
                 Ext.getCmp(prototype.id + '-gridData2').hide();
+                Ext.getCmp(prototype.id + '-gridData3').hide();
                 this.setGridData(obj, e);
             }
         } else {    //La consultad dependera del estado del checkbox
-            if (this.optionCheck === 1) {
-                //Realizar la consulta por Carrier
-                Ext.getCmp(prototype.id + '-gridData2').show();
-                Ext.getCmp(prototype.id + '-gridData').hide();
-                this.setGridData2(obj, e);
-
-            } else {
-                //Realizar la consulta principal
-                Ext.getCmp(prototype.id + '-gridData').show();
-                Ext.getCmp(prototype.id + '-gridData2').hide();
-                this.setGridData(obj, e);
-            }
+            if (Ext.getCmp(prototype.id + '-differentCarrier').getValue() && !Ext.getCmp(prototype.id + '-canceledFlight').getValue()) {
+             //Realizar la consulta por Carrier
+             Ext.getCmp(prototype.id + '-gridData2').show();
+             Ext.getCmp(prototype.id + '-gridData').hide();
+             Ext.getCmp(prototype.id + '-gridData3').hide();
+             //Ext.getCmp(prototype.id + '-canceledFlight').setValue(0);
+             this.setGridData2(obj, e);
+             
+             } else if (!Ext.getCmp(prototype.id + '-differentCarrier').getValue() && Ext.getCmp(prototype.id + '-canceledFlight').getValue()) {
+             //Realizar la consulta por Vuelo Cancelado
+             Ext.getCmp(prototype.id + '-gridData3').show();
+             Ext.getCmp(prototype.id + '-gridData2').hide();
+             Ext.getCmp(prototype.id + '-gridData').hide();
+             //Ext.getCmp(prototype.id + '-differentCarrier').setValue(0);
+             this.setGridData3(obj, e);
+             
+             } else {
+             //Realizar la consulta principal
+             Ext.getCmp(prototype.id + '-gridData').show();
+             Ext.getCmp(prototype.id + '-gridData2').hide();
+             Ext.getCmp(prototype.id + '-gridData3').hide();
+             this.setGridData(obj, e);
+             }
 
         }
-
-
-
-
-
     },
     setFormatParameter: function() {
         var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
@@ -320,6 +346,34 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         Ext.getCmp(prototype.id + '-gridData2').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
+    setGridData3: function(obj, val) {
+        this.setFormatParameter();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.OwnerlessCoupon.GridData2', {
+            proxy: {
+                url: prototype.url + '/searchCanceled'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin');
+                    var pagData = pag.getPageData();
+
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(pagData.currentPage);
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pagData.pageCount);
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(pagData.total);
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridData3').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData3').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
     eventKey: function(e, eOpts) {
 
         if (eOpts.getKey() === 13) {
@@ -365,8 +419,8 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
     },
     exportExcel: function() {
         this.setFormatParameter();
-        global.getFile(prototype.url + '/getXLSX?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&ticketNumber=' + searchParams.ticketNumber 
-                                                            + '&txtNVLO=' + searchParams.txtNVLO + '&cmbStatus=' + searchParams.cmbStatus +  '&option=' + searchParams.option);
+        global.getFile(prototype.url + '/getXLSX?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&ticketNumber=' + searchParams.ticketNumber
+                + '&txtNVLO=' + searchParams.txtNVLO + '&cmbStatus=' + searchParams.cmbStatus + '&option=' + searchParams.option);
     }
     ,
     btnFilter_click: function(obj) {
