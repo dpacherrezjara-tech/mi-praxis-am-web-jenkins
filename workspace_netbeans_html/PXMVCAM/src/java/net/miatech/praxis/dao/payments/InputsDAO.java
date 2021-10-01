@@ -1137,6 +1137,9 @@ public class InputsDAO {
                     objRtn.TRFSTAT = "LOADED";
                 }else if(objRtn.TRFSTAT.trim().equals("E")){
                     objRtn.TRFSTAT = "ERROR";
+                    if(objRtn.QTYDOC <= 1){
+                        objRtn.TRFSTAT = "RECORDS NOT FOUND";
+                    }
                 }else{
                     objRtn.TRFSTAT = "PENDING";
                 }
