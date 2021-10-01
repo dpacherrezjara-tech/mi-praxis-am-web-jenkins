@@ -193,7 +193,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             viewRefund.show();
 	}
 	if(data.STAT === 'FLWN'){
-            this.searchBeanTkt(win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim() + data.CPN,this.filterTKT.IN_SEQ, data.SEQ);
+            this.searchBeanTkt(win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim() + data.CPN,data.SEQ, data.SEQRO);
 	}
         if(data.STAT === 'BILLED'){
             //this.searchBeanTkt(win.getValue('txtFilterTicketCia').trim() + win.getValue('txtFilterTicketFormSer').trim() + data.CPN,this.filterTKT.IN_SEQ, data.SEQ);

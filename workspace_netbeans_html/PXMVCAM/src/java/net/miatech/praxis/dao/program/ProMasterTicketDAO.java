@@ -568,6 +568,7 @@ public class ProMasterTicketDAO {
                                                         while (rs11.next()) {
                                                             objRtn11 = new PX040S01A720ResultSet11();
                                                             objRtn11.fileA1692.SEQ = rs11.getString("SEQ");
+                                                            objRtn11.fileA1692.SEQRO = rs11.getString("SEQRO");
                                                             objRtn11.fileA1692.CCIA = rs11.getString("CCIA");
                                                             objRtn11.fileA1692.FORMA = rs11.getString("FORMA");
                                                             objRtn11.fileA1692.SERIE = rs11.getString("SERIE");
