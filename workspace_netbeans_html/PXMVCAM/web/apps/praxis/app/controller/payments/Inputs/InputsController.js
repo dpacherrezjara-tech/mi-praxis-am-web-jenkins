@@ -862,7 +862,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
     },
     afterRenderMonth: function (obj) {
         var month = this.fecha.getMonth() + 1;
-        if (month < 9) {
+        if (month <= 9) {
             obj.setValue('0' + month);
         } else {
             obj.setValue((month));
