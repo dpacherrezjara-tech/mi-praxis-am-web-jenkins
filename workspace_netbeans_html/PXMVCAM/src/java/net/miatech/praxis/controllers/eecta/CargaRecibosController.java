@@ -14,12 +14,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -133,8 +136,9 @@ public class CargaRecibosController extends BaseController {
             while (iterator.hasNext()) {                
                 cont++;
                 Row sheet = iterator.next();
-                //Iterator<Cell> cellIterator = currentRow.iterator();                
-                if (cont > 1) {
+                //Iterator<Cell> cellIterator = currentRow.iterator(); 
+                //datos en excel empoieza de la fila 3
+                if (cont > 2) {
                     if (sheet.getCell(0) != null) {
                         
                         A4096NRO = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString();                        
@@ -177,8 +181,8 @@ public class CargaRecibosController extends BaseController {
                         obj.put("A4096ESTAD", A4096ESTAD);
                         obj.put("A4096CUENT", A4096CUENT);
                         obj.put("A4096NRCLO", A4096NRCLO);
-                        obj.put("A4096DESCR", A4096DESCR);
-                        obj.put("A4096REFER", A4096REFER);
+                        obj.put("A4096DESCR", A4096DESCR.trim());
+                        obj.put("A4096REFER", A4096REFER.trim());
                         String jsonText = JSONValue.toJSONString(obj);                          
                         json_texto += jsonText + ",";                        
                     }
@@ -216,7 +220,7 @@ public class CargaRecibosController extends BaseController {
     
     public String get_errorLoadFile ( Integer INDICE  ){
         String[] MESSAGE_ERROR = {
-            "COLUMNA TRANSACCION ORIG. EN BLANCO ",               //0
+            "COLUMNA TRANSACCION ORIG. EN BLANCO ",//0
             "COLUMNA MONEDA EN BLANCO",   //1            
             "COLUMNA IMPORTE EN BLANCO" //33
         };        
@@ -245,7 +249,15 @@ public class CargaRecibosController extends BaseController {
         return new Gson().toJson(map);
 
     }
-   
+    public static String fn_decimalFormat(Double doubleValue){
+        //boolean isWholeNumber=(doubleValue == Math.round(doubleValue));
+        DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(Locale.US);
+        formatSymbols.setDecimalSeparator('.');
+        //String pattern= isWholeNumber ? "#.##" : "#.00";    
+        String pattern= "#.00";           
+        DecimalFormat df = new DecimalFormat(pattern, formatSymbols);
+        return df.format(doubleValue);
+    }
     @RequestMapping(value = "getDescargaFileIdentPago")
     public @ResponseBody        
     void getDescargaFileIdentPago(HttpServletRequest request, HttpServletResponse response) {
@@ -279,25 +291,26 @@ public class CargaRecibosController extends BaseController {
                																		
 
             cadena = "NO_CONTROL|UNIDAD_OPERATIVA|TRANSACCION_ORIGEN|MONTO_DISPONIBLE|MONEDA_TRX_ORIGEN|TIPO|ESTADO|CUENTA|NUMERO_CLIENTE_ORIGEN|";
-            cadena += "TRANSACCION_DESTINO|TIPO_DOCUMENTO|MONEDA|NUMERO CLIENTE DESTINO|MONTO A APLICAR|TIPO DE CAMBIO|VALOR TIPO|FECHA(DD-MM-YYYY)";
+            cadena += "TRANSACCION_DESTINO|TIPO_DOCUMENTO|MONEDA|NUMERO CLIENTE DESTINO|MONTO A APLICAR|TIPO DE CAMBIO|VALOR TIPO|FECHA(DD-MM-YYYY)|";
             cadena += "DESCRIPCION|REFERENCIA";
             writer.println("" + cadena );
-            
+            int j = 0;            
             for (vi = 0; vi < len; vi++) {                
-                cadena = "";                                
+                cadena = ""; 
+                j++;
                 //cadena += "" + lst.get(vi).A4096NRO + "|";
-                cadena += "" + vi + "|";
-                cadena += "" + lst.get(vi).A4096UNDOP + "|";
-                cadena += "" + lst.get(vi).A4096TRXOR + "|";
-                cadena += "" + lst.get(vi).A4096MONTO + "|";
-                cadena += "" + lst.get(vi).A4096MDATX + "|";
-                cadena += "" + lst.get(vi).A4096TIPO + "|";               
-                cadena += "" + lst.get(vi).A4096ESTAD + "|";
-                cadena += "" + lst.get(vi).A4096CUENT + "|";
-                cadena += "" + lst.get(vi).A4096NRCLO + "||||";
-                cadena += "" + lst.get(vi).A4096NRCLO + "|||||";
-                cadena += "" + lst.get(vi).A4096DESCR + "|";
-                cadena += "" + lst.get(vi).A4096REFER;                            
+                cadena += "" + j + "|";
+                cadena += "" + lst.get(vi).A4096UNDOP.trim() + "|";
+                cadena += "" + lst.get(vi).A4096TRXOR.trim() + "|";                
+                cadena += "" + this.fn_decimalFormat(lst.get(vi).A4096MONTO) + "|";
+                cadena += "" + lst.get(vi).A4096MDATX.trim() + "|";
+                cadena += "" + lst.get(vi).A4096TIPO.trim() + "|";               
+                cadena += "" + lst.get(vi).A4096ESTAD.trim() + "|";
+                cadena += "" + lst.get(vi).A4096CUENT.trim() + "|";
+                cadena += "" + lst.get(vi).A4096NRCLO.trim() + "||||";
+                cadena += "" + lst.get(vi).A4096NRCLO.trim() + "|||||";
+                cadena += "" + lst.get(vi).A4096DESCR.trim() + "|";
+                cadena += "" + lst.get(vi).A4096REFER.trim();                            
                 writer.println("" + cadena );
             }
             writer.flush();
