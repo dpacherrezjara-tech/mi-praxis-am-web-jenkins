@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.controller.flown.DOT.DataEntryDOTController',{
                         global.Msg({ msg: 'This File has not been created.' });
                         me.onCancelClick();
                     }
-                } else global.Msg({ msg: res.sesion });
+                } else global.Msg({ msg: 'Hubo un error.' });
                 Ext.getCmp(prototype.id + '-gridFileNames').unmask();
             },
             failure: function(response, opts) {
