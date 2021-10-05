@@ -221,12 +221,7 @@ public class DOTController extends BaseController {
             
             map.put("success", true);
             map.put("listaArray", listaArray);
-            
-            if(listaArray.isEmpty()){
-                map.put("str", "DATA NOT FOUND ");
-            }else{
-                map.put("str", new String(bytes));
-            }
+            map.put("str", new String(bytes));
         } catch (Exception e) {
             //e.printStackTrace();
             e.printStackTrace(pw);
