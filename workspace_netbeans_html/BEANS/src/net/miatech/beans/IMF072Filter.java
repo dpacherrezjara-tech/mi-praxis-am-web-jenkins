@@ -18,11 +18,6 @@ public class IMF072Filter  extends IMF072{
     public String strYearFrom = "";
     public String strYearTo = "";
     
-    public String IN_FECHA_FROM = "";
-    public String IN_FECHA_TO = "";
-    public double totVALOR = 0;
-    public String TICKET = "";
-    
     public String strFecFormat = "";
     public String strMes = "";
     public String strFlag = "";
@@ -65,6 +60,4 @@ public class IMF072Filter  extends IMF072{
     public int intPageRws = -1;
     public int intTotalPgs = -1;
     public int intTotalRws = -1;
-    
-    public Pagination page = new Pagination();
 }

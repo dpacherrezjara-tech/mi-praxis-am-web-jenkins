@@ -52,8 +52,6 @@ public class IMF072 {
     public String FUSO = "";
     public String DUSE = "";
     public String LONHAL = "";
-    public String ZONA = "";
-    public String TRNCU = "";
     //=======================
     public String USCR = "";
     public String FECR = "";
