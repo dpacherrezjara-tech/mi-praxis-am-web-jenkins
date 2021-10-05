@@ -9,15 +9,23 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.IMF140Filter;
 import net.miatech.beans.IMF141Filter;
+import net.miatech.beans.IMF072Filter;
+import net.miatech.praxis.classes.ZipFiles;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
@@ -106,6 +114,58 @@ public class ForecastController extends BaseController {
 
             //--------------------
             lst = logic.loadPX551SQP03895(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchForecastCouponDetail")
+    public @ResponseBody
+    String searchForecastCouponDetail(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Forecast : SearchForecastCouponDetail-------------");
+
+        map.put("success", true);
+        List<IMF072Filter> lst = this.getListForecastCouponDetail(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<IMF072Filter> getListForecastCouponDetail(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF072Filter> lst = new ArrayList<>(0);
+        IMF072Filter filter = new IMF072Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ForecastLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF072Filter.class);
+
+            // Paginacion
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            //--------------------
+            lst = logic.loadPX551SQP04159(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -261,6 +321,58 @@ public class ForecastController extends BaseController {
 
             //--------------------
             lst = logic.loadPX551SQP03897(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchForecastTotals")
+    public @ResponseBody
+    String searchForecastTotals(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Forecast : SearchForecastTotals-------------");
+
+        map.put("success", true);
+        List<IMF140Filter> lst = this.getListForecastTotals(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<IMF140Filter> getListForecastTotals(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF140Filter> lst = new ArrayList<>(0);
+        IMF140Filter filter = new IMF140Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ForecastLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF140Filter.class);
+
+            // Paginacion
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            //--------------------
+            lst = logic.loadPX551SQP04160(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -790,7 +902,7 @@ public class ForecastController extends BaseController {
             Cell CH1_5 = row1.createCell(5);
             Cell CH1_6 = row1.createCell(6);
 
-            CH1_0.setCellValue("Date");
+            CH1_0.setCellValue("Period");
             CH1_1.setCellValue("Date");
             CH1_2.setCellValue("PAX");
             CH1_3.setCellValue("Amount");
@@ -821,7 +933,7 @@ public class ForecastController extends BaseController {
             Cell CH2_5 = row2.createCell(5);
             Cell CH2_6 = row2.createCell(6);
 
-            CH2_0.setCellValue("Cont");
+            CH2_0.setCellValue("Contab.");
             CH2_1.setCellValue("Flight");
             CH2_2.setCellValue("ML");
             CH2_3.setCellValue("Revenue USD");
@@ -944,10 +1056,10 @@ public class ForecastController extends BaseController {
             Cell CH1_11 = row1.createCell(11);
 
             CH1_0.setCellValue("Flight");
-            CH1_1.setCellValue("");
+            CH1_1.setCellValue("Domestic");
             CH1_2.setCellValue("");
             CH1_3.setCellValue("");
-            CH1_4.setCellValue("");
+            CH1_4.setCellValue("International");
             CH1_5.setCellValue("");
             CH1_6.setCellValue("");
             CH1_7.setCellValue("");
@@ -990,14 +1102,14 @@ public class ForecastController extends BaseController {
             Cell CH2_11 = row2.createCell(11);
 
             CH2_0.setCellValue("Date");
-            CH2_1.setCellValue("ASI");
-            CH2_2.setCellValue("CAM");
-            CH2_3.setCellValue("CAN");
-            CH2_4.setCellValue("CAR");
-            CH2_5.setCellValue("EUR");
-            CH2_6.setCellValue("FRO");
-            CH2_7.setCellValue("LOC");
-            CH2_8.setCellValue("PLA");
+            CH2_1.setCellValue("FRO");
+            CH2_2.setCellValue("LOC");
+            CH2_3.setCellValue("PLA");
+            CH2_4.setCellValue("ASI");
+            CH2_5.setCellValue("CAM");
+            CH2_6.setCellValue("CAN");
+            CH2_7.setCellValue("CAR");
+            CH2_8.setCellValue("EUR");
             CH2_9.setCellValue("SUD");
             CH2_10.setCellValue("USA");
             CH2_11.setCellValue("TOTAL");
@@ -1036,14 +1148,14 @@ public class ForecastController extends BaseController {
                 Cell rcell11 = row1.createCell(11);
 
                 rcell0.setCellValue(listaData.get(vi).DFLIGHT);
-                rcell1.setCellValue(listaData.get(vi).ASI);
-                rcell2.setCellValue(listaData.get(vi).CAM);
-                rcell3.setCellValue(listaData.get(vi).CAN);
-                rcell4.setCellValue(listaData.get(vi).CAR);
-                rcell5.setCellValue(listaData.get(vi).EUR);
-                rcell6.setCellValue(listaData.get(vi).FRO);
-                rcell7.setCellValue(listaData.get(vi).LOC);
-                rcell8.setCellValue(listaData.get(vi).PLA);
+                rcell1.setCellValue(listaData.get(vi).FRO);
+                rcell2.setCellValue(listaData.get(vi).LOC);
+                rcell3.setCellValue(listaData.get(vi).PLA);
+                rcell4.setCellValue(listaData.get(vi).ASI);
+                rcell5.setCellValue(listaData.get(vi).CAM);
+                rcell6.setCellValue(listaData.get(vi).CAN);
+                rcell7.setCellValue(listaData.get(vi).CAR);
+                rcell8.setCellValue(listaData.get(vi).EUR);
                 rcell9.setCellValue(listaData.get(vi).SUD);
                 rcell10.setCellValue(listaData.get(vi).USA);
                 rcell11.setCellValue(listaData.get(vi).totZonas);
@@ -2391,4 +2503,223 @@ public class ForecastController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "getXLSXForecastCouponDetail")
+    public @ResponseBody
+    void getXLSXForecastCouponDetail(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Report : getXLSXForecastCouponDetail");
+        String fileNameDownload = String.format("Report Forecast Coupon Detail - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        try {
+            Workbook workbook;
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            List<IMF072Filter> listaData = this.getListForecastCouponDetail(request, true);
+            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+            workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Report");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            Integer vi = 0;
+            Integer vj = 0; //Almacena el numero de fila
+            Iterator iter = listaData.iterator();
+     // ====== CREANDO TITULOS ======================================
+
+            // ======  Nivel 1 ==========
+            Row row1 = sheet.createRow(vj);
+            Cell CH1_0 = row1.createCell(0);
+            Cell CH1_1 = row1.createCell(1);
+            Cell CH1_2 = row1.createCell(2);
+            Cell CH1_3 = row1.createCell(3);
+            Cell CH1_4 = row1.createCell(4);
+            Cell CH1_5 = row1.createCell(5);
+            Cell CH1_6 = row1.createCell(6);
+
+            CH1_0.setCellValue("Date");
+            CH1_1.setCellValue("Ticket");
+            CH1_2.setCellValue("Coupon");
+            CH1_3.setCellValue("Zone");
+            CH1_4.setCellValue("Flight");
+            CH1_5.setCellValue("Document");
+            CH1_6.setCellValue("Value USD");
+
+            CH1_0.setCellStyle(headerStyle);
+            CH1_1.setCellStyle(headerStyle);
+            CH1_2.setCellStyle(headerStyle);
+            CH1_3.setCellStyle(headerStyle);
+            CH1_4.setCellStyle(headerStyle);
+            CH1_5.setCellStyle(headerStyle);
+            CH1_6.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            ++vj;
+     //============================================
+
+            // ======  Nivel 2 ==========
+            Row row2 = sheet.createRow(vj);
+            Cell CH2_0 = row2.createCell(0);
+            Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+            Cell CH2_6 = row2.createCell(6);
+
+            CH2_0.setCellValue("Flight");
+            CH2_1.setCellValue("");
+            CH2_2.setCellValue("");
+            CH2_3.setCellValue("");
+            CH2_4.setCellValue("Number");
+            CH2_5.setCellValue("Type");
+            CH2_6.setCellValue("");
+
+            CH2_0.setCellStyle(headerStyle);
+            CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+            CH2_6.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            ++vj;
+            //============================================
+
+            while (iter.hasNext()) {
+                row1 = sheet.createRow(vj);
+                Cell rcell0 = row1.createCell(0);
+                Cell rcell1 = row1.createCell(1);
+                Cell rcell2 = row1.createCell(2);
+                Cell rcell3 = row1.createCell(3);
+                Cell rcell4 = row1.createCell(4);
+                Cell rcell5 = row1.createCell(5);
+                Cell rcell6 = row1.createCell(6);
+
+                rcell0.setCellValue(listaData.get(vi).DFLIGHT);
+                rcell1.setCellValue(listaData.get(vi).TICKET);
+                rcell2.setCellValue(listaData.get(vi).CUPON);
+                rcell3.setCellValue(listaData.get(vi).ZONA);
+                rcell4.setCellValue(listaData.get(vi).NFLIGHT);
+                rcell5.setCellValue(listaData.get(vi).TRNCU);
+                rcell6.setCellValue(listaData.get(vi).VALOR);
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+
+            //============================================
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+            fos.close();
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+
+    @RequestMapping(value = "/getTXTForecastCouponDetail")
+    public @ResponseBody
+    void getTXTForecastCouponDetail(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String serverPath = request.getSession().getServletContext().getRealPath("/");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHSS");
+            String path = sdf.format(new Date());
+            ZipFiles zipFiles = new ZipFiles();
+            List<File> srcfile = new ArrayList<File>();
+
+            srcfile.add(downloadTXTForecastCouponDetail(request));
+
+            File zipfile = new File(serverPath + path + ".zip");
+            zipFiles.zipFiles(srcfile, zipfile);
+            zipFiles.downFile(response, serverPath, path + ".zip");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public File downloadTXTForecastCouponDetail(HttpServletRequest request) {
+        System.out.println("Report : downloadTXT_ForecastCouponDetail");
+
+        DecimalFormat df = new DecimalFormat("#,###,##0");
+        DecimalFormat df_2 = new DecimalFormat("#,###,##0.00");
+
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.ENGLISH);
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+
+        df.setDecimalFormatSymbols(otherSymbols);
+        df_2.setDecimalFormatSymbols(otherSymbols);
+
+        String fileNameDownload = String.format("Forecast Coupon Detail" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
+        String cadena = "";
+        Integer vi = 0;
+
+        try {
+
+            File file = File.createTempFile(fileNameDownload, ".txt");
+            List<IMF072Filter> lst = this.getListForecastCouponDetail(request, true);
+            System.out.println("Tamaño de lista devuelta : " + lst.size());
+
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+
+            cadena = "Date Flight|Ticket|Coupon|Zone|Flight Number|Document Type|Value USD|";
+
+            writer.println("" + cadena);
+
+            for (vi = 0; vi < lst.size(); vi++) {
+                cadena = "";
+                cadena += lst.get(vi).DFLIGHT + "|";
+                cadena += lst.get(vi).TICKET + "|";
+                cadena += lst.get(vi).CUPON + "|";
+                cadena += lst.get(vi).ZONA + "|";
+                cadena += lst.get(vi).NFLIGHT + "|";
+                cadena += lst.get(vi).TRNCU + "|";
+                cadena += df_2.format(lst.get(vi).VALOR) + "|";
+
+                writer.println("" + cadena);
+            }
+
+            writer.flush();
+            writer.close();
+
+            return file;
+
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
 }
