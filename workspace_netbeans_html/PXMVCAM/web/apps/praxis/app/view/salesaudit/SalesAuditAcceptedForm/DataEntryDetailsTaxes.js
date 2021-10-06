@@ -20,7 +20,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
     height: 430,
-    width: 920,
+    width: 1020,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                         {
                             xtype: 'grid',
                             id: prototype.id2 + '-griddata1',
-                            width: 890,
+                            width: 1000,
                             height: 300,
                             features: [
                                 {
@@ -64,12 +64,13 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                                     {text: 'Country', dataIndex: 'A1673PAIS', align: 'center', width: 60, sortable: false},
                                     {text: 'Currency', dataIndex: 'A1673MORIG', align: 'center', width: 60, sortable: false},
                                     {text: 'Tax</br>Code', dataIndex: 'A1673CDTAX', align: 'center', width: 60, sortable: false},
-                                    {text: 'Description', dataIndex: 'A1673HREGI', align: 'center', flex: 1, sortable: false},
+                                    {text: 'Description', dataIndex: 'A1673HREGI', align: 'center', width: 120, sortable: false},
+                                    {text: 'Ato', dataIndex: 'A1673CDATO', align: 'center', width: 40, sortable: false},
 
-                                    {text: 'Airline', dataIndex: 'A1673TXMIA', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Agent', dataIndex: 'A1673TXORI', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Diferences</br> ADM', dataIndex: 'A1673TXDIF', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Diferences</br> ACM', dataIndex: 'A1673RATE', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
+                                    {text: 'Airline', dataIndex: 'A1673TXMIA', width: 120, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Agent', dataIndex: 'A1673TXORI', width: 120, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Diferences</br> ADM', dataIndex: 'A1673TXDIF', width: 120, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Diferences</br> ACM', dataIndex: 'A1673RATE', width: 120, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
                                 ]
                             }, viewConfig: {
                                 //trackOver: false,
@@ -80,7 +81,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                         {
                             xtype: 'grid', hidden: true,
                             id: prototype.id2 + '-griddata2',
-                            width: 890,
+                            width: 1000,
                             height: 300,
                             features: [
                                 {
@@ -97,9 +98,10 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Currency', dataIndex: 'A1673MORIG', align: 'center', width: 40, sortable: false},
-                                    {text: 'Tax Code', dataIndex: 'A1673CDTAX', align: 'center', width: 40, sortable: false},
-                                    {text: 'Description', dataIndex: 'A1673HREGI', align: 'center', flex: 1, sortable: false},
+                                    {text: 'Cur.', dataIndex: 'A1673MORIG', align: 'center', width: 40, sortable: false},
+                                    {text: 'Tax<br> Code', dataIndex: 'A1673CDTAX', align: 'center', width: 50, sortable: false},
+                                    {text: 'Description', dataIndex: 'A1673HREGI', align: 'center', width: 165, sortable: false},
+                                    {text: 'Ato', dataIndex: 'A1673CDATO', align: 'center', width: 40, sortable: false},
                                     {text: 'Airline',
                                         defaults: {
                                             menuDisabled: true,
@@ -107,8 +109,8 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                                             align: 'center'
                                         },
                                         columns: [
-                                            {text: 'New', dataIndex: 'A1673TXMIA', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                                            {text: 'Old', dataIndex: 'A1673OLDAI', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
+                                            {text: 'New', dataIndex: 'A1673TXMIA', width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                            {text: 'Old', dataIndex: 'A1673OLDAI', width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
                                         ]
                                     },
                                     {text: 'Agent',
@@ -118,8 +120,8 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                                             align: 'center'
                                         },
                                         columns: [
-                                            {text: 'New', dataIndex: 'A1673TXORI', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                                            {text: 'Old', dataIndex: 'A1673OLDAG', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
+                                            {text: 'New', dataIndex: 'A1673TXORI',width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                            {text: 'Old', dataIndex: 'A1673OLDAG', width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
                                         ]
                                     },
                                     {text: 'Diff',
@@ -129,8 +131,8 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                                             align: 'center'
                                         },
                                         columns: [
-                                            {text: 'Airline', dataIndex: 'A1673DIFAI', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                                            {text: 'Agent', dataIndex: 'A1673DIFAG', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
+                                            {text: 'Airline', dataIndex: 'A1673DIFAI', width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                            {text: 'Agent', dataIndex: 'A1673DIFAG', width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
                                         ]
                                     },
                                     //{text: 'New</br>Airline', dataIndex: 'A1673TXMIA', flex: 1, align: 'right',summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
@@ -139,7 +141,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsTa
                                     //{text: 'Old</br>Agent', dataIndex: 'A1673OLDAG', flex: 1, align: 'right',summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
                                     //{text: 'Diff</br>Airline', dataIndex: 'A1673DIFAI', flex: 1, align: 'right',summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
                                     //{text: 'Diff</br>Agent', dataIndex: 'A1673DIFAG', flex: 1, align: 'right',summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Differences', dataIndex: 'A1673TXDIF', flex: 1, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
+                                    {text: 'Differences', dataIndex: 'A1673TXDIF', width: 100, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
                                 ]
                             }, viewConfig: {
                                 //trackOver: false,

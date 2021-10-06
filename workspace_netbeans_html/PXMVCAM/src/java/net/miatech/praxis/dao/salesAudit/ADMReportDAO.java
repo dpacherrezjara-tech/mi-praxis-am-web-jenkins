@@ -1107,10 +1107,12 @@ public class ADMReportDAO {
                     objlst_CalcuImpuestos = new A1673();
 
                     objlst_CalcuImpuestos.A1673CDTAX = rs03.getString("A1673CDTAX");
-
+                    objlst_CalcuImpuestos.A1673CDATO = rs03.getString("A2739CDATO");
+                    
                     objlst_CalcuImpuestos.A1673TXORI = rs03.getDouble("A1673TXORI");
                     objlst_CalcuImpuestos.A1673TXMIA = rs03.getDouble("A1673TXMIA");
                     objlst_CalcuImpuestos.A1673TXDIF = rs03.getDouble("A1673TXDIF");
+                    
                     lst_CalcuImpuestos.add(objlst_CalcuImpuestos);
                 }
             }
