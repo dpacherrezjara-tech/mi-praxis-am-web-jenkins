@@ -29,6 +29,7 @@ public class A1692Filter extends A1692 {
     public int IN_TIPOFECHA = 0;
     public String CUPONNEW = "";
     public String STNEW = "";
+    public String PRDA = "";
     public String strFormatDate = "";
     public String strFormatDate2 = "";
     public String strFormatFVTA = "";
