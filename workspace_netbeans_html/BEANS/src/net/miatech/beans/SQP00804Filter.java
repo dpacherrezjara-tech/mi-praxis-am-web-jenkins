@@ -19,6 +19,10 @@ public class SQP00804Filter extends A2444{
     public double A2447IVA = 0.0;
     public double A2447COMIV = 0.0;
     public double A2447TCASH = 0.0;
-    public double A2447CAMCO = 0.0;   
+    public double A2447CAMCO = 0.0;
+    public double A2447COMBA = 0.00;
+    public double A2447IVACB = 0.00;
+    public double A2447COMB2 = 0.00;
+    public double A2447IVAC2 = 0.00;
         
 }
