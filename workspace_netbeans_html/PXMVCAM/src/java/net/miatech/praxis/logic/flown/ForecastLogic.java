@@ -80,5 +80,5 @@ public class ForecastLogic {
 
     public List<IMF140Filter> loadPX551SQP04119(IMF140Filter filter) throws SQLException, Exception {
         return ForecastDAO.loadPX551SQP04119(filter);
-    }
+    }    
 }

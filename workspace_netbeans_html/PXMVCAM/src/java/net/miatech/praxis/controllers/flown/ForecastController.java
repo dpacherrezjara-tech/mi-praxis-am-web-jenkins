@@ -1082,7 +1082,8 @@ public class ForecastController extends BaseController {
             CH1_11.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 10));
             ++vj;
              //============================================
 
@@ -1257,17 +1258,19 @@ public class ForecastController extends BaseController {
             Cell CH1_7 = row1.createCell(7);
             Cell CH1_8 = row1.createCell(8);
             Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
 
             CH1_0.setCellValue("");
             CH1_1.setCellValue("Date");
             CH1_2.setCellValue("PAX");
-            CH1_3.setCellValue("Amount");
-            CH1_4.setCellValue("Average");
-            CH1_5.setCellValue("Amount");
-            CH1_6.setCellValue("Average");
-            CH1_7.setCellValue("Seq");
-            CH1_8.setCellValue("");
-            CH1_9.setCellValue("%Var vs");
+            CH1_3.setCellValue("");
+            CH1_4.setCellValue("Amount");
+            CH1_5.setCellValue("Average");
+            CH1_6.setCellValue("Amount");
+            CH1_7.setCellValue("Average");
+            CH1_8.setCellValue("Seq");
+            CH1_9.setCellValue("");
+            CH1_10.setCellValue("%Var vs");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1279,9 +1282,10 @@ public class ForecastController extends BaseController {
             CH1_7.setCellStyle(headerStyle);
             CH1_8.setCellStyle(headerStyle);
             CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 3));
             ++vj;
              //============================================
 
@@ -1297,17 +1301,19 @@ public class ForecastController extends BaseController {
             Cell CH2_7 = row2.createCell(7);
             Cell CH2_8 = row2.createCell(8);
             Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
 
             CH2_0.setCellValue("");
             CH2_1.setCellValue("Flight");
-            CH2_2.setCellValue("ML");
-            CH2_3.setCellValue("Revenue USD");
+            CH2_2.setCellValue("REAL");
+            CH2_3.setCellValue("FUTURE");
             CH2_4.setCellValue("Revenue USD");
-            CH2_5.setCellValue("Revenue MXN");
+            CH2_5.setCellValue("Revenue USD");
             CH2_6.setCellValue("Revenue MXN");
-            CH2_7.setCellValue("week Day");
-            CH2_8.setCellValue("");
-            CH2_9.setCellValue("Average Fare");
+            CH2_7.setCellValue("Revenue MXN");
+            CH2_8.setCellValue("week Day");
+            CH2_9.setCellValue("");
+            CH2_10.setCellValue("Average Fare");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -1319,6 +1325,7 @@ public class ForecastController extends BaseController {
             CH2_7.setCellStyle(headerStyle);
             CH2_8.setCellStyle(headerStyle);
             CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -1337,6 +1344,7 @@ public class ForecastController extends BaseController {
                 Cell rcell7 = row1.createCell(7);
                 Cell rcell8 = row1.createCell(8);
                 Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
 
                 rcell0.setCellValue(" ");
                 if (listaData.get(vi).TREG.equals("0")) {
@@ -1347,25 +1355,26 @@ public class ForecastController extends BaseController {
 
                 rcell1.setCellValue(listaData.get(vi).DFLIGHT);
                 rcell2.setCellValue(listaData.get(vi).QTYPAX);
-                rcell3.setCellValue(listaData.get(vi).VCPNUSD);
-                rcell4.setCellValue(listaData.get(vi).VPROUSD);
-                rcell5.setCellValue(listaData.get(vi).VCPNMXN);
-                rcell6.setCellValue(listaData.get(vi).VPROMXN);
-                rcell7.setCellValue(listaData.get(vi).DWEEK);
-                rcell8.setCellValue(" ");
+                rcell3.setCellValue(listaData.get(vi).QTYPAX_FORECAST);
+                rcell4.setCellValue(listaData.get(vi).VCPNUSD);
+                rcell5.setCellValue(listaData.get(vi).VPROUSD);
+                rcell6.setCellValue(listaData.get(vi).VCPNMXN);
+                rcell7.setCellValue(listaData.get(vi).VPROMXN);
+                rcell8.setCellValue(listaData.get(vi).DWEEK);
+                rcell9.setCellValue(" ");
                 if (listaData.get(vi).VCPNMXN > 0) {
                     if (listaData.get(vi).AVRG_VCPNMXN >= 20) {
-                        rcell8.setCellStyle(style_red);
+                        rcell9.setCellStyle(style_red);
                     }
                     if (listaData.get(vi).AVRG_VCPNMXN < 20 && listaData.get(vi).AVRG_VCPNMXN >= -25) {
-                        rcell8.setCellStyle(style_green);
+                        rcell9.setCellStyle(style_green);
                     }
                     if (listaData.get(vi).AVRG_VCPNMXN < -25) {
-                        rcell8.setCellStyle(style_yellow);
+                        rcell9.setCellStyle(style_yellow);
                     }
                 }
 
-                rcell9.setCellValue(listaData.get(vi).AVRG_VCPMXN_PORCENTAJE);
+                rcell10.setCellValue(listaData.get(vi).AVRG_VCPMXN_PORCENTAJE);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1381,6 +1390,7 @@ public class ForecastController extends BaseController {
             sheet.autoSizeColumn(7, true);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -1433,6 +1443,19 @@ public class ForecastController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+
+            CellStyle style_green = workbook.createCellStyle();
+            style_green.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+            style_green.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+            CellStyle style_yellow = workbook.createCellStyle();
+            style_yellow.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+            style_yellow.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1453,20 +1476,22 @@ public class ForecastController extends BaseController {
             Cell CH1_10 = row1.createCell(10);
             Cell CH1_11 = row1.createCell(11);
             Cell CH1_12 = row1.createCell(12);
+            Cell CH1_13 = row1.createCell(13);
 
-            CH1_0.setCellValue("Day");
-            CH1_1.setCellValue("Flight");
-            CH1_2.setCellValue("ASI");
-            CH1_3.setCellValue("CAM");
-            CH1_4.setCellValue("CAN");
-            CH1_5.setCellValue("CAR");
-            CH1_6.setCellValue("EUR");
-            CH1_7.setCellValue("FRO");
-            CH1_8.setCellValue("LOC");
-            CH1_9.setCellValue("PLA");
-            CH1_10.setCellValue("SUD");
-            CH1_11.setCellValue("USA");
-            CH1_12.setCellValue("TOTAL");
+            CH1_0.setCellValue("");
+            CH1_1.setCellValue("Day");
+            CH1_2.setCellValue("Flight");
+            CH1_3.setCellValue("Domestic");
+            CH1_4.setCellValue("");
+            CH1_5.setCellValue("");
+            CH1_6.setCellValue("International");
+            CH1_7.setCellValue("");
+            CH1_8.setCellValue("");
+            CH1_9.setCellValue("");
+            CH1_10.setCellValue("");
+            CH1_11.setCellValue("");
+            CH1_12.setCellValue("");
+            CH1_13.setCellValue("Total");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1481,22 +1506,12 @@ public class ForecastController extends BaseController {
             CH1_10.setCellStyle(headerStyle);
             CH1_11.setCellStyle(headerStyle);
             CH1_12.setCellStyle(headerStyle);
+            CH1_13.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
-
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 13, 13));
             ++vj;
              //============================================
 
@@ -1504,12 +1519,48 @@ public class ForecastController extends BaseController {
             Row row2 = sheet.createRow(vj);
             Cell CH2_0 = row2.createCell(0);
             Cell CH2_1 = row2.createCell(1);
+            Cell CH2_2 = row2.createCell(2);
+            Cell CH2_3 = row2.createCell(3);
+            Cell CH2_4 = row2.createCell(4);
+            Cell CH2_5 = row2.createCell(5);
+            Cell CH2_6 = row2.createCell(6);
+            Cell CH2_7 = row2.createCell(7);
+            Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+            Cell CH2_12 = row2.createCell(12);
+            Cell CH2_13 = row2.createCell(13);
 
-            CH2_0.setCellValue("Week");
-            CH2_1.setCellValue("Date");
+            CH2_0.setCellValue("");
+            CH2_1.setCellValue("Week");
+            CH2_2.setCellValue("Date");
+            CH2_3.setCellValue("FRO");
+            CH2_4.setCellValue("LOC");
+            CH2_5.setCellValue("PLA");
+            CH2_6.setCellValue("ASI");
+            CH2_7.setCellValue("CAM");
+            CH2_8.setCellValue("CAN");
+            CH2_9.setCellValue("CAR");
+            CH2_10.setCellValue("EUR");
+            CH2_11.setCellValue("SUD");
+            CH2_12.setCellValue("USA");
+            CH2_13.setCellValue("");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
+            CH2_2.setCellStyle(headerStyle);
+            CH2_3.setCellStyle(headerStyle);
+            CH2_4.setCellStyle(headerStyle);
+            CH2_5.setCellStyle(headerStyle);
+            CH2_6.setCellStyle(headerStyle);
+            CH2_7.setCellStyle(headerStyle);
+            CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_12.setCellStyle(headerStyle);
+            CH2_13.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -1531,20 +1582,27 @@ public class ForecastController extends BaseController {
                 Cell rcell10 = row1.createCell(10);
                 Cell rcell11 = row1.createCell(11);
                 Cell rcell12 = row1.createCell(12);
+                Cell rcell13 = row1.createCell(13);
 
-                rcell0.setCellValue(listaData.get(vi).DWEEK);
-                rcell1.setCellValue(listaData.get(vi).DFLIGHT);
-                rcell2.setCellValue(listaData.get(vi).percentageASI);
-                rcell3.setCellValue(listaData.get(vi).percentageCAM);
-                rcell4.setCellValue(listaData.get(vi).percentageCAN);
-                rcell5.setCellValue(listaData.get(vi).percentageCAR);
-                rcell6.setCellValue(listaData.get(vi).percentageEUR);
-                rcell7.setCellValue(listaData.get(vi).percentageFRO);
-                rcell8.setCellValue(listaData.get(vi).percentageLOC);
-                rcell9.setCellValue(listaData.get(vi).percentagePLA);
-                rcell10.setCellValue(listaData.get(vi).percentageSUD);
-                rcell11.setCellValue(listaData.get(vi).percentageUSA);
-                rcell12.setCellValue(listaData.get(vi).totalRegistros);
+                rcell0.setCellValue(" ");
+                if (listaData.get(vi).TREG.equals("0")) {
+                    rcell0.setCellStyle(style_green);
+                } else if (listaData.get(vi).TREG.equals("2")) {
+                    rcell0.setCellStyle(style_yellow);
+                }
+                rcell1.setCellValue(listaData.get(vi).DWEEK);
+                rcell2.setCellValue(listaData.get(vi).DFLIGHT);
+                rcell3.setCellValue(listaData.get(vi).percentageASI + "%");
+                rcell4.setCellValue(listaData.get(vi).percentageCAM + "%");
+                rcell5.setCellValue(listaData.get(vi).percentageCAN + "%");
+                rcell6.setCellValue(listaData.get(vi).percentageCAR + "%");
+                rcell7.setCellValue(listaData.get(vi).percentageEUR + "%");
+                rcell8.setCellValue(listaData.get(vi).percentageFRO + "%");
+                rcell9.setCellValue(listaData.get(vi).percentageLOC + "%");
+                rcell10.setCellValue(listaData.get(vi).percentagePLA + "%");
+                rcell11.setCellValue(listaData.get(vi).percentageSUD + "%");
+                rcell12.setCellValue(listaData.get(vi).percentageUSA + "%");
+                rcell13.setCellValue(listaData.get(vi).totalRegistros + "%");
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1563,6 +1621,7 @@ public class ForecastController extends BaseController {
             sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
             sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -1702,76 +1761,66 @@ public class ForecastController extends BaseController {
             CH1_0.setCellValue("");
             CH1_1.setCellValue("Seq");
             CH1_2.setCellValue("Flight");
-            //ASI
-            CH1_3.setCellValue("ASI");
+            CH1_3.setCellValue("Domestic");
             CH1_4.setCellValue("");
             CH1_5.setCellValue("");
             CH1_6.setCellValue("");
             CH1_7.setCellValue("");
-            CH1_8.setCellValue("%Var vs");
-            //CAM
-            CH1_9.setCellValue("CAM");
+            CH1_8.setCellValue("");
+            CH1_9.setCellValue("");
             CH1_10.setCellValue("");
             CH1_11.setCellValue("");
             CH1_12.setCellValue("");
             CH1_13.setCellValue("");
-            CH1_14.setCellValue("%Var vs");
-            //CAN
-            CH1_15.setCellValue("CAN");
+            CH1_14.setCellValue("");
+            CH1_15.setCellValue("");
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
             CH1_18.setCellValue("");
             CH1_19.setCellValue("");
-            CH1_20.setCellValue("%Var vs");
-            //CAR
-            CH1_21.setCellValue("CAR");
+            CH1_20.setCellValue("");
+            CH1_21.setCellValue("International");
             CH1_22.setCellValue("");
             CH1_23.setCellValue("");
             CH1_24.setCellValue("");
             CH1_25.setCellValue("");
-            CH1_26.setCellValue("%Var vs");
-            //EUR
-            CH1_27.setCellValue("EUR");
+            CH1_26.setCellValue("");
+            CH1_27.setCellValue("");
             CH1_28.setCellValue("");
             CH1_29.setCellValue("");
             CH1_30.setCellValue("");
             CH1_31.setCellValue("");
-            CH1_32.setCellValue("%Var vs");
-            //FRO
-            CH1_33.setCellValue("FRO");
+            CH1_32.setCellValue("");
+            CH1_33.setCellValue("");
             CH1_34.setCellValue("");
             CH1_35.setCellValue("");
             CH1_36.setCellValue("");
             CH1_37.setCellValue("");
-            CH1_38.setCellValue("%Var vs");
-            //LOC
-            CH1_39.setCellValue("LOC");
+            CH1_38.setCellValue("");
+            CH1_39.setCellValue("");
             CH1_40.setCellValue("");
             CH1_41.setCellValue("");
             CH1_42.setCellValue("");
             CH1_43.setCellValue("");
-            CH1_44.setCellValue("%Var vs");
-            //PLA
-            CH1_45.setCellValue("PLA");
+            CH1_44.setCellValue("");
+            CH1_45.setCellValue("");
             CH1_46.setCellValue("");
             CH1_47.setCellValue("");
             CH1_48.setCellValue("");
             CH1_49.setCellValue("");
-            CH1_50.setCellValue("%Var vs");
-            //SUD
-            CH1_51.setCellValue("SUD");
+            CH1_50.setCellValue("");
+            CH1_51.setCellValue("");
             CH1_52.setCellValue("");
             CH1_53.setCellValue("");
             CH1_54.setCellValue("");
             CH1_55.setCellValue("");
-            CH1_56.setCellValue("%Var vs");
-            //USA
-            CH1_57.setCellValue("USA");
+            CH1_56.setCellValue("");
+            CH1_57.setCellValue("");
             CH1_58.setCellValue("");
             CH1_59.setCellValue("");
             CH1_60.setCellValue("");
             CH1_61.setCellValue("");
-            CH1_62.setCellValue("%Var vs");
+            CH1_62.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1838,16 +1887,9 @@ public class ForecastController extends BaseController {
             CH1_62.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 12));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 18));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 24));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 27, 30));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 33, 36));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 39, 42));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 45, 48));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 51, 54));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 57, 60));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 20));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 62));
+
             ++vj;
              //============================================
 
@@ -1920,76 +1962,76 @@ public class ForecastController extends BaseController {
             CH2_0.setCellValue("");
             CH2_1.setCellValue("Week Day");
             CH2_2.setCellValue("Date");
-            //ASI
-            CH2_3.setCellValue("PAX");
-            CH2_4.setCellValue("AVG USD");
-            CH2_5.setCellValue("AMOUNT USD");
-            CH2_6.setCellValue("AMOUNT MXN");
-            CH2_7.setCellValue("");
-            CH2_8.setCellValue("Average Fare");
-            //CAM            
-            CH2_9.setCellValue("PAX");
-            CH2_10.setCellValue("AVG USD");
-            CH2_11.setCellValue("AMOUNT USD");
-            CH2_12.setCellValue("AMOUNT MXN");
-            CH2_13.setCellValue("");
-            CH2_14.setCellValue("Average Fare");
-            //CAN
-            CH2_15.setCellValue("PAX");
-            CH2_16.setCellValue("AVG USD");
-            CH2_17.setCellValue("AMOUNT USD");
-            CH2_18.setCellValue("AMOUNT MXN");
-            CH2_19.setCellValue("");
-            CH2_20.setCellValue("Average Fare");
-            //CAR
-            CH2_21.setCellValue("PAX");
-            CH2_22.setCellValue("AVG USD");
-            CH2_23.setCellValue("AMOUNT USD");
-            CH2_24.setCellValue("AMOUNT MXN");
-            CH2_25.setCellValue("");
-            CH2_26.setCellValue("Average Fare");
-            //EUR
-            CH2_27.setCellValue("PAX");
-            CH2_28.setCellValue("AVG USD");
-            CH2_29.setCellValue("AMOUNT USD");
-            CH2_30.setCellValue("AMOUNT MXN");
-            CH2_31.setCellValue("");
-            CH2_32.setCellValue("Average Fare");
             //FRO
-            CH2_33.setCellValue("PAX");
-            CH2_34.setCellValue("AVG USD");
-            CH2_35.setCellValue("AMOUNT USD");
-            CH2_36.setCellValue("AMOUNT MXN");
+            CH2_3.setCellValue("FRO");
+            CH2_4.setCellValue("");
+            CH2_5.setCellValue("");
+            CH2_6.setCellValue("");
+            CH2_7.setCellValue("");
+            CH2_8.setCellValue("%Var vs");
+            //LOC            
+            CH2_9.setCellValue("LOC");
+            CH2_10.setCellValue("");
+            CH2_11.setCellValue("");
+            CH2_12.setCellValue("");
+            CH2_13.setCellValue("");
+            CH2_14.setCellValue("%Var vs");
+            //PLA
+            CH2_15.setCellValue("PLA");
+            CH2_16.setCellValue("");
+            CH2_17.setCellValue("");
+            CH2_18.setCellValue("");
+            CH2_19.setCellValue("");
+            CH2_20.setCellValue("%Var vs");
+            //ASI
+            CH2_21.setCellValue("ASI");
+            CH2_22.setCellValue("");
+            CH2_23.setCellValue("");
+            CH2_24.setCellValue("");
+            CH2_25.setCellValue("");
+            CH2_26.setCellValue("%Var vs");
+            //CAM
+            CH2_27.setCellValue("CAM");
+            CH2_28.setCellValue("");
+            CH2_29.setCellValue("");
+            CH2_30.setCellValue("");
+            CH2_31.setCellValue("");
+            CH2_32.setCellValue("%Var vs");
+            //CAN
+            CH2_33.setCellValue("CAN");
+            CH2_34.setCellValue("");
+            CH2_35.setCellValue("");
+            CH2_36.setCellValue("");
             CH2_37.setCellValue("");
-            CH2_38.setCellValue("Average Fare");
-            //LOC
-            CH2_39.setCellValue("PAX");
-            CH2_40.setCellValue("AVG USD");
-            CH2_41.setCellValue("AMOUNT USD");
-            CH2_42.setCellValue("AMOUNT MXN");
+            CH2_38.setCellValue("%Var vs");
+            //CAR
+            CH2_39.setCellValue("CAR");
+            CH2_40.setCellValue("");
+            CH2_41.setCellValue("");
+            CH2_42.setCellValue("");
             CH2_43.setCellValue("");
-            CH2_44.setCellValue("Average Fare");
+            CH2_44.setCellValue("%Var vs");
             //EUR
-            CH2_45.setCellValue("PAX");
-            CH2_46.setCellValue("AVG USD");
-            CH2_47.setCellValue("AMOUNT USD");
-            CH2_48.setCellValue("AMOUNT MXN");
+            CH2_45.setCellValue("EUR");
+            CH2_46.setCellValue("");
+            CH2_47.setCellValue("");
+            CH2_48.setCellValue("");
             CH2_49.setCellValue("");
-            CH2_50.setCellValue("Average Fare");
+            CH2_50.setCellValue("%Var vs");
             //SUD
-            CH2_51.setCellValue("PAX");
-            CH2_52.setCellValue("AVG USD");
-            CH2_53.setCellValue("AMOUNT USD");
-            CH2_54.setCellValue("AMOUNT MXN");
+            CH2_51.setCellValue("SUD");
+            CH2_52.setCellValue("");
+            CH2_53.setCellValue("");
+            CH2_54.setCellValue("");
             CH2_55.setCellValue("");
-            CH2_56.setCellValue("Average Fare");
+            CH2_56.setCellValue("%Var vs");
             //USA
-            CH2_57.setCellValue("PAX");
-            CH2_58.setCellValue("AVG USD");
-            CH2_59.setCellValue("AMOUNT USD");
-            CH2_60.setCellValue("AMOUNT MXN");
+            CH2_57.setCellValue("USA");
+            CH2_58.setCellValue("");
+            CH2_59.setCellValue("");
+            CH2_60.setCellValue("");
             CH2_61.setCellValue("");
-            CH2_62.setCellValue("Average Fare");
+            CH2_62.setCellValue("%Var vs");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -2057,6 +2099,225 @@ public class ForecastController extends BaseController {
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 3, 6));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 12));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 15, 18));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 21, 24));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 27, 30));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 33, 36));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 39, 42));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 45, 48));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 51, 54));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 57, 60));
+            ++vj;
+            //============================================
+            // ======  Nivel 3 ==========
+            Row row3 = sheet.createRow(vj);
+            Cell CH3_0 = row3.createCell(0);
+            Cell CH3_1 = row3.createCell(1);
+            Cell CH3_2 = row3.createCell(2);
+            Cell CH3_3 = row3.createCell(3);
+            Cell CH3_4 = row3.createCell(4);
+            Cell CH3_5 = row3.createCell(5);
+            Cell CH3_6 = row3.createCell(6);
+            Cell CH3_7 = row3.createCell(7);
+            Cell CH3_8 = row3.createCell(8);
+            Cell CH3_9 = row3.createCell(9);
+            Cell CH3_10 = row3.createCell(10);
+            Cell CH3_11 = row3.createCell(11);
+            Cell CH3_12 = row3.createCell(12);
+            Cell CH3_13 = row3.createCell(13);
+            Cell CH3_14 = row3.createCell(14);
+            Cell CH3_15 = row3.createCell(15);
+            Cell CH3_16 = row3.createCell(16);
+            Cell CH3_17 = row3.createCell(17);
+            Cell CH3_18 = row3.createCell(18);
+            Cell CH3_19 = row3.createCell(19);
+            Cell CH3_20 = row3.createCell(20);
+            Cell CH3_21 = row3.createCell(21);
+            Cell CH3_22 = row3.createCell(22);
+            Cell CH3_23 = row3.createCell(23);
+            Cell CH3_24 = row3.createCell(24);
+            Cell CH3_25 = row3.createCell(25);
+            Cell CH3_26 = row3.createCell(26);
+            Cell CH3_27 = row3.createCell(27);
+            Cell CH3_28 = row3.createCell(28);
+            Cell CH3_29 = row3.createCell(29);
+            Cell CH3_30 = row3.createCell(30);
+            Cell CH3_31 = row3.createCell(31);
+            Cell CH3_32 = row3.createCell(32);
+            Cell CH3_33 = row3.createCell(33);
+            Cell CH3_34 = row3.createCell(34);
+            Cell CH3_35 = row3.createCell(35);
+            Cell CH3_36 = row3.createCell(36);
+            Cell CH3_37 = row3.createCell(37);
+            Cell CH3_38 = row3.createCell(38);
+            Cell CH3_39 = row3.createCell(39);
+            Cell CH3_40 = row3.createCell(40);
+            Cell CH3_41 = row3.createCell(41);
+            Cell CH3_42 = row3.createCell(42);
+            Cell CH3_43 = row3.createCell(43);
+            Cell CH3_44 = row3.createCell(44);
+            Cell CH3_45 = row3.createCell(45);
+            Cell CH3_46 = row3.createCell(46);
+            Cell CH3_47 = row3.createCell(47);
+            Cell CH3_48 = row3.createCell(48);
+            Cell CH3_49 = row3.createCell(49);
+            Cell CH3_50 = row3.createCell(50);
+            Cell CH3_51 = row3.createCell(51);
+            Cell CH3_52 = row3.createCell(52);
+            Cell CH3_53 = row3.createCell(53);
+            Cell CH3_54 = row3.createCell(54);
+            Cell CH3_55 = row3.createCell(55);
+            Cell CH3_56 = row3.createCell(56);
+            Cell CH3_57 = row3.createCell(57);
+            Cell CH3_58 = row3.createCell(58);
+            Cell CH3_59 = row3.createCell(59);
+            Cell CH3_60 = row3.createCell(60);
+            Cell CH3_61 = row3.createCell(61);
+            Cell CH3_62 = row3.createCell(62);
+
+            CH3_0.setCellValue("");
+            CH3_1.setCellValue("");
+            CH3_2.setCellValue("");
+            //ASI
+            CH3_3.setCellValue("PAX");
+            CH3_4.setCellValue("AVG USD");
+            CH3_5.setCellValue("AMOUNT USD");
+            CH3_6.setCellValue("AMOUNT MXN");
+            CH3_7.setCellValue("");
+            CH3_8.setCellValue("Average Fare");
+            //CAM            
+            CH3_9.setCellValue("PAX");
+            CH3_10.setCellValue("AVG USD");
+            CH3_11.setCellValue("AMOUNT USD");
+            CH3_12.setCellValue("AMOUNT MXN");
+            CH3_13.setCellValue("");
+            CH3_14.setCellValue("Average Fare");
+            //CAN
+            CH3_15.setCellValue("PAX");
+            CH3_16.setCellValue("AVG USD");
+            CH3_17.setCellValue("AMOUNT USD");
+            CH3_18.setCellValue("AMOUNT MXN");
+            CH3_19.setCellValue("");
+            CH3_20.setCellValue("Average Fare");
+            //CAR
+            CH3_21.setCellValue("PAX");
+            CH3_22.setCellValue("AVG USD");
+            CH3_23.setCellValue("AMOUNT USD");
+            CH3_24.setCellValue("AMOUNT MXN");
+            CH3_25.setCellValue("");
+            CH3_26.setCellValue("Average Fare");
+            //EUR
+            CH3_27.setCellValue("PAX");
+            CH3_28.setCellValue("AVG USD");
+            CH3_29.setCellValue("AMOUNT USD");
+            CH3_30.setCellValue("AMOUNT MXN");
+            CH3_31.setCellValue("");
+            CH3_32.setCellValue("Average Fare");
+            //FRO
+            CH3_33.setCellValue("PAX");
+            CH3_34.setCellValue("AVG USD");
+            CH3_35.setCellValue("AMOUNT USD");
+            CH3_36.setCellValue("AMOUNT MXN");
+            CH3_37.setCellValue("");
+            CH3_38.setCellValue("Average Fare");
+            //LOC
+            CH3_39.setCellValue("PAX");
+            CH3_40.setCellValue("AVG USD");
+            CH3_41.setCellValue("AMOUNT USD");
+            CH3_42.setCellValue("AMOUNT MXN");
+            CH3_43.setCellValue("");
+            CH3_44.setCellValue("Average Fare");
+            //EUR
+            CH3_45.setCellValue("PAX");
+            CH3_46.setCellValue("AVG USD");
+            CH3_47.setCellValue("AMOUNT USD");
+            CH3_48.setCellValue("AMOUNT MXN");
+            CH3_49.setCellValue("");
+            CH3_50.setCellValue("Average Fare");
+            //SUD
+            CH3_51.setCellValue("PAX");
+            CH3_52.setCellValue("AVG USD");
+            CH3_53.setCellValue("AMOUNT USD");
+            CH3_54.setCellValue("AMOUNT MXN");
+            CH3_55.setCellValue("");
+            CH3_56.setCellValue("Average Fare");
+            //USA
+            CH3_57.setCellValue("PAX");
+            CH3_58.setCellValue("AVG USD");
+            CH3_59.setCellValue("AMOUNT USD");
+            CH3_60.setCellValue("AMOUNT MXN");
+            CH3_61.setCellValue("");
+            CH3_62.setCellValue("Average Fare");
+
+            CH3_0.setCellStyle(headerStyle);
+            CH3_1.setCellStyle(headerStyle);
+            CH3_2.setCellStyle(headerStyle);
+            CH3_3.setCellStyle(headerStyle);
+            CH3_4.setCellStyle(headerStyle);
+            CH3_5.setCellStyle(headerStyle);
+            CH3_6.setCellStyle(headerStyle);
+            CH3_7.setCellStyle(headerStyle);
+            CH3_8.setCellStyle(headerStyle);
+            CH3_9.setCellStyle(headerStyle);
+            CH3_10.setCellStyle(headerStyle);
+            CH3_11.setCellStyle(headerStyle);
+            CH3_12.setCellStyle(headerStyle);
+            CH3_13.setCellStyle(headerStyle);
+            CH3_14.setCellStyle(headerStyle);
+            CH3_15.setCellStyle(headerStyle);
+            CH3_16.setCellStyle(headerStyle);
+            CH3_17.setCellStyle(headerStyle);
+            CH3_18.setCellStyle(headerStyle);
+            CH3_19.setCellStyle(headerStyle);
+            CH3_20.setCellStyle(headerStyle);
+            CH3_21.setCellStyle(headerStyle);
+            CH3_22.setCellStyle(headerStyle);
+            CH3_23.setCellStyle(headerStyle);
+            CH3_24.setCellStyle(headerStyle);
+            CH3_25.setCellStyle(headerStyle);
+            CH3_26.setCellStyle(headerStyle);
+            CH3_27.setCellStyle(headerStyle);
+            CH3_28.setCellStyle(headerStyle);
+            CH3_29.setCellStyle(headerStyle);
+            CH3_30.setCellStyle(headerStyle);
+            CH3_31.setCellStyle(headerStyle);
+            CH3_32.setCellStyle(headerStyle);
+            CH3_33.setCellStyle(headerStyle);
+            CH3_34.setCellStyle(headerStyle);
+            CH3_35.setCellStyle(headerStyle);
+            CH3_36.setCellStyle(headerStyle);
+            CH3_37.setCellStyle(headerStyle);
+            CH3_38.setCellStyle(headerStyle);
+            CH3_39.setCellStyle(headerStyle);
+            CH3_40.setCellStyle(headerStyle);
+            CH3_41.setCellStyle(headerStyle);
+            CH3_42.setCellStyle(headerStyle);
+            CH3_43.setCellStyle(headerStyle);
+            CH3_44.setCellStyle(headerStyle);
+            CH3_45.setCellStyle(headerStyle);
+            CH3_46.setCellStyle(headerStyle);
+            CH3_47.setCellStyle(headerStyle);
+            CH3_48.setCellStyle(headerStyle);
+            CH3_49.setCellStyle(headerStyle);
+            CH3_50.setCellStyle(headerStyle);
+            CH3_51.setCellStyle(headerStyle);
+            CH3_52.setCellStyle(headerStyle);
+            CH3_53.setCellStyle(headerStyle);
+            CH3_54.setCellStyle(headerStyle);
+            CH3_55.setCellStyle(headerStyle);
+            CH3_56.setCellStyle(headerStyle);
+            CH3_57.setCellStyle(headerStyle);
+            CH3_58.setCellStyle(headerStyle);
+            CH3_59.setCellStyle(headerStyle);
+            CH3_60.setCellStyle(headerStyle);
+            CH3_61.setCellStyle(headerStyle);
+            CH3_62.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
             ++vj;
             //============================================
 
@@ -2135,150 +2396,150 @@ public class ForecastController extends BaseController {
 
                 rcell1.setCellValue(listaData.get(vi).DWEEK);
                 rcell2.setCellValue(listaData.get(vi).DFLIGHT);
-                //ASI
-                rcell3.setCellValue(listaData.get(vi).PAXASI);
-                rcell4.setCellValue(listaData.get(vi).VPROUSDASI);
-                rcell5.setCellValue(listaData.get(vi).VCPNUSDASI);
-                rcell6.setCellValue(listaData.get(vi).VCPNMXNASI);
+                //FRO
+                rcell3.setCellValue(listaData.get(vi).PAXFRO);
+                rcell4.setCellValue(listaData.get(vi).VPROUSDFRO);
+                rcell5.setCellValue(listaData.get(vi).VCPNUSDFRO);
+                rcell6.setCellValue(listaData.get(vi).VCPNMXNFRO);
                 rcell7.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNASI > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_ASI >= 20) {
+                if (listaData.get(vi).VCPNMXNFRO > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_FRO >= 20) {
                         rcell7.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_ASI < 20 && listaData.get(vi).AVRG_VCPNMXN_ASI >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_FRO < 20 && listaData.get(vi).AVRG_VCPNMXN_FRO >= -25) {
                         rcell7.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_ASI < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_FRO < -25) {
                         rcell7.setCellStyle(style_yellow);
                     }
                 }
-                rcell8.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_ASI, 2));
-                //CAM
-                rcell9.setCellValue(listaData.get(vi).PAXCAM);
-                rcell10.setCellValue(listaData.get(vi).VPROUSDCAM);
-                rcell11.setCellValue(listaData.get(vi).VCPNUSDCAM);
-                rcell12.setCellValue(listaData.get(vi).VCPNMXNCAM);
+                rcell8.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_FRO, 2));
+                //LOC
+                rcell9.setCellValue(listaData.get(vi).PAXLOC);
+                rcell10.setCellValue(listaData.get(vi).VPROUSDLOC);
+                rcell11.setCellValue(listaData.get(vi).VCPNUSDLOC);
+                rcell12.setCellValue(listaData.get(vi).VCPNMXNLOC);
                 rcell13.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNCAM > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAM >= 20) {
+                if (listaData.get(vi).VCPNMXNLOC > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_LOC >= 20) {
                         rcell13.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAM < 20 && listaData.get(vi).AVRG_VCPNMXN_CAM >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_LOC < 20 && listaData.get(vi).AVRG_VCPNMXN_LOC >= -25) {
                         rcell13.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAM < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_LOC < -25) {
                         rcell13.setCellStyle(style_yellow);
                     }
                 }
-                rcell14.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_CAM, 2));
-                //CAN
-                rcell15.setCellValue(listaData.get(vi).PAXCAN);
-                rcell16.setCellValue(listaData.get(vi).VPROUSDCAN);
-                rcell17.setCellValue(listaData.get(vi).VCPNUSDCAN);
-                rcell18.setCellValue(listaData.get(vi).VCPNMXNCAN);
+                rcell14.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_LOC, 2));
+                //PLA
+                rcell15.setCellValue(listaData.get(vi).PAXPLA);
+                rcell16.setCellValue(listaData.get(vi).VPROUSDPLA);
+                rcell17.setCellValue(listaData.get(vi).VCPNUSDPLA);
+                rcell18.setCellValue(listaData.get(vi).VCPNMXNPLA);
                 rcell19.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNCAN > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAN >= 20) {
+                if (listaData.get(vi).VCPNMXNPLA > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_PLA >= 20) {
                         rcell19.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAN < 20 && listaData.get(vi).AVRG_VCPNMXN_CAN >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_PLA < 20 && listaData.get(vi).AVRG_VCPNMXN_PLA >= -25) {
                         rcell19.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAN < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_PLA < -25) {
                         rcell19.setCellStyle(style_yellow);
                     }
                 }
-                rcell20.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_CAN, 2));
-                //CAR
-                rcell21.setCellValue(listaData.get(vi).PAXCAR);
-                rcell22.setCellValue(listaData.get(vi).VPROUSDCAR);
-                rcell23.setCellValue(listaData.get(vi).VCPNUSDCAR);
-                rcell24.setCellValue(listaData.get(vi).VCPNMXNCAR);
+                rcell20.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_PLA, 2));
+                //ASI
+                rcell21.setCellValue(listaData.get(vi).PAXASI);
+                rcell22.setCellValue(listaData.get(vi).VPROUSDASI);
+                rcell23.setCellValue(listaData.get(vi).VCPNUSDASI);
+                rcell24.setCellValue(listaData.get(vi).VCPNMXNASI);
                 rcell25.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNCAR > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAR >= 20) {
+                if (listaData.get(vi).VCPNMXNASI > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_ASI >= 20) {
                         rcell25.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAR < 20 && listaData.get(vi).AVRG_VCPNMXN_CAR >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_ASI < 20 && listaData.get(vi).AVRG_VCPNMXN_ASI >= -25) {
                         rcell25.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_CAR < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_ASI < -25) {
                         rcell25.setCellStyle(style_yellow);
                     }
                 }
-                rcell26.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_CAR, 2));
-                //EUR
-                rcell27.setCellValue(listaData.get(vi).PAXEUR);
-                rcell28.setCellValue(listaData.get(vi).VPROUSDEUR);
-                rcell29.setCellValue(listaData.get(vi).VCPNUSDEUR);
-                rcell30.setCellValue(listaData.get(vi).VCPNMXNEUR);
+                rcell26.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_ASI, 2));
+                //CAM
+                rcell27.setCellValue(listaData.get(vi).PAXCAM);
+                rcell28.setCellValue(listaData.get(vi).VPROUSDCAM);
+                rcell29.setCellValue(listaData.get(vi).VCPNUSDCAM);
+                rcell30.setCellValue(listaData.get(vi).VCPNMXNCAM);
                 rcell31.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNEUR > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_EUR >= 20) {
+                if (listaData.get(vi).VCPNMXNCAM > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAM >= 20) {
                         rcell31.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_EUR < 20 && listaData.get(vi).AVRG_VCPNMXN_EUR >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAM < 20 && listaData.get(vi).AVRG_VCPNMXN_CAM >= -25) {
                         rcell31.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_EUR < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAM < -25) {
                         rcell31.setCellStyle(style_yellow);
                     }
                 }
-                rcell32.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_EUR, 2));
-                //FRO
-                rcell33.setCellValue(listaData.get(vi).PAXFRO);
-                rcell34.setCellValue(listaData.get(vi).VPROUSDFRO);
-                rcell35.setCellValue(listaData.get(vi).VCPNUSDFRO);
-                rcell36.setCellValue(listaData.get(vi).VCPNMXNFRO);
+                rcell32.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_CAM, 2));
+                //CAN
+                rcell33.setCellValue(listaData.get(vi).PAXCAN);
+                rcell34.setCellValue(listaData.get(vi).VPROUSDCAN);
+                rcell35.setCellValue(listaData.get(vi).VCPNUSDCAN);
+                rcell36.setCellValue(listaData.get(vi).VCPNMXNCAN);
                 rcell37.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNFRO > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_FRO >= 20) {
+                if (listaData.get(vi).VCPNMXNCAN > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAN >= 20) {
                         rcell37.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_FRO < 20 && listaData.get(vi).AVRG_VCPNMXN_FRO >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAN < 20 && listaData.get(vi).AVRG_VCPNMXN_CAN >= -25) {
                         rcell37.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_FRO < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAN < -25) {
                         rcell37.setCellStyle(style_yellow);
                     }
                 }
-                rcell38.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_FRO, 2));
-                //LOC
-                rcell39.setCellValue(listaData.get(vi).PAXLOC);
-                rcell40.setCellValue(listaData.get(vi).VPROUSDLOC);
-                rcell41.setCellValue(listaData.get(vi).VCPNUSDLOC);
-                rcell42.setCellValue(listaData.get(vi).VCPNMXNLOC);
+                rcell38.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_CAN, 2));
+                //CAR
+                rcell39.setCellValue(listaData.get(vi).PAXCAR);
+                rcell40.setCellValue(listaData.get(vi).VPROUSDCAR);
+                rcell41.setCellValue(listaData.get(vi).VCPNUSDCAR);
+                rcell42.setCellValue(listaData.get(vi).VCPNMXNCAR);
                 rcell43.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNLOC > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_LOC >= 20) {
+                if (listaData.get(vi).VCPNMXNCAR > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAR >= 20) {
                         rcell43.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_LOC < 20 && listaData.get(vi).AVRG_VCPNMXN_LOC >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAR < 20 && listaData.get(vi).AVRG_VCPNMXN_CAR >= -25) {
                         rcell43.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_LOC < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_CAR < -25) {
                         rcell43.setCellStyle(style_yellow);
                     }
                 }
-                rcell44.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_LOC, 2));
-                //PLA
-                rcell45.setCellValue(listaData.get(vi).PAXPLA);
-                rcell46.setCellValue(listaData.get(vi).VPROUSDPLA);
-                rcell47.setCellValue(listaData.get(vi).VCPNUSDPLA);
-                rcell48.setCellValue(listaData.get(vi).VCPNMXNPLA);
+                rcell44.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_CAR, 2));
+                //EUR
+                rcell45.setCellValue(listaData.get(vi).PAXEUR);
+                rcell46.setCellValue(listaData.get(vi).VPROUSDEUR);
+                rcell47.setCellValue(listaData.get(vi).VCPNUSDEUR);
+                rcell48.setCellValue(listaData.get(vi).VCPNMXNEUR);
                 rcell49.setCellValue(" ");
-                if (listaData.get(vi).VCPNMXNPLA > 0) {
-                    if (listaData.get(vi).AVRG_VCPNMXN_PLA >= 20) {
+                if (listaData.get(vi).VCPNMXNEUR > 0) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_EUR >= 20) {
                         rcell49.setCellStyle(style_red);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_PLA < 20 && listaData.get(vi).AVRG_VCPNMXN_PLA >= -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_EUR < 20 && listaData.get(vi).AVRG_VCPNMXN_EUR >= -25) {
                         rcell49.setCellStyle(style_green);
                     }
-                    if (listaData.get(vi).AVRG_VCPNMXN_PLA < -25) {
+                    if (listaData.get(vi).AVRG_VCPNMXN_EUR < -25) {
                         rcell49.setCellStyle(style_yellow);
                     }
                 }
-                rcell50.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_PLA, 2));
+                rcell50.setCellValue(Functions.redondear(listaData.get(vi).AVRG_VCPNMXN_EUR, 2));
                 //SUD
                 rcell51.setCellValue(listaData.get(vi).PAXSUD);
                 rcell52.setCellValue(listaData.get(vi).VPROUSDSUD);
@@ -2701,4 +2962,5 @@ public class ForecastController extends BaseController {
             throw new SpringException(e);
         }
     }
+    
 }

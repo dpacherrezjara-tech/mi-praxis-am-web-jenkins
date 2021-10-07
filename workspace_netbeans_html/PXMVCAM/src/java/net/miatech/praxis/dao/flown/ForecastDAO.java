@@ -352,8 +352,16 @@ public class ForecastDAO {
     public List<IMF140Filter> loadPX551SQP03897(IMF140Filter filter) throws SQLException, Exception {
 
         List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        List<IMF141Filter> lst_seats = new ArrayList<IMF141Filter>(0);
+        List<IMF140Filter> lst_occupation_factor = new ArrayList<IMF140Filter>(0);
         IMF140Filter bean;
+
+        IMF141Filter filter_imf141 = new IMF141Filter();
+        filter_imf141.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+        filter_imf141.IN_FECHA_TO = filter.IN_FECHA_TO;
+
         long QTYPAX = 0;
+        long QTYPAX_FORECAST = 0;
         double VCPNUSD = 0, VPROUSD = 0, VCPNMXN = 0, VPROMXN = 0;
         int totalRegistros = 0;
 
@@ -439,21 +447,48 @@ public class ForecastDAO {
                     }
                 }
             }
-            for (int i = 0; i < lst.size(); i++) {
-                if (lst.get(i).VCPNMXN > 0) {
-                    lst.get(i).AVRG_VCPNMXN = ((lst.get(i).VCPNMXN - (lst.get(i).totVCPNMXN / totalRegistros)) / (lst.get(i).totVCPNMXN / totalRegistros)) * 100;
 
-                    if (lst.get(i).AVRG_VCPNMXN >= 20) {
-                        lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_red.png";
-                    }
-                    if (lst.get(i).AVRG_VCPNMXN < 20 && lst.get(i).AVRG_VCPNMXN >= -25) {
-                        lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_green.png";
-                    }
-                    if (lst.get(i).AVRG_VCPNMXN < -25) {
-                        lst.get(i).strImagen2 = "resources/img/icon/16x16/Circle_Yellow.png";
+            if (lst.size() > 0) {
+                lst_seats = loadPX551SQP03896(filter_imf141);
+                lst_occupation_factor = loadPX551SQP03898(filter);
+
+                for (int i = 0; i < lst.size(); i++) {
+
+                    if (lst.get(i).TREG.equals("2")) {
+                        lst.get(i).QTYPAX_FORECAST = (int) Math.round(
+                                lst_seats.get(i).FRO * lst_occupation_factor.get(i).percentageFRO / 100
+                                + lst_seats.get(i).LOC * lst_occupation_factor.get(i).percentageLOC / 100
+                                + lst_seats.get(i).PLA * lst_occupation_factor.get(i).percentagePLA / 100
+                                + lst_seats.get(i).ASI * lst_occupation_factor.get(i).percentageASI / 100
+                                + lst_seats.get(i).CAM * lst_occupation_factor.get(i).percentageCAM / 100
+                                + lst_seats.get(i).CAN * lst_occupation_factor.get(i).percentageCAN / 100
+                                + lst_seats.get(i).CAR * lst_occupation_factor.get(i).percentageCAR / 100
+                                + lst_seats.get(i).EUR * lst_occupation_factor.get(i).percentageEUR / 100
+                                + lst_seats.get(i).SUD * lst_occupation_factor.get(i).percentageSUD / 100
+                                + lst_seats.get(i).USA * lst_occupation_factor.get(i).percentageUSA / 100
+                        );
+                        QTYPAX_FORECAST = QTYPAX_FORECAST + lst.get(i).QTYPAX_FORECAST;
                     }
 
-                    lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                    if (lst.get(i).VCPNMXN > 0) {
+                        lst.get(i).AVRG_VCPNMXN = ((lst.get(i).VCPNMXN - (lst.get(i).totVCPNMXN / totalRegistros)) / (lst.get(i).totVCPNMXN / totalRegistros)) * 100;
+
+                        if (lst.get(i).AVRG_VCPNMXN >= 20) {
+                            lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_red.png";
+                        }
+                        if (lst.get(i).AVRG_VCPNMXN < 20 && lst.get(i).AVRG_VCPNMXN >= -25) {
+                            lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_green.png";
+                        }
+                        if (lst.get(i).AVRG_VCPNMXN < -25) {
+                            lst.get(i).strImagen2 = "resources/img/icon/16x16/Circle_Yellow.png";
+                        }
+
+                        lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                    }
+                }
+
+                for (int i = 0; i < lst.size(); i++) {
+                    lst.get(i).totQTYPAX_FORECAST = QTYPAX_FORECAST;
                 }
             }
 
@@ -566,6 +601,7 @@ public class ForecastDAO {
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03898(?,?,?)}";
 
+        
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
@@ -594,6 +630,13 @@ public class ForecastDAO {
                 bean = new IMF140Filter();
                 bean.DWEEK = rst.getString("DWEEK").trim();
                 bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                bean.TREG = rst.getString("TREG").trim();
+
+                if (bean.TREG.trim().equals("0")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
+                } else if (bean.TREG.trim().equals("1")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
+                }
 
                 bean.percentageASI = rst.getDouble("ASI");
                 bean.percentageCAM = rst.getDouble("CAM");
@@ -1896,4 +1939,5 @@ public class ForecastDAO {
         return lst;
     }
 
+    
 }

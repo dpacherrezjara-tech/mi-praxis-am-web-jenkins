@@ -411,7 +411,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                             id: prototype.id + '-panelGridDataForecast',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 889,
+                            width: 979,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -421,7 +421,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataForecast',
-                                    width: 889,
+                                    width: 979,
                                     height: 600,
                                     columnLines: true,
                                     features: [{
@@ -478,7 +478,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'ML', dataIndex: 'QTYPAX', width: 90,
+                                                    {text: 'REAL', dataIndex: 'QTYPAX', width: 90,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -488,6 +488,18 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataForecast').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'FORECAST', dataIndex: 'QTYPAX_FORECAST', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecast').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTYPAX_FORECAST, '0,000') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -647,7 +659,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'ML', dataIndex: 'QTYPAX', width: 90,
+                                                    {text: 'REAL', dataIndex: 'QTYPAX', width: 90,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:";
                                                             value = Ext.util.Format.number(value, '0,000');
@@ -787,6 +799,11 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
+                                            {text: '', dataIndex: 'strImagen1', width: 20,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    return '<img src=' + '"' + record.data.strImagen1 + '"' + '>';
+                                                }
+                                            },
                                             {
                                                 text: 'Day',
                                                 defaults: {
