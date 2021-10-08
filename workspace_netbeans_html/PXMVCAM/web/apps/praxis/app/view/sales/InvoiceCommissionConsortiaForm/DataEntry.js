@@ -669,7 +669,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             labelAlign: 'right',
                                             width: 100,
                                             padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Comm Banc</strong>'
+                                            html: '<strong style="color:#000;">Carge</strong>'
                                         },
                                         {
                                             xtype: 'textfield',
@@ -910,7 +910,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             labelAlign: 'right',
                                             width: 100,
                                             padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Comm Banc</strong>'
+                                            html: '<strong style="color:#000;">Carge</strong>'
                                         },
                                         {
                                             xtype: 'textfield',
