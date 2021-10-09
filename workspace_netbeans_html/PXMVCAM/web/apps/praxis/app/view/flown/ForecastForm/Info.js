@@ -411,7 +411,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                             id: prototype.id + '-panelGridDataForecast',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 979,
+                            width: 1209,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -421,7 +421,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataForecast',
-                                    width: 979,
+                                    width: 1209,
                                     height: 600,
                                     columnLines: true,
                                     features: [{
@@ -505,14 +505,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Amount',
+                                                text: 'Amount Revenue USD ',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Revenue USD', dataIndex: 'VCPNUSD', width: 120,
+                                                    {text: 'REAL', dataIndex: 'VCPNUSD', width: 120,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -522,6 +522,18 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataForecast').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totVCPNUSD, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'FORECAST', dataIndex: 'VCPNUSD_FORECAST', width: 120,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecast').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totVCPNUSD_FORECAST, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
@@ -549,14 +561,14 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Amount',
+                                                text: 'Amount Revenue MXN',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Revenue MXN', dataIndex: 'VCPNMXN', width: 120,
+                                                    {text: 'REAL', dataIndex: 'VCPNMXN', width: 120,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -566,6 +578,18 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                                             var data = Ext.getCmp(prototype.id + '-gridDataForecast').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totVCPNMXN, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'FORECAST', dataIndex: 'VCPNMXN_FORECAST', width: 120,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataForecast').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totVCPNMXN_FORECAST, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]

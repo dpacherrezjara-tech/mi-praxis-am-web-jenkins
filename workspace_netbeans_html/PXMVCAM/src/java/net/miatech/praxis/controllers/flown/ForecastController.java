@@ -1259,18 +1259,22 @@ public class ForecastController extends BaseController {
             Cell CH1_8 = row1.createCell(8);
             Cell CH1_9 = row1.createCell(9);
             Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
+            Cell CH1_12 = row1.createCell(12);
 
             CH1_0.setCellValue("");
             CH1_1.setCellValue("Date");
             CH1_2.setCellValue("PAX");
             CH1_3.setCellValue("");
-            CH1_4.setCellValue("Amount");
-            CH1_5.setCellValue("Average");
-            CH1_6.setCellValue("Amount");
-            CH1_7.setCellValue("Average");
-            CH1_8.setCellValue("Seq");
-            CH1_9.setCellValue("");
-            CH1_10.setCellValue("%Var vs");
+            CH1_4.setCellValue("Amount Revenue USD");
+            CH1_5.setCellValue("");
+            CH1_6.setCellValue("Average");
+            CH1_7.setCellValue("Amount Revenue MXN");
+            CH1_8.setCellValue("");
+            CH1_9.setCellValue("Average");
+            CH1_10.setCellValue("Seq");
+            CH1_11.setCellValue("");
+            CH1_12.setCellValue("%Var vs");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -1283,9 +1287,13 @@ public class ForecastController extends BaseController {
             CH1_8.setCellStyle(headerStyle);
             CH1_9.setCellStyle(headerStyle);
             CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
+            CH1_12.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
             ++vj;
              //============================================
 
@@ -1302,18 +1310,22 @@ public class ForecastController extends BaseController {
             Cell CH2_8 = row2.createCell(8);
             Cell CH2_9 = row2.createCell(9);
             Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
+            Cell CH2_12 = row2.createCell(12);
 
             CH2_0.setCellValue("");
             CH2_1.setCellValue("Flight");
             CH2_2.setCellValue("REAL");
             CH2_3.setCellValue("FUTURE");
-            CH2_4.setCellValue("Revenue USD");
-            CH2_5.setCellValue("Revenue USD");
-            CH2_6.setCellValue("Revenue MXN");
-            CH2_7.setCellValue("Revenue MXN");
-            CH2_8.setCellValue("week Day");
-            CH2_9.setCellValue("");
-            CH2_10.setCellValue("Average Fare");
+            CH2_4.setCellValue("REAL");
+            CH2_5.setCellValue("FUTURE");
+            CH2_6.setCellValue("Revenue USD");
+            CH2_7.setCellValue("REAL");
+            CH2_8.setCellValue("FUTURE");
+            CH2_9.setCellValue("Revenue MXN");
+            CH2_10.setCellValue("week Day");
+            CH2_11.setCellValue("");
+            CH2_12.setCellValue("Average Fare");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -1326,6 +1338,8 @@ public class ForecastController extends BaseController {
             CH2_8.setCellStyle(headerStyle);
             CH2_9.setCellStyle(headerStyle);
             CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
+            CH2_12.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -1345,6 +1359,8 @@ public class ForecastController extends BaseController {
                 Cell rcell8 = row1.createCell(8);
                 Cell rcell9 = row1.createCell(9);
                 Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
+                Cell rcell12 = row1.createCell(12);
 
                 rcell0.setCellValue(" ");
                 if (listaData.get(vi).TREG.equals("0")) {
@@ -1357,24 +1373,26 @@ public class ForecastController extends BaseController {
                 rcell2.setCellValue(listaData.get(vi).QTYPAX);
                 rcell3.setCellValue(listaData.get(vi).QTYPAX_FORECAST);
                 rcell4.setCellValue(listaData.get(vi).VCPNUSD);
-                rcell5.setCellValue(listaData.get(vi).VPROUSD);
-                rcell6.setCellValue(listaData.get(vi).VCPNMXN);
-                rcell7.setCellValue(listaData.get(vi).VPROMXN);
-                rcell8.setCellValue(listaData.get(vi).DWEEK);
-                rcell9.setCellValue(" ");
+                rcell5.setCellValue(listaData.get(vi).VCPNUSD_FORECAST);
+                rcell6.setCellValue(listaData.get(vi).VPROUSD);
+                rcell7.setCellValue(listaData.get(vi).VCPNMXN);
+                rcell8.setCellValue(listaData.get(vi).VCPNMXN_FORECAST);
+                rcell9.setCellValue(listaData.get(vi).VPROMXN);
+                rcell10.setCellValue(listaData.get(vi).DWEEK);
+                rcell11.setCellValue(" ");
                 if (listaData.get(vi).VCPNMXN > 0) {
                     if (listaData.get(vi).AVRG_VCPNMXN >= 20) {
-                        rcell9.setCellStyle(style_red);
+                        rcell11.setCellStyle(style_red);
                     }
                     if (listaData.get(vi).AVRG_VCPNMXN < 20 && listaData.get(vi).AVRG_VCPNMXN >= -25) {
-                        rcell9.setCellStyle(style_green);
+                        rcell11.setCellStyle(style_green);
                     }
                     if (listaData.get(vi).AVRG_VCPNMXN < -25) {
-                        rcell9.setCellStyle(style_yellow);
+                        rcell11.setCellStyle(style_yellow);
                     }
                 }
 
-                rcell10.setCellValue(listaData.get(vi).AVRG_VCPMXN_PORCENTAJE);
+                rcell12.setCellValue(listaData.get(vi).AVRG_VCPMXN_PORCENTAJE);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1391,6 +1409,8 @@ public class ForecastController extends BaseController {
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -1592,14 +1612,14 @@ public class ForecastController extends BaseController {
                 }
                 rcell1.setCellValue(listaData.get(vi).DWEEK);
                 rcell2.setCellValue(listaData.get(vi).DFLIGHT);
-                rcell3.setCellValue(listaData.get(vi).percentageASI + "%");
-                rcell4.setCellValue(listaData.get(vi).percentageCAM + "%");
-                rcell5.setCellValue(listaData.get(vi).percentageCAN + "%");
-                rcell6.setCellValue(listaData.get(vi).percentageCAR + "%");
-                rcell7.setCellValue(listaData.get(vi).percentageEUR + "%");
-                rcell8.setCellValue(listaData.get(vi).percentageFRO + "%");
-                rcell9.setCellValue(listaData.get(vi).percentageLOC + "%");
-                rcell10.setCellValue(listaData.get(vi).percentagePLA + "%");
+                rcell3.setCellValue(listaData.get(vi).percentageFRO + "%");
+                rcell4.setCellValue(listaData.get(vi).percentageLOC + "%");
+                rcell5.setCellValue(listaData.get(vi).percentagePLA + "%");
+                rcell6.setCellValue(listaData.get(vi).percentageASI + "%");
+                rcell7.setCellValue(listaData.get(vi).percentageCAM + "%");
+                rcell8.setCellValue(listaData.get(vi).percentageCAN + "%");
+                rcell9.setCellValue(listaData.get(vi).percentageCAR + "%");
+                rcell10.setCellValue(listaData.get(vi).percentageEUR + "%");                
                 rcell11.setCellValue(listaData.get(vi).percentageSUD + "%");
                 rcell12.setCellValue(listaData.get(vi).percentageUSA + "%");
                 rcell13.setCellValue(listaData.get(vi).totalRegistros + "%");
