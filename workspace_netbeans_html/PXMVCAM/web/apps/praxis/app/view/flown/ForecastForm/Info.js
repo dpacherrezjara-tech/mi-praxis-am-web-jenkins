@@ -770,7 +770,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                             id: prototype.id + '-panelGridDataForecastPercentage',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 984,
+                            width: 1004,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -810,7 +810,7 @@ Ext.define('Ext.Praxis.view.flown.ForecastForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataForecastPercentage',
                                     height: 600,
-                                    width: 984,
+                                    width: 1004,
                                     columnLines: true,
                                     /*features: [{
                                      ftype: 'summary',
