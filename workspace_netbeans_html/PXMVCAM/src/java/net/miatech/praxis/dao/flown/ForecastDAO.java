@@ -258,8 +258,20 @@ public class ForecastDAO {
     public List<IMF140Filter> loadPX551SQP03897(IMF140Filter filter) throws SQLException, Exception {
 
         List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        List<IMF141Filter> lst_seats = new ArrayList<IMF141Filter>(0);
+        List<IMF140Filter> lst_occupation_factor = new ArrayList<IMF140Filter>(0);
+        List<IMF140Filter> lst_forecast_zone = new ArrayList<IMF140Filter>(0);
         IMF140Filter bean;
+
+        IMF141Filter filter_imf141 = new IMF141Filter();
+        filter_imf141.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+        filter_imf141.IN_FECHA_TO = filter.IN_FECHA_TO;
+
         long QTYPAX = 0;
+        long QTYPAX_FORECAST = 0;
+        double VCPNUSD_FORECAST = 0;
+        double VCPNMXN_FORECAST = 0;
+        double totVCPNMXN_FORECAST_REAL = 0;
         double VCPNUSD = 0, VPROUSD = 0, VCPNMXN = 0, VPROMXN = 0;
         int totalRegistros = 0;
 
@@ -345,21 +357,97 @@ public class ForecastDAO {
                     }
                 }
             }
-            for (int i = 0; i < lst.size(); i++) {
-                if (lst.get(i).VCPNMXN > 0) {
-                    lst.get(i).AVRG_VCPNMXN = ((lst.get(i).VCPNMXN - (lst.get(i).totVCPNMXN / totalRegistros)) / (lst.get(i).totVCPNMXN / totalRegistros)) * 100;
 
-                    if (lst.get(i).AVRG_VCPNMXN >= 20) {
-                        lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_red.png";
-                    }
-                    if (lst.get(i).AVRG_VCPNMXN < 20 && lst.get(i).AVRG_VCPNMXN >= -25) {
-                        lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_green.png";
-                    }
-                    if (lst.get(i).AVRG_VCPNMXN < -25) {
-                        lst.get(i).strImagen2 = "resources/img/icon/16x16/Circle_Yellow.png";
+            if (lst.size() > 0) {
+                lst_seats = loadPX551SQP03896(filter_imf141);
+                lst_occupation_factor = loadPX551SQP03898(filter);
+                lst_forecast_zone = loadPX551SQP03936(filter);
+
+                for (int i = 0; i < lst.size(); i++) {
+
+                    if (lst.get(i).TREG.equals("2")) {
+                        //Pronosticando pasajeros
+                        lst.get(i).QTYPAX_FORECAST = (int) Math.round(
+                                lst_seats.get(i).FRO * lst_occupation_factor.get(i).percentageFRO / 100
+                                + lst_seats.get(i).LOC * lst_occupation_factor.get(i).percentageLOC / 100
+                                + lst_seats.get(i).PLA * lst_occupation_factor.get(i).percentagePLA / 100
+                                + lst_seats.get(i).ASI * lst_occupation_factor.get(i).percentageASI / 100
+                                + lst_seats.get(i).CAM * lst_occupation_factor.get(i).percentageCAM / 100
+                                + lst_seats.get(i).CAN * lst_occupation_factor.get(i).percentageCAN / 100
+                                + lst_seats.get(i).CAR * lst_occupation_factor.get(i).percentageCAR / 100
+                                + lst_seats.get(i).EUR * lst_occupation_factor.get(i).percentageEUR / 100
+                                + lst_seats.get(i).SUD * lst_occupation_factor.get(i).percentageSUD / 100
+                                + lst_seats.get(i).USA * lst_occupation_factor.get(i).percentageUSA / 100
+                        );
+                        QTYPAX_FORECAST = QTYPAX_FORECAST + lst.get(i).QTYPAX_FORECAST;
+
+                        //Pronosticando monto en USD
+                        lst.get(i).VCPNUSD_FORECAST
+                                = lst_forecast_zone.get(i).VCPNUSDFRO
+                                + lst_forecast_zone.get(i).VCPNUSDLOC
+                                + lst_forecast_zone.get(i).VCPNUSDPLA
+                                + lst_forecast_zone.get(i).VCPNUSDASI
+                                + lst_forecast_zone.get(i).VCPNUSDCAM
+                                + lst_forecast_zone.get(i).VCPNUSDCAN
+                                + lst_forecast_zone.get(i).VCPNUSDCAR
+                                + lst_forecast_zone.get(i).VCPNUSDEUR
+                                + lst_forecast_zone.get(i).VCPNUSDSUD
+                                + lst_forecast_zone.get(i).VCPNUSDUSA;
+                        VCPNUSD_FORECAST = VCPNUSD_FORECAST + lst.get(i).VCPNUSD_FORECAST;
+
+                        //Pronosticando monto en MXN
+                        lst.get(i).VCPNMXN_FORECAST
+                                = lst_forecast_zone.get(i).VCPNMXNFRO
+                                + lst_forecast_zone.get(i).VCPNMXNLOC
+                                + lst_forecast_zone.get(i).VCPNMXNPLA
+                                + lst_forecast_zone.get(i).VCPNMXNASI
+                                + lst_forecast_zone.get(i).VCPNMXNCAM
+                                + lst_forecast_zone.get(i).VCPNMXNCAN
+                                + lst_forecast_zone.get(i).VCPNMXNCAR
+                                + lst_forecast_zone.get(i).VCPNMXNEUR
+                                + lst_forecast_zone.get(i).VCPNMXNSUD
+                                + lst_forecast_zone.get(i).VCPNMXNUSA;
+                        VCPNMXN_FORECAST = VCPNMXN_FORECAST + lst.get(i).VCPNMXN_FORECAST;
                     }
 
-                    lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                }
+
+                for (int i = 0; i < lst.size(); i++) {
+                    lst.get(i).totQTYPAX_FORECAST = QTYPAX_FORECAST;
+                    lst.get(i).totVCPNUSD_FORECAST = VCPNUSD_FORECAST;
+                    lst.get(i).totVCPNMXN_FORECAST = VCPNMXN_FORECAST;
+                }
+                
+                totVCPNMXN_FORECAST_REAL = VCPNMXN_FORECAST;
+
+                for (int i = 0; i < lst.size(); i++) {
+                    if (lst.get(i).TREG.equals("0")) {
+                        totVCPNMXN_FORECAST_REAL = totVCPNMXN_FORECAST_REAL + lst.get(i).VCPNMXN;
+                    }
+                }
+
+                for (int i = 0; i < lst.size(); i++) {
+                    if (lst.get(i).VCPNMXN > 0) {
+                        if (lst.get(i).TREG.equals("0")) {
+                            lst.get(i).AVRG_VCPNMXN = ((lst.get(i).VCPNMXN - (totVCPNMXN_FORECAST_REAL / totalRegistros)) / (totVCPNMXN_FORECAST_REAL / totalRegistros)) * 100;
+                        }
+
+                        if (lst.get(i).TREG.equals("2")) {
+                            lst.get(i).AVRG_VCPNMXN = ((lst.get(i).VCPNMXN_FORECAST - (totVCPNMXN_FORECAST_REAL / totalRegistros)) / (totVCPNMXN_FORECAST_REAL / totalRegistros)) * 100;
+                        }
+
+                        if (lst.get(i).AVRG_VCPNMXN >= 20) {
+                            lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_red.png";
+                        }
+                        if (lst.get(i).AVRG_VCPNMXN < 20 && lst.get(i).AVRG_VCPNMXN >= -25) {
+                            lst.get(i).strImagen2 = "resources/img/icon/16x16/circle_green.png";
+                        }
+                        if (lst.get(i).AVRG_VCPNMXN < -25) {
+                            lst.get(i).strImagen2 = "resources/img/icon/16x16/Circle_Yellow.png";
+                        }
+
+                        lst.get(i).AVRG_VCPMXN_PORCENTAJE = Functions.redondear(lst.get(i).AVRG_VCPNMXN, 2) + "%";
+                    }
                 }
             }
 
@@ -400,7 +488,7 @@ public class ForecastDAO {
         Connection cnx = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03898(?,?,?)}";
-
+        
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
@@ -439,6 +527,13 @@ public class ForecastDAO {
                     bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
                 }
                 bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                bean.TREG = rst.getString("TREG").trim();
+
+                if (bean.TREG.trim().equals("0")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
+                } else if (bean.TREG.trim().equals("2")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
+                }
 
                 bean.percentageASI = rst.getDouble("ASI");
                 bean.percentageCAM = rst.getDouble("CAM");
@@ -489,7 +584,12 @@ public class ForecastDAO {
     public List<IMF140Filter> loadPX551SQP03936(IMF140Filter filter) throws SQLException, Exception {
 
         List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        List<IMF141Filter> lst_seats = new ArrayList<IMF141Filter>(0);
+        List<IMF140Filter> lst_occupation_factor = new ArrayList<IMF140Filter>(0);
         IMF140Filter bean;
+        IMF141Filter filter_imf141 = new IMF141Filter();
+        filter_imf141.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+        filter_imf141.IN_FECHA_TO = filter.IN_FECHA_TO;
 
         double TOTPAXASI = 0;
         double TOTPAXCAM = 0;
@@ -660,6 +760,7 @@ public class ForecastDAO {
                     bean.DWEEK = rst.getString("DWEEK").trim();
                     bean.DFLIGHT = rst.getString("DFLIGHT").trim();
                     bean.TREG = rst.getString("TREG").trim();
+                    bean.TCAMB = rst.getDouble("TCAMB");
 
                     if (bean.TREG.equals("0")) {
                         bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
@@ -834,7 +935,200 @@ public class ForecastDAO {
 
             rst.close();
 
+            if (lst.size() > 0) {
+                lst_seats = loadPX551SQP03896(filter_imf141);
+                lst_occupation_factor = loadPX551SQP03898(filter);
+
+                TOTVCPNMXNFRO = 0;
+                TOTVCPNMXNLOC = 0;
+                TOTVCPNMXNPLA = 0;
+                TOTVCPNMXNASI = 0;
+                TOTVCPNMXNCAM = 0;
+                TOTVCPNMXNCAN = 0;
+                TOTVCPNMXNCAR = 0;
+                TOTVCPNMXNEUR = 0;
+                TOTVCPNMXNSUD = 0;
+                TOTVCPNMXNUSA = 0;
+
+                TOTVCPNUSDFRO = 0;
+                TOTVCPNUSDLOC = 0;
+                TOTVCPNUSDPLA = 0;
+                TOTVCPNUSDASI = 0;
+                TOTVCPNUSDCAM = 0;
+                TOTVCPNUSDCAN = 0;
+                TOTVCPNUSDCAR = 0;
+                TOTVCPNUSDEUR = 0;
+                TOTVCPNUSDSUD = 0;
+                TOTVCPNUSDUSA = 0;
+
+                TOTPAXASI = 0;
+                TOTPAXCAM = 0;
+                TOTPAXCAN = 0;
+                TOTPAXCAR = 0;
+                TOTPAXEUR = 0;
+                TOTPAXFRO = 0;
+                TOTPAXLOC = 0;
+                TOTPAXPLA = 0;
+                TOTPAXSUD = 0;
+                TOTPAXUSA = 0;
+
+                for (int i = 0; i < lst.size(); i++) {
+
+                    if (lst.get(i).TREG.equals("0")) {
+                        TOTVCPNUSDFRO = TOTVCPNUSDFRO + lst.get(i).VCPNUSDFRO;
+                        TOTVCPNUSDLOC = TOTVCPNUSDLOC + lst.get(i).VCPNUSDLOC;
+                        TOTVCPNUSDPLA = TOTVCPNUSDPLA + lst.get(i).VCPNUSDPLA;
+                        TOTVCPNUSDASI = TOTVCPNUSDASI + lst.get(i).VCPNUSDASI;
+                        TOTVCPNUSDCAM = TOTVCPNUSDCAM + lst.get(i).VCPNUSDCAM;
+                        TOTVCPNUSDCAN = TOTVCPNUSDCAN + lst.get(i).VCPNUSDCAN;
+                        TOTVCPNUSDCAR = TOTVCPNUSDCAR + lst.get(i).VCPNUSDCAR;
+                        TOTVCPNUSDEUR = TOTVCPNUSDEUR + lst.get(i).VCPNUSDEUR;
+                        TOTVCPNUSDSUD = TOTVCPNUSDSUD + lst.get(i).VCPNUSDSUD;
+                        TOTVCPNUSDUSA = TOTVCPNUSDUSA + lst.get(i).VCPNUSDUSA;
+
+                        TOTVCPNMXNFRO = TOTVCPNMXNFRO + lst.get(i).VCPNMXNFRO;
+                        TOTVCPNMXNLOC = TOTVCPNMXNLOC + lst.get(i).VCPNMXNLOC;
+                        TOTVCPNMXNPLA = TOTVCPNMXNPLA + lst.get(i).VCPNMXNPLA;
+                        TOTVCPNMXNASI = TOTVCPNMXNASI + lst.get(i).VCPNMXNASI;
+                        TOTVCPNMXNCAM = TOTVCPNMXNCAM + lst.get(i).VCPNMXNCAM;
+                        TOTVCPNMXNCAN = TOTVCPNMXNCAN + lst.get(i).VCPNMXNCAN;
+                        TOTVCPNMXNCAR = TOTVCPNMXNCAR + lst.get(i).VCPNMXNCAR;
+                        TOTVCPNMXNEUR = TOTVCPNMXNEUR + lst.get(i).VCPNMXNEUR;
+                        TOTVCPNMXNSUD = TOTVCPNMXNSUD + lst.get(i).VCPNMXNSUD;
+                        TOTVCPNMXNUSA = TOTVCPNMXNUSA + lst.get(i).VCPNMXNUSA;
+
+                        TOTPAXFRO = TOTPAXFRO + lst.get(i).PAXFRO;
+                        TOTPAXLOC = TOTPAXLOC + lst.get(i).PAXLOC;
+                        TOTPAXPLA = TOTPAXPLA + lst.get(i).PAXPLA;
+                        TOTPAXASI = TOTPAXASI + lst.get(i).PAXASI;
+                        TOTPAXCAM = TOTPAXCAM + lst.get(i).PAXCAM;
+                        TOTPAXCAN = TOTPAXCAN + lst.get(i).PAXCAN;
+                        TOTPAXCAR = TOTPAXCAR + lst.get(i).PAXCAR;
+                        TOTPAXEUR = TOTPAXEUR + lst.get(i).PAXEUR;
+                        TOTPAXSUD = TOTPAXSUD + lst.get(i).PAXSUD;
+                        TOTPAXUSA = TOTPAXUSA + lst.get(i).PAXUSA;
+                    }
+
+                    if (lst.get(i).TREG.equals("2")) {
+
+                        lst.get(i).PAXFRO = (int) Math.round(lst_seats.get(i).FRO * lst_occupation_factor.get(i).percentageFRO / 100);
+                        lst.get(i).VCPNUSDFRO = lst.get(i).VPROUSDFRO * lst.get(i).PAXFRO;
+                        lst.get(i).VCPNMXNFRO = lst.get(i).VCPNUSDFRO * lst.get(i).TCAMB;
+                        TOTVCPNMXNFRO = TOTVCPNMXNFRO + lst.get(i).VCPNMXNFRO;
+                        TOTVCPNUSDFRO = TOTVCPNUSDFRO + lst.get(i).VCPNUSDFRO;
+                        TOTPAXFRO = TOTPAXFRO + lst.get(i).PAXFRO;
+
+                        lst.get(i).PAXLOC = (int) Math.round(lst_seats.get(i).LOC * lst_occupation_factor.get(i).percentageLOC / 100);
+                        lst.get(i).VCPNUSDLOC = lst.get(i).VPROUSDLOC * lst.get(i).PAXLOC;
+                        lst.get(i).VCPNMXNLOC = lst.get(i).VCPNUSDLOC * lst.get(i).TCAMB;
+                        TOTVCPNMXNLOC = TOTVCPNMXNLOC + lst.get(i).VCPNMXNLOC;
+                        TOTVCPNUSDLOC = TOTVCPNUSDLOC + lst.get(i).VCPNUSDLOC;
+                        TOTPAXLOC = TOTPAXLOC + lst.get(i).PAXLOC;
+
+                        lst.get(i).PAXPLA = (int) Math.round(lst_seats.get(i).PLA * lst_occupation_factor.get(i).percentagePLA / 100);
+                        lst.get(i).VCPNUSDPLA = lst.get(i).VPROUSDPLA * lst.get(i).PAXPLA;
+                        lst.get(i).VCPNMXNPLA = lst.get(i).VCPNUSDPLA * lst.get(i).TCAMB;
+                        TOTVCPNMXNPLA = TOTVCPNMXNPLA + lst.get(i).VCPNMXNPLA;
+                        TOTVCPNUSDPLA = TOTVCPNUSDPLA + lst.get(i).VCPNUSDPLA;
+                        TOTPAXPLA = TOTPAXPLA + lst.get(i).PAXPLA;
+
+                        lst.get(i).PAXASI = (int) Math.round(lst_seats.get(i).ASI * lst_occupation_factor.get(i).percentageASI / 100);
+                        lst.get(i).VCPNUSDASI = lst.get(i).VPROUSDASI * lst.get(i).PAXASI;
+                        lst.get(i).VCPNMXNASI = lst.get(i).VCPNUSDASI * lst.get(i).TCAMB;
+                        TOTVCPNMXNASI = TOTVCPNMXNASI + lst.get(i).VCPNMXNASI;
+                        TOTVCPNUSDASI = TOTVCPNUSDASI + lst.get(i).VCPNUSDASI;
+                        TOTPAXASI = TOTPAXASI + lst.get(i).PAXASI;
+
+                        lst.get(i).PAXCAM = (int) Math.round(lst_seats.get(i).CAM * lst_occupation_factor.get(i).percentageCAM / 100);
+                        lst.get(i).VCPNUSDCAM = lst.get(i).VPROUSDCAM * lst.get(i).PAXCAM;
+                        lst.get(i).VCPNMXNCAM = lst.get(i).VCPNUSDCAM * lst.get(i).TCAMB;
+                        TOTVCPNMXNCAM = TOTVCPNMXNCAM + lst.get(i).VCPNMXNCAM;
+                        TOTVCPNUSDCAM = TOTVCPNUSDCAM + lst.get(i).VCPNUSDCAM;
+                        TOTPAXCAM = TOTPAXCAM + lst.get(i).PAXCAM;
+
+                        lst.get(i).PAXCAN = (int) Math.round(lst_seats.get(i).CAN * lst_occupation_factor.get(i).percentageCAN / 100);
+                        lst.get(i).VCPNUSDCAN = lst.get(i).VPROUSDCAN * lst.get(i).PAXCAN;
+                        lst.get(i).VCPNMXNCAN = lst.get(i).VCPNUSDCAN * lst.get(i).TCAMB;
+                        TOTVCPNMXNCAN = TOTVCPNMXNCAN + lst.get(i).VCPNMXNCAN;
+                        TOTVCPNUSDCAN = TOTVCPNUSDCAN + lst.get(i).VCPNUSDCAN;
+                        TOTPAXCAN = TOTPAXCAN + lst.get(i).PAXCAN;
+
+                        lst.get(i).PAXCAR = (int) Math.round(lst_seats.get(i).CAR * lst_occupation_factor.get(i).percentageCAR / 100);
+                        lst.get(i).VCPNUSDCAR = lst.get(i).VPROUSDCAR * lst.get(i).PAXCAR;
+                        lst.get(i).VCPNMXNCAR = lst.get(i).VCPNUSDCAR * lst.get(i).TCAMB;
+                        TOTVCPNMXNCAR = TOTVCPNMXNCAR + lst.get(i).VCPNMXNCAR;
+                        TOTVCPNUSDCAR = TOTVCPNUSDCAR + lst.get(i).VCPNUSDCAR;
+                        TOTPAXCAR = TOTPAXCAR + lst.get(i).PAXCAR;
+
+                        lst.get(i).PAXEUR = (int) Math.round(lst_seats.get(i).EUR * lst_occupation_factor.get(i).percentageEUR / 100);
+                        lst.get(i).VCPNUSDEUR = lst.get(i).VPROUSDEUR * lst.get(i).PAXEUR;
+                        lst.get(i).VCPNMXNEUR = lst.get(i).VCPNUSDEUR * lst.get(i).TCAMB;
+                        TOTVCPNMXNEUR = TOTVCPNMXNEUR + lst.get(i).VCPNMXNEUR;
+                        TOTVCPNUSDEUR = TOTVCPNUSDEUR + lst.get(i).VCPNUSDEUR;
+                        TOTPAXEUR = TOTPAXEUR + lst.get(i).PAXEUR;
+
+                        lst.get(i).PAXSUD = (int) Math.round(lst_seats.get(i).SUD * lst_occupation_factor.get(i).percentageSUD / 100);
+                        lst.get(i).VCPNUSDSUD = lst.get(i).VPROUSDSUD * lst.get(i).PAXSUD;
+                        lst.get(i).VCPNMXNSUD = lst.get(i).VCPNUSDSUD * lst.get(i).TCAMB;
+                        TOTVCPNMXNSUD = TOTVCPNMXNSUD + lst.get(i).VCPNMXNSUD;
+                        TOTVCPNUSDSUD = TOTVCPNUSDSUD + lst.get(i).VCPNUSDSUD;
+                        TOTPAXSUD = TOTPAXSUD + lst.get(i).PAXSUD;
+
+                        lst.get(i).PAXUSA = (int) Math.round(lst_seats.get(i).USA * lst_occupation_factor.get(i).percentageUSA / 100);
+                        lst.get(i).VCPNUSDUSA = lst.get(i).VPROUSDUSA * lst.get(i).PAXUSA;
+                        lst.get(i).VCPNMXNUSA = lst.get(i).VCPNUSDUSA * lst.get(i).TCAMB;
+                        TOTVCPNMXNUSA = TOTVCPNMXNUSA + lst.get(i).VCPNMXNUSA;
+                        TOTVCPNUSDUSA = TOTVCPNUSDUSA + lst.get(i).VCPNUSDUSA;
+                        TOTPAXUSA = TOTPAXUSA + lst.get(i).PAXUSA;
+
+                    }
+                }
+
+                for (int i = 0; i < lst.size(); i++) {
+                    lst.get(i).TOTVCPNUSDFRO = TOTVCPNUSDFRO;
+                    lst.get(i).TOTVCPNMXNFRO = TOTVCPNMXNFRO;
+                    lst.get(i).TOTPAXFRO = TOTPAXFRO;
+
+                    lst.get(i).TOTVCPNUSDLOC = TOTVCPNUSDLOC;
+                    lst.get(i).TOTVCPNMXNLOC = TOTVCPNMXNLOC;
+                    lst.get(i).TOTPAXLOC = TOTPAXLOC;
+
+                    lst.get(i).TOTVCPNMXNPLA = TOTVCPNMXNPLA;
+                    lst.get(i).TOTVCPNUSDPLA = TOTVCPNUSDPLA;
+                    lst.get(i).TOTPAXPLA = TOTPAXPLA;
+
+                    lst.get(i).TOTVCPNUSDASI = TOTVCPNUSDASI;
+                    lst.get(i).TOTVCPNMXNASI = TOTVCPNMXNASI;
+                    lst.get(i).TOTPAXASI = TOTPAXASI;
+
+                    lst.get(i).TOTVCPNUSDCAM = TOTVCPNUSDCAM;
+                    lst.get(i).TOTVCPNMXNCAM = TOTVCPNMXNCAM;
+                    lst.get(i).TOTPAXCAM = TOTPAXCAM;
+
+                    lst.get(i).TOTVCPNUSDCAN = TOTVCPNUSDCAN;
+                    lst.get(i).TOTVCPNMXNCAN = TOTVCPNMXNCAN;
+                    lst.get(i).TOTPAXCAN = TOTPAXCAN;
+
+                    lst.get(i).TOTVCPNUSDCAR = TOTVCPNUSDCAR;
+                    lst.get(i).TOTVCPNMXNCAR = TOTVCPNMXNCAR;
+                    lst.get(i).TOTPAXCAR = TOTPAXCAR;
+
+                    lst.get(i).TOTVCPNUSDEUR = TOTVCPNUSDEUR;
+                    lst.get(i).TOTVCPNMXNEUR = TOTVCPNMXNEUR;
+                    lst.get(i).TOTPAXEUR = TOTPAXEUR;
+
+                    lst.get(i).TOTVCPNUSDSUD = TOTVCPNUSDSUD;
+                    lst.get(i).TOTVCPNMXNSUD = TOTVCPNMXNSUD;
+                    lst.get(i).TOTPAXSUD = TOTPAXSUD;
+
+                    lst.get(i).TOTVCPNUSDUSA = TOTVCPNUSDUSA;
+                    lst.get(i).TOTVCPNMXNUSA = TOTVCPNMXNUSA;
+                    lst.get(i).TOTPAXUSA = TOTPAXUSA;
+                }
+            }
+
             for (int i = 0; i < lst.size(); i++) {
+
                 //ASI
                 if (lst.get(i).VCPNMXNASI > 0) {
                     lst.get(i).AVRG_VCPNMXN_ASI = ((lst.get(i).VCPNMXNASI - (TOTVCPNMXNASI / totalRegistrosASI)) / (TOTVCPNMXNASI / totalRegistrosASI)) * 100;
