@@ -190,7 +190,13 @@ public class InvoiceCommissionConsortiaController extends BaseController {
             filter.VP_A2447STATU = request.getParameter("VP_A2447STATU");
             filter.VP_A2447SEQ = request.getParameter("VP_A2447SEQ");
             filter.VP_A2447INDAP = request.getParameter("VP_A2447INDAP");
-
+            filter.VP_A2447COD = request.getParameter("VP_A2447COD");
+            filter.VP_A2447COMBA = Double.parseDouble(request.getParameter("VP_A2447COMBA"));
+            filter.VP_A2447IVACB = Double.parseDouble(request.getParameter("VP_A2447IVACB"));
+            filter.VP_A2447COD2 = request.getParameter("VP_A2447COD2");
+            filter.VP_A2447COMB2 = Double.parseDouble(request.getParameter("VP_A2447COMB2"));
+            filter.VP_A2447IVAC2 = Double.parseDouble(request.getParameter("VP_A2447IVAC2"));
+                    
             objRtn = logic.setPX112S02A1757(filter);
 
         } catch (Exception e) {

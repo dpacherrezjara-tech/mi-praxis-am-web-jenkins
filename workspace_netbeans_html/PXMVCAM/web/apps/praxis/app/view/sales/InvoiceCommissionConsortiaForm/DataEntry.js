@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
     title: 'Invoice Commission Consortia',
     header: true,
     width: 600,
-    height: 550,
+    height: 750,
     border: false,
     resizable: false,
     layout: {
@@ -549,7 +549,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                                 focusleave: 'getTotalPref',  
                                                 keypress: function(obj , e ){
                                                     if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757STATU').focus();
+                                                        Ext.getCmp(prototype.id+'-txtA1757COD').focus();
                                                     }
                                                 }
                                             }
@@ -618,6 +618,490 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                         }
                                     ]
                                 },
+                                //jd
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    // bodyStyle: 'background: #E5ECEF',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'right',
+                                            width: 100,
+                                            padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;">Code</strong>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COD',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: false,
+                                            width: 99,
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            maxLength: 3,
+                                            // maskRe: /[0-9]/,
+                                            listeners: {
+                                                change: 'onUpperValue',
+                                                keypress: function(obj , e ){
+                                                    if ( e.getKey() === e.ENTER ){
+                                                        Ext.getCmp(prototype.id+'-txtA1757COMBA').focus();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    // bodyStyle: 'background: #E5ECEF',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'right',
+                                            width: 100,
+                                            padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;">Carge</strong>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMBA',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: false,
+                                            width: 99,
+                                            labelWidth: 0,
+                                            value: '0.00',
+                                            fieldStyle: 'text-align:right',
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',                                            
+                                            maskRe:/[1234567890\.]/,
+                                            listeners: {                                                
+                                                focus: 'onFocusNumberfield', 
+                                                keypress: function(obj , e ){
+                                                    if ( e.getKey() === e.ENTER ){
+                                                        Ext.getCmp(prototype.id+'-txtA1757IVACB').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMBA_P',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            fieldStyle: 'text-align:right',
+                                            padding: '2px 5px 2px 3px',
+                                            margin: '0 0 0 8',
+                                            maxLength: 13
+//                                            maskRe: /0-9./,
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMBA_IN',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMBA_D',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            margin: '0 0 0 8',
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    // bodyStyle: 'background: #E5ECEF',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'right',
+                                            width: 100,
+                                            padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;">IVA Comm Banc</strong>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVACB',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: false,
+                                            width: 99,
+                                            labelWidth: 0,
+                                            value: '0.00',
+                                            fieldStyle: 'text-align:right',
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',                                            
+                                            maskRe:/[1234567890\.]/,
+                                            listeners: {                                                
+                                                focus: 'onFocusNumberfield',
+                                                focusleave: 'getTotalPref',
+                                                keypress: function(obj , e ){
+                                                    if ( e.getKey() === e.ENTER ){
+                                                        Ext.getCmp(prototype.id+'-txtA1757STATU').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVACB_P',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            fieldStyle: 'text-align:right',
+                                            padding: '2px 5px 2px 3px',
+                                            margin: '0 0 0 8',
+                                            maxLength: 13
+//                                            maskRe: /0-9./,
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVACB_IN',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVACB_D',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            margin: '0 0 0 8',
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    // bodyStyle: 'background: #E5ECEF',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'right',
+                                            width: 100,
+                                            padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;">Cod</strong>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COD2',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: false,
+                                            width: 99,
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            maxLength: 3,
+                                            // maskRe: /[0-9]/,
+                                            listeners: {
+                                                change: 'onUpperValue',
+                                                keypress: function(obj , e ){
+                                                    if ( e.getKey() === e.ENTER ){
+                                                        Ext.getCmp(prototype.id+'-txtA1757COMB2').focus();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    // bodyStyle: 'background: #E5ECEF',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'right',
+                                            width: 100,
+                                            padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;">Carge</strong>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMB2',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: false,
+                                            width: 99,
+                                            labelWidth: 0,
+                                            value: '0.00',
+                                            fieldStyle: 'text-align:right',
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',                                            
+                                            maskRe:/[1234567890\.]/,
+                                            listeners: {                                                
+                                                focus: 'onFocusNumberfield',
+                                                keypress: function(obj , e ){
+                                                    if ( e.getKey() === e.ENTER ){
+                                                        Ext.getCmp(prototype.id+'-txtA1757IVAC2').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMB2_P',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            fieldStyle: 'text-align:right',
+                                            padding: '2px 5px 2px 3px',
+                                            margin: '0 0 0 8',
+                                            maxLength: 13
+//                                            maskRe: /0-9./,
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMB2_IN',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COMB2_D',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            margin: '0 0 0 8',
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'column',
+                                    margin: '1 0 1 0',
+                                    border: false,
+                                    // bodyStyle: 'background: #E5ECEF',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'right',
+                                            width: 100,
+                                            padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;">IVA Comm Banc</strong>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVAC2',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: false,
+                                            width: 99,
+                                            labelWidth: 0,
+                                            value: '0.00',
+                                            fieldStyle: 'text-align:right',
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',                                            
+                                            maskRe:/[1234567890\.]/,
+                                            listeners: {                                                
+                                                focus: 'onFocusNumberfield',
+                                                focusleave: 'getTotalPref',
+                                                keypress: function(obj , e ){
+                                                    if ( e.getKey() === e.ENTER ){
+                                                        Ext.getCmp(prototype.id+'-txtA1757STATU').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVAC2_P',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            fieldStyle: 'text-align:right',
+                                            padding: '2px 5px 2px 3px',
+                                            margin: '0 0 0 8',
+                                            maxLength: 13
+//                                            maskRe: /0-9./,
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVAC2_IN',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757IVAC2_D',
+                                            //required: true,
+                                            disabled: false,
+                                            readOnly: true,
+                                            width: 99,
+                                            value: '0.00',
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            fieldStyle: 'text-align:right',
+                                            margin: '0 0 0 0'
+//                                            maxLength: 13,
+//                                            maskRe: /0-9./,
+//                                            margin: '0 0 0 8',
+//                                            listeners: {
+//                                                change: 'onUpperValue'
+//                                            }
+                                        }
+                                    ]
+                                },
+                                //jd fin
                                 {
                                     xtype: 'panel',
                                     layout: 'column',
@@ -631,7 +1115,6 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             width: 100,
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;">Comm + IVA</strong>'
-
                                         },
                                         {
                                             xtype: 'textfield',
