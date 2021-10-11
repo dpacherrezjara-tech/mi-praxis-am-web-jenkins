@@ -9,9 +9,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import net.miatech.beans.IMF072Filter;
 import net.miatech.beans.IMF140Filter;
 import net.miatech.beans.IMF141Filter;
 import net.miatech.beans.spring.implement.IServerSession;
@@ -120,6 +122,98 @@ public class ForecastDAO {
                      bean.page.PAGROW = filter.page.PAGROW;
                      bean.page.TOTPAG = filter.page.TOTPAG;
                      bean.page.TOTROW = filter.page.TOTROW;*/
+                    lst.add(bean);
+                }
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
+    public List<IMF072Filter> loadPX551SQP04159(IMF072Filter filter) throws SQLException, Exception {
+
+        List<IMF072Filter> lst = new ArrayList<IMF072Filter>(0);
+        IMF072Filter bean;
+        double VALOR = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04159(?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                VALOR = rst.getDouble("VALOR");
+            }
+            rst.close();
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    bean = new IMF072Filter();
+
+                    bean.CCIA = rst.getString("CCIA").trim();
+                    bean.FORMA = rst.getString("FORMA").trim();
+                    bean.SERIE = rst.getString("SERIE").trim();
+                    bean.TICKET = bean.CCIA + bean.FORMA + bean.SERIE;
+                    bean.CUPON = rst.getString("CUPON").trim();
+                    bean.ZONA = rst.getString("ZONA").trim();
+                    bean.DFLIGHT = rst.getString("DFLIGHT").trim();
+                    bean.NFLIGHT = rst.getString("NFLIGHT").trim();
+                    bean.TRNCU = rst.getString("TRNCU").trim();
+                    bean.VALOR = rst.getDouble("VALOR");
+
+                    bean.totVALOR = VALOR;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
                     lst.add(bean);
                 }
             }
@@ -476,6 +570,77 @@ public class ForecastDAO {
         return lst;
     }
 
+    public List<IMF140Filter> loadPX551SQP04160(IMF140Filter filter) throws SQLException, Exception {
+
+        List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
+        IMF140Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04160(?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new IMF140Filter();
+                bean.IN_FECHA_FROM = filter.IN_FECHA_FROM.trim();
+                bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
+                bean.IN_TREG = filter.IN_TREG.trim();
+
+                bean.QTYPAX = rst.getInt("QTYPAX");
+                bean.VCPNUSD = rst.getDouble("VCPNUSD");
+                bean.VPROUSD = rst.getDouble("VPROUSD");
+                bean.VCPNMXN = rst.getDouble("VCPNMXN");
+                bean.VPROMXN = rst.getDouble("VPROMXN");
+                bean.TREG = rst.getString("TREG").trim();
+
+                if (bean.TREG.trim().equals("REAL")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
+
+                } else if (bean.TREG.trim().equals("FUTURE")) {
+                    bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
+                }
+
+                lst.add(bean);
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+
     public List<IMF140Filter> loadPX551SQP03898(IMF140Filter filter) throws SQLException, Exception {
 
         List<IMF140Filter> lst = new ArrayList<IMF140Filter>(0);
@@ -515,17 +680,7 @@ public class ForecastDAO {
 
             while (rst.next()) {
                 bean = new IMF140Filter();
-                bean.TREG = rst.getString("TREG").trim();
                 bean.DWEEK = rst.getString("DWEEK").trim();
-
-                if (bean.TREG.equals("0")) {
-//                        objRtn.strImagen1 = "assets/icons/16x16/greenP.png";
-                    bean.strImagen1 = "resources/img/icon/16x16/circle_green.png";
-
-                } else if (bean.TREG.equals("2")) {
-//                        objRtn.strImagen1 = "assets/icons/16x16/redP.png";
-                    bean.strImagen1 = "resources/img/icon/16x16/Circle_Yellow.png";
-                }
                 bean.DFLIGHT = rst.getString("DFLIGHT").trim();
                 bean.TREG = rst.getString("TREG").trim();
 
