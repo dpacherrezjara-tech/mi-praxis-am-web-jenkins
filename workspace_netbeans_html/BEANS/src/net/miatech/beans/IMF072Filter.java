@@ -18,6 +18,12 @@ public class IMF072Filter  extends IMF072{
     public String strYearFrom = "";
     public String strYearTo = "";
     
+        
+    public String IN_FECHA_FROM = "";
+    public String IN_FECHA_TO = "";
+    public double totVALOR = 0;
+    public String TICKET = "";
+    
     public String strFecFormat = "";
     public String strMes = "";
     public String strFlag = "";
