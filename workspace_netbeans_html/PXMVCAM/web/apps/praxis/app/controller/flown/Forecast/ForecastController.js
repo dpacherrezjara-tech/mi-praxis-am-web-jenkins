@@ -52,6 +52,11 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
+        prototypeProgram.view = 'flown-forecast-form';
+        prototypeProgram.nprog = 'PX00000551';
+        prototypeProgram.title = 'Forecast';
+        prototypeProgram.modulo = '';
+
         this.control({
 //            //   -------------------Eventos Genericos --------------------
             '#ForecastForm-xpanel': {
@@ -267,6 +272,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecast();
+                this.setGridDataForecastTotals();
                 break;
             case 'FP':
                 Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
@@ -279,6 +285,12 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
                 this.setFormatParameter();
                 this.setGridDataForecastZones();
+                break;
+            case 'FD':
+                Ext.getCmp(prototype.id + '-chkMarketByLevel').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbSummaryType').setVisible(false);
+                this.setFormatParameter();
+                this.setGridDataFareDetail();
                 break;
         }
     },
@@ -391,6 +403,43 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-gridDataForecast').setStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
+    setGridDataForecastTotals: function() {
+        win.lblUser_toolTip("Estructura: IMF140");
+        //me.panelActual = '-panelGridDataForecast';
+        //global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastTotals'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        //console.log(obj.data);
+//                            var data = obj.data.items[0].data;
+                    }
+//                        me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataForecastTotals').setTitle('<center style="font-size:12px;">' + 'Forecast Totals' + ' </center>');
+        Ext.getCmp(prototype.id + '-gridDataForecastTotals').bindStore(storeGridDatas);
+        //Ext.getCmp(prototype.id + '-gridDataForecast').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
     setGridDataForecastZones: function() {
         win.lblUser_toolTip("Estructura: IMF140");
         me.panelActual = '-panelGridDataForecastZones';
@@ -425,6 +474,41 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
         Ext.getCmp(prototype.id + '-gridDataForecastZones').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataForecastZones').setStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setGridDataFareDetail: function() {
+        win.lblUser_toolTip("Estructura: IMF072");
+        me.panelActual = '-panelGridDataFareDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchForecastCouponDetail'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin6');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                            var data = obj.data.items[0].data;
+                    }
+                    me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataFareDetail').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataFareDetail').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
     },
     setGridDataForecastPercentage: function() {
         win.lblUser_toolTip("Estructura: IMF140/IMF141");
@@ -904,7 +988,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 Ext.getCmp(prototype.id + '-panelGraphicDomestic').setVisible(false);
                 Ext.getCmp(prototype.id + '-panelGraphicInternational').setVisible(false);
                 Ext.getCmp(prototype.id + '-panelGraphicGeneral').setVisible(true);
-                
+
                 break;
             case 'I':
                 //Previous
@@ -1301,17 +1385,17 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
     },
     gridData_VIEWTKT_clickHandler: function(column, e, row, column, x, rowData) {
         var data = x.record.data;
-        var strTkt = data.strTicket;
+        var strTkt = data.TICKET;
         var beanProMasterTicket = {};
 //        
         beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
-        beanProMasterTicket.IN_FORMA = strTkt.substr(4, 4);
-        beanProMasterTicket.IN_SERIE = strTkt.substr(8, 7);
-//        beanProMasterTicket.IN_SEQ = '00';
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 13);
+        //beanProMasterTicket.IN_SEQ = '00';
 
-//        console.log(beanProMasterTicket);
+        console.log(beanProMasterTicket);
 
-        win.displayProMasterTicket(this, 'ViewForecast', beanProMasterTicket);
+        win.displayProMasterTicket(this, 'Forecast', beanProMasterTicket);
     },
     validateFields: function() {
         var msj = '';
@@ -1369,7 +1453,7 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download Excel ?',
+            msg: 'Download File ?',
             buttons: Ext.MessageBox.OKCANCEL,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
@@ -1403,6 +1487,9 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 break;
             case  '-panelGridDataAmountByZones':
                 global.getFile(prototype.url + '/getXLSXAmountByZones?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataFareDetail':
+                global.getFile(prototype.url + '/getTXTForecastCouponDetail?beanString=' + searchParams.beanString);
                 break;
 //            case  '-boxDetTicket':
 //                global.getFile(prototype.url + '/getXLSXTicket?beanString=' + me.paramsDetail.beanString);
@@ -1444,6 +1531,9 @@ Ext.define('Ext.Praxis.controller.flown.Forecast.ForecastController', {
                 break;
             case '-boxDetTicket':
                 me.pagginActual = '-paggin5';
+                break;
+            case '-panelGridDataFareDetail':
+                me.pagginActual = '-paggin6';
                 break;
         }
     },
