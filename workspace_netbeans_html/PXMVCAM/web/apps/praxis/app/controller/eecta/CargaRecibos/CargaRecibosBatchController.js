@@ -83,12 +83,12 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosBatchController
                     icon: objRtn.dbException.SQLCODE, //var icons = [Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
                     fn: function () {
                         //culmino PROCESO 
-                        //if(objRtn.OU_A4021LOTE !== ""){
-                        //    Ext.getCmp(prototype.id02 + '-A4021LOTE').setValue(objRtn.OU_A4021LOTE);
-                        //    me.search_det_loadbatch();
+                        if(objRtn.OU_A4096LOTE !== ""){
+                            Ext.getCmp(prototype.id02 + '-A4096LOTE').setValue(objRtn.OU_A4096LOTE);
+                            me.search_det_loadbatch();
                             //Ext.getCmp(prototype.id02 + '-CargaRecibosBatch').close();
                             //Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                        //}                        
+                        }                        
                     }
                 });
             },
@@ -145,45 +145,52 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosBatchController
         Ext.getCmp(prototype.id02 + '-CargaRecibosBatch').close();
     }, 
     cmbfiltro_clickHandler03:function(){
-        //this.search_det_loadbatch();
+        this.search_det_loadbatch();
     },
     search_det_loadbatch:function( ){
-//        me = this;
-//        var bean = {};        
+        me = this;
+        var bean = {};        
 //        bean.VP_A4021LOTE = Ext.getCmp(prototype.id02 + '-A4021LOTE').getValue();
 //        bean.VP_BOLETO  = Ext.getCmp(prototype.id02 + '-A4021BOLETO').getValue();
-//        bean.VP_A4021STAT  = Ext.getCmp(prototype.id02 + '-A4021STAT').getValue();
-//        if (bean.VP_A4021STAT !== '' ){
-//            if (bean.VP_BOLETO === '' && bean.VP_A4021LOTE === '' ){
-//                global.Msg({msg: 'Ingrese Nº lote y/o Boleto'});
-//                return;
-//            }
-//        };
-//        if (bean.VP_A4021STAT === '' ){
-//            if (bean.VP_BOLETO === '' && bean.VP_A4021LOTE === '' ){
-//                global.Msg({msg: 'Ingrese Nº lote y/o Boleto **'});
-//                return;
-//            }
-//        };
-//        Ext.Ajax.request({
-//            url: prototype.url + '/search_det_loadbatch',
-//            timeout: 60000000,
-//            method: 'POST',
-//            params: bean,
-//            beforerequest: Ext.getCmp(prototype.id02 + '-CargaRecibosBatch').mask('Cargando...', ''),
-//            success: function (response, options) {
-//                var res = Ext.JSON.decode(response.responseText); 
-//                Ext.getCmp(prototype.id02 + '-CargaRecibosBatch').unmask('Loading...', '');
-//                if (res.total === 0) {
-//                        global.Msg({
-//                            msg: 'No hay registros'
-//                        });
-//                    return;
-//                }  
-//                Ext.getCmp(prototype.id02 + '-infoGridCargaRecibosBatch').setStore(res.data);
-//                Ext.getCmp(prototype.id02 + '-infoGridCargaRecibosBatch').getStore().reload();           
-//            }
-//        }); 
+//        bean.VP_A4021STAT  = Ext.getCmp(prototype.id02 + '-A4021STAT').getValue();       
+        bean.VP_FDATE1 = ""; //Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+        bean.VP_FDATE2 = ""; //Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
+        bean.VP_LOTE = Ext.getCmp(prototype.id02 + '-A4096LOTE').getValue();
+        bean.VP_STAT = ""; //Ext.getCmp(prototype.id + '-ESTAD').getValue();
+        bean.VP_TRXOR = Ext.getCmp(prototype.id02 + '-A4096TRXOR').getValue();
+        bean.VP_STREF = Ext.getCmp(prototype.id02 + '-A4096STREF').getValue();
+        
+        if (bean.VP_STREF !== '' ){
+            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' ){
+                global.Msg({msg: 'Ingrese Nº Lote o Recibo'});
+                return;
+            }
+        };
+        if (bean.VP_STREF === '' ){
+            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' ){
+                global.Msg({msg: 'Ingrese Nº lote o Recibo **'});
+                return;
+            }
+        };
+        Ext.Ajax.request({
+            url: prototype.url + '/search_det_loadbatch',
+            timeout: 60000000,
+            method: 'POST',
+            params: bean,
+            beforerequest: Ext.getCmp(prototype.id02 + '-CargaRecibosBatch').mask('Cargando...', ''),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText); 
+                Ext.getCmp(prototype.id02 + '-CargaRecibosBatch').unmask('Loading...', '');
+                if (res.total === 0) {
+                        global.Msg({
+                            msg: 'No hay registros'
+                        });
+                    return;
+                }  
+                Ext.getCmp(prototype.id02 + '-infoGridCargaRecibosBatch').setStore(res.data);
+                Ext.getCmp(prototype.id02 + '-infoGridCargaRecibosBatch').getStore().reload();           
+            }
+        }); 
     },
     onExportXlsClick: function(){
 //        var bean = {};         

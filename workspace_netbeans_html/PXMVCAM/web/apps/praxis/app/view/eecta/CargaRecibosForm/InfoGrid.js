@@ -65,15 +65,14 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
 //                            },
                             columns: {
                                 items: [                                    
-                                    {text: 'Nº Lote', dataIndex: 'A4096LOTE', width: 80, align: 'center', locked: true},
-                                    {text: 'Fecha<br>Carga', dataIndex: 'A4096FCARG', align: 'center', width: 70, locked: true},
-                                    {text: 'Fecha<br>Recibo', dataIndex: 'A4096FRCBO', align: 'center', width: 70, locked: true},
-                                    {text: 'Fecha<br>Deposito', dataIndex: 'A4096FDPTO', align: 'center', width: 70, locked: true},
-                                    {text: 'No', dataIndex: 'A4096NRO', align: 'center', width: 40, locked: true},                                    
-                                    {text: 'Unidad Ope.', dataIndex: 'A4096UNDOP', align: 'left', width: 120, locked: true},
-                                    {text: 'Trx. Origen', dataIndex: 'A4096TRXOR', width: 90, align: 'left', locked: true},
-                                    {text: 'Mda.', dataIndex: 'A4096MDATX', width: 50, align: 'center', locked: true},
-                                    {text: 'Monto<br>Disponible', dataIndex: 'A4096MONTO', width: 90, align: 'right',locked: true,
+                                    {text: 'Nº Lote', dataIndex: 'A4103LOTE', width: 80, align: 'center', locked: true},                                    
+                                    {text: 'Fecha<br>Recibo', dataIndex: 'A4103FECRC', align: 'center', width: 70, locked: true},
+                                    {text: 'Fecha<br>Deposito', dataIndex: 'A4103FECDP', align: 'center', width: 70, locked: true},
+                                    {text: 'No', dataIndex: 'A4103NRO', align: 'center', width: 40, locked: true},                                    
+                                    {text: 'Unidad Ope.', dataIndex: 'A4103UNDOP', align: 'left', width: 120, locked: true},
+                                    {text: 'Trx. Origen', dataIndex: 'A4103NUMRC', width: 90, align: 'left', locked: true},
+                                    {text: 'Mda.', dataIndex: 'A4103MDARC', width: 50, align: 'center', locked: true},
+                                    {text: 'Monto<br>Disponible', dataIndex: 'A4103MONTO', width: 90, align: 'right',locked: true,
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
 //                                            return Ext.util.Format.number(value, '0,000.00');
@@ -82,14 +81,8 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Tipo', dataIndex: 'A4096TIPO', width: 40, align: 'center'},
-                                    {text: 'Estado', dataIndex: 'A4096ESTAD', width: 55, align: 'center'},
-                                    {text: 'Cuenta', dataIndex: 'A4096CUENT', width: 80, align: 'center'},
-                                    {text: 'Descripcion', dataIndex: 'A4096DESCR', width: 120, align: 'left'},                                   
-                                    {text: 'Referencia', dataIndex: 'A4096REFER', width: 120, align: 'left'}, 
-                                    //{text: 'Estado<br>Recibo', dataIndex: 'A4079STSRC', width: 90, align: 'left'},                                     
                                     {
-                                        text: 'Monto<br>Aplicado', dataIndex: 'A4096TOTAP', width: 90, align: 'right',
+                                        text: 'Monto<br>Aplicado', dataIndex: 'A4103TOTAP', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
 //                                            return Ext.util.Format.number(value, '0,000.00');
@@ -100,7 +93,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
                                         }
                                     },
                                     {
-                                        text: 'Saldo', dataIndex: 'A4096SALDP', width: 90, align: 'right',
+                                        text: 'Saldo', dataIndex: 'A4103SALDO', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
 //                                            return Ext.util.Format.number(value, '0,000.00');
@@ -109,20 +102,24 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Cliente', dataIndex: 'A4096CDCLI', width: 70, align: 'left'},
-                                    {text: 'Err.', dataIndex: 'A4096DESER', width: 70, align: 'left'}
-                                    //{text: 'Banco', dataIndex: 'A3953BANCO', width: 70, align: 'left'},                                    
-                                    //{text: 'Cta. Bancaria', dataIndex: 'A3953CTABC', width: 70, align: 'left'},
+                                    //{text: 'Estado<br>Recibo', dataIndex: 'A4079STSRC', width: 90, align: 'left'},
+                                    
+                                    {text: 'Tipo', dataIndex: 'A4103TIPO', width: 40, align: 'center'},
+                                    {text: 'Estado', dataIndex: 'A4103ESTAD', width: 55, align: 'center'},
+                                    {text: 'Cuenta', dataIndex: 'A4103CUENT', width: 80, align: 'center'},
+                                    {text: 'Descripcion', dataIndex: 'A4103DESRC', width: 120, align: 'left'},                                   
+                                    {text: 'Referencia', dataIndex: 'A4103REFRC', width: 120, align: 'left'},                                    
+                                    {text: 'Cliente', dataIndex: 'A4103CDCLI', width: 70, align: 'left'}                                    
 //                                    {
 //                                        xtype: 'actioncolumn',
-//                                        text:'Detalle<br>Pagos',
+//                                        text:'Detalle<br>Aplicacion',
 //                                        sortable: false,
 //                                        width: 55,
 //                                        align: 'center',                                        
 //                                        items: [
 //                                            {
 //                                                iconCls: 'prx-icon-detail',
-//                                                tooltip: 'Ver detalle de boletos',
+//                                                tooltip: 'Ver detalle aplicacion de pago',
 //                                                handler: 'onDetailPagoClick'
 //                                            }
 //                                        ]

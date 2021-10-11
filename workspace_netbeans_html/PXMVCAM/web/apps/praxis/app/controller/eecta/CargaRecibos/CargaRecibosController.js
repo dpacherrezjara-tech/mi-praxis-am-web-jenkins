@@ -95,7 +95,7 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
         bean.VP_LOTE = Ext.getCmp(prototype.id + '-LOTE').getValue();
         bean.VP_STAT = Ext.getCmp(prototype.id + '-ESTAD').getValue();
         bean.VP_TRXOR = Ext.getCmp(prototype.id + '-TRXOR').getValue();
-        bean.VP_STREF = Ext.getCmp(prototype.id + '-STREF').getValue();
+        //bean.VP_STREF = Ext.getCmp(prototype.id + '-STREF').getValue();
         //console.log(bean);
         
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
@@ -107,7 +107,7 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
                     obj.proxy.extraParams = bean;
                 },
                 load: function (obj, obj2, success, obj4, obj5) {
-                    win.lblUser_toolTip("Estructura: A4096");
+                    win.lblUser_toolTip("Estructura: A4103");
                     // <editor-fold defaultstate="collapsed" desc="paggin">
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
@@ -190,21 +190,36 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
             }
         }).show();
     },
+    
+    btnDetalleAplClick: function () {
+        this.winDataEntry03('I');
+    },
+    winDataEntry03:function(action, rec){
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;       
+        Ext.create('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
+            id: prototype.id05 + '-CargaRecibosDetAplForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
     btnDescargaFileIdentPago_click: function() {              
         //var str_formato = 'downloadText'; //downloadText
-        var str_msg = '¿Descargar archivo plano Identificador Pagos?';                	
+        var str_msg = '¿Descargar archivo Identificador de Pagos?';                	
         var bean ={};
-        bean.VP_FDATE1 = ""; //Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
-        bean.VP_FDATE2 = ""; //Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
-        bean.VP_LOTE = Ext.getCmp(prototype.id + '-LOTE').getValue();
+        bean.VP_FDATE1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
+        bean.VP_FDATE2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
+        bean.VP_LOTE = ""; //Ext.getCmp(prototype.id + '-LOTE').getValue();
         bean.VP_STAT = ""; // Ext.getCmp(prototype.id + '-ESTAD').getValue();
         bean.VP_TRXOR = ""; //Ext.getCmp(prototype.id + '-TRXOR').getValue();
         bean.VP_STREF = "1"; //Ext.getCmp(prototype.id + '-STREF').getValue();        
-        if (bean.VP_LOTE === ''){
+        if (bean.VP_FDATE1 === '' || bean.VP_FDATE2 === '' ){
             global.Msg({
-                msg: 'Ingrese un numero de lote'
+                msg: 'Ingrese una fecha'
             });
-            Ext.getCmp(prototype.id + '-LOTE').focus();
+            Ext.getCmp(prototype.id + '-fecha1').focus();
             return;
         }
           

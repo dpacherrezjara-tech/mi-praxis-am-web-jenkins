@@ -160,35 +160,35 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                                 //change: 'cmbfiltro_clickHandler'
                                             }
                                         },
-                                        {
-                                            xtype: 'combo',
-                                            id: prototype.id + '-STREF',
-                                            fieldLabel: 'Estado Ref.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
-                                            store: new Ext.data.SimpleStore({
-                                                fields: ['code', 'name'],
-                                                data: [
-                                                    ["", "TODOS"],
-                                                    ["1", "MATCH"],
-                                                    ["0", "UNMATCH"]
-                                                ]
-                                            }),
-                                            queryMode: 'local',
-                                            triggerAction: 'all',
-                                            autoSelect: false,
-                                            forceSelection: true,
-                                            caseSensitive: false,
-                                            editable: true,
-                                            typeAhead: true,
-                                            valueField: 'code', displayField: 'name',
-                                            width: 150,
-                                            height: 24,
-                                            value: "",
-                                            enableKeyEvents: true,
-                                            padding: '0 0',
-                                            listeners: {
-                                                //change: 'cmbfiltro_clickHandler'
-                                            }
-                                        },
+//                                        {
+//                                            xtype: 'combo',
+//                                            id: prototype.id + '-STREF',
+//                                            fieldLabel: 'Estado Ref.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
+//                                            store: new Ext.data.SimpleStore({
+//                                                fields: ['code', 'name'],
+//                                                data: [
+//                                                    ["", "TODOS"],
+//                                                    ["1", "MATCH"],
+//                                                    ["0", "UNMATCH"]
+//                                                ]
+//                                            }),
+//                                            queryMode: 'local',
+//                                            triggerAction: 'all',
+//                                            autoSelect: false,
+//                                            forceSelection: true,
+//                                            caseSensitive: false,
+//                                            editable: true,
+//                                            typeAhead: true,
+//                                            valueField: 'code', displayField: 'name',
+//                                            width: 150,
+//                                            height: 24,
+//                                            value: "",
+//                                            enableKeyEvents: true,
+//                                            padding: '0 0',
+//                                            listeners: {
+//                                                //change: 'cmbfiltro_clickHandler'
+//                                            }
+//                                        },
                                         {
                                             xtype: 'toolbar',
                                             dock: 'bottom',
@@ -227,6 +227,15 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                                     icon: 'resources/img/icon/process.png',
                                                     listeners: {
                                                         click: 'btnCargaRecibosRefBank'
+                                                    }
+                                                },
+                                                 {
+                                                    xtype: 'button',
+                                                    id: prototype.id + '-btn-ref-bank',
+                                                    text: 'Det. Apl',
+                                                    icon: 'resources/img/icon/payment.png',
+                                                    listeners: {
+                                                        click: 'btnDetalleAplClick'
                                                     }
                                                 }
                                             ]
