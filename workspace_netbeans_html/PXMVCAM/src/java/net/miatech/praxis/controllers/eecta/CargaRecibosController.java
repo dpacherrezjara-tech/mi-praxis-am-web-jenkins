@@ -32,6 +32,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04195Filter;
 import net.miatech.praxis.eecta.SQP04196Filter;
 import net.miatech.praxis.eecta.SQP04197Filter;
+import net.miatech.praxis.eecta.SQP04211Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
 import net.miatech.utils.Functions;
@@ -63,9 +64,9 @@ public class CargaRecibosController extends BaseController {
     @RequestMapping(value = "/search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
-        List<SQP04196Filter> listaData;
-        SQP04196Filter filter;
-        filter = new SQP04196Filter();
+        List<SQP04211Filter> listaData;
+        SQP04211Filter filter;
+        filter = new SQP04211Filter();
         filter.page.TOTROW = -1;
         filter.page.START = 0;
         filter.page.LIMIT = 0;
@@ -74,6 +75,43 @@ public class CargaRecibosController extends BaseController {
             filter.VP_FDATE2 = request.getParameter("VP_FDATE2");
             filter.VP_LOTE = request.getParameter("VP_LOTE");
             filter.VP_STAT = request.getParameter("VP_STAT");
+            filter.VP_TRXOR = request.getParameter("VP_TRXOR");
+                        
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 18;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04211Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/search_det_loadbatch")
+    public @ResponseBody
+    String search_det_loadbatch(ModelMap map, HttpServletRequest request) {
+        List<SQP04196Filter> listaData;
+        SQP04196Filter filter;
+        filter = new SQP04196Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {            
+            filter.VP_FDATE1 = request.getParameter("VP_FDATE1"); //no usado
+            filter.VP_FDATE2 = request.getParameter("VP_FDATE2"); //no usado
+            filter.VP_LOTE = request.getParameter("VP_LOTE");
+            filter.VP_STAT = request.getParameter("VP_STAT"); //no usado
             filter.VP_TRXOR = request.getParameter("VP_TRXOR");
             filter.VP_STREF = request.getParameter("VP_STREF");
             
@@ -97,7 +135,6 @@ public class CargaRecibosController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
     @RequestMapping(value = "/setCargaRecibosBatch", method = RequestMethod.POST)
     public @ResponseBody
     String setCargaRecibosBatch(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
@@ -261,7 +298,7 @@ public class CargaRecibosController extends BaseController {
     @RequestMapping(value = "getDescargaFileIdentPago")
     public @ResponseBody        
     void getDescargaFileIdentPago(HttpServletRequest request, HttpServletResponse response) {
-        SQP04196Filter filter = new SQP04196Filter();
+        SQP04211Filter filter = new SQP04211Filter();
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Date date = new Date();        
         LocalDateTime myDateObj = LocalDateTime.now();
@@ -276,7 +313,7 @@ public class CargaRecibosController extends BaseController {
             
             logic = new CargaRecibosLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
-            List<SQP04196Filter> lst = logic.getSQP04196Filter(filter);
+            List<SQP04211Filter> lst = logic.getSQP04211Filter(filter);
             
             int len = lst.size();
             Integer vi = 0;            
@@ -300,17 +337,17 @@ public class CargaRecibosController extends BaseController {
                 j++;
                 //cadena += "" + lst.get(vi).A4096NRO + "|";
                 cadena += "" + j + "|";
-                cadena += "" + lst.get(vi).A4096UNDOP.trim() + "|";
-                cadena += "" + lst.get(vi).A4096TRXOR.trim() + "|";                
-                cadena += "" + this.fn_decimalFormat(lst.get(vi).A4096MONTO) + "|";
-                cadena += "" + lst.get(vi).A4096MDATX.trim() + "|";
-                cadena += "" + lst.get(vi).A4096TIPO.trim() + "|";               
-                cadena += "" + lst.get(vi).A4096ESTAD.trim() + "|";
-                cadena += "" + lst.get(vi).A4096CUENT.trim() + "|";
-                cadena += "" + lst.get(vi).A4096NRCLO.trim() + "||||";
-                cadena += "" + lst.get(vi).A4096NRCLO.trim() + "|||||";
-                cadena += "" + lst.get(vi).A4096DESCR.trim() + "|";
-                cadena += "" + lst.get(vi).A4096REFER.trim();                            
+                cadena += "" + lst.get(vi).A4103UNDOP.trim() + "|";
+                cadena += "" + lst.get(vi).A4103NUMRC.trim() + "|";                
+                cadena += "" + this.fn_decimalFormat(lst.get(vi).A4103MONTO) + "|";
+                cadena += "" + lst.get(vi).A4103MDARC.trim() + "|";
+                cadena += "" + lst.get(vi).A4103TIPO.trim() + "|";               
+                cadena += "" + lst.get(vi).A4103ESTAD.trim() + "|";
+                cadena += "" + lst.get(vi).A4103CUENT.trim() + "|";
+                cadena += "" + lst.get(vi).A4103NRCLO.trim() + "||||";
+                cadena += "" + lst.get(vi).A4103NRCLO.trim() + "|||||";
+                cadena += "" + lst.get(vi).A4103DESRC.trim() + "|";
+                cadena += "" + lst.get(vi).A4103REFRC.trim();                            
                 writer.println("" + cadena );
             }
             writer.flush();

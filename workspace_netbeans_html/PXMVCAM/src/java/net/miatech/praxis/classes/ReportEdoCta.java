@@ -379,8 +379,8 @@ public class ReportEdoCta {
             // '30' = NOTAS_CREDITO  - NC
             // '40' = PAGOS  - RC
             
-            // '21' = RECIBOS NO APLICADOS (NA)
-            // '41' = RECIBOS APLICADOS (R)	 
+            // '50' = RECIBOS NO APLICADOS (NA)
+            // '60' = RECIBOS APLICADOS (R)	 
             ////+++++++++++++++++++++++++++++++++++++++++++++
             //SALDO
             ////+++++++++++++++++++++++++++++++++++++++++++++

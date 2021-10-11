@@ -12,6 +12,7 @@ import net.miatech.praxis.dao.eecta.CargaRecibosDAO;
 import net.miatech.praxis.eecta.SQP04195Filter;
 import net.miatech.praxis.eecta.SQP04196Filter;
 import net.miatech.praxis.eecta.SQP04197Filter;
+import net.miatech.praxis.eecta.SQP04211Filter;
 
 /**
  *
@@ -24,7 +25,11 @@ public class CargaRecibosLogic {
     public void setSession(IServerSession ss) {
         objDAO.setSession(ss);
     }
-
+    
+    public List<SQP04211Filter> getSQP04211Filter(SQP04211Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04211Filter(filter);
+    }
+    
     public List<SQP04196Filter> getSQP04196Filter(SQP04196Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04196Filter(filter);
     }
