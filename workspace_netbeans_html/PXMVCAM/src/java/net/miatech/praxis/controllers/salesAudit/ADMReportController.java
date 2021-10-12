@@ -1459,6 +1459,7 @@ public class ADMReportController extends BaseController {
                 map03.put("A1673TXORI", lst.lst_CalcuImpuestos.get(vi).A1673TXORI);
                 map03.put("A1673TXMIA", lst.lst_CalcuImpuestos.get(vi).A1673TXMIA);
                 map03.put("A1673TXDIF", lst.lst_CalcuImpuestos.get(vi).A1673TXDIF);
+                map03.put("A1673CDATO", lst.lst_CalcuImpuestos.get(vi).A1673CDATO);
 
                 lst_CalculosImpuestos.add(map03);
             }
