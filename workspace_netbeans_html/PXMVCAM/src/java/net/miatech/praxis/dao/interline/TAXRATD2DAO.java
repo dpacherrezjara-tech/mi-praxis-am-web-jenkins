@@ -232,7 +232,7 @@ public class TAXRATD2DAO {
     public List<A1692Filter> loadPX145S03A1141(PX032S01A1202Filter filter) throws SQLException, Exception {
         List<A1692Filter> lstRtn = new ArrayList<A1692Filter>(0);
         A1692Filter objRtn;
-        double totLOC = 0, totINT = 0;
+        double tot_LAM_XV = 0, tot_EAM_XV = 0, tot_LAM_XD = 0, tot_EAM_XD = 0;
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
@@ -249,8 +249,10 @@ public class TAXRATD2DAO {
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
-                totLOC = rs01.getDouble("A1141LAM");
-                totINT = rs01.getDouble("A1141EAM");
+                tot_LAM_XV = rs01.getDouble("LAM_XV");
+                tot_EAM_XV = rs01.getDouble("EAM_XV");
+                tot_LAM_XD = rs01.getDouble("LAM_XD");
+                tot_EAM_XD = rs01.getDouble("EAM_XD");
             }
             try {
                 rs01.close();
@@ -269,11 +271,18 @@ public class TAXRATD2DAO {
                     objRtn.strDescCDEPART = rs01.getString("DES_AEROPUERTO");
                     objRtn.MDACP = rs01.getString("A1141LCU");//Moneda Local
                     objRtn.BATCHP = rs01.getString("A1141ECU");//Moneda Inter
-                    objRtn.ISC = rs01.getDouble("A1141LAM");
-                    objRtn.GROSS = rs01.getDouble("A1141EAM");
-
-                    objRtn.totISC = totLOC;
-                    objRtn.totGROSS = totINT;
+//                    objRtn.ISC = rs01.getDouble("A1141LAM");
+//                    objRtn.GROSS = rs01.getDouble("A1141EAM");
+                    
+                    objRtn.LAM_XV = rs01.getDouble("LAM_XV");
+                    objRtn.EAM_XV = rs01.getDouble("EAM_XV");
+                    objRtn.LAM_XD = rs01.getDouble("LAM_XD");
+                    objRtn.EAM_XD = rs01.getDouble("EAM_XD");
+                    
+                    objRtn.tot_LAM_XV = tot_LAM_XV;
+                    objRtn.tot_EAM_XV = tot_EAM_XV;
+                    objRtn.tot_LAM_XD = tot_LAM_XD;
+                    objRtn.tot_EAM_XD = tot_EAM_XD;
 
                     lstRtn.add(objRtn);
                 }
