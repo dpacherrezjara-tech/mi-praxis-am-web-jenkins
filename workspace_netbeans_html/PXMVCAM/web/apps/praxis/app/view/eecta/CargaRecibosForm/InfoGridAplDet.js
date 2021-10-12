@@ -47,59 +47,29 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                             height: 280,
                             padding: '0px 5px 1px 5px',
                             tbar: [
+                                
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id05 + '-TICKET-CIA',
-                                    fieldLabel: 'Consultar Boleto', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 130,
-                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                    enableKeyEvents: true,
-                                    width: 170,
-                                    value: '139',
-                                    enforceMaxLength: true,
-                                    maxLength: 3,
-                                    height: 24,
-                                    listeners: {
-                                        keypress: 'onTxtFilterKeypress01'
-                                    }
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id05 + '-TICKET-NUMB',
-                                    fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                    id: prototype.id05 + '-A4106NUMRC',
+                                    fieldLabel: 'Consultar Recibo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 130,
                                     fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                     enableKeyEvents: true,
                                     padding: '0 0 0 2',
-                                    width: 110,
+                                    width: 270,
                                     enforceMaxLength: true,
-                                    maxLength: 10,
+                                    maxLength: 30,
                                     height: 24,
                                     listeners: {
                                         keypress: 'onTxtFilterKeypress01'
                                     }
-                                },
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id05 + '-TICKET-SEQ',
-                                    fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
-                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
-                                    enableKeyEvents: true,
-                                    width: 30,
-                                    value: '00',
-                                    height: 24,
-                                    padding: '0 0 0 2',
-                                    enforceMaxLength: true,
-                                    maxLength: 2,
-                                    listeners: {
-                                        keypress: 'onTxtFilterKeypress01'
-                                    }
-                                },
+                                },                                
                                 {
                                     xtype: 'button',
                                     id: prototype.id05 + '-btn-apl-consulta-tkt',
                                     text: 'Consultar',
                                     icon: 'resources/img/icon/search.png',                                                    
                                     listeners: {
-                                        click: 'get_aplpago_detalle'
+                                        click: 'get_apl_recibo_det'
                                     }
                                 }
                             ],
@@ -112,7 +82,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                             //plugins: 'gridfilters',
                             columns: {
                                 items: [
-                                    {text: 'Boleto', dataIndex: 'TICKET_NUMBER', width: 105, align: 'center', locked: true,
+                                    {text: 'Recibo', dataIndex: 'A4106NUMRC', width: 120, align: 'center', locked: true,
                                         summaryType: 'count',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000') + ' Boleto (s)';
@@ -125,12 +95,12 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
 //                                            }
 //                                        }
                                     },
-                                    {text: 'Trx.', dataIndex: 'A3977TRNCU', align: 'center', width: 50, locked: true},
-                                    {text: 'Sec.<br>Apl.', dataIndex: 'A3977SQAPL', align: 'center', width: 40},
-                                    {text: 'Fecha<br>Pago', dataIndex: 'A3977FECPG', align: 'center', width: 70},
-                                    {text: 'Mda<br>Pago', dataIndex: 'A3977MDA', align: 'center', width: 60},
+                                   
+                                    {text: 'Sec.<br>Apl.', dataIndex: 'A4106SQAPL', align: 'center', width: 40},
+                                    {text: 'Fecha<br>Pago', dataIndex: 'A4106FECPG', align: 'center', width: 70},
+                                    {text: 'Mda<br>Pago', dataIndex: 'A4106MDA', align: 'center', width: 60},
                                     {
-                                        text: 'Total', dataIndex: 'A3977TOT', width: 80, align: 'right',
+                                        text: 'Total', dataIndex: 'A4106TOT', width: 80, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -141,7 +111,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                         }
                                     },
                                     {
-                                        text: 'Pago', dataIndex: 'A3977TOTAP', width: 80, align: 'right',
+                                        text: 'Pago', dataIndex: 'A4106TOTAP', width: 80, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -152,7 +122,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                         }
                                     },
                                     {
-                                        text: 'Saldo', dataIndex: 'A3977SALD', width: 80, align: 'right',
+                                        text: 'Saldo', dataIndex: 'A4106SALD', width: 80, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -162,19 +132,20 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Estado', dataIndex: 'A3977STSPG', align: 'left', width: 100},
+                                    {text: 'Estado', dataIndex: 'A4106STSPG', align: 'left', width: 100},
                                     {
                                         text: 'Aplicacion',
                                         columns: [
-                                            {text: 'Usuario', dataIndex: 'A3977APLIC', width: 80, align: 'left'},
-                                            {text: 'Fecha', dataIndex: 'A3977FAPLC', width: 80, align: 'left'},
-                                            {text: 'Hora', dataIndex: 'A3977HAPLC', width: 50, align: 'left'}
+                                            {text: 'Usuario', dataIndex: 'A4106APLIC', width: 80, align: 'left'},
+                                            {text: 'Fecha', dataIndex: 'A4106FAPLC', width: 80, align: 'left'},
+                                            {text: 'Hora', dataIndex: 'A4106HAPLC', width: 50, align: 'left'}
                                         ]
                                     },
-                                    {text: 'Tipo', dataIndex: 'A3977TRXPG', align: 'center', width: 60},
-                                    {text: 'Ref. Pago', dataIndex: 'A3977REFPG', align: 'left', width: 130},
-                                    {text: 'Banco', dataIndex: 'A3977BANCO', align: 'left', width: 130},
-                                    {text: 'Cta Bancaria', dataIndex: 'A3977CTABC', align: 'left', width: 100}
+                                    {text: 'Tipo', dataIndex: 'A4106TRXPG', align: 'center', width: 60},
+                                    {text: 'Ref. Pago', dataIndex: 'A4106REFPG', align: 'left', width: 130},
+                                    {text: 'Banco', dataIndex: 'A4106BANCO', align: 'left', width: 130},
+                                    {text: 'Cta Bancaria', dataIndex: 'A4106CTABC', align: 'left', width: 100},
+                                     {text: 'Lote', dataIndex: 'A4106LOTE', align: 'center', width: 100}
                                 ],
                                 defaults: {
                                     sortable: true,

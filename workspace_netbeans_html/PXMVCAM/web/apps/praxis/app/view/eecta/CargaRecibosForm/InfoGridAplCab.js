@@ -64,12 +64,12 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplCab', {
                                             {
                                                 iconCls: 'prx-icon-detail',
                                                 tooltip: 'Ver detalle de pago',
-                                                handler: 'get_aplpago_detalle'
+                                                handler: 'get_apl_recibo_det'
                                             }
                                         ]
 
                                     }, 
-                                    {text: 'Id Pago', dataIndex: 'A3959IDPG', width: 90, align: 'center', locked: true,
+                                    {text: 'Id Apl.', dataIndex: 'A4105IDAPL', width: 90, align: 'center', locked: true,
                                         summaryType: 'count',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000') + ' Pago(s)' ;
@@ -83,10 +83,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplCab', {
                                         }
                                     },                                                                        
                                     //{text: 'Ref. Pago', dataIndex: 'A3959REFPG', align: 'left', width: 130, locked: true},
-                                    {text: 'Fecha<br>Pago', dataIndex: 'A3959FECPG', align: 'left', width: 70},
-                                    {text: 'Mda<br>Pago', dataIndex: 'A3959MDAPG', align: 'center', width: 60},                                                                        
+                                    {text: 'Fecha<br>Pago', dataIndex: 'A4105FECPG', align: 'left', width: 70},
+                                    {text: 'Mda<br>Pago', dataIndex: 'A4105MDAPG', align: 'center', width: 60},                                                                        
                                     {
-                                        text: 'Total<br>Pago', dataIndex: 'A3959TOTPG', width: 80, align: 'right',
+                                        text: 'Total<br>Pago', dataIndex: 'A4105TOTPG', width: 80, align: 'right',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -96,10 +96,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplCab', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },                                                                        
-                                    {text: 'Tipo<br>Aplicacion', dataIndex: 'A3959TIPPG', align: 'left', width: 100},
-                                    {text: 'Usuario', dataIndex: 'A3959REGIS', width: 80, align: 'left'},
-                                    {text: 'Fecha', dataIndex: 'A3959FREGI', width: 80, align: 'left'},
-                                    {text: 'Hora', dataIndex: 'A3959HREGI', width: 50, align: 'left'}
+                                    {text: 'Tipo<br>Aplicacion', dataIndex: 'A4105TIPPG_00', align: 'left', width: 100},
+                                    {text: 'Usuario', dataIndex: 'A4105REGIS', width: 80, align: 'left'},
+                                    {text: 'Fecha', dataIndex: 'A4105FREGI', width: 80, align: 'left'},
+                                    {text: 'Hora', dataIndex: 'A4105HREGI', width: 50, align: 'left'}
                                     //{text: 'Banco', dataIndex: 'A3959BANCO', align: 'left', width: 130},
                                     //{text: 'Cta Bancaria', dataIndex: 'A3959CTABC', align: 'left', width: 100}
                                 ],

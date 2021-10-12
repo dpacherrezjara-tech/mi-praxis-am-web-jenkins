@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.CargaRecibosController',
     requires: [
-        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid'
+        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCab'
     ],
     beanXLS: {},
     page_current: 0,
@@ -88,35 +88,39 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
     search: function ()
     {
         me = this;
-        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        
+        //Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        
         var bean = {};        
         bean.VP_FDATE1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha1').getValue(), 'Ymd');
         bean.VP_FDATE2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-fecha2').getValue(), 'Ymd');
-        bean.VP_LOTE = Ext.getCmp(prototype.id + '-LOTE').getValue();
+        bean.VP_IDRCB = Ext.getCmp(prototype.id + '-IDRCB').getValue();
         bean.VP_STAT = Ext.getCmp(prototype.id + '-ESTAD').getValue();
         bean.VP_TRXOR = Ext.getCmp(prototype.id + '-TRXOR').getValue();
-        //bean.VP_STREF = Ext.getCmp(prototype.id + '-STREF').getValue();
+        bean.VP_CDCLI = Ext.getCmp(prototype.id + '-CDCLI').getValue();
+        bean.VP_VPARM = Ext.getCmp(prototype.id + '-VPARM').getValue();
         //console.log(bean);
         
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
             proxy: {
-                url: prototype.url + '/search'
+                url: prototype.url + '/searchCab'
             },
             listeners: {
                 beforeload: function (obj) {
                     obj.proxy.extraParams = bean;
                 },
                 load: function (obj, obj2, success, obj4, obj5) {
-                    win.lblUser_toolTip("Estructura: A4103");
+                    win.lblUser_toolTip("Estructura: A4102");
                     // <editor-fold defaultstate="collapsed" desc="paggin">
-                    var pag = Ext.getCmp(prototype.id + '-paggin');
-                    var pagData = pag.getPageData();
-                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
-                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
-                    var total = Ext.util.Format.number(pagData.total, '0,000');
-                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
-                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
-                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var pagData = pag.getPageData();
+//                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
+//                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
+//                    var total = Ext.util.Format.number(pagData.total, '0,000');
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(currentPage);
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(pageCount);
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(total);
+                    
                     // </editor-fold>
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -142,8 +146,9 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
             id: prototype.id + '-contentInfo'
         });
         panel.add(gridPanel);
-        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData').setStore(storeGridDatas);        
+        Ext.getCmp(prototype.id + '-paggin').setStore(storeGridDatas);
+        
 
     },    
     btnCargaRecibosBatch: function () {
@@ -190,15 +195,31 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
             }
         }).show();
     },
-    
-    btnDetalleAplClick: function () {
-        this.winDataEntry03('I');
+   
+    onDetailAplClick: function(grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry03('U', rec);
     },
     winDataEntry03:function(action, rec){
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;       
         Ext.create('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
             id: prototype.id05 + '-CargaRecibosDetAplForm',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
+    onDetailReciboClick:function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry04('U', rec);
+    },
+     winDataEntry04:function(action, rec){
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;       
+        Ext.create('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetRecForm', {
+            id: prototype.id06 + '-CargaRecibosDetRecForm',
             params: {
                 action: action,
                 rec: rec
@@ -214,7 +235,8 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
         bean.VP_LOTE = ""; //Ext.getCmp(prototype.id + '-LOTE').getValue();
         bean.VP_STAT = ""; // Ext.getCmp(prototype.id + '-ESTAD').getValue();
         bean.VP_TRXOR = ""; //Ext.getCmp(prototype.id + '-TRXOR').getValue();
-        bean.VP_STREF = "1"; //Ext.getCmp(prototype.id + '-STREF').getValue();        
+        bean.VP_STREF = "1"; //Ext.getCmp(prototype.id + '-STREF').getValue();
+        bean.VP_IDRCB = ""; //Ext.getCmp(prototype.id + '-STREF').getValue();
         if (bean.VP_FDATE1 === '' || bean.VP_FDATE2 === '' ){
             global.Msg({
                 msg: 'Ingrese una fecha'

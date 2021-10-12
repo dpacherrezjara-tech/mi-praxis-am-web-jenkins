@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-console.log('view');
+//console.log('view');
 
-Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
+Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetRecForm', {
     extend: 'Ext.window.Window',
-    alias: 'widget.' + prototype.id05 + '-CargaRecibosDetAplForm',
-    controller: prototype.id05 + '-cargaRecibosDetAplController',
+    alias: 'widget.' + prototype.id06 + '-CargaRecibosDetRecForm',
+    controller: prototype.id06 + '-cargaRecibosDetRecController',
     requires: [
-        'Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplController',
-        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplCab',
-        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet'
+        'Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetRecController',
+        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid'
     ],
-    title: 'Aplicacion de pagos',
+    title: 'Detalle de recibos',
     header: true,
     width: 910,
     height: 600,
@@ -29,7 +28,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
         {
             region: 'center',
             xtype: 'form',
-            id: prototype.id05 + '-DataEntry',
+            id: prototype.id06 + '-DataEntry',
             border: true,
             layout: {
                 type: 'vbox'
@@ -43,7 +42,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                     items: [
                         {
                             xtype: 'textfield',
-                            id: prototype.id05 + '-A4102IDRCB',
+                            id: prototype.id06 + '-A4102IDRCB',
                             fieldLabel: 'Id Carga', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
                             width: 225,fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                             enableKeyEvents: true,
@@ -61,7 +60,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id05 + '-A4102CDCLI',
+                            id: prototype.id06 + '-A4102CDCLI',
                             fieldLabel: 'Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                             labelWidth: 70,fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                             readOnly: true,
@@ -69,7 +68,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id05 + '-A3953RSOCI',
+                            id: prototype.id06 + '-A3953RSOCI',
                             fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 10,
                             width: 350,fieldStyle: 'font-weight: bold;font-size:13px;text-align:left',
                             readOnly: true,
@@ -96,7 +95,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                     items: [
                         {
                             xtype: 'textfield',
-                            id: prototype.id05 + '-A4102FECRC',
+                            id: prototype.id06 + '-A4102FECRC',
                             fieldLabel: 'Fecha', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,                            
                             width: 205,fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
                             readOnly: true
@@ -109,7 +108,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id05 + '-A4102QTYRC',
+                                    id: prototype.id06 + '-A4102QTYRC',
                                     fieldLabel: 'Cant.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
                                     width: 120, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
                                     value: '0',
@@ -117,7 +116,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id05 + '-A4102TOTRC',
+                                    id: prototype.id06 + '-A4102TOTRC',
                                     fieldLabel: 'Total', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
                                     width: 150, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
                                     value: '0.00',
@@ -125,7 +124,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id05 + '-A4102MDARC',
+                                    id: prototype.id06 + '-A4102MDARC',
                                     padding:'0 0 0 2',
                                     fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 2,
                                     width: 40, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',                                   
@@ -133,7 +132,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id05 + '-A4102TOTAP',
+                                    id: prototype.id06 + '-A4102TOTAP',
                                     fieldLabel: 'Aplicado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
                                     width: 150, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
                                     value: '0.00',
@@ -141,7 +140,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id05 + '-A4102SALDO',
+                                    id: prototype.id06 + '-A4102SALDO',
                                     fieldLabel: 'Saldo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
                                     width: 150, fieldStyle: 'font-weight: bold;font-size:13px;text-align:right',
                                     value: '0.00',
@@ -150,27 +149,15 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                             ]
                         }
                     ]
-                },  
-                {
-                    // <editor-fold defaultstate="collapsed" desc="grid-cab">
-                    xtype: 'panel',
-                    id: prototype.id05 + '-contenedor-cab',
-                    width: 900,
-                    layout: 'fit',
-                    items: [{
-                            xtype: prototype.id05 + '-infoGridAplCab'
-                        }
-                    ]
-                            // </editor-fold>
-                },
+                },                
                 {
                     // <editor-fold defaultstate="collapsed" desc="grid-det">
                     xtype: 'panel',
-                    id: prototype.id05 + '-contenedor-det',
+                    id: prototype.id06 + '-contenedor-det',
                     width: 900,
                     layout: 'fit',
                     items: [{
-                            xtype: prototype.id05 + '-infoGridAplDet'
+                            xtype: prototype.id06 + '-info'
                         }
                     ]
                             // </editor-fold>
@@ -192,7 +179,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
             items: [
                 {
                     text: 'Grabar',
-                    id: prototype.id05 + '-btn-save',
+                    id: prototype.id06 + '-btn-save',
                     iconCls: 'prx-icon-check',
                     hidden: true,
                     listeners: {
@@ -201,7 +188,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                 },
                 {
                     text: 'Update',
-                    id: prototype.id05 + '-btn-update',
+                    id: prototype.id06 + '-btn-update',
                     iconCls: 'prx-icon-update',
                     hidden: true,
                     listeners: {
@@ -210,7 +197,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                 },
                 {
                     text: 'Delete',
-                    id: prototype.id05 + '-btn-delete',
+                    id: prototype.id06 + '-btn-delete',
                     iconCls: 'prx-icon-delete',
                     hidden: true,
                     listeners: {
@@ -219,7 +206,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosDetAplForm', {
                 },
                 {
                     text: 'Close',
-                    id: prototype.id05 + '-btn-cancel',
+                    id: prototype.id06 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

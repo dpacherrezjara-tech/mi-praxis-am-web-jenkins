@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//console.log('xxxxx');
 
-Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplController', {
+
+Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetRecController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.' + prototype.id05 + '-cargaRecibosDetAplController',
+    alias: 'controller.' + prototype.id06 + '-cargaRecibosDetRecController',
     url: CONTEXTPATH + '/CargaRecibos',
     /**
      * Constructor
@@ -23,25 +23,27 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplControlle
     },
     handlerEvent_setDisabled: function (bflag) {        
         //boton logo
-        //Ext.getCmp(prototype.id05 + '-file').setDisabled(bflag);
-        //Ext.getCmp(prototype.id05 + '-btn-upload').setDisabled(bflag);        
+        //Ext.getCmp(prototype.id06 + '-file').setDisabled(bflag);
+        //Ext.getCmp(prototype.id06 + '-btn-upload').setDisabled(bflag);        
     },
     getDataInputs: function () {
         var p = this.view.params;
         var data = p.rec.data;
         //console.log(data);
-        //var vtitle = Ext.getCmp(prototype.id05 + '-AplPaymentBoletoEntry').getTitle();
-        //Ext.getCmp(prototype.id05 + '-AplPaymentBoletoEntry').setTitle( vtitle + ' Nº: ' + data.A3957NRRPT );        
-        Ext.getCmp(prototype.id05 + '-A4102IDRCB').setValue(data.A4102IDRCB);
-        Ext.getCmp(prototype.id05 + '-A4102CDCLI').setValue(data.A4102CDCLI);        
-        Ext.getCmp(prototype.id05 + '-A3953RSOCI').setValue(data.A3953RSOCI.trim()); 
-        Ext.getCmp(prototype.id05 + '-A4102FECRC').setValue(data.A4102FECRC);    
-        Ext.getCmp(prototype.id05 + '-A4102QTYRC').setValue(Ext.util.Format.number( data.A4102QTYRC , '0,000'));
-        Ext.getCmp(prototype.id05 + '-A4102TOTRC').setValue(Ext.util.Format.number( data.A4102TOTRC , '0,000.00'));
-        Ext.getCmp(prototype.id05 + '-A4102MDARC').setValue(data.A4102MDARC);
-        Ext.getCmp(prototype.id05 + '-A4102TOTAP').setValue(Ext.util.Format.number( data.A4102TOTAP , '0,000.00'));
-        Ext.getCmp(prototype.id05 + '-A4102SALDO').setValue(Ext.util.Format.number( data.A4102SALDO , '0,000.00'));               
-        this.get_apl_recibo();        
+        //var vtitle = Ext.getCmp(prototype.id06 + '-AplPaymentBoletoEntry').getTitle();
+        //Ext.getCmp(prototype.id06 + '-AplPaymentBoletoEntry').setTitle( vtitle + ' Nº: ' + data.A3957NRRPT );
+        
+        Ext.getCmp(prototype.id06 + '-A4102IDRCB').setValue(data.A4102IDRCB);
+        Ext.getCmp(prototype.id06 + '-A4102CDCLI').setValue(data.A4102CDCLI);        
+        Ext.getCmp(prototype.id06 + '-A3953RSOCI').setValue(data.A3953RSOCI.trim()); 
+        Ext.getCmp(prototype.id06 + '-A4102FECRC').setValue(data.A4102FECRC); //Ext.util.Format.date(data.A3957INIPR, 'Y/m/d')                
+        Ext.getCmp(prototype.id06 + '-A4102QTYRC').setValue(Ext.util.Format.number( data.A4102QTYRC , '0,000'));
+        Ext.getCmp(prototype.id06 + '-A4102TOTRC').setValue(Ext.util.Format.number( data.A4102TOTRC , '0,000.00'));
+        Ext.getCmp(prototype.id06 + '-A4102MDARC').setValue(data.A4102MDARC);
+        Ext.getCmp(prototype.id06 + '-A4102TOTAP').setValue(Ext.util.Format.number( data.A4102TOTAP , '0,000.00'));
+        Ext.getCmp(prototype.id06 + '-A4102SALDO').setValue(Ext.util.Format.number( data.A4102SALDO , '0,000.00'));       
+        
+        this.get_detalleRecibos();        
     },
     getDataEntryValues: function (strOption) {        
     },    
@@ -116,19 +118,25 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplControlle
         });
     },
     onCancelClick: function (btn) {
-        Ext.getCmp(prototype.id05 + '-CargaRecibosDetAplForm').close();
+        Ext.getCmp(prototype.id06 + '-CargaRecibosDetRecForm').close();
     },           
-    get_apl_recibo: function () {        
+    get_detalleRecibos: function () {        
         var p = this.view.params;        
         //console.log(p);                 
         var bean = {};        
-        bean.VP_IDRCB = p.rec.data.A4102IDRCB;
         
+        bean.VP_FDATE1 = "";
+        bean.VP_FDATE2 = "";
+        bean.VP_LOTE = "";
+        bean.VP_STAT = "";
+        bean.VP_TRXOR = "";
+        bean.VP_IDRCB = p.rec.data.A4102IDRCB;
+                
         //bean.limit = "-1";
         //bean.page = "-1";
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {        
             proxy: {
-                url: prototype.url + '/get_apl_recibo'
+                url: prototype.url + '/searchDet'
             },
             listeners: {
                 beforeload: function (obj) {
@@ -137,14 +145,14 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplControlle
                 load: function (obj, obj2, success, obj4, obj5) {
                     //win.lblUser_toolTip("Estructura: A3009");                                        
                     // <editor-fold defaultstate="collapsed" desc="paggin">
-//                    var pag = Ext.getCmp(prototype.id05 + '-paggin');
+//                    var pag = Ext.getCmp(prototype.id06 + '-paggin');
 //                    var pagData = pag.getPageData();
 //                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
 //                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
 //                    var total = Ext.util.Format.number(pagData.total, '0,000');
-//                    Ext.getCmp(prototype.id05 + '-lbl-currentPage').setText(currentPage);
-//                    Ext.getCmp(prototype.id05 + '-lbl-pageCount').setText(pageCount);
-//                    Ext.getCmp(prototype.id05 + '-lbl-total').setText(total);
+//                    Ext.getCmp(prototype.id06 + '-lbl-currentPage').setText(currentPage);
+//                    Ext.getCmp(prototype.id06 + '-lbl-pageCount').setText(pageCount);
+//                    Ext.getCmp(prototype.id06 + '-lbl-total').setText(total);
                     // </editor-fold>
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -155,29 +163,37 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplControlle
                 }
             }
         });
-        Ext.getCmp(prototype.id05 + '-infoGridCab').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id05 + '-infoGridCab').getStore().reload();
+        Ext.getCmp(prototype.id06 + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id06 + '-gridData').getStore().reload();
+        Ext.getCmp(prototype.id06 + '-paggin').setStore(storeGridDatas);
     },
-    get_apl_recibo_det: function ( grid, rowIndex, colIndex ) { 
+    
+    get_aplpago_detalle: function ( grid, rowIndex, colIndex ) { 
         var rec = [];
-        Ext.getCmp(prototype.id05 + '-infoGridDet').setTitle( '' );
+        Ext.getCmp(prototype.id06 + '-infoGridAppliedPaymentDet').setTitle( '' );
         var VL_IDPG = '';
-        //console.log('rowIndex: '  + rowIndex);
+        console.log('rowIndex: '  + rowIndex);
         if(rowIndex>0){
             rec = grid.getStore().getAt(rowIndex); 
-            VL_IDPG = rec.data.A4106IDAPL;              
-            Ext.getCmp(prototype.id05 + '-infoGridDet').setTitle( 'Detalle Id pago nº: ' + rec.data.A3959IDPG ); 
-            Ext.getCmp(prototype.id05 + '-A4106NUMRC').setValue("");
+            VL_IDPG = rec.data.A3959IDPG;              
+            Ext.getCmp(prototype.id06 + '-infoGridAppliedPaymentDet').setTitle( 'Detalle Id pago nº: ' + rec.data.A3959IDPG ); 
+            Ext.getCmp(prototype.id06 + '-TICKET-NUMB').setValue("");
         }
         var bean = {};        
-        bean.VP_IDPG = VL_IDPG;                
-        bean.VP_RECIBO = Ext.getCmp(prototype.id05 + '-A4106NUMRC').getValue();
-                        
+        bean.VP_IDPG = VL_IDPG;        
+        var vl_ticket_cia = Ext.getCmp(prototype.id06 + '-TICKET-CIA').getValue();
+        var vl_ticket_num = Ext.getCmp(prototype.id06 + '-TICKET-NUMB').getValue();
+        var vl_ticket_seq = Ext.getCmp(prototype.id06 + '-TICKET-SEQ').getValue();
+        bean.VP_TICKET =  "";
+        if (vl_ticket_num !== ""){
+            bean.VP_TICKET = vl_ticket_cia + vl_ticket_num + vl_ticket_seq;
+        }
+                
         bean.limit = "-1";
         bean.page = "-1";
-        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.AplPayment.GridData', {        
             proxy: {
-                url: prototype.url + '/get_apl_recibo_det'
+                url: prototype.url + '/get_aplpago_detalle'
             },
             listeners: {
                 beforeload: function (obj) {
@@ -186,14 +202,14 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplControlle
                 load: function (obj, obj2, success, obj4, obj5) {
                     //win.lblUser_toolTip("Estructura: A3009");
                     // <editor-fold defaultstate="collapsed" desc="paggin">
-//                    var pag = Ext.getCmp(prototype.id05 + '-paggin');
+//                    var pag = Ext.getCmp(prototype.id06 + '-paggin');
 //                    var pagData = pag.getPageData();
 //                    var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
 //                    var pageCount = Ext.util.Format.number(pagData.pageCount, '0,000');
 //                    var total = Ext.util.Format.number(pagData.total, '0,000');
-//                    Ext.getCmp(prototype.id05 + '-lbl-currentPage').setText(currentPage);
-//                    Ext.getCmp(prototype.id05 + '-lbl-pageCount').setText(pageCount);
-//                    Ext.getCmp(prototype.id05 + '-lbl-total').setText(total);
+//                    Ext.getCmp(prototype.id06 + '-lbl-currentPage').setText(currentPage);
+//                    Ext.getCmp(prototype.id06 + '-lbl-pageCount').setText(pageCount);
+//                    Ext.getCmp(prototype.id06 + '-lbl-total').setText(total);
                     // </editor-fold>
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -204,12 +220,12 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplControlle
                 }
             }
         });
-        Ext.getCmp(prototype.id05 + '-infoGridDet').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id05 + '-infoGridDet').getStore().reload();
+        Ext.getCmp(prototype.id06 + '-infoGridAppliedPaymentDet').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id06 + '-infoGridAppliedPaymentDet').getStore().reload();
     },
     onTxtFilterKeypress01: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
-            this.get_apl_recibo_det();
+            this.get_aplpago_detalle();
         }
     }
     
