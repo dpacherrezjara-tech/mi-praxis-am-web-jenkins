@@ -18,6 +18,7 @@ public class A4105 {
     public String A4105TIPPG = ""; //HAR(1) CCSID 284 NOT NULL, 
     public String A4105NRLOT = ""; //HAR(10) CCSID 284 NOT NULL, 
     public String A4105CDCLI = ""; //HAR(9) CCSID 284 NOT NULL, 
+    public String A4105IDRCB = ""; //HAR(9) CCSID 284 NOT NULL, 
     public String A4105REGIS = ""; //HAR(10) CCSID 284 NOT NULL, 
     public String A4105FREGI = ""; //HAR(8) CCSID 284 NOT NULL, 
     public String A4105HREGI = ""; //HAR(6) CCSID 284 NOT NULL, 

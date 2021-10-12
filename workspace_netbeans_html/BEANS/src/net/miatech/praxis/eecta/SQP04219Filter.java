@@ -11,14 +11,10 @@ import net.miatech.beans.Pagination;
  *
  * @author vhidalgo
  */
-public class SQP04211Filter extends A4103 {
-
+public class SQP04219Filter extends A4106{
     public String VP_CCUST = "";
-    public String VP_FDATE1 = "";
-    public String VP_FDATE2 = "";
-    public String VP_LOTE = "";
-    public String VP_STAT = "";
-    public String VP_TRXOR = "";
-    public String VP_IDRCB = "";    
-    public Pagination page = new Pagination();
+    public String VP_IDPG = "";  
+    public String VP_RECIBO = "";  
+    public String A4106TIPPG_00 = "";      
+    public Pagination page = new Pagination();   
 }

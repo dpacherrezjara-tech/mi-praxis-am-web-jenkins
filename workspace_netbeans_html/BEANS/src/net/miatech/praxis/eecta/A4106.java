@@ -13,6 +13,7 @@ public class A4106 {
 
     public String A4106CCUST = ""; //HAR(3) CCSID 284 NOT NULL, 
     public String A4106IDAPL = ""; //HAR(9) CCSID 284 NOT NULL, 
+    public String A4106IDRCB = ""; //HAR(9) CCSID 284 NOT NULL, 
     public String A4106SQRCB = ""; //HAR(9) CCSID 284 NOT NULL, 
     public String A4106SQAPL = ""; //HAR(2) CCSID 284 NOT NULL, 
     public String A4106NUMRC = ""; //HAR(30) CCSID 284 NOT NULL, 
