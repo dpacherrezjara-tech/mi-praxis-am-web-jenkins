@@ -33,6 +33,9 @@ import net.miatech.praxis.eecta.SQP04195Filter;
 import net.miatech.praxis.eecta.SQP04196Filter;
 import net.miatech.praxis.eecta.SQP04197Filter;
 import net.miatech.praxis.eecta.SQP04211Filter;
+import net.miatech.praxis.eecta.SQP04217Filter;
+import net.miatech.praxis.eecta.SQP04218Filter;
+import net.miatech.praxis.eecta.SQP04219Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
 import net.miatech.utils.Functions;
@@ -60,10 +63,49 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/CargaRecibos")
 public class CargaRecibosController extends BaseController {
     private CargaRecibosLogic logic;
-
-    @RequestMapping(value = "/search")
+    
+    @RequestMapping(value = "/searchCab")
     public @ResponseBody
-    String search(ModelMap map, HttpServletRequest request) {
+    String searchCab(ModelMap map, HttpServletRequest request) {
+        List<SQP04217Filter> listaData;
+        SQP04217Filter filter;
+        filter = new SQP04217Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {            
+            filter.VP_FDATE1 = request.getParameter("VP_FDATE1");
+            filter.VP_FDATE2 = request.getParameter("VP_FDATE2");
+            filter.VP_IDRCB = request.getParameter("VP_IDRCB");
+            filter.VP_STAT = request.getParameter("VP_STAT");
+            filter.VP_TRXOR = request.getParameter("VP_TRXOR");
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_VPARM = request.getParameter("VP_VPARM").trim();
+                        
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 18;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04217Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/searchDet")
+    public @ResponseBody
+    String searchDet(ModelMap map, HttpServletRequest request) {
         List<SQP04211Filter> listaData;
         SQP04211Filter filter;
         filter = new SQP04211Filter();
@@ -76,6 +118,7 @@ public class CargaRecibosController extends BaseController {
             filter.VP_LOTE = request.getParameter("VP_LOTE");
             filter.VP_STAT = request.getParameter("VP_STAT");
             filter.VP_TRXOR = request.getParameter("VP_TRXOR");
+            filter.VP_IDRCB = request.getParameter("VP_IDRCB");
                         
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 18;
@@ -415,5 +458,71 @@ public class CargaRecibosController extends BaseController {
         zipOutputStream.closeEntry();
         zipOutputStream.close();
         fileOutputStream.close();
+    }
+    
+    
+    @RequestMapping(value = "/get_apl_recibo")
+    public @ResponseBody
+    String get_apl_recibo(ModelMap map, HttpServletRequest request) {
+        List<SQP04218Filter> listaData;
+        SQP04218Filter filter;
+        filter = new SQP04218Filter();
+//        filter.page.TOTROW = -1;
+//        filter.page.START = 0;
+//        filter.page.LIMIT = 0;
+        try {
+            filter.VP_IDRCB = request.getParameter("VP_IDRCB");
+            //filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+//            filter.page.PAGROW = 18;
+//            start = (start != 0 ? start : 0);
+//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04218Filter(filter);
+
+            map.put("success", true);
+            //map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("total", listaData.size());            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    @RequestMapping(value = "/get_apl_recibo_det"/*, method = RequestMethod.POST*/)
+    public @ResponseBody
+    String get_apl_recibo_det(ModelMap map, HttpServletRequest request) {
+        List<SQP04219Filter> listaData;
+        SQP04219Filter filter;
+        filter = new SQP04219Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {                        
+            filter.VP_IDPG = request.getParameter("VP_IDPG");
+            filter.VP_RECIBO = request.getParameter("VP_RECIBO");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = -1;            
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04219Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
     }
 }
