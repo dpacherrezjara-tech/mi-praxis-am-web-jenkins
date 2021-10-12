@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.store.panel.UsersForm.GridData', {
+Ext.define('Ext.Praxis.store.panel.Users.GridData', {
     extend: 'Ext.data.Store',
-    model: 'Ext.Praxis.model.panel.GridData',
+    model: 'Ext.Praxis.model.panel.Users.GridData',
     autoLoad: true,
     pageSize: 20,
     proxy: {

@@ -568,6 +568,7 @@ public class ProMasterTicketDAO {
                                                         while (rs11.next()) {
                                                             objRtn11 = new PX040S01A720ResultSet11();
                                                             objRtn11.fileA1692.SEQ = rs11.getString("SEQ");
+                                                            objRtn11.fileA1692.SEQRO = rs11.getString("SEQRO");
                                                             objRtn11.fileA1692.CCIA = rs11.getString("CCIA");
                                                             objRtn11.fileA1692.FORMA = rs11.getString("FORMA");
                                                             objRtn11.fileA1692.SERIE = rs11.getString("SERIE");
@@ -750,7 +751,7 @@ public class ProMasterTicketDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null;
 
-        String SQLCLL01 = "{CALL PX040S01A1716(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL SQP04220(?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX040S01A1716
         //String SQLCLL01 = "{CALL PRAXIS.SQP00362(?,?,?,?)}";
         Connection cnx = null;
         try {
@@ -2658,6 +2659,7 @@ public class ProMasterTicketDAO {
                                                             objRtn11.fileA1692.SERIE = rs11.getString("SERIE");
                                                             objRtn11.fileA1692.CUPON = rs11.getString("CUPON");
                                                             objRtn11.fileA1692.SEQ = rs11.getString("SEQ");
+                                                            objRtn11.fileA1692.SEQRO =  "00"; // = rs11.getString("SEQRO");
                                                             objRtn11.fileA1692.CDEPART = rs11.getString("CDEPART");
                                                             objRtn11.fileA1692.CARRIVA = rs11.getString("CARRIVA");
                                                             objRtn11.fileA1692.CARR = rs11.getString("CARR");

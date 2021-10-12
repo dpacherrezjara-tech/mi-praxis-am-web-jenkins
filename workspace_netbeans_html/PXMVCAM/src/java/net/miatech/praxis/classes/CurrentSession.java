@@ -5,8 +5,11 @@
 
 package net.miatech.praxis.classes;
  
+import java.util.List;
 import java.util.Map;
 import net.miatech.beans.spring.ServerSession;
+import net.miatech.libmiatec.A006;
+import net.miatech.libmiatec.A1007;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +30,26 @@ public class CurrentSession {
     public Map<String,Object> propertySession;
     public ServerSession serverSession;
     public String appRoot = "";
+    
+    public List<A1007> lstCiudades;
+    public List<A006> lstPaises;
+    
+    public List<A1007> getCiudades() {
+        return lstCiudades;
+    }
 
+    public void setCiudades(List<A1007> paramCiudades) {
+        this.lstCiudades = paramCiudades;
+    }
+    
+    public List<A006> getPaises() {
+        return lstPaises;
+    }
+
+    public void setPaises(List<A006> paramPaises) {
+        this.lstPaises = paramPaises;
+    }
+    
     public String getAppRoot() {
         return appRoot;
     }

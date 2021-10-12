@@ -1388,6 +1388,9 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.Info', {
                                                         text: 'Seq', dataIndex: 'SEQ', width: 40, hidden: true
                                                     },
                                                     {
+                                                        text: 'SeqRo', dataIndex: 'SEQRO', width: 40, hidden: true
+                                                    },
+                                                    {
                                                         text: 'STATUS', dataIndex: 'STATUS', width: 70
                                                     },
                                                     {
