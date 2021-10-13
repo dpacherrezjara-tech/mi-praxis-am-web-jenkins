@@ -394,7 +394,8 @@ public class ReportEdoCta {
             PYi = PYi - 14;
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total saldo anterior* ", NORMAL)), PosX1, PYi, 0);           
             for (int i = 4; i < Data.size(); i++) {
-                if( Data.get(i).rpteDet.A3982TREG.equals("00")){ 
+                if( Data.get(i).rpteDet.A3982TREG.equals("00")){
+                    ItemPage++;
                     ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(Data.get(i).rpteDet.A3982TOT) , NORMAL)), 595, PYi, 0); //700
                     break;
                 }
@@ -418,7 +419,8 @@ public class ReportEdoCta {
             PYi = PYi - 15;  
             Double Subtotal_ventas = 0.0;            
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("10")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("10")){
+                ItemPage++;   
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
@@ -456,7 +458,8 @@ public class ReportEdoCta {
             PYi = PYi - 15;  
             Double Subtotal_refund = 0.0;            
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("20")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("20")){   
+                   ItemPage++;
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
@@ -493,7 +496,8 @@ public class ReportEdoCta {
             Double Subtotal_pagos = 0.0;
             
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("30")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("30")){
+                ItemPage++;                   
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
@@ -529,7 +533,8 @@ public class ReportEdoCta {
             Double Subtotal_pagos_RC = 0.0;
             
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("40")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("40")){
+                ItemPage++;
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
@@ -566,7 +571,8 @@ public class ReportEdoCta {
             Double Subtotal_recibos_NA = 0.0;
             
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("50")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("50")){ 
+                ItemPage++;
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
@@ -602,7 +608,8 @@ public class ReportEdoCta {
             Double Subtotal_pago_recibo_apl = 0.0;
             
             for (int i = 4; i < Data.size(); i++) {                
-               if( Data.get(i).rpteDet.A3982TREG.equals("60")){                   
+               if( Data.get(i).rpteDet.A3982TREG.equals("60")){ 
+                   ItemPage++;
                 //if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
                 //else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                               
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3982FECPR, subFont)), 15, PYi, 0);
@@ -637,7 +644,7 @@ public class ReportEdoCta {
             //TOTAL EN LETRAS
             //int posRemark = PYi-15; //25
             PYi = PYi-15;
-            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 590, PYi, 0); //540
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(  "ItemPage:"+ItemPage + " "+  new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 590, PYi, 0); //540
             //PYi = PYi-15;
             //antiguedad de saldos
             int posRemark = PYi;
@@ -665,6 +672,31 @@ public class ReportEdoCta {
             
             //--linea final
             colorRectangle(under, new GrayColor(0.825f), PosX1, 15, 590, 0); //LINEA 700
+                            
+                if (ItemPage > 10 && getPageNumber < 1) { //old a 24 lineas
+                    ItemPage = 0;
+                    PYi = 510; //ubicacion del titulo en la pagi sig
+                    getPageNumber++;
+                    document.newPage();
+                    // Set Title Next Page //
+                    posNewPagex = 15;
+                    posNewPagey = PYi;
+                    //this.setTitle(posNewPagex, posNewPagey, writer );                    
+                    // Reinciar Contador al inicio  Nex Page //
+                    posNewPagex = 15;
+                }
+                // Page > 1
+                if (getPageNumber > 0 && ItemPage > 10) { //40
+                    ItemPage = 0;
+                    PYi = 510; 
+                    getPageNumber++;
+                    document.newPage();
+                    // Set Title Next Page //
+                    posNewPagey = PYi; // (PYi + 13);
+                    // this.setTitle(posNewPagex, posNewPagey, writer );
+                    // Reinciar Contador al inicio  Nex Page //
+                    posNewPagex = 15;
+                }
             
             // genera Data en txt
             //PrintStream out = new PrintStream(new FileOutputStream(fileTmp02));

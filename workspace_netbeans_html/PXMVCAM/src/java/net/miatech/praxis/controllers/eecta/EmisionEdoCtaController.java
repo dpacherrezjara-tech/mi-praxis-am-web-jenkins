@@ -29,6 +29,7 @@ import net.miatech.praxis.eecta.SQP03977Filter;
 import net.miatech.praxis.eecta.SQP04001Filter;
 import net.miatech.praxis.eecta.SQP04043Filter;
 import net.miatech.praxis.eecta.SQP04050Filter;
+import net.miatech.praxis.eecta.SQP04224Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.EmisionEdoCtaLogic;
 import net.miatech.utils.Functions;
@@ -141,15 +142,23 @@ public class EmisionEdoCtaController extends BaseController {
             logic = new EmisionEdoCtaLogic();
             logic.setSession(this.serverSession.getServerSession());
             SQP04001Filter filter;
+            SQP04224Filter filter01;
             List<SQP04001Filter> listaData;
+            List<SQP04224Filter> listaData01;
             filter = new SQP04001Filter();
             //Datos cabecera    
             String beanString = request.getParameter("beanString");
-            filter = new Gson().fromJson(beanString, filter.getClass());
-            listaData = logic.getSQP04001(filter);
+            filter = new Gson().fromJson(beanString, filter.getClass());           
+            listaData = logic.getSQP04001Filter(filter);
+            //datos detalle de recibos
+            filter01 = new SQP04224Filter();
+            filter01.VP_NROEDO = filter.VP_NROEDO;
+            filter01.VP_CDCLI = filter.VP_CDCLI;            
+            listaData01 = logic.getSQP04224Filter(filter01);
+            
             ReportEdoCtaDet reportEdoCtaDet = new ReportEdoCtaDet();
             String Rutatmp = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
-            File archivo = reportEdoCtaDet.createReport(listaData, Rutatmp);
+            File archivo = reportEdoCtaDet.createReport(listaData, listaData01, Rutatmp);
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
             response.setHeader("Pragma", "public");
