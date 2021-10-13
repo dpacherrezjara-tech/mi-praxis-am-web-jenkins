@@ -19,7 +19,7 @@ public class A4104 {
     public String A4104NUMRC = ""; //HAR(30) CCSID 284 NOT NULL, 
     public String A4104FECRC = ""; //HAR(8) CCSID 284 NOT NULL, 
     public String A4104FECDP = ""; //HAR(8) CCSID 284 NOT NULL, 
-    public Double A4104ANTSD = 0.00;
+    public Integer A4104ANTSD = 0;
     public String A4104MDARC = ""; //HAR(3) CCSID 284 NOT NULL, 
     public Double A4104TOT = 0.00;
     public String A4104REGIS = ""; //HAR(10) CCSID 284 NOT NULL, 
