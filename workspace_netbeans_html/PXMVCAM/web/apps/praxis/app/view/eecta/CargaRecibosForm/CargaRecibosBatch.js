@@ -123,13 +123,13 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                 {
                                     xtype: 'combo',
                                     id: prototype.id02 + '-A4096STREF',
-                                    emptyText: 'Estado Carga', //labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
+                                    //emptyText: 'Estado Carga', //labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "TODOS"],
-                                            ["0", "OK"],
-                                            ["1", "ERROR"]
+                                            ["1", "MATCH"],
+                                            ["0", "UNMATCH"]
                                         ]
                                     }),
                                     queryMode: 'local',

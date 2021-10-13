@@ -88,7 +88,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridBatch', {
                                     {text: 'Descripcion', dataIndex: 'A4096DESCR', width: 120, align: 'left'},                                   
                                     {text: 'Referencia', dataIndex: 'A4096REFER', width: 120, align: 'left'}, 
                                     {
-                                        text: 'Estado', dataIndex: 'A4096STAT', width: 60, align: 'center', locked: false,
+                                        text: 'Estado', dataIndex: 'A4096STREF', width: 60, align: 'center', locked: false,
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                       
                                             var html = '<img src="resources/img/semaforo/Circle_Red.png" title="UnMatch" >';                                            
                                             if ( value === '1' )
