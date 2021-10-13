@@ -126,15 +126,17 @@ public class ControlUATPController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             objRtn = logic.setSQP04110Filter(filter);
-            //obtener UUID desde: amfeapprest.miatech.net/ws/rest/ApiGW   
-            //Desabilitado ahora sera despues del timbre individual
-//            if(filter.VP_PROCESO.equals("UATP")){                                
+            
+            //Enviar EXCEL para timbre individual            
+            if(filter.VP_PROCESO.equals("UATP") && filter.VP_FACTURAR.equals("Y") ){
+//                CALL SERVICIO PYTHON
+                  
 //                objRtn01 = this.setSQP03348Filter( filter );
 //                if(!objRtn01.dbException.SQLCODE.equals('1')){
 //                    objRtn.dbException.MESSAGE = objRtn01.dbException.MESSAGE;   
 //                    objRtn.dbException.SQLCODE = objRtn01.dbException.SQLCODE;   
 //                }                     
-//            }                     
+            }                     
             map.put("objRtn", objRtn);
             map.put("success", true);
         } catch (Exception ex) {
@@ -148,7 +150,8 @@ public class ControlUATPController extends BaseController {
         return new Gson().toJson(map);
 
     }
-
+    
+    //obtener UUID desde: amfeapprest.miatech.net/ws/rest/ApiGW   
     @RequestMapping(value = "set_procesarUUID")
     public @ResponseBody
     String set_procesarUUID(ModelMap map, HttpServletRequest request) {

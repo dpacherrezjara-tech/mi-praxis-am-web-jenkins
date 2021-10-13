@@ -5,19 +5,20 @@
  */
 package net.miatech.praxis.eecta;
 
-import net.miatech.beans.DBException;
+import net.miatech.beans.Pagination;
 
 /**
  *
  * @author vhidalgo
  */
-public class SQP04110Filter {
+public class SQP04211Filter extends A4103 {
+
     public String VP_CCUST = "";
-    public String VP_PROCESO = "";    
-    public String VP_FDATE1 = "";    
+    public String VP_FDATE1 = "";
     public String VP_FDATE2 = "";
-    public String VP_FEJEC = "";
-    public String VP_CDCLI= "";
-    public String VP_FACTURAR= "";
-    public DBException dbException = new DBException();
+    public String VP_LOTE = "";
+    public String VP_STAT = "";
+    public String VP_TRXOR = "";
+    public String VP_IDRCB = "";    
+    public Pagination page = new Pagination();
 }

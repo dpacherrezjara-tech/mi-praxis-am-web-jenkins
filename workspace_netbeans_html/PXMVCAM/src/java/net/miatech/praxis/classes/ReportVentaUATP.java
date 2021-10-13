@@ -32,6 +32,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.eecta.SQP03874Filter;
 
 /**
@@ -39,7 +40,7 @@ import net.miatech.praxis.eecta.SQP03874Filter;
  * @author vhidalgo
  */
 public class ReportVentaUATP {
-
+    
     private String FILE = "RptVentaUATP.pdf";
     public final String FileTXT = "RptVentaUATP.txt";
     private Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD); //12
@@ -51,7 +52,7 @@ public class ReportVentaUATP {
     private int Hlng = 12;
     private File fileTmp01, fileTmp02;
     private List<File> lstFileTmp = new ArrayList<File>();
-
+    private IServerSession session;
     class TableHeader extends PdfPageEventHelper {
 
         /**
@@ -223,11 +224,14 @@ public class ReportVentaUATP {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Total", subFont_1)), PosX1, PYi, 0);
             
     }
-
-    public File createReport(List<SQP03874Filter> Data) {
+    
+    public void setSession(IServerSession ss) {
+        session = ss;
+    }
+    public File createReport(List<SQP03874Filter> Data, String Rutatmp ) {
 
         try {
-
+            
             //C:\Program Files\Apache Software Foundation\Apache Tomcat 8.0.27\temp\tmp5401410828782100458RptVentaUATP.pdf
             fileTmp01 = File.createTempFile("tmp", FILE);
             lstFileTmp.add(fileTmp01);
@@ -278,8 +282,9 @@ public class ReportVentaUATP {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTitle, 300, PYi, 0);
 
             // Logo AEROMEXICO
-            Image img;
-            img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
+            Image img;                                    
+            img = Image.getInstance(String.format(Rutatmp+"%s", RESOURCES[0]));
+            //img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
             img.setAbsolutePosition(PosX1, 530);
             img.scaleToFit(190, 40);
             document.add(new Paragraph(String.format("", RESOURCES[0], img.getClass().getName())));
@@ -309,8 +314,9 @@ public class ReportVentaUATP {
             //LOGO CLIENTE   
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
-            }
-            img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            }            
+            img = Image.getInstance(String.format(Rutatmp+"%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            //img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
             img.setAbsolutePosition(px1, 520); //530
             //img.scaleToFit(190, 40);
             img.scaleToFit(280, 60); //245 42

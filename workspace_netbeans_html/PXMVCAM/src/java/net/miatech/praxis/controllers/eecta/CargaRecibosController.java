@@ -14,12 +14,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +32,10 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.eecta.SQP04195Filter;
 import net.miatech.praxis.eecta.SQP04196Filter;
 import net.miatech.praxis.eecta.SQP04197Filter;
+import net.miatech.praxis.eecta.SQP04211Filter;
+import net.miatech.praxis.eecta.SQP04217Filter;
+import net.miatech.praxis.eecta.SQP04218Filter;
+import net.miatech.praxis.eecta.SQP04219Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
 import net.miatech.utils.Functions;
@@ -56,13 +63,52 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/CargaRecibos")
 public class CargaRecibosController extends BaseController {
     private CargaRecibosLogic logic;
-
-    @RequestMapping(value = "/search")
+    
+    @RequestMapping(value = "/searchCab")
     public @ResponseBody
-    String search(ModelMap map, HttpServletRequest request) {
-        List<SQP04196Filter> listaData;
-        SQP04196Filter filter;
-        filter = new SQP04196Filter();
+    String searchCab(ModelMap map, HttpServletRequest request) {
+        List<SQP04217Filter> listaData;
+        SQP04217Filter filter;
+        filter = new SQP04217Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {            
+            filter.VP_FDATE1 = request.getParameter("VP_FDATE1");
+            filter.VP_FDATE2 = request.getParameter("VP_FDATE2");
+            filter.VP_IDRCB = request.getParameter("VP_IDRCB");
+            filter.VP_STAT = request.getParameter("VP_STAT");
+            filter.VP_TRXOR = request.getParameter("VP_TRXOR");
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_VPARM = request.getParameter("VP_VPARM").trim();
+                        
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 18;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04217Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/searchDet")
+    public @ResponseBody
+    String searchDet(ModelMap map, HttpServletRequest request) {
+        List<SQP04211Filter> listaData;
+        SQP04211Filter filter;
+        filter = new SQP04211Filter();
         filter.page.TOTROW = -1;
         filter.page.START = 0;
         filter.page.LIMIT = 0;
@@ -71,6 +117,44 @@ public class CargaRecibosController extends BaseController {
             filter.VP_FDATE2 = request.getParameter("VP_FDATE2");
             filter.VP_LOTE = request.getParameter("VP_LOTE");
             filter.VP_STAT = request.getParameter("VP_STAT");
+            filter.VP_TRXOR = request.getParameter("VP_TRXOR");
+            filter.VP_IDRCB = request.getParameter("VP_IDRCB");
+                        
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 18;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04211Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/search_det_loadbatch")
+    public @ResponseBody
+    String search_det_loadbatch(ModelMap map, HttpServletRequest request) {
+        List<SQP04196Filter> listaData;
+        SQP04196Filter filter;
+        filter = new SQP04196Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {            
+            filter.VP_FDATE1 = request.getParameter("VP_FDATE1"); //no usado
+            filter.VP_FDATE2 = request.getParameter("VP_FDATE2"); //no usado
+            filter.VP_LOTE = request.getParameter("VP_LOTE");
+            filter.VP_STAT = request.getParameter("VP_STAT"); //no usado
             filter.VP_TRXOR = request.getParameter("VP_TRXOR");
             filter.VP_STREF = request.getParameter("VP_STREF");
             
@@ -94,7 +178,6 @@ public class CargaRecibosController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
     @RequestMapping(value = "/setCargaRecibosBatch", method = RequestMethod.POST)
     public @ResponseBody
     String setCargaRecibosBatch(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
@@ -133,8 +216,9 @@ public class CargaRecibosController extends BaseController {
             while (iterator.hasNext()) {                
                 cont++;
                 Row sheet = iterator.next();
-                //Iterator<Cell> cellIterator = currentRow.iterator();                
-                if (cont > 1) {
+                //Iterator<Cell> cellIterator = currentRow.iterator(); 
+                //datos en excel empoieza de la fila 3
+                if (cont > 2) {
                     if (sheet.getCell(0) != null) {
                         
                         A4096NRO = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString();                        
@@ -177,8 +261,8 @@ public class CargaRecibosController extends BaseController {
                         obj.put("A4096ESTAD", A4096ESTAD);
                         obj.put("A4096CUENT", A4096CUENT);
                         obj.put("A4096NRCLO", A4096NRCLO);
-                        obj.put("A4096DESCR", A4096DESCR);
-                        obj.put("A4096REFER", A4096REFER);
+                        obj.put("A4096DESCR", A4096DESCR.trim());
+                        obj.put("A4096REFER", A4096REFER.trim());
                         String jsonText = JSONValue.toJSONString(obj);                          
                         json_texto += jsonText + ",";                        
                     }
@@ -216,7 +300,7 @@ public class CargaRecibosController extends BaseController {
     
     public String get_errorLoadFile ( Integer INDICE  ){
         String[] MESSAGE_ERROR = {
-            "COLUMNA TRANSACCION ORIG. EN BLANCO ",               //0
+            "COLUMNA TRANSACCION ORIG. EN BLANCO ",//0
             "COLUMNA MONEDA EN BLANCO",   //1            
             "COLUMNA IMPORTE EN BLANCO" //33
         };        
@@ -245,11 +329,19 @@ public class CargaRecibosController extends BaseController {
         return new Gson().toJson(map);
 
     }
-   
+    public static String fn_decimalFormat(Double doubleValue){
+        //boolean isWholeNumber=(doubleValue == Math.round(doubleValue));
+        DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(Locale.US);
+        formatSymbols.setDecimalSeparator('.');
+        //String pattern= isWholeNumber ? "#.##" : "#.00";    
+        String pattern= "#.00";           
+        DecimalFormat df = new DecimalFormat(pattern, formatSymbols);
+        return df.format(doubleValue);
+    }
     @RequestMapping(value = "getDescargaFileIdentPago")
     public @ResponseBody        
     void getDescargaFileIdentPago(HttpServletRequest request, HttpServletResponse response) {
-        SQP04196Filter filter = new SQP04196Filter();
+        SQP04211Filter filter = new SQP04211Filter();
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
         Date date = new Date();        
         LocalDateTime myDateObj = LocalDateTime.now();
@@ -264,7 +356,7 @@ public class CargaRecibosController extends BaseController {
             
             logic = new CargaRecibosLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
-            List<SQP04196Filter> lst = logic.getSQP04196Filter(filter);
+            List<SQP04211Filter> lst = logic.getSQP04211Filter(filter);
             
             int len = lst.size();
             Integer vi = 0;            
@@ -279,25 +371,26 @@ public class CargaRecibosController extends BaseController {
                																		
 
             cadena = "NO_CONTROL|UNIDAD_OPERATIVA|TRANSACCION_ORIGEN|MONTO_DISPONIBLE|MONEDA_TRX_ORIGEN|TIPO|ESTADO|CUENTA|NUMERO_CLIENTE_ORIGEN|";
-            cadena += "TRANSACCION_DESTINO|TIPO_DOCUMENTO|MONEDA|NUMERO CLIENTE DESTINO|MONTO A APLICAR|TIPO DE CAMBIO|VALOR TIPO|FECHA(DD-MM-YYYY)";
+            cadena += "TRANSACCION_DESTINO|TIPO_DOCUMENTO|MONEDA|NUMERO CLIENTE DESTINO|MONTO A APLICAR|TIPO DE CAMBIO|VALOR TIPO|FECHA(DD-MM-YYYY)|";
             cadena += "DESCRIPCION|REFERENCIA";
             writer.println("" + cadena );
-            
+            int j = 0;            
             for (vi = 0; vi < len; vi++) {                
-                cadena = "";                                
+                cadena = ""; 
+                j++;
                 //cadena += "" + lst.get(vi).A4096NRO + "|";
-                cadena += "" + vi + "|";
-                cadena += "" + lst.get(vi).A4096UNDOP + "|";
-                cadena += "" + lst.get(vi).A4096TRXOR + "|";
-                cadena += "" + lst.get(vi).A4096MONTO + "|";
-                cadena += "" + lst.get(vi).A4096MDATX + "|";
-                cadena += "" + lst.get(vi).A4096TIPO + "|";               
-                cadena += "" + lst.get(vi).A4096ESTAD + "|";
-                cadena += "" + lst.get(vi).A4096CUENT + "|";
-                cadena += "" + lst.get(vi).A4096NRCLO + "||||";
-                cadena += "" + lst.get(vi).A4096NRCLO + "|||||";
-                cadena += "" + lst.get(vi).A4096DESCR + "|";
-                cadena += "" + lst.get(vi).A4096REFER;                            
+                cadena += "" + j + "|";
+                cadena += "" + lst.get(vi).A4103UNDOP.trim() + "|";
+                cadena += "" + lst.get(vi).A4103NUMRC.trim() + "|";                
+                cadena += "" + this.fn_decimalFormat(lst.get(vi).A4103MONTO) + "|";
+                cadena += "" + lst.get(vi).A4103MDARC.trim() + "|";
+                cadena += "" + lst.get(vi).A4103TIPO.trim() + "|";               
+                cadena += "" + lst.get(vi).A4103ESTAD.trim() + "|";
+                cadena += "" + lst.get(vi).A4103CUENT.trim() + "|";
+                cadena += "" + lst.get(vi).A4103NRCLO.trim() + "||||";
+                cadena += "" + lst.get(vi).A4103NRCLO.trim() + "|||||";
+                cadena += "" + lst.get(vi).A4103DESRC.trim() + "|";
+                cadena += "" + lst.get(vi).A4103REFRC.trim();                            
                 writer.println("" + cadena );
             }
             writer.flush();
@@ -365,5 +458,71 @@ public class CargaRecibosController extends BaseController {
         zipOutputStream.closeEntry();
         zipOutputStream.close();
         fileOutputStream.close();
+    }
+    
+    
+    @RequestMapping(value = "/get_apl_recibo")
+    public @ResponseBody
+    String get_apl_recibo(ModelMap map, HttpServletRequest request) {
+        List<SQP04218Filter> listaData;
+        SQP04218Filter filter;
+        filter = new SQP04218Filter();
+//        filter.page.TOTROW = -1;
+//        filter.page.START = 0;
+//        filter.page.LIMIT = 0;
+        try {
+            filter.VP_IDRCB = request.getParameter("VP_IDRCB");
+            //filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+//            filter.page.PAGROW = 18;
+//            start = (start != 0 ? start : 0);
+//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04218Filter(filter);
+
+            map.put("success", true);
+            //map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("total", listaData.size());            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    @RequestMapping(value = "/get_apl_recibo_det"/*, method = RequestMethod.POST*/)
+    public @ResponseBody
+    String get_apl_recibo_det(ModelMap map, HttpServletRequest request) {
+        List<SQP04219Filter> listaData;
+        SQP04219Filter filter;
+        filter = new SQP04219Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {                        
+            filter.VP_IDPG = request.getParameter("VP_IDPG");
+            filter.VP_RECIBO = request.getParameter("VP_RECIBO");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = -1;            
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04219Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
     }
 }

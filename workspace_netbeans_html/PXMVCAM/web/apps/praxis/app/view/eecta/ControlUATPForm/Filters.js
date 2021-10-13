@@ -153,7 +153,16 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Filters', {
                                                             listeners: {
                                                                 click: 'btnUUIDForm_click'
                                                             }
-                                                        }                                                        
+                                                        },
+                                                        {
+                                                            xtype: 'button',
+                                                            id: prototype.id + '-btn-get-facturacion',
+                                                            text: 'Facturacion',
+                                                            icon: 'resources/img/botones/Select_Information.png',
+                                                            listeners: {
+                                                                click: 'btnFacturacionForm_click'
+                                                            }
+                                                        }
                                                     ]
                                                 }
                                             ]

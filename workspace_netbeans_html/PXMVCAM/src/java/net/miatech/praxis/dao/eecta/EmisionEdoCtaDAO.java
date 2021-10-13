@@ -20,6 +20,7 @@ import net.miatech.praxis.eecta.SQP03977Filter;
 import net.miatech.praxis.eecta.SQP04001Filter;
 import net.miatech.praxis.eecta.SQP04043Filter;
 import net.miatech.praxis.eecta.SQP04050Filter;
+import net.miatech.praxis.eecta.SQP04224Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -176,7 +177,7 @@ public class EmisionEdoCtaDAO {
                 objRtn.tbl_client.A3953TORGN = rs01.getString("A3953TORGN");                                                                                                                      
                 //Fetch BLOB from DB
                 Blob blb= rs01.getBlob("LOGOBLOB");                
-                if( blb != null){
+                if( blb != null && !rs01.getString("A3953LOGO").equals("") ){
                     byte barr[]=blb.getBytes(1,(int)blb.length());
                     String Rutatmp = session.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
                     FileOutputStream fout=new FileOutputStream( Rutatmp + rs01.getString("A3953LOGO") ); 
@@ -280,7 +281,7 @@ public class EmisionEdoCtaDAO {
 
         return lstRtn;
     }
-     public List<SQP04001Filter> getSQP04001(SQP04001Filter filter) throws SQLException, Exception {
+     public List<SQP04001Filter> getSQP04001Filter(SQP04001Filter filter) throws SQLException, Exception {
         List<SQP04001Filter> lstRtn = new ArrayList<SQP04001Filter>(0);
         SQP04001Filter objRtn;
 
@@ -400,6 +401,7 @@ public class EmisionEdoCtaDAO {
 
         return lstRtn;
     }
+     
      
      public List<SQP04043Filter> getSQP04043Filter(SQP04043Filter filter) throws SQLException, Exception {
         List<SQP04043Filter> lstRtn = new ArrayList<SQP04043Filter>(0);
@@ -652,6 +654,60 @@ public class EmisionEdoCtaDAO {
                     lstRtn.add(objRtn);                    
                 }
             }            
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+     public List<SQP04224Filter> getSQP04224Filter(SQP04224Filter filter) throws SQLException, Exception {
+        List<SQP04224Filter> lstRtn = new ArrayList<SQP04224Filter>(0);
+        SQP04224Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04224(?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_NROEDO);
+            cstmt01.setString(3, filter.VP_CDCLI);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                objRtn = new SQP04224Filter();
+                objRtn.A4104CCUST = rs01.getString("A4104CCUST");
+                objRtn.A4104NREDO = rs01.getString("A4104NREDO");
+                objRtn.A4104CDCLI = rs01.getString("A4104CDCLI");
+                objRtn.A4104IDRCB = rs01.getString("A4104IDRCB");
+                objRtn.A4104SQRCB = rs01.getInt("A4104SQRCB");
+                objRtn.A4104NUMRC = rs01.getString("A4104NUMRC");
+                objRtn.A4104FECRC = rs01.getString("A4104FECRC");
+                objRtn.A4104FECDP = rs01.getString("A4104FECDP");
+                objRtn.A4104MDARC = rs01.getString("A4104MDARC");
+                objRtn.A4104TOT = rs01.getDouble("A4104TOT");
+                objRtn.A4104ANTSD = rs01.getInt("A4104ANTSD");
+                lstRtn.add(objRtn);
+            }
+
         } finally {
             if (rs01 != null) {
                 try {

@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-TRXOR',
-                                            fieldLabel: 'Trx. Origen', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                            fieldLabel: 'Recibo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
                                             fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
                                             width: 200,
@@ -115,11 +115,11 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id + '-LOTE',
-                                            fieldLabel: 'Lote', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
+                                            id: prototype.id + '-IDRCB',
+                                            fieldLabel: 'Id Carga', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
                                             fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
                                             enableKeyEvents: true,
-                                            width: 170,
+                                            width: 150,
                                             value: '',
                                             enforceMaxLength: true,
                                             maxLength: 10,
@@ -129,15 +129,46 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                             }
                                         },
                                         {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-CDCLI',
+                                            fieldLabel: 'Cliente', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
+                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                            enableKeyEvents: true,
+                                            width: 150, emptyText:'Id',
+                                            value: '',
+                                            enforceMaxLength: true,
+                                            maxLength: 9,
+                                            height: 24,
+                                            listeners: {
+                                                keypress: 'onTxtFilterKeypress'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-VPARM',
+                                            fieldLabel: '', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 5,
+                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                            enableKeyEvents: true,
+                                            width: 170, emptyText:'Nombre',
+                                            value: '', padding: '1 1 1 2',
+                                            enforceMaxLength: true,
+                                            maxLength: 60,
+                                            height: 24,
+                                            listeners: {
+                                                keypress: 'onTxtFilterKeypress'
+                                            }
+                                        },
+                                        {
                                             xtype: 'combo',
                                             id: prototype.id + '-ESTAD',
-                                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 60,
+                                            fieldLabel: 'Aplicación', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
                                                     ["", "TODOS"],
-                                                    ["N/I", "NI"],
-                                                    ["N/A", "NA"]
+                                                    ["P", "PENDIENTE"],
+                                                    ["T", "TOTAL"],
+                                                    ["X", "PARCIAL"]
                                                 ]
                                             }),
                                             queryMode: 'local',
@@ -148,7 +179,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                             editable: true,
                                             typeAhead: true,
                                             valueField: 'code', displayField: 'name',
-                                            width: 150,
+                                            width: 160,
                                             height: 24,
                                             value: "",
 //                                            listConfig: {
@@ -159,77 +190,6 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                             listeners: {
                                                 //change: 'cmbfiltro_clickHandler'
                                             }
-                                        },
-                                        {
-                                            xtype: 'combo',
-                                            id: prototype.id + '-STREF',
-                                            fieldLabel: 'Estado Ref.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
-                                            store: new Ext.data.SimpleStore({
-                                                fields: ['code', 'name'],
-                                                data: [
-                                                    ["", "TODOS"],
-                                                    ["1", "MATCH"],
-                                                    ["0", "UNMATCH"]
-                                                ]
-                                            }),
-                                            queryMode: 'local',
-                                            triggerAction: 'all',
-                                            autoSelect: false,
-                                            forceSelection: true,
-                                            caseSensitive: false,
-                                            editable: true,
-                                            typeAhead: true,
-                                            valueField: 'code', displayField: 'name',
-                                            width: 150,
-                                            height: 24,
-                                            value: "",
-                                            enableKeyEvents: true,
-                                            padding: '0 0',
-                                            listeners: {
-                                                //change: 'cmbfiltro_clickHandler'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'toolbar',
-                                            dock: 'bottom',
-                                            ui: 'footer',
-                                            margin: '2 0 2 15',
-                                            layout: {
-                                                pack: 'center'
-                                            },
-                                            fieldStyle: 'text-align:center',
-                                            defaults: {
-                                                scale: 'small'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-apl-batch',
-                                                    text: 'Cargar',
-                                                    icon: 'resources/img/icon/single_format.png',
-                                                    listeners: {
-                                                        click: 'btnCargaRecibosBatch'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-proc-ref-bank',
-                                                    text: 'Procesar Ref.',
-                                                    icon: 'resources/img/icon/next.png',
-                                                    listeners: {
-                                                        click: 'btnCargaRecibosProcesarRefBank'
-                                                    }
-                                                },
-                                                {
-                                                    xtype: 'button',
-                                                    id: prototype.id + '-btn-ref-bank',
-                                                    text: 'Config. Ref.',
-                                                    icon: 'resources/img/icon/process.png',
-                                                    listeners: {
-                                                        click: 'btnCargaRecibosRefBank'
-                                                    }
-                                                }
-                                            ]
                                         }
                                     ]
                                 }

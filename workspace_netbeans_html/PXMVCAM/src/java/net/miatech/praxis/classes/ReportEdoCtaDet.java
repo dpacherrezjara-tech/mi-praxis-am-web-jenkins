@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import net.miatech.praxis.eecta.SQP04001Filter;
+import net.miatech.praxis.eecta.SQP04224Filter;
 
 /**
  *
@@ -202,8 +203,28 @@ public class ReportEdoCtaDet {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Antig.", subFont_1)), PosX1+30, PYi+10, 0);                         
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("(días)", subFont_1)), PosX1+30, PYi, 0);            
     }
+    
+    public void setTitleRecibos(int posNewPagex, int posNewPagey, PdfWriter writer) {
 
-    public File createReport(List<SQP04001Filter> Data) {
+        PdfContentByte canvas = writer.getDirectContent();
+        PdfContentByte under = writer.getDirectContentUnder();
+        colorRectangle(under, new CMYKColor(1f, 0f, 0f, 0.5f), posNewPagex, posNewPagey+10 , 750, 22); //750
+                            
+            int PYi = posNewPagey+15; //(+) sube (-) baja
+            int PosX1 = 330;            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Nº Recibo" , subFont_1)), PosX1, PYi, 0);
+            PosX1 = PosX1 + 150;            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Fecha", subFont_1)), PosX1, PYi, 0);            
+            PosX1 = PosX1 + 130;             
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Mda.", subFont_1)), PosX1+30, PYi, 0);
+            PosX1 = PosX1 + 55;             
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Saldo", subFont_1)), PosX1+30, PYi, 0);            
+            PosX1 = PosX1 + 35;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Antig.", subFont_1)), PosX1+30, PYi+10, 0);                         
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("(días)", subFont_1)), PosX1+30, PYi, 0);            
+    }
+
+    public File createReport(List<SQP04001Filter> Data, List<SQP04224Filter> Data01, String Rutatmp ) {
 
         try {
 
@@ -256,12 +277,13 @@ public class ReportEdoCtaDet {
             PdfContentByte under = writer.getDirectContentUnder();
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTitle, 300, PYi, 0);
             PYi = PYi - 10;
-            Phrase txtTitle1 = new Phrase(new Paragraph("ANEXO: Detalle de boletos", subFontT));            
+            Phrase txtTitle1 = new Phrase(new Paragraph("ANEXO: Detalle de saldo", subFontT));            
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, txtTitle1, 300, PYi, 0);
 
             // Logo AEROMEXICO
-            Image img;
-            img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
+            Image img; 
+            img = Image.getInstance(String.format(Rutatmp+ "%s", RESOURCES[0]));
+            //img = Image.getInstance(String.format("/Dumps/%s", RESOURCES[0]));
             img.setAbsolutePosition(PosX1, 530);
             img.scaleToFit(190, 40);
             document.add(new Paragraph(String.format("", RESOURCES[0], img.getClass().getName())));
@@ -292,7 +314,8 @@ public class ReportEdoCtaDet {
             if (Data.get(0).tbl_client.A3953LOGO.equals("")){
                 Data.get(0).tbl_client.A3953LOGO = "not_picture.png";
             }
-            img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            img = Image.getInstance(String.format(Rutatmp + "%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
+            //img = Image.getInstance(String.format("/Dumps/%s", Data.get(0).tbl_client.A3953LOGO /*RESOURCES[0]*/ ));            
             img.setAbsolutePosition(px1, 520);
             img.scaleToFit(280, 60);
             document.add(new Paragraph(String.format("", Data.get(0).tbl_client.A3953LOGO/*RESOURCES[0]*/, img.getClass().getName())));
@@ -371,8 +394,8 @@ public class ReportEdoCtaDet {
             //Titulos
             PYi = PYi_c;
             this.setTitle(15, PYi-40, writer );            
-            //Double VL_A3958TOT = 0.0;            
-            PYi = PYi - (Hlng + 30); //8
+            Double VL_A3958TOT = 0.0;            
+            PYi = PYi - (Hlng + 30); //8            
             for (int i = 3; i < Data.size(); i++) {
                 
                 if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); 
@@ -387,14 +410,14 @@ public class ReportEdoCtaDet {
                 ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(i).rpteDet.A3958MDLOC, subFont)), 650, PYi, 0);                
                 ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(i).rpteDet.A3958TOT), subFont)), 720, PYi, 0);
                 ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numeroInt(Data.get(i).CANT_DIA), subFont)), 755, PYi, 0);
-                //VL_A3958TOT = VL_A3958TOT + Data.get(i).rpteDet.A3958TOT;
+                VL_A3958TOT = VL_A3958TOT + Data.get(i).rpteDet.A3958TOT;
                 
                 // Texto detail            
 //                out.println(Data.lstRws.get(i).A1729IATA + ";"
 //                        + Data.lstRws.get(i).TKT );
                 PYi = PYi - 12;
                 // Control Page: 1 //                 
-                ItemPage++;
+                ItemPage++;                
                 if (ItemPage > 30 && getPageNumber < 1) { //old a 30 lineas
                     ItemPage = 0;
                     PYi = 510; //ubicacion del titulo en la pagi sig
@@ -421,14 +444,69 @@ public class ReportEdoCtaDet {
                     posNewPagex = 15;
                 }
             }
+            PYi = PYi - 10;
+            int pos_sub_ttl = 585;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUB. TTL: ", subFontT)), pos_sub_ttl, PYi, 0);
+            int pos_sub_ttl_a = pos_sub_ttl + 135;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(VL_A3958TOT), subFontT)), pos_sub_ttl_a, PYi, 0);
+            
+            
+            // detalle de RECIBOS
+            int ItemPage01 = 0;
+            PYi = PYi - 35;
+            this.setTitleRecibos( 15, PYi, writer );            
+            double TTL_REC = 0;
+            for (int i = 0; i < Data01.size(); i++) {
+                if( i%2 == 0) colorRectangle(under, new GrayColor(0.825f), 15, PYi-7, 750, 15); //750 
+                else          colorRectangle(under, GrayColor.GRAYWHITE, 15, PYi-7, 750, 15);                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data01.get(i).A4104NUMRC, subFont)), 330, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data01.get(i).A4104FECRC, subFont)), 480, PYi, 0);                                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data01.get(i).A4104MDARC, subFont)), 650, PYi, 0);                
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data01.get(i).A4104TOT), subFont)), 720, PYi, 0);
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numeroInt(Data01.get(i).A4104ANTSD), subFont)), 755, PYi, 0); 
+                TTL_REC = TTL_REC + Data01.get(i).A4104TOT ;  
+                PYi = PYi - 12;
+               ItemPage01++;                
+                if (ItemPage01 > 30 && getPageNumber < 1) { //old a 30 lineas
+                    ItemPage01 = 0;
+                    PYi = 510; //ubicacion del titulo en la pagi sig
+                    getPageNumber++;
+                    document.newPage();
+                    // Set Title Next Page //
+                    posNewPagex = 15;
+                    posNewPagey = PYi;
+                    this.setTitleRecibos(posNewPagex, posNewPagey, writer );                    
+                    // Reinciar Contador al inicio  Nex Page //
+                    posNewPagex = 15;
 
+                }
+                // Page > 1
+                if (getPageNumber > 0 && ItemPage01 > 40) { //40
+                    ItemPage01 = 0;
+                    PYi = 510; 
+                    getPageNumber++;
+                    document.newPage();
+                    // Set Title Next Page //
+                    posNewPagey = PYi; // (PYi + 13);
+                     this.setTitleRecibos(posNewPagex, posNewPagey, writer );
+                    // Reinciar Contador al inicio  Nex Page //
+                    posNewPagex = 15;
+                } 
+            }
+            PYi = PYi - 10;
+            int pos_sub_ttl_REC = 585;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SUB. TTL: ", subFontT)), pos_sub_ttl_REC, PYi, 0);
+            int pos_sub_ttl_REC_a = pos_sub_ttl_REC + 135;
+            ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph( formato_numero(TTL_REC), subFontT)), pos_sub_ttl_REC_a, PYi, 0);
+            
+            
             // TOTALES                                                
             PYi = PYi - 18;            
             colorRectangle(under, new GrayColor(0.825f), 15, PYi + 9, 750, -25); 
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("SALDO TOTAL: ", NORMAL)), 580, PYi, 0);            
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("TTL SALDO: ", NORMAL)), 580, PYi, 0);            
             ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new Paragraph(formato_numero(Data.get(0).rpteCab.A3981TOT), NORMAL)), 720, PYi, 0);
             //TOTAL EN LETRAS            
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 80, PYi, 0);
+            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph(Data.get(0).rpteCab.A3981TOTLT, NORMAL)), 40, PYi, 0);
 
 //            //REMARK            
 //            String TextRemark = Data.get(2).tbl_misl.A3961DESC1.replaceAll("}", Data.get(0).tbl_client.A3953PLZCR + " DIAS ");

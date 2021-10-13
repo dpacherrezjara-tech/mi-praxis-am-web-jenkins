@@ -3,6 +3,9 @@ prototype.widthGrid = '100%';
 prototype.id02 = 'CargaRecibosBatch';
 prototype.id03 = 'CatalogoClienteRef';
 prototype.id04 = 'CargaRecibosRef';
+prototype.id05 = 'CargaRecibosDetAplForm';
+prototype.id06 = 'CargaRecibosDetRecForm';
+
 
 //console.log(prototype.id);
 
@@ -69,7 +72,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosForm', {
                                         {
                                             xtype: 'panel',
                                             id: prototype.id + '-panel-contenedor-grid',                                            
-                                            height: 520, 
+                                            height: 525, 
                                             layout: 'fit',
                                             items: [
                                                 // <editor-fold defaultstate="collapsed" desc="setGridData">
