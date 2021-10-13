@@ -163,10 +163,11 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosDetAplControlle
         Ext.getCmp(prototype.id05 + '-infoGridDet').setTitle( '' );
         var VL_IDPG = '';
         //console.log('rowIndex: '  + rowIndex);
-        if(rowIndex>0){
+        if(rowIndex >= 0){
             rec = grid.getStore().getAt(rowIndex); 
-            VL_IDPG = rec.data.A4106IDAPL;              
-            Ext.getCmp(prototype.id05 + '-infoGridDet').setTitle( 'Detalle Id pago nº: ' + rec.data.A3959IDPG ); 
+            //console.log('rec: '  + rec.data);
+            VL_IDPG = rec.data.A4105IDAPL;              
+            Ext.getCmp(prototype.id05 + '-infoGridDet').setTitle( 'Detalle Id pago nº: ' + rec.data.A4105IDAPL ); 
             Ext.getCmp(prototype.id05 + '-A4106NUMRC').setValue("");
         }
         var bean = {};        
