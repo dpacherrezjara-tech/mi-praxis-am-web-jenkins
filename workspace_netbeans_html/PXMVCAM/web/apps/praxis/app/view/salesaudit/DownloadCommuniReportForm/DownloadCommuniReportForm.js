@@ -1,7 +1,7 @@
 
 prototype.id = 'DownloadCommuniReportForm';
 prototype.url = CONTEXTPATH + '/DownloadCommuniReportForm';
-prototype.widthWindow = 750;
+prototype.widthWindow = 1000;
 prototype.heightWindow = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.DownloadCommuniReportForm.DownloadCommuniReportForm', {
@@ -293,7 +293,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DownloadCommuniReportForm.DownloadCommuni
                                     id: prototype.id + '-gridData',
                                     columnLines: true,
                                     autoScroll: true,
-                                    width: prototype.widthWindow,
+                                    width: 800,//prototype.widthWindow,
                                     height: 600,
                                     features: [{
                                             //id: 'group',
@@ -344,7 +344,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DownloadCommuniReportForm.DownloadCommuni
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetalle',
-                                    width: 750,
+                                    width: 950,
                                     hidden: true,
                                     height: 600,
                                     columnLines: true,
@@ -357,7 +357,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DownloadCommuniReportForm.DownloadCommuni
                                         items: [
                                             {text: 'System </br>date', dataIndex: 'A3455FREGI', width: 70},
                                             {text: 'Country', dataIndex: 'A3455PAIS', width: 70, align: 'center'},
-                                            {text: 'Description', dataIndex: 'A3455NOMBR', width: 250, renderer: 'onRendererColumnAttr'},
+                                            {text: 'Description', dataIndex: 'A3455NOMBR', width: 450, renderer: 'onRendererColumnAttr'},
                                             {text: 'Processed', dataIndex: 'A3455COUNT', width: 90, align: 'right',
                                                 summaryType: 'sum',
                                                 summaryRenderer: function (value, summaryData, dataIndex) {
