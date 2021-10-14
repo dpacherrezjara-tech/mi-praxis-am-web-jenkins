@@ -465,7 +465,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RejectedReportForm.RejectedReportForm', {
                                     columnLines: true,
                                     autoScroll: true,
                                     hidden: true,
-                                    width: 700,
+                                    width: 800,
                                     height: 600,
                                     features: [{
                                             //id: 'group',
