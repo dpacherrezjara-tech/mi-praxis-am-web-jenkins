@@ -62,9 +62,19 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiumCommissions.ConsortiumCommissi
         if(this.month < 10) this.month = "0"+this.month;
         this.day = new Date().getDate(); 
         if(this.day < 10) this.day = "0"+this.day;
-        var fecha = year + this.month + this.day;//YYYYMMDD
+        var fecha = year + '' +  this.month + '' + this.day;//YYYYMMDD
         this.time = new Date().getHours();
         // </editor-fold>
+        console.log('year');
+        console.log(year);
+        console.log('month');
+        console.log(this.month);
+        console.log('day');
+        console.log(this.day);
+        console.log('fecha');
+        console.log(fecha);
+        console.log('type');
+        console.log(type);
         
         // <editor-fold defaultstate="collapsed" desc="asignación">
         searchParams = {

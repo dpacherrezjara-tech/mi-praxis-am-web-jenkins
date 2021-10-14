@@ -65,7 +65,7 @@ public class AccountingMasterUATPDAO {
             if (filter.page.PAGNUM > 0) {
                PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
-             String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX161S01A1820(?,?,?,?,?,?,?,?,?,?,?)}";
+             String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04221(?,?,?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX161S01A1820
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cstmt01 = cnx.prepareCall(SQLCLL01);
             
             cstmt01.registerOutParameter(7, Types.INTEGER);
