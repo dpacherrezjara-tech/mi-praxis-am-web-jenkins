@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -430,8 +431,9 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552PROVI3 = 0;
                             fileA2552.A2552PROVIDES3 = "";
                             fileA2552.A2552UBICA = "";
-
-                            if ((fileA2552.A2552TAX1 + fileA2552.A2552TAX2 + fileA2552.A2552TAX3 + fileA2552.A2552TAX4 + fileA2552.A2552TAX5 + fileA2552.A2552TAX6 + fileA2552.A2552TAX7 + fileA2552.A2552TAX8 + fileA2552.A2552TAX9 + fileA2552.A2552TAX10 + fileA2552.A2552TAX11 + fileA2552.A2552TAX12 + fileA2552.A2552TAX13 + fileA2552.A2552TAX14 + fileA2552.A2552TAX15 + fileA2552.A2552TAX16 + fileA2552.A2552TAX17 + fileA2552.A2552TAX18 + fileA2552.A2552TAX19 + fileA2552.A2552TAX20) != fileA2552.A2552TAX) {
+                            
+                            DecimalFormat df = new DecimalFormat("#.00");
+                            if (df.format(fileA2552.A2552TAX1 + fileA2552.A2552TAX2 + fileA2552.A2552TAX3 + fileA2552.A2552TAX4 + fileA2552.A2552TAX5 + fileA2552.A2552TAX6 + fileA2552.A2552TAX7 + fileA2552.A2552TAX8 + fileA2552.A2552TAX9 + fileA2552.A2552TAX10 + fileA2552.A2552TAX11 + fileA2552.A2552TAX12 + fileA2552.A2552TAX13 + fileA2552.A2552TAX14 + fileA2552.A2552TAX15 + fileA2552.A2552TAX16 + fileA2552.A2552TAX17 + fileA2552.A2552TAX18 + fileA2552.A2552TAX19 + fileA2552.A2552TAX20) == null ? df.format(fileA2552.A2552TAX) != null : !df.format(fileA2552.A2552TAX1 + fileA2552.A2552TAX2 + fileA2552.A2552TAX3 + fileA2552.A2552TAX4 + fileA2552.A2552TAX5 + fileA2552.A2552TAX6 + fileA2552.A2552TAX7 + fileA2552.A2552TAX8 + fileA2552.A2552TAX9 + fileA2552.A2552TAX10 + fileA2552.A2552TAX11 + fileA2552.A2552TAX12 + fileA2552.A2552TAX13 + fileA2552.A2552TAX14 + fileA2552.A2552TAX15 + fileA2552.A2552TAX16 + fileA2552.A2552TAX17 + fileA2552.A2552TAX18 + fileA2552.A2552TAX19 + fileA2552.A2552TAX20).equals(df.format(fileA2552.A2552TAX))) {
                                 result = "The amount of the taxes does not fit the detail";
                                 break;
                             }
