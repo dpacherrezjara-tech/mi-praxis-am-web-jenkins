@@ -188,6 +188,51 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
             }
         });
     },
+    onSaveFacturacionClick: function (btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: '¿Seguro de procesar la facturacion?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    this.view.params.action = "I";
+                    this.set_procesarFE();
+                }
+            }
+        });
+    },
+    set_procesarFE: function () {
+        var p = this.view.params;
+        var strOption = p.action;
+        var me = this;
+        var params = this.getDataEntryValues(strOption);        
+        Ext.Ajax.request({
+            url: this.url + '/set_procesarFE',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify(params)                
+            },
+            beforerequest: Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').mask('Loading...', ''),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                var objRtn = res.objRtn;
+                Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').unmask('Loading...', '');
+                global.Msg({
+                    msg: objRtn.dbException.MESSAGE,
+                    icon: objRtn.dbException.SQLCODE,
+                    fn: function () {
+                        //culmino PROCESO                                               
+                        me.search();                           
+                    }
+                });
+            }
+        });
+        
+    },
     onCancelClick: function (btn) {
         Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').close();
     },     

@@ -43,8 +43,8 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info02', {
                             xtype: 'grid',
                             id: prototype.id03 + '-gridData',
                             columnLines: true,
-                            width: 780,
-                            height: 310,
+                            width: 820,
+                            height: 320,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [                                    

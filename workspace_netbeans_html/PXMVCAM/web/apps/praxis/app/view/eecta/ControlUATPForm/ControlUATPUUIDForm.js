@@ -12,10 +12,10 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
         'Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController',
         'Ext.Praxis.view.eecta.ControlUATPForm.Info02'
     ],
-    title: 'Procesar UUID',
+    title: 'Facturacion Individual',
     header: true,
-    width: 800,
-    height: 480,
+    width: 850,
+    height: 500,
     border: false,
     resizable: false,
     layout: {
@@ -100,7 +100,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
                                         data: [
                                             ["", "TODOS"],
                                             ["0", "PENDIENTE"],
-                                            ["1", "UUID OK"],
+                                            ["1", "OK"],
                                             ["2", "ERROR"]
                                         ]
                                     }),
@@ -153,8 +153,17 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
                                                 },
                                                 {
                                                     xtype: 'button',
+                                                    id: prototype.id03 + '-btn-set-facturacion',
+                                                    text: 'Procesar FE',
+                                                    icon: 'resources/img/botones/process.png',
+                                                    listeners: {
+                                                        click: 'onSaveFacturacionClick'
+                                                    }
+                                                },
+                                                {
+                                                    xtype: 'button',
                                                     id: prototype.id03 + '-btn-get-UUID',
-                                                    text: 'Procesar UUID',
+                                                    text: 'Datos FE',
                                                     icon: 'resources/img/botones/download.png',
                                                     listeners: {
                                                         click: 'onSaveClick'

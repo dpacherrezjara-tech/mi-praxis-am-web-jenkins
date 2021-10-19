@@ -94,22 +94,22 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Options', {
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-get-UUID',
-                            text: 'UUID',
-                            icon: 'resources/img/botones/1400098721_cv.png',
+                            id: prototype.id + '-btn-get-facturacion',
+                            text: 'Facturación',
+                            icon: 'resources/img/botones/Select_Information.png',
                             listeners: {
                                 click: 'btnUUIDForm_click'
                             }
                         },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-get-facturacion',
-                            text: 'Facturacion',
-                            icon: 'resources/img/botones/Select_Information.png',
-                            listeners: {
-                                click: 'btnFacturacionForm_click'
-                            }
-                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-get-facturacion',
+//                            text: 'Facturacion',
+//                            icon: 'resources/img/botones/Select_Information.png',
+//                            listeners: {
+//                                click: 'btnFacturacionForm_click'
+//                            }
+//                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnFilter',
