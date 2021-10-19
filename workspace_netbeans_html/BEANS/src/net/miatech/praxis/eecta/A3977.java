@@ -25,6 +25,7 @@ public class A3977 {
     public String A3977STSPG = "";
     public String A3977IDPG = "";
     public String A3977SQPG = "";
+    public String A3977SQRCB = "";
     public String A3977REFPG = "";
     public String A3977FECPG = "";
     public String A3977BANCO = "";
