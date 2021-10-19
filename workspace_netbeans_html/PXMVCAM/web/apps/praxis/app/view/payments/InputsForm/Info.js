@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                             border: true,
                             hidden: false,
                             height: 516,
-                            width: 1115,
+                            width: 1165,
                             margin: '10 0 0 150',
                             layout: {
                                 type: 'vbox',
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
                                     height: 510,
-                                    width: 1115,
+                                    width: 1165,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -123,11 +123,17 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                             metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;font-weight:bold;';
                                                             return '<a href="#payments-inputs-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + value + '</a>';
                                                         }
-                                                    },
+                                                    }
                                                 ]
+                                            },
+                                            {text: 'Details / error Message', dataIndex: 'MENSA', width: 350,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:left;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.MENSA+'"';
+                                                    return value;
+                                                }
                                             }
-                                            ,
-                                            {text: 'Details / error Message', dataIndex: 'MENSA', width: 300}
                                         ]
                                     }
                                 }
