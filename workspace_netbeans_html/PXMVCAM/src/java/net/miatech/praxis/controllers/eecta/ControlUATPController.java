@@ -26,6 +26,7 @@ import net.miatech.praxis.eecta.SQP04109Filter;
 import net.miatech.praxis.eecta.SQP04110Filter;
 import net.miatech.praxis.eecta.SQP04145Filter;
 import net.miatech.praxis.eecta.SQP04146Filter;
+import net.miatech.praxis.eecta.SQP04229Filter;
 import net.miatech.praxis.logic.eecta.ControlUATPLogic;
 import org.json.simple.JSONValue;
 import org.springframework.context.annotation.Scope;
@@ -338,6 +339,29 @@ public class ControlUATPController extends BaseController {
             map.put("err", ex.getMessage());
         }
         return new Gson().toJson(map);
+    }
+      
+    @RequestMapping(value = "set_procesarFE")
+    public @ResponseBody
+    String set_procesarFE(ModelMap map, HttpServletRequest request) {
+        SQP04229Filter filter = new SQP04229Filter();  
+        SQP04229Filter objRtn = new SQP04229Filter();
+        try {
+            logic = new ControlUATPLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            objRtn = logic.setSQP04229Filter(filter);            
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0";
+            objRtn.dbException.MESSAGE = ex.getMessage();
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+
     }
 
 }

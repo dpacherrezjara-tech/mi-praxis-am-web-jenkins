@@ -20,6 +20,7 @@ import net.miatech.praxis.eecta.SQP04109Filter;
 import net.miatech.praxis.eecta.SQP04110Filter;
 import net.miatech.praxis.eecta.SQP04145Filter;
 import net.miatech.praxis.eecta.SQP04146Filter;
+import net.miatech.praxis.eecta.SQP04229Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -496,5 +497,35 @@ public class ControlUATPDAO {
         }
 
         return lstRtn;
+    }
+    public SQP04229Filter setSQP04229Filter(SQP04229Filter filter) throws SQLException, Exception {
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04229(?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(5, Types.VARCHAR);
+            cstmt.registerOutParameter(6, Types.VARCHAR);                        
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.vp_fdesde);
+            cstmt.setString(3, filter.vp_fhasta);
+            cstmt.setString(4, filter.vp_cdcli);
+            cstmt.execute();
+            filter.dbException.SQLCODE = cstmt.getString(5);
+            filter.dbException.MESSAGE = cstmt.getString(6);
+                        
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
     }
 }
