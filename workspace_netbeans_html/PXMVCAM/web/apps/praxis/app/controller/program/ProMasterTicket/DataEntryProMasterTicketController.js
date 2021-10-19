@@ -261,6 +261,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
     
     //<editor-fold defaultstate="collapsed" desc="search">
     search: function (bean) {
+        console.log('_search_');
         var me01 = this;
         var storeGridDatas = Ext.create('Ext.Praxis.store.program.GridData', {
             proxy: {
@@ -286,12 +287,14 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                             
                             console.log(obj.data);
                             if (obj.data.length === 1) {
+                                console.log('_obj.data.items_');
                                 console.log(obj.data.items);
                                 console.log(obj.data.items[0].data);
                                 me01.gridData_act1_clickHandler(obj.data.items[0].data);
                             }
                         } else {
                             if (parseInt(win.getValue('1-cbxSearchBy')) === 1) {
+                                console.log('_1-cbxSearchBy_');
                                 me01.beanProMasterTicket = {};
                                 me01.beanProMasterTicket.IN_CIA  = win.getValue('1-txtTicketCia');
                                 me01.beanProMasterTicket.IN_FORMA= win.getValue('1-txtTicketForSer').substr(0, 4); 
@@ -303,6 +306,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                                 me.startDisplay();
                                 Ext.getCmp('DataEntryProMasterTicketForm').hide();
                             } else if (parseInt(win.getValue('1-cbxSearchBy')) === 6) {
+                                console.log('_ACT_VIEW_BY_TKT_ADM_');
                                 me01.beanProMasterTicket = {};
                                 me01.beanProMasterTicket.IN_CIA  = win.getValue('1-txtTicketCia');
                                 me01.beanProMasterTicket.IN_FORMA= win.getValue('1-txtTicketForSer').substr(0, 4); 
@@ -311,8 +315,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                                 
                                 me.params.actionCode = 'ACT_VIEW_BY_TKT_ADM';
                                 me.params.bean = me01.beanProMasterTicket;
-                                me.startDisplay();
-                                Ext.getCmp('DataEntryProMasterTicketForm').hide();
+                                //me.startDisplay();
+                                //Ext.getCmp('DataEntryProMasterTicketForm').hide();
                             } else {
                                 Ext.getCmp(prototype.id+'-1-gridData').getStore().removeAll();
                                 Ext.getCmp(prototype.id+'-1-pie').hide();
@@ -344,8 +348,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
 	this.beanProMasterTicket.IN_FORMA= strTkt.substr(3, 4); 
 	this.beanProMasterTicket.IN_SERIE= strTkt.substr(7, 6);
 	this.beanProMasterTicket.IN_SEQ  = win.stringPad(data.A720SEQ, '0', 2);
-	
-        me.params.actionCode = 'VIEWTICKET_FOR_BWRMASTERTICKET';
+	if (parseInt(win.getValue('1-cbxSearchBy')) === 6) {
+            me.params.actionCode = 'ACT_VIEW_BY_TKT_ADM';
+        }
+        else
+        {
+            me.params.actionCode = 'VIEWTICKET_FOR_BWRMASTERTICKET';
+        }
         me.params.bean = this.beanProMasterTicket;
         me.startDisplay();
 	Ext.getCmp('DataEntryProMasterTicketForm').hide();
