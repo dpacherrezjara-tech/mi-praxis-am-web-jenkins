@@ -161,14 +161,15 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Filters', {
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-ESTAD',
-                                            fieldLabel: 'Aplicación', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
+                                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
                                                     ["", "TODOS"],
                                                     ["P", "PENDIENTE"],
-                                                    ["T", "TOTAL"],
-                                                    ["X", "PARCIAL"]
+                                                    ["T", "APL. TOTAL"],
+                                                    ["X", "PARCIAL"],
+                                                    ["A", "ANULADO"]
                                                 ]
                                             }),
                                             queryMode: 'local',
