@@ -73,6 +73,10 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         
         Ext.getCmp(prototype.id + '-txtA1757COD').setValue(data.A2447COD.trim());    //COLHDG('CODIGO1')
         Ext.getCmp(prototype.id + '-txtA1757COD2').setValue(data.A2447COD2.trim());    //COLHDG('CODIGO2')
+        Ext.getCmp(prototype.id + '-txtA1757NFAC1').setValue(data.A2447NFAC1.trim());    //COLHDG('NUMBER1')
+        Ext.getCmp(prototype.id + '-txtA1757NFAC2').setValue(data.A2447NFAC2.trim());    //COLHDG('NUMBER2')
+        Ext.getCmp(prototype.id + '-txtA1757FFAC1').setValue(data.A2447FFAC1.trim());    //COLHDG('FECHA1')
+        Ext.getCmp(prototype.id + '-txtA1757FFAC2').setValue(data.A2447FFAC2.trim());    //COLHDG('FECHA2')
         Ext.getCmp(prototype.id + '-txtA1757COMBA').setValue(Ext.util.Format.number(data.A2447COMBA, '0,000.00'));    //COLHDG('COMM BANCARIA')
         Ext.getCmp(prototype.id + '-txtA1757IVACB').setValue(Ext.util.Format.number(data.A2447IVACB, '0,000.00'));    //COLHDG('IVA COMM BANCARIA')
         Ext.getCmp(prototype.id + '-txtA1757COMB2').setValue(Ext.util.Format.number(data.A2447COMB2, '0,000.00'));    //COLHDG('COMM BANCARIA 2')
@@ -136,9 +140,14 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         var VP_A2447INDAP = Ext.getCmp(prototype.id + '-txtA1757INDAP').getValue();
         
         var VP_A2447COD = Ext.getCmp(prototype.id + '-txtA1757COD').getValue();
+        var VP_A2447NFAC1 = Ext.getCmp(prototype.id + '-txtA1757NFAC1').getValue();
+        var VP_A2447FFAC1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1757FFAC1').getValue(), 'Ymd');
         var VP_A2447COMBA = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-txtA1757COMBA').getValue().replace(",", "").replace(",", ""));
         var VP_A2447IVACB = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-txtA1757IVACB').getValue().replace(",", "").replace(",", ""));
+        
         var VP_A2447COD2 = Ext.getCmp(prototype.id + '-txtA1757COD2').getValue();
+        var VP_A2447NFAC2 = Ext.getCmp(prototype.id + '-txtA1757NFAC2').getValue();
+        var VP_A2447FFAC2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtA1757FFAC2').getValue(), 'Ymd');
         var VP_A2447COMB2 = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-txtA1757COMB2').getValue().replace(",", "").replace(",", ""));
         var VP_A2447IVAC2 = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-txtA1757IVAC2').getValue().replace(",", "").replace(",", ""));
         
@@ -167,7 +176,11 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
             VP_A2447IVACB: VP_A2447IVACB,
             VP_A2447COD2: VP_A2447COD2,
             VP_A2447COMB2: VP_A2447COMB2,
-            VP_A2447IVAC2: VP_A2447IVAC2
+            VP_A2447IVAC2: VP_A2447IVAC2,
+            VP_A2447NFAC1: VP_A2447NFAC1,
+            VP_A2447FFAC1: VP_A2447FFAC1,
+            VP_A2447NFAC2: VP_A2447NFAC2,
+            VP_A2447FFAC2: VP_A2447FFAC2
         };
     },
     onSaveClick: function(btn) {
@@ -336,19 +349,44 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
             Ext.getCmp(prototype.id + '-txtA1757MONED').focus();
             return mensaje;
         }
-        if (params.VP_A2447COD === 0) {
-            mensaje = 'Enter Code';
-            Ext.getCmp(prototype.id + '-txtA1757COD').focus();
+        if (params.VP_A2447COD !== '' && params.VP_A2447NFAC1 === '') {
+            mensaje = 'Enter Invoice Number';
+            Ext.getCmp(prototype.id + '-txtA1757NFAC1').focus();
             return mensaje;
         }
-        if (params.VP_A2447COMBA === 0) {
+        if (params.VP_A2447COD !== '' && params.VP_A2447FFAC1 === '') {
+            mensaje = 'Enter Invoice Date';
+            Ext.getCmp(prototype.id + '-txtA1757FFAC1').focus();
+            return mensaje;
+        }
+        if (params.VP_A2447COD !== '' && params.VP_A2447COMBA === 0) {
             mensaje = 'Enter Commission Bank Amount';
             Ext.getCmp(prototype.id + '-txtA1757COMBA').focus();
             return mensaje;
         }
-        if (params.VP_A2447IVACB === 0) {
+        if (params.VP_A2447COD !== '' && params.VP_A2447IVACB === 0) {
             mensaje = 'Enter IVA Commission Bank Amount';
             Ext.getCmp(prototype.id + '-txtA1757IVACB').focus();
+            return mensaje;
+        }
+        if (params.VP_A2447COD2 !== '' && params.VP_A2447NFAC2 === '') {
+            mensaje = 'Enter Invoice Number';
+            Ext.getCmp(prototype.id + '-txtA1757NFAC2').focus();
+            return mensaje;
+        }
+        if (params.VP_A2447COD2 !== '' && params.VP_A2447FFAC2 === '') {
+            mensaje = 'Enter Invoice Date';
+            Ext.getCmp(prototype.id + '-txtA1757FFAC2').focus();
+            return mensaje;
+        }
+        if (params.VP_A2447COD2 !== '' && params.VP_A2447COMB2 === 0) {
+            mensaje = 'Enter Commission Bank Amount';
+            Ext.getCmp(prototype.id + '-txtA1757COMB2').focus();
+            return mensaje;
+        }
+        if (params.VP_A2447COD2 !== '' && params.VP_A2447IVAC2 === 0) {
+            mensaje = 'Enter IVA Commission Bank Amount';
+            Ext.getCmp(prototype.id + '-txtA1757IVAC2').focus();
             return mensaje;
         }
         if (params.VP_A2447STATU === 'D'/*beanMant.VP_A1757STATU != 'A' && beanMant.VP_A1757INDAP != 'C' */) {
@@ -359,7 +397,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
     },
     //agregados 
      getTotalPref: function() {
-        //console.log(isValid);        
+        //console.log(isValid);
         var VL_A1757INDAP = Ext.getCmp(prototype.id + '-txtA1757INDAP').getValue();
         var VL_A1757COMM = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-txtA1757COMM').getValue().replace(",", "").replace(",", ""));
         var VL_A1757IVA = Ext.Number.parseFloat(Ext.getCmp(prototype.id + '-txtA1757IVA').getValue().replace(",", "").replace(",", ""));
@@ -518,12 +556,16 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
          Ext.getCmp(prototype.id + '-txtA1757SEQ').setValue('00');
          Ext.getCmp(prototype.id + '-txtA1757INDAP').setValue('');
          Ext.getCmp(prototype.id + '-txtA1757COD').setValue('');
+         Ext.getCmp(prototype.id + '-txtA1757NFAC1').setValue('');
+         Ext.getCmp(prototype.id + '-txtA1757FFAC1').setValue('');
          Ext.getCmp(prototype.id + '-txtA1757COMBA').setValue('0.00');
          Ext.getCmp(prototype.id + '-txtA1757IVACB').setValue('0.00'); 
          Ext.getCmp(prototype.id + '-txtA1757COD2').setValue('');
+         Ext.getCmp(prototype.id + '-txtA1757NFAC2').setValue('');
+         Ext.getCmp(prototype.id + '-txtA1757FFAC2').setValue('');
          Ext.getCmp(prototype.id + '-txtA1757COMB2').setValue('0.00');
          Ext.getCmp(prototype.id + '-txtA1757IVAC2').setValue('0.00');
-         // Dtos de pre.factura	
+         // Dtos de pre.factura
          Ext.getCmp(prototype.id + '-txtA1757CAMCO_P').setValue('0.00'); 
          Ext.getCmp(prototype.id + '-txtA1757COMIV_P').setValue('0.00');
          Ext.getCmp(prototype.id + '-txtA1757COMM_P').setValue('0.00');
@@ -566,6 +608,10 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         Ext.getCmp(prototype.id + '-txtA1757IVAC2').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757COD').setValue('');
         Ext.getCmp(prototype.id + '-txtA1757COD2').setValue('');
+        Ext.getCmp(prototype.id + '-txtA1757NFAC1').setValue('');
+        Ext.getCmp(prototype.id + '-txtA1757FFAC1').setValue('');
+        Ext.getCmp(prototype.id + '-txtA1757NFAC2').setValue('');
+        Ext.getCmp(prototype.id + '-txtA1757FFAC2').setValue('');
         // Dtos de pre.factura				
         Ext.getCmp(prototype.id + '-txtA1757CAMCO_P').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757COMIV_P').setValue('0.00');
