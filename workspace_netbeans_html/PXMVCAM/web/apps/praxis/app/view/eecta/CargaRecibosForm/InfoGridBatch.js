@@ -70,10 +70,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridBatch', {
                                     {text: 'Fecha<br>Recibo', dataIndex: 'A4096FRCBO', align: 'center', width: 70, locked: true},
                                     {text: 'Fecha<br>Deposito', dataIndex: 'A4096FDPTO', align: 'center', width: 70, locked: true},
                                     {text: 'No', dataIndex: 'A4096NRO', align: 'center', width: 40, locked: true},                                    
-                                    {text: 'Unidad Ope.', dataIndex: 'A4096UNDOP', align: 'left', width: 120, locked: true},
-                                    {text: 'Trx. Origen', dataIndex: 'A4096TRXOR', width: 90, align: 'left', locked: true},
-                                    {text: 'Mda.', dataIndex: 'A4096MDATX', width: 50, align: 'center', locked: true},
-                                    {text: 'Monto<br>Disponible', dataIndex: 'A4096MONTO', width: 90, align: 'right',locked: true,
+                                    {text: 'Unidad Ope.', dataIndex: 'A4096UNDOP', align: 'left', width: 120},
+                                    {text: 'Trx. Origen', dataIndex: 'A4096TRXOR', width: 90, align: 'left'},
+                                    {text: 'Mda.', dataIndex: 'A4096MDATX', width: 50, align: 'center',},
+                                    {text: 'Monto<br>Disponible', dataIndex: 'A4096MONTO', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
 //                                            return Ext.util.Format.number(value, '0,000.00');
@@ -88,18 +88,18 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridBatch', {
                                     {text: 'Descripcion', dataIndex: 'A4096DESCR', width: 120, align: 'left'},                                   
                                     {text: 'Referencia', dataIndex: 'A4096REFER', width: 120, align: 'left'}, 
                                     {
-                                        text: 'Estado', dataIndex: 'A4096STREF', width: 60, align: 'center', locked: false,
-                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                       
-                                            var html = '<img src="resources/img/semaforo/Circle_Red.png" title="UnMatch" >';                                            
-                                            if ( value === '1' )
-                                            var html = '<img src="resources/img/semaforo/Circle_Green.png" title="Match" >';
-                                        
-                                            return html;
-                                        }
+                                        text: 'Estado', dataIndex: 'A4096STREF', width: 120, align: 'center', locked: false,
+//                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                       
+//                                            var html = '<img src="resources/img/semaforo/Circle_Red.png" title="UnMatch" >';                                            
+//                                            if ( value === '1' )
+//                                            var html = '<img src="resources/img/semaforo/Circle_Green.png" title="Match" >';
+//                                        
+//                                            return html;
+//                                        }
                                     },
                                     //{text: 'Err.', dataIndex: 'A4096DESER', width: 70, align: 'left'}
                                     {
-                                        text: 'Mensaje <br>Resultado', dataIndex: 'A4096DESER', width: 170, align: 'left',
+                                        text: 'Mensaje <br>Error', dataIndex: 'A4096DESER', width: 170, align: 'left',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             if(record.get('A4096STAT') === '0')metaData.style = 'font-weight:bold;color:green;';
                                             if(record.get('A4096STAT') !== '0')metaData.style = 'font-weight:bold;color:red;';
