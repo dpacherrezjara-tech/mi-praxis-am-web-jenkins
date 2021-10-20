@@ -346,7 +346,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         }
         if (params.VP_A2447INDAP === '') {
             mensaje = 'Required Field, Invoice aplication';
-            Ext.getCmp(prototype.id + '-txtA1757MONED').focus();
+            Ext.getCmp(prototype.id + '-txtA1757INDAP').focus();
             return mensaje;
         }
         if (params.VP_A2447COD !== '' && params.VP_A2447NFAC1 === '') {
@@ -389,9 +389,23 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
             Ext.getCmp(prototype.id + '-txtA1757IVAC2').focus();
             return mensaje;
         }
-        if (params.VP_A2447STATU === 'D'/*beanMant.VP_A1757STATU != 'A' && beanMant.VP_A1757INDAP != 'C' */) {
-            mensaje = 'Invalid Status for Invoice';
-            return mensaje;
+        if (params.VP_A2447INDAP === 'S') {
+            if (params.VP_A2447IATA === '86984730' || params.VP_A2447IATA === '86977251' || params.VP_A2447IATA === '86984951' ||
+                params.VP_A2447IATA === '86984881' || params.VP_A2447IATA === '86984925' || params.VP_A2447IATA === '86984936'){
+                if (params.VP_A2447STATU === 'D') {
+                    Ext.getCmp(prototype.id + '-txtA1757STATU').setValue('A');
+                }
+            }else{
+                if (params.VP_A2447STATU === 'D'/*beanMant.VP_A1757STATU != 'A' && beanMant.VP_A1757INDAP != 'C' */) {
+                    mensaje = 'Invalid Status for Invoice';
+                    return mensaje;
+                }
+            }
+        }else{
+            if (params.VP_A2447STATU === 'D'/*beanMant.VP_A1757STATU != 'A' && beanMant.VP_A1757INDAP != 'C' */) {
+                mensaje = 'Invalid Status for Invoice';
+                return mensaje;
+            }
         }
         return mensaje;
     },
