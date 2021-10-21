@@ -36,7 +36,18 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
             VP_FDATE1:VL_FECHA1,
             VP_FDATE2:VL_FECHA2
         };
-    },  
+    },
+    getDataParamFE: function (strOption) {        
+        //var VL_ACTION = strOption;  
+        var VL_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA1').getValue(), 'Ymd');
+        var VL_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA2').getValue(), 'Ymd');                     
+        return {
+            //VP_ACTION:VL_ACTION,
+            vp_fdesde:VL_FECHA1,
+            vp_fhasta:VL_FECHA2,
+            vp_cdcli:''
+        };
+    },
     Onsearch: function () {
         this.search();
     },
@@ -208,7 +219,7 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
         var p = this.view.params;
         var strOption = p.action;
         var me = this;
-        var params = this.getDataEntryValues(strOption);        
+        var params = this.getDataParamFE(strOption);        
         Ext.Ajax.request({
             url: this.url + '/set_procesarFE',
             method: 'POST',
