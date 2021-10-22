@@ -17,6 +17,7 @@ import net.miatech.praxis.eecta.SQP04110Filter;
 import net.miatech.praxis.eecta.SQP04145Filter;
 import net.miatech.praxis.eecta.SQP04146Filter;
 import net.miatech.praxis.eecta.SQP04229Filter;
+import net.miatech.praxis.eecta.SQP04238Filter;
 
 /**
  *
@@ -61,5 +62,9 @@ public class ControlUATPLogic {
     public SQP04229Filter setSQP04229Filter(SQP04229Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04229Filter(filter);
     }
+    public List<SQP04238Filter> getSQP04238Filter(SQP04238Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04238Filter(filter);
+    }
+
 
 }
