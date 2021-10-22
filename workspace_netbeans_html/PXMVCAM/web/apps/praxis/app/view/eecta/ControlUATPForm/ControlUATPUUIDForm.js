@@ -10,12 +10,13 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
     controller: prototype.id03 + '-controlUATPUUIDController',
     requires: [
         'Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController',
-        'Ext.Praxis.view.eecta.ControlUATPForm.Info02'
+        'Ext.Praxis.view.eecta.ControlUATPForm.Info02',
+        'Ext.Praxis.view.eecta.ControlUATPForm.Info04'
     ],
     title: 'Facturacion Individual',
     header: true,
-    width: 850,
-    height: 500,
+    width: 920,
+    height: 650,
     border: false,
     resizable: false,
     layout: {
@@ -133,13 +134,13 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
                                             xtype: 'toolbar',
                                             dock: 'bottom',
                                             ui: 'footer',
-                                            margin: '2 0 2 15',
+                                            margin: '2 0 2 7',
                                             layout: {
                                                 pack: 'center'
                                             },
                                             fieldStyle: 'text-align:center',
                                             defaults: {
-                                                scale: 'medium'
+                                                scale: 'small'
                                             },
                                             items: [
                                                 {
@@ -154,7 +155,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
                                                 {
                                                     xtype: 'button',
                                                     id: prototype.id03 + '-btn-set-facturacion',
-                                                    text: 'Procesar FE',
+                                                    text: 'Timbrar',
                                                     icon: 'resources/img/botones/process.png',
                                                     listeners: {
                                                         click: 'onSaveFacturacionClick'
@@ -178,16 +179,28 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPUUIDForm', {
                     ]
                 },
                 {
+                    // <editor-fold defaultstate="collapsed" desc="setGridData">                        
                     xtype: 'panel',
                     id: prototype.id03 + '-panel-contenedor-grid',
                     layout: 'fit',
-                    items: [
-                        // <editor-fold defaultstate="collapsed" desc="setGridData">
-                        {
+                    width: 920,
+                    items: [{
+                            xtype: prototype.id05 + '-info04'
+                        }                      
+                    ]
+                     // </editor-fold>                                                 
+                },
+                {
+                    // <editor-fold defaultstate="collapsed" desc="grid-det">
+                    xtype: 'panel',
+                    id: prototype.id03 + '-panel-contenedor-grid-det',
+                    width: 920,
+                    layout: 'fit',
+                    items: [{
                             xtype: prototype.id03 + '-info02'
                         }
-                        // </editor-fold>                                                 
                     ]
+                    // </editor-fold>
                 }
             ]
         }

@@ -4,6 +4,7 @@ prototype.id01 = 'Info01';
 prototype.id02 = 'ControlUATPProcesarForm';
 prototype.id03 = 'ControlUATPUUIDForm';
 prototype.id04 = 'ControlUATPErroresForm';
+prototype.id05 = 'ControlUATPFacturacionCab';
 
 Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.ControlUATPForm', {
     extend: 'Ext.form.Panel',
