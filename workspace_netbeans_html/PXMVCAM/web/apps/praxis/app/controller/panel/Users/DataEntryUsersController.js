@@ -46,10 +46,9 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     mostrarData: function(rec) {
         console.log('log rec');
         console.log(rec);
-        this.setValue('USR', rec.get('USR'));
-        //this.setValue('NPROG', rec.get('NPROG'));
-        //this.setValue('PROG', rec.get('PROG'));
-        Ext.getCmp(prototype.id+'-chkStatus').setValue(rec.get('STAT') === 'A' ? true : false);
+        this.setValue('txtUSR', rec.get('USR'));
+        this.setValue('cboCity', rec.get('CITY'));
+        Ext.getCmp(prototype.id+'-chkStatus').setValue(rec.get('STAT') === 'ACTIVO' ? true : false);
         
         // <editor-fold defaultstate="collapsed" desc="ControlData">
         this.setValue('USCR', rec.get('USCR'));
@@ -163,17 +162,29 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     // </editor-fold>
     
     validaRequiredFields: function() {
-        if (this.getValue('USR')==='' || this.getValue('NPROG') === null) {
-            this.msjAlert='Enter correct data';
-            return false;
+        if(this.p.action==='I')
+        {
+            if (this.getValue('txtUSR')==='' || this.getValue('txtDESC')==='' || this.getValue('cboCity') === '') {
+                this.msjAlert='Enter mandatory data';
+                return false;
+            }  
+        }
+        
+        if(this.p.action==='U')
+        {
+            if (this.getValue('txtUSR')==='' || this.getValue('cboCity') === '') {
+                this.msjAlert='Enter mandatory data';
+                return false;
+            }      
         }        
+              
         return true;
     },
     
     crud: function() {
         var mod = this;
         Ext.Ajax.request({
-            url: prototype.url + '/Maintance',
+            url: prototype.url + '/setMantUser',
             method: 'POST',
             timeout: 60000000,
             params: this.beanOption,
@@ -182,7 +193,8 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                    var msg = res.intResult;                    
+                    var msg = res.response;
+                    var msgInt = res.sql_code;
                     /*var cbxModulo = mod.getValue('cbxModulo');
                     if(cbxModulo==='PSALES')
                     {
@@ -202,14 +214,14 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                     }*/
                         
                     var icon=1;
-                    if(msg==='RECORD EXISTS'){
+                    if(msgInt==='779'){
                         icon=2;
                     }
                     global.Msg({
                         msg: msg,
                         icon: icon,
                         fn: function() {
-                            if (msg==='RECORD INSERTED') {
+                            if (msgInt==='779') {
                                 Ext.getCmp('DataEntryUsersForm').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
@@ -244,14 +256,25 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     llenarData: function() {
         this.beanOption = {};
         
-        var USR = this.getValue('USR');
-        var NPROG = this.getValue('NPROG');
+        var USR = this.getValue('txtUSR');
+        var DESC = this.getValue('txtDESC');
+        var CITY = this.getValue('cboCity');
+        var chkExpiredDate = Ext.getCmp(prototype.id+'-chkExpiredDate').getValue() ? 'true' : 'false';
+        var DTEXPIRED = this.getValue('txtExpDate');
+        var chkPass = Ext.getCmp(prototype.id+'-chkPass').getValue() ? 'true' : 'false';
+        var txtPass = this.getValue('txtPass');
+        var strOption = this.p.action;
         var STAT =  Ext.getCmp(prototype.id+'-chkStatus').getValue() ? 'A' : 'L';
         this.beanOption = {
             USR: USR,
-            NPROG: NPROG,
+            DESC: DESC,
+            CITY: CITY,
+            chkExpiredDate: chkExpiredDate,
+            DTEXPIRED: DTEXPIRED,
+            chkPass: chkPass,
+            txtPass: txtPass,
             STAT: STAT,
-            strOption: this.view.params.action
+            strOption: strOption
         };
         console.log('beanOption');
         console.log(this.beanOption);    

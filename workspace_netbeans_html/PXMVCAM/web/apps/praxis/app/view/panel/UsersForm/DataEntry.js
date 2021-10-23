@@ -164,7 +164,7 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                         },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1740FINI2',
+                            id:prototype.id+'-txtExpDate',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',

@@ -116,11 +116,11 @@ public class UsersController extends BaseController {
             filter.VP_ACTION = request.getParameter("strOption").trim();
             filter.VP_CCUST = "139";
             filter.VP_APLICA = "PX";
-            filter.chkExpiredDate = true;
-            filter.TOKEN = "";
-            filter.VP_DESC = "";
-            filter.DTEXPIRED = "";
-            filter.chkPass = true;
+            filter.chkExpiredDate = ("true".equals(request.getParameter("chkExpiredDate")));
+            filter.TOKEN = request.getParameter("txtPass").trim();
+            filter.VP_DESC = request.getParameter("DESC").trim();
+            filter.DTEXPIRED = request.getParameter("DTEXPIRED").trim();
+            filter.chkPass = ("true".equals(request.getParameter("chkPass")));
             UserLogic userLogic = new UserLogic();
             userLogic.setSession(this.serverSession.getServerSession());
             PanelLogic logic = new PanelLogic();
