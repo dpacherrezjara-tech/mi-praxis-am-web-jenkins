@@ -43,16 +43,28 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info04', {
                             xtype: 'grid',
                             id: prototype.id05 + '-gridData',
                             columnLines: true,
-                            width: 910,
-                            height: 200,
+                            width: 990,
+                            height: 390,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [                                    
+                                     {
+                                        xtype: 'actioncolumn',
+                                        text:'',
+                                        sortable: false,
+                                        width: 40,
+                                        align: 'center',
+                                        locked: true,
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Detalle de boletos',
+                                                handler: 'onDetailClick04'
+                                            }
+                                        ]
+                                    },
                                     {
-                                        text: 'Fecha', dataIndex: 'A4101FPROC', width: 70, align: 'center', locked: true,
-//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            return record.get('A4054CIA') + record.get('A4054FORMA') + record.get('A4054SERIE');
-//                                        }
+                                        text: 'Fecha', dataIndex: 'A4101FPROC', width: 70, align: 'center', locked: true
                                     },
                                     {
                                         text: 'Id Cliente', dataIndex: 'A4101CDCLI', width: 90, align: 'center', locked: true
@@ -61,16 +73,16 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info04', {
                                         text: 'Nombre Cliente', dataIndex: 'A3953RSOCI', width: 200, align: 'left', locked: true
                                     },
                                     {
-                                        text: 'L. Envio', dataIndex: 'A4101NLOTE', width: 80, align: 'center'
+                                        text: 'Lote<br>Envio', dataIndex: 'A4101NLOTE', width: 80, align: 'center'
                                     },
                                     {
-                                        text: 'Total<br>Enviado', dataIndex: 'A4101TLTTK', width: 70, align: 'right'
+                                        text: 'Total<br>Enviado', dataIndex: 'A4101TLTTK', width: 70, align: 'center'
                                     },
                                     {
                                         text: 'Facturación',
                                         columns: [
-                                            {text: 'Facturado', dataIndex: 'A4101TLPDF', width: 110, align: 'left'},
-                                            {text: 'No Facturado', dataIndex: 'A4101TLNFA', width: 70, align: 'center'},
+                                            {text: 'Facturado', dataIndex: 'A4101TLPDF', width: 70, align: 'center'},
+                                            {text: 'No<br>Facturado', dataIndex: 'A4101TLNFA', width: 70, align: 'center'},
                                             {text: 'Error', dataIndex: 'A4101TLERR', width: 60, align: 'center'},
                                             {text: 'Total', dataIndex: 'A4101TTLRC', width: 60, align: 'center'}
                                         ]
@@ -83,20 +95,6 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info04', {
                                             return value;
                                         }
                                     }                                   
-//                                    {text: 'Trx.', dataIndex: 'A4054TRNCU', align: 'center', width: 60, locked: true},
-//                                    {text: 'Fecha<br>Contable', dataIndex: 'A4054FCONT', align: 'center', width: 70, locked: true},
-//                                    {
-//                                        text: 'Información Factura',
-//                                        columns: [
-//                                            {text: 'UUID', dataIndex: 'A4054CFDI', width: 110, align: 'left'},
-//                                            {text: 'Fecha', dataIndex: 'A4054FECTB', width: 70, align: 'center'},
-//                                            {text: 'FOP', dataIndex: 'A4054FOP', width: 60, align: 'center'},
-//                                            {text: 'Metodo', dataIndex: 'A4054MPG', width: 60, align: 'center'},
-//                                            {text: 'Tipo', dataIndex: 'A4054TIPO', width: 50, align: 'center'},                                            
-//                                            {text: 'RFC', dataIndex: 'A4054RFC', width: 80, align: 'left'},
-//                                            {text: 'RFC Name', dataIndex: 'A4054RFCN', width: 110, align: 'left'}
-//                                        ]
-//                                    }                                   
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -143,7 +141,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info04', {
                                 {
                                     xtype: 'panel',
                                     id: prototype.id05 + '-boxPaginacion',
-                                    width: '99%',
+                                    width: 780,
                                     border: false,
                                     items: [
                                         {
