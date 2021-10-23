@@ -599,7 +599,7 @@ public class ReportEdoCta {
                     }
                 }                                
                ItemPage++;
-                if (ItemPage > 20 && getPageNumber < 1) { 
+                if (ItemPage > 18 && getPageNumber < 1) { 
                     ItemPage = 0;
                     PYi = 761; //ubicacion del titulo en la pagi sig
                     getPageNumber++;
