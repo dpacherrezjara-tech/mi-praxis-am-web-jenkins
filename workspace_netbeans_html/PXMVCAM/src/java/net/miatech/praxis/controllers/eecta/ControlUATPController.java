@@ -279,6 +279,11 @@ public class ControlUATPController extends BaseController {
             filter.VP_FECHA2 = request.getParameter("VP_FDATE2");
             filter.VP_TICKET = request.getParameter("VP_TICKET");
             filter.VP_STAT = request.getParameter("VP_STAT");
+            
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_NLOTE = request.getParameter("VP_NLOTE");
+            
+            
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);

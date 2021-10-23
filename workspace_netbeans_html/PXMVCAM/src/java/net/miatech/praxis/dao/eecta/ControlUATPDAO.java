@@ -328,31 +328,34 @@ public class ControlUATPDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP04145(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP04145(?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;        
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(7, Types.INTEGER);
-            cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
             
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.VP_OPCION);
             cstmt01.setString(3, filter.VP_FECHA1);
             cstmt01.setString(4, filter.VP_FECHA2);            
             cstmt01.setString(5, filter.VP_STAT);            
-            cstmt01.setString(6, filter.VP_TICKET);            
-            cstmt01.setInt(7, filter.page.PAGNUM);
-            cstmt01.setInt(8, filter.page.PAGROW);
-            cstmt01.setInt(9, filter.page.TOTPAG);
-            cstmt01.setInt(10, filter.page.TOTROW);            
+            cstmt01.setString(6, filter.VP_TICKET);
+            cstmt01.setString(7, filter.VP_CDCLI);
+            cstmt01.setString(8, filter.VP_NLOTE);
+       
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);            
             cstmt01.execute();            
-            filter.page.PAGNUM = cstmt01.getInt(7);
-            filter.page.PAGROW = cstmt01.getInt(8);
-            filter.page.TOTPAG = cstmt01.getInt(9);
-            filter.page.TOTROW = cstmt01.getInt(10);
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
             
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -378,6 +381,14 @@ public class ControlUATPDAO {
                 objRtn.A4054REVIS = rs01.getString("A4054REVIS");
                 objRtn.A4054FREVI = rs01.getString("A4054FREVI");
                 objRtn.A4054HREVI = rs01.getString("A4054HREVI");
+                //NEWS
+                objRtn.A4054CDCLI = rs01.getString("A4054CDCLI");
+                objRtn.A4054NLOTE = rs01.getString("A4054NLOTE");
+                objRtn.A4054PNR = rs01.getString("A4054PNR");
+                objRtn.A4054STDE = rs01.getString("A4054STDE");
+                objRtn.A4054RMSG = rs01.getString("A4054RMSG");
+                objRtn.A4054PXML = rs01.getString("A4054PXML");
+                objRtn.A4054PPDF = rs01.getString("A4054PPDF");
                 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
