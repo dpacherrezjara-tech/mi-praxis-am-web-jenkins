@@ -34,6 +34,7 @@ import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.flown.AccountingMasterFlownLogic;
 import net.miatech.praxis.logic.flown.YieldReportLogic;
 import net.miatech.praxis.logic.panel.PanelLogic;
+import net.miatech.praxis.logic.program.UserLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -104,19 +105,91 @@ public class UsersController extends BaseController {
     
     @RequestMapping(value = "setMantUser")
     public @ResponseBody String setMantUser(HttpServletRequest request) {
-        
         PX075S02INF001Filter filter = new PX075S02INF001Filter();
         PX075S02INF001Filter objRtn = new PX075S02INF001Filter();      
+        JavaToFlexResponse resp = new JavaToFlexResponse();
+        boolean boValida = false;
         try {
             filter.VP_USR = request.getParameter("USR").trim();
-            filter.VP_STAT = "A"; // request.getParameter("STAT").trim();
+            filter.VP_STAT = request.getParameter("STAT").trim();
             filter.VP_CITY = request.getParameter("CITY").trim();
-            filter.VP_ACTION = request.getParameter("strOption").toString().trim();
+            filter.VP_ACTION = request.getParameter("strOption").trim();
             filter.VP_CCUST = "139";
             filter.VP_APLICA = "PX";
+            filter.chkExpiredDate = true;
+            filter.TOKEN = "";
+            filter.VP_DESC = "";
+            filter.DTEXPIRED = "";
+            filter.chkPass = true;
+            UserLogic userLogic = new UserLogic();
+            userLogic.setSession(this.serverSession.getServerSession());
             PanelLogic logic = new PanelLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            objRtn = logic.setPX075S02INF001(filter);
+            logic.setSession(this.serverSession.getServerSession());            
+            if("I".equals(filter.VP_ACTION))
+            {
+                boValida = userLogic.SQP03268(filter.VP_USR); // VALIDA SI YA EXISTE USUARIO
+                if(!boValida)
+                {
+                    userLogic.SQP03219(filter.VP_USR,filter.TOKEN,filter.VP_DESC); // REGISTRA AS400
+                    objRtn = logic.setPX075S02INF001(filter); // REGISTRO EN TABLAS PRAXIS
+                    if("A".equals(filter.VP_STAT))
+                    {
+                        if(filter.chkExpiredDate) 
+                        {
+                            if(filter.DTEXPIRED !=null && filter.DTEXPIRED.length()==8) // HABILITAMOS CON FECHA DE EXPIRACION
+                                userLogic.SQP03266(filter.VP_USR,filter.DTEXPIRED);
+                            else
+                            {
+                                if(filter.DTEXPIRED !=null && filter.DTEXPIRED.length()==0) // HABILITAMOS SIN FECHA *NONE
+                                    userLogic.SQP02491(filter.VP_USR);
+                            }
+                            resp.info.add("User created successfully");
+                        }
+
+                        if(filter.chkPass)
+                        {
+                            userLogic.SQP03218(filter.VP_USR,filter.TOKEN);
+                            resp.info.add("User created successfully");
+                        }
+                    }
+                    resp.info.add("User created successfully"); // objRtn.dbException.MESSAGE
+                }
+                else
+                {
+                    resp.info.add("User already exists, please enter another one");
+                }
+                
+            }
+            else if("U".equals(filter.VP_ACTION))
+            {
+                objRtn = logic.setPX075S02INF001(filter); // ACTUALIZACION EN TABLAS PRAXIS
+                if("A".equals(filter.VP_STAT))
+                {
+                   if(filter.chkExpiredDate) 
+                    {
+                        if(filter.DTEXPIRED !=null && filter.DTEXPIRED.length()==8) // HABILITAMOS CON FECHA DE EXPIRACION
+                            userLogic.SQP03266(filter.VP_USR,filter.DTEXPIRED);
+                        else
+                        {
+                            if(filter.DTEXPIRED !=null && filter.DTEXPIRED.length()==0) // HABILITAMOS SIN FECHA *NONE
+                                userLogic.SQP02491(filter.VP_USR);
+                        }
+                        resp.info.add("User updated successfully");
+                    }
+
+                    if(filter.chkPass)
+                    {
+                        userLogic.SQP03218(filter.VP_USR,filter.TOKEN);
+                        resp.info.add("User updated successfully");
+                    }
+                }
+                resp.info.add("User updated successfully"); // objRtn.dbException.MESSAGE
+            }
+            else
+            {
+                objRtn = logic.setPX075S02INF001(filter); // ELIMINACION EN TABLAS PRAXIS
+                resp.info.add("User deleted successfully"); // objRtn.dbException.MESSAGE
+            }
             
         }catch (Exception e) {
             throw new SpringException(e);
