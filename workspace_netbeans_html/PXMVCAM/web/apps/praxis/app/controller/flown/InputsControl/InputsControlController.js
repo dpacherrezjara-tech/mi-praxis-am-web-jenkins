@@ -1045,8 +1045,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     
     setCalendar: function() {
         console.log("Estamos en SetCalendar");
-        this.setClearCalendar();
-        this.initCalendar();
+//        this.setClearCalendar();
 
 
         var aux = true;
@@ -1067,6 +1066,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             },
             success: function(response, options) {
                 if (aux) {
+                    me.initCalendar();
                     var res = Ext.JSON.decode(response.responseText);
                     res = res.data;
                     var dato = 0;
