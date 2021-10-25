@@ -677,7 +677,7 @@ public class InputsDAO {
                 objRtn.strFormatDate2 = filter.strFormatDate2;
                 objRtn.FECHA = rs01.getString("FECRFILE");
                 objRtn.strFormatDate3 = Functions.getMonthConvert(objRtn.FECHA);
-                objRtn.strFormatDate4 = rs01.getString("NLOT");
+//                objRtn.strFormatDate4 = rs01.getString("NLOT");
                 objRtn.FUENTE = rs01.getString("FUENTE");
                 objRtn.PPROGRAM = rs01.getString("PPROGRAM");
                 objRtn.MENSA = rs01.getString("MENSA").trim();
@@ -825,21 +825,19 @@ public class InputsDAO {
         hmTablaFuente.put("ACLARSNTDR", "A2311");
         hmTablaFuente.put("AVISOSBNMX", "A2316");
         hmTablaFuente.put("EECCBX", "A2328");
-        
-        hmTablaFuente.put("AX-DLVRY-C", "A4111");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00667_GG(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00667(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(9, Types.VARCHAR);
+            cstmt01.registerOutParameter(8, Types.VARCHAR);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
             cstmt01.registerOutParameter(11, Types.INTEGER);
             cstmt01.registerOutParameter(12, Types.INTEGER);
-            cstmt01.registerOutParameter(13, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.FECR);//filter.strFormatDate4
@@ -847,20 +845,19 @@ public class InputsDAO {
             cstmt01.setString(4, filter.FUENTE);//"PLM"
             cstmt01.setString(5, filter.PPROGRAM);
             cstmt01.setString(6, filter.IN_ERROR);
-            cstmt01.setString(7, filter.FECHA);
-            cstmt01.setString(8, consulta);
-            cstmt01.setString(9, "");
-            cstmt01.setInt(10, filter.page.PAGNUM);
-            cstmt01.setInt(11, filter.page.PAGROW);
-            cstmt01.setInt(12, filter.page.TOTPAG);
-            cstmt01.setInt(13, filter.page.TOTROW);
+            cstmt01.setString(7, consulta);
+            cstmt01.setString(8, "");
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
             cstmt01.execute();
 
-            filter.strFormatDate4 = cstmt01.getString(9);
-            filter.page.PAGNUM = cstmt01.getInt(10);
-            filter.page.PAGROW = cstmt01.getInt(11);
-            filter.page.TOTPAG = cstmt01.getInt(12);
-            filter.page.TOTROW = cstmt01.getInt(13);
+            filter.strFormatDate4 = cstmt01.getString(8);
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
 
             rs01 = cstmt01.getResultSet();
             int pos = 0;
