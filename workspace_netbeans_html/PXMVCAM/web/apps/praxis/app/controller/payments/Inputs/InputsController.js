@@ -559,6 +559,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
             day = 1;
             
             var panelmes = Ext.getCmp(prototype.id +'panel'+ (i < 10 ? '0' : '') + i);
+            panelmes.suspendLayout = true;
             for (var n = init; n < fin; n++) {
 //                if (n % 7 === 1) {
 //                    colorFlag = '#D6D6D6';
@@ -595,6 +596,9 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                 day++;
             }
         }
+        console.log('termina cracion-----------****');
+        Ext.getCmp(prototype.id +'panel05').suspendLayout = false;
+        Ext.getCmp(prototype.id +'panel05').updateLayout();
     },
     
     setCalendar2: function () {

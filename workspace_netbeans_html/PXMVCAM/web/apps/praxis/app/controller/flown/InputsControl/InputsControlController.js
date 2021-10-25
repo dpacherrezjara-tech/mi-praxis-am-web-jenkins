@@ -1001,6 +1001,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             day = 1;
             
             var panelmes = Ext.getCmp(prototype.id +'panel'+ (i < 10 ? '0' : '') + i);
+            panelmes.suspendLayout = true;
             for (var n = init; n < fin; n++) {
 //                if (n % 7 === 1) {
 //                    colorFlag = '#D6D6D6';
@@ -1029,7 +1030,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     var fday = (day < 10 ? '0' : '') + day;
                     var v_id = 'lbl'+anio+''+mes+''+ fday ;
                     var v_label = new Ext.form.Label({
-                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000',backgroundColor:colorFlag
+                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000'
                                     });
                     panelmes.add( v_label);
                 
@@ -1037,6 +1038,9 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 day++;
             }
         }
+        console.log('termina cracion-----------****');
+        Ext.getCmp(prototype.id +'panel05').suspendLayout = false;
+        Ext.getCmp(prototype.id +'panel05').updateLayout();
     },
     
     setCalendar: function() {
@@ -1087,7 +1091,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                             colorFlag = '#2e6bf4';
                         }
                         
-                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
+//                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
                         
 //                        if(mes ==='01'){
                             if(source === 'VCR'){
