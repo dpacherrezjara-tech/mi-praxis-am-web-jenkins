@@ -129,7 +129,9 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                         data: [
                                             ["", "TODOS"],
                                             ["1", "MATCH"],
-                                            ["0", "UNMATCH"]
+                                            ["0", "UNMATCH"],
+                                            ["2", "PROCESADO DB RECIBOS"],
+                                            ["3", "PROCESADO DB RECIBOS"]
                                         ]
                                     }),
                                     queryMode: 'local',

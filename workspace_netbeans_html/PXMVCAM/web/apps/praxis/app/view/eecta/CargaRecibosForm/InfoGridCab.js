@@ -131,7 +131,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCab', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Estado<br>Aplicación', dataIndex: 'A4102ESTAD', width: 90, align: 'left'},                                    
+                                    {text: 'Estado', dataIndex: 'A4102ESTAD', width: 90, align: 'left'},                                    
                                     
                                     {text: 'Registrado', dataIndex: 'A4102REGIS', align: 'center', width: 80},  
                                     {text: 'Fecha', dataIndex: 'A4102FREGI', align: 'center', width: 70},  
@@ -146,7 +146,12 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCab', {
                             viewConfig: {
                                 stripeRows: true,
                                 enableTextSelection: true,
-                                markDirty: false
+                                markDirty: false,
+                                getRowClass: function (record, rowIndex, rowParams, store) {
+                                    //console.log(record.data.A3958STSPG); 
+                                    if ( record.data.A4102ESTAD === "ANULADO" )                  
+                                         return 'rowC';                                        
+                                }
                             },
                             trackMouseOver: true,
                             scope: this,

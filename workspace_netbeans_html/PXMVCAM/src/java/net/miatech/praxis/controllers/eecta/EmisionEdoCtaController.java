@@ -114,6 +114,7 @@ public class EmisionEdoCtaController extends BaseController {
             String Rutatmp = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
             ReportEdoCta reportEdoCta = new ReportEdoCta();
             File archivo = reportEdoCta.createReport(listaData, Rutatmp );
+            //File archivo = reportEdoCta.createReport( "C:\\Dumps\\resources\\report1.pdf" );
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
             response.setHeader("Pragma", "public");

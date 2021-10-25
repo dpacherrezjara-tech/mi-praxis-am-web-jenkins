@@ -256,7 +256,8 @@ public class CatalogoClienteDAO {
             cstmt01.registerOutParameter(9, Types.VARCHAR);
             cstmt01.registerOutParameter(10, Types.VARCHAR); 
             
-            filter.VP_PATHTMP= "/Dumps/";            
+            //filter.VP_PATHTMP= "/Dumps/";            
+            filter.VP_PATHTMP= session.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
             filter.VP_NOMBRE = "L"+filter.VP_CDCLI+".jpg";
             File file = new File(filter.VP_PATHTMP + filter.VP_NOMBRE );
             if(!logofile.isEmpty()){                

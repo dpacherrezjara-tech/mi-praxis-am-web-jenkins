@@ -40,4 +40,7 @@ public class A4103 {
     public String A4103REVIS = ""; //HAR(10) CCSID 284 NOT NULL, 
     public String A4103FREVI = ""; //HAR(8) CCSID 284 NOT NULL, 
     public String A4103HREVI = ""; //HAR(6) CCSID 284 NOT NULL
+    //news
+    public String A4103REFR = "";
+    public String A4103CDCLA= "";
 }

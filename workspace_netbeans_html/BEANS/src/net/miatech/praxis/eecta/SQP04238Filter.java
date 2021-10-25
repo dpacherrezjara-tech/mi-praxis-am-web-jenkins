@@ -11,14 +11,17 @@ import net.miatech.beans.Pagination;
  *
  * @author vhidalgo
  */
-public class SQP04145Filter extends A4054 {
+public class SQP04238Filter extends A4101 {
 
-    public String VP_OPCION = "";
-    public String VP_FECHA1 = "";
-    public String VP_FECHA2 = "";
+    public String VP_CCUST = "";
+    public String VP_FDATE1 = "";
+    public String VP_FDATE2 = "";
+    public String VP_LOTE = "";
     public String VP_STAT = "";
     public String VP_TICKET = "";
     public String VP_CDCLI = "";
-    public String VP_NLOTE = "";    
-    public Pagination page = new Pagination();
+    //EXTRA
+    public String A3953RSOCI = ""; 
+    public String A4101ESTAD_1 = ""; 
+    public Pagination page = new Pagination(); 
 }

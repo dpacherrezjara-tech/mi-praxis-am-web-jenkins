@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                     fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
                                     enableKeyEvents: true,
                                     padding: '0 0 0 2',
-                                    width: 270,
+                                    width: 290,
                                     enforceMaxLength: true,
                                     maxLength: 30,
                                     height: 24,
@@ -85,7 +85,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                     {text: 'Recibo', dataIndex: 'A4106NUMRC', width: 120, align: 'center', locked: true,
                                         summaryType: 'count',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000') + ' Boleto (s)';
+                                            return Ext.util.Format.number(value, '0,000') + ' RECIBO(s)';
                                         }
 //                                        filter: {                                            
 //                                            type: 'string',                                            
@@ -101,10 +101,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                     {text: 'Mda<br>Pago', dataIndex: 'A4106MDA', align: 'center', width: 60},
                                     {
                                         text: 'Total', dataIndex: 'A4106TOT', width: 80, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
+//                                        summaryType: 'sum',
+//                                        summaryRenderer: function (value, summaryData, dataIndex) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             //metaData.style = 'font-weight:bold;color:green;';     
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -123,10 +123,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                     },
                                     {
                                         text: 'Saldo', dataIndex: 'A4106SALD', width: 80, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
+//                                        summaryType: 'sum',
+//                                        summaryRenderer: function (value, summaryData, dataIndex) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             //metaData.style = 'font-weight:bold;color:green;';     
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridAplDet', {
                                     {text: 'Ref. Pago', dataIndex: 'A4106REFPG', align: 'left', width: 130},
                                     {text: 'Banco', dataIndex: 'A4106BANCO', align: 'left', width: 130},
                                     {text: 'Cta Bancaria', dataIndex: 'A4106CTABC', align: 'left', width: 100},
-                                     {text: 'Lote', dataIndex: 'A4106LOTE', align: 'center', width: 100}
+                                    {text: 'Lote', dataIndex: 'A4106LOTE', align: 'center', width: 100}
                                 ],
                                 defaults: {
                                     sortable: true,

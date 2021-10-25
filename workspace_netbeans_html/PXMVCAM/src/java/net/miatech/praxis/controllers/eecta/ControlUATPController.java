@@ -26,6 +26,8 @@ import net.miatech.praxis.eecta.SQP04109Filter;
 import net.miatech.praxis.eecta.SQP04110Filter;
 import net.miatech.praxis.eecta.SQP04145Filter;
 import net.miatech.praxis.eecta.SQP04146Filter;
+import net.miatech.praxis.eecta.SQP04229Filter;
+import net.miatech.praxis.eecta.SQP04238Filter;
 import net.miatech.praxis.logic.eecta.ControlUATPLogic;
 import org.json.simple.JSONValue;
 import org.springframework.context.annotation.Scope;
@@ -277,6 +279,11 @@ public class ControlUATPController extends BaseController {
             filter.VP_FECHA2 = request.getParameter("VP_FDATE2");
             filter.VP_TICKET = request.getParameter("VP_TICKET");
             filter.VP_STAT = request.getParameter("VP_STAT");
+            
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_NLOTE = request.getParameter("VP_NLOTE");
+            
+            
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
@@ -323,6 +330,68 @@ public class ControlUATPController extends BaseController {
             logic = new ControlUATPLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.getSQP04146Filter(filter);
+
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+            map.put("data", listaData);
+            map.put("err", "");
+        } catch (NumberFormatException ex) {
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+            map.put("err", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+            map.put("err", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+      
+    @RequestMapping(value = "set_procesarFE")
+    public @ResponseBody
+    String set_procesarFE(ModelMap map, HttpServletRequest request) {
+        SQP04229Filter filter = new SQP04229Filter();  
+        SQP04229Filter objRtn = new SQP04229Filter();
+        try {
+            logic = new ControlUATPLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            objRtn = logic.setSQP04229Filter(filter);            
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0";
+            objRtn.dbException.MESSAGE = ex.getMessage();
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+
+    }
+    @RequestMapping(value = "/search_fac_cab")
+    public @ResponseBody
+    String search_fac_cab(ModelMap map, HttpServletRequest request) {
+        List<SQP04238Filter> listaData;
+        SQP04238Filter filter;
+        filter = new SQP04238Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {            
+            filter.VP_FDATE1 = request.getParameter("VP_FDATE1");
+            filter.VP_FDATE2 = request.getParameter("VP_FDATE2");
+            filter.VP_LOTE = request.getParameter("VP_LOTE");
+            filter.VP_STAT = request.getParameter("VP_STAT");
+            filter.VP_TICKET = request.getParameter("VP_TICKET");
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            logic = new ControlUATPLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04238Filter(filter);
 
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);

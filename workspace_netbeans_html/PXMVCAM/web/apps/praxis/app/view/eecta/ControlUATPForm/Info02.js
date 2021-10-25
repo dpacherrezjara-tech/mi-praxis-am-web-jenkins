@@ -43,11 +43,11 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info02', {
                             xtype: 'grid',
                             id: prototype.id03 + '-gridData',
                             columnLines: true,
-                            width: 780,
-                            height: 310,
+                            width: 990,
+                            height: 390,
                             padding: '0px 5px 1px 5px',
                             columns: {
-                                items: [                                    
+                                items: [
                                     {
                                         text: 'Ticket', dataIndex: 'A4054SERIE', width: 110, align: 'center', locked: true,
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
@@ -55,36 +55,73 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Info02', {
                                         }
                                     },
                                     {
-                                        text: 'Seq', dataIndex: 'A4054SEQ', width: 40, align: 'center', locked: true
+                                        text: 'SEQ', dataIndex: 'A4054SEQ', width: 40, align: 'center', locked: true
                                     },
                                     {
-                                        text: 'Estado', dataIndex: 'A4054STAT', align: 'center', width: 60, locked: true,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            var VL_DES = 'Pendiente';
-                                            if (record.get('A4054STAT')==='2') VL_DES = 'Error al obtener UUID';
-                                            if (record.get('A4054STAT')==='1') VL_DES = 'OK';                                            
-                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="' + VL_DES + '">';
-                                            if (value === '1')
-                                                html = '<img src="resources/img/semaforo/Circle_Green.png" title="' + VL_DES + '" >';
-                                            if (value === '2')
-                                                html = '<img src="resources/img/semaforo/Circle_Red.png" title="' + VL_DES + '" >';
-                                            return html;
-                                        }
-                                    },                                    
+                                        text: 'PNR', dataIndex: 'A4054PNR', width: 50, align: 'center', locked: true
+                                    },
+                                    {
+                                        text: 'Estado', dataIndex: 'A4054STAT', align: 'center', width: 100, locked: true,
+//                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                            var VL_DES = 'Pendiente';
+//                                            if (record.get('A4054STAT') === '2')
+//                                                VL_DES = 'Error al obtener UUID';
+//                                            if (record.get('A4054STAT') === '1')
+//                                                VL_DES = 'OK';
+//                                            var html = '<img src="resources/img/semaforo/Circle_Silver.png" title="' + VL_DES + '">';
+//                                            if (value === '1')
+//                                                html = '<img src="resources/img/semaforo/Circle_Green.png" title="' + VL_DES + '" >';
+//                                            if (value === '2')
+//                                                html = '<img src="resources/img/semaforo/Circle_Red.png" title="' + VL_DES + '" >';
+//                                            return html;
+//                                        }
+                                    },
                                     {text: 'Trx.', dataIndex: 'A4054TRNCU', align: 'center', width: 60, locked: true},
                                     {text: 'Fecha<br>Contable', dataIndex: 'A4054FCONT', align: 'center', width: 70, locked: true},
                                     {
                                         text: 'Información Factura',
                                         columns: [
-                                            {text: 'UUID', dataIndex: 'A4054CFDI', width: 110, align: 'left'},
+                                            {
+                                                xtype: 'actioncolumn',
+                                                text: 'XML',
+                                                sortable: false,
+                                                width: 40,
+                                                align: 'center',
+                                                locked: false,
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-download',
+                                                        tooltip: 'XML'
+                                                        //handler: 'onDetailClick_viewXml'
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                xtype: 'actioncolumn',
+                                                text: 'PDF',
+                                                sortable: false,
+                                                width: 40,
+                                                align: 'center',
+                                                locked: false,
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-download',
+                                                        tooltip: 'DESCARGAR PDF'
+                                                        //handler: 'onDetailClick_viewXml'
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Estado', dataIndex: 'A4054STDE', width: 110, align: 'left'},                                            
+                                            {text: 'CDFI', dataIndex: 'A4054CFDI', width: 110, align: 'left'},
                                             {text: 'Fecha', dataIndex: 'A4054FECTB', width: 70, align: 'center'},
                                             {text: 'FOP', dataIndex: 'A4054FOP', width: 60, align: 'center'},
                                             {text: 'Metodo', dataIndex: 'A4054MPG', width: 60, align: 'center'},
-                                            {text: 'Tipo', dataIndex: 'A4054TIPO', width: 50, align: 'center'},                                            
+                                            {text: 'Tipo', dataIndex: 'A4054TIPO', width: 50, align: 'center'},
                                             {text: 'RFC', dataIndex: 'A4054RFC', width: 80, align: 'left'},
-                                            {text: 'RFC Name', dataIndex: 'A4054RFCN', width: 110, align: 'left'}
+                                            {text: 'RFC Name', dataIndex: 'A4054RFCN', width: 210, align: 'left'},                                            
+                                            {text: 'Detalle<br>Mensaje', dataIndex: 'A4054RMSG', width: 110, align: 'left'}
                                         ]
-                                    }                                   
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,
