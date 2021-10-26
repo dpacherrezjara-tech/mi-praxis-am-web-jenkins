@@ -511,7 +511,7 @@ public class ForecastDAO {
                     lst.get(i).totVCPNUSD_FORECAST = VCPNUSD_FORECAST;
                     lst.get(i).totVCPNMXN_FORECAST = VCPNMXN_FORECAST;
                 }
-                
+
                 totVCPNMXN_FORECAST_REAL = VCPNMXN_FORECAST;
 
                 for (int i = 0; i < lst.size(); i++) {
@@ -653,7 +653,7 @@ public class ForecastDAO {
         Connection cnx = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03898(?,?,?)}";
-        
+
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
@@ -930,6 +930,11 @@ public class ForecastDAO {
                         bean.VPROUSDASI = rst.getDouble("VCPNUSDASI") / rst.getDouble("PAXASI");
                         bean.VPROUSDASI = Functions.redondear(bean.VPROUSDASI, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDASI = rst.getDouble("VPROUSDASI");
+                    }
+
                     bean.VCPNUSDASI = rst.getDouble("VCPNUSDASI");
                     bean.VCPNMXNASI = rst.getDouble("VCPNMXNASI");
 
@@ -939,6 +944,11 @@ public class ForecastDAO {
                         bean.VPROUSDCAM = rst.getDouble("VCPNUSDCAM") / rst.getDouble("PAXCAM");
                         bean.VPROUSDCAM = Functions.redondear(bean.VPROUSDCAM, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDCAM = rst.getDouble("VPROUSDCAM");
+                    }
+
                     bean.VCPNUSDCAM = rst.getDouble("VCPNUSDCAM");
                     bean.VCPNMXNCAM = rst.getDouble("VCPNMXNCAM");
                     //CAN                
@@ -947,6 +957,11 @@ public class ForecastDAO {
                         bean.VPROUSDCAN = rst.getDouble("VCPNUSDCAN") / rst.getDouble("PAXCAN");
                         bean.VPROUSDCAN = Functions.redondear(bean.VPROUSDCAN, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDCAN = rst.getDouble("VPROUSDCAN");
+                    }
+
                     bean.VCPNUSDCAN = rst.getDouble("VCPNUSDCAN");
                     bean.VCPNMXNCAN = rst.getDouble("VCPNMXNCAN");
                     //CAR                
@@ -955,6 +970,11 @@ public class ForecastDAO {
                         bean.VPROUSDCAR = rst.getDouble("VCPNUSDCAR") / rst.getDouble("PAXCAR");
                         bean.VPROUSDCAR = Functions.redondear(bean.VPROUSDCAR, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDCAR = rst.getDouble("VPROUSDCAR");
+                    }
+
                     bean.VCPNUSDCAR = rst.getDouble("VCPNUSDCAR");
                     bean.VCPNMXNCAR = rst.getDouble("VCPNMXNCAR");
                     //EUR                
@@ -963,6 +983,11 @@ public class ForecastDAO {
                         bean.VPROUSDEUR = rst.getDouble("VCPNUSDEUR") / rst.getDouble("PAXEUR");
                         bean.VPROUSDEUR = Functions.redondear(bean.VPROUSDEUR, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDEUR = rst.getDouble("VPROUSDEUR");
+                    }
+
                     bean.VCPNUSDEUR = rst.getDouble("VCPNUSDEUR");
                     bean.VCPNMXNEUR = rst.getDouble("VCPNMXNEUR");
                     //FRO                
@@ -971,6 +996,11 @@ public class ForecastDAO {
                         bean.VPROUSDFRO = rst.getDouble("VCPNUSDFRO") / rst.getDouble("PAXFRO");
                         bean.VPROUSDFRO = Functions.redondear(bean.VPROUSDFRO, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDFRO = rst.getDouble("VPROUSDFRO");
+                    }
+
                     bean.VCPNUSDFRO = rst.getDouble("VCPNUSDFRO");
                     bean.VCPNMXNFRO = rst.getDouble("VCPNMXNFRO");
                     //LOC                
@@ -979,6 +1009,11 @@ public class ForecastDAO {
                         bean.VPROUSDLOC = rst.getDouble("VCPNUSDLOC") / rst.getDouble("PAXLOC");
                         bean.VPROUSDLOC = Functions.redondear(bean.VPROUSDLOC, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDLOC = rst.getDouble("VPROUSDLOC");
+                    }
+
                     bean.VCPNUSDLOC = rst.getDouble("VCPNUSDLOC");
                     bean.VCPNMXNLOC = rst.getDouble("VCPNMXNLOC");
                     //PLA                
@@ -987,6 +1022,11 @@ public class ForecastDAO {
                         bean.VPROUSDPLA = rst.getDouble("VCPNUSDPLA") / rst.getDouble("PAXPLA");
                         bean.VPROUSDPLA = Functions.redondear(bean.VPROUSDPLA, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDPLA = rst.getDouble("VPROUSDPLA");
+                    }
+
                     bean.VCPNUSDPLA = rst.getDouble("VCPNUSDPLA");
                     bean.VCPNMXNPLA = rst.getDouble("VCPNMXNPLA");
                     //SUD                
@@ -995,6 +1035,11 @@ public class ForecastDAO {
                         bean.VPROUSDSUD = rst.getDouble("VCPNUSDSUD") / rst.getDouble("PAXSUD");
                         bean.VPROUSDSUD = Functions.redondear(bean.VPROUSDSUD, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDSUD = rst.getDouble("VPROUSDSUD");
+                    }
+
                     bean.VCPNUSDSUD = rst.getDouble("VCPNUSDSUD");
                     bean.VCPNMXNSUD = rst.getDouble("VCPNMXNSUD");
                     //USA                
@@ -1003,41 +1048,15 @@ public class ForecastDAO {
                         bean.VPROUSDUSA = rst.getDouble("VCPNUSDUSA") / rst.getDouble("PAXUSA");
                         bean.VPROUSDUSA = Functions.redondear(bean.VPROUSDUSA, 2);
                     }
+
+                    if (bean.TREG.equals("2")) {
+                        bean.VPROUSDUSA = rst.getDouble("VPROUSDUSA");
+                    }
+
                     bean.VCPNUSDUSA = rst.getDouble("VCPNUSDUSA");
                     bean.VCPNMXNUSA = rst.getDouble("VCPNMXNUSA");
 
                     lst.add(bean);
-
-                    if (bean.VCPNMXNASI > 0) {
-                        totalRegistrosASI++;
-                    }
-                    if (bean.VCPNMXNCAM > 0) {
-                        totalRegistrosCAM++;
-                    }
-                    if (bean.VCPNMXNCAN > 0) {
-                        totalRegistrosCAN++;
-                    }
-                    if (bean.VCPNMXNCAR > 0) {
-                        totalRegistrosCAR++;
-                    }
-                    if (bean.VCPNMXNEUR > 0) {
-                        totalRegistrosEUR++;
-                    }
-                    if (bean.VCPNMXNFRO > 0) {
-                        totalRegistrosFRO++;
-                    }
-                    if (bean.VCPNMXNLOC > 0) {
-                        totalRegistrosLOC++;
-                    }
-                    if (bean.VCPNMXNPLA > 0) {
-                        totalRegistrosPLA++;
-                    }
-                    if (bean.VCPNMXNSUD > 0) {
-                        totalRegistrosSUD++;
-                    }
-                    if (bean.VCPNMXNUSA > 0) {
-                        totalRegistrosUSA++;
-                    }
 
                     //Totales
                     bean.TOTPAXASI = TOTPAXASI;
@@ -1188,6 +1207,9 @@ public class ForecastDAO {
                         TOTPAXPLA = TOTPAXPLA + lst.get(i).PAXPLA;
 
                         lst.get(i).PAXASI = (int) Math.round(lst_seats.get(i).ASI * lst_occupation_factor.get(i).percentageASI / 100);
+                        if (lst.get(i).PAXASI == 0) {
+                            lst.get(i).VPROUSDASI = 0;
+                        }
                         lst.get(i).VCPNUSDASI = lst.get(i).VPROUSDASI * lst.get(i).PAXASI;
                         lst.get(i).VCPNMXNASI = lst.get(i).VCPNUSDASI * lst.get(i).TCAMB;
                         TOTVCPNMXNASI = TOTVCPNMXNASI + lst.get(i).VCPNMXNASI;
@@ -1279,6 +1301,56 @@ public class ForecastDAO {
                     lst.get(i).TOTVCPNUSDUSA = TOTVCPNUSDUSA;
                     lst.get(i).TOTVCPNMXNUSA = TOTVCPNMXNUSA;
                     lst.get(i).TOTPAXUSA = TOTPAXUSA;
+
+                    //PROMEDIOS TOTALES
+                    if (TOTPAXASI > 0){
+                        lst.get(i).TOTVPROUSDASI = TOTVCPNUSDASI / TOTPAXASI;
+                    } else {
+                        lst.get(i).TOTVPROUSDASI = 0;
+                    }
+                    
+                    lst.get(i).TOTVPROUSDCAM = TOTVCPNUSDCAM / TOTPAXCAM;
+                    lst.get(i).TOTVPROUSDCAN = TOTVCPNUSDCAN / TOTPAXCAN;
+                    lst.get(i).TOTVPROUSDCAR = TOTVCPNUSDCAR / TOTPAXCAR;
+                    lst.get(i).TOTVPROUSDEUR = TOTVCPNUSDEUR / TOTPAXEUR;
+                    lst.get(i).TOTVPROUSDFRO = TOTVCPNUSDFRO / TOTPAXFRO;
+                    lst.get(i).TOTVPROUSDLOC = TOTVCPNUSDLOC / TOTPAXLOC;
+                    lst.get(i).TOTVPROUSDPLA = TOTVCPNUSDPLA / TOTPAXPLA;
+                    lst.get(i).TOTVPROUSDSUD = TOTVCPNUSDSUD / TOTPAXSUD;
+                    lst.get(i).TOTVPROUSDUSA = TOTVCPNUSDUSA / TOTPAXUSA;
+
+                    //TOTAL DE REGISTROS
+                    if (lst.get(i).VCPNMXNASI > 0) {
+                        totalRegistrosASI++;
+                    }
+                    if (lst.get(i).VCPNMXNCAM > 0) {
+                        totalRegistrosCAM++;
+                    }
+                    if (lst.get(i).VCPNMXNCAN > 0) {
+                        totalRegistrosCAN++;
+                    }
+                    if (lst.get(i).VCPNMXNCAR > 0) {
+                        totalRegistrosCAR++;
+                    }
+                    if (lst.get(i).VCPNMXNEUR > 0) {
+                        totalRegistrosEUR++;
+                    }
+                    if (lst.get(i).VCPNMXNFRO > 0) {
+                        totalRegistrosFRO++;
+                    }
+                    if (lst.get(i).VCPNMXNLOC > 0) {
+                        totalRegistrosLOC++;
+                    }
+                    if (lst.get(i).VCPNMXNPLA > 0) {
+                        totalRegistrosPLA++;
+                    }
+                    if (lst.get(i).VCPNMXNSUD > 0) {
+                        totalRegistrosSUD++;
+                    }
+                    if (lst.get(i).VCPNMXNUSA > 0) {
+                        totalRegistrosUSA++;
+                    }
+
                 }
             }
 
