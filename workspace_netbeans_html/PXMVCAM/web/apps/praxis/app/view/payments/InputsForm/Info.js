@@ -127,12 +127,12 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                 ]
                                             },
                                             {text: 'Details / error Message', dataIndex: 'MENSA', width: 350,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    var data = record.data;
-                                                    metaData.style = "text-align:left;";
-                                                    metaData.tdAttr = 'data-qtip="' + data.MENSA+'"';
-                                                    return value;
-                                                }
+//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                    var data = record.data;
+//                                                    metaData.style = "text-align:left;";
+//                                                    metaData.tdAttr = 'data-qtip="' + data.MENSA+'"';
+//                                                    return value;
+//                                                }
                                             }
                                         ]
                                     }
