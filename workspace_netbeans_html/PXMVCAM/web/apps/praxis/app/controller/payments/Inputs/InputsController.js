@@ -667,7 +667,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
     searchDelivery_clickHandler: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         var beanDeliv = rowData.data;
         switch (columnNum) {
-            case 1:
+            case 4:
                 beanDeliv.IN_ERROR = '';
                 break;
             case 9:
