@@ -828,7 +828,7 @@ public class InputsDAO {
         
         hmTablaFuente.put("AX-DLVRY-C", "A4111");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00667GG_(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00667_GG(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             
