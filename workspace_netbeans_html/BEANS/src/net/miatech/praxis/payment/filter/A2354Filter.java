@@ -22,6 +22,7 @@ public class A2354Filter extends A2354 {
     public String A003IATA = "";
     public long RN = 0;
     public String strDescripCtry = "";
+    public String strDescripUNIOPE = "";
     //A003
     public String A003KEY1 = "";
     public Pagination page = new Pagination();

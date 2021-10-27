@@ -489,6 +489,11 @@ public class MerchantNumberDAO {
 
         List<A2354Filter> lstData = new ArrayList<A2354Filter>(0);
         A2354Filter bean;
+        
+        HashMap<String, String> hmDescUNIOPE = new HashMap<String, String>();
+        hmDescUNIOPE.put("1", "Aerovias MX");
+        hmDescUNIOPE.put("2", "Aeromexico Cargo");
+        hmDescUNIOPE.put("3", "PLM");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -534,6 +539,12 @@ public class MerchantNumberDAO {
                 bean.CODCLIT2 = rst.getString("CODCLIT2").trim();
                 bean.DIRCLIT2 = rst.getString("DIRCLIT2").trim();
                 bean.strDescrip = rst.getString("DES_IATA").trim();
+                bean.UNIOPE = rst.getString("UNIOPE").trim();                
+                if (hmDescUNIOPE.containsKey(rst.getString("UNIOPE").trim().toUpperCase())) {
+                    bean.strDescripUNIOPE = hmDescUNIOPE.get(rst.getString("UNIOPE").trim()).toString();
+                } else {
+                    bean.strDescripUNIOPE = rst.getString("UNIOPE").trim();
+                }
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -575,7 +586,7 @@ public class MerchantNumberDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -590,15 +601,16 @@ public class MerchantNumberDAO {
             cstmt.setString(6, filter.CIATA.trim());
             cstmt.setString(7, filter.CANAL.trim());
             cstmt.setString(8, filter.SCOUNTRY.trim());
+            cstmt.setString(9, filter.UNIOPE.trim());
 
-            cstmt.setString(9, filter.CODCLIT1.trim());
-            cstmt.setString(10, filter.DIRCLIT1.trim());
-            cstmt.setString(11, filter.CODCLIT2.trim());
-            cstmt.setString(12, filter.DIRCLIT2.trim());
+            cstmt.setString(10, filter.CODCLIT1.trim());
+            cstmt.setString(11, filter.DIRCLIT1.trim());
+            cstmt.setString(12, filter.CODCLIT2.trim());
+            cstmt.setString(13, filter.DIRCLIT2.trim());
 
-            cstmt.setString(13, session.getUserView().getUserInfo().USR);
-            cstmt.setString(14, Functions.getFechaActual());
-            cstmt.setString(15, Functions.getHoraActual());
+            cstmt.setString(14, session.getUserView().getUserInfo().USR);
+            cstmt.setString(15, Functions.getFechaActual());
+            cstmt.setString(16, Functions.getHoraActual());
             cstmt.execute();
 
         } catch (Exception e) {
@@ -657,6 +669,8 @@ public class MerchantNumberDAO {
                 objRtn.DIRCLIT1 = rs01.getString("DIRCLIT1").trim();
                 objRtn.CODCLIT2 = rs01.getString("CODCLIT2").trim();
                 objRtn.DIRCLIT2 = rs01.getString("DIRCLIT2").trim();
+                objRtn.UNIOPE = rs01.getString("UNIOPE").trim();
+                
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
                 objRtn.HOCR = rs01.getString("HOCR");
