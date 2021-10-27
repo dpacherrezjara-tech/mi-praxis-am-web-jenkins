@@ -817,7 +817,10 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         controller.startDisplay();
         this.dataEntry.show();
         
+        
         /*var DataEntryLog = Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {id: 'DataEntryProMasterTicketForm'} );
+        console.log('DataEntryLog');
+        console.log(DataEntryLog);
         var controller = DataEntryLog.getController();
         controller.ticketNumber = "";
         controller.actionCode = this.actionCode2;

@@ -7,6 +7,8 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
     controller: 'DataEntryProMasterTicketController',
     title: 'View Ticket - Browser',
     header: true,
+    closable: false,
+    closeAction: 'hide',
     height: 640,
     width: 1200,
     resizable: false,
@@ -632,6 +634,29 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
             ]
         }
     ],
-    dockedItems: [
+    dockedItems:[
+        {
+            xtype: 'toolbar',
+            dock: 'bottom',
+            ui: 'footer',
+            margin: '10 0 10 0',
+            layout:{
+                pack: 'center'
+            },
+            fieldStyle: 'text-align:center',
+            defaults:{
+                scale: 'medium'
+            },
+            items:[
+                {
+                    text: 'Cancel',
+                    id:prototype.id+'-btn-cancel',
+                    iconCls: 'prx-icon-cancel',
+                    listeners:{
+                        click: 'onCancelClick'
+                    }
+                }
+            ]
+        }
     ]
 });
