@@ -357,7 +357,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
         }
         me.params.bean = this.beanProMasterTicket;
         me.startDisplay();
-	Ext.getCmp('DataEntryProMasterTicketForm').hide();
+	me.dataEntry.hide(); //Ext.getCmp('DataEntryProMasterTicketForm').hide();
+    },
+    onCancelClick: function(btn){
+        //this.view.close();
+        me.dataEntry.hide();
     },
     
     pagFirst: function(obj, e) {
