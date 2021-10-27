@@ -52,6 +52,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('de-txtNameIATA', this.beanResult.strDescrip);
         this.setValue('de-txtSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtNameCTRY', this.beanResult.strDescripCtry);
+        this.setValue('de-cmbUNIOPE', this.beanResult.UNIOPE);
         
         this.setValue('de-txtCODCLIT1', this.beanResult.CODCLIT1);
         this.setValue('de-txtDIRCLIT1', this.beanResult.DIRCLIT1);
@@ -77,6 +78,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         beanTemp.CIATA = this.getValue("de-txtCIATA");
         beanTemp.CANAL = this.getValue("de-txtCANAL");
         beanTemp.SCOUNTRY = this.getValue("de-txtSCOUNTRY");
+        beanTemp.UNIOPE = this.getValue("de-cmbUNIOPE");
         
         beanTemp.CODCLIT1 = this.getValue("de-txtCODCLIT1");
         beanTemp.DIRCLIT1 = this.getValue("de-txtDIRCLIT1");
@@ -95,6 +97,19 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
     },
     getData: function() {
 //        console.log('getData');
+        var cmbUNIOPE = Ext.getCmp(prototype.id + '-de-cmbUNIOPE');
+        cmbUNIOPE.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", ""],
+                ["1", "Aerovias MX"],
+                ["2", "Aeromexico Cargo"],
+                ["3", "PLM"]
+            ]
+        }));
+        cmbUNIOPE.setValue('');
+
         var beanString = JSON.stringify(meDE.bean.data);
 
         Ext.Ajax.request({
@@ -128,6 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('txtUSUP', '');
         this.setValue('txtFEUP', '');
         this.setValue('txtHOUP', '');
+        //this.setValue('-de-cmbUNIOPE', '');
     },
     //</editor-fold>
     toUpperCase: function(obj, value, opts) {

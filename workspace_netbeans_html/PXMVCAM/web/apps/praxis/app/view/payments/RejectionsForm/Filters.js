@@ -68,6 +68,21 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.Filters', {
                     hidden: false,
                     hiddenLabel: false
                 }
+                ,
+                {
+                    xtype: 'combo',
+                    fieldLabel: 'Bank',
+                    id: prototype.id+'-cmbBank',
+                    disabled: false,
+                    width: 300,
+                    labelWidth: 120,
+                    queryMode: 'local',
+                    triggerAction: 'all',
+                    valueField: 'CODEBANK',
+                    displayField: 'IN_CODE_IN_NAME',
+                    hidden: false,
+                    hiddenLabel: false
+                },
                 
             ]
             

@@ -22,7 +22,6 @@ public class MerchantNumberLogic {
 
     public void setSession(IServerSession ss) {
         MerchantNumberDAO.setSession(ss);
-
     }
 
     public List<A2280Filter> loadPX265SQP00660(A2280Filter filter) throws SQLException, Exception {
