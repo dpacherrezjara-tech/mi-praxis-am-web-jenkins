@@ -438,18 +438,20 @@ public class InvoiceCommissionConsortiaController extends BaseController {
                 //Iterator<Cell> cellIterator = currentRow.iterator();
                 if (cont > 1) {
                     if (sheet.getCell(0) != null) {
-                        //IATA CODE|INVOICE NUMBER|INVOICE DATE|BATCH NUMBER|INVOICE APLICATION|COMMISSION|IVA|STATUS
+                        // Antes----> IATA CODE|INVOICE NUMBER|INVOICE DATE|BATCH NUMBER|INVOICE APLICATION|COMMISSION|IVA|STATUS
+                        // Ahora----> CONCEPTO|IATA CODE|INVOICE NUMBER|INVOICE DATE|BATCH NUMBER|INVOICE APLICATION|COMMISSION|IVA|STATUS
                         param.VP_ACTION     = filter.VP_ACTION;
                         param.VP_A2447CCUST = filter.VP_A2447CCUST;
-                        param.VP_A2447LOTE  = sheet.getCell(3)== null ? "" : sheet.getCell(3).toString();
-                        param.VP_A2447IATA  = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString();
-                        param.VP_A2447COMM  = sheet.getCell(5)== null ? 0 : Double.parseDouble(sheet.getCell(5).toString());//tiene que ser igual a A2444TCOM
-                        param.VP_A2447IVA   = sheet.getCell(6)== null ? 0 : Double.parseDouble(sheet.getCell(6).toString());//tiene que ser igual a A2444TIVA
-                        param.VP_A2447NFACT = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString();
-                        param.VP_A2447FFACT = sheet.getCell(2)== null ? "" : sheet.getCell(2).toString();//no menor a la fecha actual
-                        param.VP_A2447STATU = sheet.getCell(7)== null ? "" : sheet.getCell(7).toString();
+                        param.VP_A2447COD  = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString();
+                        param.VP_A2447LOTE  = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString();
+                        param.VP_A2447IATA  = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString();
+                        param.VP_A2447COMM  = sheet.getCell(6)== null ? 0 : Double.parseDouble(sheet.getCell(6).toString());//tiene que ser igual a A2444TCOM
+                        param.VP_A2447IVA   = sheet.getCell(7)== null ? 0 : Double.parseDouble(sheet.getCell(7).toString());//tiene que ser igual a A2444TIVA
+                        param.VP_A2447NFACT = sheet.getCell(2)== null ? "" : sheet.getCell(2).toString();
+                        param.VP_A2447FFACT = sheet.getCell(3)== null ? "" : sheet.getCell(3).toString();//no menor a la fecha actual
+                        param.VP_A2447STATU = sheet.getCell(8)== null ? "" : sheet.getCell(8).toString();
                         param.VP_A2447SEQ   = cont.toString();
-                        param.VP_A2447INDAP = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString();
+                        param.VP_A2447INDAP = sheet.getCell(5)== null ? "" : sheet.getCell(5).toString();
                         lstData.add(param);
                     }
                 }
