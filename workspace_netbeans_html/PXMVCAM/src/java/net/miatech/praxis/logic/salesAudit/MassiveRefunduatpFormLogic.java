@@ -42,5 +42,8 @@ public class MassiveRefunduatpFormLogic {
     public List<A4076Filter> searchDetail(A4076Filter filter) throws SQLException, Exception {
         return RefunduatpFormDAO.searchDetail(filter);
     }
+    public String ProcesaManualUATP(A4076Filter filter,String lstaTaxes,String fop) throws SQLException, Exception {
+        return RefunduatpFormDAO.ProcesaManualUATP(filter, lstaTaxes, fop);
+    }
 
 }
