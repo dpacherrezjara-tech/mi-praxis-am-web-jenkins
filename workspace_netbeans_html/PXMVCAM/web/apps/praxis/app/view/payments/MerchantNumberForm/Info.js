@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1600,
+                width: 1630,
                 height: 700,
                 margin: '0 0 0 0',
                 align: 'center'
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                             padding: '1',
                             border:true,
                             height: 550,
-                            width: 1590,  
+                            width: 1630,  
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id+'-gridDataAirport',
                                     height: 510,
-                                    width: 1590,
+                                    width: 1630,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                     return  value;
                                                 }
                                             },
-                                            {text: 'Unidad<br>Operativa', dataIndex: 'strDescripUNIOPE', width: 90},
+                                            {text: 'Unidad<br>Operativa', dataIndex: 'strDescripUNIOPE', width: 120},
                                             {text: 'Canal', dataIndex: 'CANAL', width: 55} ,
                                             {text: 'Social',
                                                 defaults: {

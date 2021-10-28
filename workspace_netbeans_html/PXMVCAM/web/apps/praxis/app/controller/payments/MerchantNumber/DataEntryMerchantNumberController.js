@@ -26,18 +26,18 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 //        console.log('afterRender');
         switch (this.actionCode) {
             case 'I':
-                var cmbUNIOPE = Ext.getCmp(prototype.id + '-de-cmbUNIOPE');
-                cmbUNIOPE.bindStore(Ext.create('Ext.data.ArrayStore', {
-                    autoLoad: false,
-                    fields: ['code', 'name'],
-                    data: [
-                        ["", ""],
-                        ["1", "Aerovias MX"],
-                        ["2", "Aeromexico Cargo"],
-                        ["3", "PLM"]
-                    ]
-                }));
-                cmbUNIOPE.setValue('');
+//                var cmbUNIOPE = Ext.getCmp(prototype.id + '-de-cmbUNIOPE');
+//                cmbUNIOPE.bindStore(Ext.create('Ext.data.ArrayStore', {
+//                    autoLoad: false,
+//                    fields: ['code', 'name'],
+//                    data: [
+//                        ["", ""],
+//                        ["1", "Aerovias MX"],
+//                        ["2", "Aeromexico Cargo"],
+//                        ["3", "PLM"]
+//                    ]
+//                }));
+//                cmbUNIOPE.setValue('');
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
