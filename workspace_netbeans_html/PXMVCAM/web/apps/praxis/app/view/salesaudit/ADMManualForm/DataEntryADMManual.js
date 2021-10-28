@@ -638,6 +638,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                                 items: [
                                     {text: 'Cur', dataIndex: 'A1673MONED', flex: 1},
                                     {text: 'Tax', dataIndex: 'A1673CDTAX', align: 'center', flex: 1},
+                                    {text: 'Ato', dataIndex: 'A1673CDATO', align: 'center', flex: 1},
                                     {text: 'Net', dataIndex: 'A1673TXMIA', flex: 1, align: 'right',
                                         renderer: 'onColumnAirlineRenderer', summaryRenderer: 'OnAirlineSummary', //summaryType: 'sum',
                                         summaryType: function (records) {
