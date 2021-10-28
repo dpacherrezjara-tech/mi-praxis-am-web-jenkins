@@ -105,7 +105,7 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.CANTPEN = rs01.getInt("CANTPEN");
                 objRtn.SUMAOK = rs01.getDouble("SUMAOK");
                 objRtn.SUMAKO = rs01.getDouble("SUMAKO");
-                objRtn.TOTALSUMA  = rs01.getDouble("SUMAOK") + rs01.getDouble("SUMAKO");
+                objRtn.TOTALSUMA = rs01.getDouble("SUMAOK") + rs01.getDouble("SUMAKO");
 
                 objRtn.A4076BASE = rs01.getString("A4076BASE");
                 objRtn.A4076TYPE = rs01.getString("A4076TYPE");
@@ -521,5 +521,59 @@ public class MassiveRefunduatpFormDAO {
             pasarGarbageCollector();
         }
         return lstRtn;
+    }
+
+    public String ProcesaManualUATP(A4076Filter filter, String lstaTaxes, String lstafop) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        String STR_RESULT = "";
+
+        session.getCNXIBMDB2().open();
+        try {
+            String SQLCLL01 = "{CALL LIBSAP26.SQP04194(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("IN_PREME", filter.A4076PREME);
+            cs.setString("IN_ANIO", filter.A4076ANIO);
+            cs.setInt("IN_CORRL", filter.A4076CORR);
+            cs.setString("IN_TICKET", filter.IN_TICKET);
+            cs.setString("IN_REFE", filter.A4076REFE);
+            cs.setString("IN_FVTA", filter.A4076FVTA);
+            cs.setString("IN_TDOC", filter.A4076TDOC);
+            cs.setString("IN_MDA", filter.A4076MDA);
+            cs.setDouble("IN_TARTK", filter.A4076TARTK);
+            cs.setString("IN_MONTT", filter.A4076MONTT);
+            cs.setDouble("IN_EQVTK", filter.A4076EQVTK);
+            cs.setDouble("IN_TTAX", filter.A4076TTAX);
+            cs.setDouble("IN_NETO", filter.A4076NETO);
+            cs.setDouble("IN_COMI", filter.A4076COMI);
+            cs.setDouble("IN_TAXCO", filter.A4076TAXCO);
+            cs.setString("IN_STATUS", filter.IN_STATUS);
+            cs.setString("IN_DESC", filter.A4076DESC);
+            cs.setString("IN_LSTATaxes", lstaTaxes);
+            cs.setString("IN_LSTAfop", lstafop);
+            cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
+            cs.setString("IN_FREGI", Functions.getFechaActual());
+            cs.setString("IN_HREGI", Functions.getHoraActual());
+            cs.execute();
+
+            rst = cs.getResultSet();
+
+            while (rst.next()) {
+                STR_RESULT = rst.getString("VMESSAGE");
+            }
+            cs.close();
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            strSQL = null;
+            session.getCNXIBMDB2().close();
+        }
+
+        return STR_RESULT;
     }
 }
