@@ -22,6 +22,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A4076Filter;
+import net.miatech.praxis.SaleAudit.A4077;
+import net.miatech.praxis.SaleAudit.A4078;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.MassiveRefunduatpFormLogic;
@@ -1533,6 +1535,49 @@ public class MassiveRefunduatpFormController extends BaseController {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);
         }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "ProcesaManualUATP")
+    public @ResponseBody
+    String ProcesaManualUATP(ModelMap map, HttpServletRequest request) {
+        String result = "";
+        String razones = "";
+        String taxes = "";
+        String fop = "";
+        boolean iboolean;
+        A4076Filter filter = new A4076Filter();
+        ArrayList<A4078> gridDataTaxes = new ArrayList<A4078>();
+        ArrayList<A4077> gridDataFop = new ArrayList<A4077>();
+        // A4078 objlst_TAXES = null;
+        //A4077 objlst_CardType = null;
+        try {
+
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            JsonParser parser = new JsonParser();
+            // Obtain Array
+            JsonArray gsonTaxes = parser.parse(request.getParameter("beanlstTaxes")).getAsJsonArray();
+            JsonArray gsonFop = parser.parse(request.getParameter("beanlstlstFop")).getAsJsonArray();
+            for (JsonElement obj : gsonTaxes) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                taxes = taxes + "|" + gsonObj.get("A4078CORRL").getAsInt() + "$" + gsonObj.get("A4078SEQ").getAsInt() + "$" + gsonObj.get("A4078CDTAX").getAsString() + "$" + gsonObj.get("A4078CDATO").getAsString()  + "$" + gsonObj.get("A4078TXDIF").getAsDouble();
+            }
+            //LISTA DE FOP 
+            for (JsonElement obj : gsonFop) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                fop += fop + "|" + gsonObj.get("A4077CORRL").getAsInt() + "$" + gsonObj.get("A4077SEQ").getAsInt() + "$" + gsonObj.get("A4077CFOP").getAsString() + "$" + gsonObj.get("A4077TYCAR").getAsString() + "$" + gsonObj.get("A4077NTARJ").getAsString()  + "$" + gsonObj.get("A4077TOTAL").getAsDouble() ;
+            }
+
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            result = logic.ProcesaManualUATP(filter, taxes, fop);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        map.put("success", true);
+        map.put("data", result);
         return new Gson().toJson(map);
     }
 
