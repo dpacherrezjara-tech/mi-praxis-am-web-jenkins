@@ -41,6 +41,7 @@ public class A4076 {
     public String A4076REFE;
     public String A4076TICKET;
     public String A4076AGENCY;
+    public String A4076DESC;
 
     public double A4076TARTK;
     public double A4076EQVTK;
@@ -142,6 +143,14 @@ public class A4076 {
     public double SUMAKO;
     public double TOTALSUMA;
     public double TOTALCANT;
+
+    public String getA4076DESC() {
+        return A4076DESC;
+    }
+
+    public void setA4076DESC(String A4076DESC) {
+        this.A4076DESC = A4076DESC;
+    }
 
     public double getTOTALSUMA() {
         return TOTALSUMA;
