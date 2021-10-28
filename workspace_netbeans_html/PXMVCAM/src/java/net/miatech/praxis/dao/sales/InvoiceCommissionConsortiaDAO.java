@@ -302,7 +302,7 @@ public class InvoiceCommissionConsortiaDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP03832(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP03832(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         PreparedStatement stmt = null;
         ResultSet rst = null;
@@ -311,8 +311,8 @@ public class InvoiceCommissionConsortiaDAO {
         try {
             cstmt01 = cnx.prepareCall(SQLCLL01);
             for (SQP00802Filter obj : filter) {
-                cstmt01.registerOutParameter(12, Types.VARCHAR);
                 cstmt01.registerOutParameter(13, Types.VARCHAR);
+                cstmt01.registerOutParameter(14, Types.VARCHAR);
                 cstmt01.setString(1, obj.VP_ACTION);
                 cstmt01.setString(2, obj.VP_A2447CCUST);
                 cstmt01.setString(3, obj.VP_A2447LOTE.trim());
@@ -324,10 +324,11 @@ public class InvoiceCommissionConsortiaDAO {
                 cstmt01.setString(9, obj.VP_A2447STATU.trim());
                 cstmt01.setString(10, obj.VP_A2447SEQ.trim());
                 cstmt01.setString(11, obj.VP_A2447INDAP.trim());
+                cstmt01.setString(12, obj.VP_A2447COD.trim());
                 cstmt01.execute();
-                obj.dbException.SQLCODE = cstmt01.getString(12);
-                obj.dbException.MESSAGE = cstmt01.getString(13);
-                mensaje=cstmt01.getString(13);
+                obj.dbException.SQLCODE = cstmt01.getString(13);
+                obj.dbException.MESSAGE = cstmt01.getString(14);
+                mensaje=cstmt01.getString(14);
                 if (!obj.dbException.SQLCODE.equals("0")) {
                     mensajeErr += obj.dbException.MESSAGE.trim()+ "\r\n";
                 }
