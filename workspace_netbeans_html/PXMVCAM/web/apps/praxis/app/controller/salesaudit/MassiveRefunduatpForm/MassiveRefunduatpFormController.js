@@ -115,7 +115,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "Y", "name": "PENDING"},
                 {"code": "E", "name": "SALES DATE ERROR"},
                 {"code": "U", "name": "WITH USES"},
-                {"code": "T", "name": "ATO ERROR"}
+                {"code": "T", "name": "ATO ERROR"},
+                {"code": "B", "name": "TAX ERROR"}
 
 
             ]
@@ -126,7 +127,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "", "name": "ALL"},
                 {"code": "Y", "name": "PENDING"},
                 {"code": "E", "name": "SEND BPO"},
-                {"code": "F", "name": "CAPTURED BPO"}
+                {"code": "F", "name": "CAPTURED BPO"},
+                {"code": "C", "name": "CANC"}
 
 
             ]
@@ -380,11 +382,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 color = '#81BEF7';
                 value = 'ATO ERROR';
                 break;
-                /*
-                 case 'J':
+             case 'B':
                  color = '#F3EFB6';
-                 value = 'ASSIGNED FOR THE EXECUTION OF THE ROBOT';
+                 value = 'TAX ERROR';
                  break;
+                /*
                  case 'G':
                  color = '#81F781';
                  value = 'PREVIOUS AUTHORISED';
