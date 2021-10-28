@@ -164,7 +164,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                 {"code": "JU", "name": "Justified"},
                 {"code": "CU", "name": "Cleared Up"},
                 {"code": "CO", "name": "Condoned"},
-                {"code": "ZE", "name": "Authorized"}
+                {"code": "ZE", "name": "Authorized"},
+                {"code": "RE", "name": "Rejected"}
             ]
         }));
     },
@@ -1323,7 +1324,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualCon
                         //if (CmboTransaction !== 'ADM' && CmboTransaction !== 'ACM' && CmboTransaction !== 'NTC' && CmboTransaction !== 'NTD') {
                         var gridtax = Ext.getCmp(prototype.id01 + '-gridtaxAGENT');
                         gridtax.store.data.each(function (rec) {
-                            lstTaxes.push({"A1673MONED": rec.data.A1673MONED, "A1673CDTAX": rec.data.A1673CDTAX, "A1673TXMIA": rec.data.A1673TXMIA});
+                            lstTaxes.push({"A1673MONED": rec.data.A1673MONED, "A1673CDTAX": rec.data.A1673CDTAX, "A1673TXMIA": rec.data.A1673TXMIA,"A1673CDATO": rec.data.A1673CDATO});
                         });
                         //}
                         if (txtCountry === 'MX') {

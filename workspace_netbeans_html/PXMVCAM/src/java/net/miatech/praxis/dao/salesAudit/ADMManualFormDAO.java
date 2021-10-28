@@ -374,6 +374,7 @@ public class ADMManualFormDAO {
                     objlst_CalcuImpuestos = new A1673();
 
                     objlst_CalcuImpuestos.A1673CDTAX = rs02.getString("A2739CDTAX");
+                    objlst_CalcuImpuestos.A1673CDATO = rs02.getString("A1673CDATO");
                     objlst_CalcuImpuestos.A1673TXORI = rs02.getDouble("A2739TXORI");
                     objlst_CalcuImpuestos.A1673TXMIA = rs02.getDouble("A2739TXMIA");
                     objlst_CalcuImpuestos.A1673TXDIF = rs02.getDouble("A2739TXDIF");

@@ -69,6 +69,29 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.RFNDAddTax', {
                     items: [
                         {
                             xtype: 'textfield',
+                            id: prototype.id02 + '-txtAto',
+                            fieldLabel: 'Ato', hidden: true,
+                            labelWidth: 50,
+                            maxLength: 3,
+                            enforceMaxLength: 3,
+                            value: '',
+                            width: 150,
+                            listeners: {
+                                change: 'onchange2'
+                            }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    defaults: {
+                        style: 'margin: 1px',
+                        fieldStyle: 'font-weight: bold; color: blue;'
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
                             id: prototype.id02 + '-txttaxamount',
                             fieldLabel: 'Amount',
                             maskRe: /^-?[0-9]*(\.[0-9]{0,2})?$/,
