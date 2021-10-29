@@ -9,6 +9,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     objFLIGHTMANIF: {},
     objA1691: {},
     objA3729: {},
+    objODS: {},
+    objVCRJ: {},
     gloTipoTkt: '',
     g_nflight: '',
     status: '',
@@ -26,6 +28,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         this.setStoreData();
         this.initDate();
         this.btnSearch_click();
+        this.searchControlODS();
 //        global.validateProgram("a", "b", "c");
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
@@ -1494,5 +1497,57 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         prototypeProgram.modulo = '';
 
         win.displayProFacsimilSearch(me, bean104, 'FlightConciliation');
-    }
+    },
+    
+    changeControl: function() {
+        
+        var v_cmbControl = this.getValue("cmbControl");
+        
+        if(v_cmbControl === 'JSON'){
+            Ext.getCmp(prototype.id + '-txtNENV').setValue(me.objVCRJ.QCPNFI);
+            Ext.getCmp(prototype.id + '-txtDPRDA').setValue(me.objVCRJ.strDescripcion);
+	}else{
+            Ext.getCmp(prototype.id + '-txtNENV').setValue(me.objODS.QCPNFI);
+            Ext.getCmp(prototype.id + '-txtDPRDA').setValue(me.objODS.strDescripcion);
+	}
+        
+    },
+    actualizar: function() {
+        this.searchControlODS();
+    },
+    
+    //<editor-fold defaultstate="collapsed" desc="searchControlODS">
+    searchControlODS: function() {
+        
+        Ext.Ajax.request({
+            url: prototype.url + '/searchControlODS',
+            method: 'POST',
+            timeout: 60000000,
+            params: {nprog: nprog || ''},
+            success: function(response, opts) {
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                
+                if(res.success){
+                    
+                    me.objODS = res.objODS;
+                    me.objVCRJ = res.objVCRJ;
+                    
+                    console.log(me.objODS.QCPNFI);
+                    console.log(me.objODS.strDescripcion);
+                    
+                    Ext.getCmp(prototype.id + '-txtNENV').setValue(me.objODS.QCPNFI);
+                    Ext.getCmp(prototype.id + '-txtDPRDA').setValue(me.objODS.strDescripcion);
+                }else{
+                    
+                    
+                }
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+        
+    },
+    
 });

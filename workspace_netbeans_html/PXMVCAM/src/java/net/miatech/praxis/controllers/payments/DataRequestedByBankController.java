@@ -786,7 +786,7 @@ public class DataRequestedByBankController extends BaseController {
 //                receptores.add("lmendoza@miatech.net");
                 // Emails CC
                 List<String> Ccp = new ArrayList<String>();
-                String strMails = "jtorres@miatech.net";//
+                String strMails = "jtorres@miatech.net;ggutierrez@miatech.net";//
                 if (!strMails.trim().equals("")) {
                     String[] parts = strMails.split(";");
                     for (int i = 0; i < parts.length; i++) {
@@ -875,7 +875,7 @@ public class DataRequestedByBankController extends BaseController {
 
                             //Hace la reversión
                             msj = logic.loadPX404SQP01900(aclaracion, "3");
-                            msj = "Information could not be updated.";
+                            msj = "Information could not be updated. (Email)";
                         }
                     }
 
@@ -885,7 +885,7 @@ public class DataRequestedByBankController extends BaseController {
 
                         //Hace la reversión
                         msj = logic.loadPX404SQP01900(aclaracion, "3");
-                        msj = "Information could not be updated.";
+                        msj = "Information could not be updated. (Pdf)";
                     }
                 }
             }

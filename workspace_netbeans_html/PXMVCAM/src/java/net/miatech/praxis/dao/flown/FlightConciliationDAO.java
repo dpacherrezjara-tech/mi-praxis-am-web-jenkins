@@ -1963,4 +1963,74 @@ public class FlightConciliationDAO {
         System.runFinalization();
         System.gc();
     }
+    
+    public HashMap loadSQP03651() throws SQLException, Exception {
+        
+        HashMap hm = new HashMap();
+        A1691Filter obj = new A1691Filter();
+        A1691Filter obj2 = new A1691Filter();
+        
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03651(?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                
+                obj.strDescripcion = rst.getString("REG_CONTROL");
+                obj.QCPNFI = rst.getInt("NENV");
+                
+            }
+            hm.put("ODS",obj);
+            rst.close();
+            if(cstmt.getMoreResults()){
+                
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                    obj2.strDescripcion = rst.getString("REG_CONTROL");
+                    obj2.QCPNFI = rst.getInt("NENV");
+
+                }
+                
+                hm.put("VCRJ",obj2);
+                
+            }
+
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return hm;
+    }
+    
+    
 }

@@ -33,6 +33,7 @@ import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -50,6 +51,7 @@ public class ProReportClarification {
     private int Hlng = 12;
     private File fileTmp01; //, fileTmp02;
     private List<File> lstFileTmp = new ArrayList<File>();
+    private static final Logger logError = Logger.getLogger("errorLog");
 
     class TableHeader extends PdfPageEventHelper {
 
@@ -186,6 +188,7 @@ public class ProReportClarification {
 
         } catch (Exception e) {
             e.printStackTrace();
+            logError.error("Data Request By Bank (createReportPDF) - Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
             success = false;
         }
 
@@ -519,6 +522,7 @@ public class ProReportClarification {
             e.printStackTrace();
             Log log = LogFactory.getLog("ProReportClarification");
             log.error("Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
+            logError.error("Data Request By Bank (createReportPDF_CCW) - Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
             success = false;
         }
 

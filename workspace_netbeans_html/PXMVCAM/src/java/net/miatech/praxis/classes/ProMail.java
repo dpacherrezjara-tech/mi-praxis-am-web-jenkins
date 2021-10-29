@@ -24,13 +24,16 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import net.miatech.beans.ServerSession;
 import net.miatech.beans.spring.implement.IServerSession;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author vhidalgo
  */
 public class ProMail {
-
+    
+    private static final Logger logError = Logger.getLogger("errorLog");
+    
     private class SMTPAuthenticator extends Authenticator {
 
         private String dEmail;
@@ -613,6 +616,7 @@ public class ProMail {
         } catch (Exception e) {
             e.getMessage();
             e.toString();
+            logError.error("Data Request By Bank (proMail.enviaMDP) - Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
             envioExitoso = false;
         }/* finally {
             //Se eliminan del servidor los archivos adjuntos

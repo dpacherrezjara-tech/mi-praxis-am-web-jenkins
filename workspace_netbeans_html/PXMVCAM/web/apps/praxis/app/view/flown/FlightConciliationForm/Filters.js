@@ -390,6 +390,59 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
+                        { xtype: 'tbspacer', width: 1000 },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbControl',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["ODS", "ODS Control"], ["JSON", "JSON Control"]
+                                ]
+                            }),
+                            queryMode: 'local',
+//                            hidden: true,
+                            allowBlank: true,
+                            forceSelection: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            width: 110,
+                            value: "ODS",
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            listeners: {
+                                change: 'changeControl'
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 3 },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnRefresh',
+                            icon: 'resources/img/botones/refresh.png',
+                            tooltip: 'Refresh',
+                            listeners: {
+                                click: 'actualizar'
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 3 },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtNENV',
+                            fieldStyle: 'text-align:center',
+                            editable: false,
+                            width: 30
+                        },
+                        { xtype: 'tbspacer', width: 5 },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtDPRDA',
+                            fieldStyle: 'text-align:center',
+                            editable: false,
+                            width: 100
+                        }
                     ]
                 }
             ]
