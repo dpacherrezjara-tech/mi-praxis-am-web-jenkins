@@ -26,6 +26,18 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 //        console.log('afterRender');
         switch (this.actionCode) {
             case 'I':
+                var cmbUNIOPE = Ext.getCmp(prototype.id + '-de-cmbUNIOPE');
+                cmbUNIOPE.bindStore(Ext.create('Ext.data.ArrayStore', {
+                    autoLoad: false,
+                    fields: ['code', 'name'],
+                    data: [
+                        ["", ""],
+                        ["1", "Aerovias MX"],
+                        ["2", "Aeromexico Cargo"],
+                        ["3", "PLM"]
+                    ]
+                }));
+                cmbUNIOPE.setValue('');
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -53,7 +65,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('de-txtSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtNameCTRY', this.beanResult.strDescripCtry);
         this.setValue('de-cmbUNIOPE', this.beanResult.UNIOPE);
-        
+
         this.setValue('de-txtCODCLIT1', this.beanResult.CODCLIT1);
         this.setValue('de-txtDIRCLIT1', this.beanResult.DIRCLIT1);
         this.setValue('de-txtDIRCLIT2', this.beanResult.DIRCLIT2);
@@ -66,8 +78,6 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
     },
-    
-    
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function(beanTemp) {
 //        console.log('llenarData');
@@ -79,7 +89,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         beanTemp.CANAL = this.getValue("de-txtCANAL");
         beanTemp.SCOUNTRY = this.getValue("de-txtSCOUNTRY");
         beanTemp.UNIOPE = this.getValue("de-cmbUNIOPE");
-        
+
         beanTemp.CODCLIT1 = this.getValue("de-txtCODCLIT1");
         beanTemp.DIRCLIT1 = this.getValue("de-txtDIRCLIT1");
         beanTemp.DIRCLIT2 = this.getValue("de-txtDIRCLIT2");
@@ -165,7 +175,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     var beanTemp = {};
                     this.llenarData(beanTemp);
                     var msjResult = this.validacionInsert(beanTemp);
-                    
+
                     if (msjResult === '') {
                         beanTemp.option = 'I';
                         this.MaintenanceA2354(beanTemp);
@@ -229,7 +239,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             method: 'POST',
             timeout: 60000000,
 //            params: beanTemp,
-            params: {beanString: beanString , option: beanTemp.option},
+            params: {beanString: beanString, option: beanTemp.option},
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
             success: function(response, opts) {
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
