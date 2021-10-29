@@ -102,4 +102,9 @@ public class FlightConciliationLogic {
     public A1692Filter loadPX095S06A1692_1(String strTicket, String strSeq, String seqRol, HashMap<String, String> hmAeropuertos, HashMap<String, String> hmPaises) throws SQLException,Exception {
         return objDAO.loadPX095S06A1692_1(strTicket, strSeq, seqRol, hmAeropuertos, hmPaises);
     }
+    
+    public HashMap loadSQP03651() throws SQLException, Exception {
+        return objDAO.loadSQP03651();
+    }
+    
 }
