@@ -46,6 +46,7 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
 //        console.log(meDE.beanResult);
 //        console.log(this.beanResult.CODEREJ);
         this.setValue('de-txtCODEREJ', this.beanResult.CODEREJ);
+        this.setValue('de-txtFTE', this.beanResult.FTE);
         this.setValue('de-txtDESCREJ', this.beanResult.DESCREJ);
         this.setValue('de-txtCOUNTRY', this.beanResult.COUNTRY);
         this.setValue('de-txtCODEBANK', this.beanResult.CODEBANK);
@@ -82,6 +83,12 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function(beanTemp) {
         beanTemp.CODEREJ = this.getValue("de-txtCODEREJ");
+        beanTemp.FTE = this.getValue("de-txtFTE");
+        if (this.beanResult.FTE !== undefined) {
+            beanTemp.NEW_FTE = this.beanResult.FTE;
+        } else {
+            beanTemp.NEW_FTE = ''
+        }
         beanTemp.DESCREJ = this.getValue("de-txtDESCREJ");
         beanTemp.COUNTRY = this.getValue("de-txtCOUNTRY");
         beanTemp.CODEBANK = this.getValue("de-txtCODEBANK");
@@ -134,23 +141,23 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
     onUpdateClick: function(btn) {
 //        console.log('onUpdateClick');
         Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                animateTarget: btn,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn) {
-                    if (btn === 'yes') {
-                        var beanTemp = {};
-                        this.llenarData(beanTemp);
-                        beanTemp.option = 'U';
-                        this.maintenanceBean(beanTemp);
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            var beanTemp = {};
+                            this.llenarData(beanTemp);
+                            beanTemp.option = 'U';
+                            this.maintenanceBean(beanTemp);
+                        }
                     }
-                }
-            });
+                });
     },
     onDeleteClick: function(btn) {
         Ext.Msg.show({
@@ -194,7 +201,7 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
                     Ext.getCmp(prototype.id + '-dataEntry').unmask();
                     Ext.getCmp(prototype.id + '-dataEntry').close();
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
-                   
+
                 } else
                     global.Msg({msg: ''});
             }
@@ -204,7 +211,7 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
 
     validacionInsert: function(beanTemp) {
         var msjResult = '';
-        if (this.getValue("de-txtCODEREJ") == '') {
+        if (this.getValue("de-txtCODEREJ") == '' || this.getValue("de-txtFTE") == '' || this.getValue("de-txtCODEBANK") == '') {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
