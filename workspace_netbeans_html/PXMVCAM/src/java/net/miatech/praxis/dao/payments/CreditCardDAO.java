@@ -483,4 +483,104 @@ public class CreditCardDAO {
 
         return objRtn;
     }
+
+    public List<A2280Filter> loadPX265SQP03398(A2280Filter filter) throws SQLException, Exception {
+
+        List<A2280Filter> lstData = new ArrayList<A2280Filter>(0);
+        A2280Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03398(?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.CODE.trim());
+            // cstmt.setString(3, filter.CODEBANK.trim());
+            cstmt.setString(3, filter.COUNTRY.trim());
+            cstmt.setString(4, filter.CURRENC.trim());
+
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                bean = new A2280Filter();
+                bean.RN = rst.getLong("RN");
+                bean.CCUST = rst.getString("CCUST").trim();
+                bean.COUNTRY = rst.getString("COUNTRY").trim();
+                bean.CODEBANK = rst.getString("CODEBANK").trim();
+                bean.CURRENC = rst.getString("CURRENC").trim();
+                bean.CODE = rst.getString("CODECAR").trim();
+                bean.TCOMIS = rst.getString("TCOMIS").trim();
+                bean.FECFROM = rst.getString("FECFROM").trim();
+                bean.FECTO = rst.getString("FECTO").trim();
+                bean.SEQ = rst.getString("SEQ").trim();
+                bean.FSTAT = rst.getString("FSTAT").trim();
+                bean.CODEQUIV = rst.getString("CODEQUIV");
+                bean.NAMECAR = rst.getString("NAMECAR").trim();
+                bean.FNOBANK = rst.getString("FNOBANK").trim();
+                bean.DCOMIS = rst.getString("DCOMIS").trim();
+                bean.BASEC = rst.getString("BASEC").trim();
+                bean.MESES = rst.getString("MESES").trim();
+                bean.MONTO = rst.getDouble("MONTO");
+                bean.RATE = rst.getDouble("RATE");
+                bean.RATEIVA = rst.getDouble("RATEIVA");
+                bean.BSPBANK = rst.getString("BSPBANK").trim();
+                bean.CLIENTE = rst.getString("CLIENTE").trim();
+                bean.strAgrupacion = rst.getString("COUNTRY").trim() + " - " + rst.getString("CODEBANK").trim() + " - "
+                        + rst.getString("CODECAR").trim() + " - " + rst.getString("CURRENC").trim();
+                bean.strDescPais = rst.getString("DESCPAIS").trim();
+                bean.strDescBank = rst.getString("NAMEBANK").trim();
+
+                bean.page.PAGNUM = filter.page.PAGNUM;
+                bean.page.PAGROW = filter.page.PAGROW;
+                bean.page.TOTPAG = filter.page.TOTPAG;
+                bean.page.TOTROW = filter.page.TOTROW;
+                lstData.add(bean);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstData;
+    }
 }
