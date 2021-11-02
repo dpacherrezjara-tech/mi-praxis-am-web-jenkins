@@ -30,6 +30,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 break;                
                 
         }
+        this.setValue("cboCity", "");
         global.AccessControlMaganer();
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
@@ -63,45 +64,47 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     
     // <editor-fold defaultstate="collapsed" desc="CRUD">
     onSaveClick: function(btn) {
-        if (this.validaRequiredFields()) {
-            switch (this.getValue('cbxModulo')) {
-                case "PSALES" : 
-                case "PCADUCOS" : 
-                case "PADJMA" : 
-                    Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to insert ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function(btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "I";
-                                this.llenarData();
-                                this.crud();
-                            }
-                        }
-                    });
-                    break;            
-                case "PPSALES" :
-                    Ext.Msg.show({
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to insert ?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function(btn) {
-                            if (btn === 'yes') {
-                                this.view.params.action = "I";
-                                this.llenarData();
-                                this.crudPending();
-                            }
-                        }
-                    });
-                    break;            
-            }   
+        if (this.validaRequiredFields()) {            
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Are you sure to insert ?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'yes') {
+                        this.view.params.action = "I";
+                        this.llenarData();
+                        this.crud();
+                    }
+                }
+            });               
+        } else {
+            var msg = this.msjAlert;
+            if (msg==='') msg = 'You must enter all required fields.';
+            global.Msg({
+                msg: msg
+            });
+        }
+    },
+    onUpdateClick: function(btn) {
+        if (this.validaRequiredFields()) {            
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Are you sure to update ?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'yes') {
+                        this.view.params.action = "U";
+                        this.llenarData();
+                        this.crud();
+                    }
+                }
+            });               
         } else {
             var msg = this.msjAlert;
             if (msg==='') msg = 'You must enter all required fields.';
@@ -114,50 +117,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
         this.view.close();
     },
     onDeleteClick: function(btn){        
-        switch (this.getValue('cbxModulo')) {
-            case "PSALES" : 
-                dataentryParams = {};
-                dataentryParams.IN_MODULO = 'SALES';
-                dataentryParams.IN_FECHA_PROCESO = this.p.rec.get('A1955FPROC');
-                this.setReverse(this.p.rec);
-                break;
-            case "PCADUCOS" : case "PADJMA" : 
-                Ext.Msg.show({
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to delete ?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function(btn) {
-                        if (btn === 'yes') {
-                            this.view.params.action = "D";
-                            this.llenarData();
-                            //console.log(this.beanOption);
-                            this.crud();
-                        }
-                    }
-                });
-                break;            
-            case "PPSALES" :
-                Ext.Msg.show({
-                    title: '.:PRAXIS:.',
-                    msg: 'Are you sure to delete ?',
-                    buttons: Ext.MessageBox.YESNO,
-                    scope: this,
-                    icon: Ext.MessageBox.QUESTION,
-                    modal: true,
-                    fn: function(btn) {
-                        if (btn === 'yes') {
-                            this.view.params.action = "D";
-                            this.llenarData();
-                            //console.log(this.beanOption);
-                            this.crudPending();
-                        }
-                    }
-                });
-                break;            
-        }                  
+                         
     },
     // </editor-fold>
     
@@ -195,23 +155,6 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 if (res.success) {
                     var msg = res.response;
                     var msgInt = res.sql_code;
-                    /*var cbxModulo = mod.getValue('cbxModulo');
-                    if(cbxModulo==='PSALES')
-                    {
-                        var lstGroups = res.lstGroups;
-                        if(lstGroups.length>0)
-                        {
-                            var groups = '';
-                            for(var i=0 ; i<lstGroups.length; i++)
-                            {
-                                if(i<(lstGroups.length-1))
-                                    groups+=lstGroups[i].A1955ERRLG+',';
-                                else
-                                    groups+=lstGroups[i].A1955ERRLG;
-                            }
-                            msg = 'Observed Groups: ' + groups 
-                        }
-                    }*/
                         
                     var icon=1;
                     if(msgInt==='779'){
@@ -260,7 +203,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
         var DESC = this.getValue('txtDESC');
         var CITY = this.getValue('cboCity');
         var chkExpiredDate = Ext.getCmp(prototype.id+'-chkExpiredDate').getValue() ? 'true' : 'false';
-        var DTEXPIRED = this.getValue('txtExpDate');
+        var DTEXPIRED = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtExpDate').getValue(), 'Ymd')        
         var chkPass = Ext.getCmp(prototype.id+'-chkPass').getValue() ? 'true' : 'false';
         var txtPass = this.getValue('txtPass');
         var strOption = this.p.action;

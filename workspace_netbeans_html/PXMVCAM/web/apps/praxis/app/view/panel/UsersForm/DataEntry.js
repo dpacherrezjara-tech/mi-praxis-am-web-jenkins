@@ -87,7 +87,7 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-txtDESC',                            
                             text: '',
-                            maxLength: 50,
+                            maxLength: 30,
                             enforceMaxLength: true,
                             //style: 'font-weight:bold;color:red;',
                             width: 320,
@@ -122,7 +122,7 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
-                                    ["", "Select"],
+                                    ["", "- SELECT -"],
                                     ["MEX", "MEXICO DF"],
                                     ["LIM", "LIMA"]
                                 ]
@@ -194,7 +194,7 @@ Ext.define('Ext.Praxis.view.panel.UsersForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-txtPass',                            
                             text: '',
-                            maxLength: 50,
+                            maxLength: 10,
                             enforceMaxLength: true,
                             //style: 'font-weight:bold;color:red;',
                             width: 220,
