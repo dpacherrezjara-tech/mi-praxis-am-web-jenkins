@@ -89,6 +89,7 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.DataEntry', {
                                     fieldStyle: 'text-align:center;',
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
+                                    readOnly: true,
                                     maxLength: 3,
                                     //maskRe: /[A-Z]/,
                                     width: 55,
