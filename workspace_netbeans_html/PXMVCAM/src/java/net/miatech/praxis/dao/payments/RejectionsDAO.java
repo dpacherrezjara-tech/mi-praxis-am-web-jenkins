@@ -101,6 +101,7 @@ public class RejectionsDAO {
                 bean.COUNTRY = rst.getString("COUNTRY").trim();
                 bean.CODEBANK = rst.getString("CODEBANK").trim();
                 bean.NAMEBANK = rst.getString("NAMEBANK").trim();
+                bean.FTE = rst.getString("FTE").trim();
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -160,6 +161,7 @@ public class RejectionsDAO {
                 objRtn.COUNTRY = rs01.getString("COUNTRY").trim();
                 objRtn.CODEBANK = rs01.getString("CODEBANK").trim();
                 objRtn.NAMEBANK = rs01.getString("NAMEBANK").trim();
+                objRtn.FTE = rs01.getString("FTE").trim();
 
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
@@ -199,7 +201,7 @@ public class RejectionsDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00734(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00734(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -213,9 +215,10 @@ public class RejectionsDAO {
             cstmt.setString(5, filter.COUNTRY.trim());
             cstmt.setString(6, filter.CODEBANK.trim());
             cstmt.setString(7, filter.NAMEBANK.trim());
-            cstmt.setString(8, session.getUserView().getUserInfo().USR);
-            cstmt.setString(9, Functions.getFechaActual());
-            cstmt.setString(10, Functions.getHoraActual());
+            cstmt.setString(8, filter.FTE.trim());
+            cstmt.setString(9, session.getUserView().getUserInfo().USR);
+            cstmt.setString(10, Functions.getFechaActual());
+            cstmt.setString(11, Functions.getHoraActual());
             cstmt.execute();
 
         } catch (Exception e) {

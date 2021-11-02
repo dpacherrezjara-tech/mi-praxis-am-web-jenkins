@@ -12,6 +12,7 @@ public class A2287 {
 
     public String CCUST = "";
     public String CODEREJ = "";
+    public String FTE = "";    
     public String DESCREJ = "";
     public String COUNTRY = "";
     public String CODEBANK = "";
