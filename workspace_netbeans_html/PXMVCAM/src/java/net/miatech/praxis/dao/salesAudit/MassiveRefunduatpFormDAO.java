@@ -576,4 +576,42 @@ public class MassiveRefunduatpFormDAO {
 
         return STR_RESULT;
     }
+
+    public String ProcesaDelete(A4076Filter filter) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        String STR_RESULT = "";
+
+        session.getCNXIBMDB2().open();
+        try {
+            String SQLCLL01 = "{CALL LIBSAP26.SQP04241(?,?,?,?,?,?)}";
+            cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("IN_OPTION", filter.IN_OPTION);
+            cs.setString("IN_PREME", filter.IN_PREME);
+            cs.setString("IN_ANIO", filter.IN_ANIO);
+            cs.setInt("IN_CORRL", filter.IN_CORR);
+            cs.setInt("IN_SEQ", filter.IN_SEQ);
+
+            cs.execute();
+
+            rst = cs.getResultSet();
+
+            while (rst.next()) {
+                STR_RESULT = rst.getString("VMESSAGE");
+            }
+            cs.close();
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            strSQL = null;
+            session.getCNXIBMDB2().close();
+        }
+
+        return STR_RESULT;
+    }
 }
