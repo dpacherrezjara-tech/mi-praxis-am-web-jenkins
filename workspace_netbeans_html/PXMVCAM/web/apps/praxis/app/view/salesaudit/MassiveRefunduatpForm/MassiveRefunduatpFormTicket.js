@@ -272,7 +272,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                         items: [
                                             {
                                                 iconCls: 'prx-icon-image-trash',
-                                                handler: 'OnFopRemove'
+                                                handler: 'onDeleteFopClick'
                                             }
                                         ]
                                     }
@@ -283,8 +283,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     align: 'center'
                                 }
                             },
-                            height: 150,
-                            flex: 1
+                            height: 200,
+                            width: 500
                         }, /*{
                          xtype: 'grid',
                          id: prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT',
@@ -342,7 +342,6 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             ],
                             columns: {
                                 items: [
-                                    {text: 'Cur', dataIndex: 'A4078MONED', width: 60},
                                     {text: 'Tax', dataIndex: 'A4078CDTAX', align: 'center', width: 60, editor: {
                                             completeOnEnter: false,
                                             field: {
@@ -385,7 +384,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                         items: [
                                             {
                                                 iconCls: 'prx-icon-image-trash',
-                                                handler: 'OnTaxRFNDRemove'
+                                                handler: 'onDeleteTaxClick'
                                             }
                                         ]
                                     }
@@ -397,7 +396,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                 }
                             },
                             height: 200,
-                            width: 330
+                            width: 450
                         }
                         /*{
                          xtype: 'grid',
@@ -449,7 +448,11 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             fieldLabel: 'Fare',
                             labelWidth: 33,
                             //readOnly: true,
-                            value: '0.00'
+                            value: '0.00',
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                blur: 'onTotaFare'
+                            }
                         },
                         {
                             xtype: 'textfield',
@@ -464,7 +467,11 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             fieldLabel: 'Equivalent',
                             labelWidth: 65,
                             //readOnly: true,
-                            value: '0.00'
+                            value: '0.00',
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                blur: 'onTotaFare'
+                            }
                         }
 
                     ]
@@ -558,18 +565,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             labelWidth: 40,
                             readOnly: true,
                             value: '0.00'
-                        }
-
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    //hidden: true,
-                    defaults: {
-                        style: 'margin: 1px'
-                    },
-                    items: [
+                        },
                         {
                             xtype: 'combo',
                             id: prototype.idMassiveRefunduatpFormTicket + '-ComboCambio',
@@ -587,29 +583,30 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             listeners: {
                                 afterrender: 'onCmbStatusAfterRender'
                             }
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            defaults: {
-                                bodyStyle: 'background: transparent'
-                            },
-                            items: [{
-                                    xtype: 'textareafield',
-                                    id: prototype.idMassiveRefunduatpFormTicket + '-Argument',
-                                    labelWidth: 85,
-                                    width: 850,
-                                    height: 80,
-                                    grow: true,
-                                    maxLength: 300,
-                                    enforceMaxLength: true,
-                                    name: 'Argument',
-                                    fieldLabel: 'Argument'
-                                }
-
-                            ]
                         }
+
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    border: false,
+                    defaults: {
+                        bodyStyle: 'background: transparent'
+                    },
+                    items: [{
+                            xtype: 'textareafield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-Argument',
+                            labelWidth: 85,
+                            width: 850,
+                            height: 80,
+                            grow: true,
+                            maxLength: 300,
+                            enforceMaxLength: true,
+                            name: 'Argument',
+                            fieldLabel: 'Argument'
+                        }
+
                     ]
                 }
 
