@@ -92,6 +92,7 @@ public class CargaRecibosDAO {
                 objRtn.A4102TOTRC = rs01.getDouble("A4102TOTRC");
                 objRtn.A4102MDARC = rs01.getString("A4102MDARC");                
                 objRtn.A4102TOTAP = rs01.getDouble("A4102TOTAP");
+                objRtn.A4102TAJUS = rs01.getDouble("A4102TAJUS");
                 objRtn.A4102SALDO = rs01.getDouble("A4102SALDO");
                 objRtn.A4102ESTAD = rs01.getString("A4102ESTAD");                
                 objRtn.A4102REGIS = rs01.getString("A4102REGIS");
@@ -189,6 +190,7 @@ public class CargaRecibosDAO {
                 objRtn.A4103MONTO = rs01.getDouble("A4103MONTO");
                 objRtn.A4103STRCB = rs01.getString("A4103STRCB");
                 objRtn.A4103TOTAP = rs01.getDouble("A4103TOTAP");
+                objRtn.A4103TAJUS = rs01.getDouble("A4103TAJUS");
                 objRtn.A4103SALDO = rs01.getDouble("A4103SALDO");
                 objRtn.A4103STAT = rs01.getString("A4103STAT");
                 objRtn.A4103CODER = rs01.getString("A4103CODER");
