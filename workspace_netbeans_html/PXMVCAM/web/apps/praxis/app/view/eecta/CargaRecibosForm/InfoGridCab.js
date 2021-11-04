@@ -107,6 +107,17 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCab', {
                                         }
                                     },
                                     {
+                                        text: 'Total<br>Ajuste', dataIndex: 'A4102TAJUS', width: 60, align: 'right',
+//                                        summaryType: 'sum',
+//                                        summaryRenderer: function (value, summaryData, dataIndex) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {                                            
+                                            metaData.style = 'font-weight:bold;color:green;';                                            
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
+                                    },
+                                    {
                                         xtype: 'actioncolumn',
                                         text:'Detalle<br>Apl.',
                                         sortable: false,
