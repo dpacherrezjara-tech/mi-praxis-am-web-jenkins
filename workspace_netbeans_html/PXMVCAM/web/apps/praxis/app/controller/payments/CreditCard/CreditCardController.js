@@ -311,7 +311,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
                                 MONTO: '',
                                 MESES: '',
                                 CODEQUIV: '',
-                                expanded: false, children: []
+                                expanded: true, children: []
                             });
                             var b = [];
                             Ext.Object.each(lstData, function (index, value01) {
@@ -388,7 +388,11 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
     },
     onEditClick2: function(grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry2('U', rec);
+        if (rec.data.children === null || rec.data.children === undefined) {
+            this.winDataEntry2('U', rec);
+        } else {
+            global.Msg({msg: 'Please Select Detail'});
+        }
     },
     winDataEntry2: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;

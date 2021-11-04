@@ -7,8 +7,8 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
     controller: 'DataEntryCommCreditCardController',
     title: 'Credit Card Commission - Data Entry Form',
     header: true,
-    height: 510,
-    width: 1000,
+    height: 680,
+    width: 930,
     resizable: false,
     layout: 'fit',
     modal: true,
@@ -32,20 +32,20 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                     defaults: {
                         anchor: '100%'
                     },
-                    style: {
-                        borderColor: 'black',
-                        borderStyle: 'solid'
-                    },
+//                    style: {
+//                        borderColor: 'black',
+//                        borderStyle: 'solid'
+//                    },
                     items: [
                         {
                             xtype: 'label',
                             text: 'Credit Card Information',
-                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;background:#E5ECEF;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
-                            width: 234,
+                            width: 890,
                             height: 20,
-                            margin: '4 2 4 8'
+                            margin: '10 2 2 8'
                         },
                         {
                             xtype: 'panel',
@@ -53,16 +53,16 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                             border: true,
                             bodyStyle: 'background:#E5ECEF;',
                             margin: '0 2 0 8',
-                            width: 1000,
+                            width: 890,
                             defaults: {
                                 anchor: '100%'
                             },
-                            style: {
-                                borderColor: 'black',
-                                borderStyle: 'solid'
-                            },
+//                            style: {
+//                                borderColor: 'black',
+//                                borderStyle: 'solid'
+//                            },
                             items: [
-                                {xtype: 'tbspacer', width: 7},
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Code',
@@ -74,7 +74,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     xtype: 'label',
                                     text: '(*)',
                                     style: 'font-weight:bold;color:#9C1717;',
-                                    width: 25
+                                    width: 20
                                 },
                                 {xtype: 'tbspacer', width: 4},
                                 {
@@ -89,33 +89,38 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
                                     width: 50,
+                                    listeners:{
+                                        change: function(field, newValue){
+                                            field.setValue(newValue.toUpperCase());
+                                         } 
+                                    }
                                 },
-                                {xtype: 'tbspacer', width: 15},
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
                                     text: 'Name',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 110
                                 },
-                                {xtype: 'tbspacer', width: 32},
+                                {xtype: 'tbspacer', width: 14},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtNAMEC',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 280,
+                                    width: 290,
                                     editable: true,
                                     enforceMaxLength: true,
                                     maxLength: 40
                                 },
-                                {xtype: 'tbspacer', width: 15},
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
                                     text: 'Equivalent Code',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
+                                    width: 100
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-de-txtCODEQUIV',
@@ -127,7 +132,12 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     maxLength: 2,
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
-                                    width: 60
+                                    width: 60,
+                                    listeners:{
+                                        change: function(field, newValue){
+                                            field.setValue(newValue.toUpperCase());
+                                         } 
+                                    }
                                 }
                             ]
                         },
@@ -135,10 +145,10 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                         {
                             xtype: 'label',
                             text: 'Bank Information',
-                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                            bodyStyle: 'background:#E5ECEF;',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;background:#DEEBDF;',
+                            bodyStyle: 'background:#DEEBDF;',
                             fontSize: '11',
-                            width: 234,
+                            width: 890,
                             height: 20,
                             margin: '0 2 2 8'
                         },
@@ -146,21 +156,18 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '0 2 2 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
+                            bodyStyle: 'background:#DEEBDF;',
+                            margin: '0 2 2 8',
+                            width: 890,
                             items: [
-                                {xtype: 'tbspacer', width: 7},
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Code',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 66},
+                                {xtype: 'tbspacer', width: 34},
                                 {
                                     xtype: 'label',
                                     text: '(*)',
@@ -191,7 +198,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Name: ',
+                                    text: 'Name',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 100
                                 },
@@ -201,6 +208,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     id: prototype.id + '-de-txtNAMEBANK',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
+                                    editable: false,
                                     maxChars: '40',
                                     width: 290
                                 },
@@ -211,7 +219,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 66},
+                                {xtype: 'tbspacer', width: 46},
                                 {
                                     xtype: 'label',
                                     text: '(*)',
@@ -229,36 +237,32 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     fieldStyle: 'text-align:center;',
                                     enableKeyEvents: true,
                                     enforceMaxLength: true,
-                                    width: 50,
+                                    width: 60,
                                     readOnly: false,
                                     maxLength: 2,
                                     maskRe: /[a-zA-Z]/,
                                     listeners: {
                                         change: 'onUpperValue'
                                     }
-                                },
-                                {xtype: 'tbspacer', width: 123}
+                                }
                             ]
                         },
                         {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '0 2 2 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1000
-                            },
+                            bodyStyle: 'background:#DEEBDF;',
+                            margin: '0 2 2 8',
+                            width: 890,
                             items: [
-                                {xtype: 'tbspacer', width: 7},
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Currency',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 80
                                 },
-                                {xtype: 'tbspacer', width: 20},
+                                {xtype: 'tbspacer', width: 4},
                                 {
                                     xtype: 'label',
                                     text: '(*)',
@@ -275,7 +279,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     id: prototype.id + '-de-txtCURRENC',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    width: 60,
+                                    width: 50,
                                     readOnly: false,
                                     enforceMaxLength: true,
                                     maxLength: 3,
@@ -308,47 +312,48 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 50},
+                                {xtype: 'tbspacer', width: 70},
                                 {
                                     xtype: 'combo',
                                     id: prototype.id + '-cmbFSTAT',
                                     fieldStyle: 'text-align:center;',
                                     valueField: 'code',
                                     displayField: 'name',
-                                    width: 90,
+                                    width: 70,
                                     editable: false
-                                },
-                                {xtype: 'tbspacer', width: 353}
+                                }
                             ]
                         },
                         {xtype: 'tbspacer', width: 6},
                         {
                             xtype: 'label',
                             text: 'Bank BSP Information',
-                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;background:#E5ECEF;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
-                            width: 234,
-                            margin: '15 2 4 8'
+                            height: 20,
+                            width: 890,
+                            margin: '8 2 2 8'
                         },
                         {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '4 2 0 20',
+                            width: 890,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '0 2 2 8',
                             items: [
-                                {xtype: 'tbspacer', width: 7},
+                                {xtype: 'tbspacer', width: 20},
                                 {
                                     xtype: 'label',
                                     text: 'Code',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 90},
+                                {xtype: 'tbspacer', width: 58},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCODE1',
+                                    id: prototype.id + '-de-txtBSPBANK',
                                     fieldStyle: 'text-align:center',
                                     enableKeyEvents: false,
                                     enforceMaxLength: true,
@@ -365,46 +370,46 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Name: ',
+                                    text: 'Name',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 100
                                 },
                                 {xtype: 'tbspacer', width: 24},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtNAME1',
+                                    id: prototype.id + '-de-txtNAMEBSPBANK',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
+                                    editable: false,
                                     maxChars: '40',
                                     width: 290
-                                },
-                                {xtype: 'tbspacer', width: 40},
+                                }
                             ]
                         },
                         {xtype: 'tbspacer', width: 6},
                         {
                             xtype: 'label',
                             text: 'Comission Information',
-                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;background:#DEEBDF;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
-                            width: 234,
-                            margin: '15 2 4 8'
-
+                            height: 20,
+                            width: 890,
+                            margin: '8 2 4 8'
                         },
                         {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            width: 1000,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '4 2 12 20',
+                            width: 893,
+                            height: 200,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '4 2 12 8',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataCommInfo',
-                                    //height: 510,
-                                    width: 954,
+                                    width: 892,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -412,10 +417,9 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                             menuDisabled: true,
                                             sortable: true,
                                             align: 'center'
-
                                         },
                                         items: [
-                                            {text: 'Seq', dataIndex: '', width: 50},
+                                            {text: 'Seq', dataIndex: 'SEQ', width: 40},
                                             {text: 'Comission',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -424,8 +428,13 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: '', width: 50},
-                                                    {text: 'Description', dataIndex: '', width: 240}
+                                                    {text: 'Code', dataIndex: 'TCOMIS', width: 45},
+                                                    {text: 'Description', dataIndex: 'DCOMIS', width: 250,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left;";
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
                                             },
                                             {text: 'Effective Date',
@@ -435,12 +444,12 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'From', dataIndex: '', width: 120},
-                                                    {text: 'To', dataIndex: '', width: 120},
+                                                    {text: 'From', dataIndex: 'FECFROM', width: 90},
+                                                    {text: 'To', dataIndex: 'FECTO', width: 90},
                                                 ]
                                             },
-                                            {text: 'Base', dataIndex: '', width: 80},
-                                            {text: 'Rate', dataIndex: '', width: 80},
+                                            {text: 'Base', dataIndex: 'BASEC', width: 65},
+                                            {text: 'Rate', dataIndex: 'RATE', width: 65},
                                             {text: 'IVA',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -448,9 +457,10 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Rate', dataIndex: '', width: 100,
+                                                    {text: 'Rate', dataIndex: 'RATEIVA', width: 65,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         }
                                                     },
@@ -464,11 +474,17 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Amt.', dataIndex: '', width: 80}
+                                                    {text: 'Amt.', dataIndex: 'MONTO', width: 75,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
                                             },
-                                            {text: 'Months', dataIndex: '', width: 80},
-                                            /*{
+                                            {text: 'Months', dataIndex: 'MESES', width: 65},
+                                            {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
                                                 width: 40,
@@ -478,13 +494,49 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     {
                                                         iconCls: 'prx-icon-edit',
                                                         tooltip: 'Edit',
-                                                        handler: 'onEditClickDEComm'
+//                                                        handler: 'onEditClickDEComm'
                                                     }
                                                 ]
-                                            }*/
+                                            }
                                         ]
                                     }
                                 },
+                            ]
+                        },
+                        {
+                            xtype: 'label',
+                            text: 'Accounting Information',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;background:#E5ECEF;',
+                            bodyStyle: 'background:#E5ECEF;',
+                            fontSize: '11',
+                            height: 20,
+                            width: 890,
+                            margin: '4 2 2 8'
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            width: 890,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '0 2 8 8',
+                            items: [
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'label',
+                                    text: 'Client ',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 8},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtCLIENTE',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    maxChars: '40',
+                                    width: 290
+                                }
                             ]
                         }
                     ]
