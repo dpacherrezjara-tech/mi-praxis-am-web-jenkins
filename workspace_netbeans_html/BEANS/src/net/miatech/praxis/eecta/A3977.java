@@ -33,6 +33,7 @@ public class A3977 {
     public String A3977TRXPG = "";
     public Double A3977TOT = 0.0;
     public Double A3977TOTAP = 0.0;
+    public Double A3977TAJUS = 0.0;    
     public Double A3977SALD = 0.0;
     public String A3977MDA = "";
     public String A3977APLIC = "";

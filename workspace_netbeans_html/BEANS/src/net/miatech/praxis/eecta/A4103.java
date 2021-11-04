@@ -30,6 +30,7 @@ public class A4103 {
     public String A4103MDARC = ""; //HAR(3) CCSID 284 NOT NULL, 
     public Double A4103MONTO = 0.00;
     public Double A4103TOTAP = 0.00;
+    public Double A4103TAJUS = 0.00;
     public Double A4103SALDO = 0.00;
     public String A4103STRCB = ""; //HAR(1) CCSID 284 NOT NULL, 
     public String A4103STAT = ""; //HAR(1) CCSID 284 NOT NULL, 
