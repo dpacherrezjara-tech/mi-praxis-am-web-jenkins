@@ -26,6 +26,7 @@ public class A2280Filter extends A2280 {
     public String strDescPais = "";
     public String IN_CODE_IN_NAME="";
     public long RN = 0;
+    public String option = "";
     public List<A2348> lstDetalle = new ArrayList<A2348>(0);
     public Pagination page = new Pagination();
     
