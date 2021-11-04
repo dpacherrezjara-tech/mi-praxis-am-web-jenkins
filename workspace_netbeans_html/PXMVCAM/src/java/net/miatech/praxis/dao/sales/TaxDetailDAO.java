@@ -98,10 +98,10 @@ public class TaxDetailDAO {
             rs01 = cstmt01.getResultSet();
             int pos = 0;
 
-            while (rs01.next()) {
+            while (rs01.next()) { 
                 pos++;
                 objRtn = new ReportTaxA1530Filter();
-                objRtn.FECPROC = rs01.getString("FECPROC");
+                /*objRtn.FECPROC = rs01.getString("FECPROC");
                 objRtn.FECVTA = rs01.getString("FVTA");
                 objRtn.IATA = rs01.getString("IATA");
                 objRtn.NOMBRE = rs01.getString("NOMBRE");
@@ -118,10 +118,10 @@ public class TaxDetailDAO {
                 objRtn.FECCONT = rs01.getString("FECCONT");
                 objRtn.TOTAL_LOC = rs01.getDouble("MONTO_EMD");
                 objRtn.COUNTRYTAX = rs01.getString("COUNTRYTAX");
-                objRtn.CUENT = rs01.getString("CUENT");
-                objRtn.RN = rs01.getInt("RN");
+                //objRtn.CUENT = rs01.getString("CUENT");
+                objRtn.RN = rs01.getInt("RN");*/
 
-                /*objRtn.FECPROC = rs01.getString("FECPROC");
+                objRtn.FECPROC = rs01.getString("FECPROC");
                 objRtn.FECVTA = rs01.getString("FECVTA");
                 objRtn.IATA = rs01.getString("IATA");
                 objRtn.NOMBRE = rs01.getString("NOMBRE");
@@ -140,7 +140,7 @@ public class TaxDetailDAO {
                 objRtn.TOTAL_LOC = rs01.getDouble("TOTAL_LOC");
                 objRtn.TOTAL_REV = rs01.getDouble("TOTAL_REV");
                 objRtn.COUNTRYTAX = rs01.getString("COUNTRYTAX");
-                objRtn.FLAG = rs01.getString("FLAG");*/
+                objRtn.FLAG = rs01.getString("FLAG");
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
