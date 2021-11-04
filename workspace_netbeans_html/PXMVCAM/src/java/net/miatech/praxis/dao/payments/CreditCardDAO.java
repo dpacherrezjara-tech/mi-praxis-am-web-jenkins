@@ -16,6 +16,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.A2281;
 import net.miatech.praxis.payment.filter.A2280Filter;
+import net.miatech.praxis.payment.filter.A2348;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -583,4 +584,323 @@ public class CreditCardDAO {
 
         return lstData;
     }
+    
+    //------------------------------------------------------------------------------------------------
+    
+    public List<A2280Filter> loadPX265SQP00663() throws SQLException, Exception {
+
+        List<A2280Filter> lstRtn = new ArrayList<A2280Filter>(0);
+        A2280Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00663()}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new A2280Filter();
+                objRtn.CODEBANK = rs01.getString("CODEBANK").trim();
+                objRtn.BSPBANK = rs01.getString("BSPBANK").trim();
+                objRtn.NAMEBANK = rs01.getString("NAMEBANK").trim();
+
+                lstRtn.add(objRtn);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
+    }
+    
+    
+    public List<A2280Filter> loadPX265SQP03423() throws SQLException, Exception, Exception {
+
+        List<A2280Filter> lstRtn = new ArrayList<A2280Filter>(0);
+        A2280Filter objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+        
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03423()}";
+
+        try {
+            
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+            
+            while (rs01.next()) {
+                objRtn = new A2280Filter();
+                objRtn.TCOMIS = rs01.getString("TCOMIS").trim();
+                objRtn.DCOMIS = rs01.getString("DCOMIS").trim();
+                lstRtn.add(objRtn);
+            }
+            
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
+    }
+    
+    public A2280Filter loadPX265SQP03399(A2280Filter filter) throws SQLException, Exception {
+
+        A2280Filter objRtn = new A2280Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+        List<A2348> lstDetalle = new ArrayList<A2348>(0);
+        A2348 beanDetalle = new A2348();
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03399(?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.CODE.trim());
+            cstmt01.setString(3, filter.CODEBANK.trim());
+            cstmt01.setString(4, filter.COUNTRY.trim());
+            cstmt01.setString(5, filter.CURRENC.trim());
+            cstmt01.setString(6, filter.FNOBANK.trim());
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                beanDetalle = new A2348();
+                beanDetalle.TCOMIS = rs01.getString("TCOMIS").trim();
+                beanDetalle.FECFROM = rs01.getString("FECFROM").trim();
+                beanDetalle.FECTO = rs01.getString("FECTO").trim();
+                beanDetalle.SEQ = rs01.getString("SEQ").trim();
+                beanDetalle.DCOMIS = rs01.getString("DCOMIS").trim();
+                beanDetalle.BASEC = rs01.getString("BASEC").trim();
+                beanDetalle.MONTO = rs01.getDouble("MONTO");
+                beanDetalle.MESES = rs01.getInt("MESES");
+                beanDetalle.RATE = rs01.getDouble("RATE");
+                beanDetalle.RATEIVA = rs01.getDouble("RATEIVA");
+                lstDetalle.add(beanDetalle);
+            }
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+
+                if (rs01.next()) {
+
+                    objRtn.CCUST = rs01.getString("CCUST");
+                    objRtn.COUNTRY = rs01.getString("COUNTRY").trim();
+                    objRtn.CODEBANK = rs01.getString("CODEBANK").trim();
+                    objRtn.NAMEBANK = rs01.getString("NAMEBANK").trim();
+                    objRtn.CURRENC = rs01.getString("CURRENC").trim();
+                    objRtn.CODE = rs01.getString("CODECAR").trim();
+                    objRtn.NAMECAR = rs01.getString("NAMECAR").trim();
+                    objRtn.FSTAT = rs01.getString("FSTAT").trim();
+                    objRtn.CODEQUIV = rs01.getString("CODEQUIV");
+                    objRtn.FNOBANK = rs01.getString("FNOBANK").trim();
+                    objRtn.BSPBANK = rs01.getString("BSPBANK").trim();
+                    objRtn.CLIENTE = rs01.getString("CLIENTE").trim();
+                    objRtn.strBSPBANK = rs01.getString("strBSPBANK");
+                    objRtn.USCR = rs01.getString("USCR");
+                    objRtn.FECR = rs01.getString("FECR");
+                    objRtn.HOCR = rs01.getString("HOCR");
+                    objRtn.USUP = rs01.getString("USUP");
+                    objRtn.FEUP = rs01.getString("FEUP");
+                    objRtn.HOUP = rs01.getString("HOUP");
+                    objRtn.lstDetalle = lstDetalle;
+
+                }
+                rs01.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            //e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return objRtn;
+    }
+    
+    public String loadPX265SQP00941(A2280Filter filter) throws SQLException, Exception {
+
+        CallableStatement cs = null;
+        String strSQL;
+        String msj = "";
+
+        Connection cnx = null;
+        try {
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00941(?,?,?,?,?)}";
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+            cs.registerOutParameter(5, Types.VARCHAR);
+
+            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cs.setString(2, filter.NEW_CODEBANK.trim());
+            cs.setString(3, filter.NEW_COUNTRY.trim());
+            cs.setString(4, filter.NEW_CURRENC.trim());
+            cs.setString(5, "");//INOUT   IO_MSJ       VARCHAR(100), -- MENSAJE DE SALIDA
+            cs.execute();
+
+            //Obteniendo el mensaje de error ===================================    
+            if (cs.getString(5) != null) {
+                msj = cs.getString(5).trim();
+            }
+
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            // =================
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+
+    public String loadPX265SQP03400(A2280Filter filter, String option) throws SQLException, Exception {
+        
+        //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A2280.
+        String strMsj = "Operation was successful.";
+        CallableStatement cstmt = null;
+        Connection cnx = null;
+        List<A2348> lstDetalle = filter.lstDetalle;
+        A2348 beanDet = new A2348();
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03400(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+
+            if (lstDetalle != null && lstDetalle.size() > 0) {
+                for (int i=0; i < lstDetalle.size(); i++) {
+                    beanDet = lstDetalle.get(i);
+                    
+                    cstmt = cnx.prepareCall(SQLCLL01);
+                    cstmt.setString(1, option);
+                    cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
+                    cstmt.setString(3, filter.COUNTRY.trim());
+                    cstmt.setString(4, filter.CODEBANK.trim());
+                    cstmt.setString(5, filter.CURRENC.trim());
+                    cstmt.setString(6, filter.CODE.trim());
+                    cstmt.setString(7, filter.NAME.trim());
+                    cstmt.setString(8, beanDet.TCOMIS.trim());
+                    cstmt.setString(9, beanDet.FECFROM.trim());
+                    cstmt.setString(10, beanDet.FECTO.trim());
+                    cstmt.setString(11, beanDet.SEQ.trim());
+                    cstmt.setString(12, filter.FSTAT.trim());
+                    cstmt.setString(13, filter.CODEQUIV.trim());
+                    cstmt.setString(14, filter.FNOBANK.trim());
+                    cstmt.setString(15, beanDet.DCOMIS.trim());
+                    cstmt.setString(16, beanDet.BASEC.trim());
+                    cstmt.setDouble(17, beanDet.MONTO);
+                    cstmt.setInt(18, beanDet.MESES);
+                    cstmt.setDouble(19, beanDet.RATE);
+                    cstmt.setDouble(20, beanDet.RATEIVA);
+                    cstmt.setString(21, filter.NEW_COUNTRY.trim());
+                    cstmt.setString(22, filter.NEW_CURRENC.trim());
+                    cstmt.setString(23, filter.NEW_CODEBANK.trim());
+                    cstmt.setString(24, filter.NEW_FNOBANK.trim());
+                    cstmt.setString(25, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(26, Functions.getFechaActual());
+                    cstmt.setString(27, Functions.getHoraActual());
+                    if(i==0){
+                        cstmt.setString(28, "Y");
+                    }else{
+                        cstmt.setString(28, "0");
+                    }
+                    cstmt.execute();
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            strMsj = e.getMessage();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+    }
+
+    
+    
 }

@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                     xtype: 'treepanel',
                                     id: prototype.id + '-gridCommData',
 //                                    height: 510,
-                                    width: 1300,
+                                    width: 1242,
                                     hidden: false,
                                     columnLines: true,
                                     reserveScrollbar: true,
@@ -407,7 +407,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                                     {
                                                         iconCls: 'prx-icon-edit',
                                                         tooltip: 'Edit',
-//                                                        handler: 'onEditClick2'
+                                                        handler: 'onEditClick2'
                                                     }
                                                 ]
                                             }
