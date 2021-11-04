@@ -43,8 +43,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.UsersController', {
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         console.log(rec);
-        if(rec.data.A1955MODUL!=='PADM')
-            this.winDataEntry('U', rec);
+        this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
