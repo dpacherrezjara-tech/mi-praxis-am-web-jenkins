@@ -295,7 +295,45 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         });
     },
     //</editor-fold>
-
+    btnAddComissionInformation_click: function(){
+        Ext.getCmp(prototype.id + '-hboxEdit').show();
+        this.setValue('de-txtSEQ', "");
+        this.setValue('de-txtCCOMIS', "");
+        this.setValue('de-txtDCOMIS', "");
+        this.setValue('de-txtFECFROM', "");
+        this.setValue('de-txtFECTO', "");
+        this.setValue('de-cmbBASEC', "");
+        this.setValue('de-txtRATE', "");
+        this.setValue('de-txtRATEIVA', "");
+        this.setValue('de-txtMONTO', "");
+        this.setValue('de-txtMESES', "");  
+    },
+    onEditClickDEComm: function(grid, rowIndex, colIndex){
+        var rec = grid.getStore().getAt(rowIndex);
+        console.log(rec);
+        Ext.getCmp(prototype.id + '-hboxEdit').show();
+        this.setValue('de-txtSEQ', rec.data.SEQ);
+        this.setValue('de-txtCCOMIS', rec.data.TCOMIS);
+        this.setValue('de-txtDCOMIS', rec.data.DCOMIS);
+        this.setValue('de-txtFECFROM', rec.data.FECFROM);
+        this.setValue('de-txtFECTO', rec.data.FECTO);
+        this.setValue('de-cmbBASEC', rec.data.BASEC);
+        this.setValue('de-txtRATE', rec.data.RATE);
+        this.setValue('de-txtRATEIVA', rec.data.RATEIVA);
+        this.setValue('de-txtMONTO', rec.data.MONTO);
+        this.setValue('de-txtMESES', rec.data.MESES);
+    },    
+    btnImgCancel_click: function(){
+        Ext.getCmp(prototype.id + '-hboxEdit').hide();
+    },
+    btnImgSave_click: function(){
+        if( this.getValue('de-txtFECFROM').length < 8 || this.getValue('de-txtFECTO').length < 8){
+            global.Msg({msg: 'Invalid Length Date'})
+        }
+    },
+    btnImgDelete_click: function(){
+        
+    },
     validacionInsert: function(beanTemp) {
         var msjResult = '';
         if (this.getValue("de-txtCODE") === '' || this.getValue("de-txtCODEBANK") === '' || this.getValue("de-txtCOUNTRY") === '' || this.getValue("de-txtCURRENC") === '') {

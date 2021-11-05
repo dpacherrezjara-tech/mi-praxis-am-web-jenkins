@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
     controller: 'DataEntryCommCreditCardController',
     title: 'Credit Card Commission - Data Entry Form',
     header: true,
-    height: 680,
+    height: 750,
     width: 930,
     resizable: false,
     layout: 'fit',
@@ -89,10 +89,10 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
                                     width: 50,
-                                    listeners:{
-                                        change: function(field, newValue){
+                                    listeners: {
+                                        change: function(field, newValue) {
                                             field.setValue(newValue.toUpperCase());
-                                         } 
+                                        }
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 40},
@@ -133,10 +133,10 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
                                     width: 60,
-                                    listeners:{
-                                        change: function(field, newValue){
+                                    listeners: {
+                                        change: function(field, newValue) {
                                             field.setValue(newValue.toUpperCase());
-                                         } 
+                                        }
                                     }
                                 }
                             ]
@@ -388,14 +388,310 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                         },
                         {xtype: 'tbspacer', width: 6},
                         {
-                            xtype: 'label',
-                            text: 'Comission Information',
-                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;background:#DEEBDF;',
-                            bodyStyle: 'background:#E5ECEF;',
-                            fontSize: '11',
-                            height: 20,
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
                             width: 890,
-                            margin: '8 2 4 8'
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '0 2 2 8',
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'Comission Information',
+                                    style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;background:#DEEBDF;',
+                                    bodyStyle: 'background:#E5ECEF;',
+                                    fontSize: '11',
+                                    height: 20,
+                                    //width: 890,
+                                    margin: '8 2 4 8'
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.id + '-btnAddComissionInformation',
+                                    iconCls: 'prx-icon-add',
+                                    tooltip: 'New',
+                                    margin: '8 2 4 8',
+                                    listeners: {
+                                        click: 'btnAddComissionInformation_click'
+                                    }
+                                },
+                            ]
+                        },
+                        {xtype: 'tbspacer', width: 6},
+                        //Editar Comission
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-hboxEdit',
+                            layout: 'vbox',
+                            border: false,
+                            width: 890,
+                            hidden: true,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '0 2 2 8',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    width: 890,
+                                    hidden: false,
+                                    bodyStyle: 'background:#E5ECEF;',
+                                    margin: '0 2 2 8',
+                                    items: [
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'SEQ',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 30
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Commission',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 220
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Date from',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 80
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Date to',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 80
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Base',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 90
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Rate',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 60
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'IVA',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 60
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Amount',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 60
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Months',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 60
+                                        },
+                                    ]
+                                },
+                                {xtype: 'tbspacer', height: 6},
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    width: 890,
+                                    hidden: false,
+                                    bodyStyle: 'background:#E5ECEF;',
+                                    margin: '0 2 2 8',
+                                    items: [
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtSEQ',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 3,
+                                            maskRe: /[0-9]/,
+                                            readOnly: true,
+                                            width: 30,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtCCOMIS',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 3,
+                                            //maskRe: /[0-9]/,
+                                            readOnly: false,
+                                            width: 30,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtDCOMIS',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 180,
+                                            //maskRe: /[0-9]/,
+                                            readOnly: false,
+                                            width: 190,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtFECFROM',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 8,
+                                            maskRe: /[0-9]/,
+                                            readOnly: false,
+                                            width: 80,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtFECTO',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 8,
+                                            maskRe: /[0-9]/,
+                                            readOnly: false,
+                                            width: 80,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-de-cmbBASEC',
+                                            fieldStyle: 'text-align:left;',
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            width: 90,
+                                            editable: false,
+                                            store: new Ext.data.SimpleStore({
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ["", "(None)"], ["1", "MERCH"], ["2", "TOTAL VENTA"],
+                                                    ["3", "OTROS"]
+                                                ]
+                                            }),
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtRATE',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 8,
+                                            maskRe: /[0-9.]/,
+                                            readOnly: false,
+                                            width: 60,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtRATEIVA',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 8,
+                                            maskRe: /[0-9.]/,
+                                            readOnly: false,
+                                            width: 60,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtMONTO',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 8,
+                                            maskRe: /[0-9.]/,
+                                            readOnly: false,
+                                            width: 60,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtMESES',
+                                            fieldStyle: 'text-align:center',
+                                            enableKeyEvents: false,
+                                            enforceMaxLength: true,
+                                            //editable: true,
+                                            //enabled: false,
+                                            maxLength: 2,
+                                            maskRe: /[0-9]/,
+                                            readOnly: false,
+                                            width: 60,
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnImgSave',
+                                            iconCls: 'prx-icon-save',
+                                            tooltip: 'Save',
+                                            //margin: '8 2 4 8',
+                                            listeners: {
+                                                click: 'btnImgSave_click'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnImgDelete',
+                                            iconCls: 'prx-icon-delete',
+                                            tooltip: 'Delete',
+                                            //margin: '8 2 4 8',
+                                            listeners: {
+                                                click: 'btnImgDelete_click'
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 1},
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-btnImgCancel',
+                                            iconCls: 'prx-icon-cancel',
+                                            tooltip: 'Cancel',
+                                            //margin: '8 2 4 8',
+                                            listeners: {
+                                                click: 'btnImgCancel_click'
+                                            }
+                                        },
+                                    ]
+                                },
+                            ]
                         },
                         {
                             xtype: 'panel',
@@ -448,7 +744,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     {text: 'To', dataIndex: 'FECTO', width: 90},
                                                 ]
                                             },
-                                            {text: 'Base', dataIndex: 'BASEC', width: 65},
+                                            {text: 'Base', dataIndex: 'BASEC', width: 65,},
                                             {text: 'Rate', dataIndex: 'RATE', width: 65},
                                             {text: 'IVA',
                                                 defaults: {
@@ -494,7 +790,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     {
                                                         iconCls: 'prx-icon-edit',
                                                         tooltip: 'Edit',
-//                                                        handler: 'onEditClickDEComm'
+                                                        handler: 'onEditClickDEComm'
                                                     }
                                                 ]
                                             }
