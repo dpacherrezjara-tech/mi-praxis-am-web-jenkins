@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         this.setValue('de-txtCURRENC', this.beanResult.CURRENC);
         this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
         this.setValue('de-txtNAMEBSPBANK', this.beanResult.strBSPBANK);
-        
+
         this.setValue('cmbFSTAT', this.beanResult.FSTAT);
         this.setValue('cmbFNOBANK', this.beanResult.FNOBANK);
 
@@ -63,14 +63,14 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
-        
+
         var storeData = Ext.create('Ext.data.Store', {
             data: this.beanResult.lstDetalle,
             autoLoad: true
         });
 
-        Ext.getCmp(prototype.id + '-gridDataCommInfo').bindStore(storeData);        
-        
+        Ext.getCmp(prototype.id + '-gridDataCommInfo').bindStore(storeData);
+
     },
     obtainData: function() {
 //        console.log('obtainData');
@@ -104,7 +104,6 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         cmbFNOBANK.setValue('');
 
     },
-    
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function(beanTemp) {
 
@@ -132,15 +131,15 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         beanTemp.USUP = this.getValue("txtUSUP").trim();
         beanTemp.FEUP = this.getValue("txtFEUP").trim();
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
-        
-             
+
+
         var listaGrilla = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore().data;
         var beanDet = {};
         var listaNueva = [];
-        
+
         for (var i = 0; i < listaGrilla.length; i++) {
             beanDet = listaGrilla.items[i];
-                        
+
             var beanNuevo = {};
             beanNuevo.TCOMIS = beanDet.data.TCOMIS;
             beanNuevo.DCOMIS = beanDet.data.DCOMIS;
@@ -150,9 +149,9 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
             beanNuevo.BASEC = beanDet.data.BASEC;
             beanNuevo.MONTO = beanDet.data.MONTO;
             beanNuevo.MESES = beanDet.data.MESES;
-            beanNuevo.RATE = parseFloat((beanDet.data.RATE + '').trim().replace('.',''));
-            beanNuevo.RATEIVA = parseFloat((beanDet.data.RATEIVA + '').trim().replace('.',''));
-                        
+            beanNuevo.RATE = parseFloat((beanDet.data.RATE + '').trim().replace('.', ''));
+            beanNuevo.RATEIVA = parseFloat((beanDet.data.RATEIVA + '').trim().replace('.', ''));
+
             listaNueva.push(beanNuevo);
         }
         beanTemp.lstDetalle = listaNueva;
@@ -162,7 +161,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
     },
     getData: function() {
 //        console.log('getData');
-        
+
         win.lblUser_toolTip("Estructura: A2348");
         var beanString = JSON.stringify(meDE.bean.data);
 
@@ -176,7 +175,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
-                
+
                 meDE.beanResult = res.beanComplete;
                 meDE.mostrarData();
 
@@ -228,23 +227,23 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
     },
     onUpdateClick: function(btn) {
         Ext.Msg.show(
-            {
-                title: '.:PRAXIS:.',
-                msg: 'Are you sure to update ?',
-                buttons: Ext.MessageBox.YESNO,
-                scope: this,
-                animateTarget: btn,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn) {
-                    if (btn === 'yes') {
-                        var beanTemp = {};
-                        this.llenarData(beanTemp);
-                        beanTemp.option = 'U';
-                        this.MaintenanceA2348Comm(beanTemp);
+                {
+                    title: '.:PRAXIS:.',
+                    msg: 'Are you sure to update ?',
+                    buttons: Ext.MessageBox.YESNO,
+                    scope: this,
+                    animateTarget: btn,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'yes') {
+                            var beanTemp = {};
+                            this.llenarData(beanTemp);
+                            beanTemp.option = 'U';
+                            this.MaintenanceA2348Comm(beanTemp);
+                        }
                     }
-                }
-            });
+                });
     },
     onDeleteClick: function(btn) {
         Ext.Msg.show({
@@ -271,7 +270,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
 
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA2348Comm">
     MaintenanceA2348Comm: function(beanTemp) {
-        
+
         var beanString = JSON.stringify(beanTemp);
         Ext.Ajax.request({
             url: prototype.url + '/MaintenanceA2348Comm',
@@ -290,12 +289,15 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
                     Ext.getCmp(prototype.id + '-dataEntry').close();
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
 
-                } else{global.Msg({msg: ''})};
+                } else {
+                    global.Msg({msg: ''})
+                }
+                ;
             }
         });
     },
     //</editor-fold>
-    btnAddComissionInformation_click: function(){
+    btnAddComissionInformation_click: function() {
         Ext.getCmp(prototype.id + '-hboxEdit').show();
         this.setValue('de-txtSEQ', "");
         this.setValue('de-txtCCOMIS', "");
@@ -306,9 +308,9 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         this.setValue('de-txtRATE', "");
         this.setValue('de-txtRATEIVA', "");
         this.setValue('de-txtMONTO', "");
-        this.setValue('de-txtMESES', "");  
+        this.setValue('de-txtMESES', "");
     },
-    onEditClickDEComm: function(grid, rowIndex, colIndex){
+    onEditClickDEComm: function(grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         console.log(rec);
         Ext.getCmp(prototype.id + '-hboxEdit').show();
@@ -322,17 +324,131 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         this.setValue('de-txtRATEIVA', rec.data.RATEIVA);
         this.setValue('de-txtMONTO', rec.data.MONTO);
         this.setValue('de-txtMESES', rec.data.MESES);
-    },    
-    btnImgCancel_click: function(){
-        Ext.getCmp(prototype.id + '-hboxEdit').hide();
     },
-    btnImgSave_click: function(){
-        if( this.getValue('de-txtFECFROM').length < 8 || this.getValue('de-txtFECTO').length < 8){
-            global.Msg({msg: 'Invalid Length Date'})
-        }
+    btnImgCancel_click: function() {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to cancel ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    Ext.getCmp(prototype.id + '-hboxEdit').hide();
+                }
+            }
+        });
+
     },
-    btnImgDelete_click: function(){
-        
+    btnImgSave_click: function() {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to save/update ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    if (this.getValue('de-txtFECFROM').length < 8 || this.getValue('de-txtFECTO').length < 8) {
+                        global.Msg({msg: 'Invalid Length Date'})
+                    } else {
+                        var SEQ = this.getValue('de-txtSEQ');
+                        var CCOMIS = this.getValue('de-txtCCOMIS');
+                        var DCOMIS = this.getValue('de-txtDCOMIS');
+                        var FECFROM = this.getValue('de-txtFECFROM');
+                        var FECTO = this.getValue('de-txtFECTO');
+                        var BASEC = this.getValue('de-cmbBASEC');
+                        var RATE = this.getValue('de-txtRATE');
+                        var RATEIVA = this.getValue('de-txtRATEIVA');
+                        var MONTO = this.getValue('de-txtMONTO');
+                        var MESES = this.getValue('de-txtMESES');
+
+                        var NEW_SEQ = 0;
+                        var dataRow = {};
+                        dataRow.SEQ = SEQ;
+                        dataRow.TCOMIS = CCOMIS;
+                        dataRow.DCOMIS = DCOMIS;
+                        dataRow.FECFROM = FECFROM;
+                        dataRow.FECTO = FECTO;
+                        dataRow.BASEC = BASEC;
+                        dataRow.RATE = RATE;
+                        dataRow.RATEIVA = RATEIVA;
+                        dataRow.MONTO = MONTO;
+                        dataRow.MESES = MESES;
+
+                        var store_gridDataCommInfo = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore();
+
+                        if (this.getValue('de-txtSEQ') === '') {
+                            //AGREGAR LOGICA CORRELATIVO SEQ
+                            for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
+                                NEW_SEQ = NEW_SEQ + 1;
+                                store_gridDataCommInfo.data.items[i].data.SEQ = this.fillZeros(3, NEW_SEQ.toString());
+                            }
+                            dataRow.SEQ = this.fillZeros(3, (NEW_SEQ + 1).toString());
+                            store_gridDataCommInfo.add(dataRow);
+                            Ext.getCmp(prototype.id + '-gridDataCommInfo').getView().refresh();
+                        } else {
+                            //Actualiza                
+                            console.log(store_gridDataCommInfo);
+                            for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
+                                if (store_gridDataCommInfo.data.items[i].data.SEQ === SEQ) {
+                                    store_gridDataCommInfo.data.items[i].data.TCOMIS = CCOMIS;
+                                    store_gridDataCommInfo.data.items[i].data.DCOMIS = DCOMIS;
+                                    store_gridDataCommInfo.data.items[i].data.FECFROM = FECFROM;
+                                    store_gridDataCommInfo.data.items[i].data.FECTO = FECTO;
+                                    store_gridDataCommInfo.data.items[i].data.BASEC = BASEC;
+                                    store_gridDataCommInfo.data.items[i].data.RATE = RATE;
+                                    store_gridDataCommInfo.data.items[i].data.RATEIVA = RATEIVA;
+                                    store_gridDataCommInfo.data.items[i].data.MONTO = MONTO;
+                                    store_gridDataCommInfo.data.items[i].data.MESES = MESES;
+                                    Ext.getCmp(prototype.id + '-gridDataCommInfo').getView().refresh();
+                                    break;
+                                }
+                            }
+
+                        }
+                        Ext.getCmp(prototype.id + '-hboxEdit').hide();
+                    }
+                }
+            }
+        });
+
+    },
+    btnImgDelete_click: function() {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure to delete ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'yes') {
+                    var SEQ = this.getValue('de-txtSEQ');
+                    var NEW_SEQ = 0;
+                    var store_gridDataCommInfo = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore();
+
+                    for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
+                        if (store_gridDataCommInfo.data.items[i].data.SEQ === SEQ) {
+                            var posicion = i;
+                            break;
+                        }
+                    }
+
+                    store_gridDataCommInfo.removeAt(posicion);
+
+                    for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
+                        NEW_SEQ = NEW_SEQ + 1;
+                        store_gridDataCommInfo.data.items[i].data.SEQ = this.fillZeros(3, NEW_SEQ.toString());
+                    }
+
+                    Ext.getCmp(prototype.id + '-gridDataCommInfo').getView().refresh();
+                    Ext.getCmp(prototype.id + '-hboxEdit').hide();
+                }
+            }
+        });
     },
     validacionInsert: function(beanTemp) {
         var msjResult = '';
@@ -382,6 +498,12 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         if (e.getKey() === e.ENTER) {
 //            this.btnSearch_click();
         }
-    }
+    },
+    fillZeros: function(size, value) {
+        for (var i = value.length; i < size; i++) {
+            value = '0' + value;
+        }
+        return value;
+    },
 // </editor-fold>
 });
