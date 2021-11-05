@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
     controller: 'DataEntryCreditCardController',
     title:'Credit Card - Data Entry Form',
     header:true,
-    height:510,
+    height:540,
     width:820,
     resizable:false,
     layout:'fit',

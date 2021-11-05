@@ -75,9 +75,9 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Filters', {
                     id:prototype.id+'-rbgType',
                     hidden: false,
                     items: [
-                        { boxLabel: '<b style="color:#148D28;">Credit Card</b>', inputValue: 'CARD', name: 'rbgType', checked: false, width: 100, },
+                        { boxLabel: '<b style="color:#148D28;">Credit Card</b>', inputValue: 'CARD', name: 'rbgType', checked: true, width: 100, },
                         {xtype: 'tbspacer', width: 20},
-                        { boxLabel: '<b style="color:#148D28;">Commissions</b>', inputValue: 'COMM', name: 'rbgType', checked: true }
+                        { boxLabel: '<b style="color:#148D28;">Commissions</b>', inputValue: 'COMM', name: 'rbgType', checked: false }
                     ],
                     listeners: {
                         change: 'cmbTranType_changeHandler' 
