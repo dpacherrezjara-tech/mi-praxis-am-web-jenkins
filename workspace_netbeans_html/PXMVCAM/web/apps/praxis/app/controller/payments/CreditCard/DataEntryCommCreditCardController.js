@@ -114,10 +114,10 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         beanTemp.CLIENTE = this.getValue("de-txtCLIENTE");
         beanTemp.FSTAT = this.getValue("cmbFSTAT");
 
-        beanTemp.CODEBANK = me.bean.CODEBANK === undefined ? '' : me.bean.CODEBANK;
-        beanTemp.COUNTRY = me.bean.COUNTRY === undefined ? '' : me.bean.COUNTRY;
-        beanTemp.CURRENC = me.bean.CURRENC === undefined ? '' : me.bean.CURRENC;
-        beanTemp.FNOBANK = me.bean.FNOBANK === undefined ? '' : me.bean.FNOBANK;
+        beanTemp.CODEBANK = this.beanResult.CODEBANK === undefined ? '' : this.beanResult.CODEBANK;
+        beanTemp.COUNTRY = this.beanResult.COUNTRY === undefined ? '' : this.beanResult.COUNTRY;
+        beanTemp.CURRENC = this.beanResult.CURRENC === undefined ? '' : this.beanResult.CURRENC;
+        beanTemp.FNOBANK = this.beanResult.FNOBANK === undefined ? '' : this.beanResult.FNOBANK;
 
         beanTemp.NEW_CODEBANK = this.getValue("de-txtCODEBANK");
         beanTemp.NEW_COUNTRY = this.getValue("de-txtCOUNTRY");
@@ -452,8 +452,11 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
     },
     validacionInsert: function(beanTemp) {
         var msjResult = '';
+        var store_gridDataCommInfo = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore();
         if (this.getValue("de-txtCODE") === '' || this.getValue("de-txtCODEBANK") === '' || this.getValue("de-txtCOUNTRY") === '' || this.getValue("de-txtCURRENC") === '') {
             msjResult = "You must enter the required field.";
+        } else if(store_gridDataCommInfo.data.length === 0) {
+            msjResult = "You must enter at least one commission.";
         }
         return msjResult;
     },

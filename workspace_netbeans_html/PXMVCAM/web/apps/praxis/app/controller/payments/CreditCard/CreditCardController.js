@@ -240,8 +240,8 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
 //        global.clear();
 //        Ext.getCmp(prototype.id + '-gridCommData').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-        
-        
+
+
         var cadena = searchParams.beanString;
 
         Ext.Ajax.request({
@@ -250,7 +250,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
             params: {beanString: cadena},
-            success: function (response, options) {
+            success: function(response, options) {
                 Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
@@ -264,7 +264,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
 //                    me.drillDown.push(me.panelActual);
 //                    me.panelActual = '-boxCardData';
 //                    global.selectedChild(me.childs, prototype.id + me.panelActual);
-                    
+
 //                    var data = res.data[0];
                     var lstData = res.data;
                     console.log(lstData);
@@ -274,7 +274,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
                     var a = [];
                     var dataRoot = {text: '.', expanded: false, children: []};
 
-                    Ext.Object.each(lstData, function (index, value) {
+                    Ext.Object.each(lstData, function(index, value) {
 //                        console.log(value);
                         if (a.indexOf(value.strAgrupacion) < 0) {
                             var x = [];
@@ -314,7 +314,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
                                 expanded: true, children: []
                             });
                             var b = [];
-                            Ext.Object.each(lstData, function (index, value01) {
+                            Ext.Object.each(lstData, function(index, value01) {
                                 if (value.strAgrupacion === value01.strAgrupacion) {
                                     dataRoot.children[a.indexOf(value.strAgrupacion)].children.push({
                                         strAgrupacion: value01.strAgrupacion,
@@ -349,16 +349,16 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
                     var storeTree = Ext.create('Ext.data.TreeStore', {
                         root: dataRoot
                     });
-                    
+
                     console.log(storeTree);
 
                     Ext.getCmp(prototype.id + '-gridCommData').setStore(storeTree);
                 }
-                
+
             }
         });
-        
-        
+
+
     },
     validateFields: function() {
         var msj = '';
@@ -367,7 +367,15 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
         return msj;
     },
     btnAdd_click: function() {
-        this.winDataEntry('I');
+        var check = Ext.getCmp(prototype.id + '-rbgType').getValue();
+        if (check.rbgType === 'CARD') {
+            console.log('CARD');
+            this.winDataEntry('I');
+        } else {
+            console.log('COMM');
+            this.winDataEntry2('I');
+        }
+        
     },
     onEditClick: function(grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
@@ -409,22 +417,22 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
     },
     btnBack_click: function(obj, e) {
 
-                if (me.drillDown.length > 0) {
-                    me.panelActual = me.drillDown.pop();
-                    global.selectedChild(me.childs, prototype.id + me.panelActual);
-                    me.setWidthPie();
+        if (me.drillDown.length > 0) {
+            me.panelActual = me.drillDown.pop();
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+            me.setWidthPie();
 
-                    this.getPaggin();
-                    if (me.pagginActual !== '') {
-                        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-                        var pagData = pag.getPageData();
-                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                    }
-                } else {
-                    global.showMenu();
-                }
+            this.getPaggin();
+            if (me.pagginActual !== '') {
+                var pag = Ext.getCmp(prototype.id + me.pagginActual);
+                var pagData = pag.getPageData();
+                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+            }
+        } else {
+            global.showMenu();
+        }
     },
     btnClear_click: function(obj, e) {
         Ext.getCmp(prototype.id + '-cmbCode').setValue('');
