@@ -16,10 +16,13 @@ public class A2354Filter extends A2354 {
     public String IN_MERCHN = "";
     public String IN_DESCR = "";
     public String IN_RSOCIAL = "";
+    public String IN_UNIOPE = "";
+    public String IN_CANAL = "";
     public String strFecha = "";
     public String strDescrip = "";
     public String A003CANAL = "";
     public String A003IATA = "";
+    
     public long RN = 0;
     public String strDescripCtry = "";
     public String strDescripUNIOPE = "";
