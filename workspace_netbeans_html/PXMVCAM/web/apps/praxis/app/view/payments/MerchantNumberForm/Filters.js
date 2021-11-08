@@ -26,7 +26,6 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                 enforceMaxLength: true
             },
             items: [
-                
                 {
                     xtype: 'combo',
                     id: prototype.id+'-cmbFindBy',
@@ -47,8 +46,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                     listeners:{
                         change: 'cmbFind_changeHandler'
                     }
-                }
-                ,
+                },
                 {
                     xtype: 'textfield',
                     id: prototype.id+'-txtMERCHN',                                   
@@ -67,8 +65,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                     listeners:{
                         keypress: 'eventKey'
                     }  
-                }
-                ,
+                },
                 {
                     xtype: 'textfield',
                     id: prototype.id+'-txtRSOCIAL',                                   
@@ -88,30 +85,59 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                         change: 'onUpperValue',
                         keypress: 'eventKey'
                     }
-                }
-//                ,
+                },
 //                {
-//                    xtype:'combo',
-//                    id: prototype.id + '-SearchBy',
-//                    store: new Ext.data.SimpleStore({
-//                        fields: ['code', 'name'],
-//                        data: [
-//                             ["1", "Merchant Nbr:"], ["2", "Social Reason:"]
-//                       ]
-//                    }),                                   
-//                    enableKeyEvents: true,                    
-//                    caseSensitive: true,
-//                    allowBlank: true,
-//                    readOnly: false,
-//                    editable: true,    
-//                    enforceMaxLength: true,
-//                    maxLength: 40,
-//                    maskRe: /[a-zA-Z]/,
-//                    labelWidth: 120,
-//                    width: 190,
+//                    xtype: 'label',
+//                    text: 'Operative Unit:',
 //                    hidden: false,
-//                    hiddenLabel: false
-//                }
+//                    textAlign: 'center',
+//                    paddingLeft: 3,
+//                    style: 'font-weight:bold;color:#0B333C;',
+//                    width: 120
+//                },
+                {xtype: 'tbspacer', width: 30},
+                {
+                    xtype: 'combo',
+                    fieldLabel: 'Operative Unit:',
+                    id: prototype.id + '-cmbUNIOPE',
+                    queryMode: 'local',
+//                    labelWidth: 120,
+                    width: 240,
+                    fieldStyle: 'color:#074066;',
+                    forceSelection: true,
+                    selectOnFocus: false,
+                    caseSensitive: false,
+                    hidden: false,
+                    autoSelect: true,
+                    editable: false,
+                    disabled: false,
+                    typeAhead: true,
+                    valueField: 'code',
+                    displayField: 'name',
+                    enableKeyEvents: true,
+                    triggerAction: 'all'
+                },
+                {xtype: 'tbspacer', width: 30},
+                {
+                    xtype: 'textfield',
+                    fieldLabel: 'Channel',
+                    id: prototype.id+'-txtCANAL',                                   
+                    enableKeyEvents: true,
+                    caseSensitive: true,
+                    allowBlank: true,
+                    readOnly: false,
+                    editable: true,    
+                    maxLength:4,
+                    labelWidth: 120,
+                    width: 190,
+                    hidden: false,
+                    hiddenLabel: false,
+                    listeners:{
+                        change: 'onUpperValue',
+                        keypress: 'eventKey'
+                    }
+                }
+               
             ]
             
             
