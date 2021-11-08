@@ -54,6 +54,8 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
         this.setValue('de-txtCOUNTRY', this.beanResult.COUNTRY);
         this.setValue('de-txtCURRENC', this.beanResult.CURRENC);
         this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
+        this.setValue('de-txtFECFROM', this.beanResult.FECFROM);
+        this.setValue('de-txtFECTO', this.beanResult.FECTO);
         
         this.setValue('cmbFSTAT', this.beanResult.FSTAT);
         this.setValue('cmbFNOBANK', this.beanResult.FNOBANK);
@@ -126,6 +128,8 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
         beanTemp.RATECOP1 = this.getValue("de-txtRATECOP1");
         beanTemp.RATECOP2 = this.getValue("de-txtRATECOP2");
         beanTemp.RATEIVA = this.getValue("de-txtRATEIVA");
+        beanTemp.FECFROM = this.getValue("de-txtFECFROM");
+        beanTemp.FECTO = this.getValue("de-txtFECTO");
 
         beanTemp.CODEBANK = me.bean.CODEBANK === undefined ? '' : me.bean.CODEBANK;
         beanTemp.COUNTRY = me.bean.COUNTRY === undefined ? '' : me.bean.COUNTRY;
@@ -283,7 +287,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
         var beanString = JSON.stringify(beanTemp);
 //        console.log(beanString);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA2280',
+            url: prototype.url + '/MaintenanceA2280-test',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: beanString},

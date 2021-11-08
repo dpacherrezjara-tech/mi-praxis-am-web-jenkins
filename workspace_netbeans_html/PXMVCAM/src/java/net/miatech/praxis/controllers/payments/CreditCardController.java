@@ -404,7 +404,7 @@ public class CreditCardController extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchCompleteComm")
     public @ResponseBody
     String searchCompleteComm(ModelMap map, HttpServletRequest request) {
@@ -412,7 +412,7 @@ public class CreditCardController extends BaseController {
 
         Gson gson = new Gson();
         A2280Filter filter = new A2280Filter();
-        
+
         List<A2280Filter> loadlstA2280;
         List<A2280Filter> loadLstTCOMIS;
         A2280Filter beanComplete = new A2280Filter();
@@ -423,11 +423,11 @@ public class CreditCardController extends BaseController {
         logic = new CreditCardLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            
+
             loadlstA2280 = logic.loadPX265SQP00663();
             loadLstTCOMIS = logic.loadPX265SQP03423();
             beanComplete = logic.loadPX265SQP03399(filter);
-            
+
             map.put("beanComplete", beanComplete);
             map.put("loadlstA2280", loadlstA2280);
             map.put("listaTCOMIS", loadLstTCOMIS);
@@ -438,7 +438,7 @@ public class CreditCardController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "MaintenanceA2348Comm")
     public @ResponseBody
     String MaintenanceA2348Comm(ModelMap map, HttpServletRequest request) {
@@ -453,13 +453,13 @@ public class CreditCardController extends BaseController {
         try {
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A2280Filter.class);
-            
+
             logic = new CreditCardLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
+
             //Verifica que el código del banco ingresado exista en la tabla A2281
             msj = logic.loadPX265SQP00941(filter);
-            if(msj.trim().isEmpty()){
+            if (msj.trim().isEmpty()) {
                 msj = logic.loadPX265SQP03400(filter, filter.option);
             }
 
@@ -474,6 +474,38 @@ public class CreditCardController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-    
+
+    @RequestMapping(value = "MaintenanceA2280")
+    public @ResponseBody
+    String MaintenanceA2280(ModelMap map, HttpServletRequest request){        
+        String msj = "";
+        String beanString;
+        Gson gson = new Gson();
+
+        A2280Filter filter = new A2280Filter();
+        System.out.println("-------------- CreditCard : MaintenanceA2280-------------");
+
+        try {
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2280Filter.class);
+            
+            CreditCardLogic logic = new CreditCardLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            //Verifica que el código del banco ingresado exista en la tabla A2281
+            msj = logic.loadPX265SQP00941(filter);
+            if(msj.trim().isEmpty()){
+                msj = logic.loadPX265SQP00661(filter, filter.option);
+            }
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+
+    }
 }

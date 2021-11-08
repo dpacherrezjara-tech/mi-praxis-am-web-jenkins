@@ -84,12 +84,12 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                     maxLength: 2,
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
-                                    width: 50,
+                                    width: 70,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 40 },
+                                { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
                                     text: 'Name: ',
@@ -106,6 +106,60 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                     width: 290
                                 },
                                 { xtype: 'tbspacer', width: 123 }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '2 2 2 20',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Date from:',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 80
+                                },
+                                { xtype: 'tbspacer', width: 56 },                                                                
+                                { xtype: 'tbspacer', width: 4 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtFECFROM',
+                                    fieldStyle: 'text-align:center;',
+                                    enableKeyEvents: true,
+                                    enforceMaxLength: true,
+                                    width: 70,
+                                    readOnly: false,
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,                                    
+                                },
+                                { xtype: 'tbspacer', width: 20 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Date to:',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 80
+                                },
+                                { xtype: 'tbspacer', width: 40 },                                
+                                { xtype: 'tbspacer', width: 2 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtFECTO',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 70,
+                                    readOnly: false,
+                                    enforceMaxLength: true,
+                                    maxLength: 8,
+                                    maskRe: /[0-9]/,                                    
+                                },   
+                                { xtype: 'tbspacer', width: 343 }
                             ]
                         },
                         {
@@ -134,12 +188,12 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntry',{
                                     maxLength: 2,
                                     maskRe: /[a-zA-Z]/,
                                     readOnly: false,
-                                    width: 50,
+                                    width: 70,
                                     listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                { xtype: 'tbspacer', width: 575 }
+                                { xtype: 'tbspacer', width: 555 }
                             ]
                         },    
                         { xtype: 'tbspacer', width: 80, height: 10 },

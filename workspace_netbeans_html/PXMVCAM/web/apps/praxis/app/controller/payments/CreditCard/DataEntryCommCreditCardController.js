@@ -149,8 +149,8 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
             beanNuevo.BASEC = beanDet.data.BASEC;
             beanNuevo.MONTO = beanDet.data.MONTO;
             beanNuevo.MESES = beanDet.data.MESES;
-            beanNuevo.RATE = parseFloat((beanDet.data.RATE + '').trim().replace('.', ''));
-            beanNuevo.RATEIVA = parseFloat((beanDet.data.RATEIVA + '').trim().replace('.', ''));
+            beanNuevo.RATE = parseFloat((beanDet.data.RATE + '').trim().replace(',', ''));
+            beanNuevo.RATEIVA = parseFloat((beanDet.data.RATEIVA + '').trim().replace(',', ''));
 
             listaNueva.push(beanNuevo);
         }

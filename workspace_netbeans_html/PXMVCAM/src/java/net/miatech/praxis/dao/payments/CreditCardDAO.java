@@ -148,7 +148,7 @@ public class CreditCardDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00672(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00672(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -171,9 +171,12 @@ public class CreditCardDAO {
             cstmt.setString(13, filter.CLIENTE.trim());
             cstmt.setString(14, filter.CODBANKN.trim());
             cstmt.setInt(15, filter.DOCNUM);
-            cstmt.setString(16, session.getUserView().getUserInfo().USR);
-            cstmt.setString(17, Functions.getFechaActual());
-            cstmt.setString(18, Functions.getHoraActual());
+            cstmt.setString(16, filter.FECFROM);
+            cstmt.setString(17, filter.FECTO);
+            
+            cstmt.setString(18, session.getUserView().getUserInfo().USR);
+            cstmt.setString(19, Functions.getFechaActual());
+            cstmt.setString(20, Functions.getHoraActual());
             cstmt.execute();
 
         } catch (Exception e) {
@@ -316,6 +319,8 @@ public class CreditCardDAO {
                 bean.FSTAT = rst.getString("FSTAT").trim();
                 bean.FNOBANK = rst.getString("FNOBANK").trim();
                 bean.CLIENTE = rst.getString("CLIENTE").trim();
+                bean.FECFROM = rst.getString("FECFROM").trim();
+                bean.FECTO = rst.getString("FECTO").trim();
 
                 bean.RATCNAC = rst.getDouble("RATCNAC");
                 bean.RATDNAC = rst.getDouble("RATDNAC");
@@ -452,6 +457,8 @@ public class CreditCardDAO {
                 objRtn.RATEIVA = rs01.getDouble("RATEIVA");
                 objRtn.CODEQUIV = rs01.getString("CODEQUIV");
                 objRtn.BSPBANK = rs01.getString("BSPBANK");
+                objRtn.FECFROM = rs01.getString("FECFROM");
+                objRtn.FECTO = rs01.getString("FECTO");
                 objRtn.strBSPBANK = rs01.getString("strBSPBANK");
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
