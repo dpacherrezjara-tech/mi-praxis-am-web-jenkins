@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1400,
+                width: 1460,
                 height: 700,
                 align: 'center'
             },
@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                             border: true,
 //                            margin: '1',
                             //height: 550,
-                            width: 1300,
+                            width: 1460,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     //height: 510,
-                                    width: 1300,
+                                    width: 1460,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -93,8 +93,29 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                                     {text: 'Name', dataIndex: 'NAMEBANK', width: 140, align: 'center'}
                                                 ]
                                             },
-                                            {text: 'Currency', dataIndex: 'CURRENC', width: 70}
-                                            ,
+                                            {text: 'Currency', dataIndex: 'CURRENC', width: 70},
+                                            {text: 'Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'From', dataIndex: 'FECFROM', width: 80, align: 'center', sortable: false
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'To', dataIndex: 'FECTO', width: 80, align: 'center', sortable: false
+                                                    }
+                                                ]
+                                            },
                                             {text: 'Commision',
                                                 defaults: {
                                                     menuDisabled: true,

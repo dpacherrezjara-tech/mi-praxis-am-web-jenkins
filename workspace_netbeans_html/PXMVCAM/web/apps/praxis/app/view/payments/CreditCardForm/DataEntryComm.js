@@ -744,8 +744,14 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.DataEntryComm', {
                                                     {text: 'To', dataIndex: 'FECTO', width: 90},
                                                 ]
                                             },
-                                            {text: 'Base', dataIndex: 'BASEC', width: 65,},
-                                            {text: 'Rate', dataIndex: 'RATE', width: 65},
+                                            {text: 'Base', dataIndex: 'BASEC', width: 65, },
+                                            {text: 'Rate', dataIndex: 'RATE', width: 65,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'IVA',
                                                 defaults: {
                                                     menuDisabled: true,
