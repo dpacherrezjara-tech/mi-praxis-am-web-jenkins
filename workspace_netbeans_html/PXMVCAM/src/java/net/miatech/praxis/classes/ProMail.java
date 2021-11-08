@@ -70,7 +70,11 @@ public class ProMail {
                 props.put("mail.smtp.host", "216.32.180.74");
                 props.put("mail.smtp.port", "25");
             */
-            props.put("mail.smtp.host","m.outlook.com" );
+            
+            //props.put("mail.smtp.host","m.outlook.com" );
+            //props.put("mail.smtp.port", "587");
+            
+            props.put("mail.smtp.host","smtp.office365.com" );
             props.put("mail.smtp.port", "587");
             
             props.put("mail.smtp.starttls.enable","true");
@@ -78,7 +82,7 @@ public class ProMail {
             props.setProperty("mail.smtp.user", usuario);
             props.setProperty("mail.smtp.auth", "true");
             
-            Authenticator auth = new SMTPAuthenticator(usuario, "Am@claraciones"); // Tener Clave del quien Envia
+            Authenticator auth = new SMTPAuthenticator(usuario, "Notific@ciones"); // Tener Clave del quien Envia // Am@claraciones
             
 //            Authenticator auth = new SMTPAuthenticator(usuario, "Aeromexico01"); // Tener Clave del quien Envia                
             
