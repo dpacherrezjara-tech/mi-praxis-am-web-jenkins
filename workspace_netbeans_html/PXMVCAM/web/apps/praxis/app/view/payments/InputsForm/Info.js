@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     {text: 'Error', dataIndex: 'flagError', width: 60}
                                                 ]
                                             },
-                                            {text: 'Processing',
+                                            {text: 'Generation',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -199,7 +199,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     {text: 'Number', dataIndex: 'QRECOR', width: 60}
                                                 ]
                                             },
-                                            {text: 'Processing',
+                                            {text: 'Generation',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
