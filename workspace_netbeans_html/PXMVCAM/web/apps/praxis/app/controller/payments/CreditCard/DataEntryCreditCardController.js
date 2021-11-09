@@ -287,7 +287,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCreditCardControl
         var beanString = JSON.stringify(beanTemp);
 //        console.log(beanString);
         Ext.Ajax.request({
-            url: prototype.url + '/MaintenanceA2280-test',
+            url: prototype.url + '/MaintenanceA2280',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: beanString},
