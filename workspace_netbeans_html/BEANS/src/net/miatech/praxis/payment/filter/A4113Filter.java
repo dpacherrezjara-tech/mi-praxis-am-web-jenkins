@@ -25,6 +25,7 @@ public class A4113Filter extends A4113 {
     public String IN_PRDA = "";
     public String IN_SETTLD = "";
     public String IN_NBATCH = "";
+    public String DES_MERCHANT = "";
     
     public Pagination page = new Pagination();
     

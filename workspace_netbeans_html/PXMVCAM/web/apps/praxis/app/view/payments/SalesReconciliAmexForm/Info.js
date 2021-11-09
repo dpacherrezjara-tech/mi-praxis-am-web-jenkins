@@ -83,7 +83,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 100},
+                                            {text: 'Merchant ID', dataIndex: 'PMERCHID', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:center;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT+'"';
+                                                    return  value;
+                                                }
+                                            },
                                             {text: 'AX Payment <br> Number', dataIndex: 'AXPAYNBR', width: 100},
                                             {text: 'Currency', dataIndex: 'PCURRENCY', width: 100},
                                             {

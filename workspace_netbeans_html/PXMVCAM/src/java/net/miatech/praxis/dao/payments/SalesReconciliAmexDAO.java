@@ -103,6 +103,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                    beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
                     
                     beanTkt.PNETAMOU = rst.getDouble("PNETAMOU");
                     beanTkt.PGROSAMOU = rst.getDouble("PGROSAMOU");
