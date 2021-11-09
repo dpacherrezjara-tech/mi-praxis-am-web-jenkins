@@ -556,7 +556,7 @@ public class CreditCardDAO {
                 bean.BSPBANK = rst.getString("BSPBANK").trim();
                 bean.CLIENTE = rst.getString("CLIENTE").trim();
                 bean.strAgrupacion = rst.getString("COUNTRY").trim() + " - " + rst.getString("CODEBANK").trim() + " - "
-                        + rst.getString("CODECAR").trim() + " - " + rst.getString("CURRENC").trim();
+                        + rst.getString("CODECAR").trim() + " - " + rst.getString("CURRENC").trim() + " - " + rst.getString("FECFROM").trim() + " - " + rst.getString("FECTO").trim();
                 bean.strDescPais = rst.getString("DESCPAIS").trim();
                 bean.strDescBank = rst.getString("NAMEBANK").trim();
 
@@ -696,7 +696,7 @@ public class CreditCardDAO {
         List<A2348> lstDetalle = new ArrayList<A2348>(0);
         A2348 beanDetalle = new A2348();
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03399(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03399(?,?,?,?,?,?,?,?)}";
 
         try {
 
@@ -709,6 +709,8 @@ public class CreditCardDAO {
             cstmt01.setString(4, filter.COUNTRY.trim());
             cstmt01.setString(5, filter.CURRENC.trim());
             cstmt01.setString(6, filter.FNOBANK.trim());
+            cstmt01.setString(7, filter.FECFROM.trim());
+            cstmt01.setString(8, filter.FECTO.trim());
 
             cstmt01.execute();
 

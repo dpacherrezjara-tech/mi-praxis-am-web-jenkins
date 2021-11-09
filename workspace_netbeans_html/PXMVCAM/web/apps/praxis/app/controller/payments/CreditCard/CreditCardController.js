@@ -283,41 +283,31 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
                             var TOT_VFOP = 0;
                             var TOT_TOTCUP = 0;
                             var TOT_AUTAMOUNT = 0;
-//                            Ext.Object.each(lstData, function (index, valuex) {
-//                                if (value.strAgrupacion === valuex.strAgrupacion) {
-//                                    TOT_pos += valuex.pos;
-//                                    TOT_VFOP += valuex.VFOP;
-//                                    TOT_AUTAMOUNT += valuex.AUTAMOUNT;
-//                                    TOT_TOTCUP += valuex.TOTCUP;
-//                                }
-//                            });
 
-//                            console.log(TOT_VFOP);
-
-                            a.push(value.strAgrupacion);
+                            a.push(value.strAgrupacion);                            
                             dataRoot.children.push({
-                                strAgrupacion: value.strAgrupacion,
+                                strAgrupacion: value.strAgrupacion.substr(0,18),
                                 COUNTRY: '',
                                 CODEBANK: '',
                                 CODE: '',
                                 CURRENC: '',
                                 TCOMIS: '',
                                 DCOMIS: '',
-                                FECFROM: '',
-                                FECTO: '',
+                                FECFROM: value.FECFROM,
+                                FECTO: value.FECTO,
                                 BASEC: '',
                                 RATE: '',
                                 RATEIVA: '',
                                 MONTO: '',
                                 MESES: '',
                                 CODEQUIV: '',
-                                expanded: true, children: []
+                                expanded: false, children: []
                             });
                             var b = [];
                             Ext.Object.each(lstData, function(index, value01) {
                                 if (value.strAgrupacion === value01.strAgrupacion) {
                                     dataRoot.children[a.indexOf(value.strAgrupacion)].children.push({
-                                        strAgrupacion: value01.strAgrupacion,
+                                        strAgrupacion: value01.strAgrupacion.substr(0,18),
                                         COUNTRY: value01.COUNTRY,
                                         CODEBANK: value01.CODEBANK,
                                         CODE: value01.CODE,
@@ -339,12 +329,6 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.CreditCardController', {
                         }
                     });
                     console.log(dataRoot);
-//                    prototype.id_TOT_lngTotDocs_ = data.lngTotDocs;
-
-//                    Ext.getCmp(prototype.id + '-lngTotDocs').setText(Ext.util.Format.number(data.lngTotDocs, '0,000'));
-//                    Ext.getCmp(prototype.id + '-dblTotVFOP').setText(Ext.util.Format.number(data.dblTotVFOP, '0,000.00'));
-//                    Ext.getCmp(prototype.id + '-dblTotAUTAMOUNT').setText(Ext.util.Format.number(data.dblTotAUTAMOUNT, '0,000.00'));
-//                    Ext.getCmp(prototype.id + '-lngTotTOTCUP').setText(Ext.util.Format.number(data.lngTotTOTCUP, '0,000'));
 
                     var storeTree = Ext.create('Ext.data.TreeStore', {
                         root: dataRoot
