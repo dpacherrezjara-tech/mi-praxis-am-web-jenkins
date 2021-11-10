@@ -88,7 +88,7 @@ public class ForecastDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                QTYPAX = rst.getLong("QTYPAX");
+                QTYPAX = rst.getLong("QTYPAXS");
                 VCPNUSD = rst.getDouble("VCPNUSD");
                 VPROUSD = rst.getDouble("VPROUSD");
                 VCPNMXN = rst.getDouble("VCPNMXN");
@@ -106,7 +106,7 @@ public class ForecastDAO {
 
                     bean.FCONT = rst.getString("FCONT").trim();
                     bean.DFLIGHT = rst.getString("DFLIGHT").trim();
-                    bean.QTYPAX = rst.getInt("QTYPAX");
+                    bean.QTYPAX = rst.getInt("QTYPAXS");
                     bean.VCPNUSD = rst.getDouble("VCPNUSD");
                     bean.VPROUSD = rst.getDouble("VPROUSD");
                     bean.VCPNMXN = rst.getDouble("VCPNMXN");
@@ -400,7 +400,7 @@ public class ForecastDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                QTYPAX = rst.getLong("QTYPAX");
+                QTYPAX = rst.getLong("QTYPAXS");
                 VCPNUSD = rst.getDouble("VCPNUSD");
                 VPROUSD = rst.getDouble("VPROUSD");
                 VCPNMXN = rst.getDouble("VCPNMXN");
@@ -418,7 +418,7 @@ public class ForecastDAO {
 
                     //bean.FCONT = rst.getString("FCONT").trim();
                     bean.DFLIGHT = rst.getString("DFLIGHT").trim();
-                    bean.QTYPAX = rst.getInt("QTYPAX");
+                    bean.QTYPAX = rst.getInt("QTYPAXS");
                     bean.VCPNUSD = rst.getDouble("VCPNUSD");
                     bean.VPROUSD = rst.getDouble("VPROUSD");
                     bean.VCPNMXN = rst.getDouble("VCPNMXN");
@@ -599,7 +599,7 @@ public class ForecastDAO {
                 bean.IN_FECHA_TO = filter.IN_FECHA_TO.trim();
                 bean.IN_TREG = filter.IN_TREG.trim();
 
-                bean.QTYPAX = rst.getInt("QTYPAX");
+                bean.QTYPAX = rst.getInt("QTYPAXS");
                 bean.VCPNUSD = rst.getDouble("VCPNUSD");
                 bean.VPROUSD = rst.getDouble("VPROUSD");
                 bean.VCPNMXN = rst.getDouble("VCPNMXN");
@@ -1714,7 +1714,7 @@ public class ForecastDAO {
             while (rst.next()) {
                 VCPNMXN = rst.getDouble("VCPNMXN");
                 VCPNUSD = rst.getDouble("VCPNUSD");
-                QTYPAX = rst.getLong("QTYPAX");
+                QTYPAX = rst.getLong("QTYPAXS");
                 VPROUSD = rst.getDouble("VPROUSD");
                 VPROMXN = rst.getDouble("VPROMXN");
             }
@@ -1735,7 +1735,7 @@ public class ForecastDAO {
                     bean.VPROMXN = rst.getDouble("VPROMXN");
                     bean.LABEL_MXN = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNMXN");
                     bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
-                    bean.QTYPAX = rst.getInt("QTYPAX");
+                    bean.QTYPAX = rst.getInt("QTYPAXS");
 
                     bean.totVCPNMXN = VCPNMXN;
                     bean.totVCPNUSD = VCPNUSD;
@@ -1810,13 +1810,13 @@ public class ForecastDAO {
                 bean.VPROMXN = rst.getDouble("VPROMXN");
                 bean.LABEL_MXN = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNMXN");
                 bean.LABEL_USD = rst.getString("ZONA").trim() + ": " + rst.getDouble("VCPNUSD");
-                bean.QTYPAX = rst.getInt("QTYPAX");
+                bean.QTYPAX = rst.getInt("QTYPAXS");
 
                 DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
                 DVCPNUSD = DVCPNUSD + rst.getDouble("VCPNUSD");
                 DVPROUSD = DVPROUSD + rst.getDouble("VPROUSD");
                 DVPROMXN = DVPROMXN + rst.getDouble("VPROMXN");
-                DQTYPAX = DQTYPAX + rst.getInt("QTYPAX");
+                DQTYPAX = DQTYPAX + rst.getInt("QTYPAXS");
 
                 lstDomestic.add(bean);
             }
@@ -1831,13 +1831,13 @@ public class ForecastDAO {
                     beanI.VCPNUSD = rst.getDouble("VCPNUSD");
                     beanI.VPROUSD = rst.getDouble("VPROUSD");
                     beanI.VPROMXN = rst.getDouble("VPROMXN");
-                    beanI.QTYPAX = rst.getInt("QTYPAX");
+                    beanI.QTYPAX = rst.getInt("QTYPAXS");
 
                     IVCPNMXN = IVCPNMXN + rst.getDouble("VCPNMXN");
                     IVCPNUSD = IVCPNUSD + rst.getDouble("VCPNUSD");
                     IVPROUSD = IVPROUSD + rst.getDouble("VPROUSD");
                     IVPROMXN = IVPROMXN + rst.getDouble("VPROMXN");
-                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAX");
+                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAXS");
 
                     lstInternational.add(beanI);
                 }
@@ -1923,13 +1923,13 @@ public class ForecastDAO {
                  bean.VPROMXN = rst.getDouble("VPROMXN");*/
                 bean.LABEL_MXN = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNMXN");
                 bean.LABEL_USD = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNUSD");
-                bean.QTYPAX = rst.getInt("QTYPAX");
+                bean.QTYPAX = rst.getInt("QTYPAXS");
 
                 DVCPNMXN = DVCPNMXN + rst.getDouble("VCPNMXN");
                 DVCPNUSD = DVCPNUSD + rst.getDouble("VCPNUSD");
                 //DVPROUSD = DVPROUSD + rst.getDouble("VPROUSD");
                 //DVPROMXN = DVPROMXN + rst.getDouble("VPROMXN");
-                DQTYPAX = DQTYPAX + rst.getInt("QTYPAX");
+                DQTYPAX = DQTYPAX + rst.getInt("QTYPAXS");
 
                 lstDomestic.add(bean);
             }
@@ -1944,7 +1944,7 @@ public class ForecastDAO {
                     beanI.VCPNUSD = rst.getDouble("VCPNUSD");
                     /*beanI.VPROUSD = rst.getDouble("VPROUSD");
                      beanI.VPROMXN = rst.getDouble("VPROMXN");*/
-                    beanI.QTYPAX = rst.getInt("QTYPAX");
+                    beanI.QTYPAX = rst.getInt("QTYPAXS");
                     beanI.LABEL_MXN = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNMXN");
                     beanI.LABEL_USD = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNUSD");
 
@@ -1952,7 +1952,7 @@ public class ForecastDAO {
                     IVCPNUSD = IVCPNUSD + rst.getDouble("VCPNUSD");
                     /*IVPROUSD = IVPROUSD + rst.getDouble("VPROUSD");
                      IVPROMXN = IVPROMXN + rst.getDouble("VPROMXN");*/
-                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAX");
+                    IQTYPAX = IQTYPAX + rst.getInt("QTYPAXS");
 
                     lstInternational.add(beanI);
                 }
@@ -2218,11 +2218,11 @@ public class ForecastDAO {
                 bean.VCPNUSD = rst.getDouble("VCPNUSD");
                 bean.LABEL_MXN = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNMXN");
                 bean.LABEL_USD = rst.getString("DFLIGHT").trim() + ": " + rst.getDouble("VCPNUSD");
-                bean.QTYPAX = rst.getInt("QTYPAX");
+                bean.QTYPAX = rst.getInt("QTYPAXS");
 
                 VCPNMXN = VCPNMXN + rst.getDouble("VCPNMXN");
                 VCPNUSD = VCPNUSD + rst.getDouble("VCPNUSD");
-                QTYPAX = QTYPAX + rst.getInt("QTYPAX");
+                QTYPAX = QTYPAX + rst.getInt("QTYPAXS");
 
                 lst.add(bean);
             }
