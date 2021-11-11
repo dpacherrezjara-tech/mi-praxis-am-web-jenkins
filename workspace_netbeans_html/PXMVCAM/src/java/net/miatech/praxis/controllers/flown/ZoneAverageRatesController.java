@@ -235,7 +235,7 @@ public class ZoneAverageRatesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadSQP03848_GG(filter);
+            lst = logic.loadSQP04258(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
