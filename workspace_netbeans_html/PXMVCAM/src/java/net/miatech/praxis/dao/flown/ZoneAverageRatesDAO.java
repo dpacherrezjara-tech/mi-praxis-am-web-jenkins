@@ -63,36 +63,30 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848(?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848(?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-//            cstmt.registerOutParameter(5, Types.INTEGER);
-//            cstmt.registerOutParameter(6, Types.INTEGER);
-//            cstmt.registerOutParameter(7, Types.INTEGER);
-//            cstmt.registerOutParameter(8, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEF);
             cstmt.setString(3, filter.IN_DATET);
             cstmt.setString(4, filter.IN_ZONA);
             cstmt.setString(5, filter.IN_CCIA);
-//            cstmt.setInt(5, filter.page.PAGNUM);
-//            cstmt.setInt(6, filter.page.PAGROW);
-//            cstmt.setInt(7, filter.page.TOTPAG);
-//            cstmt.setInt(8, filter.page.TOTROW);
-
+            cstmt.setString(6, filter.IN_DATE);
             cstmt.execute();
 
-//            filter.page.PAGNUM = cstmt.getInt(5);
-//            filter.page.PAGROW = cstmt.getInt(6);
-//            filter.page.TOTPAG = cstmt.getInt(7);
-//            filter.page.TOTROW = cstmt.getInt(8);
             rs01 = cstmt.getResultSet();
-            //Obteniendo los Totales ===========================================
             while (rs01.next()) {
                 row = new A1692Filter();
-//                row.RN = rs01.getInt("RN");
-                row.DFLIGHT = rs01.getString("DFLIGHT");
+                
+//                row.IN_DATEF = filter.IN_DATEF;
+//                row.IN_DATET = filter.IN_DATET;
+                row.IN_DATE = filter.IN_DATE;
+                
+                row.DATE = rs01.getString("DATE");
+                row.IN_DATEF = row.DATE;
+                row.IN_DATET = row.DATE;
+                
                 row.ZONA = rs01.getString("ZONA");
                 row.DESCZONA = Functions.getNombreZonas(row.ZONA);
                 row.COD_DESC_ZONA = row.ZONA + " - " + row.DESCZONA;
@@ -104,13 +98,7 @@ public class ZoneAverageRatesDAO {
                 row.VALOR_CUPONES_PEND = rs01.getDouble("VALOR_CUPONES_PEND");
                 row.PROMEDIO_CUPONES_CONT = rs01.getDouble("PROMEDIO_CUPONES_CONT");
                 row.PROMEDIO_CUPONES_PEND = rs01.getDouble("PROMEDIO_CUPONES_PEND");
-                row.IN_DATEF = row.DFLIGHT;
-                row.IN_DATET = row.DFLIGHT;
                 row.IN_ZONA = row.ZONA;
-//                row.page.PAGNUM = filter.page.PAGNUM;
-//                row.page.PAGROW = filter.page.PAGROW;
-//                row.page.TOTPAG = filter.page.TOTPAG;
-//                row.page.TOTROW = filter.page.TOTROW;
 
                 lista.add(row);
             }
@@ -136,35 +124,37 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03849(?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03849_GG(?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(4, Types.INTEGER);
             cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEF);
             cstmt.setString(3, filter.IN_DATET);
-            cstmt.setInt(4, filter.page.PAGNUM);
-            cstmt.setInt(5, filter.page.PAGROW);
-            cstmt.setInt(6, filter.page.TOTPAG);
-            cstmt.setInt(7, filter.page.TOTROW);
+            cstmt.setString(4, filter.IN_DATE);
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(4);
-            filter.page.PAGROW = cstmt.getInt(5);
-            filter.page.TOTPAG = cstmt.getInt(6);
-            filter.page.TOTROW = cstmt.getInt(7);
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
 
             rs01 = cstmt.getResultSet();
-            //Obteniendo los Totales ===========================================
             while (rs01.next()) {
+                
                 row = new A1692Filter();
+                row.IN_DATE = filter.IN_DATE;
                 row.RN = rs01.getInt("RN");
-                row.DFLIGHT = rs01.getString("DFLIGHT");
+                row.DATE = rs01.getString("DATE");
                 row.ZONA = rs01.getString("ZONA");
                 row.DESCZONA = Functions.getNombreZonas(row.ZONA);
                 row.COD_DESC_ZONA = row.ZONA + " - " + row.DESCZONA;
@@ -205,36 +195,40 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848_GG(?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848_GG(?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEF);
             cstmt.setString(3, filter.IN_DATET);
             cstmt.setString(4, filter.IN_ZONA);
-            cstmt.setInt(5, filter.page.PAGNUM);
-            cstmt.setInt(6, filter.page.PAGROW);
-            cstmt.setInt(7, filter.page.TOTPAG);
-            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.setString(5, filter.IN_DATE);
+            
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(5);
-            filter.page.PAGROW = cstmt.getInt(6);
-            filter.page.TOTPAG = cstmt.getInt(7);
-            filter.page.TOTROW = cstmt.getInt(8);
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
 
             rs01 = cstmt.getResultSet();
-            //Obteniendo los Totales ===========================================
             while (rs01.next()) {
+                
                 row = new A1692Filter();
+                
+                row.IN_DATE = filter.IN_DATE;
                 row.RN = rs01.getInt("RN");
-                row.DFLIGHT = rs01.getString("DFLIGHT");
+                row.DATE = rs01.getString("DATE");
                 row.ZONA = rs01.getString("ZONA");
                 row.DESCZONA = Functions.getNombreZonas(row.ZONA);
                 row.COD_DESC_ZONA = row.ZONA + " - " + row.DESCZONA;
@@ -252,6 +246,7 @@ public class ZoneAverageRatesDAO {
                 row.VALOR_CUPONES_PEND = rs01.getDouble("VALOR_CUPONES_PEND");
                 row.PROMEDIO_CUPONES_CONT = rs01.getDouble("PROMEDIO_CUPONES_CONT");
                 row.PROMEDIO_CUPONES_PEND = rs01.getDouble("PROMEDIO_CUPONES_PEND");
+                
                 row.page.PAGNUM = filter.page.PAGNUM;
                 row.page.PAGROW = filter.page.PAGROW;
                 row.page.TOTPAG = filter.page.TOTPAG;

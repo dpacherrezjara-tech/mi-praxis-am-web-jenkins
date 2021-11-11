@@ -46,10 +46,23 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Filters', {
                     items: [
                         {
                             xtype: 'label',
-                            html: '<strong style="color:#000;">Flight Date </strong>',
+                            html: '<strong style="color:#000;">Search By: </strong>',
                             align: 'left',
                             fieldStyle: 'text-align: left;',
                             padding: '11px 7px 8px 10px'
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbDateSel',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            width: 110,
+                            hidden: false
                         },
                         {
                             xtype: 'combo',
