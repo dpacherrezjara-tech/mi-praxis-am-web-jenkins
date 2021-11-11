@@ -41,6 +41,7 @@ import net.miatech.praxis.eecta.SQP04218Filter;
 import net.miatech.praxis.eecta.SQP04219Filter;
 import net.miatech.praxis.eecta.SQP04253Filter;
 import net.miatech.praxis.eecta.SQP04254Filter;
+import net.miatech.praxis.eecta.SQP04255Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
 import net.miatech.utils.Functions;
@@ -576,6 +577,41 @@ public class CargaRecibosController extends BaseController {
             logic = new CargaRecibosLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.getSQP04254Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/get_complemento_det"/*, method = RequestMethod.POST*/)
+    public @ResponseBody
+    String get_complemento_det(ModelMap map, HttpServletRequest request) {
+        List<SQP04255Filter> listaData;
+        SQP04255Filter filter;
+        filter = new SQP04255Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {                        
+            filter.VP_FPROC = request.getParameter("VP_FPROC");
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_NLOTE = request.getParameter("VP_NLOTE");
+            filter.VP_SQRCB = Integer.parseInt(request.getParameter("VP_SQRCB"));
+            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = -1;            
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04255Filter(filter);
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
             map.put("data", listaData);
