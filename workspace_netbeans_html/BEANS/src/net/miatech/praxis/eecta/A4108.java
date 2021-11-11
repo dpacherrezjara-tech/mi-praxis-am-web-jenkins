@@ -16,7 +16,7 @@ public class A4108 {
     public String A4108FPROC = ""; //(8) CCSID 284 NOT NULL, 
     public String A4108CDCLI = ""; //(9) CCSID 284 NOT NULL, 
     public String A4108NLOTE = ""; //(10) CCSID 284 NOT NULL, 
-    public Double A4108SQRCB = 0.0; //(9 , 0) NOT NULL, 
+    public Integer A4108SQRCB = 0; //(9 , 0) NOT NULL, 
     public String A4108CIA = ""; //(3) CCSID 284 NOT NULL, 
     public String A4108FORMA = ""; //(4) CCSID 284 NOT NULL, 
     public String A4108SERIE = ""; //(6) CCSID 284 NOT NULL, 
