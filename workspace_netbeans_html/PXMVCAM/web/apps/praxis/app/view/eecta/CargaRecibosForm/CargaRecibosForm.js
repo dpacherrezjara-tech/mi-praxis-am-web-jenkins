@@ -5,6 +5,7 @@ prototype.id03 = 'CatalogoClienteRef';
 prototype.id04 = 'CargaRecibosRef';
 prototype.id05 = 'CargaRecibosDetAplForm';
 prototype.id06 = 'CargaRecibosDetRecForm';
+prototype.id07 = 'CargaRecibosComplemento';
 
 
 //console.log(prototype.id);

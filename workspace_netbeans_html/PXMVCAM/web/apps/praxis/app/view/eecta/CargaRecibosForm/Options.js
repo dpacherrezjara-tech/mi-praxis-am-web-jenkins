@@ -95,7 +95,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btn-proc-ref-bank',
-                            text: 'Procesar Ref.',
+                            text: 'Referencia',
                             icon: 'resources/img/icon/next.png',
                             listeners: {
                                 click: 'btnCargaRecibosProcesarRefBank'
@@ -108,6 +108,15 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.Options', {
                             icon: 'resources/img/icon/process.png',
                             listeners: {
                                 click: 'btnCargaRecibosRefBank'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-complemento',
+                            text: 'Complemento',
+                            icon: 'resources/img/icon/prorrate.png',
+                            listeners: {
+                                click: 'btnfrmComplementoPago'
                             }
                         },
                         {

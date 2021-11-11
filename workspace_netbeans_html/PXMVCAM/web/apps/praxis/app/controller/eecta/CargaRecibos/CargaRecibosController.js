@@ -226,6 +226,21 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosController', {
             }
         }).show();
     },
+    //invoca a formulario complementos
+    btnfrmComplementoPago:function () {
+        this.winDataEntry05('I');
+    },
+    winDataEntry05:function(action, rec){
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;       
+        Ext.create('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosComplemento', {
+            id: prototype.id07 + '-CargaRecibosComplemento',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
     btnDescargaFileIdentPago_click: function() {              
         //var str_formato = 'downloadText'; //downloadText
         var str_msg = '¿Descargar archivo Identificador de Pagos?';                	
