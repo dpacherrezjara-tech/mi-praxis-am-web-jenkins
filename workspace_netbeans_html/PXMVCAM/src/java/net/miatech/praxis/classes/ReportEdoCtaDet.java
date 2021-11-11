@@ -95,28 +95,18 @@ public class ReportEdoCtaDet {
             PdfPTable table = new PdfPTable(3);
             try {
                 table.setWidths(new int[]{24, 24, 2});
-                table.setTotalWidth(700);
+                table.setTotalWidth(720);
                 table.setLockedWidth(true);
                 table.getDefaultCell().setFixedHeight(20); 
                 table.getDefaultCell().setBorder(Rectangle.BOTTOM);                
                 table.addCell(header);                
-                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);                
-                
-//                Paragraph Nbr_page = new Paragraph( String.format("Página: %d de ", writer.getPageNumber() ), subFont );                
-//                Nbr_page.getFont().setSize(9);
-//                table.addCell(Nbr_page);          
-                
+                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT); 
                 table.addCell(String.format("Página: %d de ", writer.getPageNumber())); //original                                
                 
                 PdfPCell cell = new PdfPCell(Image.getInstance(total) );                
                 cell.setBorder(Rectangle.BOTTOM);   
                 table.addCell( cell );
-                
-//                Paragraph Nbr_page_total = new Paragraph(  String.format("%d ", Image.getInstance(total) )  , subFont );
-//                Nbr_page_total.getFont().setSize(9);                
-//                table.addCell( Nbr_page_total );
-                
-                table.writeSelectedRows(0, -1, 34, 600, writer.getDirectContent());  
+                table.writeSelectedRows(0, -1, 15, 600, writer.getDirectContent());                 
                 
             } catch (DocumentException de) {
                 throw new ExceptionConverter(de);
@@ -223,6 +213,36 @@ public class ReportEdoCtaDet {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Antig.", subFont_1)), PosX1+30, PYi+10, 0);                         
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("(días)", subFont_1)), PosX1+30, PYi, 0);            
     }
+    
+    public String setColumnMulticell( String Cadena, Integer wcolumn  ){        
+        //Obtner todas las cadenas de palabras completas
+        String strMulticell = "";
+        String[] cadena_nombre = Cadena.split(" "); 
+        Integer ttl_arrg = cadena_nombre.length;
+        String Line01="";String Line01_="";
+        String Line02="";String Line02_="";
+        String Line03="";
+        //cada linea debe ser menor a "wcolumn" posiciones      
+        for(int i=0;i<ttl_arrg;i++){
+            Line01_ = Line01_ + cadena_nombre[i]+ " ";;
+            if(Line01_.length() < wcolumn ){
+                Line01 = Line01 + cadena_nombre[i] + " ";                      
+            }else{
+                Line02_ = Line02_ + cadena_nombre[i]+ " ";;
+                if(Line02_.length() < wcolumn  ){
+                    Line02 = Line02 + cadena_nombre[i]+ " ";;
+                }else{                
+                    Line03 = Line03 + cadena_nombre[i]+ " ";;
+                }
+            }            
+        }        
+        if (!Line01.equals("")) strMulticell = Line01;
+        if (!Line02.equals("")) strMulticell = strMulticell + "|" + Line02;
+        if (!Line03.equals("")) strMulticell = strMulticell + "|" + Line03;
+        
+        return strMulticell;
+        
+    }
 
     public File createReport(List<SQP04001Filter> Data, List<SQP04224Filter> Data01, String Rutatmp ) {
 
@@ -237,26 +257,7 @@ public class ReportEdoCtaDet {
             Hlng = 12;
             int PosX1 = 15;
             int PosX2;
-            int PosXd;
-            int PosX3;
-            int PosX4;
-            int PosX5;
-            int PosX6;
-            int PosX7;
-            int PosX8;
-            int PosX9;
-            int PosX10;
-            int PosX11;
-            int PosX12;
-            int PosX13;
-            int PosX14;
-            int PosX15;
-            int PosX16;
-            int PosX17;
-            int PosX18;
-            int PosX19;
-            int PosX20;
-
+            
             int ItemPage = 0;
             int getPageNumber = 0;
             int PoxT;
@@ -324,23 +325,34 @@ public class ReportEdoCtaDet {
             
             //datos CLIENTE
             PYi = py0;
-            String A3953RSOCI_part1 = "";
-            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
-            int length = A3953RSOCI.length(); 
-            if(length > 44 ){
-               A3953RSOCI = A3953RSOCI.substring(0, 44);
-               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
-            }
-            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
-            if (!A3953RSOCI_part1.trim().equals("")){
+//            String A3953RSOCI_part1 = "";
+//            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+//            int length = A3953RSOCI.length(); 
+//            if(length > 44 ){
+//               A3953RSOCI = A3953RSOCI.substring(0, 44);
+//               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(44, length);
+//            }
+//            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
+//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
+//            if (!A3953RSOCI_part1.trim().equals("")){
+//                PYi = PYi - Hlng;
+//                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
+//                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
+//            }
+
+            String VL_A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+            if(VL_A3953RSOCI.length() < 30){               
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph( VL_A3953RSOCI, catFont)), px1, PYi, 0);
                 PYi = PYi - Hlng;
-                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
-            }
-//            Phrase RSOCI = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-//            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);
-            PYi = PYi - Hlng;
+            }else{                    
+                String StrMulticell = this.setColumnMulticell(VL_A3953RSOCI, 30);                  
+                String[] ArgMulticell = StrMulticell.split("\\|");                
+                for(int j=0;j<ArgMulticell.length;j++){                
+                    ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph( ArgMulticell[j], catFont)), px1, PYi, 0); 
+                    PYi = PYi - Hlng;
+                }
+            } 
+            
             Phrase DIRE1 = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953DIRE1, NORMAL)); //"AV. MARINA NACIONAL Nº. 329 INT C3 "
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, DIRE1, px1, PYi, 0);
             PYi = PYi - Hlng;            
