@@ -1,8 +1,7 @@
 
-Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
+Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridComplDet', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id07 + '-infoGridCompl',
-    //layout: 'border',
+    alias: 'widget.' + prototype.id08 + '-infoGridComplDet',    
     align: 'center',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -12,7 +11,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
     items: [
         {
             region: 'center',
-            id: prototype.id07 + '-boxPrincipal',
+            id: prototype.id08 + '-boxPrincipal',
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -25,7 +24,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
             items: [
                 {
                     region: 'center',
-                    id: prototype.id07 + '-boxMainData',
+                    id: prototype.id08 + '-boxMainData',
                     border: false,
                     width: prototype.widthContenedor,
                     hidden: false,
@@ -42,90 +41,49 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
                         // <editor-fold defaultstate="collapsed" desc="grid">
                         {
                             xtype: 'grid',
-                            id: prototype.id07 + '-infoGridCargaRecibosCompl',
+                            id: prototype.id08 + '-infoGridCargaRecibosComplDet',
                             columnLines: true,
                             width: 900,
                             height: 350,
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [
+                                    
+                                    {text: 'Id<br>Documento', dataIndex: 'A4108CFDI', width: 80, align: 'center', locked: true},
+                                    {text: 'Serie', dataIndex: 'A4108TIPO', align: 'center', width: 70, locked: true},
                                     {
-                                        xtype: 'actioncolumn',
-                                        text: '',
-                                        sortable: false,
-                                        width: 40,
-                                        align: 'center',
-                                        locked: true,                                        
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-detail',
-                                                tooltip: 'Detalle documentos relacionados',
-                                                handler: 'onDetailClickDocRelacionado'
-                                            }
-                                        ]
+                                        text: 'Folio', dataIndex: 'A4108CIA', align: 'center', width: 70, locked: true,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return record.get('A4108CIA')+record.get('A4108FORMA')+record.get('A4108SERIE');
+                                        }
+                                    
                                     },
-                                    {text: 'Nº Envio', dataIndex: 'A4107NLOTE', width: 80, align: 'center', locked: true},
-                                    {text: 'Fecha', dataIndex: 'A4107FPROC', align: 'center', width: 70, locked: true},
-                                    {text: 'IdCliente', dataIndex: 'A4107CDCLI', align: 'center', width: 70, locked: true},
-                                    {text: 'RFC', dataIndex: 'A4107RFC', align: 'center', width: 90, locked: true},
-                                    {text: 'Cliente', dataIndex: 'A4107RSOCI', align: 'center', width: 230, locked: true},
-                                    {
-                                        xtype: 'actioncolumn',
-                                        text: 'PDF',
-                                        sortable: false,
-                                        width: 40,
-                                        align: 'center',
-                                        locked: false,
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-download',
-                                                tooltip: 'Descargar documento PDF',
-                                                handler: 'onDonwloadDocumentPDFClick'
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        xtype: 'actioncolumn',
-                                        text: 'XML',
-                                        sortable: false,
-                                        width: 40,
-                                        align: 'center',
-                                        locked: false,
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-download',
-                                                tooltip: 'Descargar documento XML',
-                                                handler: 'onDonwloadDocumentXMLClick'
-                                            }
-                                        ]
-                                    },
-                                    {text: 'Fecha<br>Pago', dataIndex: 'A4107FPAGO', width: 70, align: 'left'},
-                                    {text: 'Forma de<br> Pago', dataIndex: 'A4107FOP', width: 70, align: 'center'},
-                                    {text: 'Mda.', dataIndex: 'A4107MONED', width: 50, align: 'center'},
-                                    {text: 'Monto', dataIndex: 'A4107TMONT', width: 90, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
+                                    {text: 'Mda.', dataIndex: 'A4108MDA', width: 50, align: 'center'},
+                                    {text: 'Tipo<br>Cambio', dataIndex: 'A4108TCAM', width: 90, align: 'right',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
+                                    },   
+                                    {text: 'Metodo<br>Pago', dataIndex: 'A4108MPG', align: 'center', width: 70, locked: true},
+                                    {text: 'Nº<br>Parcialidad', dataIndex: 'A4108SQAPL', align: 'center', width: 70, locked: true},
+                                    {text: 'Importe<br>Saldo Anterior', dataIndex: 'A4108TOT', width: 90, align: 'right',
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Número <br>de Operación', dataIndex: 'A4107NUMRC', align: 'left', width: 120},
-                                    {text: 'Folio Fiscal', dataIndex: 'A4107FFISC', align: 'left', width: 120},
-                                    {text: 'Nº Certificado', dataIndex: 'A4107NSERI', align: 'left', width: 80},
-                                    {text: 'Fecha<br>Emisión', dataIndex: 'A4107FEMIS', align: 'center', width: 70},
-                                    {
-                                        text: 'Estado', dataIndex: 'A4107ESTAD', width: 120, align: 'center', locked: false
+                                    {text: 'Importe<br>Pagado', dataIndex: 'A4108TOTAP', width: 90, align: 'right',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
                                     },
-                                    {
-                                        text: 'Mensaje <br>Error', dataIndex: 'A4107RMSG', width: 170, align: 'left',
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            if (record.get('A4107ESTAD') === '0')
-                                                metaData.style = 'font-weight:bold;color:green;';
-                                            if (record.get('A4107ESTAD') !== '0')
-                                                metaData.style = 'font-weight:bold;color:red;';
-                                            return value;
+                                    {text: 'Importe<br>Ajuste', dataIndex: 'A4108TAJUS', width: 90, align: 'right',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
+                                    },
+                                     {text: 'Importe<br>Saldo Insuluto', dataIndex: 'A4108SALD', width: 90, align: 'right',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     }
                                 ],
@@ -153,7 +111,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
                         // <editor-fold defaultstate="collapsed" desc="pie">
 //                        {
 //                            xtype: 'panel',
-//                            id: prototype.id07 + '-pie',
+//                            id: prototype.id08 + '-pie',
 //                            width: prototype.widthGrid,
 //                            layout: {
 //                                type: 'hbox',
@@ -185,7 +143,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
 //                                            width: 50
 //                                        },
 //                                        {
-//                                            id: prototype.id07 + '-lbl-currentPage',
+//                                            id: prototype.id08 + '-lbl-currentPage',
 //                                            text: '1',
 //                                            width: 50
 //                                        },
@@ -194,7 +152,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
 //                                            width: 50
 //                                        },
 //                                        {
-//                                            id: prototype.id07 + '-lbl-pageCount',
+//                                            id: prototype.id08 + '-lbl-pageCount',
 //                                            text: '0',
 //                                            width: 50
 //                                        },
@@ -204,7 +162,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl', {
 //                                            width: 80
 //                                        },
 //                                        {
-//                                            id: prototype.id07 + '-lbl-total',
+//                                            id: prototype.id08 + '-lbl-total',
 //                                            text: '0',
 //                                            width: 50
 //                                        }

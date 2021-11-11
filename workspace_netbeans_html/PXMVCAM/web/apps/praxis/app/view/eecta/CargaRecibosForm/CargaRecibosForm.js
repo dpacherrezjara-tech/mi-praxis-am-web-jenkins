@@ -6,7 +6,7 @@ prototype.id04 = 'CargaRecibosRef';
 prototype.id05 = 'CargaRecibosDetAplForm';
 prototype.id06 = 'CargaRecibosDetRecForm';
 prototype.id07 = 'CargaRecibosComplemento';
-
+prototype.id08 = 'CargaRecibosComplementoGridDet';
 
 //console.log(prototype.id);
 

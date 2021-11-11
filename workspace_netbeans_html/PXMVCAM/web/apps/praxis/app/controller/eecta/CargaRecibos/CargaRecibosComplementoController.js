@@ -7,7 +7,10 @@
 Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosComplementoController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.id07 + '-cargaRecibosComplementoController',
-    url: CONTEXTPATH + '/CargaRecibos', 
+    url: CONTEXTPATH + '/CargaRecibos',     
+    requires: [        
+        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridComplDet'
+    ],
     bean: {},
     init: function (view) {
         var me = this;
@@ -191,37 +194,83 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosComplementoCont
         bean.VP_NUMRC = Ext.getCmp(prototype.id07 + '-A4107NUMRC').getValue();
         bean.VP_ESTAD = Ext.getCmp(prototype.id07 + '-A4107ESTAD').getValue();
         
-//        if (bean.VP_LOTE !== '' ){
-//            if (bean.VP_NUMRC === '' && bean.VP_LOTE === '' ){
-//                global.Msg({msg: 'Ingrese Nº Lote o Recibo'});
-//                return;
-//            }
-//        };
-//        if (bean.VP_ESTAD === '' ){
-//            if (bean.VP_NUMRC === '' && bean.VP_LOTE === '' ){
-//                global.Msg({msg: 'Ingrese Nº lote o Recibo **'});
-//                return;
-//            }
-//        };
-        Ext.Ajax.request({
-            url: prototype.url + '/get_complemento_cab',
-            timeout: 60000000,
-            method: 'POST',
-            params: bean,
-            beforerequest: Ext.getCmp(prototype.id07 + '-CargaRecibosComplemento').mask('Cargando...', ''),
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText); 
-                Ext.getCmp(prototype.id07 + '-CargaRecibosComplemento').unmask('Loading...', '');
-                if (res.total === 0) {
+        Ext.getCmp(prototype.id07 + '-form01').show();
+        Ext.getCmp(prototype.id07 + '-form02').hide();
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
+        proxy: {
+            url: prototype.url + '/get_complemento_cab'
+        },
+        listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, records, successful, operation, eOpts) {
+                    //console.log(records);
+                    if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'No hay registros'
                         });
-                    return;
-                }  
-                Ext.getCmp(prototype.id07 + '-infoGridCargaRecibosCompl').setStore(res.data);
-                Ext.getCmp(prototype.id07 + '-infoGridCargaRecibosCompl').getStore().reload();           
+                    }
+                    global.clear();
+                }
             }
-        }); 
+        });
+        var panel = Ext.getCmp(prototype.id07 + '-contenedor-info');       
+        panel.removeAll();
+        var gridPanel = Ext.create({
+            region: 'center',
+            xtype: prototype.id07 + '-infoGridCompl',
+            id: prototype.id07 + '-contentInfo2'
+        });
+        panel.add(gridPanel);
+        Ext.getCmp(prototype.id07 + '-infoGridCargaRecibosCompl').setStore(storeGridDatas);
+        //Ext.getCmp(prototype.id07 + '-paggin').bindStore(storeGridDatas);
+    },
+    onDetailClickDocRelacionado: function ( grid, rowIndex, colIndex ){
+        me = this;
+        var bean = {};
+        Ext.getCmp(prototype.id07 + '-form01').hide();
+        Ext.getCmp(prototype.id07 + '-form02').show();
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex); 
+        bean.VP_FPROC = rec.get('A4107FPROC');
+        bean.VP_CDCLI = rec.get('A4107CDCLI');
+        bean.VP_NLOTE = rec.get('A4107NLOTE');
+        bean.VP_SQRCB = rec.get('A4107SQRCB');
+        bean.limit = "-1";
+        bean.page = "-1";
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
+            proxy: {
+                url: prototype.url + '/get_complemento_det'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, records, successful, operation, eOpts) {
+                    //console.log(records);
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found'
+                        });
+                    }
+                    global.clear();
+                }
+            }
+        });
+        
+        var panel = Ext.getCmp(prototype.id07 + '-contenedor-info');       
+        panel.removeAll();
+        var gridPanel = Ext.create({
+            region: 'center',
+            xtype: prototype.id08 + '-infoGridComplDet',
+            id: prototype.id08 + '-contentInfoDet'
+        });
+        panel.add(gridPanel);
+        Ext.getCmp(prototype.id08 + '-infoGridCargaRecibosComplDet').setStore(storeGridDatas);
+        
     },
     onExportXlsClick: function(){
 //        var bean = {};         

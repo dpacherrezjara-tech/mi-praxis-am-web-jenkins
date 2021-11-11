@@ -179,6 +179,23 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosComplemento', {
                     ]
                 },
                 {
+                    xtype: 'form',
+                    id: prototype.id07 + '-form02',
+                    layout: 'hbox',
+                    width: '100%',
+                    items: [
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBack',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Regresar',
+                            listeners: {
+                                click: 'search_complemento'
+                            }
+                        }
+                    ]  
+                },
+                {
                     // <editor-fold defaultstate="collapsed" desc="grid">
                     xtype: 'panel',
                     id: prototype.id07 + '-contenedor-info',
