@@ -1050,7 +1050,7 @@ public class SalesReconciliBoomerDAO {
                 objRtn.A1716PASRV = rst.getDouble("PASISVORV");
                 objRtn.A1716CUENT = rst.getString("CIAF") + "-" + rst.getString("UNIDAD") + "-" + rst.getString("CECOSTO") + "-" + rst.getString("UBICA") + "-" + rst.getString("CUENTA") + "-" + rst.getString("SUBCUENTA") + "-" + rst.getString("EQUIPO") + "-" + rst.getString("ICIA");
                 objRtn.A1716SUBCU = rst.getString("SUBCUENTA");
-                objRtn.A1716FCONT = rst.getString("ANNOMES") + rst.getString("PERIODO"); //PERIODO
+                //objRtn.A1716FCONT = rst.getString("ANNOMES") + rst.getString("PERIODO"); //PERIODO
                 objRtn.A1716TITU = rst.getString("TITULO");
                 objRtn.A1716COPE = rst.getString("CLIENTE");
                 objRtn.A720ROE = rst.getDouble("TIPPOCAM");
