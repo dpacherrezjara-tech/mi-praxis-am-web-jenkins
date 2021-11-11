@@ -62,7 +62,10 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Filters', {
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
                             width: 110,
-                            hidden: false
+                            hidden: false,
+                             listeners:{
+                                change: 'showCheck'
+                            }
                         },
                         {
                             xtype: 'combo',
@@ -203,6 +206,17 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Filters', {
                             labelWidth: 60,
                             width: 150,
                             anchor: '100%'
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkDetailAll',
+                            margin: '0 20 0 30',
+                            width: 80,
+                            boxLabel: '<b>All</b>',
+                            inputValue: '1',
+                            listeners:{
+                                change: 'btnSearch_click'
+                            }
                         }
                     ]
                 }
