@@ -16,6 +16,7 @@ public class A1692Filter extends A1692 {
     public String DATE = "";
     public String IN_FECHA_FROM = "";
     public String IN_FECHA_TO = "";
+    public String FLAG_ALL = "";
     public String IN_DATE = "";
     public String IN_DATEF = "";
     public String IN_DATET = "";
