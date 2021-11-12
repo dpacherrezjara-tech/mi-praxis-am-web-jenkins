@@ -63,7 +63,7 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848(?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848_GGGG(?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
@@ -73,6 +73,7 @@ public class ZoneAverageRatesDAO {
             cstmt.setString(4, filter.IN_ZONA);
             cstmt.setString(5, filter.IN_CCIA);
             cstmt.setString(6, filter.IN_DATE);
+            cstmt.setString(7, filter.FLAG_ALL);
             cstmt.execute();
 
             rs01 = cstmt.getResultSet();
@@ -124,29 +125,30 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03849_GG(?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03849_GGGG(?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEF);
             cstmt.setString(3, filter.IN_DATET);
             cstmt.setString(4, filter.IN_DATE);
-            cstmt.setInt(5, filter.page.PAGNUM);
-            cstmt.setInt(6, filter.page.PAGROW);
-            cstmt.setInt(7, filter.page.TOTPAG);
-            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.setString(5, filter.FLAG_ALL);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(5);
-            filter.page.PAGROW = cstmt.getInt(6);
-            filter.page.TOTPAG = cstmt.getInt(7);
-            filter.page.TOTROW = cstmt.getInt(8);
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
 
             rs01 = cstmt.getResultSet();
             while (rs01.next()) {
@@ -186,7 +188,7 @@ public class ZoneAverageRatesDAO {
         return lista;
     }
 
-    public List<A1692Filter> loadSQP03848_GG(A1692Filter filter) throws SQLException, Exception {
+    public List<A1692Filter> loadSQP04258(A1692Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
         cnx = null;
@@ -195,31 +197,32 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848_GG(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04258(?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEF);
             cstmt.setString(3, filter.IN_DATET);
             cstmt.setString(4, filter.IN_ZONA);
             cstmt.setString(5, filter.IN_DATE);
+            cstmt.setString(6, filter.FLAG_ALL);
             
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
 
             rs01 = cstmt.getResultSet();
             while (rs01.next()) {
