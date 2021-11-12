@@ -30,8 +30,8 @@ public class A4076Filter extends A4076 {
     public String IN_PREME = "";
     public String IN_USER = "";
     public String IN_ANIO = "";
-    public int IN_CORR = 0;
-    public int IN_SEQ = 0;
+    public String IN_CORR = "0";
+    public String IN_SEQ = "0";
 
     public List<A4077> lst_CardType = new ArrayList<A4077>(0);
     public List<A4078> lst_TAXES = new ArrayList<A4078>(0);

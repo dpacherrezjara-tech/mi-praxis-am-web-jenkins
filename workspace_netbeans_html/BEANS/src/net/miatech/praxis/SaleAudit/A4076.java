@@ -14,7 +14,7 @@ public class A4076 {
     public String A4076CCUST;
     public String A4076PREME;
     public String A4076ANIO;
-    public int A4076CORR;
+    public String A4076CORR;
     public String A4076TYPE;
     public String A4076BASE;
     public String A4076CIA;
@@ -42,6 +42,7 @@ public class A4076 {
     public String A4076TICKET;
     public String A4076AGENCY;
     public String A4076DESC;
+    public String A4076AGEN;
 
     public double A4076TARTK;
     public double A4076EQVTK;
@@ -143,6 +144,107 @@ public class A4076 {
     public double SUMAKO;
     public double TOTALSUMA;
     public double TOTALCANT;
+    
+    public String A4076CPN1;
+    public String A4076CPN2;
+    public String A4076CPN3;
+    public String A4076CPN4;
+    public String A4076USO;
+    public String A4076USO1;
+    public String A4076USO2;
+    public String A4076USO3;
+    public String A4076USO4;
+    public double A4076NETK;
+
+    public String getA4076USO1() {
+        return A4076USO1;
+    }
+
+    public void setA4076USO1(String A4076USO1) {
+        this.A4076USO1 = A4076USO1;
+    }
+
+    public String getA4076CPN1() {
+        return A4076CPN1;
+    }
+
+    public void setA4076CPN1(String A4076CPN1) {
+        this.A4076CPN1 = A4076CPN1;
+    }
+
+    public String getA4076CPN2() {
+        return A4076CPN2;
+    }
+
+    public void setA4076CPN2(String A4076CPN2) {
+        this.A4076CPN2 = A4076CPN2;
+    }
+
+    public String getA4076CPN3() {
+        return A4076CPN3;
+    }
+
+    public void setA4076CPN3(String A4076CPN3) {
+        this.A4076CPN3 = A4076CPN3;
+    }
+
+    public String getA4076CPN4() {
+        return A4076CPN4;
+    }
+
+    public void setA4076CPN4(String A4076CPN4) {
+        this.A4076CPN4 = A4076CPN4;
+    }
+
+    public String getA4076USO() {
+        return A4076USO;
+    }
+
+    public void setA4076USO(String A4076USO) {
+        this.A4076USO = A4076USO;
+    }
+
+    public String getA4076USO2() {
+        return A4076USO2;
+    }
+
+    public void setA4076USO2(String A4076USO2) {
+        this.A4076USO2 = A4076USO2;
+    }
+
+    public String getA4076USO3() {
+        return A4076USO3;
+    }
+
+    public void setA4076USO3(String A4076USO3) {
+        this.A4076USO3 = A4076USO3;
+    }
+
+    public String getA4076USO4() {
+        return A4076USO4;
+    }
+
+    public void setA4076USO4(String A4076USO4) {
+        this.A4076USO4 = A4076USO4;
+    }
+
+    public double getA4076NETK() {
+        return A4076NETK;
+    }
+
+    public void setA4076NETK(double A4076NETK) {
+        this.A4076NETK = A4076NETK;
+    }
+    
+    
+    
+    public String getA4076AGEN() {
+        return A4076AGEN;
+    }
+
+    public void setA4076AGEN(String A4076AGEN) {
+        this.A4076AGEN = A4076AGEN;
+    }
 
     public String getA4076DESC() {
         return A4076DESC;
@@ -792,11 +894,11 @@ public class A4076 {
         this.A4076ANIO = A4076ANIO;
     }
 
-    public int getA4076CORR() {
+    public String getA4076CORR() {
         return A4076CORR;
     }
 
-    public void setA4076CORR(int A4076CORR) {
+    public void setA4076CORR(String A4076CORR) {
         this.A4076CORR = A4076CORR;
     }
 
