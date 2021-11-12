@@ -1,16 +1,20 @@
-
 prototype.idMassiveRefunduatpForm = 'MassiveRefunduatpForm';
+prototype.idMassiveRefunduatpFormTicket = 'MassiveRefunduatpFormTicket';
 prototype.idMassiveRefunduatpFormSubiArchivo = 'MassiveRefunduatpFormSubiArchivo';
 prototype.url = CONTEXTPATH + '/MassiveRefunduatpForm';
-prototype.widthWindow = 1366;
+prototype.url01 = CONTEXTPATH + '/BwrBSPLINKRFND';
+prototype.widthWindow = 1300;
 prototype.heightWindow = 768;
 //
-Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpForm',{
+Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpForm', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.MassiveRefunduatpForm',
 
-    requires:[
+    requires: [
         'Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormController',
+        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormSubiArchivo',
+        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormTicket'
+
     ],
 
     controller: 'MassiveRefunduatpFormController',
@@ -29,6 +33,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
     defaults: {
         border: false
     },
+
     listeners: {
         beforeShow: 'OnBeforeShow'
     },
@@ -59,15 +64,6 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             },
                             items: [
                                 {
-                                    xtype: 'checkbox',
-                                    id: prototype.idMassiveRefunduatpForm + '-pagination',
-                                    boxLabel: 'Pagination?',
-                                    checked: true,
-                                    listeners: {
-                                        change: 'onPaginationChkChange'
-                                    }
-                                },
-                                {
                                     xtype: 'Paginator',
                                     id: prototype.idMassiveRefunduatpForm + '-pagginator-01',
                                     pagInfo: [
@@ -84,7 +80,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             items: [
                                 {
                                     xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-btn-search',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnSearch',
                                     iconCls: 'prx-icon-search',
                                     tooltip: 'Search',
                                     listeners: {
@@ -102,34 +98,32 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-Save_List',
-                                    icon: 'resources/img/icon/16x16/task-save.png',
-                                    tooltip: 'Void Change massive states',
+                                    id: prototype.id + '-Save_refresh',
+                                    icon: 'resources/img/icon/16x16/Save_refresh-16.png',
+                                    tooltip: 'Change massive from approved states',
                                     listeners: {
-                                        click: 'img_clickHandler_save_List'
+                                        click: 'img_clickHandler_save'
                                     }
                                 },
+                                /*{
+                                 xtype: 'button',
+                                 id: prototype.idMassiveRefunduatpForm + '-Save_List',
+                                 icon: 'resources/img/icon/16x16/task-save.png',
+                                 tooltip: 'Process Change massive states',
+                                 listeners: {
+                                 click: 'img_clickHandler_save_List'
+                                 }
+                                 },*/
                                 {
                                     xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-Save_ListGrouped',
-                                    icon: 'resources/img/botones/16x16/Save.png',
-                                    tooltip: 'Process REFUND validations',
-                                    listeners: {
-                                        click: 'img_clickHandler_RFND_validations'
-                                    }
-                                },
-                                {
-                                    xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-btn-filter',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnFilter',
                                     iconCls: 'prx-icon-filter',
-                                    tooltip: 'Hidden/Show filter',
-                                    listeners: {
-                                        click: 'onFilterClick'
-                                    }
+                                    tooltip: 'Display filter',
+                                    listeners: 'onFilterClick'
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-btn-excel',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnExcel',
                                     iconCls: 'prx-icon-excel',
                                     tooltip: 'Export to Excel',
                                     listeners: {
@@ -138,12 +132,19 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                 },
                                 {
                                     xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-btn-clear',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnClear',
                                     iconCls: 'prx-icon-clear',
                                     tooltip: 'Clear Options',
                                     listeners: {
-                                        click: 'onClearClick'
+                                        click: 'btnClear_click'
                                     }
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnBack',
+                                    iconCls: 'prx-icon-back',
+                                    tooltip: 'Back',
+                                    listeners: 'onClearClick'
                                 }
                             ]
                         }
@@ -152,64 +153,80 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                 {
                     xtype: 'panel',
                     id: prototype.idMassiveRefunduatpForm + '-contenedor-filters',
-                    bodyStyle: 'background-color: #E3EAF9;',
+                    border: false,
                     defaults: {
-                        bodyStyle: 'background: transparent',
-                        border: false,
-                        padding: '5px'
+                        bodyStyle: 'background-color: #E3EAF9;',
+                        border: true,
+                        style: 'margin: 2px',
                     },
                     padding: '1px 5px 1px 5px',
                     items: [
                         {
-                            xtype: 'form',
-                            id: prototype.idMassiveRefunduatpForm + '-contenedor-filters-form',
+                            xtype: 'panel',
+                            layout: 'hbox',
                             defaults: {
-                                padding: '1px',
-                                bodyStyle: 'background: transparent'
+                                style: 'margin: 1px',
+                                bodyStyle: 'background: transparent',
+                                padding: '5px'
                             },
                             items: [
                                 {
+                                    xtype: 'label',
+                                    text: 'Select by:',
+                                    style: 'font-weight:bold;',
+                                    padding: '10 5 5 5',
+                                    width: 80
+                                },
+                                {
+                                    xtype: 'label',
+                                    style: 'color:red;font-size:13px;',
+                                    padding: '10 5 5 5',
+                                    text: '(*)',
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Mandatory Field'
+                                    }
+                                },
+                                , {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'combo',
+                                    //fieldLabel: 'Search Type',
+                                    id: prototype.idMassiveRefunduatpForm + '-search-type',
+                                    labelAlign: 'left',
+                                    queryMode: 'local',
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    emptyText: '[SELECTED]',
+                                    //labelWidth: 75,
+                                    labelClsExtra: 'prx-label-search',
+                                    width: 120,
+                                    editable: false,
+                                    listConfig: {
+                                        minWidth: 200
+                                    },
+                                    listeners: {
+                                        afterrender: 'onCmbSearchAfterRender',
+                                        change: 'onCmbSearchChange'
+                                    }
+                                },
+                                {
                                     xtype: 'panel',
-                                    id: prototype.idMassiveRefunduatpForm + '-box-filter-01',
                                     layout: 'hbox',
-                                    border: true,
+                                    style: 'margin-left: 2px',
                                     defaults: {
-                                        // style: 'margin-left:1px',
-                                        padding: '5px 1px 5px 1px'
+                                        style: 'margin: 2px'
                                     },
                                     items: [
                                         {
-                                            xtype: 'combo',
-                                            fieldLabel: 'Search Type',
-                                            id: prototype.idMassiveRefunduatpForm + '-search-type',
-                                            labelAlign: 'left',
-                                            queryMode: 'local',
-                                            valueField: 'code',
-                                            displayField: 'name',
-                                            emptyText: '[SELECTED]',
-                                            labelWidth: 75,
-                                            labelClsExtra: 'prx-label-search',
-                                            width: 275,
-                                            editable: false,
-                                            listConfig: {
-                                                minWidth: 200
-                                            },
-                                            listeners: {
-                                                afterrender: 'onCmbSearchAfterRender',
-                                                change: 'onCmbSearchChange'
-                                            }
-                                        },
-                                        {
                                             xtype: 'datefield',
                                             id: prototype.idMassiveRefunduatpForm + '-txtFilterDateFrom',
-                                            fieldLabel: 'From',
                                             format: 'Y/m/d',
-                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
-                                            value: Ext.Date.format(new Date(), 'Y/m/d'),
+                                            fieldLabel: 'From:',
                                             labelWidth: 40,
                                             labelAlign: 'right',
+                                            maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
+                                            value: Ext.Date.format(new Date(), 'Y/m/d'),
                                             width: 135,
-                                            hidden: true,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
@@ -217,14 +234,13 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                         {
                                             xtype: 'datefield',
                                             id: prototype.idMassiveRefunduatpForm + '-txtFilterDateTo',
-                                            fieldLabel: 'To',
                                             format: 'Y/m/d',
+                                            fieldLabel: 'To:',
+                                            labelWidth: 30,
+                                            labelAlign: 'right',
                                             maxValue: Ext.Date.format(new Date(), 'Y/m/d'),
                                             value: Ext.Date.format(new Date(), 'Y/m/d'),
-                                            labelWidth: 40,
-                                            labelAlign: 'right',
-                                            width: 135,
-                                            hidden: true,
+                                            width: 125,
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
@@ -237,7 +253,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                             maxLength: 3,
                                             enforceMaxLength: 3,
                                             width: 35,
-                                            values: '139',
+                                            value: '139',
                                             hidden: true
                                         },
                                         {
@@ -252,37 +268,29 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    id: prototype.idMassiveRefunduatpForm + '-box-filter-02',
-                                    layout: 'hbox',
-                                    border: true,
-                                    defaults: {
-                                        // style: 'margin-left:1px',
-                                        padding: '5px 1px 5px 1px'
-                                    },
-                                    items: [
+                                        },
                                         {
-                                            xtype: 'textfield',
-                                            id: prototype.idMassiveRefunduatpForm + '-txtCountry',
-                                            fieldLabel: 'Country',
-                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                                            maxLength: 2,
-                                            enforceMaxLength: 2,
+                                            xtype: 'combo',
+                                            id: prototype.idMassiveRefunduatpForm + '-CmbType',
+                                            fieldLabel: 'Type',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 170,
                                             labelWidth: 50,
-                                            width: 110,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
                                             listeners: {
-                                                specialkey: 'onSearchkey',
-                                                change: 'onchange'
+                                                afterrender: 'onCmbStatusAfterRender'
                                             }
                                         },
                                         {
                                             xtype: 'textfield',
                                             id: prototype.idMassiveRefunduatpForm + '-txtIATA',
-                                            width: 160,
+                                            width: 140,
                                             maskRe: /[0-9]/,
                                             maxLength: 8,
                                             enforceMaxLength: 8,
@@ -310,40 +318,182 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                             listeners: {
                                                 afterrender: 'onCmbStatusAfterRender'
                                             }
-                                        }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.idMassiveRefunduatpForm + '-CmbStatusBPO', 
+                                            fieldLabel: 'BPO',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 200,
+                                            labelWidth: 50,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender'
+                                            }
+                                        },
+                                        {xtype: 'textfield', id: prototype.idMassiveRefunduatpForm + '-txtUser', hidden: true}
                                     ]
                                 }
                             ]
                         }
                     ]
                 },
+
                 {
                     xtype: 'panel',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'center'
-                    },
-                    border: true,
+                    border: false,
                     bodyStyle: 'background-color: #E3EAF9;',
                     defaults: {
-                        border: false,
                         padding: '0px 5px 0px 5px'
                     },
                     padding: '1px 5px 1px 5px',
                     items: [
                         {
                             xtype: 'grid',
-                            id: prototype.idMassiveRefunduatpForm + '-grid',
+                            id: prototype.idMassiveRefunduatpForm + '-gridCabe',
                             columnLines: true,
                             autoScroll: true,
-                            width: 990,
-                            height: 520,
+                            height: 200,
                             selModel: {
                                 selType: 'checkboxmodel',
                                 listeners: {
                                     beforeselect: function (grid, record, index, eOpts, metaData) {
 
-                                        if (Ext.String.trim(record.get('A3907FLAG')) === 'Y' ) {
+                                        if (record.get('CANTPEN') > 0) {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+
+                                    }
+                                }
+
+                            },
+                            features: [{
+                                    //id: 'group',
+                                    ftype: 'groupingsummary',
+                                    groupHeaderTpl: '{name}',
+                                    hideGroupedHeader: false,
+                                    enableGroupingMenu: false
+                                }, {
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: true,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {text: 'Folio', dataIndex: 'A4076PREME', width: 150, align: 'center', renderer: 'onRendererColumnOnPreme'},
+                                    {text: 'System <br> date', dataIndex: 'A4076FREGI', width: 100, sortable: true, align: 'center'},
+                                    {text: 'Auditor', dataIndex: 'A4076REGIS', width: 100},
+                                    {text: 'Base', dataIndex: 'A4076BASE', width: 100, renderer: 'onRendererColumnBase'},
+                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100},
+                                    {text: 'Ticket Qty',
+                                        columns: [
+                                            {
+                                                text: 'OK',
+                                                dataIndex: 'CANTOK',
+                                                width: 90,
+                                                align: 'right',
+                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                            },
+                                            {
+                                                text: 'Error',
+                                                dataIndex: 'CANTKO',
+                                                width: 90,
+                                                align: 'right',
+                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                            },
+                                            {
+                                                text: 'Total',
+                                                dataIndex: 'TOTALCANT',
+                                                width: 90,
+                                                align: 'right',
+                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                            }
+                                        ]
+
+
+                                    },
+                                    {text: 'Ticket Amount',
+                                        columns: [
+                                            {
+                                                text: 'OK',
+                                                dataIndex: 'SUMAOK',
+                                                width: 130,
+                                                align: 'right',
+                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                            },
+                                            {
+                                                text: 'Error',
+                                                dataIndex: 'SUMAKO',
+                                                width: 130,
+                                                align: 'right',
+                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                            },
+                                            {
+                                                text: 'Total',
+                                                dataIndex: 'TOTALSUMA',
+                                                width: 130,
+                                                align: 'right',
+                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                            }
+                                        ]
+
+
+                                    },
+                                    //{text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatuscab'},
+                                    {text: '', dataIndex: '', width: 60, renderer: 'onRendererColumnOnCab'}
+
+                                ]
+                            }
+                        },
+                        {
+                            xtype: 'toolbar',
+                            items: [
+
+                                {xtype: 'tbspacer', width: 1200},
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idMassiveRefunduatpForm + '-Save_List',
+                                    icon: 'resources/img/icon/16x16/task-save.png',
+                                    tooltip: 'Process Change massive states',
+                                    listeners: {
+                                        click: 'img_clickHandler_save_List'
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnExcel2',
+                                    iconCls: 'prx-icon-excel',
+                                    tooltip: 'Export to Excel',
+                                    listeners: {
+                                        click: 'onExcelClick2'
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'grid', title: 'TICKET DETAIL',
+                            id: prototype.idMassiveRefunduatpForm + '-grid',
+                            columnLines: true,
+                            autoScroll: true,
+                            //width: 1260,
+                            height: 350,
+                            selModel: {
+                                selType: 'checkboxmodel',
+                                listeners: {
+                                    beforeselect: function (grid, record, index, eOpts, metaData) {
+
+                                        if (Ext.String.trim(record.get('A4076FLAG')) === 'Y' || Ext.String.trim(record.get('A4076FLAG')) === 'U') {
                                             return true;
                                         } else {
                                             return false;
@@ -355,14 +505,43 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             },
                             columns: {
                                 items: [
-                                    {text: 'Ticket', dataIndex: 'A3907TKT', width: 100},
-                                    {text: 'System<br>Date', dataIndex: 'A3907FREGI', width: 70},
-                                    {text: 'IATA', dataIndex: 'A3907IATA', width: 65},
-                                    {text: 'Agency', dataIndex: 'A3907NOMAGENCY', width: 275, align: 'left', renderer: 'onRendererColumn'},
-                                    {text: 'Country', dataIndex: 'A3907PAIS', width: 60},
-                                    {text: 'Document', dataIndex: 'A3907NUMER', width: 80},
-                                    {text: 'Authorise/</br>Reject date', dataIndex: 'A3907FAUTO', width: 80},
-                                    {text: 'Status', dataIndex: 'A3907FLAG', width: 200, renderer: 'onRendererColumnStatus'}
+                                    {text: 'Base', dataIndex: 'A4076BASE', width: 60, renderer: 'onRendererColumnBase'},
+                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100},
+                                    {text: 'Ticket', dataIndex: 'IN_TICKET', width: 100},
+                                    {text: 'CPN', dataIndex: 'A4076CPN', width: 40},
+                                    {text: 'System<br>Date', dataIndex: 'A4076FREVI', width: 70},
+                                    {text: 'Issue<br>Date', dataIndex: 'A4076FVTA', width: 70},
+                                    {text: 'Country', dataIndex: 'A4076PAIS', width: 60},
+                                    {text: 'IATA', dataIndex: 'A4076IATA', width: 65},
+                                    {text: 'Agency', dataIndex: 'A4076AGENCY', width: 275, align: 'left', renderer: 'onRendererColumnAttr'},
+                                    {text: 'Cur.', dataIndex: 'A4076MDA', width: 40},
+                                    {text: 'Transc.', dataIndex: 'A4076TRNCO', width: 80},
+                                    {text: 'Tdoc', dataIndex: 'A4076TDOC', width: 80},
+                                    {text: 'Fare', dataIndex: 'A4076TARIFA', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Tax', dataIndex: 'A4076TTAX', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Neto', dataIndex: 'A4076NETO', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatus'},
+                                    {text: 'BPO', dataIndex: 'A4076STAT', width: 200, renderer: 'onRendererColumnStatBPO'},
+                                    {
+                                        text: '',
+                                        dataIndex: '',
+                                        width: 60,
+                                        renderer: 'onRendererColumnOnTime'
+                                    },
+                                    {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 50,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Detail',
+                                                handler: 'onDetailClick'
+                                            }
+                                        ]
+                                    }
+
 
                                 ],
                                 defaults: {
@@ -376,64 +555,64 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                 stripeRows: true,
                                 enableTextSelection: true
                             }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    id: prototype.idMassiveRefunduatpForm + '-pagginator-legend',
-                    layout: {
-                        type: 'hbox',
-                        pack: 'center'
-                    },
-                    border: true,
-                    bodyStyle: 'background-color: transparent;',
-                    defaults: {
-                        border: false,
-                        padding: '0px 5px 0px 5px'
-                    },
-                    padding: '1px 5px 1px 5px',
-                    items: [
+                        },
                         {
                             xtype: 'panel',
-                            width: prototype.widthContenedor,
-                            height: 25,
+                            iid: prototype.idMassiveRefunduatpForm + '-pagginator-legend',
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
                             },
+                            border: true,
+                            bodyStyle: 'background-color: transparent;',
                             defaults: {
-                                xtype: 'label',
-                                margin: '3px 0px 0px 5px'
+                                border: false,
+                                padding: '0px 5px 0px 5px'
                             },
+                            padding: '1px 5px 1px 5px',
                             items: [
                                 {
-                                    text: 'Page',
-                                    width: 50
-                                },
-                                {
-                                    id: prototype.idMassiveRefunduatpForm + '-lbl-currentPage',
-                                    text: '1',
-                                    width: 50
-                                },
-                                {
-                                    text: 'Of',
-                                    width: 50
-                                },
-                                {
-                                    id: prototype.idMassiveRefunduatpForm + '-lbl-pageCount',
-                                    text: '0',
-                                    width: 50
-                                },
-                                {xtype: 'tbspacer', width: 100},
-                                {
-                                    text: 'Total found',
-                                    width: 80
-                                },
-                                {
-                                    id: prototype.idMassiveRefunduatpForm + '-lbl-total',
-                                    text: '0',
-                                    width: 50
+                                    xtype: 'panel',
+                                    width: prototype.widthContenedor,
+                                    height: 25,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        margin: '3px 0px 0px 5px'
+                                    },
+                                    items: [
+                                        {
+                                            text: 'Page',
+                                            width: 50
+                                        },
+                                        {
+                                            id: prototype.idMassiveRefunduatpForm + '-lbl-currentPage',
+                                            text: '1',
+                                            width: 50
+                                        },
+                                        {
+                                            text: 'Of',
+                                            width: 50
+                                        },
+                                        {
+                                            id: prototype.idMassiveRefunduatpForm + '-lbl-pageCount',
+                                            text: '0',
+                                            width: 50
+                                        },
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            text: 'Total found',
+                                            width: 80
+                                        },
+                                        {
+                                            id: prototype.idMassiveRefunduatpForm + '-lbl-total',
+                                            text: '0',
+                                            width: 50
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -443,6 +622,3 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
         }
     ]
 });
-
-
-

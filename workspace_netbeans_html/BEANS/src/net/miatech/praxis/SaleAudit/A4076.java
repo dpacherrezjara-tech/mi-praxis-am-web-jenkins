@@ -40,6 +40,8 @@ public class A4076 {
     public String A4076HREVI;
     public String A4076REFE;
     public String A4076TICKET;
+    public String A4076AGENCY;
+    public String A4076DESC;
 
     public double A4076TARTK;
     public double A4076EQVTK;
@@ -47,7 +49,9 @@ public class A4076 {
     public double A4076COMI;
     public double A4076TCMBT;
     public double A4076TAXCO;
-    public double A4076NETO ;
+    public double A4076NETO;
+    public double A4076TARIFA;
+    public double A4076TTAX;
     /*campos de las otras tablas*/
     // TARJETAS
     public String A4076FP1;
@@ -130,6 +134,119 @@ public class A4076 {
     public String A4076TAX18;
     public String A4076ATO18;
     public double A4076MONTAX18;
+    public long RN;
+    public String A4076ESTADO;
+    public int CANTOK;
+    public int CANTKO;
+    public int CANTPEN;
+    public double SUMAOK;
+    public double SUMAKO;
+    public double TOTALSUMA;
+    public double TOTALCANT;
+
+    public String getA4076DESC() {
+        return A4076DESC;
+    }
+
+    public void setA4076DESC(String A4076DESC) {
+        this.A4076DESC = A4076DESC;
+    }
+
+    public double getTOTALSUMA() {
+        return TOTALSUMA;
+    }
+
+    public void setTOTALSUMA(int TOTALSUMA) {
+        this.TOTALSUMA = TOTALSUMA;
+    }
+
+    public double getTOTALCANT() {
+        return TOTALCANT;
+    }
+
+    public void setTOTALCANT(double TOTALCANT) {
+        this.TOTALCANT = TOTALCANT;
+    }
+
+    public int getCANTPEN() {
+        return CANTPEN;
+    }
+
+    public void setCANTPEN(int CANTPEN) {
+        this.CANTPEN = CANTPEN;
+    }
+    
+    public int getCANTOK() {
+        return CANTOK;
+    }
+
+    public void setCANTOK(int CANTOK) {
+        this.CANTOK = CANTOK;
+    }
+
+    public int getCANTKO() {
+        return CANTKO;
+    }
+
+    public void setCANTKO(int CANTKO) {
+        this.CANTKO = CANTKO;
+    }
+
+    public double getSUMAOK() {
+        return SUMAOK;
+    }
+
+    public void setSUMAOK(double SUMAOK) {
+        this.SUMAOK = SUMAOK;
+    }
+
+    public double getSUMAKO() {
+        return SUMAKO;
+    }
+
+    public void setSUMAKO(double SUMAKO) {
+        this.SUMAKO = SUMAKO;
+    }
+    
+    public double getA4076TTAX() {
+        return A4076TTAX;
+    }
+
+    public void setA4076TTAX(double A4076TTAX) {
+        this.A4076TTAX = A4076TTAX;
+    }
+
+    public String getA4076ESTADO() {
+        return A4076ESTADO;
+    }
+
+    public void setA4076ESTADO(String A4076ESTADO) {
+        this.A4076ESTADO = A4076ESTADO;
+    }
+
+    public double getA4076TARIFA() {
+        return A4076TARIFA;
+    }
+
+    public void setA4076TARIFA(double A4076TARIFA) {
+        this.A4076TARIFA = A4076TARIFA;
+    }
+
+    public String getA4076AGENCY() {
+        return A4076AGENCY;
+    }
+
+    public void setA4076AGENCY(String A4076AGENCY) {
+        this.A4076AGENCY = A4076AGENCY;
+    }
+
+    public long getRN() {
+        return RN;
+    }
+
+    public void setRN(long RN) {
+        this.RN = RN;
+    }
 
     public double getA4076NETO() {
         return A4076NETO;
@@ -139,7 +256,6 @@ public class A4076 {
         this.A4076NETO = A4076NETO;
     }
 
-   
     public String getA4076FP1() {
         return A4076FP1;
     }
@@ -156,7 +272,6 @@ public class A4076 {
         this.A4076FP2 = A4076FP2;
     }
 
-    
     public String getA4076TICKET() {
         return A4076TICKET;
     }

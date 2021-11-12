@@ -23,16 +23,41 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
      */
     afterRender: function () {
         var me = this;
+        me.setStoresFilters();
+
+    },
+    setStoresFilters: function () {
+        var CmbType = Ext.getCmp(prototype.idMassiveRefunduatpFormSubiArchivo + '-CmbType');
+
+        CmbType.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "SELECT"},
+                {"code": "MA", "name": "LAYOUT UATP"},
+                {"code": "GP", "name": "LAYOUT LAYOUT"}
+
+            ]
+        }));
 
     },
     onClickCancel: function (btn) {
         this.view.close();
 
     },
+    onCmbSearchAfterRender: function (obj) {
+        obj.setValue('');
+    },
     onClickSave: function (btn) {
         var me = this;
         var File = Ext.getCmp(prototype.idMassiveRefunduatpFormSubiArchivo + '-File').getValue();
+        var CmbType = Ext.getCmp(prototype.idMassiveRefunduatpFormSubiArchivo + '-CmbType').getValue();
 
+        if (CmbType === '') {
+            Ext.MessageBox.alert('PRAXIS', "Select Type", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.idMassiveRefunduatpFormSubiArchivo + '-CmbType').focus();", 100);
+            });
+            return;
+        }
         if (File === '') {
             Ext.MessageBox.alert('PRAXIS', "Select File", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
@@ -41,7 +66,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             return;
 
         }
-        me.BeanInitial.File = File;
+        me.BeanInitial.IN_NAME = File;
+        me.BeanInitial.IN_TYPE = CmbType;
         var form = Ext.getCmp(prototype.idMassiveRefunduatpFormSubiArchivo + '-form-01').getForm();
         form.submit({
             url: me.urlWin01 + '/insertTracingFile/',
@@ -70,4 +96,3 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
 
     }
 });
-

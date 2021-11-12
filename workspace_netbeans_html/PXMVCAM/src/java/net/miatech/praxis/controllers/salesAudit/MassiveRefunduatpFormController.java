@@ -6,22 +6,42 @@
 package net.miatech.praxis.controllers.salesAudit;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A4076Filter;
+import net.miatech.praxis.SaleAudit.A4077;
+import net.miatech.praxis.SaleAudit.A4078;
 import net.miatech.praxis.controllers.BaseController;
+import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.MassiveRefunduatpFormLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -43,6 +63,131 @@ public class MassiveRefunduatpFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
     private MassiveRefunduatpFormLogic logic;
+
+    @RequestMapping(value = "search")
+    public @ResponseBody
+    String search(ModelMap map, HttpServletRequest request) {
+        List<A4076Filter> lst;
+        A4076Filter filter = new A4076Filter();
+
+        try {
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            int limit = Integer.parseInt(request.getParameter("limit"));
+            int start = Integer.parseInt(request.getParameter("start"));
+
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
+            Boolean bExcel = pExcel == 1 ? true : false;
+
+            filter.IN_OPTION = request.getParameter("IN_OPTION");
+            filter.IN_DATEFROM = request.getParameter("IN_DATEFROM");
+            filter.IN_DATETO = request.getParameter("IN_DATETO");
+            filter.IN_TICKET = request.getParameter("IN_TICKET");
+            filter.IN_COUNTRY = request.getParameter("IN_COUNTRY");
+            filter.IN_IATA = request.getParameter("IN_IATA");
+            filter.IN_STATUSBPO = request.getParameter("IN_STATUSBPO");
+            filter.IN_STATUS = request.getParameter("IN_STATUS");
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.search(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        map.put("success", true);
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "SearchUATPRFNDetail")
+    public @ResponseBody
+    String SearchUATPRFNDetail(ModelMap map, HttpServletRequest request) {
+        A4076Filter lst;
+        A4076Filter filter = new A4076Filter();
+
+        HashMap map01, map02;
+
+        ArrayList<HashMap<String, String>> lst_TAXES = new ArrayList<>();
+        ArrayList<HashMap<String, String>> lst_FOP = new ArrayList<>();
+        try {
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_PREME = request.getParameter("IN_PREME").trim();
+            filter.IN_ANIO = request.getParameter("IN_ANIO").trim();
+            filter.IN_CORR = Integer.parseInt(request.getParameter("IN_CORR"));
+
+            lst = logic.SearchUATPRFNDetail(filter);
+
+            // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_TAXES">
+            for (int vi = 0; vi < lst.lst_TAXES.size(); ++vi) {
+                map01 = new HashMap<>();
+
+                map01.put("A4078CCUST", lst.lst_TAXES.get(vi).A4078CCUST);
+                map01.put("A4078PREME", lst.lst_TAXES.get(vi).A4078PREME);
+                map01.put("A4078ANIO", lst.lst_TAXES.get(vi).A4078ANIO);
+                map01.put("A4078CORRL", lst.lst_TAXES.get(vi).A4078CORRL);
+                map01.put("A4078SEQ", lst.lst_TAXES.get(vi).A4078SEQ);
+                map01.put("A4078CDTAX", lst.lst_TAXES.get(vi).A4078CDTAX);
+                map01.put("A4078CDATO", lst.lst_TAXES.get(vi).A4078CDATO);
+                map01.put("A4078MONED", lst.lst_TAXES.get(vi).A4078MONED);
+                map01.put("A4078TXMIA", lst.lst_TAXES.get(vi).A4078TXMIA);
+                map01.put("A4078MORIG", lst.lst_TAXES.get(vi).A4078MORIG);
+                map01.put("A4078TXORI", lst.lst_TAXES.get(vi).A4078TXORI);
+                map01.put("A4078TXDIF", lst.lst_TAXES.get(vi).A4078TXDIF);
+                map01.put("A4078TXDAF", lst.lst_TAXES.get(vi).A4078TXDAF);
+                map01.put("A4078STAT", lst.lst_TAXES.get(vi).A4078STAT);
+                map01.put("A4078SBSTA", lst.lst_TAXES.get(vi).A4078SBSTA);
+
+                lst_TAXES.add(map01);
+            }
+            // </editor-fold>
+
+            // <editor-fold defaultstate="collapsed" desc="ArrayList -> lst_FOP">
+            for (int vi = 0; vi < lst.lst_CardType.size(); ++vi) {
+                map02 = new HashMap<>();
+
+                map02.put("A4077CCUST", lst.lst_CardType.get(vi).A4077CCUST);
+                map02.put("A4077PREME", lst.lst_CardType.get(vi).A4077PREME);
+                map02.put("A4077ANIO", lst.lst_CardType.get(vi).A4077ANIO);
+                map02.put("A4077CORRL", lst.lst_CardType.get(vi).A4077CORRL);
+                map02.put("A4077SEQ", lst.lst_CardType.get(vi).A4077SEQ);
+                map02.put("A4077CFOP", lst.lst_CardType.get(vi).A4077CFOP);
+                map02.put("A4077TYCAR", lst.lst_CardType.get(vi).A4077TYCAR);
+                map02.put("A4077CUR", lst.lst_CardType.get(vi).A4077CUR);
+                map02.put("A4077NTARJ", lst.lst_CardType.get(vi).A4077NTARJ);
+                map02.put("A4077FEXP", lst.lst_CardType.get(vi).A4077FEXP);
+                map02.put("A4077CAPL", lst.lst_CardType.get(vi).A4077CAPL);
+                map02.put("A4077MONTO", lst.lst_CardType.get(vi).A4077MONTO);
+                map02.put("A4077MONTE", lst.lst_CardType.get(vi).A4077MONTE);
+                map02.put("A4077TOTAL", lst.lst_CardType.get(vi).A4077TOTAL);
+                map02.put("A4077FLAG", lst.lst_CardType.get(vi).A4077FLAG);
+
+                lst_FOP.add(map02);
+            }
+            // </editor-fold>
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        map.put("success", true);
+        map.put("lst_TAXES", lst_TAXES);
+        map.put("lst_FOP", lst_FOP);
+
+        return new Gson().toJson(map);
+    }
 
     @RequestMapping(value = "insertTracingFile", method = RequestMethod.POST)
     public @ResponseBody
@@ -72,12 +217,13 @@ public class MassiveRefunduatpFormController extends BaseController {
                 cont++;
                 Row currentRow = iterator.next();
                 Iterator<Cell> cellIterator = currentRow.iterator();
-                if (cont > 1) {
-                    if (currentRow.getCell(0) != null) {
-                        cont1++;
-                        fileA4076.A4076CCUST = "139";
-                        fileA4076.A4076TYPE = filter.IN_TYPE;
-                        if (fileA4076.A4076TYPE.equals("MA")) {
+                fileA4076.A4076CCUST = "139";
+                fileA4076.A4076TYPE = filter.IN_TYPE;
+                if (fileA4076.A4076TYPE.equals("MA")) {
+                    if (cont > 2) {
+                        if (currentRow.getCell(0) != null) {
+                            cont1++;
+
                             fileA4076.A4076TICKET = getCellValue(currentRow.getCell(0));
                             if (fileA4076.A4076TICKET.equals("")) {
                                 result = "TICKET required";
@@ -98,7 +244,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 break;
                             }
                             if (fileA4076.A4076IATA.length() != 8) {
-                                result = "THE TICKET MUST BE 13 CHARACTERES  " + fileA4076.A4076IATA;
+                                result = "THE TICKET MUST BE 8 CHARACTERES  " + fileA4076.A4076IATA;
                                 break;
                             }
                             fileA4076.A4076MDA = getCellValue(currentRow.getCell(3));
@@ -136,7 +282,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 break;
                             }
                             if (fileA4076.A4076FVTA.length() != 10) {
-                                result = "THE SALE DATE MUST BE 4 CHARACTERES  " + fileA4076.A4076FVTA;
+                                result = "THE SALE DATE MUST BE 10 CHARACTERES  " + fileA4076.A4076FVTA;
                                 break;
                             }
 
@@ -149,7 +295,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 }
                             }
                             fileA4076.A4076TCARD1 = getCellValue(currentRow.getCell(9));
-                            if (fileA4076.A4076TCARD1.equals("CC")) {
+                            if (fileA4076.A4076FP1.equals("CC")) {
                                 if (fileA4076.A4076TCARD1.equals("")) {
                                     result = "Type Card 1 required";
                                     break;
@@ -175,7 +321,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 }
                             }
                             fileA4076.A4076TCARD2 = getCellValue(currentRow.getCell(13));
-                            if (fileA4076.A4076TCARD2.equals("CC")) {
+                            if (fileA4076.A4076FP2.equals("CC")) {
                                 if (fileA4076.A4076TCARD2.equals("")) {
                                     result = "Type Card 2 required";
                                     break;
@@ -650,7 +796,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "THE TYPE MUST BE 4 CHARACTERES  " + fileA4076.A4076BASE;
                                 break;
                             }
-                        } else {
+                            lstGeneral.add(fileA4076);
+                        }
+                    }
+                } else {
+                    if (cont > 1) {
+
+                        if (currentRow.getCell(0) != null) {
+                            cont1++;
                             fileA4076.A4076TICKET = getCellValue(currentRow.getCell(0));
                             if (fileA4076.A4076TICKET.equals("")) {
                                 result = "TICKET required";
@@ -660,17 +813,17 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "THE TICKET MUST BE 13 CHARACTERES  " + fileA4076.A4076TICKET;
                                 break;
                             }
-                            if (!getCellValue(currentRow.getCell(2)).equals("")) {
-                                fileA4076.A4076NETO = Float.parseFloat(getCellValue(currentRow.getCell(2)));
+                            if (!getCellValue(currentRow.getCell(1)).equals("")) {
+                                fileA4076.A4076NETO = Float.parseFloat(getCellValue(currentRow.getCell(1)));
                             } else {
                                 fileA4076.A4076NETO = 0;
                             }
-                            fileA4076.A4076REFE = getCellValue(currentRow.getCell(3));
+                            fileA4076.A4076REFE = getCellValue(currentRow.getCell(2));
                             if (fileA4076.A4076REFE.equals("")) {
                                 result = "REFERENCE required";
                                 break;
                             }
-                            fileA4076.A4076MDA = getCellValue(currentRow.getCell(4));
+                            fileA4076.A4076MDA = getCellValue(currentRow.getCell(3));
                             if (fileA4076.A4076MDA.equals("")) {
                                 result = "Currency required";
                                 break;
@@ -679,7 +832,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "THE Currency MUST BE 3 CHARACTERES  " + fileA4076.A4076MDA;
                                 break;
                             }
-                            fileA4076.A4076TDOC = getCellValue(currentRow.getCell(5));
+                            fileA4076.A4076TDOC = getCellValue(currentRow.getCell(4));
                             if (fileA4076.A4076TDOC.equals("")) {
                                 result = "Transaction required";
                                 break;
@@ -689,16 +842,16 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 break;
                             }
 
-                            fileA4076.A4076FVTA = getCellValue(currentRow.getCell(6));
+                            fileA4076.A4076FVTA = getCellValue(currentRow.getCell(5));
                             if (fileA4076.A4076FVTA.equals("")) {
                                 result = "Transaction required";
                                 break;
                             }
                             if (fileA4076.A4076FVTA.length() != 10) {
-                                result = "THE SALE DATE MUST BE 4 CHARACTERES  " + fileA4076.A4076FVTA;
+                                result = "THE SALE DATE MUST BE 10 CHARACTERES  " + fileA4076.A4076FVTA;
                                 break;
                             }
-                            fileA4076.A4076BASE = getCellValue(currentRow.getCell(7));
+                            fileA4076.A4076BASE = getCellValue(currentRow.getCell(6));
                             if (fileA4076.A4076BASE.equals("")) {
                                 result = "TYPE required";
                                 break;
@@ -779,14 +932,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                             fileA4076.A4076COMI = 0.00;
                             fileA4076.A4076TCMBT = 0.00;
                             fileA4076.A4076TAXCO = 0.00;
-                            fileA4076.A4076TCARD1="";
-                            fileA4076.A4076TCARD2="";
-
+                            fileA4076.A4076TCARD1 = "";
+                            fileA4076.A4076TCARD2 = "";
+                            lstGeneral.add(fileA4076);
                         }
-                        lstGeneral.add(fileA4076);
 
                     }
                 }
+
             }
             if (result.equals("")) {
                 result = logic.subirExcel(lstGeneral);
@@ -851,4 +1004,599 @@ public class MassiveRefunduatpFormController extends BaseController {
         }
         return cellValue.trim();
     }
+
+    @RequestMapping(value = "ProcesaMantenimiento")
+    public @ResponseBody
+    String ProcesaMantenimiento(ModelMap map, HttpServletRequest request) {
+        String result = "";
+        ArrayList<A4076Filter> gridData = new ArrayList<A4076Filter>();
+
+        try {
+
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            JsonParser parser = new JsonParser();
+            // Obtain Array
+            JsonArray gsonArr = parser.parse(request.getParameter("beanlst")).getAsJsonArray();
+            for (JsonElement obj : gsonArr) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                A4076Filter data = new A4076Filter();
+                data.IN_OPTION = "1";
+                data.A4076PREME = gsonObj.get("A4076PREME").getAsString();
+                data.A4076ANIO = gsonObj.get("A4076ANIO").getAsString();
+                data.A4076CORR = gsonObj.get("A4076CORR").getAsInt();
+                data.A4076BASE = "";
+                gridData.add(data);
+
+            }
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            result = logic.ProcesaMantenimiento(gridData);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        map.put("success", true);
+        map.put("data", result);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "ProcesaMantenimientoStatus")
+    public @ResponseBody
+    String ProcesaMantenimientoStatus(ModelMap map, HttpServletRequest request) {
+        String result = "";
+        ArrayList<A4076Filter> gridData = new ArrayList<A4076Filter>();
+
+        try {
+
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            JsonParser parser = new JsonParser();
+            // Obtain Array
+            JsonArray gsonArr = parser.parse(request.getParameter("beanlst")).getAsJsonArray();
+            for (JsonElement obj : gsonArr) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                A4076Filter data = new A4076Filter();
+                data.IN_OPTION = "2";
+                data.A4076PREME = gsonObj.get("A4076PREME").getAsString();
+                data.A4076ANIO = "";
+                data.A4076CORR = 0;
+                data.A4076BASE = gsonObj.get("A4076BASE").getAsString();
+                gridData.add(data);
+
+            }
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            result = logic.ProcesaMantenimiento(gridData);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        map.put("success", true);
+        map.put("data", result);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/getXLSX")
+    public @ResponseBody
+    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
+        A4076Filter filter = new A4076Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4076Filter> listaData = logic.search(filter);
+
+            // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
+            //Workbook workbook = new XSSFWorkbook();
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
+            Sheet sheet = workbook.createSheet("Masivos RFND");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            CellStyle headerStyle = workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            // </editor-fold>
+
+            Integer vi = 0, vj = 0;
+            Iterator iter = listaData.iterator();
+
+            Row row;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10;
+            //<editor-fold defaultstate="collapsed" desc="row">
+            row = sheet.createRow(vj);
+
+            CH_00 = row.createCell(0);
+            CH_01 = row.createCell(1);
+            CH_02 = row.createCell(2);
+            CH_03 = row.createCell(3);
+            CH_04 = row.createCell(4);
+            CH_05 = row.createCell(5);
+            CH_06 = row.createCell(6);
+            CH_07 = row.createCell(7);
+            CH_08 = row.createCell(8);
+            CH_09 = row.createCell(9);
+            CH_10 = row.createCell(10);
+
+            CH_00.setCellValue("Folio");
+            CH_01.setCellValue("System date");
+            CH_02.setCellValue("Auditor");
+            CH_03.setCellValue("Base");
+            CH_04.setCellValue("Type");
+            CH_05.setCellValue("Ticket Qty OK");
+            CH_06.setCellValue("Ticket Qty Error");
+            CH_07.setCellValue("total");
+            CH_08.setCellValue("Ticket Amount OK");
+            CH_09.setCellValue("Ticket Amount Error");
+            CH_10.setCellValue("total");
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+
+            CH_00.setCellStyle(headerStyle);
+            CH_01.setCellStyle(headerStyle);
+            CH_02.setCellStyle(headerStyle);
+            CH_03.setCellStyle(headerStyle);
+            CH_04.setCellStyle(headerStyle);
+            CH_05.setCellStyle(headerStyle);
+            CH_06.setCellStyle(headerStyle);
+            CH_07.setCellStyle(headerStyle);
+            CH_08.setCellStyle(headerStyle);
+            CH_09.setCellStyle(headerStyle);
+            CH_10.setCellStyle(headerStyle);
+
+            ++vj;
+            //</editor-fold>
+
+            while (iter.hasNext()) {
+                row = sheet.createRow(vj);
+                // <editor-fold defaultstate="collapsed" desc="data">
+                CH_00 = row.createCell(0);
+                CH_01 = row.createCell(1);
+                CH_02 = row.createCell(2);
+                CH_03 = row.createCell(3);
+                CH_04 = row.createCell(4);
+                CH_05 = row.createCell(5);
+                CH_06 = row.createCell(6);
+                CH_07 = row.createCell(7);
+                CH_08 = row.createCell(8);
+                CH_09 = row.createCell(9);
+                CH_10 = row.createCell(10);
+
+                CH_00.setCellValue(listaData.get(vi).A4076PREME);
+                CH_01.setCellValue(listaData.get(vi).A4076FREGI);
+                CH_02.setCellValue(listaData.get(vi).A4076REGIS);
+                CH_03.setCellValue(listaData.get(vi).A4076BASE);
+                CH_04.setCellValue(listaData.get(vi).A4076TYPE);
+                CH_05.setCellValue(listaData.get(vi).CANTOK);
+                CH_06.setCellValue(listaData.get(vi).CANTKO);
+                CH_07.setCellValue(listaData.get(vi).TOTALCANT);
+
+                CH_08.setCellValue(listaData.get(vi).SUMAOK);
+                CH_09.setCellValue(listaData.get(vi).SUMAKO);
+                CH_10.setCellValue(listaData.get(vi).TOTALSUMA);
+
+                CH_00.setCellStyle(bodyStyle);
+                CH_01.setCellStyle(bodyStyle);
+                CH_02.setCellStyle(bodyStyle);
+                CH_03.setCellStyle(bodyStyle);
+                CH_04.setCellStyle(bodyStyle);
+                CH_05.setCellStyle(bodyStyle);
+                CH_06.setCellStyle(bodyStyle);
+                CH_07.setCellStyle(bodyStyle);
+                CH_08.setCellStyle(bodyStyle);
+                CH_09.setCellStyle(bodyStyle);
+                CH_10.setCellStyle(bodyStyle);
+
+                // </editor-fold>
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+
+            String fileNameDownload = String.format("Masivos RFND - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw new SpringException(e);
+        }
+    }
+
+    @RequestMapping(value = "/getXLSX2")
+    public @ResponseBody
+    void getXLSX2(HttpServletRequest request, HttpServletResponse response) {
+        A4076Filter filter = new A4076Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4076Filter> listaData = logic.searchDetail(filter);
+
+            // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
+            //Workbook workbook = new XSSFWorkbook();
+            int limite = 300;
+            SXSSFWorkbook workbook = new SXSSFWorkbook(limite);
+            Sheet sheet = workbook.createSheet("Masivos RFND");
+            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            CellStyle headerStyle = workbook.createCellStyle();
+            CellStyle bodyStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+            headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
+            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+            headerStyle.setFont(headerFont);
+
+            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            // </editor-fold>
+
+            Integer vi = 0, vj = 0;
+            Iterator iter = listaData.iterator();
+
+            Row row;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16;
+            //<editor-fold defaultstate="collapsed" desc="row">
+            row = sheet.createRow(vj);
+
+            CH_00 = row.createCell(0);
+            CH_01 = row.createCell(1);
+            CH_02 = row.createCell(2);
+            CH_03 = row.createCell(3);
+            CH_04 = row.createCell(4);
+            CH_05 = row.createCell(5);
+            CH_06 = row.createCell(6);
+            CH_07 = row.createCell(7);
+            CH_08 = row.createCell(8);
+            CH_09 = row.createCell(9);
+            CH_10 = row.createCell(10);
+            CH_11 = row.createCell(11);
+            CH_12 = row.createCell(12);
+            CH_13 = row.createCell(13);
+            CH_14 = row.createCell(14);
+            CH_15 = row.createCell(15);
+            CH_16 = row.createCell(16);
+
+            CH_00.setCellValue("Base");
+            CH_01.setCellValue("Type");
+            CH_02.setCellValue("Ticket");
+            CH_03.setCellValue("CPN");
+            CH_04.setCellValue("System Date");
+            CH_05.setCellValue("Issue Date");
+            CH_06.setCellValue("Country");
+            CH_07.setCellValue("IATA");
+            CH_08.setCellValue("Agency");
+            CH_09.setCellValue("Currency");
+            CH_10.setCellValue("Transaction");
+            CH_11.setCellValue("Tdoc");
+            CH_12.setCellValue("Fare");
+            CH_13.setCellValue("Tax");
+            CH_14.setCellValue("Neto");
+            CH_15.setCellValue("Status");
+            CH_16.setCellValue("BPO");
+
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+
+            CH_00.setCellStyle(headerStyle);
+            CH_01.setCellStyle(headerStyle);
+            CH_02.setCellStyle(headerStyle);
+            CH_03.setCellStyle(headerStyle);
+            CH_04.setCellStyle(headerStyle);
+            CH_05.setCellStyle(headerStyle);
+            CH_06.setCellStyle(headerStyle);
+            CH_07.setCellStyle(headerStyle);
+            CH_08.setCellStyle(headerStyle);
+            CH_09.setCellStyle(headerStyle);
+            CH_10.setCellStyle(headerStyle);
+            CH_11.setCellStyle(headerStyle);
+            CH_12.setCellStyle(headerStyle);
+            CH_13.setCellStyle(headerStyle);
+            CH_14.setCellStyle(headerStyle);
+            CH_15.setCellStyle(headerStyle);
+            CH_16.setCellStyle(headerStyle);
+
+            ++vj;
+            //</editor-fold>
+
+            while (iter.hasNext()) {
+                row = sheet.createRow(vj);
+                // <editor-fold defaultstate="collapsed" desc="data">
+                CH_00 = row.createCell(0);
+                CH_01 = row.createCell(1);
+                CH_02 = row.createCell(2);
+                CH_03 = row.createCell(3);
+                CH_04 = row.createCell(4);
+                CH_05 = row.createCell(5);
+                CH_06 = row.createCell(6);
+                CH_07 = row.createCell(7);
+                CH_08 = row.createCell(8);
+                CH_09 = row.createCell(9);
+                CH_10 = row.createCell(10);
+                CH_11 = row.createCell(11);
+                CH_12 = row.createCell(12);
+                CH_13 = row.createCell(13);
+                CH_14 = row.createCell(14);
+                CH_15 = row.createCell(15);
+                CH_16 = row.createCell(16);
+
+                CH_00.setCellValue(listaData.get(vi).A4076BASE);
+                CH_01.setCellValue(listaData.get(vi).A4076TYPE);
+                CH_02.setCellValue(listaData.get(vi).IN_TICKET);
+                CH_03.setCellValue(listaData.get(vi).A4076CPN);
+                CH_04.setCellValue(listaData.get(vi).A4076FREVI);
+                CH_05.setCellValue(listaData.get(vi).A4076FVTA);
+                CH_06.setCellValue(listaData.get(vi).A4076PAIS);
+                CH_07.setCellValue(listaData.get(vi).A4076IATA);
+                CH_08.setCellValue(listaData.get(vi).A4076AGENCY);
+                CH_09.setCellValue(listaData.get(vi).A4076MDA);
+                CH_10.setCellValue(listaData.get(vi).A4076TRNCO);
+                CH_11.setCellValue(listaData.get(vi).A4076TDOC);
+                CH_12.setCellValue(listaData.get(vi).A4076TARIFA);
+                CH_13.setCellValue(listaData.get(vi).A4076TTAX);
+                CH_14.setCellValue(listaData.get(vi).A4076NETO);
+                String vl_A4076FLAG = "";
+                switch (listaData.get(vi).A4076FLAG) {
+                    case "Y":
+                        vl_A4076FLAG = "PENDING";
+                        break;
+                    case "A":
+                        vl_A4076FLAG = "APPROVED";
+                        break;
+                    case "E":
+                        vl_A4076FLAG = "SALES DATE ERROR";
+                        break;
+                    case "U":
+                        vl_A4076FLAG = "WITH USES";
+                        break;
+                    case "D":
+                        vl_A4076FLAG = "DUPLICATE TICKET";
+                        break;
+                    case "T":
+                        vl_A4076FLAG = "ATO ERROR";
+                        break;
+                }
+                CH_15.setCellValue(vl_A4076FLAG);
+                String vl_A4076STAT = "";
+                switch (listaData.get(vi).A4076STAT) {
+                    case "Y":
+                        vl_A4076STAT = "PENDING";
+                        break;
+                    case "E":
+                        vl_A4076STAT = "SEND BPO";
+                        break;
+                    case "F":
+                        vl_A4076STAT = "CAPTURED BPO";
+                        break;
+                }
+                CH_16.setCellValue(vl_A4076STAT);
+
+                CH_00.setCellStyle(bodyStyle);
+                CH_01.setCellStyle(bodyStyle);
+                CH_02.setCellStyle(bodyStyle);
+                CH_03.setCellStyle(bodyStyle);
+                CH_04.setCellStyle(bodyStyle);
+                CH_05.setCellStyle(bodyStyle);
+                CH_06.setCellStyle(bodyStyle);
+                CH_07.setCellStyle(bodyStyle);
+                CH_08.setCellStyle(bodyStyle);
+                CH_09.setCellStyle(bodyStyle);
+                CH_10.setCellStyle(bodyStyle);
+                CH_11.setCellStyle(bodyStyle);
+                CH_12.setCellStyle(bodyStyle);
+                CH_13.setCellStyle(bodyStyle);
+                CH_14.setCellStyle(bodyStyle);
+                CH_15.setCellStyle(bodyStyle);
+                CH_16.setCellStyle(bodyStyle);
+
+                // </editor-fold>
+                iter.next();
+                ++vi;
+                ++vj;
+            }
+            sheet.autoSizeColumn(0, true);
+            sheet.autoSizeColumn(1, true);
+            sheet.autoSizeColumn(2, true);
+            sheet.autoSizeColumn(3, true);
+            sheet.autoSizeColumn(4, true);
+            sheet.autoSizeColumn(5, true);
+            sheet.autoSizeColumn(6, true);
+            sheet.autoSizeColumn(7, true);
+            //sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
+
+            String fileNameDownload = String.format("Masivos RFND - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+
+            File file = File.createTempFile(fileNameDownload, ".xlsx");
+            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+            workbook.write(response.getOutputStream());
+
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw new SpringException(e);
+        }
+    }
+
+    @RequestMapping(value = "searchDetail")
+    public @ResponseBody
+    String searchDetail(ModelMap map, HttpServletRequest request) {
+        A4076Filter filter = new A4076Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4076Filter> lst_search = logic.searchDetail(filter);
+
+            map.put("success", true);
+            map.put("data", lst_search);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "ProcesaManualUATP")
+    public @ResponseBody
+    String ProcesaManualUATP(ModelMap map, HttpServletRequest request) {
+        String result = "";
+        String taxes = "";
+        String fop = "";
+        A4076Filter filter = new A4076Filter();
+        // A4078 objlst_TAXES = null;
+        //A4077 objlst_CardType = null;
+        try {
+
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            JsonParser parser = new JsonParser();
+            // Obtain Array
+            JsonArray gsonTaxes = parser.parse(request.getParameter("beanlstTaxes")).getAsJsonArray();
+            JsonArray gsonFop = parser.parse(request.getParameter("beanlstlstFop")).getAsJsonArray();
+            for (JsonElement obj : gsonTaxes) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                taxes = taxes + "|" + gsonObj.get("A4078CORRL").getAsInt() + "$" + gsonObj.get("A4078SEQ").getAsInt() + "$" + gsonObj.get("A4078CDTAX").getAsString() + "$" + gsonObj.get("A4078CDATO").getAsString() + "$" + gsonObj.get("A4078TXDIF").getAsDouble() + "$" + gsonObj.get("A4078STAT").getAsString();
+            }
+            //LISTA DE FOP 
+            for (JsonElement obj : gsonFop) {
+                JsonObject gsonObj = obj.getAsJsonObject();
+                fop += fop + "|" + gsonObj.get("A4077CORRL").getAsInt() + "$" + gsonObj.get("A4077SEQ").getAsInt() + "$" + gsonObj.get("A4077CFOP").getAsString() + "$" + gsonObj.get("A4077TYCAR").getAsString() + "$" + gsonObj.get("A4077NTARJ").getAsString() + "$" + gsonObj.get("A4077TOTAL").getAsDouble() + "$" + gsonObj.get("A4077FLAG").getAsString();
+            }
+
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            result = logic.ProcesaManualUATP(filter, taxes, fop);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        map.put("success", true);
+        map.put("data", result);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "ProcesaDelete")
+    public @ResponseBody
+    String ProcesaDelete(ModelMap map, HttpServletRequest request) {
+        String result = "";
+        A4076Filter filter = new A4076Filter();
+
+        try {
+
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            result = logic.ProcesaDelete(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        map.put("success", true);
+        map.put("data", result);
+        return new Gson().toJson(map);
+    }
+
 }

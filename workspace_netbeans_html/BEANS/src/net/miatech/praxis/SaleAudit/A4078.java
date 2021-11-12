@@ -15,6 +15,7 @@ public class A4078 {
     public String A4078PREME;
     public String A4078ANIO;
     public int A4078CORRL;
+    public int A4078SEQ;
     public String A4078CDTAX;
     public String A4078CDATO;
     public String A4078MONED;
@@ -31,6 +32,23 @@ public class A4078 {
     public double A4078TXORI;
     public double A4078TXDIF;
     public double A4078TXDAF;
+    public String A4078STAT;
+
+    public String getA4078STAT() {
+        return A4078STAT;
+    }
+
+    public void setA4078STAT(String A4078STAT) {
+        this.A4078STAT = A4078STAT;
+    }
+
+    public int getA4078SEQ() {
+        return A4078SEQ;
+    }
+
+    public void setA4078SEQ(int A4078SEQ) {
+        this.A4078SEQ = A4078SEQ;
+    }
 
     public String getA4078CCUST() {
         return A4078CCUST;

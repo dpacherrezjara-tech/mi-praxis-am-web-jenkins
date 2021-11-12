@@ -15,6 +15,7 @@ public class A4077 {
     public String A4077PREME;
     public String A4077ANIO;
     public int A4077CORRL;
+    public int A4077SEQ;
     public String A4077CFOP;
     public String A4077TYCAR;
     public String A4077CUR;
@@ -33,6 +34,14 @@ public class A4077 {
     public double A4077MONTO;
     public double A4077MONTE;
     public double A4077TOTAL;
+
+    public int getA4077SEQ() {
+        return A4077SEQ;
+    }
+
+    public void setA4077SEQ(int A4077SEQ) {
+        this.A4077SEQ = A4077SEQ;
+    }
 
     public String getA4077CCUST() {
         return A4077CCUST;
@@ -193,5 +202,4 @@ public class A4077 {
     public void setA4077TOTAL(double A4077TOTAL) {
         this.A4077TOTAL = A4077TOTAL;
     }
-
 }

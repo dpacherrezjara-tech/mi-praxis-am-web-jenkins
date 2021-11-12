@@ -13,7 +13,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
     alias: 'widget.MassiveRefunduatpFormSubiArchivo',
     controller: 'MassiveRefunduatpFormSubiArchivoController',
     requires: [
-        'Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormSubiArchivoController'        
+        'Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormSubiArchivoController'
     ],
     title: 'UPLOAD FILE',
     header: true,
@@ -37,6 +37,22 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
             },
             items: [
                 {
+                    xtype: 'combo',
+                    id: prototype.idMassiveRefunduatpFormSubiArchivo + '-CmbType',
+                    fieldLabel: 'Type',
+                    queryMode: 'local',
+                    displayField: 'name',
+                    valueField: 'code',
+                    width: 180,
+                    labelWidth: 50,
+                    emptyText: '',
+                    listConfig: {
+                        minWidth: 200
+                    },
+                    listeners: {
+                        afterrender: 'onCmbSearchAfterRender'
+                    }
+                }, {
                     xtype: 'form',
                     id: prototype.idMassiveRefunduatpFormSubiArchivo + '-form-01',
                     layout: 'vbox',

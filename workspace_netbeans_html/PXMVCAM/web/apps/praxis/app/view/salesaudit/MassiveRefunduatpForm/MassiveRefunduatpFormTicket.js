@@ -17,6 +17,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
     id: prototype.idMassiveRefunduatpFormTicket + '-win',
     title: 'TICKET DETAIL',
     header: true,
+//    bodyStyle: 'background: transparent; top:17px !important',
     height: 600,
     width: 950,
     border: false,
@@ -45,6 +46,15 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                     items: [
                         {
                             xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtfolio',
+                            fieldLabel: 'Folio',
+                            labelWidth: 30,
+                            value: 'xxxxxx',
+                            readOnly: true,
+                            width: 150
+                        },
+                        {
+                            xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txttkt',
                             fieldLabel: 'TKT',
                             labelWidth: 30,
@@ -54,58 +64,32 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtcpn',
-                            fieldLabel: 'CPN',
-                            labelWidth: 30,
-                            width: 80,
-                            value: 'xxxxxx',
-                            readOnly: true
-                        },
-                        {
-                            xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txttrnc',
                             fieldLabel: 'TRNC',
                             labelWidth: 30,
-                            width: 100,
+                            width: 180,
                             value: 'xxxxxx',
                             readOnly: true
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txttdoc',
-                            fieldLabel: 'TDOC',
-                            labelWidth: 30,
-                            width: 100,
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtType',
+                            fieldLabel: 'Type',
+                            labelWidth: 35,
+                            width: 180,
                             value: 'xxxxxx',
                             readOnly: true
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtIssdate',
-                            fieldLabel: 'Iss. date',
-                            labelWidth: 55,
-                            width: 150,
-                            value: '0000',
-                            readOnly: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtiata',
-                            fieldLabel: 'IATA',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtBase',
+                            fieldLabel: 'Base',
                             labelWidth: 35,
-                            width: 120,
-                            value: '0000',
-                            readOnly: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtcurre',
-                            fieldLabel: 'Cur.',
-                            labelWidth: 35,
-                            width: 120,
-                            value: '0000',
+                            width: 180,
+                            value: 'xxxxxx',
                             readOnly: true
                         }
+
                     ]
                 },
                 {
@@ -118,31 +102,85 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                     items: [
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtrefe',
-                            fieldLabel: 'Reference',
-                            labelWidth: 65,
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtRefe',
+                            fieldLabel: 'Refe',
+                            labelWidth: 30,
                             value: 'xxxxxx',
-                            readOnly: true,
-                            width: 400
+                            //readOnly: true,
+                            width: 348,
+                            maxLength: 80,
+                            enforceMaxLength: 80
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txtStatus',
                             fieldLabel: 'Status',
                             labelWidth: 35,
-                            width: 245,
-                            value: '0000',
+                            width: 200,
+                            value: 'xxxxxx',
                             readOnly: true
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtStatusBPO',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtBPO',
                             fieldLabel: 'BPO',
+                            labelWidth: 30,
+                            width: 200,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtAudit',
+                            fieldLabel: 'Audit',
                             labelWidth: 35,
-                            width: 245,
-                            value: '0000',
+                            width: 150,
+                            value: 'xxxxxx',
                             readOnly: true
                         }
+
+
+
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    defaults: {
+                        style: 'margin: 1px',
+                        fieldStyle: 'font-weight: bold; color: blue;'
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtIssdate',
+                            fieldLabel: 'Iss. date',
+                            labelWidth: 55,
+                            width: 150,
+                            value: 'xxxxxx',
+                            maxLength: 8,
+                            enforceMaxLength: 8
+                                    //readOnly: true
+                        }, {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtSystemDate',
+                            fieldLabel: 'Sys. Date',
+                            labelWidth: 60,
+                            width: 180,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txttidoc',
+                            fieldLabel: 'Tdoc',
+                            labelWidth: 35,
+                            width: 150,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        }
+
+
 
                     ]
                 },
@@ -157,26 +195,87 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             xtype: 'grid',
                             id: prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT',
                             title: 'FORM OF PAYMENT',
-                            collapsible: true,
-                            collapseDirection: "left",
-                            //collapsed: true,
-                            //collapsible: true,
-                            //collapseDirection: Ext.Component.DIRECTION_LEFT,
                             columnLines: true,
-                            autoScroll: true,
+                            selModel: 'cellmodel',
+
                             features: [
                                 {
                                     dock: 'bottom',
                                     ftype: 'summary'
                                 }
                             ],
+                            plugins: {
+                                cellediting: {
+                                    clicksToEdit: 1
+                                }
+                            },
+                            dockedItems: [{
+                                    xtype: 'toolbar',
+                                    items: [{
+                                            text: 'Add Fop',
+                                            id: prototype.idMassiveRefunduatpFormTicket + '-gridFopADD',
+                                            iconCls: 'prx-icon-add',
+                                            handler: 'onAddFopClick'
+                                        }, '-']
+                                }],
+                            autoScroll: true,
                             columns: {
                                 items: [
-                                    {text: 'Type', dataIndex: 'A4077CFOP', width: 70},
-                                    {text: 'Card </br> Type', dataIndex: 'A4077TYCAR', width: 60},
-                                    {text: 'Credit Card Number', dataIndex: 'A4077NTARJ', width: 150},
-                                    {text: 'Amount', dataIndex: 'A4077TOTAL', width: 90, align: 'right', editor: 'numberfield', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
-
+                                    {text: 'Type', width: 50, dataIndex: 'A4077CFOP', editor: {
+                                            completeOnEnter: false,
+                                            field: {
+                                                xtype: 'textfield',
+                                                maxLength: 2, enforceMaxLength: 2,
+                                                maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                                listeners: {
+                                                    change: 'onchange'
+                                                }
+                                            }
+                                        }},
+                                    {text: 'Card<br>Type', width: 45, dataIndex: 'A4077TYCAR', editor: {
+                                            completeOnEnter: false,
+                                            field: {
+                                                xtype: 'textfield',
+                                                maxLength: 2, enforceMaxLength: 2,
+                                                maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                                listeners: {
+                                                    change: 'onchange'
+                                                }
+                                            }
+                                        }},
+                                    {text: 'Ref Number', width: 150, dataIndex: 'A4077NTARJ', editor: {
+                                            completeOnEnter: false,
+                                            field: {
+                                                xtype: 'textfield',
+                                                maxLength: 19, enforceMaxLength: 19
+                                            }
+                                        }},
+                                    {text: 'Net', dataIndex: 'A4077TOTAL', width: 120, align: 'right', editor: 'numberfield',
+                                        renderer: 'onColumnAirlineRenderer', summaryRenderer: 'OnAirlineSummary',
+                                        summaryType: function (records) {
+                                            // do your logic and return a value.
+                                            var total = 0;
+                                            var lenn = records.length;
+                                            for (var j = 0; j < lenn; ++j) {
+                                                total = total + parseFloat(records[j].get('A4077TOTAL'));
+                                            }
+                                            return total.toFixed(2);
+                                            //console.log(records);
+                                        }
+                                    },
+                                    {
+                                        xtype: 'actioncolumn',
+                                        text: 'Delete',
+                                        width: 50,
+                                        menuDisabled: true,
+                                        sortable: false,
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-image-trash',
+                                                handler: 'onDeleteFopClick'
+                                            }
+                                        ]
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -184,17 +283,57 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     align: 'center'
                                 }
                             },
-                            height: 250,
-                            flex: 1
-                        }, {
+                            height: 200,
+                            width: 500
+                        }, /*{
+                         xtype: 'grid',
+                         id: prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT',
+                         title: 'FORM OF PAYMENT',
+                         columnLines: true,
+                         autoScroll: true,
+                         features: [
+                         {
+                         dock: 'bottom',
+                         ftype: 'summary'
+                         }
+                         ],
+                         columns: {
+                         items: [
+                         {text: 'Type', dataIndex: 'A4077CFOP', width: 70},
+                         {text: 'Card Type', dataIndex: 'A4077TYCAR', width: 45},
+                         {text: 'Credit Card<br> Number', dataIndex: 'A4077NTARJ', width: 250},
+                         {text: 'Cur', dataIndex: 'A4077CUR', width: 50},
+                         {text: 'Amount', dataIndex: 'A4077TOTAL', width: 90, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                         ],
+                         defaults: {
+                         sortable: false,
+                         menuDisabled: true,
+                         align: 'center'
+                         }
+                         },
+                         height: 200,
+                         flex: 1
+                         },*/
+                        {
                             xtype: 'grid',
                             id: prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes',
-                            title: 'TAXES COMPANY',
-                            //collapsible: true,
-                            //collapseDirection: "right",
-                            //collapsed: true,
                             columnLines: true,
-                            //autoScroll: true,
+                            title: 'TAXES AM',
+                            autoScroll: true,
+                            selModel: 'cellmodel',
+                            dockedItems: [{
+                                    xtype: 'toolbar',
+                                    items: [{
+                                            text: 'Add Taxes',
+                                            id: prototype.idMassiveRefunduatpFormTicket + '-gridTaxesADD',
+                                            iconCls: 'prx-icon-add',
+                                            handler: 'OnAddTaxRenderer'
+                                        }, '-']
+                                }],
+                            plugins: {
+                                ptype: 'cellediting',
+                                clicksToEdit: 1
+                            },
                             features: [
                                 {
                                     dock: 'bottom',
@@ -203,11 +342,52 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             ],
                             columns: {
                                 items: [
-                                    //{text: '<span style="font-size: 10px;">Orig<br/>Date</span>', dataIndex: 'A2837FEMIO', flex: 1},
-                                    {text: 'Cur', dataIndex: 'A4078MONED', flex: 1},
-                                    {text: 'Tax</br>Code', dataIndex: 'A4078CDTAX', flex: 1},
-                                    {text: 'Ato', dataIndex: 'A4078CDATO', flex: 1},
-                                    {text: 'Amount', dataIndex: 'A4078TXDIF', flex: 1, align: 'right',renderer: 'onColumnAirlineRenderer', summaryType: 'sum',summaryRenderer: 'OnAirlineSummary'}
+                                    {text: 'Tax', dataIndex: 'A4078CDTAX', align: 'center', width: 60, editor: {
+                                            completeOnEnter: false,
+                                            field: {
+                                                xtype: 'textfield',
+                                                maxLength: 3, enforceMaxLength: 3,
+                                                listeners: {
+                                                    change: 'onchange'
+                                                }
+                                            }
+                                        }},
+                                    {text: 'Ato', width: 60, dataIndex: 'A4078CDATO', editor: {
+                                            completeOnEnter: false,
+                                            field: {
+                                                xtype: 'textfield',
+                                                maxLength: 3, enforceMaxLength: 3,
+                                                maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                                listeners: {
+                                                    change: 'onchange'
+                                                }
+                                            }
+                                        }},
+                                    {text: 'Net', dataIndex: 'A4078TXDIF', width: 120, align: 'right', editor: 'numberfield',
+                                        renderer: 'onColumnAirlineRenderer', summaryRenderer: 'OnAirlineSummary', //summaryType: 'sum',
+                                        summaryType: function (records) {
+                                            // do your logic and return a value.
+                                            var total = 0;
+                                            var lenn = records.length;
+                                            for (var j = 0; j < lenn; ++j) {
+                                                total = total + parseFloat(records[j].get('A4078TXDIF'));
+                                            }
+                                            return total.toFixed(2);
+                                            //console.log(records);
+                                        }
+                                    },
+                                    {
+                                        xtype: 'actioncolumn',
+                                        width: 50,
+                                        menuDisabled: true,
+                                        sortable: false,
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-image-trash',
+                                                handler: 'onDeleteTaxClick'
+                                            }
+                                        ]
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -215,10 +395,37 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     align: 'center'
                                 }
                             },
-                            height: 250,
-                            flex: 1
+                            height: 200,
+                            width: 450
                         }
-
+                        /*{
+                         xtype: 'grid',
+                         id: prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes',
+                         title: 'TAXES',
+                         columnLines: true,
+                         autoScroll: true,
+                         features: [
+                         {
+                         dock: 'bottom',
+                         ftype: 'summary'
+                         }
+                         ],
+                         columns: {
+                         items: [
+                         {text: 'Cur', dataIndex: 'A4078MONED', width: 45},
+                         {text: 'Tax</br>Code', dataIndex: 'A4078CDTAX', width: 80},
+                         {text: 'Ato', dataIndex: 'A4078CDATO', width: 60},
+                         {text: 'Amount', dataIndex: 'A4078TXDIF', width: 90, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
+                         ],
+                         defaults: {
+                         sortable: false,
+                         menuDisabled: true,
+                         align: 'center'
+                         }
+                         },
+                         height: 200,
+                         width: 330
+                         }*/
                     ]
                 },
                 {
@@ -231,19 +438,36 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                     items: [
                         {
                             xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtFaremda',
+                            readOnly: true,
+                            value: '',
+                            width: 30
+                        }, {
+                            xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txtFare',
                             fieldLabel: 'Fare',
-                            labelWidth: 80,
-                            readOnly: true,
-                            value: '0.00'
+                            labelWidth: 33,
+                            //readOnly: true,
+                            value: '0.00',
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                blur: 'onTotaFare'
+                            }
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtTotalFareEqv',
-                            fieldLabel: 'Fare Eqv.',
-                            labelWidth: 60,
-                            readOnly: true,
-                            enableKeyEvents: true,
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtEquivamda',
+                            //readOnly: true,
+                            value: '',
+                            width: 30
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtFarEquiv',
+                            fieldLabel: 'Equivalent',
+                            labelWidth: 65,
+                            //readOnly: true,
+                            value: '0.00',
                             listeners: {
                                 specialkey: 'onSearchkey',
                                 blur: 'onTotaFare'
@@ -257,20 +481,18 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                     layout: 'hbox',
                     //hidden: true,
                     defaults: {
-                        border: false,
-                        labelSeparator: '',
-                        style: 'margin:1px !important'
-
+                        style: 'margin: 1px'
                     },
                     items: [
-
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtTotalTaxAm',
-                            fieldLabel: 'Total Tax', readOnly: true,
-                            labelWidth: 80,
-                            value: '00'
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax',
+                            fieldLabel: 'Total Tax',
+                            readOnly: true,
+                            labelWidth: 65,
+                            value: '0.00'
                         }
+
                     ]
                 },
                 {
@@ -284,39 +506,39 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                         {
                             xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txtTotal',
-                            fieldLabel: 'Total RFND',
-                            labelStyle: 'font-weight: bold;',
-                            //hideLabel: true,
-                            labelWidth: 80,
-                            readOnly: true
+                            fieldLabel: 'Total',
+                            labelWidth: 65,
+                            readOnly: true,
+                            value: '0.00'
+                        }
+
+
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    //hidden: true,
+                    defaults: {
+                        style: 'margin: 1px'
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtCommi1',
+                            fieldLabel: 'Commission',
+                            labelWidth: 65,
+                            //readOnly: true,
+                            value: '0.00'
                         },
-                        {xtype: 'tbspacer', width: 10},
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    //hidden: true,
-                    defaults: {
-                        style: 'margin: 1px'
-                    },
-                    items: [
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtCommission',
-                            fieldLabel: 'Commission:',
-                            readOnly: true,
-                            labelWidth: 80,
-                            value: '0.00'
-                        }, {
-                            xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtRate',
-                            fieldLabel: 'Rate:',
-                            readOnly: true,
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtTcambi1',
+                            fieldLabel: 'Rate',
                             labelWidth: 40,
+                            readOnly: true,
                             value: '0.00'
                         }
-
 
                     ]
                 },
@@ -330,24 +552,64 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                     items: [
                         {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtCommission2',
-                            fieldLabel: 'Tax on:',
-                            readOnly: true,
-                            labelWidth: 80,
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtToca1',
+                            fieldLabel: 'Toca.',
+                            labelWidth: 65,
+                            //readOnly: true,
                             value: '0.00'
-                        }, {
+                        },
+                        {
                             xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtRate2',
-                            fieldLabel: 'Rate:',
-                            readOnly: true,
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtTcambi2',
+                            fieldLabel: 'Rate',
                             labelWidth: 40,
+                            readOnly: true,
                             value: '0.00'
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-ComboCambio',
+                            fieldLabel: 'Status',
+                            queryMode: 'local',
+                            displayField: 'name',
+                            valueField: 'code',
+                            width: 200,
+                            labelWidth: 50,
+                            labelAlign: 'left',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            listeners: {
+                                afterrender: 'onCmbStatusAfterRender'
+                            }
                         }
 
-
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    border: false,
+                    defaults: {
+                        bodyStyle: 'background: transparent'
+                    },
+                    items: [{
+                            xtype: 'textareafield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-Argument',
+                            labelWidth: 85,
+                            width: 850,
+                            height: 80,
+                            grow: true,
+                            maxLength: 300,
+                            enforceMaxLength: true,
+                            name: 'Argument',
+                            fieldLabel: 'Argument'
+                        }
 
                     ]
                 }
+
 
             ]
         }
@@ -367,6 +629,14 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
             style: 'background-color: #E3EAF9; padding: 5px;',
             items: [
                 {
+                    icon: 'resources/img/botones/24x24/1337982029_3floppy_unmount.png',
+                    text: 'Save', id: prototype.idMassiveRefunduatpFormTicket + '-Save',
+                    height: 30,
+                    scale: 'medium',
+                    listeners: {
+                        click: 'onClickSave'
+                    }
+                }, {
                     text: 'Close',
                     id: prototype.idMassiveRefunduatpFormTicket + '-btn-close',
                     iconCls: 'prx-icon-cancel',
@@ -379,4 +649,6 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
     ]
 
 });
+
+
 
