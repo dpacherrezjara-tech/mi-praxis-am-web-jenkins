@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.SaleAudit.A4076Filter;
@@ -153,7 +154,7 @@ public class MassiveRefunduatpFormDAO {
         ResultSet rst = null;
         String valida = "Y";
         int Cant = 0;
-        int PREME = 0;
+        String PREME = "";
         session.getCNXIBMDB2().open();
         //cnx = session.getCNXIBMDB2().getIBMDB2Connection();
 
@@ -164,13 +165,13 @@ public class MassiveRefunduatpFormDAO {
                 //INSERTAR DATOS A LA TABLA
                 cstmt01.registerOutParameter(86, Types.VARCHAR);
                 cstmt01.registerOutParameter(87, Types.VARCHAR);
-                cstmt01.registerOutParameter(88, Types.INTEGER);
+                cstmt01.registerOutParameter(88, Types.VARCHAR);
 
                 cstmt01.setString(1, obj.A4076CCUST);
                 cstmt01.setString(2, obj.A4076TYPE);
                 cstmt01.setString(3, obj.A4076TICKET);
                 cstmt01.setString(4, obj.A4076REFE);
-                cstmt01.setString(5, obj.A4076IATA);
+                cstmt01.setString(5, obj.A4076AGEN);
                 cstmt01.setString(6, obj.A4076MDA);
                 cstmt01.setString(7, obj.A4076TRNCO);
                 cstmt01.setString(8, obj.A4076TDOC);
@@ -252,14 +253,14 @@ public class MassiveRefunduatpFormDAO {
 
                 cstmt01.setInt(83, Cant);
                 cstmt01.setString(84, valida);
-                cstmt01.setInt(85, PREME);
+                cstmt01.setString(85, PREME);
 
                 cstmt01.execute();
                 Cant++;
                 valida = "N";
                 obj.dbException.SQLCODE = cstmt01.getString(86);
                 obj.dbException.MESSAGE = cstmt01.getString(87);
-                PREME = cstmt01.getInt(88);
+                PREME = cstmt01.getString(88);
                 mensaje = obj.dbException.MESSAGE;
 
                 if (!obj.dbException.SQLCODE.equals("0")) {
@@ -308,7 +309,7 @@ public class MassiveRefunduatpFormDAO {
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_PREME);
             cstmt01.setString(3, filter.IN_ANIO);
-            cstmt01.setInt(4, filter.IN_CORR);
+            cstmt01.setString(4, filter.IN_CORR);
             cstmt01.execute();
             rs01 = cstmt01.getResultSet();
             ///LISTA FOP
@@ -317,8 +318,8 @@ public class MassiveRefunduatpFormDAO {
                 objlst_CardType.A4077CCUST = rs01.getString("A4077CCUST");
                 objlst_CardType.A4077PREME = rs01.getString("A4077PREME");
                 objlst_CardType.A4077ANIO = rs01.getString("A4077ANIO");
-                objlst_CardType.A4077CORRL = rs01.getInt("A4077CORRL");
-                objlst_CardType.A4077SEQ = rs01.getInt("A4077SEQ");
+                objlst_CardType.A4077CORRL = rs01.getString("A4077CORRL");
+                objlst_CardType.A4077SEQ = rs01.getString("A4077SEQ");
                 objlst_CardType.A4077CFOP = rs01.getString("A4077CFOP");
                 objlst_CardType.A4077TYCAR = rs01.getString("A4077TYCAR");
                 objlst_CardType.A4077CUR = rs01.getString("A4077CUR");
@@ -339,8 +340,8 @@ public class MassiveRefunduatpFormDAO {
                     objlst_TAXES.A4078CCUST = rs02.getString("A4078CCUST");
                     objlst_TAXES.A4078PREME = rs02.getString("A4078PREME");
                     objlst_TAXES.A4078ANIO = rs02.getString("A4078ANIO");
-                    objlst_TAXES.A4078CORRL = rs02.getInt("A4078CORRL");
-                    objlst_TAXES.A4078SEQ = rs02.getInt("A4078SEQ");
+                    objlst_TAXES.A4078CORRL = rs02.getString("A4078CORRL");
+                    objlst_TAXES.A4078SEQ = rs02.getString("A4078SEQ");
                     objlst_TAXES.A4078CDTAX = rs02.getString("A4078CDTAX");
                     objlst_TAXES.A4078CDATO = rs02.getString("A4078CDATO");
                     objlst_TAXES.A4078MONED = rs02.getString("A4078MONED");
@@ -403,7 +404,7 @@ public class MassiveRefunduatpFormDAO {
                 cs.setString("IN_OPTION", obj.IN_OPTION);
                 cs.setString("IN_PREME", obj.A4076PREME);
                 cs.setString("IN_ANIO", obj.A4076ANIO);
-                cs.setInt("IN_CORR", obj.A4076CORR);
+                cs.setString("IN_CORR", obj.A4076CORR);
                 cs.setString("IN_BASE", obj.A4076BASE);
                 cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
                 cs.setString("IN_FREGI", Functions.getFechaActual());
@@ -458,7 +459,7 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076CCUST = rs01.getString("A4076CCUST");
                 objRtn.A4076PREME = rs01.getString("A4076PREME");
                 objRtn.A4076ANIO = rs01.getString("A4076ANIO");
-                objRtn.A4076CORR = rs01.getInt("A4076CORR");
+                objRtn.A4076CORR = rs01.getString("A4076CORR");
                 objRtn.A4076BASE = rs01.getString("A4076BASE");
                 objRtn.A4076TYPE = rs01.getString("A4076TYPE");
                 objRtn.A4076CIA = rs01.getString("A4076CIA");
@@ -496,6 +497,18 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076AGENCY = rs01.getString("AGENCY");
                 objRtn.A4076ESTADO = rs01.getString("A4076ESTADO");
 
+                objRtn.A4076CPN1 = rs01.getString("A4076CPN1");
+                objRtn.A4076CPN2 = rs01.getString("A4076CPN2");
+                objRtn.A4076CPN3 = rs01.getString("A4076CPN3");
+                objRtn.A4076CPN4 = rs01.getString("A4076CPN4");
+                objRtn.A4076USO = rs01.getString("A4076USO");
+                objRtn.A4076USO1 = rs01.getString("A4076USO1");
+                objRtn.A4076USO2 = rs01.getString("A4076USO2");
+                objRtn.A4076USO3 = rs01.getString("A4076USO3");
+                objRtn.A4076USO4 = rs01.getString("A4076USO4");
+                objRtn.A4076DESC = rs01.getString("A4076DESC");
+                objRtn.A4076NETK = rs01.getDouble("A4076NETK");
+
                 lstRtn.add(objRtn);
             }
         } catch (SQLException e) {
@@ -528,16 +541,17 @@ public class MassiveRefunduatpFormDAO {
         ResultSet rst = null;
         String strSQL;
         String STR_RESULT = "";
+        DecimalFormat df = new DecimalFormat("#.00");
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP04194(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL LIBSAP26.SQP04194(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
             cs.setString("IN_PREME", filter.A4076PREME);
             cs.setString("IN_ANIO", filter.A4076ANIO);
-            cs.setInt("IN_CORRL", filter.A4076CORR);
+            cs.setString("IN_CORRL", filter.A4076CORR);
             cs.setString("IN_TICKET", filter.IN_TICKET);
             cs.setString("IN_REFE", filter.A4076REFE);
             cs.setString("IN_FVTA", filter.A4076FVTA);
@@ -547,7 +561,7 @@ public class MassiveRefunduatpFormDAO {
             cs.setString("IN_MONTT", filter.A4076MONTT);
             cs.setDouble("IN_EQVTK", filter.A4076EQVTK);
             cs.setDouble("IN_TTAX", filter.A4076TTAX);
-            cs.setDouble("IN_NETO", filter.A4076NETO);
+            cs.setDouble("IN_NETO", filter.A4076TARTK);
             cs.setDouble("IN_COMI", filter.A4076COMI);
             cs.setDouble("IN_TAXCO", filter.A4076TAXCO);
             cs.setString("IN_STATUS", filter.IN_STATUS);
@@ -592,8 +606,8 @@ public class MassiveRefunduatpFormDAO {
             cs.setString("IN_OPTION", filter.IN_OPTION);
             cs.setString("IN_PREME", filter.IN_PREME);
             cs.setString("IN_ANIO", filter.IN_ANIO);
-            cs.setInt("IN_CORRL", filter.IN_CORR);
-            cs.setInt("IN_SEQ", filter.IN_SEQ);
+            cs.setString("IN_CORRL", filter.IN_CORR);
+            cs.setString("IN_SEQ", filter.IN_SEQ);
 
             cs.execute();
 

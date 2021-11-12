@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,8 +23,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A4076Filter;
-import net.miatech.praxis.SaleAudit.A4077;
-import net.miatech.praxis.SaleAudit.A4078;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.MassiveRefunduatpFormLogic;
@@ -126,7 +125,7 @@ public class MassiveRefunduatpFormController extends BaseController {
 
             filter.IN_PREME = request.getParameter("IN_PREME").trim();
             filter.IN_ANIO = request.getParameter("IN_ANIO").trim();
-            filter.IN_CORR = Integer.parseInt(request.getParameter("IN_CORR"));
+            filter.IN_CORR = request.getParameter("IN_CORR");
 
             lst = logic.SearchUATPRFNDetail(filter);
 
@@ -193,6 +192,7 @@ public class MassiveRefunduatpFormController extends BaseController {
     public @ResponseBody
     String insertTracingFile(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
         A4076Filter filter = new A4076Filter();
+        DecimalFormat df = new DecimalFormat("#.00");
         ArrayList<A4076Filter> lstGeneral = new ArrayList<A4076Filter>(0);
         A4076Filter fileA4076;
         String result = "";
@@ -238,13 +238,13 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "REFERENCE required";
                                 break;
                             }
-                            fileA4076.A4076IATA = getCellValue(currentRow.getCell(2));
-                            if (fileA4076.A4076IATA.equals("")) {
+                            fileA4076.A4076AGEN = getCellValue(currentRow.getCell(2));
+                            if (fileA4076.A4076AGEN.equals("")) {
                                 result = "IATA required";
                                 break;
                             }
-                            if (fileA4076.A4076IATA.length() != 8) {
-                                result = "THE TICKET MUST BE 8 CHARACTERES  " + fileA4076.A4076IATA;
+                            if (fileA4076.A4076AGEN.length() != 8) {
+                                result = "THE TICKET MUST BE 8 CHARACTERES  " + fileA4076.A4076AGEN;
                                 break;
                             }
                             fileA4076.A4076MDA = getCellValue(currentRow.getCell(3));
@@ -796,6 +796,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "THE TYPE MUST BE 4 CHARACTERES  " + fileA4076.A4076BASE;
                                 break;
                             }
+                            
+                            if(!df.format(fileA4076.A4076NETO).equals(df.format(fileA4076.A4076MONTCARD1 + fileA4076.A4076MONTCARD2))){
+                                result = "There is a difference between the FP and the Net" + fileA4076.A4076NETO +"-"+(fileA4076.A4076MONTCARD1 + fileA4076.A4076MONTCARD2);
+                                break;
+                            }
+                            
+                            
+                            
+                            
                             lstGeneral.add(fileA4076);
                         }
                     }
@@ -858,6 +867,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (fileA4076.A4076BASE.length() != 4) {
                                 result = "THE TYPE MUST BE 4 CHARACTERES  " + fileA4076.A4076BASE;
+                                break;
+                            }
+                            fileA4076.A4076AGEN = getCellValue(currentRow.getCell(7));
+                            if (fileA4076.A4076AGEN.equals("")) {
+                                result = "IATA required";
+                                break;
+                            }
+                            if (fileA4076.A4076AGEN.length() != 8) {
+                                result = "THE TICKET MUST BE 8 CHARACTERES  " + fileA4076.A4076AGEN;
                                 break;
                             }
 
@@ -1023,7 +1041,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 data.IN_OPTION = "1";
                 data.A4076PREME = gsonObj.get("A4076PREME").getAsString();
                 data.A4076ANIO = gsonObj.get("A4076ANIO").getAsString();
-                data.A4076CORR = gsonObj.get("A4076CORR").getAsInt();
+                data.A4076CORR = gsonObj.get("A4076CORR").getAsString();
                 data.A4076BASE = "";
                 gridData.add(data);
 
@@ -1058,7 +1076,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 data.IN_OPTION = "2";
                 data.A4076PREME = gsonObj.get("A4076PREME").getAsString();
                 data.A4076ANIO = "";
-                data.A4076CORR = 0;
+                data.A4076CORR = "0";
                 data.A4076BASE = gsonObj.get("A4076BASE").getAsString();
                 gridData.add(data);
 
@@ -1545,6 +1563,7 @@ public class MassiveRefunduatpFormController extends BaseController {
         String taxes = "";
         String fop = "";
         A4076Filter filter = new A4076Filter();
+        DecimalFormat df = new DecimalFormat("#.00");
         // A4078 objlst_TAXES = null;
         //A4077 objlst_CardType = null;
         try {
@@ -1557,12 +1576,12 @@ public class MassiveRefunduatpFormController extends BaseController {
             JsonArray gsonFop = parser.parse(request.getParameter("beanlstlstFop")).getAsJsonArray();
             for (JsonElement obj : gsonTaxes) {
                 JsonObject gsonObj = obj.getAsJsonObject();
-                taxes = taxes + "|" + gsonObj.get("A4078CORRL").getAsInt() + "$" + gsonObj.get("A4078SEQ").getAsInt() + "$" + gsonObj.get("A4078CDTAX").getAsString() + "$" + gsonObj.get("A4078CDATO").getAsString() + "$" + gsonObj.get("A4078TXDIF").getAsDouble() + "$" + gsonObj.get("A4078STAT").getAsString();
+                taxes = taxes + "|" + gsonObj.get("A4078CORRL").getAsString() + "$" + gsonObj.get("A4078SEQ").getAsString() + "$" + gsonObj.get("A4078CDTAX").getAsString() + "$" + gsonObj.get("A4078CDATO").getAsString() + "$" + gsonObj.get("A4078TXDIF").getAsDouble() + "$" + gsonObj.get("A4078STAT").getAsString();
             }
             //LISTA DE FOP 
             for (JsonElement obj : gsonFop) {
                 JsonObject gsonObj = obj.getAsJsonObject();
-                fop += fop + "|" + gsonObj.get("A4077CORRL").getAsInt() + "$" + gsonObj.get("A4077SEQ").getAsInt() + "$" + gsonObj.get("A4077CFOP").getAsString() + "$" + gsonObj.get("A4077TYCAR").getAsString() + "$" + gsonObj.get("A4077NTARJ").getAsString() + "$" + gsonObj.get("A4077TOTAL").getAsDouble() + "$" + gsonObj.get("A4077FLAG").getAsString();
+                fop += fop + "|" + gsonObj.get("A4077CORRL").getAsString() + "$" + gsonObj.get("A4077SEQ").getAsString() + "$" + gsonObj.get("A4077CFOP").getAsString() + "$" + gsonObj.get("A4077TYCAR").getAsString() + "$" + gsonObj.get("A4077NTARJ").getAsString() + "$" + gsonObj.get("A4077TOTAL").getAsDouble()+ "$" + gsonObj.get("A4077FLAG").getAsString();
             }
 
             logic = new MassiveRefunduatpFormLogic();
