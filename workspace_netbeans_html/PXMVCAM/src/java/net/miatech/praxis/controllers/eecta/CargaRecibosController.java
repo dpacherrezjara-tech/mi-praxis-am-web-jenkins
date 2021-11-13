@@ -6,6 +6,8 @@
 package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -42,6 +44,7 @@ import net.miatech.praxis.eecta.SQP04219Filter;
 import net.miatech.praxis.eecta.SQP04253Filter;
 import net.miatech.praxis.eecta.SQP04254Filter;
 import net.miatech.praxis.eecta.SQP04255Filter;
+import net.miatech.praxis.eecta.SQP04259Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
 import net.miatech.utils.Functions;
@@ -89,7 +92,7 @@ public class CargaRecibosController extends BaseController {
             filter.VP_VPARM = request.getParameter("VP_VPARM").trim();
                         
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 18;
+            filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
             logic = new CargaRecibosLogic();
@@ -163,7 +166,8 @@ public class CargaRecibosController extends BaseController {
             filter.VP_STAT = request.getParameter("VP_STAT"); //no usado
             filter.VP_TRXOR = request.getParameter("VP_TRXOR");
             filter.VP_STREF = request.getParameter("VP_STREF");
-            
+            filter.VP_CUENT = request.getParameter("VP_CUENT");
+                        
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 18;
             start = (start != 0 ? start : 0);
@@ -683,5 +687,32 @@ public class CargaRecibosController extends BaseController {
         File f = new File(sFichero);
         f.delete();
         return true;
+    }
+    
+    @RequestMapping(value = "setReciboAsignarCliente")
+    public @ResponseBody
+    String setReciboAsignarCliente(ModelMap map, HttpServletRequest request) {
+        SQP04259Filter filter = new SQP04259Filter();
+        SQP04259Filter objRtn = new SQP04259Filter();
+        logic = new CargaRecibosLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());                      
+            JsonParser parser = new JsonParser();
+            JsonArray gson_detail = parser.parse(request.getParameter("json_detail")).getAsJsonArray();
+            filter.VP_JSON = gson_detail.toString();            
+            objRtn = logic.setSQP04259Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+            //throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
     }
 }

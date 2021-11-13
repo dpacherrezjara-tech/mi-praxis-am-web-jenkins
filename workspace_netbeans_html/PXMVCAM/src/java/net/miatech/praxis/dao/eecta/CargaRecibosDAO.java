@@ -23,6 +23,7 @@ import net.miatech.praxis.eecta.SQP04219Filter;
 import net.miatech.praxis.eecta.SQP04253Filter;
 import net.miatech.praxis.eecta.SQP04254Filter;
 import net.miatech.praxis.eecta.SQP04255Filter;
+import net.miatech.praxis.eecta.SQP04259Filter;
 import org.apache.log4j.Logger;
 
 /**
@@ -90,6 +91,7 @@ public class CargaRecibosDAO {
                 objRtn.A4102CCUST = rs01.getString("A4102CCUST");
                 objRtn.A4102IDRCB = rs01.getString("A4102IDRCB");
                 objRtn.A4102CDCLI = rs01.getString("A4102CDCLI");
+                objRtn.A4102LOTE = rs01.getString("A4102LOTE");
                 objRtn.A4102FECRC = rs01.getString("A4102FECRC");
                 objRtn.A4102QTYRC = rs01.getInt("A4102QTYRC");
                 objRtn.A4102TOTRC = rs01.getDouble("A4102TOTRC");
@@ -240,15 +242,15 @@ public class CargaRecibosDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP04196(?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP04196(?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
             cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.VP_FDATE1);
@@ -257,15 +259,16 @@ public class CargaRecibosDAO {
             cstmt01.setString(5, filter.VP_STAT);
             cstmt01.setString(6, filter.VP_TRXOR);
             cstmt01.setString(7, filter.VP_STREF);
-            cstmt01.setInt(8, filter.page.PAGNUM);
-            cstmt01.setInt(9, filter.page.PAGROW);
-            cstmt01.setInt(10, filter.page.TOTPAG);
-            cstmt01.setInt(11, filter.page.TOTROW);
+            cstmt01.setString(8, filter.VP_CUENT);
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
             cstmt01.execute();
-            filter.page.PAGNUM = cstmt01.getInt(8);
-            filter.page.PAGROW = cstmt01.getInt(9);
-            filter.page.TOTPAG = cstmt01.getInt(10);
-            filter.page.TOTROW = cstmt01.getInt(11);
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -302,7 +305,8 @@ public class CargaRecibosDAO {
                 objRtn.A4096REVIS = rs01.getString("A4096REVIS");
                 objRtn.A4096FREVI = rs01.getString("A4096FREVI");
                 objRtn.A4096HREVI = rs01.getString("A4096HREVI");
-
+                objRtn.A3953RSOCI = rs01.getString("A3953RSOCI");
+                
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -794,5 +798,33 @@ public class CargaRecibosDAO {
 
         return lstRtn;
     }
-     
+     public SQP04259Filter setSQP04259Filter(SQP04259Filter filter) throws SQLException, Exception {
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL PXUATP.SQP04259(?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(4, Types.VARCHAR);
+            cstmt.registerOutParameter(5, Types.VARCHAR);                        
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.VP_CDCLI);
+            cstmt.setString(3, filter.VP_JSON);
+            cstmt.execute();
+            filter.dbException.SQLCODE = cstmt.getString(4);
+            filter.dbException.MESSAGE = cstmt.getString(5);
+                        
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return filter;
+    } 
 }
