@@ -45,7 +45,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCab', {
                             id: prototype.id + '-gridData',
                             columnLines: true,                            
                             width: '100%',
-                            height: 480, //490
+                            height: 500,  
                             padding: '0px 5px 1px 5px',
 //                            features: [
 //                                {
@@ -64,9 +64,10 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCab', {
 //                                }
 //                            },
                             columns: {
-                                items: [                                    
-                                    {text: 'Id Carga', dataIndex: 'A4102IDRCB', width: 80, align: 'center', locked: true},
-                                    {text: 'Id Cliente', dataIndex: 'A4102CDCLI', width: 80, align: 'center', locked: true},
+                                items: [ 
+                                    {text: 'Lote', dataIndex: 'A4102LOTE', width: 80, align: 'center', locked: true},
+                                    {text: 'Id <br>Carga', dataIndex: 'A4102IDRCB', width: 75, align: 'center', locked: true},
+                                    {text: 'Id <br>Cliente', dataIndex: 'A4102CDCLI', width: 75, align: 'center', locked: true},
                                     {text: 'Nombre Cliente', dataIndex: 'A3953RSOCI', width: 260, align: 'left', locked: true},                                    
                                     {text: 'Fecha<br>Recibo', dataIndex: 'A4102FECRC', align: 'center', width: 70, locked: true},
                                     {

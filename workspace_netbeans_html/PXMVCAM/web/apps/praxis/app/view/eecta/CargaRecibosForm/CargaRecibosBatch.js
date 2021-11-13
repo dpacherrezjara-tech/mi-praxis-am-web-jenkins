@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
     ],
     title: 'Cargar recibos',
     header: true,
-    width: 870,
+    width: 950,
     height: 500,
     border: false,
     resizable: false,
@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                             xtype: 'toolbar',
                             dock: 'bottom',
                             ui: 'footer',
-                            margin: '2 0 2 10',
+                            margin: '2 0 2 7',
                             layout: {
                                 pack: 'center'
                             },
@@ -75,9 +75,9 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                 scale: 'medium'
                             },
                             items: [
-                                {
-                                    xtype: 'tbseparator'
-                                },
+//                                {
+//                                    xtype: 'tbseparator'
+//                                },
                                 {
                                     xtype: 'button',
                                     id: prototype.id02 + '-btn-save',
@@ -90,18 +90,19 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                             ]
                         },
                         {
-                            xtype: 'fieldset',
+                            xtype: 'panel',
                             layout: 'hbox',
-                            width: 380,
+                            width: 470,
                             border: true,
-                            title: 'Filtrar',                            
+                            //title: 'Filtrar',
                             items: [
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id02 + '-A4096LOTE',
-                                    emptyText: 'Nº Lote', 
+                                    emptyText: 'Nº Lote',
                                     fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
-                                    enableKeyEvents: true, padding: '2 2 2 2',
+                                    enableKeyEvents: true, 
+                                    padding: '10 2 2 2',
                                     width: 95,
                                     listeners: {
                                         keypress: 'onTxtFilterKeypress03'
@@ -114,8 +115,21 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                     fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
                                     //placeholder: 'xxx-xxxx-xxxxxx',
                                     //inputMask: '999-9999-999999',                                    
-                                    enableKeyEvents: true, padding: '2 2 2 2',
+                                    enableKeyEvents: true, padding: '10 2 2 2',
                                     width: 120,
+                                    listeners: {
+                                        keypress: 'onTxtFilterKeypress03'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id02 + '-A4096CUENT',
+                                    emptyText: 'Cuenta', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
+                                    //placeholder: 'xxx-xxxx-xxxxxx',
+                                    //inputMask: '999-9999-999999',                                    
+                                    enableKeyEvents: true, padding: '10 2 2 2',
+                                    width: 70,
                                     listeners: {
                                         keypress: 'onTxtFilterKeypress03'
                                     }
@@ -131,7 +145,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                             ["1", "MATCH"],
                                             ["0", "UNMATCH"],
                                             ["2", "PROCESADO DB RECIBOS"],
-                                            ["3", "PROCESADO DB RECIBOS"]
+                                            ["3", "RE-PROCESADO REF."]
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -145,7 +159,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                     width: 80,
                                     value: "",
                                     enableKeyEvents: true,
-                                    padding: '2 2 2 2',
+                                    padding: '10 2 2 2',
                                     listeners: {
                                         change: 'cmbfiltro_clickHandler03'
                                     }
@@ -160,19 +174,38 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                     },
                                     fieldStyle: 'text-align:center',
                                     defaults: {
-                                        scale: 'small'
+                                        scale: 'medium'
                                     },
                                     items: [
                                         {xtype: 'tbseparator'},
                                         {
                                             xtype: 'button',
-                                            id: prototype.id02 + '-btn-excel',                                            
+                                            id: prototype.id02 + '-btnSearch',
+                                            icon: 'resources/img/botones/search.png',  
+                                            tooltip: 'Buscar',
+                                            listeners: {
+                                                click: 'search_det_loadbatch'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id02 + '-btn-asignar-cliente',
+                                            icon: 'resources/img/botones/user.png',  
+                                            tooltip: 'Asignar Cliente',
+                                            listeners: {
+                                                click: 'onfrmReferenciaManualClick'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id02 + '-btn-excel',
                                             icon: 'resources/img/botones/excel.png',
-                                            hidden:true, //descarga pendiente
+                                            hidden: true, //descarga pendiente
                                             listeners: {
                                                 click: 'onExportXlsClick'
                                             }
                                         }
+                                        
                                     ]
                                 }
                             ]
@@ -183,7 +216,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                     // <editor-fold defaultstate="collapsed" desc="grid">
                     xtype: 'panel',
                     id: prototype.id02 + '-contenedor-info',
-                    width: 840,
+                    width: 940,
                     layout: 'fit',
                     items: [
                         {
