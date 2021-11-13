@@ -14,6 +14,7 @@ public class A4102 {
     public String A4102CCUST = ""; //HAR(3) CCSID 284 NOT NULL, 
     public String A4102IDRCB = ""; //HAR(9) CCSID 284 NOT NULL, 
     public String A4102CDCLI = ""; //HAR(9) CCSID 284 NOT NULL, 
+    public String A4102LOTE = "";
     public String A4102FECRC = ""; //HAR(8) CCSID 284 NOT NULL, 
     public Integer A4102QTYRC = 0; //NUMERIC(9 , 0) NOT NULL, 
     public Double A4102TOTRC = 0.00;
