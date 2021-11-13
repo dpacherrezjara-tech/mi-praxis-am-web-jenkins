@@ -353,7 +353,10 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
                 if (btn === 'yes') {
                     if (this.getValue('de-txtFECFROM').length < 8 || this.getValue('de-txtFECTO').length < 8) {
                         global.Msg({msg: 'Invalid Length Date'})
-                    } else {
+                    } else if(this.getValue('de-txtFECFROM') > this.getValue('de-txtFECTO')){
+                        global.Msg({msg: 'Invalid Date. *From Date* is greather than *To Date*'})
+                    }
+                    else {
                         var SEQ = this.getValue('de-txtSEQ');
                         var CCOMIS = this.getValue('de-txtCCOMIS');
                         var DCOMIS = this.getValue('de-txtDCOMIS');
