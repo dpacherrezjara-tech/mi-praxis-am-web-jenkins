@@ -249,7 +249,8 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
             }, listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-gridData').mask('Loading...');
-                    obj.proxy.extraParams = searchParams;
+//                    obj.proxy.extraParams = searchParams;
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel:false};
                 },
                 load: function(obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-gridData').unmask();
@@ -384,7 +385,8 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
             }, listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetData').mask('Loading...');
-                    obj.proxy.extraParams = me.paramsDetail;
+//                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel:false};
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetData').unmask();
@@ -496,7 +498,8 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
             }, listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetZone').mask('Loading...');
-                    obj.proxy.extraParams = me.paramsDetail;
+//                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel:false};
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetZone').unmask();
@@ -618,30 +621,50 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
     },
     exportExcel: function() {
         
-//        console.log('------ Excel -------');
-////        console.log(searchParams);
+        console.log('------ Excel -------');
+        console.log(me.panelActual);
 //        
-//        me.dw_excel = true;
-//        if(me.boxActual === '-panelGridData'){
-////            console.log(Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-////            me.goURLpost('search',searchParams,Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-//        }else if(me.boxActual === '-panelGridDetData'){
-//            
-//            console.log(Ext.getCmp(prototype.id + '-gridDetData').config.columns.items);
-//            me.goURLpost('searchByDay', JSON.stringify(me.beanStatment), Ext.getCmp(prototype.id + '-gridDetData').config.columns.items);
-//            
-//        }else if(me.boxActual === '-boxDet'){
-//            console.log(Ext.getCmp(prototype.id + '-gridDet').config.columns);
-//            me.goURLpost('searchDet', JSON.stringify(me.beanDet), Ext.getCmp(prototype.id + '-gridDet').config.columns.items);
-//        }else if(me.boxActual === '-boxDetCtas'){
-//            console.log(Ext.getCmp(prototype.id + '-gridDetCtas').config.columns);
-//            me.goURLpost('searchDetCtas', JSON.stringify(me.beanDetCtas), Ext.getCmp(prototype.id + '-gridDetCtas').config.columns.items);
-//        }else{
-//            me.dw_excel = false;
-//        }
-    }
+        me.dw_excel = true;
+        if(me.panelActual === '-panelGridData'){
+            global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+//            me.goURLpost('search', searchParams.beanString, Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+        }else if(me.panelActual === '-panelGridDetData'){
+            global.getFile(prototype.url + '/getXLSX_Day?beanString=' + me.paramsDetail.beanString);
+//            me.goURLpost('searchByDay', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDetData').config.columns.items);
+        }else if(me.panelActual === '-panelGridDetZone'){
+            me.goURLpost('searchByZone', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDetZone').config.columns.items);
+        }else{
+            me.dw_excel = false;
+        }
+    },
+    
+    goURLpost: function (method,parms,columns) {
+        
+        var js_columns = JSON.stringify(columns);
+        
+        var mapForm = document.createElement("form");
+        mapForm.target = "_blank";
+        mapForm.method = "POST"; // or "post" if appropriate
+        mapForm.action = prototype.url + '/' +method+'?dw_excel=true';
 
-    ,
+        var mapInput = document.createElement("input");
+        mapInput.type = "text";
+        mapInput.name = "beanString";
+        mapInput.value = parms;
+        mapForm.appendChild(mapInput);
+        
+        var mapInput = document.createElement("input");
+        mapInput.type = "text";
+        mapInput.name = "columns";
+        mapInput.value = js_columns;
+        mapForm.appendChild(mapInput);
+
+        document.body.appendChild(mapForm);
+
+
+        mapForm.submit();
+    },
+    
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
