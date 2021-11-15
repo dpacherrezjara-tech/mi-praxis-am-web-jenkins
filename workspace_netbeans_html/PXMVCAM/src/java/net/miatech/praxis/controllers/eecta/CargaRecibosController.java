@@ -6,6 +6,11 @@
 package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,6 +41,10 @@ import net.miatech.praxis.eecta.SQP04211Filter;
 import net.miatech.praxis.eecta.SQP04217Filter;
 import net.miatech.praxis.eecta.SQP04218Filter;
 import net.miatech.praxis.eecta.SQP04219Filter;
+import net.miatech.praxis.eecta.SQP04253Filter;
+import net.miatech.praxis.eecta.SQP04254Filter;
+import net.miatech.praxis.eecta.SQP04255Filter;
+import net.miatech.praxis.eecta.SQP04259Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
 import net.miatech.utils.Functions;
@@ -83,7 +92,7 @@ public class CargaRecibosController extends BaseController {
             filter.VP_VPARM = request.getParameter("VP_VPARM").trim();
                         
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
-            filter.page.PAGROW = 18;
+            filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
             logic = new CargaRecibosLogic();
@@ -157,7 +166,8 @@ public class CargaRecibosController extends BaseController {
             filter.VP_STAT = request.getParameter("VP_STAT"); //no usado
             filter.VP_TRXOR = request.getParameter("VP_TRXOR");
             filter.VP_STREF = request.getParameter("VP_STREF");
-            
+            filter.VP_CUENT = request.getParameter("VP_CUENT");
+                        
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 18;
             start = (start != 0 ? start : 0);
@@ -524,5 +534,185 @@ public class CargaRecibosController extends BaseController {
             map.put("sesion", ex.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "setFacturarComplemento", method = RequestMethod.POST)
+    public @ResponseBody            
+    String setFacturarComplemento(ModelMap map, HttpServletRequest request) {
+        SQP04253Filter objRtn = new SQP04253Filter();        
+        logic = new CargaRecibosLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            SQP04253Filter filter = new SQP04253Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+            objRtn = logic.setSQP04253Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());            
+        }
+        return new Gson().toJson(map);
+
+    }   
+    
+    @RequestMapping(value = "/get_complemento_cab"/*, method = RequestMethod.POST*/)
+    public @ResponseBody
+    String get_complemento_cab(ModelMap map, HttpServletRequest request) {
+        List<SQP04254Filter> listaData;
+        SQP04254Filter filter;
+        filter = new SQP04254Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {                        
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_RSOCI = request.getParameter("VP_RSOCI");
+            filter.VP_LOTE = request.getParameter("VP_LOTE");
+            filter.VP_NUMRC = request.getParameter("VP_NUMRC");
+            filter.VP_ESTAD = request.getParameter("VP_ESTAD");
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = -1;            
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04254Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/get_complemento_det"/*, method = RequestMethod.POST*/)
+    public @ResponseBody
+    String get_complemento_det(ModelMap map, HttpServletRequest request) {
+        List<SQP04255Filter> listaData;
+        SQP04255Filter filter;
+        filter = new SQP04255Filter();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        try {                        
+            filter.VP_FPROC = request.getParameter("VP_FPROC");
+            filter.VP_CDCLI = request.getParameter("VP_CDCLI");
+            filter.VP_NLOTE = request.getParameter("VP_NLOTE");
+            filter.VP_SQRCB = Integer.parseInt(request.getParameter("VP_SQRCB"));
+            
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = -1;            
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new CargaRecibosLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04255Filter(filter);
+            map.put("success", true);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);            
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    /*API descarga Documento facturas/xml
+     */
+    @RequestMapping(value = "getDonwloadDocumentInvoice")
+    public @ResponseBody
+    void getDonwloadDocumentInvoice(HttpServletRequest request, HttpServletResponse response) {
+        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD_DJANGO").toString();        
+        try {            
+            String vl_document_path = request.getParameter("document_path");
+            String[] arrOfStr  = vl_document_path.split("/", 2);
+            String vl_bucket = arrOfStr[0];
+            String vl_key = arrOfStr[1];
+            Unirest.setTimeouts(3600000, 3600000);           
+            HashMap bodyData = new HashMap<>();            
+            //bodyData.put("server_database", serverSession.getServerSession().getPropertySession().get("SERVER_DJANGO").toString());            
+            bodyData.put("vp_bucket", vl_bucket); //"miatech-aeromexico-factura-files"                
+            bodyData.put("vp_key", vl_key);       //"masivo/miatech-result-file-complemento/2021110510.xml"                
+            bodyData.put("vp_path_tmp", rutaTemp );                
+            
+            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+            //String urlREST = "http://127.0.0.1:5557";
+            String urlAPI  = "/api/praxis/praxis_facturacion_eecc_download/";  
+            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI )
+                    .header("content-type", "application/json") 
+                    .header("cache-control", "no-cache")
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+            
+            String error_code = responseAPI.getBody().getObject().get("RESPONSE").toString();
+            String error_msg = responseAPI.getBody().getObject().get("MESSAGE_TEXT").toString();
+            String file_path = responseAPI.getBody().getObject().get("FILEPATH").toString();
+            String file_name = responseAPI.getBody().getObject().get("FILENAME").toString();
+            
+            String fileNameDownload = file_path +"\\"+ file_name;
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file_name  + "\"");
+            InputStream is = new FileInputStream( fileNameDownload );
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();            
+// ZIP            
+//            response.setContentType("application/zip");
+//            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
+//            InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
+//            IOUtils.copy(is, response.getOutputStream());
+//            response.flushBuffer();
+            
+            delete_fichero(fileNameDownload);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public Boolean delete_fichero( String fileName ) {
+        //String path = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String sFichero = fileName; //path + "\\" + fileName + ".pdf";
+        File f = new File(sFichero);
+        f.delete();
+        return true;
+    }
+    
+    @RequestMapping(value = "setReciboAsignarCliente")
+    public @ResponseBody
+    String setReciboAsignarCliente(ModelMap map, HttpServletRequest request) {
+        SQP04259Filter filter = new SQP04259Filter();
+        SQP04259Filter objRtn = new SQP04259Filter();
+        logic = new CargaRecibosLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());                      
+            JsonParser parser = new JsonParser();
+            JsonArray gson_detail = parser.parse(request.getParameter("json_detail")).getAsJsonArray();
+            filter.VP_JSON = gson_detail.toString();            
+            objRtn = logic.setSQP04259Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+            //throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
     }
 }

@@ -28,6 +28,7 @@ public class A4106 {
     public String A4106TRXPG = ""; //HAR(2) CCSID 284 NOT NULL, 
     public Double A4106TOT = 0.00;
     public Double A4106TOTAP = 0.00;
+    public Double A4106TAJUS = 0.00;    
     public Double A4106SALD = 0.00;
     public String A4106MDA = ""; //HAR(3) CCSID 284 NOT NULL, 
     public String A4106APLIC = ""; //HAR(10) CCSID 284 NOT NULL, 

@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 
-Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
+Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosComplemento', {
     extend: 'Ext.window.Window',
-    alias: 'widget.' + prototype.id02 + '-dataEntry',
-    controller: prototype.id02 + '-cargaRecibosBatchController',
+    alias: 'widget.' + prototype.id07 + '-dataEntry',
+    controller: prototype.id07 + '-cargaRecibosComplementoController',
     requires: [
-        'Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosBatchController',
-        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridBatch'
+        'Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosComplementoController',
+        'Ext.Praxis.view.eecta.CargaRecibosForm.InfoGridCompl'
     ],
-    title: 'Cargar recibos',
+    title: 'Complemento de pago',
     header: true,
-    width: 950,
+    width: 900,
     height: 500,
     border: false,
     resizable: false,
@@ -27,7 +27,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
         {
             region: 'center',
             xtype: 'form',
-            id: prototype.id02 + '-DataEntry-center',
+            id: prototype.id07 + '-DataEntry-center',
             border: true,
             layout: {
                 type: 'vbox'
@@ -35,117 +35,102 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
             items: [
                 {
                     xtype: 'form',
-                    id: prototype.id02 + '-form01',
+                    id: prototype.id07 + '-form01',
                     layout: 'hbox',
                     width: '100%',
                     items: [
                         {
-                            xtype: 'filefield',
-                            padding: '10 2 2 2',
-                            id: prototype.id02 + '-file',
-                            name: 'excelfile',
-                            labelAlign: 'right',
-                            fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Input File</strong>',
-                            allowBlank: false,
-                            accept: '.xlsx, .xls, .txt',
-                            labelWidth: 70,
-                            width: 340,
-                            //buttonText: 'Select logo...',
-                            regex: /(.)+((\.xlsx)|(\.txt)(\w)?)$/i,
-                            regexText: 'Only XLS,XLSX,TXT formats are accepted',
-                            buttonConfig: {
-                                text: 'Browse...',
-                                width: 75,
-                                glyph: 'xf3b6@Ionicons'
-                            },
+                            xtype: 'datefield',
+                            id: prototype.id07 + '-A4107FPROC',
+                            fieldLabel: 'Fecha', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
+                            width: 175,
+                            height: 24,
+                            format: 'Ymd',
+                            minValue: new Date(200, 00, 01),
+                            value: new Date(),
+                            maskRe: /[0-9/]/,
+                            editable: true,
+                            enableKeyEvents: true,
+                            enforceMaxLength: true,
+                            maxLength: 10,
+                            padding: '2 2 2 2',                                           
                             listeners: {
-                                //change: 'onUploadChange'
+                                //change: 'onUpperValue',
+                                keypress: function (obj, e) {
+                                    if (e.getKey() === e.ENTER) {
+                                        //Ext.getCmp(prototype.id + '-fecha2').focus();
+                                    }
+                                }
                             }
                         },
                         {
                             xtype: 'toolbar',
                             dock: 'bottom',
                             ui: 'footer',
-                            margin: '2 0 2 7',
+                            margin: '2 0 2 5',
                             layout: {
                                 pack: 'center'
                             },
                             fieldStyle: 'text-align:center',
                             defaults: {
-                                scale: 'medium'
+                                scale: 'small'
                             },
                             items: [
-//                                {
-//                                    xtype: 'tbseparator'
-//                                },
+                               
                                 {
                                     xtype: 'button',
-                                    id: prototype.id02 + '-btn-save',
-                                    text: 'Procesar',
+                                    id: prototype.id07 + '-btn-save',
+                                    text: 'Facturar',
                                     icon: 'resources/img/botones/process.png',
                                     listeners: {
                                         click: 'onSaveClick'
                                     }
-                                }
+                                },
+                                {xtype: 'tbseparator'}
                             ]
                         },
                         {
-                            xtype: 'panel',
+                            xtype: 'fieldset',
                             layout: 'hbox',
-                            width: 470,
+                            //width: 380,
                             border: true,
                             //title: 'Filtrar',
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id02 + '-A4096LOTE',
-                                    emptyText: 'Nº Lote',
+                                    id: prototype.id07 + '-A4107NLOTE',
+                                    emptyText: 'Nº Envio', fieldLabel: 'Filtrar',
                                     fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
-                                    enableKeyEvents: true, 
-                                    padding: '10 2 2 2',
-                                    width: 95,
+                                    enableKeyEvents: true, padding: '2 2 2 2',
+                                    width: 200,labelWidth: 60, labelAlign: 'right',
                                     listeners: {
                                         keypress: 'onTxtFilterKeypress03'
                                     }
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id02 + '-A4096TRXOR',
+                                    id: prototype.id07 + '-A4107NUMRC',
                                     emptyText: 'Nº Recibo', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
                                     fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
                                     //placeholder: 'xxx-xxxx-xxxxxx',
                                     //inputMask: '999-9999-999999',                                    
-                                    enableKeyEvents: true, padding: '10 2 2 2',
+                                    enableKeyEvents: true, padding: '2 2 2 2',
                                     width: 120,
                                     listeners: {
                                         keypress: 'onTxtFilterKeypress03'
                                     }
                                 },
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.id02 + '-A4096CUENT',
-                                    emptyText: 'Cuenta', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
-                                    //placeholder: 'xxx-xxxx-xxxxxx',
-                                    //inputMask: '999-9999-999999',                                    
-                                    enableKeyEvents: true, padding: '10 2 2 2',
-                                    width: 70,
-                                    listeners: {
-                                        keypress: 'onTxtFilterKeypress03'
-                                    }
-                                },
-                                {
                                     xtype: 'combo',
-                                    id: prototype.id02 + '-A4096STREF',
-                                    //emptyText: 'Estado Carga', //labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
+                                    id: prototype.id07 + '-A4107ESTAD',                                    
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "TODOS"],
-                                            ["1", "MATCH"],
-                                            ["0", "UNMATCH"],
-                                            ["2", "PROCESADO DB RECIBOS"],
-                                            ["3", "RE-PROCESADO REF."]
+                                            ["0", "PENDIENTE"],
+                                            ["1", "ENVIADO"],
+                                            ["2", "PROCESADO"],
+                                            ["3", "ERROR"]
                                         ]
                                     }),
                                     queryMode: 'local',
@@ -159,7 +144,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                     width: 80,
                                     value: "",
                                     enableKeyEvents: true,
-                                    padding: '10 2 2 2',
+                                    padding: '2 2 2 2',
                                     listeners: {
                                         change: 'cmbfiltro_clickHandler03'
                                     }
@@ -174,38 +159,19 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                     },
                                     fieldStyle: 'text-align:center',
                                     defaults: {
-                                        scale: 'medium'
+                                        scale: 'small'
                                     },
                                     items: [
-                                        {xtype: 'tbseparator'},
+                                        //{xtype: 'tbseparator'},
                                         {
                                             xtype: 'button',
-                                            id: prototype.id02 + '-btnSearch',
-                                            icon: 'resources/img/botones/search.png',  
-                                            tooltip: 'Buscar',
-                                            listeners: {
-                                                click: 'search_det_loadbatch'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id02 + '-btn-asignar-cliente',
-                                            icon: 'resources/img/botones/user.png',  
-                                            tooltip: 'Asignar Cliente',
-                                            listeners: {
-                                                click: 'onfrmReferenciaManualClick'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id02 + '-btn-excel',
+                                            id: prototype.id07 + '-btn-excel',
                                             icon: 'resources/img/botones/excel.png',
                                             hidden: true, //descarga pendiente
                                             listeners: {
                                                 click: 'onExportXlsClick'
                                             }
                                         }
-                                        
                                     ]
                                 }
                             ]
@@ -213,14 +179,31 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                     ]
                 },
                 {
+                    xtype: 'form',
+                    id: prototype.id07 + '-form02',
+                    layout: 'hbox',
+                    width: '100%',
+                    items: [
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBack',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Regresar',
+                            listeners: {
+                                click: 'search_complemento'
+                            }
+                        }
+                    ]  
+                },
+                {
                     // <editor-fold defaultstate="collapsed" desc="grid">
                     xtype: 'panel',
-                    id: prototype.id02 + '-contenedor-info',
-                    width: 940,
+                    id: prototype.id07 + '-contenedor-info',
+                    width: 900,
                     layout: 'fit',
                     items: [
                         {
-                            xtype: prototype.id02 + '-infoGridBatch'
+                            xtype: prototype.id07 + '-infoGridCompl'
                         }
                     ]
                             // </editor-fold>
@@ -242,7 +225,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
             items: [
 //                {
 //                    xtype: 'button',
-//                    id: prototype.id02 + '-btn-save',
+//                    id: prototype.id07 + '-btn-save',
 //                    text: 'Procesar',
 //                    icon: 'resources/img/botones/process.png',
 //                    listeners: {
@@ -251,7 +234,7 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
 //                },
                 {
                     text: 'Close',
-                    id: prototype.id02 + '-btn-cancel',
+                    id: prototype.id07 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
                         click: 'onCancelClick'

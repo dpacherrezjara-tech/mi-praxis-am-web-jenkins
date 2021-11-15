@@ -107,6 +107,7 @@ public class AplPaymentDAO {
                 objRtn.A3957TIPPG = rs01.getString("A3957TIPPG");      
                 objRtn.A3957STSPG = rs01.getString("A3957STSPG");                                     
                 objRtn.A3957TOTAP = rs01.getDouble("A3957TOTAP");
+                objRtn.A3957TAJUS = rs01.getDouble("A3957TAJUS");
                 objRtn.A3957SALDP = rs01.getDouble("A3957SALDP");
                     
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
@@ -186,7 +187,8 @@ public class AplPaymentDAO {
                 objRtn.A3958PAX = rs01.getString("A3958PAX");
                 objRtn.A3958IDCON = rs01.getString("A3958IDCON");
                 objRtn.A3958FCONT = rs01.getString("A3958FCONT");     
-                objRtn.A3958TOTAP = rs01.getDouble("A3958TOTAP");     
+                objRtn.A3958TOTAP = rs01.getDouble("A3958TOTAP"); 
+                objRtn.A3958TAJUS = rs01.getDouble("A3958TAJUS"); 
                 objRtn.A3958SALDP = rs01.getDouble("A3958SALDP");
                 objRtn.A3958STSPG = rs01.getString("A3958STSPG");                
                 lstRtn.add(objRtn);
@@ -372,6 +374,7 @@ public class AplPaymentDAO {
                 //importe
                 objRtn.A3977TOT = rs01.getDouble("A3977TOT");
                 objRtn.A3977TOTAP = rs01.getDouble("A3977TOTAP");
+                objRtn.A3977TAJUS = rs01.getDouble("A3977TAJUS");
                 objRtn.A3977SALD = rs01.getDouble("A3977SALD");
                 objRtn.A3977MDA = rs01.getString("A3977MDA");
                 //audit

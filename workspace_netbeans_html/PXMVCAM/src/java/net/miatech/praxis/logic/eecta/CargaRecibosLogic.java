@@ -16,6 +16,10 @@ import net.miatech.praxis.eecta.SQP04211Filter;
 import net.miatech.praxis.eecta.SQP04217Filter;
 import net.miatech.praxis.eecta.SQP04218Filter;
 import net.miatech.praxis.eecta.SQP04219Filter;
+import net.miatech.praxis.eecta.SQP04253Filter;
+import net.miatech.praxis.eecta.SQP04254Filter;
+import net.miatech.praxis.eecta.SQP04255Filter;
+import net.miatech.praxis.eecta.SQP04259Filter;
 
 /**
  *
@@ -48,12 +52,28 @@ public class CargaRecibosLogic {
     public SQP04197Filter setSQP04197Filter(SQP04197Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04197Filter(filter);
     }
-     public List<SQP04218Filter> getSQP04218Filter(SQP04218Filter filter) throws SQLException, Exception {
+
+    public List<SQP04218Filter> getSQP04218Filter(SQP04218Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04218Filter(filter);
     }
-      public List<SQP04219Filter> getSQP04219Filter(SQP04219Filter filter) throws SQLException, Exception {
+
+    public List<SQP04219Filter> getSQP04219Filter(SQP04219Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04219Filter(filter);
     }
-    
 
+    public SQP04253Filter setSQP04253Filter(SQP04253Filter filter) throws SQLException, Exception {
+        return objDAO.setSQP04253Filter(filter);
+    }
+
+    public List<SQP04254Filter> getSQP04254Filter(SQP04254Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04254Filter(filter);
+    }
+
+    public List<SQP04255Filter> getSQP04255Filter(SQP04255Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04255Filter(filter);
+    }
+     public SQP04259Filter setSQP04259Filter(SQP04259Filter filter) throws SQLException, Exception {
+        return objDAO.setSQP04259Filter(filter);
+    }
+    
 }

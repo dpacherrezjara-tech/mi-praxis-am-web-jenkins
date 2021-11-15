@@ -92,6 +92,17 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
+                                     {
+                                        text: 'Monto<br>Ajuste', dataIndex: 'A4103TAJUS', width: 90, align: 'right',
+//                                        summaryType: 'sum',
+//                                        summaryRenderer: function (value, summaryData, dataIndex) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {                                            
+                                            metaData.style = 'font-weight:bold;color:green;';                                            
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
+                                    },
                                     {
                                         text: 'Saldo', dataIndex: 'A4103SALDO', width: 90, align: 'right',
 //                                        summaryType: 'sum',

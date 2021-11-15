@@ -159,16 +159,17 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosBatchController
         bean.VP_STAT = ""; //Ext.getCmp(prototype.id + '-ESTAD').getValue();
         bean.VP_TRXOR = Ext.getCmp(prototype.id02 + '-A4096TRXOR').getValue();
         bean.VP_STREF = Ext.getCmp(prototype.id02 + '-A4096STREF').getValue();
+        bean.VP_CUENT = Ext.getCmp(prototype.id02 + '-A4096CUENT').getValue();
         
         if (bean.VP_STREF !== '' ){
-            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' ){
-                global.Msg({msg: 'Ingrese Nº Lote o Recibo'});
+            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' && bean.VP_CUENT ===''  ){
+                global.Msg({msg: 'Ingrese Nº Lote, Recibo o Cuenta'});
                 return;
             }
         };
         if (bean.VP_STREF === '' ){
-            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' ){
-                global.Msg({msg: 'Ingrese Nº lote o Recibo **'});
+            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' && bean.VP_CUENT ==='' ){
+                global.Msg({msg: 'Ingrese Nº lote, Recibo o cuenta **'});
                 return;
             }
         };
@@ -185,13 +186,45 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosBatchController
                         global.Msg({
                             msg: 'No hay registros'
                         });
-                    return;
+                    //return;
                 }  
                 Ext.getCmp(prototype.id02 + '-infoGridCargaRecibosBatch').setStore(res.data);
                 Ext.getCmp(prototype.id02 + '-infoGridCargaRecibosBatch').getStore().reload();           
             }
         }); 
     },
+    onfrmReferenciaManualClick:function(){
+        this.winDataEntry();
+    },
+    winDataEntry: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+        var rec_selected = new Array();
+        var grid = Ext.getCmp(prototype.id02 + '-infoGridCargaRecibosBatch');
+        if (grid.getSelectionModel().hasSelection()) {
+            var selection = grid.getSelectionModel().getSelected();
+            for (var i = 0; i < selection.length; i++) {
+                var row = grid.getSelectionModel().getSelection()[i];
+                //console.log(row.get('A3957CDCLI'));
+                rec_selected.push(row.data);
+            }
+        }else{
+            global.Msg({
+                msg: 'Debe seleccionar al menos un registro'
+            });
+            return;
+        }
+        // console.log(rec_selected);
+        Ext.create('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosRefManual', {
+            id: prototype.id09 + '-CargaRecibosRefManual',
+            params: {
+                action: action,
+                rec: rec,
+                rec_selected: rec_selected
+            }
+        }).show();
+    },
+    
     onExportXlsClick: function(){
 //        var bean = {};         
 //        bean.VP_A4021LOTE = Ext.getCmp(prototype.id02 + '-A4021LOTE').getValue();
@@ -217,7 +250,7 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosBatchController
 //                }
 //            }
 //        });
-    },
+    },    
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },

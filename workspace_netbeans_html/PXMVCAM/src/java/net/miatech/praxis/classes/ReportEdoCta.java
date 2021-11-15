@@ -94,10 +94,10 @@ public class ReportEdoCta {
             PdfPTable table = new PdfPTable(3);
             try {
                 table.setWidths(new int[]{24, 24, 2});
-                table.setTotalWidth(560); //700
+                table.setTotalWidth(590); //560
                 table.setLockedWidth(true);
-                table.getDefaultCell().setFixedHeight(20); 
-                table.getDefaultCell().setBorder(Rectangle.BOTTOM);                
+                table.getDefaultCell().setFixedHeight(10); // 20
+                table.getDefaultCell().setBorder(Rectangle.BOTTOM);                                
                 table.addCell(header);                
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);                         
                 table.addCell(String.format("Página: %d de ", writer.getPageNumber())); 
@@ -105,7 +105,7 @@ public class ReportEdoCta {
                 cell.setBorder(Rectangle.BOTTOM);   
                 table.addCell( cell );
                 //Ubicacion COORDENA Y del contador de pagina
-                table.writeSelectedRows(0, -1, 34, 790, writer.getDirectContent()); //790
+                table.writeSelectedRows(0, -1, 15, 790, writer.getDirectContent()); //34 790
                                 
             } catch (DocumentException de) {
                 throw new ExceptionConverter(de);
@@ -174,7 +174,7 @@ public class ReportEdoCta {
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 400, PYi, 0);
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFont_1)), 560, PYi, 0);
     }
-     public void setHeader20(int PosX1, int PYi, PdfWriter writer ){
+    public void setHeader20(int PosX1, int PYi, PdfWriter writer ){
         //PYi = PYi - 25; //saldo entre bloque
         PdfContentByte canvas = writer.getDirectContent();
         PdfContentByte under = writer.getDirectContentUnder();        
@@ -228,7 +228,7 @@ public class ReportEdoCta {
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 400, PYi, 0);
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFont_1)), 560, PYi, 0);
     }
-     public void setHeader60(int PosX1, int PYi, PdfWriter writer ){
+    public void setHeader60(int PosX1, int PYi, PdfWriter writer ){
         PdfContentByte canvas = writer.getDirectContent();
         PdfContentByte under = writer.getDirectContentUnder();
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("PAGOS APLICADOS (RECIBOS)", subFontT)), PosX1, PYi, 0);     
@@ -241,6 +241,37 @@ public class ReportEdoCta {
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Cant. Trx.", subFont_1)), 400, PYi, 0);
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph("Importe", subFont_1)), 560, PYi, 0);
     }
+    
+    public String setColumnMulticell( String Cadena, Integer wcolumn  ){        
+        //Obtner todas las cadenas de palabras completas
+        String strMulticell = "";
+        String[] cadena_nombre = Cadena.split(" "); 
+        Integer ttl_arrg = cadena_nombre.length;
+        String Line01="";String Line01_="";
+        String Line02="";String Line02_="";
+        String Line03="";
+        //cada linea debe ser menor a "wcolumn" posiciones      
+        for(int i=0;i<ttl_arrg;i++){
+            Line01_ = Line01_ + cadena_nombre[i]+ " ";;
+            if(Line01_.length() < wcolumn ){
+                Line01 = Line01 + cadena_nombre[i] + " ";                      
+            }else{
+                Line02_ = Line02_ + cadena_nombre[i]+ " ";;
+                if(Line02_.length() < wcolumn  ){
+                    Line02 = Line02 + cadena_nombre[i]+ " ";;
+                }else{                
+                    Line03 = Line03 + cadena_nombre[i]+ " ";;
+                }
+            }            
+        }        
+        if (!Line01.equals("")) strMulticell = Line01;
+        if (!Line02.equals("")) strMulticell = strMulticell + "|" + Line02;
+        if (!Line03.equals("")) strMulticell = strMulticell + "|" + Line03;
+        
+        return strMulticell;
+        
+    }
+   
     
     public File createReport(List<SQP03976Filter> Data, String Rutatmp ) {
 
@@ -319,26 +350,22 @@ public class ReportEdoCta {
             document.add(img);            
             writer.setCompressionLevel(0);
             
-            //datos CLIENTE
+            //datos CLIENTE                        
             PYi = py0;
-            String A3953RSOCI_part1 = "";
-            String A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
-            int length = A3953RSOCI.length(); 
-            if(length > 29 ){
-               A3953RSOCI = A3953RSOCI.substring(0, 29);
-               A3953RSOCI_part1 = Data.get(0).tbl_client.A3953RSOCI.substring(29, length);
-            }
             px1 = px1 - 25; //Inicia datos CLIENTE
-            Phrase RSOCI = new Phrase(new Paragraph(A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-            ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);            
-            if (!A3953RSOCI_part1.trim().equals("")){
+            String VL_A3953RSOCI = Data.get(0).tbl_client.A3953RSOCI;
+            if(VL_A3953RSOCI.length() < 30){               
+                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph( VL_A3953RSOCI, catFont)), px1, PYi, 0);
                 PYi = PYi - Hlng;
-                Phrase RSOCI_1 = new Phrase(new Paragraph(A3953RSOCI_part1, catFont)); //RAZON SOCIAL CLIENTE
-                ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI_1, px1, PYi, 0);
-            }
-            //Phrase RSOCI = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953RSOCI, catFont)); //RAZON SOCIAL CLIENTE
-            //ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, RSOCI, px1, PYi, 0);
-            PYi = PYi - Hlng;
+            }else{                    
+                String StrMulticell = this.setColumnMulticell(VL_A3953RSOCI, 30);                  
+                String[] ArgMulticell = StrMulticell.split("\\|");                
+                for(int j=0;j<ArgMulticell.length;j++){                
+                    ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(new Paragraph( ArgMulticell[j], catFont)), px1, PYi, 0); 
+                    PYi = PYi - Hlng;
+                }
+            }            
+            
             Phrase DIRE1 = new Phrase(new Paragraph(Data.get(0).tbl_client.A3953DIRE1, NORMAL)); //"AV. MARINA NACIONAL Nº. 329 INT C3 "
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, DIRE1, px1, PYi, 0);
             PYi = PYi - Hlng;            

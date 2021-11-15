@@ -59,6 +59,7 @@ public class A3958 {
     public String A3958FCONT = "";
     public String A3958STSPG = "";
     public double A3958TOTAP = 0.0;
+    public double A3958TAJUS = 0.0;    
     public double A3958SALDP = 0.0; 
     //
     public Integer ANT_SALDO = 0; 
