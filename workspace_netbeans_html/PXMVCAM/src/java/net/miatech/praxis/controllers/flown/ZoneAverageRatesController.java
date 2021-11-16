@@ -139,7 +139,7 @@ public class ZoneAverageRatesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadSQP03848(filter);
+            lst = logic.loadSQP04262(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, lst);
@@ -194,7 +194,7 @@ public class ZoneAverageRatesController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.loadSQP03849(filter);
+            lst = logic.loadSQP04263(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, lst);

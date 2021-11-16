@@ -54,7 +54,7 @@ public class ZoneAverageRatesDAO {
         session = ss;
     }
 
-    public List<A1692Filter> loadSQP03848(A1692Filter filter) throws SQLException, Exception {
+    public List<A1692Filter> loadSQP04262(A1692Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
         cnx = null;
@@ -63,7 +63,7 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03848_GGGG(?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04262(?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
@@ -116,7 +116,7 @@ public class ZoneAverageRatesDAO {
         return lista;
     }
 
-    public List<A1692Filter> loadSQP03849(A1692Filter filter) throws SQLException, Exception {
+    public List<A1692Filter> loadSQP04263(A1692Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
         cnx = null;
@@ -125,7 +125,7 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03849_GGGG(?,?,?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04263(?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
             cstmt.registerOutParameter(6, Types.INTEGER);
