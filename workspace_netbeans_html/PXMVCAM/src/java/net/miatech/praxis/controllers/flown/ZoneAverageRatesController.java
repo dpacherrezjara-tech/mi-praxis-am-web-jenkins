@@ -478,7 +478,7 @@ public class ZoneAverageRatesController extends BaseController {
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
             
-            lst = logic.loadSQP03849(filter);
+            lst = logic.loadSQP04263(filter);
 
             List<A1692Filter> listaData = lst;
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
