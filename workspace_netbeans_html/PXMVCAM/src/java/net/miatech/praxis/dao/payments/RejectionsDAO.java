@@ -141,7 +141,7 @@ public class RejectionsDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00735(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00735(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -150,6 +150,8 @@ public class RejectionsDAO {
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.CODEREJ.trim());
+            cstmt01.setString(3, filter.FTE.trim());
+            cstmt01.setString(4, filter.CODEBANK.trim());
 
             cstmt01.execute();
 
@@ -222,6 +224,7 @@ public class RejectionsDAO {
             cstmt.execute();
 
         } catch (Exception e) {
+            strMsj = e.getMessage();
             e.getMessage();
         } finally {
             if (cstmt != null) {
@@ -233,6 +236,10 @@ public class RejectionsDAO {
             }
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
+        }
+        
+        if (strMsj.toLowerCase().contains("duplicada")) {
+            strMsj = "Error: Duplicated record. Reject were not registered.";
         }
 
         return strMsj;

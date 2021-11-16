@@ -237,6 +237,7 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.DataEntry', {
                                     maxLength: 3,
 //                                    maskRe: /[A-Z]/,
                                     width: 45,
+                                    readOnly: true,
                                     listeners: {
                                         change: 'onUpperValue'
                                     }

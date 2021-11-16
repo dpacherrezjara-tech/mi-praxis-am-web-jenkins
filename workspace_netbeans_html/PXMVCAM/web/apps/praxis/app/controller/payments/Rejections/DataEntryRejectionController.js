@@ -224,6 +224,7 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
         console.log("HabilitarCampoClave");
         Ext.getCmp(prototype.id + '-de-txtCODEREJ').setReadOnly(false);
         Ext.getCmp(prototype.id + '-de-txtFTE').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-de-txtCODEBANK').setReadOnly(false);
 //        Ext.getCmp(prototype.id + '-txtDESSOU').setReadOnly(false);
     },
     Habilitarlbl: function() {
