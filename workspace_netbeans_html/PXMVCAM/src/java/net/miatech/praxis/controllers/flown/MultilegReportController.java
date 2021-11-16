@@ -121,6 +121,35 @@ public class MultilegReportController extends BaseController {
         return new Gson().toJson(map);
     }
     
+    @RequestMapping(value = "/updateA1897")
+    public @ResponseBody
+    String updateA1897(ModelMap map, HttpServletRequest request) {
+        String msj;
+        Gson gson = new Gson();
+        filter = new A1786Filter();
+        try {
+            
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1786Filter.class);
+            
+
+            logic = new MultilegReportLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            msj = logic.loadPX087SQP04261(filter);//loadPX087S02A1786
+            
+            map.put("success", true);
+            map.put("mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + ex.getMessage());
+        }
+
+        return new Gson().toJson(map);
+    }
+    
     @RequestMapping(value = "/searchDetTicket")
     public @ResponseBody
     String searchDetTicket(ModelMap map, HttpServletRequest request) {

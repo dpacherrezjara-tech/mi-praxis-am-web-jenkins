@@ -38,4 +38,8 @@ public class MultilegReportLogic {
     public List<A1692Filter> loadPX087S05A1897(A1692Filter filter) throws SQLException, Exception {
         return objDAO.loadPX087S05A1897(filter);
     }
+
+    public String loadPX087SQP04261(A1786Filter filter) throws SQLException, Exception {
+        return objDAO.loadPX087SQP04261(filter);
+    }
 }
