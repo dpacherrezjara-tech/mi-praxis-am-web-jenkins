@@ -72,15 +72,24 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'FLIGHT DATE', xtype: 'treecolumn', dataIndex: 'DFLIGHT', width: 120,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return '<a href="#flown-zone-average-rates-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                text: 'DATE',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
                                                 },
-                                                listeners: {
-                                                    click: 'onDetDay'
-                                                }
-
+                                                columns: [
+                                                    {
+                                                        text: 'FLIGHT', xtype: 'treecolumn', dataIndex: 'DATE', width: 120, id: prototype.id + '-rowDate',
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return '<a href="#flown-zone-average-rates-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                        listeners: {
+                                                            click: 'onDetDay'
+                                                        }
+                                                    }
+                                                ]
                                             },
                                             {
                                                 text: 'ZONE', dataIndex: 'COD_DESC_ZONA', width: 160,
@@ -93,16 +102,24 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'ACCOUNTED <br>COUPONS', dataIndex: 'QTY_CUPONES_CONT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                }
+                                                text: 'ACCOUNTED',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'COUPONS', dataIndex: 'QTY_CUPONES_CONT', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             },
-                                            {
-                                                text: 'CURRENCY', dataIndex: 'MDACP', width: 100
-                                            },
+                                            {text: 'CURRENCY', dataIndex: 'MDACP', width: 100},
                                             {
                                                 text: 'VALUE', dataIndex: 'VALOR_CUPONES_CONT', width: 120,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
@@ -120,12 +137,22 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'PENDING <br>COUPONS', dataIndex: 'QTY_CUPONES_PEND', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                }
+                                                text: 'PENDING',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'COUPONS', dataIndex: 'QTY_CUPONES_PEND', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
@@ -161,7 +188,15 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'FLIGHT DATE', dataIndex: 'DFLIGHT', width: 100
+                                                text: 'DATE',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'FLIGHT', dataIndex: 'DATE', width: 100, id: prototype.id + '-idDate',}
+                                                ]
                                             },
                                             {
                                                 text: 'ZONE', dataIndex: 'COD_DESC_ZONA', width: 160,
@@ -171,16 +206,24 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'ACCOUNTED <br>COUPONS', dataIndex: 'QTY_CUPONES_CONT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                }
+                                                text: 'ACCOUNTED',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'COUPONS', dataIndex: 'QTY_CUPONES_CONT', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             },
-                                            {
-                                                text: 'CURRENCY', dataIndex: 'MDACP', width: 100
-                                            },
+                                            {text: 'CURRENCY', dataIndex: 'MDACP', width: 100},
                                             {
                                                 text: 'VALUE', dataIndex: 'VALOR_CUPONES_CONT', width: 120,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
@@ -198,12 +241,22 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'PENDING <br>COUPONS', dataIndex: 'QTY_CUPONES_PEND', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                }
+                                                text: 'PENDING',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'COUPONS', dataIndex: 'QTY_CUPONES_PEND', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
@@ -260,16 +313,24 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'ACCOUNTED <br>COUPONS', dataIndex: 'QTY_CUPONES_CONT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                }
+                                                text: 'ACCOUNTED',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'COUPONS', dataIndex: 'QTY_CUPONES_CONT', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             },
-                                            {
-                                                text: 'CURRENCY', dataIndex: 'MDACP', width: 100
-                                            },
+                                            {text: 'CURRENCY', dataIndex: 'MDACP', width: 100},
                                             {
                                                 text: 'VALUE', dataIndex: 'VALOR_CUPONES_CONT', width: 120,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
@@ -287,12 +348,22 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'PENDING <br>COUPONS', dataIndex: 'QTY_CUPONES_PEND', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
-                                                    return value;
-                                                }
+                                                text: 'PENDING',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'COUPONS', dataIndex: 'QTY_CUPONES_PEND', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
