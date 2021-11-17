@@ -32,8 +32,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         CmbType.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECT"},
-                {"code": "MA", "name": "LAYOUT UATP"},
-                {"code": "GP", "name": "LAYOUT LAYOUT"}
+                {"code": "MA", "name": "LAYOUT DETAIL"},
+                {"code": "GP", "name": "LAYOUT TOTAL"}
 
             ]
         }));

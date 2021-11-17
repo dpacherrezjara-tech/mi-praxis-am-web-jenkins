@@ -64,6 +64,24 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                         },
                         {
                             xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtcpn',
+                            fieldLabel: 'CPN',
+                            labelWidth: 30,
+                            width: 190,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        },
+                         {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtuse',
+                            fieldLabel: 'USE',
+                            labelWidth: 30,
+                            width: 190,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txttrnc',
                             fieldLabel: 'TRNC',
                             labelWidth: 30,
@@ -451,7 +469,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             value: '0.00',
                             listeners: {
                                 specialkey: 'onSearchkey',
-                                blur: 'onTotaFare'
+                                //blur: 'onTotaFare'
                             }
                         },
                         {
@@ -470,7 +488,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             value: '0.00',
                             listeners: {
                                 specialkey: 'onSearchkey',
-                                blur: 'onTotaFare'
+                                //blur: 'onTotaFare'
                             }
                         }
 
@@ -506,7 +524,15 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                         {
                             xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txtTotal',
-                            fieldLabel: 'Total',
+                            fieldLabel: 'Total RFND',
+                            labelWidth: 65,
+                            readOnly: true,
+                            value: '0.00'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtTotalPraxis',
+                            fieldLabel: 'Total Praxis',
                             labelWidth: 65,
                             readOnly: true,
                             value: '0.00'

@@ -116,7 +116,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "E", "name": "SALES DATE ERROR"},
                 {"code": "U", "name": "WITH USES"},
                 {"code": "T", "name": "ATO ERROR"},
-                {"code": "B", "name": "TAX ERROR"}
+                {"code": "B", "name": "TAX ERROR"},
+                {"code": "H", "name": "HIGHER AMOUNT FOR SALE"},
+                {"code": "M", "name": "MODIFIED"},
+                {"code": "R", "name": "REJECT"}
 
 
             ]
@@ -208,7 +211,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
     onExcelClick2: function (obj, e) {
         var me = this;
         //if (me.bean2.length > 0) {
-            me.exportExcel(prototype.url + '/getXLSX2?beanString=' + encodeURI(JSON.stringify(me.bean2)));
+        me.exportExcel(prototype.url + '/getXLSX2?beanString=' + encodeURI(JSON.stringify(me.bean2)));
         //}
     },
     onSearchClick: function (obj, e) {
@@ -295,6 +298,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         if (bExcel) {
             me.exportExcel(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean)));
         } else {
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-lbl-total2').setText('0');
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-grid').getStore().removeAll();
             Ext.getCmp(prototype.idMassiveRefunduatpForm + '-gridCabe').getStore().removeAll();
             Ext.getCmp(prototype.idMassiveRefunduatpForm + '-gridCabe').getStore().loadPage(1, {
                 params: bean,
@@ -382,19 +387,22 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 color = '#81BEF7';
                 value = 'ATO ERROR';
                 break;
-             case 'B':
-                 color = '#F3EFB6';
-                 value = 'TAX ERROR';
-                 break;
-                /*
-                 case 'G':
-                 color = '#81F781';
-                 value = 'PREVIOUS AUTHORISED';
-                 break;
-                 case 'H':
+            case 'B':
+                color = '#F3EFB6';
+                value = 'TAX ERROR';
+                break;
+            case 'H':
+                color = '#81F781';
+                value = 'HIGHER AMOUNT FOR SALE';
+                break;
+            case 'M':
                  color = '#F3F781';
-                 value = 'PBD DISPUTE';
-                 break;*/
+                 value = 'MODIFIED';
+                 break;    
+            case 'R':
+                 color = '#E5B2B2';
+                 value = 'REJECT';
+                 break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
@@ -487,7 +495,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 beanString: JSON.stringify(me.bean2)
 
             }, callback: function (records, operation, success) {
+                if (records.length !== 0) {
+                    Ext.getCmp(prototype.idMassiveRefunduatpForm + '-lbl-total2').setText(records.length);
+                } else {
+                    Ext.getCmp(prototype.idMassiveRefunduatpForm + '-lbl-total2').setText('0');
+                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                        }});
 
+                }
 
             }
         });
@@ -509,9 +524,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
 
             }, callback: function (records, operation, success) {
                 if (records.length !== 0) {
-                    //Ext.getCmp(prototype.id + '-lbl-totalDeta').setText(records[0].data.A3268TOTALPAG);
+                    Ext.getCmp(prototype.idMassiveRefunduatpForm + '-lbl-total2').setText(records.length);
                 } else {
-                    //Ext.getCmp(prototype.id + '-lbl-totalDeta').setText('0');
+                    Ext.getCmp(prototype.idMassiveRefunduatpForm + '-lbl-total2').setText('0');
                     global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                         }});
 

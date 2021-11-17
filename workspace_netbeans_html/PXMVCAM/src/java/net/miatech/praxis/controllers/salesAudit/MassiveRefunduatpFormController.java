@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,8 +23,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SaleAudit.A4076Filter;
-import net.miatech.praxis.SaleAudit.A4077;
-import net.miatech.praxis.SaleAudit.A4078;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.salesAudit.MassiveRefunduatpFormLogic;
@@ -126,7 +125,7 @@ public class MassiveRefunduatpFormController extends BaseController {
 
             filter.IN_PREME = request.getParameter("IN_PREME").trim();
             filter.IN_ANIO = request.getParameter("IN_ANIO").trim();
-            filter.IN_CORR = Integer.parseInt(request.getParameter("IN_CORR"));
+            filter.IN_CORR = request.getParameter("IN_CORR");
 
             lst = logic.SearchUATPRFNDetail(filter);
 
@@ -193,6 +192,7 @@ public class MassiveRefunduatpFormController extends BaseController {
     public @ResponseBody
     String insertTracingFile(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
         A4076Filter filter = new A4076Filter();
+        DecimalFormat df = new DecimalFormat("#.00");
         ArrayList<A4076Filter> lstGeneral = new ArrayList<A4076Filter>(0);
         A4076Filter fileA4076;
         String result = "";
@@ -238,13 +238,13 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "REFERENCE required";
                                 break;
                             }
-                            fileA4076.A4076IATA = getCellValue(currentRow.getCell(2));
-                            if (fileA4076.A4076IATA.equals("")) {
+                            fileA4076.A4076AGEN = getCellValue(currentRow.getCell(2));
+                            if (fileA4076.A4076AGEN.equals("")) {
                                 result = "IATA required";
                                 break;
                             }
-                            if (fileA4076.A4076IATA.length() != 8) {
-                                result = "THE TICKET MUST BE 8 CHARACTERES  " + fileA4076.A4076IATA;
+                            if (fileA4076.A4076AGEN.length() != 8) {
+                                result = "THE TICKET MUST BE 8 CHARACTERES  " + fileA4076.A4076AGEN;
                                 break;
                             }
                             fileA4076.A4076MDA = getCellValue(currentRow.getCell(3));
@@ -369,7 +369,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX1 = getCellValue(currentRow.getCell(20));
                             if (!fileA4076.A4076TAX1.equals("")) {
-                                if (fileA4076.A4076TAX1.length() != 2) {
+                                if (fileA4076.A4076TAX1.length() >3 || fileA4076.A4076TAX1.length() <2) {
                                     result = "THE TAX1 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX1;
                                     break;
                                 }
@@ -391,7 +391,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX2 = getCellValue(currentRow.getCell(23));
                             if (!fileA4076.A4076TAX2.equals("")) {
-                                if (fileA4076.A4076TAX2.length() != 2) {
+                                if (fileA4076.A4076TAX2.length() >3 || fileA4076.A4076TAX2.length()<2) {
                                     result = "THE TAX2 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX2;
                                     break;
                                 }
@@ -413,7 +413,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX3 = getCellValue(currentRow.getCell(26));
                             if (!fileA4076.A4076TAX3.equals("")) {
-                                if (fileA4076.A4076TAX3.length() != 2) {
+                                if (fileA4076.A4076TAX3.length() >3 || fileA4076.A4076TAX3.length()<2) {
                                     result = "THE TAX3 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX3;
                                     break;
                                 }
@@ -435,14 +435,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX4 = getCellValue(currentRow.getCell(29));
                             if (!fileA4076.A4076TAX4.equals("")) {
-                                if (fileA4076.A4076TAX4.length() != 2) {
+                                if (fileA4076.A4076TAX4.length()> 3 || fileA4076.A4076TAX4.length()< 2 ) {
                                     result = "THE TAX4 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX4;
                                     break;
                                 }
                             }
                             fileA4076.A4076ATO4 = getCellValue(currentRow.getCell(30));
                             if (!fileA4076.A4076ATO4.equals("")) {
-                                if (fileA4076.A4076ATO4.length() != 3) {
+                                if (fileA4076.A4076ATO4.length()> 3) {
                                     result = "THE ATO4 MUST BE 3 CHARACTERES  " + fileA4076.A4076ATO4;
                                     break;
                                 }
@@ -457,7 +457,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX5 = getCellValue(currentRow.getCell(32));
                             if (!fileA4076.A4076TAX5.equals("")) {
-                                if (fileA4076.A4076TAX5.length() != 2) {
+                                if (fileA4076.A4076TAX5.length()> 3 || fileA4076.A4076TAX5.length() < 2) {
                                     result = "THE TAX5 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX5;
                                     break;
                                 }
@@ -480,14 +480,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX6 = getCellValue(currentRow.getCell(35));
                             if (!fileA4076.A4076TAX6.equals("")) {
-                                if (fileA4076.A4076TAX6.length() != 2) {
+                                if (fileA4076.A4076TAX6.length()> 3 || fileA4076.A4076TAX6.length()< 2) {
                                     result = "THE TAX6 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX6;
                                     break;
                                 }
                             }
                             fileA4076.A4076ATO6 = getCellValue(currentRow.getCell(36));
                             if (!fileA4076.A4076ATO6.equals("")) {
-                                if (fileA4076.A4076ATO6.length() != 3) {
+                                if (fileA4076.A4076ATO6.length()>3) {
                                     result = "THE ATO6 MUST BE 3 CHARACTERES  " + fileA4076.A4076ATO6;
                                     break;
                                 }
@@ -502,14 +502,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX7 = getCellValue(currentRow.getCell(38));
                             if (!fileA4076.A4076TAX7.equals("")) {
-                                if (fileA4076.A4076TAX7.length() != 2) {
+                                if (fileA4076.A4076TAX7.length()>3 || fileA4076.A4076TAX7.length()<2) {
                                     result = "THE TAX7 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX7;
                                     break;
                                 }
                             }
                             fileA4076.A4076ATO7 = getCellValue(currentRow.getCell(39));
                             if (!fileA4076.A4076ATO7.equals("")) {
-                                if (fileA4076.A4076ATO7.length() != 3) {
+                                if (fileA4076.A4076ATO7.length()> 3) {
                                     result = "THE ATO7 MUST BE 3 CHARACTERES  " + fileA4076.A4076ATO7;
                                     break;
                                 }
@@ -524,14 +524,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX8 = getCellValue(currentRow.getCell(41));
                             if (!fileA4076.A4076TAX8.equals("")) {
-                                if (fileA4076.A4076TAX8.length() != 2) {
+                                if (fileA4076.A4076TAX8.length()>3 || fileA4076.A4076TAX8.length()<2) {
                                     result = "THE TAX8 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX8;
                                     break;
                                 }
                             }
                             fileA4076.A4076ATO8 = getCellValue(currentRow.getCell(42));
                             if (!fileA4076.A4076ATO8.equals("")) {
-                                if (fileA4076.A4076ATO8.length() != 3) {
+                                if (fileA4076.A4076ATO8.length()> 3) {
                                     result = "THE ATO8 MUST BE 3 CHARACTERES  " + fileA4076.A4076ATO8;
                                     break;
                                 }
@@ -546,7 +546,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX9 = getCellValue(currentRow.getCell(44));
                             if (!fileA4076.A4076TAX9.equals("")) {
-                                if (fileA4076.A4076TAX9.length() != 2) {
+                                if (fileA4076.A4076TAX9.length()> 3 || fileA4076.A4076TAX9.length()< 2) {
                                     result = "THE TAX9 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX9;
                                     break;
                                 }
@@ -568,7 +568,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX10 = getCellValue(currentRow.getCell(47));
                             if (!fileA4076.A4076TAX10.equals("")) {
-                                if (fileA4076.A4076TAX10.length() != 2) {
+                                if (fileA4076.A4076TAX10.length()> 3 || fileA4076.A4076TAX10.length() < 2) {
                                     result = "THE TAX10 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX10;
                                     break;
                                 }
@@ -590,7 +590,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX11 = getCellValue(currentRow.getCell(50));
                             if (!fileA4076.A4076TAX11.equals("")) {
-                                if (fileA4076.A4076TAX11.length() != 2) {
+                                if (fileA4076.A4076TAX11.length()> 3 || fileA4076.A4076TAX11.length()< 2) {
                                     result = "THE TAX11 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX11;
                                     break;
                                 }
@@ -612,7 +612,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX12 = getCellValue(currentRow.getCell(53));
                             if (!fileA4076.A4076TAX12.equals("")) {
-                                if (fileA4076.A4076TAX12.length() != 2) {
+                                if (fileA4076.A4076TAX12.length()> 3 || fileA4076.A4076TAX12.length()< 2) {
                                     result = "THE TAX12 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX12;
                                     break;
                                 }
@@ -634,7 +634,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX13 = getCellValue(currentRow.getCell(56));
                             if (!fileA4076.A4076TAX13.equals("")) {
-                                if (fileA4076.A4076TAX13.length() != 2) {
+                                if (fileA4076.A4076TAX13.length() > 3 || fileA4076.A4076TAX13.length() < 2) {
                                     result = "THE TAX13 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX13;
                                     break;
                                 }
@@ -656,7 +656,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX14 = getCellValue(currentRow.getCell(59));
                             if (!fileA4076.A4076TAX14.equals("")) {
-                                if (fileA4076.A4076TAX14.length() != 2) {
+                                if (fileA4076.A4076TAX14.length() > 3 || fileA4076.A4076TAX14.length() < 2) {
                                     result = "THE TAX14 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX14;
                                     break;
                                 }
@@ -678,7 +678,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX15 = getCellValue(currentRow.getCell(62));
                             if (!fileA4076.A4076TAX15.equals("")) {
-                                if (fileA4076.A4076TAX15.length() != 2) {
+                                if (fileA4076.A4076TAX15.length() > 3 || fileA4076.A4076TAX15.length()< 2) {
                                     result = "THE TAX15 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX15;
                                     break;
                                 }
@@ -700,7 +700,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX16 = getCellValue(currentRow.getCell(65));
                             if (!fileA4076.A4076TAX16.equals("")) {
-                                if (fileA4076.A4076TAX16.length() != 2) {
+                                if (fileA4076.A4076TAX16.length() > 3 || fileA4076.A4076TAX16.length()< 2) {
                                     result = "THE TAX16 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX16;
                                     break;
                                 }
@@ -723,7 +723,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX17 = getCellValue(currentRow.getCell(68));
                             if (!fileA4076.A4076TAX17.equals("")) {
-                                if (fileA4076.A4076TAX17.length() != 2) {
+                                if (fileA4076.A4076TAX17.length() > 3 || fileA4076.A4076TAX17.length()< 2) {
                                     result = "THE TAX17 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX17;
                                     break;
                                 }
@@ -745,7 +745,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                              */
                             fileA4076.A4076TAX18 = getCellValue(currentRow.getCell(71));
                             if (!fileA4076.A4076TAX18.equals("")) {
-                                if (fileA4076.A4076TAX18.length() != 2) {
+                                if (fileA4076.A4076TAX18.length() > 3 || fileA4076.A4076TAX18.length()< 2) {
                                     result = "THE TAX18 MUST BE 2 CHARACTERES  " + fileA4076.A4076TAX18;
                                     break;
                                 }
@@ -792,10 +792,19 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "TYPE required";
                                 break;
                             }
-                            if (fileA4076.A4076BASE.length() != 4) {
+                            if (fileA4076.A4076BASE.length() != 3) {
                                 result = "THE TYPE MUST BE 4 CHARACTERES  " + fileA4076.A4076BASE;
                                 break;
                             }
+                            
+                            if(!df.format(fileA4076.A4076NETO).equals(df.format(fileA4076.A4076MONTCARD1 + fileA4076.A4076MONTCARD2))){
+                                result = "There is a difference between the FP and the Net" + fileA4076.A4076NETO +"-"+(fileA4076.A4076MONTCARD1 + fileA4076.A4076MONTCARD2);
+                                break;
+                            }
+                            
+                            
+                            
+                            
                             lstGeneral.add(fileA4076);
                         }
                     }
@@ -856,8 +865,17 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 result = "TYPE required";
                                 break;
                             }
-                            if (fileA4076.A4076BASE.length() != 4) {
-                                result = "THE TYPE MUST BE 4 CHARACTERES  " + fileA4076.A4076BASE;
+                            if (fileA4076.A4076BASE.length() != 3) {
+                                result = "THE TYPE MUST BE 3 CHARACTERES  " + fileA4076.A4076BASE;
+                                break;
+                            }
+                            fileA4076.A4076AGEN = getCellValue(currentRow.getCell(7));
+                            if (fileA4076.A4076AGEN.equals("")) {
+                                result = "IATA required";
+                                break;
+                            }
+                            if (fileA4076.A4076AGEN.length() != 8) {
+                                result = "THE TICKET MUST BE 8 CHARACTERES  " + fileA4076.A4076AGEN;
                                 break;
                             }
 
@@ -1023,7 +1041,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 data.IN_OPTION = "1";
                 data.A4076PREME = gsonObj.get("A4076PREME").getAsString();
                 data.A4076ANIO = gsonObj.get("A4076ANIO").getAsString();
-                data.A4076CORR = gsonObj.get("A4076CORR").getAsInt();
+                data.A4076CORR = gsonObj.get("A4076CORR").getAsString();
                 data.A4076BASE = "";
                 gridData.add(data);
 
@@ -1058,7 +1076,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 data.IN_OPTION = "2";
                 data.A4076PREME = gsonObj.get("A4076PREME").getAsString();
                 data.A4076ANIO = "";
-                data.A4076CORR = 0;
+                data.A4076CORR = "0";
                 data.A4076BASE = gsonObj.get("A4076BASE").getAsString();
                 gridData.add(data);
 
@@ -1545,6 +1563,7 @@ public class MassiveRefunduatpFormController extends BaseController {
         String taxes = "";
         String fop = "";
         A4076Filter filter = new A4076Filter();
+        DecimalFormat df = new DecimalFormat("#.00");
         // A4078 objlst_TAXES = null;
         //A4077 objlst_CardType = null;
         try {
@@ -1557,12 +1576,12 @@ public class MassiveRefunduatpFormController extends BaseController {
             JsonArray gsonFop = parser.parse(request.getParameter("beanlstlstFop")).getAsJsonArray();
             for (JsonElement obj : gsonTaxes) {
                 JsonObject gsonObj = obj.getAsJsonObject();
-                taxes = taxes + "|" + gsonObj.get("A4078CORRL").getAsInt() + "$" + gsonObj.get("A4078SEQ").getAsInt() + "$" + gsonObj.get("A4078CDTAX").getAsString() + "$" + gsonObj.get("A4078CDATO").getAsString() + "$" + gsonObj.get("A4078TXDIF").getAsDouble() + "$" + gsonObj.get("A4078STAT").getAsString();
+                taxes = taxes + "|" + gsonObj.get("A4078CORRL").getAsString() + "$" + gsonObj.get("A4078SEQ").getAsString() + "$" + gsonObj.get("A4078CDTAX").getAsString() + "$" + gsonObj.get("A4078CDATO").getAsString() + "$" + gsonObj.get("A4078TXDIF").getAsDouble() + "$" + gsonObj.get("A4078STAT").getAsString();
             }
             //LISTA DE FOP 
             for (JsonElement obj : gsonFop) {
                 JsonObject gsonObj = obj.getAsJsonObject();
-                fop += fop + "|" + gsonObj.get("A4077CORRL").getAsInt() + "$" + gsonObj.get("A4077SEQ").getAsInt() + "$" + gsonObj.get("A4077CFOP").getAsString() + "$" + gsonObj.get("A4077TYCAR").getAsString() + "$" + gsonObj.get("A4077NTARJ").getAsString() + "$" + gsonObj.get("A4077TOTAL").getAsDouble() + "$" + gsonObj.get("A4077FLAG").getAsString();
+                fop += fop + "|" + gsonObj.get("A4077CORRL").getAsString() + "$" + gsonObj.get("A4077SEQ").getAsString() + "$" + gsonObj.get("A4077CFOP").getAsString() + "$" + gsonObj.get("A4077TYCAR").getAsString() + "$" + gsonObj.get("A4077NTARJ").getAsString() + "$" + gsonObj.get("A4077TOTAL").getAsDouble()+ "$" + gsonObj.get("A4077FLAG").getAsString();
             }
 
             logic = new MassiveRefunduatpFormLogic();

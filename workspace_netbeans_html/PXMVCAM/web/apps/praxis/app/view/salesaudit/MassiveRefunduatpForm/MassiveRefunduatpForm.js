@@ -458,105 +458,6 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             }
                         },
                         {
-                            xtype: 'toolbar',
-                            items: [
-
-                                {xtype: 'tbspacer', width: 1200},
-                                {
-                                    xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-Save_List',
-                                    icon: 'resources/img/icon/16x16/task-save.png',
-                                    tooltip: 'Process Change massive states',
-                                    listeners: {
-                                        click: 'img_clickHandler_save_List'
-                                    }
-                                }, {
-                                    xtype: 'button',
-                                    id: prototype.idMassiveRefunduatpForm + '-btnExcel2',
-                                    iconCls: 'prx-icon-excel',
-                                    tooltip: 'Export to Excel',
-                                    listeners: {
-                                        click: 'onExcelClick2'
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'grid', title: 'TICKET DETAIL',
-                            id: prototype.idMassiveRefunduatpForm + '-grid',
-                            columnLines: true,
-                            autoScroll: true,
-                            //width: 1260,
-                            height: 350,
-                            selModel: {
-                                selType: 'checkboxmodel',
-                                listeners: {
-                                    beforeselect: function (grid, record, index, eOpts, metaData) {
-
-                                        if (Ext.String.trim(record.get('A4076FLAG')) === 'Y' || Ext.String.trim(record.get('A4076FLAG')) === 'U') {
-                                            return true;
-                                        } else {
-                                            return false;
-                                        }
-
-                                    }
-                                }
-
-                            },
-                            columns: {
-                                items: [
-                                    {text: 'Base', dataIndex: 'A4076BASE', width: 60, renderer: 'onRendererColumnBase'},
-                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100},
-                                    {text: 'Ticket', dataIndex: 'IN_TICKET', width: 100},
-                                    {text: 'CPN', dataIndex: 'A4076CPN', width: 40},
-                                    {text: 'System<br>Date', dataIndex: 'A4076FREVI', width: 70},
-                                    {text: 'Issue<br>Date', dataIndex: 'A4076FVTA', width: 70},
-                                    {text: 'Country', dataIndex: 'A4076PAIS', width: 60},
-                                    {text: 'IATA', dataIndex: 'A4076IATA', width: 65},
-                                    {text: 'Agency', dataIndex: 'A4076AGENCY', width: 275, align: 'left', renderer: 'onRendererColumnAttr'},
-                                    {text: 'Cur.', dataIndex: 'A4076MDA', width: 40},
-                                    {text: 'Transc.', dataIndex: 'A4076TRNCO', width: 80},
-                                    {text: 'Tdoc', dataIndex: 'A4076TDOC', width: 80},
-                                    {text: 'Fare', dataIndex: 'A4076TARIFA', width: 120, renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Tax', dataIndex: 'A4076TTAX', width: 120, renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Neto', dataIndex: 'A4076NETO', width: 120, renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatus'},
-                                    {text: 'BPO', dataIndex: 'A4076STAT', width: 200, renderer: 'onRendererColumnStatBPO'},
-                                    {
-                                        text: '',
-                                        dataIndex: '',
-                                        width: 60,
-                                        renderer: 'onRendererColumnOnTime'
-                                    },
-                                    {
-                                        sortable: false,
-                                        xtype: 'actioncolumn',
-                                        width: 50,
-                                        align: 'center',
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-detail',
-                                                tooltip: 'Detail',
-                                                handler: 'onDetailClick'
-                                            }
-                                        ]
-                                    }
-
-
-                                ],
-                                defaults: {
-                                    sortable: true,
-                                    menuDisabled: true,
-                                    align: 'center'
-                                }
-                            },
-                            viewConfig: {
-                                //trackOver: false,
-                                stripeRows: true,
-                                enableTextSelection: true
-                            }
-                        },
-                        {
                             xtype: 'panel',
                             iid: prototype.idMassiveRefunduatpForm + '-pagginator-legend',
                             layout: {
@@ -609,6 +510,149 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                         },
                                         {
                                             id: prototype.idMassiveRefunduatpForm + '-lbl-total',
+                                            text: '0',
+                                            width: 50
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'toolbar',
+                            items: [
+
+                                {xtype: 'tbspacer', width: 1200},
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idMassiveRefunduatpForm + '-Save_List',
+                                    icon: 'resources/img/icon/16x16/task-save.png',
+                                    tooltip: 'Process Change massive states',
+                                    listeners: {
+                                        click: 'img_clickHandler_save_List'
+                                    }
+                                }, {
+                                    xtype: 'button',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnExcel2',
+                                    iconCls: 'prx-icon-excel',
+                                    tooltip: 'Export to Excel',
+                                    listeners: {
+                                        click: 'onExcelClick2'
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'grid', title: 'TICKET DETAIL',
+                            id: prototype.idMassiveRefunduatpForm + '-grid',
+                            columnLines: true,
+                            autoScroll: true,
+                            //width: 1260,
+                            height: 350,
+                            selModel: {
+                                selType: 'checkboxmodel',
+                                listeners: {
+                                    beforeselect: function (grid, record, index, eOpts, metaData) {
+
+                                        if (Ext.String.trim(record.get('A4076FLAG')) === 'Y' || Ext.String.trim(record.get('A4076FLAG')) === 'U') {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+
+                                    }
+                                }
+
+                            },
+                            columns: {
+                                items: [
+                                    {text: 'Base', dataIndex: 'A4076BASE', width: 60, renderer: 'onRendererColumnBase'},
+                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100},
+                                    {text: 'Ticket', dataIndex: 'A4076TICKET', width: 100},
+                                    {text: 'CPN', dataIndex: 'A4076CPN', width: 40},
+                                    {text: 'USE', dataIndex: 'A4076USO', width: 40},
+                                    {text: 'System<br>Date', dataIndex: 'A4076FREVI', width: 70},
+                                    {text: 'Issue<br>Date', dataIndex: 'A4076FVTA', width: 70},
+                                    {text: 'Country', dataIndex: 'A4076PAIS', width: 60},
+                                    {text: 'IATA', dataIndex: 'A4076IATA', width: 65},
+                                    {text: 'Agency', dataIndex: 'A4076AGENCY', width: 275, align: 'left', renderer: 'onRendererColumnAttr'},
+                                    {text: 'Cur.', dataIndex: 'A4076MDA', width: 40},
+                                    {text: 'Transc.', dataIndex: 'A4076TRNCO', width: 80},
+                                    {text: 'Tdoc', dataIndex: 'A4076TDOC', width: 80},
+                                    {text: 'Fare', dataIndex: 'A4076TARIFA', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Tax', dataIndex: 'A4076TTAX', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Neto<br>RFND', dataIndex: 'A4076NETO', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Neto<br>Praxis', dataIndex: 'A4076NETK', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatus'},
+                                    {text: 'BPO', dataIndex: 'A4076STAT', width: 200, renderer: 'onRendererColumnStatBPO'},
+                                    {
+                                        text: '',
+                                        dataIndex: '',
+                                        width: 60,
+                                        renderer: 'onRendererColumnOnTime'
+                                    },
+                                    {
+                                        sortable: false,
+                                        xtype: 'actioncolumn',
+                                        width: 50,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Detail',
+                                                handler: 'onDetailClick'
+                                            }
+                                        ]
+                                    }
+
+
+                                ],
+                                defaults: {
+                                    sortable: true,
+                                    menuDisabled: true,
+                                    align: 'center'
+                                }
+                            },
+                            viewConfig: {
+                                //trackOver: false,
+                                stripeRows: true,
+                                enableTextSelection: true
+                            }
+                        },
+                        {
+                            xtype: 'panel',
+                            iid: prototype.idMassiveRefunduatpForm + '-pagginator-legend2',
+                            layout: {
+                                type: 'hbox',
+                                pack: 'center'
+                            },
+                            border: true,
+                            bodyStyle: 'background-color: transparent;',
+                            defaults: {
+                                border: false,
+                                padding: '0px 5px 0px 5px'
+                            },
+                            padding: '1px 5px 1px 5px',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    width: prototype.widthContenedor,
+                                    height: 25,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        margin: '3px 0px 0px 5px'
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            text: 'Total found',
+                                            width: 80
+                                        },
+                                        {
+                                            id: prototype.idMassiveRefunduatpForm + '-lbl-total2',
                                             text: '0',
                                             width: 50
                                         }

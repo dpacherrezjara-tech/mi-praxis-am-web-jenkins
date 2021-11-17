@@ -101,6 +101,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'B':
                 vl_FLAG = 'TAX ERROR';
                 break;
+            case 'H':
+                vl_FLAG = 'HIGHER AMOUNT FOR SALE';
+                break;
+            case 'M':
+                vl_FLAG = 'MODIFIED';
+                break;
+            case 'R':
+                vl_FLAG = 'REJECT';
+                break;
         }
 
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtfolio').setValue(rec.get('A4076PREME') + '-' + rec.get('A4076ANIO'));
@@ -115,6 +124,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtIssdate').setValue(rec.get('A4076FVTA'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtSystemDate').setValue(rec.get('A4076FREGI'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttidoc').setValue(rec.get('A4076TDOC'));
+        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-Argument').setValue(rec.get('A4076DESC'));
+        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtuse').setValue(rec.get('A4076USO'));
+        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtcpn').setValue(rec.get('A4076CPN'));
         // montos
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFaremda').setValue(rec.get('A4076MDA'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').setValue(Ext.util.Format.number(rec.get('A4076TARTK'), '0,000.00'));
@@ -126,7 +138,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTcambi1').setValue(Ext.util.Format.number(rec.get('A4076TCMBC'), '0,000.00'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtToca1').setValue(Ext.util.Format.number(rec.get('A4076TAXCO'), '0,000.00'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTcambi2').setValue(Ext.util.Format.number(rec.get('A4076TCMBT'), '0,000.00'));
+        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalPraxis').setValue(Ext.util.Format.number(rec.get('A4076NETK'), '0,000.00'));
 
+        //me.onTotalRFND();
     },
 
     onLoadDataGrid: function () {
@@ -179,123 +193,24 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         var txttkt = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttkt').getValue();
         //
         var txtFaremda = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFaremda').getValue();
-        var txtFare = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').getValue().replace(',', '');
+        var txtFare = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').getValue().replaceAll(',', '');
         var txtEquivamda = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtEquivamda').getValue();
-        var txtFarEquiv = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFarEquiv').getValue().replace(',', '');
-        var txtTotalTax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').getValue().replace(',', '');
-        var txtTotal = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotal').getValue().replace(',', '');
+        var txtFarEquiv = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFarEquiv').getValue().replaceAll(',', '');
+        var txtTotalTax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').getValue().replaceAll(',', '');
+        var txtTotal = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotal').getValue().replaceAll(',', '');
+        var txtTotalPRAXIS = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalPraxis').getValue().replaceAll(',', '');
+        var TotalPRAXIS = (parseFloat(txtTotalPRAXIS));
         //
-        var txtCommi1 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtCommi1').getValue().replace(',', '');
-        var txtToca1 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtToca1').getValue().replace(',', '');
-        // validaciones Taxes
-        var gridTaxes = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes').getStore().getCount();
-        if (gridTaxes > 0) {
-            for (var o = 0; o < gridTaxes; o++) {
-                if (Ext.String.trim(gridTaxes.getStore().getAt(o).get('A4078CDTAX')).length === 0) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'You must enter Code Tax');
-                    return;
-                }
+        var txtCommi1 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtCommi1').getValue().replaceAll(',', '');
+        var txtToca1 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtToca1').getValue().replaceAll(',', '');
 
-                if (Ext.String.trim(gridTaxes.getStore().getAt(o).get('A4078CDTAX')).length !== 0) {
-                    if (Ext.String.trim(gridTaxes.getStore().getAt(o).get('A4078CDTAX')) === 'XF' && Ext.String.trim(gridTaxes.getStore().getAt(o).get('A4078CDATO')).length < 0) {
-                        Ext.Msg.alert('.: PRAXIS :.', 'Please, enter Airport for tax XF');
-                        return;
-                    }
-                }
-            }
+        // validacion de la razon
+        if (Ext.String.trim(txtArgument).length === 0) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Enter issue argument');
+            return;
         }
-        // validaciones FOP
-        var gridPAYMENT = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT').getStore().getCount();
-        if (gridPAYMENT > 0) {
-            for (var p = 0; p < gridPAYMENT; p++) {
-                if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A4077CFOP')) === '') {
-                    Ext.Msg.alert('.: PRAXIS :.', 'You must enter payment method');
-                    return;
-                }
-                if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A4077CFOP')) === 'CA') {
-                    if (gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') !== '') {
-                        Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is cash, you not must enter the card type');
-                        return;
-                    }
-                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A4077NTARJ')) !== '') {
-                        Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is cash, you not must enter the card number');
-                        return;
-                    }
-                    if (parseFloat(gridPAYMENT.getStore().getAt(p).get('A4077TOTAL')) === 0) {
-                        Ext.Msg.alert('.: PRAXIS :.', 'Enter Net.');
-                        return;
-                    }
-                    vl_netofop = (vl_netofop + parseFloat(gridPAYMENT.getStore().getAt(p).get('A4077TOTAL')));
-
-
-                }
-                if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A4077CFOP')) === 'CC' || Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A4077CFOP')) === 'ET') {
-
-                    if (gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === '') {
-                        Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card you must enter the card type');
-                        return;
-                    }
-                    if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A4077NTARJ')) === '') {
-                        Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
-                        return;
-                    }
-                    if (gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'BA' || gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'IK' || gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'DS' || gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'CA' || gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'VI' || gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'JC') {
-                        if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length < 16) {
-                            Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
-                            return;
-                        }
-                    }
-
-                    if (gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'AX' || gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'TP' || gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'PP') {
-                        if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length < 15) {
-                            Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
-                            return;
-                        }
-                    }
-                    if (gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') === 'DC') {
-                        if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length < 14) {
-                            Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
-                            return;
-                        }
-                    }
-
-                    if (parseFloat(gridPAYMENT.getStore().getAt(p).get('A4077TOTAL')) === 0) {
-                        Ext.Msg.alert('.: PRAXIS :.', 'Enter Net.');
-                        bvalida = false;
-                        return;
-                    }
-                    vl_netofop = (vl_netofop + parseFloat(gridPAYMENT.getStore().getAt(p).get('A4077TOTAL')));
-
-                }
-            }
-            vl_netofop = (txtTotal - vl_netofop);
-            if (vl_netofop !== 0) {
-                Ext.Msg.alert('.: PRAXIS :.', 'the total fop must be equal to the total refund');
-                return;
-            }
-        }
-
-        //taxes
-        var gridtax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes');
-        gridtax.store.data.each(function (rec) {
-            lstTaxes.push({"A4078CORRL": rec.data.A4078CORRL, "A4078SEQ": rec.data.A4078SEQ, "A4078CDTAX": rec.data.A4078CDTAX, "A4078CDATO": rec.data.A4078CDATO, "A4078TXDIF": rec.data.A4078TXDIF, "A4078STAT": rec.data.A4078STAT});
-        });
-        //fop
-        var gridfop = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT');
-        gridfop.store.data.each(function (rec) {
-            lstTaxes.push({"A4077CORRL": rec.data.A4077CORRL, "A4077SEQ": rec.data.A4077SEQ, "A4077CFOP": rec.data.A4077CFOP, "A4077TYCAR": rec.data.A4077TYCAR, "A4077NTARJ": rec.data.A4077NTARJ, "A4077TOTAL": rec.data.A4077TOTAL, "A4077FLAG": rec.data.A4077FLAG});
-        });
-
-        /*for (var i = 0; i < Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes').getStore().data.length; i++) {
-         var bean = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes').getStore().data.items[i].data;
-         lstTaxes.push(bean);
-         }
-         for (var i = 0; i < Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT').getStore().data.length; i++) {
-         var bean = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT').getStore().data.items[i].data;
-         lstFop.push(bean);
-         }*/
         //F CAPTURED BPO Y A APPROVED
-        if (ComboEstatus === '') {
+        if (Ext.String.trim(ComboEstatus).length === 0) {
             Ext.Msg.alert('.: PRAXIS :.', 'Select of Estatus ');
             return;
         }
@@ -304,24 +219,143 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             return;
         }
 
-        me.beanguardar.IN_PREME = Ext.String.trim(rec.get('A4076PREME'));
-        me.beanguardar.IN_ANIO = Ext.String.trim(rec.get('A4076ANIO'));
-        me.beanguardar.IN_CORR = Ext.String.trim(rec.get('A4076CORR'));
+        if (ComboEstatus !== 'M') {
+            // validaciones Taxes
+            var grid01 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes');
+            var gridTaxes = grid01.getStore().getCount();
+            if (gridTaxes > 0) {
+                for (var o = 0; o < gridTaxes; o++) {
+                    if (Ext.String.trim(grid01.getStore().getAt(o).get('A4078CDTAX')).length === 0) {
+                        Ext.Msg.alert('.: PRAXIS :.', 'You must enter Code Tax');
+                        return;
+                    }
+
+                    if (Ext.String.trim(grid01.getStore().getAt(o).get('A4078CDTAX')).length !== 0) {
+                        if (Ext.String.trim(grid01.getStore().getAt(o).get('A4078CDTAX')) === 'XF' && Ext.String.trim(grid01.getStore().getAt(o).get('A4078CDATO')).length < 0) {
+                            Ext.Msg.alert('.: PRAXIS :.', 'Please, enter Airport for tax XF');
+                            return;
+                        }
+                    }
+                }
+            }
+            // validaciones FOP
+            var grid02 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT');
+            var gridPAYMENT = grid02.getStore().getCount();
+            //var gridPAYMENT = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT').getStore().getCount();
+            if (gridPAYMENT > 0) {
+                for (var p = 0; p < gridPAYMENT; p++) {
+                    if (Ext.String.trim(grid02.getStore().getAt(p).get('A4077CFOP')) === '') {
+                        Ext.Msg.alert('.: PRAXIS :.', 'You must enter payment method');
+                        return;
+                    }
+                    if (Ext.String.trim(grid02.getStore().getAt(p).get('A4077CFOP')) === 'CA') {
+                        if (gridPAYMENT.getStore().getAt(p).get('A4077TYCAR') !== '') {
+                            Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is cash, you not must enter the card type');
+                            return;
+                        }
+                        if (Ext.String.trim(grid02.getStore().getAt(p).get('A4077NTARJ')) !== '') {
+                            Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is cash, you not must enter the card number');
+                            return;
+                        }
+                        if (parseFloat(grid02.getStore().getAt(p).get('A4077TOTAL')) === 0) {
+                            Ext.Msg.alert('.: PRAXIS :.', 'Enter Net.');
+                            return;
+                        }
+                        vl_netofop = (vl_netofop + parseFloat(grid02.getStore().getAt(p).get('A4077TOTAL')));
+
+
+                    }
+                    if (Ext.String.trim(grid02.getStore().getAt(p).get('A4077CFOP')) === 'CC' || Ext.String.trim(grid02.getStore().getAt(p).get('A4077CFOP')) === 'ET') {
+
+                        if (grid02.getStore().getAt(p).get('A4077TYCAR') === '') {
+                            Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card you must enter the card type');
+                            return;
+                        }
+                        if (Ext.String.trim(grid02.getStore().getAt(p).get('A4077NTARJ')) === '') {
+                            Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
+                            return;
+                        }
+                        if (grid02.getStore().getAt(p).get('A4077TYCAR') === 'BA' || grid02.getStore().getAt(p).get('A4077TYCAR') === 'IK' || grid02.getStore().getAt(p).get('A4077TYCAR') === 'DS' || grid02.getStore().getAt(p).get('A4077TYCAR') === 'CA' || grid02.getStore().getAt(p).get('A4077TYCAR') === 'VI' || grid02.getStore().getAt(p).get('A4077TYCAR') === 'JC') {
+                            if (Ext.String.trim(grid02.getStore().getAt(p).get('A3653NTARJ')).length < 16) {
+                                Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
+                                return;
+                            }
+                        }
+
+                        if (grid02.getStore().getAt(p).get('A4077TYCAR') === 'AX' || grid02.getStore().getAt(p).get('A4077TYCAR') === 'TP' || grid02.getStore().getAt(p).get('A4077TYCAR') === 'PP') {
+                            if (Ext.String.trim(gridPAYMENT.getStore().getAt(p).get('A3653NTARJ')).length < 15) {
+                                Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
+                                return;
+                            }
+                        }
+                        if (grid02.getStore().getAt(p).get('A4077TYCAR') === 'DC') {
+                            if (Ext.String.trim(grid02.getStore().getAt(p).get('A3653NTARJ')).length < 14) {
+                                Ext.Msg.alert('.: PRAXIS :.', 'If the payment type is credit card, you must enter the card number');
+                                return;
+                            }
+                        }
+
+                        if (parseFloat(grid02.getStore().getAt(p).get('A4077TOTAL')) === 0) {
+                            Ext.Msg.alert('.: PRAXIS :.', 'Enter Net.');
+                            bvalida = false;
+                            return;
+                        }
+                        vl_netofop = (vl_netofop + parseFloat(grid02.getStore().getAt(p).get('A4077TOTAL')));
+
+                    }
+                }
+                vl_netofop = (txtTotal - vl_netofop);
+                if (vl_netofop !== 0) {
+                    Ext.Msg.alert('.: PRAXIS :.', 'the total fop must be equal to the total refund');
+                    return;
+                }
+            }
+            if (TotalPRAXIS > 0) {
+                if (parseFloat(txtTotal) > TotalPRAXIS) {
+                    Ext.Msg.alert('.: PRAXIS :.', 'The total to be RFND is greater than the amount in PRAXIS');
+                    return;
+                }
+            }
+        }
+
+        //taxes
+        /* var gridtax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes');
+         gridtax.store.data.each(function (rec) {
+         lstTaxes.push({"A4078CORRL": rec.data.A4078CORRL, "A4078SEQ": rec.data.A4078SEQ, "A4078CDTAX": rec.data.A4078CDTAX, "A4078CDATO": rec.data.A4078CDATO, "A4078TXDIF": rec.data.A4078TXDIF, "A4078STAT": rec.data.A4078STAT});
+         });
+         //fop
+         var gridfop = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT');
+         gridfop.store.data.each(function (rec) {
+         lstTaxes.push({"A4077CORRL": rec.data.A4077CORRL, "A4077SEQ": rec.data.A4077SEQ, "A4077CFOP": rec.data.A4077CFOP, "A4077TYCAR": rec.data.A4077TYCAR, "A4077NTARJ": rec.data.A4077NTARJ, "A4077TOTAL": rec.data.A4077TOTAL, "A4077FLAG": rec.data.A4077FLAG});
+         });*/
+
+        for (var i = 0; i < Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes').getStore().data.length; i++) {
+            var bean = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes').getStore().data.items[i].data;
+            lstTaxes.push(bean);
+        }
+        for (var i = 0; i < Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT').getStore().data.length; i++) {
+            var bean = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT').getStore().data.items[i].data;
+            lstFop.push(bean);
+        }
+
+        me.beanguardar.A4076PREME = Ext.String.trim(rec.get('A4076PREME'));
+        me.beanguardar.A4076ANIO = Ext.String.trim(rec.get('A4076ANIO'));
+        me.beanguardar.A4076CORR = rec.get('A4076CORR');
         //
-        me.beanguardar.A4076REFE = txtRefe;
-        me.beanguardar.A4076FVTA = txtIssdate;
-        me.beanguardar.A4076TDOC = txttidoc;
-        me.beanguardar.A4076MDA = txtFaremda;
-        me.beanguardar.A4076TARTK = txtFare;
-        me.beanguardar.A4076MONTT = txtEquivamda;
+        me.beanguardar.A4076REFE = Ext.String.trim(txtRefe);
+        me.beanguardar.A4076FVTA = Ext.String.trim(txtIssdate);
+        me.beanguardar.A4076TDOC = Ext.String.trim(txttidoc);
+        me.beanguardar.A4076MDA = Ext.String.trim(txtFaremda);
+        me.beanguardar.A4076TARTK = Ext.String.trim(txtFare);
+        me.beanguardar.A4076MONTT = Ext.String.trim(txtEquivamda);
         me.beanguardar.A4076EQVTK = txtFarEquiv;
         me.beanguardar.A4076TTAX = txtTotalTax;
         me.beanguardar.A4076NETO = txtTotal;
         me.beanguardar.A4076COMI = txtCommi1;
         me.beanguardar.A4076TAXCO = txtToca1;
-        me.beanguardar.IN_STATUS = ComboEstatus;
-        me.beanguardar.A4076DESC = txtArgument;
-        me.beanguardar.IN_TICKET = txttkt;
+        me.beanguardar.IN_STATUS = Ext.String.trim(ComboEstatus);
+        me.beanguardar.A4076DESC = Ext.String.trim(txtArgument);
+        me.beanguardar.IN_TICKET = Ext.String.trim(txttkt);
 
 
         var mask = new Ext.LoadMask(Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-win'), {
@@ -342,7 +376,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 var res = Ext.JSON.decode(response.responseText);
                 //console.log(res.data);
                 var vp_icon = 0;
-                if (res.data === 'RECORD INSERTED') {
+                if (res.data === 'RECORD INSERTED' || res.data === 'With uses verify') {
                     vp_icon = 1;
                 }
                 global.Msg({msg: res.data, icon: vp_icon, fn: function () {
@@ -366,15 +400,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         beanDatos.A4077TYCAR = '';
         beanDatos.A4077NTARJ = '';
         beanDatos.A4077TOTAL = 0;
-        beanDatos.A4077CORRL = 0;
-        beanDatos.A4077SEQ = 0;
+        beanDatos.A4077CORRL = '0';
+        beanDatos.A4077SEQ = '0';
         beanDatos.A4077FLAG = 'M';
         grid01.getStore().add(beanDatos);
     },
     onDeleteFopClick: function (grid, rowIndex, colIndex) {
         var me = this;
         var store = grid.getStore();
-        var rec = store.getAt(rowIndex);
+         var recdato = store.getAt(rowIndex);
         var paramsGuardarFOP = {};
         //
         rec = me.view.params.rec;
@@ -385,12 +419,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             buttons: 3,
             fn: function (btn) {
                 if (btn === 'yes') {
-                    if (rec.data.A4077FLAG !== 'M') {
+                    if (recdato.data.A4077FLAG !== 'M') {
                         paramsGuardarFOP.IN_OPTION = "1";
                         paramsGuardarFOP.IN_PREME = Ext.String.trim(rec.get('A4076PREME'));
                         paramsGuardarFOP.IN_ANIO = Ext.String.trim(rec.get('A4076ANIO'));
-                        paramsGuardarFOP.IN_CORR = Ext.String.trim(rec.data.A4077CORRL);
-                        paramsGuardarFOP.IN_SEQ = Ext.String.trim(rec.data.A4077SEQ);
+                        paramsGuardarFOP.IN_CORR = Ext.String.trim(recdato.data.A4077CORRL);
+                        paramsGuardarFOP.IN_SEQ = Ext.String.trim(recdato.data.A4077SEQ);
 
                         var mask = new Ext.LoadMask(Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-form'), {
                             msg: 'Please Wait....'
@@ -428,30 +462,29 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         beanDatos.A4078CDTAX = '';
         beanDatos.A4078CDATO = '';
         beanDatos.A4078TXDIF = 0;
-        beanDatos.A4078CORRL = 0;
-        beanDatos.A4078SEQ = 0;
+        beanDatos.A4078CORRL = '0';
+        beanDatos.A4078SEQ = '0';
         beanDatos.A4078STAT = 'M';
         grid01.getStore().add(beanDatos);
     },
     onDeleteTaxClick: function (grid, rowIndex, colIndex) {
         var me = this;
         var store = grid.getStore();
-        var rec = store.getAt(rowIndex);
+        var recdato = store.getAt(rowIndex);
         rec = me.view.params.rec;
         var paramsGuardarTax = {};
-
         global.Msg({
             msg: 'Delete Tax?',
             icon: 3,
             buttons: 3,
             fn: function (btn) {
                 if (btn === 'yes') {
-                    if (rec.data.A4078STAT !== 'M') {
+                    if (recdato.data.A4078STAT !== 'M') {
                         paramsGuardarTax.IN_OPTION = "2";
                         paramsGuardarTax.IN_PREME = Ext.String.trim(rec.get('A4076PREME'));
                         paramsGuardarTax.IN_ANIO = Ext.String.trim(rec.get('A4076ANIO'));
-                        paramsGuardarTax.IN_CORR = Ext.String.trim(rec.data.A4077CORRL);
-                        paramsGuardarTax.IN_SEQ = Ext.String.trim(rec.data.A4077SEQ);
+                        paramsGuardarTax.IN_CORR = Ext.String.trim(recdato.data.A4078CORRL);
+                        paramsGuardarTax.IN_SEQ = Ext.String.trim(recdato.data.A4078SEQ);
 
                         var mask = new Ext.LoadMask(Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-form'), {
                             msg: 'Please Wait....'
@@ -469,6 +502,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                                 if (res.data === 'RECORD DELETED') {
                                     vp_icon = 1;
                                     grid.getStore().removeAt(rowIndex);
+                                     me.onSumaTaxGrid();
                                 }
                                 global.Msg({msg: res.data, icon: vp_icon, fn: function () {
                                     }});
@@ -493,6 +527,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             Total += parseFloat(monto);
         }
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').setValue(Ext.util.Format.number(Total, '0,000.00'));
+        console.log(Total);
         me.onTotalRFND();
     },
     onTotalRFND: function () {
@@ -508,10 +543,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
 
 
         var txtFareto = 0;
-        var txtFare = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').getValue().replace(',', '');
-        var txtFarEquiv = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFarEquiv').getValue().replace(',', '');
-        var txtTotalTax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').getValue().replace(',', '');
-        if (txtFarEquiv !== 0) {
+        var txtFare = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').getValue().replaceAll(',', '');
+        var txtFarEquiv = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFarEquiv').getValue().replaceAll(',', '');
+        var txtTotalTax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').getValue().replaceAll(',', '');
+
+        if (parseFloat(txtFarEquiv) > 0) {
             txtFareto = txtFarEquiv;
         } else {
             txtFareto = txtFare;
@@ -522,6 +558,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
     onSearchkey: function (f, e) {
         //alert(e.getKey());
         if (e.getKey() === e.ENTER || e.getKey() === e.TAB) {
+
 
             if (Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').getValue() === '') {
                 Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').setValue('0.00');
@@ -535,10 +572,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
 
 
             var txtFareto = 0;
-            var txtFare = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').getValue().replace(',', '');
-            var txtFarEquiv = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFarEquiv').getValue().replace(',', '');
-            var txtTotalTax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').getValue().replace(',', '');
-            if (txtFarEquiv !== 0) {
+            var txtFare = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFare').getValue().replaceAll(',', '');
+            var txtFarEquiv = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtFarEquiv').getValue().replaceAll(',', '');
+            var txtTotalTax = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').getValue().replaceAll(',', '');
+            if (txtFarEquiv > 0) {
                 txtFareto = txtFarEquiv;
             } else {
                 txtFareto = txtFare;
