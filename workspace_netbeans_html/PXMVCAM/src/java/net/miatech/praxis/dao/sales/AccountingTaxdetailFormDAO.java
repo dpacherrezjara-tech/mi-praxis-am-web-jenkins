@@ -13,17 +13,14 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.ReportTaxA1530Filter;
-import net.miatech.beans.SQP00796Filter;
-import net.miatech.beans.SQP00806Filter;
-
 import net.miatech.beans.spring.implement.IServerSession;
 import org.apache.log4j.Logger;
 
 /**
  *
- * @author lmendoza
+ * @author zperez
  */
-public class TaxDetailDAO {
+public class AccountingTaxdetailFormDAO {
 
     private IServerSession session;
     private CallableStatement cs = null;
@@ -31,7 +28,7 @@ public class TaxDetailDAO {
     private Connection cnx = null;
     private static final Logger logError = Logger.getLogger("errorLog");
 
-    public TaxDetailDAO() {
+    public AccountingTaxdetailFormDAO() {
     }
 
     public static void pasarGarbageCollector() {
@@ -40,7 +37,7 @@ public class TaxDetailDAO {
         System.gc();
     }
 
-    public TaxDetailDAO(IServerSession ss) {
+    public AccountingTaxdetailFormDAO(IServerSession ss) {
         session = ss;
     }
 
@@ -53,10 +50,10 @@ public class TaxDetailDAO {
         List<ReportTaxA1530Filter> lstRtn = new ArrayList<>(0);
         ReportTaxA1530Filter objRtn;
         /* int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;*/
-
+        // SQP04252 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00295(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04251(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         session.getCNXIBMDB2().open();
         try {
 
@@ -98,10 +95,10 @@ public class TaxDetailDAO {
             rs01 = cstmt01.getResultSet();
             int pos = 0;
 
-            while (rs01.next()) { 
+            while (rs01.next()) {
                 pos++;
                 objRtn = new ReportTaxA1530Filter();
-                /*objRtn.FECPROC = rs01.getString("FECPROC");
+                objRtn.FECPROC = rs01.getString("FECPROC");
                 objRtn.FECVTA = rs01.getString("FVTA");
                 objRtn.IATA = rs01.getString("IATA");
                 objRtn.NOMBRE = rs01.getString("NOMBRE");
@@ -118,29 +115,8 @@ public class TaxDetailDAO {
                 objRtn.FECCONT = rs01.getString("FECCONT");
                 objRtn.TOTAL_LOC = rs01.getDouble("MONTO_EMD");
                 objRtn.COUNTRYTAX = rs01.getString("COUNTRYTAX");
-                //objRtn.CUENT = rs01.getString("CUENT");
-                objRtn.RN = rs01.getInt("RN");*/
-
-                objRtn.FECPROC = rs01.getString("FECPROC");
-                objRtn.FECVTA = rs01.getString("FECVTA");
-                objRtn.IATA = rs01.getString("IATA");
-                objRtn.NOMBRE = rs01.getString("NOMBRE");
-                objRtn.GRUPO = rs01.getString("GRUPO");
-                objRtn.NROBOLETO = rs01.getString("NROBOLETO");
-                objRtn.ITINERARIO = rs01.getString("ITINERARIO");
-                objRtn.TRANSACCION = rs01.getString("TRANSACCION");
-                objRtn.ATO = rs01.getString("ATO");
-                objRtn.CODMONEDA = rs01.getString("CODMONEDA");
-                objRtn.IMPMDAORI = rs01.getDouble("IMPMDAORI");
-                //objRtn.CODMDAREV=rs01.getString("CODMDAREV");
-                objRtn.IMPMDAREV = rs01.getDouble("IMPMDAREV");
-                objRtn.ACOUNTID = rs01.getString("ACOUNTID");
-                objRtn.Tax = rs01.getString("TAX");
-                objRtn.FECCONT = rs01.getString("FECCONT");
-                objRtn.TOTAL_LOC = rs01.getDouble("TOTAL_LOC");
-                objRtn.TOTAL_REV = rs01.getDouble("TOTAL_REV");
-                objRtn.COUNTRYTAX = rs01.getString("COUNTRYTAX");
-                objRtn.FLAG = rs01.getString("FLAG");
+                objRtn.CUENT = rs01.getString("CUENT");
+                objRtn.RN = rs01.getInt("RN");
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
