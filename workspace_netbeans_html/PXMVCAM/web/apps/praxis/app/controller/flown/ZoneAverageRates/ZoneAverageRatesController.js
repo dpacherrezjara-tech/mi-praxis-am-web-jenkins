@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
         } else {
             this.setGridData();
         }
-        
+
 
     },
     setSearchParams: function() {
@@ -395,6 +395,111 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataAvrgByZone').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    onDetDayAverageByZones: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelAvrgByZoneDetDay';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.IN_DATEF = rowData.data.DATE;
+        this.beanDetDay.IN_DATE = rowData.data.IN_DATE;
+
+        var flag = Ext.getCmp(prototype.id + '-chkDetailAll').getValue();
+        if (flag) {
+            this.beanDetDay.FLAG_ALL = "";
+        } else {
+            this.beanDetDay.FLAG_ALL = "Y";
+        }
+
+        console.log(this.beanDetDay);
+
+        me.paramsDetail.beanString = JSON.stringify(this.beanDetDay);
+        this.setGridDataAverageByZonesByDay();
+    },
+    setGridDataAverageByZonesByDay: function() {
+
+        win.lblUser_toolTip("Estructura: A1692");
+        me.panelActual = '-panelAvrgByZoneDetDay';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueZone.GridData', {
+            proxy: {
+                url: prototype.url + '/searchAverageDetDay'
+            }, listeners: {
+                beforeload: function(obj) {
+                    //Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').mask('Loading...');
+//                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel: false};
+                },
+                load: function(obj) {
+                    //Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').unmask();
+                    var pag = Ext.getCmp(prototype.id + '-paggin3');
+                    var pagData = pag.getPageData();
+                    console.log(pagData);
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var bean = obj.data.items[0].data;                       
+                        var mes = '';
+                        switch (bean.DATE.substring(4, 6)) {
+                            case  '01':
+                                mes = ' - JAN';
+                                break;
+                            case  '02':
+                                mes = ' - FEB';
+                                break;
+                            case  '03':
+                                mes = ' - MAR';
+                                break;
+                            case  '04':
+                                mes = ' - APR';
+                                break;
+                            case  '05':
+                                mes = ' - MAY';
+                                break;
+                            case  '06':
+                                mes = ' - JUN';
+                                break;
+                            case  '07':
+                                mes = ' - JUL';
+                                break;
+                            case  '08':
+                                mes = ' - AUG';
+                                break;
+                            case  '09':
+                                mes = ' - SEP';
+                                break;
+                            case  '10':
+                                mes = ' - OCT';
+                                break;
+                            case  '11':
+                                mes = ' - NOV';
+                                break;
+                            case  '12':
+                                mes = ' - DEC';
+                                break;
+                        }
+
+                        if (bean.IN_DATE === "DFLIGHT") {
+                            Ext.getCmp(prototype.id + '-dateAvrgByZoneDetDay').setText('FLIGHT');
+                            Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').setTitle('<center style="font-size:12px;">' + 'FLIGHT DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
+                        } else {
+                            Ext.getCmp(prototype.id + '-dateAvrgByZoneDetDay').setText('ACCOUNTING');
+                            Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').setTitle('<center style="font-size:12px;">' + 'ACCOUNTING DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
+                        }
+
+                        me.setWidthPie();
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
     },
     onDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
@@ -755,6 +860,9 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                 break;
             case '-panelGridDetZone':
                 me.pagginActual = '-paggin2';
+                break;
+            case '-panelAvrgByZoneDetDay':
+                me.pagginActual = '-paggin3';
                 break;
         }
     },

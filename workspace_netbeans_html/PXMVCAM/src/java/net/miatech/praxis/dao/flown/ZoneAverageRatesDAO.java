@@ -256,17 +256,29 @@ public class ZoneAverageRatesDAO {
 
         String SQLCLL01;
         try {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04265(?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04265(?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEF);
-            cstmt.setString(3, filter.IN_DATET);
-            cstmt.setString(4, filter.IN_CCIA);
-            cstmt.setString(5, filter.IN_DATE);
-            cstmt.setString(6, filter.FLAG_ALL);
+            cstmt.setString(3, filter.IN_CCIA);
+            cstmt.setString(4, filter.IN_DATE);
+            cstmt.setString(5, filter.FLAG_ALL);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
             cstmt.execute();
+            
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
 
             rs01 = cstmt.getResultSet();
             while (rs01.next()) {
@@ -290,6 +302,11 @@ public class ZoneAverageRatesDAO {
                 row.AVRG_PLA = rs01.getDouble("AVRG_PLA");
                 row.AVRG_SUD = rs01.getDouble("AVRG_SUD");
                 row.AVRG_USA = rs01.getDouble("AVRG_USA");
+                
+                row.page.PAGNUM = filter.page.PAGNUM;
+                row.page.PAGROW = filter.page.PAGROW;
+                row.page.TOTPAG = filter.page.TOTPAG;
+                row.page.TOTROW = filter.page.TOTROW;
 
                 lista.add(row);
             }

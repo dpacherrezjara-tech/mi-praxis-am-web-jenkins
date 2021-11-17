@@ -529,7 +529,7 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                             id: prototype.id + '-panelAvrgByZoneDetDay',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 884,
+                            width: 814,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
