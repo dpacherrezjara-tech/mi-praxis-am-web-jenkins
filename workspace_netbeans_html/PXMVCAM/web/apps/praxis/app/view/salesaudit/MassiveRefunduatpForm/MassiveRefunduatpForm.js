@@ -580,7 +580,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     {text: 'Tdoc', dataIndex: 'A4076TDOC', width: 80},
                                     {text: 'Fare', dataIndex: 'A4076TARIFA', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Tax', dataIndex: 'A4076TTAX', width: 120, renderer: 'onColumnAmountRenderer'},
-                                    {text: 'Neto', dataIndex: 'A4076NETO', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Neto<br>RFND', dataIndex: 'A4076NETO', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Neto<br>Praxis', dataIndex: 'A4076NETK', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatus'},
                                     {text: 'BPO', dataIndex: 'A4076STAT', width: 200, renderer: 'onRendererColumnStatBPO'},
