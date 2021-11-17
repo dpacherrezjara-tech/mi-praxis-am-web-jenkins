@@ -408,7 +408,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
     onDeleteFopClick: function (grid, rowIndex, colIndex) {
         var me = this;
         var store = grid.getStore();
-        var rec = store.getAt(rowIndex);
+         var recdato = store.getAt(rowIndex);
         var paramsGuardarFOP = {};
         //
         rec = me.view.params.rec;
@@ -419,12 +419,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             buttons: 3,
             fn: function (btn) {
                 if (btn === 'yes') {
-                    if (rec.data.A4077FLAG !== 'M') {
+                    if (recdato.data.A4077FLAG !== 'M') {
                         paramsGuardarFOP.IN_OPTION = "1";
                         paramsGuardarFOP.IN_PREME = Ext.String.trim(rec.get('A4076PREME'));
                         paramsGuardarFOP.IN_ANIO = Ext.String.trim(rec.get('A4076ANIO'));
-                        paramsGuardarFOP.IN_CORR = Ext.String.trim(rec.data.A4077CORRL);
-                        paramsGuardarFOP.IN_SEQ = Ext.String.trim(rec.data.A4077SEQ);
+                        paramsGuardarFOP.IN_CORR = Ext.String.trim(recdato.data.A4077CORRL);
+                        paramsGuardarFOP.IN_SEQ = Ext.String.trim(recdato.data.A4077SEQ);
 
                         var mask = new Ext.LoadMask(Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-form'), {
                             msg: 'Please Wait....'
@@ -470,22 +470,21 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
     onDeleteTaxClick: function (grid, rowIndex, colIndex) {
         var me = this;
         var store = grid.getStore();
-        var rec = store.getAt(rowIndex);
+        var recdato = store.getAt(rowIndex);
         rec = me.view.params.rec;
         var paramsGuardarTax = {};
-
         global.Msg({
             msg: 'Delete Tax?',
             icon: 3,
             buttons: 3,
             fn: function (btn) {
                 if (btn === 'yes') {
-                    if (rec.data.A4078STAT !== 'M') {
+                    if (recdato.data.A4078STAT !== 'M') {
                         paramsGuardarTax.IN_OPTION = "2";
                         paramsGuardarTax.IN_PREME = Ext.String.trim(rec.get('A4076PREME'));
                         paramsGuardarTax.IN_ANIO = Ext.String.trim(rec.get('A4076ANIO'));
-                        paramsGuardarTax.IN_CORR = Ext.String.trim(rec.data.A4077CORRL);
-                        paramsGuardarTax.IN_SEQ = Ext.String.trim(rec.data.A4077SEQ);
+                        paramsGuardarTax.IN_CORR = Ext.String.trim(recdato.data.A4078CORRL);
+                        paramsGuardarTax.IN_SEQ = Ext.String.trim(recdato.data.A4078SEQ);
 
                         var mask = new Ext.LoadMask(Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-form'), {
                             msg: 'Please Wait....'
@@ -503,6 +502,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                                 if (res.data === 'RECORD DELETED') {
                                     vp_icon = 1;
                                     grid.getStore().removeAt(rowIndex);
+                                     me.onSumaTaxGrid();
                                 }
                                 global.Msg({msg: res.data, icon: vp_icon, fn: function () {
                                     }});
@@ -527,6 +527,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             Total += parseFloat(monto);
         }
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').setValue(Ext.util.Format.number(Total, '0,000.00'));
+        console.log(Total);
         me.onTotalRFND();
     },
     onTotalRFND: function () {
