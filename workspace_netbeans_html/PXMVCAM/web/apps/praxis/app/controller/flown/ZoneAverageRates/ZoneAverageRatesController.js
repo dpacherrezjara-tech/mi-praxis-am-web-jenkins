@@ -784,6 +784,11 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
 //            me.goURLpost('searchByDay', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDetData').config.columns.items);
         } else if (me.panelActual === '-panelGridDetZone') {
             me.goURLpost('searchByZone', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDetZone').config.columns.items);
+        } else if (me.panelActual === '-panelAvrgByZone') {
+            global.getFile(prototype.url + '/getXLSXAverage?beanString=' + searchParams.beanString);            
+        } else if (me.panelActual === '-panelAvrgByZoneDetDay') {
+            //me.goURLpost('searchAverageDetDay', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').config.columns.items); 
+            global.getFile(prototype.url + '/getXLSXAverageDetDay?beanString=' + me.paramsDetail.beanString);
         } else {
             me.dw_excel = false;
         }
