@@ -151,6 +151,116 @@ public class ZoneAverageRatesController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "searchAverage")
+    public @ResponseBody
+    String searchAverage(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("-------------- ZoneAverageRatesController : searchAverage-------------");
+        map.put("success", true);
+        List<A1692Filter> listaData = this.getListAverage(request, true, response);
+        System.out.println("Total : " + listaData.size());
+        map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+        map.put("data", listaData);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1692Filter> getListAverage(HttpServletRequest request, Boolean bExcel, HttpServletResponse response) {
+
+        List<A1692Filter> lst = new ArrayList<>(0);
+        A1692Filter filter = new A1692Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
+        try {
+            logic = new ZoneAverageRatesLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1692Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadSQP04264(filter);
+
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, lst);
+            }
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchAverageDetDay")
+    public @ResponseBody
+    String searchAverageDetDay(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("-------------- ZoneAverageRatesController : searchAverageDetDay-------------");
+        map.put("success", true);
+        List<A1692Filter> listaData = this.getListAverageDetDay(request, true, response);
+        System.out.println("Total : " + listaData.size());
+        map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+        map.put("data", listaData);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<A1692Filter> getListAverageDetDay(HttpServletRequest request, Boolean bExcel, HttpServletResponse response) {
+
+        List<A1692Filter> lst = new ArrayList<>(0);
+        A1692Filter filter = new A1692Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
+        try {
+            logic = new ZoneAverageRatesLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A1692Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!dw_excel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadSQP04265(filter);
+
+            if (dw_excel) {
+                ExportUtil.exportFields(request, response, lst);
+            }
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
     @RequestMapping(value = "searchByDay")
     public @ResponseBody
     String searchByDay(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -266,17 +376,16 @@ public class ZoneAverageRatesController extends BaseController {
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSX");
         String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-        
+
         List<A1692Filter> lst = new ArrayList<>(0);
         A1692Filter filter = new A1692Filter();
         Gson gson = new Gson();
         String beanString = "";
-        
+
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            
-            
+
             logic = new ZoneAverageRatesLogic();
             logic.setSession(this.serverSession.getServerSession());
 
@@ -291,11 +400,10 @@ public class ZoneAverageRatesController extends BaseController {
 
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
-        
-            
+
             List<A1692Filter> listaData = this.getList(request, true, response);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
-            
+
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
@@ -375,7 +483,7 @@ public class ZoneAverageRatesController extends BaseController {
             Cell CH2_4 = row2.createCell(4);
             Cell CH2_5 = row2.createCell(5);
             Cell CH2_6 = row2.createCell(6);
-            
+
             String strDate = "";
             String type_date = listaData.get(0).IN_DATE;
             if (type_date.equals("DFLIGHT")) {
@@ -383,7 +491,7 @@ public class ZoneAverageRatesController extends BaseController {
             } else {
                 strDate = "ACCOUNTING";
             }
-            
+
             CH2_0.setCellValue(strDate);
 //            CH2_1.setCellValue("");
             CH2_2.setCellValue("COUPONS");
@@ -462,10 +570,10 @@ public class ZoneAverageRatesController extends BaseController {
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            
+
             logic = new ZoneAverageRatesLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
+
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A1692Filter.class);
             filter.page.TOTROW = -1;
@@ -477,7 +585,7 @@ public class ZoneAverageRatesController extends BaseController {
 
             filter.page.PAGROW = -1;
             filter.page.PAGNUM = 1;
-            
+
             lst = logic.loadSQP04263(filter);
 
             List<A1692Filter> listaData = lst;

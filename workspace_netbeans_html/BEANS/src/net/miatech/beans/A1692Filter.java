@@ -143,4 +143,15 @@ public class A1692Filter extends A1692 {
     public String COD_DESC_ARRI = "";
     public String IN_CCIA = "";
     public String FLAGLEG = "";
+    //CAMPOS PARA TARIFA PROMEDIO POR ZONAS
+    public double AVRG_ASI = 0;
+    public double AVRG_CAM = 0;
+    public double AVRG_CAN = 0;
+    public double AVRG_CAR = 0;
+    public double AVRG_EUR = 0;
+    public double AVRG_FRO = 0;
+    public double AVRG_LOC = 0;
+    public double AVRG_PLA = 0;
+    public double AVRG_SUD = 0;
+    public double AVRG_USA = 0;
 }
