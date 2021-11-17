@@ -210,14 +210,25 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Filters', {
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id + '-chkDetailAll',
-                            margin: '0 20 0 30',
-                            width: 80,
+                            margin: '0 10 0 10',
+                            width: 50,
                             boxLabel: '<b>All</b>',
                             inputValue: '1',
                             listeners:{
                                 change: 'btnSearch_click'
                             }
-                        }
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkChangeView',
+                            margin: '0 10 0 10',
+                            width: 140,
+                            boxLabel: '<b>Average By Zone</b>',
+                            inputValue: '0',
+                            listeners:{
+                                change: 'btnSearch_click'
+                            }
+                        },
                     ]
                 }
 
