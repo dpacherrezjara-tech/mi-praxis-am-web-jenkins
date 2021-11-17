@@ -937,7 +937,7 @@ public class ZoneAverageRatesController extends BaseController {
     public @ResponseBody
     void getXLSXAverageDetDay(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXAverageDetDay");
-        String fileNameDownload = String.format("Report  - Avrg Zones By Month" + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Report  - Avrg Zones By Day " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
