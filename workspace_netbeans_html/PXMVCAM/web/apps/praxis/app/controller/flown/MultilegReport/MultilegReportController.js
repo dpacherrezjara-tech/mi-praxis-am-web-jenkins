@@ -4,6 +4,7 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},
+    searchParamsUppdate: {},
     _path: '',
     _pathDetail: '',
     _pathDetTicket: '',
@@ -17,7 +18,7 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         prototype.id = 'MultilegReportForm';
         prototype.url = CONTEXTPATH + '/MultilegReport';
         prototype.widthContenedor = 1340;
-        prototype.widthGrid = 790;
+        prototype.widthGrid = 850 ;
         prototype.widthGridDetail = 1252;
         prototype.widthGridDetTicket = 1305;
         prototype.widthGridDetTicketA1897 = 1330;
@@ -173,6 +174,11 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         Ext.getCmp(prototype.id + '-boxDetailData').show();
         this.setGridDataSearchDetail();
     },
+    onUpdateCarrierA1897: function(column, e, row, column, x, rowData) {
+        var data = x.record.data;
+        this.setFormatParameterDetUpdate(data);
+        this.updateTicketA1897();
+    },
     onViewDetTicketClick: function(column, e, row, column, x, rowData) {
         var data = x.record.data;
         console.log(data.FLAGLEG);
@@ -317,6 +323,21 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
                 'IN_QTYLEG=' + searchParams.IN_QTYLEG;
         // </editor-fold>
     },
+    setFormatParameterDetUpdate: function(data) {
+        searchParamsUppdate = {};
+        bean = {};
+        bean.DFLIGHT = data.DFLIGHT;
+        bean.NFLIGHT = data.NFLIGHT;
+        bean.ORIG = data.ORIG;
+        bean.DEST = data.DEST;
+
+        var beanString = JSON.stringify(bean);
+        // <editor-fold defaultstate="collapsed" desc="asignación">
+        searchParamsUppdate = {
+            beanString: beanString
+        };
+
+    },
     setFormatParameterDetail: function(data) {
         searchParams = {};
 
@@ -417,6 +438,26 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         });
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
     },
+    updateTicketA1897: function() {
+        
+        Ext.Ajax.request({
+            url: prototype.url + '/updateA1897',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {beanString:searchParamsUppdate},
+            success: function(response, options) {
+                Ext.getBody().unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                var msj = res.mensaje;
+                
+                global.Msg({
+                    msg: msj
+                });
+                
+            }
+        });
+    },    
     setGridDataSearchDetail: function() {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.MultilegReport.GridDataDetail', {
             proxy: {
