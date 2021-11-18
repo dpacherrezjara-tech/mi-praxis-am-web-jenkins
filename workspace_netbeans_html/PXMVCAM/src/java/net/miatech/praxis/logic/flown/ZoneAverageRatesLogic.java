@@ -36,6 +36,14 @@ public class ZoneAverageRatesLogic {
         return revenueZoneDAO.loadSQP04263(filter);
     }
 
+    public List<A1692Filter> loadSQP04264(A1692Filter filter) throws SQLException, Exception {
+        return revenueZoneDAO.loadSQP04264(filter);
+    }
+    
+    public List<A1692Filter> loadSQP04265(A1692Filter filter) throws SQLException, Exception {
+        return revenueZoneDAO.loadSQP04265(filter);
+    }
+
     public List<A1692Filter> loadSQP04258(A1692Filter filter) throws SQLException, Exception {
         return revenueZoneDAO.loadSQP04258(filter);
     }

@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'FLIGHT', dataIndex: 'DATE', width: 100, id: prototype.id + '-idDate',}
+                                                    {text: 'FLIGHT', dataIndex: 'DATE', width: 100, id: prototype.id + '-idDate', }
                                                 ]
                                             },
                                             {
@@ -365,6 +365,314 @@ Ext.define('Ext.Praxis.view.flown.ZoneAverageRatesForm.Info', {
                                                     }
                                                 ]
                                             }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelAvrgByZone',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            width: 884,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataAvrgByZone',
+                                    height: 600,
+                                    width: 814,
+                                    columnLines: true,
+                                    /*features: [{
+                                     ftype: 'summary',
+                                     dock: 'bottom'
+                                     }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Flight',
+                                                id: prototype.id + '-dateAvrgByZone',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'DATE', dataIndex: 'DATE', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return '<a href="#flown-zone-average-rates-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                        listeners: {
+                                                            click: 'onDetDayAverageByZones'
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Domestic',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'FRO', dataIndex: 'AVRG_FRO', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'LOC', dataIndex: 'AVRG_LOC', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'PLA', dataIndex: 'AVRG_PLA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'International',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'ASI', dataIndex: 'AVRG_ASI', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'CAM', dataIndex: 'AVRG_CAM', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'CAN', dataIndex: 'AVRG_CAN', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'CAR', dataIndex: 'AVRG_CAR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'EUR', dataIndex: 'AVRG_EUR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'SUD', dataIndex: 'AVRG_SUD', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'USA', dataIndex: 'AVRG_USA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelAvrgByZoneDetDay',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            width: 814,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataAvrgByZoneDetDay',
+                                    height: 600,
+                                    width: 814,
+                                    columnLines: true,
+                                    /*features: [{
+                                     ftype: 'summary',
+                                     dock: 'bottom'
+                                     }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Flight',
+                                                id: prototype.id + '-dateAvrgByZoneDetDay',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'DATE', dataIndex: 'DATE', width: 100,
+                                                        /*renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return '<a href="#flown-zone-average-rates-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                        listeners: {
+                                                            click: 'onDetDayAverageByZones'
+                                                        }*/
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Domestic',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'FRO', dataIndex: 'AVRG_FRO', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'LOC', dataIndex: 'AVRG_LOC', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'PLA', dataIndex: 'AVRG_PLA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'International',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'ASI', dataIndex: 'AVRG_ASI', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'CAM', dataIndex: 'AVRG_CAM', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'CAN', dataIndex: 'AVRG_CAN', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'CAR', dataIndex: 'AVRG_CAR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'EUR', dataIndex: 'AVRG_EUR', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'SUD', dataIndex: 'AVRG_SUD', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'USA', dataIndex: 'AVRG_USA', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
                                         ]
                                     }
                                 }

@@ -183,7 +183,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
             ]
         }));
         cmbStock.setValue("");
-        
+
         var cmbDateSel = Ext.getCmp(prototype.id + '-cmbDateSel');
         cmbDateSel.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -198,9 +198,15 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
 
     },
     btnSearch_click: function(obj, e) {
-        
+        var flag = Ext.getCmp(prototype.id + '-chkChangeView').getValue();
+        console.log(flag);
         this.setSearchParams();
-        this.setGridData();
+        if (flag) {
+            this.setGridDataAverageByZone();
+        } else {
+            this.setGridData();
+        }
+
 
     },
     setSearchParams: function() {
@@ -217,18 +223,18 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
 
         me.bean.IN_ZONA = Ext.getCmp(prototype.id + '-cmbZone').getValue();
         me.bean.IN_CCIA = Ext.getCmp(prototype.id + '-cmbStock').getValue();
-        
+
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        
-        if(me.bean.IN_DATE === 'FCONT'){
+
+        if (me.bean.IN_DATE === 'FCONT') {
             var flag = Ext.getCmp(prototype.id + '-chkDetailAll').getValue();
-            if(flag){
+            if (flag) {
                 me.bean.FLAG_ALL = "";
-            }else{
+            } else {
                 me.bean.FLAG_ALL = "Y";
             }
         }
-        
+
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -250,7 +256,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-gridData').mask('Loading...');
 //                    obj.proxy.extraParams = searchParams;
-                    obj.proxy.extraParams = {beanString: searchParams, dw_excel:false};
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
                 },
                 load: function(obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-gridData').unmask();
@@ -269,7 +275,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                             } else {
                                 Ext.getCmp(prototype.id + '-rowDate').setText('ACCOUNTING');
                             }
-                            
+
                             var lstData = res.data;
                             console.log(lstData);
                             var a = [];
@@ -278,7 +284,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                             Ext.Object.each(lstData, function(index, value) {
                                 if (a.indexOf(value.DATE) < 0) {
                                     var x = [];
-                                    
+
                                     var totQTY_CUPONES_CONT = 0;
                                     var totQTY_CUPONES_PEND = 0;
                                     var totVALOR_CUPONES_CONT = 0;
@@ -350,6 +356,151 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
 //        Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
+    setGridDataAverageByZone: function() {
+        console.log('Entro');
+        win.lblUser_toolTip("Estructura: A1692");
+        me.panelActual = '-panelAvrgByZone';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueZone.GridData', {
+            proxy: {
+                url: prototype.url + '/searchAverage'
+            }, listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + '-gridDataAvrgByZone').mask('Loading...');
+//                    obj.proxy.extraParams = searchParams;
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-gridDataAvrgByZone').unmask();
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+
+                    if (res.success) {
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            var bean = res.data[0];
+                            if (bean.IN_DATE === "DFLIGHT") {
+                                Ext.getCmp(prototype.id + '-dateAvrgByZone').setText('FLIGHT');
+                            } else {
+                                Ext.getCmp(prototype.id + '-dateAvrgByZone').setText('ACCOUNTING');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataAvrgByZone').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    onDetDayAverageByZones: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelAvrgByZoneDetDay';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetDay.IN_DATEF = rowData.data.DATE;
+        this.beanDetDay.IN_DATE = rowData.data.IN_DATE;
+
+        var flag = Ext.getCmp(prototype.id + '-chkDetailAll').getValue();
+        if (flag) {
+            this.beanDetDay.FLAG_ALL = "";
+        } else {
+            this.beanDetDay.FLAG_ALL = "Y";
+        }
+
+        console.log(this.beanDetDay);
+
+        me.paramsDetail.beanString = JSON.stringify(this.beanDetDay);
+        this.setGridDataAverageByZonesByDay();
+    },
+    setGridDataAverageByZonesByDay: function() {
+
+        win.lblUser_toolTip("Estructura: A1692");
+        me.panelActual = '-panelAvrgByZoneDetDay';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueZone.GridData', {
+            proxy: {
+                url: prototype.url + '/searchAverageDetDay'
+            }, listeners: {
+                beforeload: function(obj) {
+                    //Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').mask('Loading...');
+//                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel: false};
+                },
+                load: function(obj) {
+                    //Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').unmask();
+                    var pag = Ext.getCmp(prototype.id + '-paggin3');
+                    var pagData = pag.getPageData();
+                    console.log(pagData);
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var bean = obj.data.items[0].data;                       
+                        var mes = '';
+                        switch (bean.DATE.substring(4, 6)) {
+                            case  '01':
+                                mes = ' - JAN';
+                                break;
+                            case  '02':
+                                mes = ' - FEB';
+                                break;
+                            case  '03':
+                                mes = ' - MAR';
+                                break;
+                            case  '04':
+                                mes = ' - APR';
+                                break;
+                            case  '05':
+                                mes = ' - MAY';
+                                break;
+                            case  '06':
+                                mes = ' - JUN';
+                                break;
+                            case  '07':
+                                mes = ' - JUL';
+                                break;
+                            case  '08':
+                                mes = ' - AUG';
+                                break;
+                            case  '09':
+                                mes = ' - SEP';
+                                break;
+                            case  '10':
+                                mes = ' - OCT';
+                                break;
+                            case  '11':
+                                mes = ' - NOV';
+                                break;
+                            case  '12':
+                                mes = ' - DEC';
+                                break;
+                        }
+
+                        if (bean.IN_DATE === "DFLIGHT") {
+                            Ext.getCmp(prototype.id + '-dateAvrgByZoneDetDay').setText('FLIGHT');
+                            Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').setTitle('<center style="font-size:12px;">' + 'FLIGHT DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
+                        } else {
+                            Ext.getCmp(prototype.id + '-dateAvrgByZoneDetDay').setText('ACCOUNTING');
+                            Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').setTitle('<center style="font-size:12px;">' + 'ACCOUNTING DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
+                        }
+
+                        me.setWidthPie();
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
+    },
     onDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         if (rowData.data.children === null) {
@@ -360,11 +511,11 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
             this.beanDetDay.IN_DATEF = rowData.data.IN_DATEF;
             this.beanDetDay.IN_DATET = rowData.data.IN_DATET;
             this.beanDetDay.IN_DATE = rowData.data.IN_DATE;
-            
+
             var flag = Ext.getCmp(prototype.id + '-chkDetailAll').getValue();
-            if(flag){
+            if (flag) {
                 this.beanDetDay.FLAG_ALL = "";
-            }else{
+            } else {
                 this.beanDetDay.FLAG_ALL = "Y";
             }
 
@@ -386,7 +537,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetData').mask('Loading...');
 //                    obj.proxy.extraParams = me.paramsDetail;
-                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel:false};
+                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel: false};
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetData').unmask();
@@ -440,7 +591,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                                 mes = ' - DEC';
                                 break;
                         }
-                        
+
                         if (bean.IN_DATE === "DFLIGHT") {
                             Ext.getCmp(prototype.id + '-idDate').setText('FLIGHT');
                             Ext.getCmp(prototype.id + '-gridDetData').setTitle('<center style="font-size:12px;">' + 'FLIGHT DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
@@ -448,8 +599,8 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                             Ext.getCmp(prototype.id + '-idDate').setText('ACCOUNTING');
                             Ext.getCmp(prototype.id + '-gridDetData').setTitle('<center style="font-size:12px;">' + 'ACCOUNTING DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
                         }
-                        
-                        
+
+
                         me.setWidthPie();
 
                     }
@@ -470,13 +621,13 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
             this.beanDetZone.IN_DATEF = rowData.data.IN_DATEF;
             this.beanDetZone.IN_DATET = rowData.data.IN_DATET;
             this.beanDetZone.IN_ZONA = rowData.data.IN_ZONA;
-            
+
             this.beanDetZone.IN_DATE = rowData.data.IN_DATE;
-            
+
             var flag = Ext.getCmp(prototype.id + '-chkDetailAll').getValue();
-            if(flag){
+            if (flag) {
                 this.beanDetZone.FLAG_ALL = "";
-            }else{
+            } else {
                 this.beanDetZone.FLAG_ALL = "Y";
             }
 
@@ -499,13 +650,13 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetZone').mask('Loading...');
 //                    obj.proxy.extraParams = me.paramsDetail;
-                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel:false};
+                    obj.proxy.extraParams = {beanString: me.paramsDetail, dw_excel: false};
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-gridDetZone').unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin2');
                     var pagData = pag.getPageData();
-                    
+
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
@@ -554,16 +705,16 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                                 mes = ' - DEC';
                                 break;
                         }
-                        
-                         if (bean.IN_DATE === "DFLIGHT") {
+
+                        if (bean.IN_DATE === "DFLIGHT") {
 //                            Ext.getCmp(prototype.id + '-idDate').setText('FLIGHT');
                             Ext.getCmp(prototype.id + '-gridDetZone').setTitle('<center style="font-size:12px;">' + 'FLIGHT DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
                         } else {
 //                            Ext.getCmp(prototype.id + '-idDate').setText('ACCOUNTING');
                             Ext.getCmp(prototype.id + '-gridDetZone').setTitle('<center style="font-size:12px;">' + 'ACCOUNTING DATE: ' + bean.DATE.substring(0, 4) + mes + '</center>');
                         }
-                        
-                        
+
+
                         me.setWidthPie();
 
                     }
@@ -575,12 +726,12 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
         Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
     },
     showCheck: function(obj, e) {
-        
+
         var chk = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-        
-        if(chk === 'FCONT'){
+
+        if (chk === 'FCONT') {
             Ext.getCmp(prototype.id + '-chkDetailAll').show();
-        }else{
+        } else {
             Ext.getCmp(prototype.id + '-chkDetailAll').hide();
         }
 
@@ -620,39 +771,43 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
         });
     },
     exportExcel: function() {
-        
+
         console.log('------ Excel -------');
         console.log(me.panelActual);
 //        
         me.dw_excel = true;
-        if(me.panelActual === '-panelGridData'){
+        if (me.panelActual === '-panelGridData') {
             global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
 //            me.goURLpost('search', searchParams.beanString, Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-        }else if(me.panelActual === '-panelGridDetData'){
+        } else if (me.panelActual === '-panelGridDetData') {
             global.getFile(prototype.url + '/getXLSX_Day?beanString=' + me.paramsDetail.beanString);
 //            me.goURLpost('searchByDay', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDetData').config.columns.items);
-        }else if(me.panelActual === '-panelGridDetZone'){
+        } else if (me.panelActual === '-panelGridDetZone') {
             me.goURLpost('searchByZone', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDetZone').config.columns.items);
-        }else{
+        } else if (me.panelActual === '-panelAvrgByZone') {
+            global.getFile(prototype.url + '/getXLSXAverage?beanString=' + searchParams.beanString);            
+        } else if (me.panelActual === '-panelAvrgByZoneDetDay') {
+            //me.goURLpost('searchAverageDetDay', me.paramsDetail.beanString, Ext.getCmp(prototype.id + '-gridDataAvrgByZoneDetDay').config.columns.items); 
+            global.getFile(prototype.url + '/getXLSXAverageDetDay?beanString=' + me.paramsDetail.beanString);
+        } else {
             me.dw_excel = false;
         }
     },
-    
-    goURLpost: function (method,parms,columns) {
-        
+    goURLpost: function(method, parms, columns) {
+
         var js_columns = JSON.stringify(columns);
-        
+
         var mapForm = document.createElement("form");
         mapForm.target = "_blank";
         mapForm.method = "POST"; // or "post" if appropriate
-        mapForm.action = prototype.url + '/' +method+'?dw_excel=true';
+        mapForm.action = prototype.url + '/' + method + '?dw_excel=true';
 
         var mapInput = document.createElement("input");
         mapInput.type = "text";
         mapInput.name = "beanString";
         mapInput.value = parms;
         mapForm.appendChild(mapInput);
-        
+
         var mapInput = document.createElement("input");
         mapInput.type = "text";
         mapInput.name = "columns";
@@ -664,7 +819,6 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
 
         mapForm.submit();
     },
-    
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
@@ -711,6 +865,9 @@ Ext.define('Ext.Praxis.controller.flown.ZoneAverageRates.ZoneAverageRatesControl
                 break;
             case '-panelGridDetZone':
                 me.pagginActual = '-paggin2';
+                break;
+            case '-panelAvrgByZoneDetDay':
+                me.pagginActual = '-paggin3';
                 break;
         }
     },
