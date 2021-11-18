@@ -69,7 +69,7 @@ Ext.define('Ext.Praxis.view.flown.MultilegReportForm.Info', {
                                         }
                                     },
                                     {
-                                        text: 'Update', dataIndex: '', width: 55,
+                                        text: 'Update', dataIndex: '', width: 55,id:prototype.id + '-col-update',
                                         listeners: {
                                             click: 'onUpdateCarrierA1897'
                                         },

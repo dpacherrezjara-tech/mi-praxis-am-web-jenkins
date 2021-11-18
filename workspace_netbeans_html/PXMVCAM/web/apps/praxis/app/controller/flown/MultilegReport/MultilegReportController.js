@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
     _pathDetail: '',
     _pathDetTicket: '',
     me: '',
+    NPROG: 'PX00000087',
     // </editor-fold>
     setContext: function() {
         me = this;
@@ -31,6 +32,7 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
         this.setStoreData();
         this.btnClear_click();
         this.btnSearch_click();
+        this.validateProgram(Ext.getCmp(prototype.id + '-col-update'),'PX00000087', 'M');
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     onFromYearChange: function(combo, newValue, oldValue, eOpts) {
@@ -609,5 +611,72 @@ Ext.define('Ext.Praxis.controller.flown.MultilegReport.MultilegReportController'
     },
     focus: function(id) {
         Ext.getCmp(prototype.id + '-' + id).focus();
+    },
+    validateAccess: function(info, opcion) {
+        var bolRtn = false;
+        switch (opcion)
+        {
+            case "A":
+                if (info.PERMA === "Y")
+                    bolRtn = true;
+                break;
+            case "L":
+                if (info.PERML === "Y" || info.PERMC === "Y" || info.PERMM === "Y" || info.PERME === "Y")
+                    bolRtn = true;
+                break;
+            case "C":
+                if (info.PERMC === "Y")
+                    bolRtn = true;
+                break;
+            case "M":
+                if (info.PERMM === "Y")
+                    bolRtn = true;
+                break;
+            case "E":
+                if (info.PERME === "Y")
+                    bolRtn = true;
+                break;
+            case "X":
+                if (info.PERMX === "Y")
+                    bolRtn = true;
+                break;
+        }
+
+        return bolRtn;
+    },
+    //<editor-fold defaultstate="collapsed" desc="validateProgram">
+    validateProgram: function(cmp, nprog, opcion) {
+//        console.log('------- validateProgram ---------');
+//        console.log('------- nprog ' + nprog);
+//        console.log('------- opcion  ' +opcion);
+        Ext.Ajax.request({
+            url: prototype.urlMaster + '/validateUserProgramAccess',
+            method: 'POST',
+            timeout: 60000000,
+            params: {nprog: nprog || ''},
+            success: function(response, opts) {
+//                console.log(response);
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    var matrix = res.matrix;
+                    console.log('---');
+                    console.log(matrix);
+                    var visible = me.validateAccess(matrix, opcion);
+                    console.log('---2');
+                    console.log(visible);
+                    if (visible){
+                        cmp.show();
+                        Ext.getCmp(prototype.id + '-gridData').setWidth(850);
+                    }else{
+                        cmp.hide();
+                        Ext.getCmp(prototype.id + '-gridData').setWidth(800);
+                    }    
+                } else
+                    global.Msg({msg: res.sesion});
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
     }
 });
