@@ -116,26 +116,35 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Commision',
+                                            {text: 'National Card Date',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Rate Normal', dataIndex: 'RATECON', width: 100, align: 'center',
+                                                    {text: 'Credit', dataIndex: 'RATCNAC', width: 100, align: 'center',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Rate Promotional 1', dataIndex: 'RATECOP1', width: 130, align: 'center',
+                                                    {text: 'Debit', dataIndex: 'RATDNAC', width: 130, align: 'center',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         }
-                                                    },
-                                                    {text: 'Rate Promotional 2', dataIndex: 'RATECOP2', width: 130, align: 'center',
+                                                    },                                                    
+                                                ]
+                                            },
+                                            {text: 'International',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Card Rate', dataIndex: 'RATCEXT', width: 130, align: 'center',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
@@ -165,14 +174,14 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
 //                                                    }                                                ]
 //                                            },
                                             {
-                                                text: 'Rate',
+                                                text: 'IVA',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'IVA', dataIndex: 'RATEIVA', width: 50, align: 'right'}
+                                                    {text: 'Rate', dataIndex: 'RATEIVA', width: 50, align: 'right'}
                                                 ]
                                             },
                                             {text: 'Cliente', dataIndex: 'CLIENTE', width: 95},

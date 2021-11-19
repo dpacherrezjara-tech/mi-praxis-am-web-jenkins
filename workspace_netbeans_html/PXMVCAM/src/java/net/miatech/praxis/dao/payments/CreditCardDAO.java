@@ -103,7 +103,7 @@ public class CreditCardDAO {
                     bean.FINSUMO = "Pending";
                 }
 
-                bean.CODBANKN = rst.getString("CODBANKN");
+                bean.CODBANKN = rst.getString("CODBANKN").trim();
                 bean.DOCNUM = rst.getInt("DOCNUM");
                 bean.RATECON = rst.getDouble("RATECON");
                 bean.RATECOP1 = rst.getDouble("RATECOP1");
@@ -232,15 +232,15 @@ public class CreditCardDAO {
                 objRtn.RATECOP1 = rs01.getDouble("RATECOP1");
                 objRtn.RATECOP2 = rs01.getDouble("RATECOP2");
                 objRtn.RATEIVA = rs01.getDouble("RATEIVA");
-                objRtn.CODBANKN = rs01.getString("CODBANKN");
+                objRtn.CODBANKN = rs01.getString("CODBANKN").trim();
                 objRtn.DOCNUM = rs01.getInt("DOCNUM");
 
-                objRtn.USCR = rs01.getString("USCR");
-                objRtn.FECR = rs01.getString("FECR");
-                objRtn.HOCR = rs01.getString("HOCR");
-                objRtn.USUP = rs01.getString("USUP");
-                objRtn.FEUP = rs01.getString("FEUP");
-                objRtn.HOUP = rs01.getString("HOUP");
+                objRtn.USCR = rs01.getString("USCR").trim();
+                objRtn.FECR = rs01.getString("FECR").trim();
+                objRtn.HOCR = rs01.getString("HOCR").trim();
+                objRtn.USUP = rs01.getString("USUP").trim();
+                objRtn.FEUP = rs01.getString("FEUP").trim();
+                objRtn.HOUP = rs01.getString("HOUP").trim();
 
                 //lstRtn.add(objRtn);
             }
@@ -326,7 +326,7 @@ public class CreditCardDAO {
                 bean.RATDNAC = rst.getDouble("RATDNAC");
                 bean.RATCEXT = rst.getDouble("RATCEXT");
                 bean.RATEIVA = rst.getDouble("RATEIVA");
-                bean.CODEQUIV = rst.getString("CODEQUIV");
+                bean.CODEQUIV = rst.getString("CODEQUIV").trim();
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -366,7 +366,7 @@ public class CreditCardDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00661_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00661_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -388,15 +388,17 @@ public class CreditCardDAO {
             cstmt.setDouble(13, filter.RATCEXT);
             cstmt.setDouble(14, filter.RATEIVA);
             cstmt.setString(15, filter.CLIENTE.trim());
-            cstmt.setString(16, filter.NEW_COUNTRY.trim());
-            cstmt.setString(17, filter.NEW_CURRENC.trim());
-            cstmt.setString(18, filter.NEW_CODEBANK.trim());
-            cstmt.setString(19, filter.NEW_FNOBANK.trim());
-            cstmt.setString(20, filter.CODEQUIV.trim());
-            cstmt.setString(21, filter.BSPBANK.trim());
-            cstmt.setString(22, session.getUserView().getUserInfo().USR);
-            cstmt.setString(23, Functions.getFechaActual());
-            cstmt.setString(24, Functions.getHoraActual());
+            cstmt.setString(16, filter.FECFROM.trim());
+            cstmt.setString(17, filter.FECTO.trim());
+            cstmt.setString(18, filter.NEW_COUNTRY.trim());
+            cstmt.setString(19, filter.NEW_CURRENC.trim());
+            cstmt.setString(20, filter.NEW_CODEBANK.trim());
+            cstmt.setString(21, filter.NEW_FNOBANK.trim());
+            cstmt.setString(22, filter.CODEQUIV.trim());
+            cstmt.setString(23, filter.BSPBANK.trim());
+            cstmt.setString(24, session.getUserView().getUserInfo().USR);
+            cstmt.setString(25, Functions.getFechaActual());
+            cstmt.setString(26, Functions.getHoraActual());
             cstmt.execute();
 
         } catch (Exception e) {
@@ -455,17 +457,17 @@ public class CreditCardDAO {
                 objRtn.RATDNAC = rs01.getDouble("RATDNAC");
                 objRtn.RATCEXT = rs01.getDouble("RATCEXT");
                 objRtn.RATEIVA = rs01.getDouble("RATEIVA");
-                objRtn.CODEQUIV = rs01.getString("CODEQUIV");
-                objRtn.BSPBANK = rs01.getString("BSPBANK");
-                objRtn.FECFROM = rs01.getString("FECFROM");
-                objRtn.FECTO = rs01.getString("FECTO");
-                objRtn.strBSPBANK = rs01.getString("strBSPBANK");
-                objRtn.USCR = rs01.getString("USCR");
-                objRtn.FECR = rs01.getString("FECR");
-                objRtn.HOCR = rs01.getString("HOCR");
-                objRtn.USUP = rs01.getString("USUP");
-                objRtn.FEUP = rs01.getString("FEUP");
-                objRtn.HOUP = rs01.getString("HOUP");
+                objRtn.CODEQUIV = rs01.getString("CODEQUIV").trim();
+                objRtn.BSPBANK = rs01.getString("BSPBANK").trim();
+                objRtn.FECFROM = rs01.getString("FECFROM").trim();
+                objRtn.FECTO = rs01.getString("FECTO").trim();
+                objRtn.strBSPBANK = rs01.getString("strBSPBANK").trim();
+                objRtn.USCR = rs01.getString("USCR").trim();
+                objRtn.FECR = rs01.getString("FECR").trim();
+                objRtn.HOCR = rs01.getString("HOCR").trim();
+                objRtn.USUP = rs01.getString("USUP").trim();
+                objRtn.FEUP = rs01.getString("FEUP").trim();
+                objRtn.HOUP = rs01.getString("HOUP").trim();
 
             }
         } catch (Exception e) {
@@ -749,7 +751,7 @@ public class CreditCardDAO {
                     objRtn.FNOBANK = rs01.getString("FNOBANK").trim();
                     objRtn.BSPBANK = rs01.getString("BSPBANK").trim();
                     objRtn.CLIENTE = rs01.getString("CLIENTE").trim();
-                    objRtn.strBSPBANK = rs01.getString("strBSPBANK");
+                    objRtn.strBSPBANK = rs01.getString("strBSPBANK").trim();
                     objRtn.USCR = rs01.getString("USCR");
                     objRtn.FECR = rs01.getString("FECR");
                     objRtn.HOCR = rs01.getString("HOCR");
