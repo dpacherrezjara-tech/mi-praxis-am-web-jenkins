@@ -26,6 +26,7 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
         this.obtainData();
         switch (this.actionCode) {
             case 'I':
+                Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore().removeAll();
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -353,10 +354,10 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
                 if (btn === 'yes') {
                     if (this.getValue('de-txtFECFROM').length < 8 || this.getValue('de-txtFECTO').length < 8) {
                         global.Msg({msg: 'Invalid Length Date'})
-                    } else if(this.getValue('de-txtFECFROM') > this.getValue('de-txtFECTO')){
+                    } else if (this.getValue('de-txtFECFROM') > this.getValue('de-txtFECTO')) {
                         global.Msg({msg: 'Invalid Date. *From Date* is greather than *To Date*'})
-                    }
-                    else {
+                    } else {
+
                         var SEQ = this.getValue('de-txtSEQ');
                         var CCOMIS = this.getValue('de-txtCCOMIS');
                         var DCOMIS = this.getValue('de-txtDCOMIS');
@@ -381,38 +382,44 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
                         dataRow.MONTO = MONTO;
                         dataRow.MESES = MESES;
 
-                        var store_gridDataCommInfo = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore();
+                        var strMessage = this.validacionDetalle(dataRow);
 
-                        if (this.getValue('de-txtSEQ') === '') {
-                            //AGREGAR LOGICA CORRELATIVO SEQ
-                            for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
-                                NEW_SEQ = NEW_SEQ + 1;
-                                store_gridDataCommInfo.data.items[i].data.SEQ = this.fillZeros(3, NEW_SEQ.toString());
-                            }
-                            dataRow.SEQ = this.fillZeros(3, (NEW_SEQ + 1).toString());
-                            store_gridDataCommInfo.add(dataRow);
-                            Ext.getCmp(prototype.id + '-gridDataCommInfo').getView().refresh();
-                        } else {
-                            //Actualiza                
-                            console.log(store_gridDataCommInfo);
-                            for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
-                                if (store_gridDataCommInfo.data.items[i].data.SEQ === SEQ) {
-                                    store_gridDataCommInfo.data.items[i].data.TCOMIS = CCOMIS;
-                                    store_gridDataCommInfo.data.items[i].data.DCOMIS = DCOMIS;
-                                    store_gridDataCommInfo.data.items[i].data.FECFROM = FECFROM;
-                                    store_gridDataCommInfo.data.items[i].data.FECTO = FECTO;
-                                    store_gridDataCommInfo.data.items[i].data.BASEC = BASEC;
-                                    store_gridDataCommInfo.data.items[i].data.RATE = RATE;
-                                    store_gridDataCommInfo.data.items[i].data.RATEIVA = RATEIVA;
-                                    store_gridDataCommInfo.data.items[i].data.MONTO = MONTO;
-                                    store_gridDataCommInfo.data.items[i].data.MESES = MESES;
-                                    Ext.getCmp(prototype.id + '-gridDataCommInfo').getView().refresh();
-                                    break;
+                        if (strMessage === "") {
+                            var store_gridDataCommInfo = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore();
+
+                            if (this.getValue('de-txtSEQ') === '') {
+                                //AGREGAR LOGICA CORRELATIVO SEQ
+                                for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
+                                    NEW_SEQ = NEW_SEQ + 1;
+                                    store_gridDataCommInfo.data.items[i].data.SEQ = this.fillZeros(3, NEW_SEQ.toString());
                                 }
-                            }
+                                dataRow.SEQ = this.fillZeros(3, (NEW_SEQ + 1).toString());
+                                store_gridDataCommInfo.add(dataRow);
+                                Ext.getCmp(prototype.id + '-gridDataCommInfo').getView().refresh();
+                            } else {
+                                //Actualiza                
+                                console.log(store_gridDataCommInfo);
+                                for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
+                                    if (store_gridDataCommInfo.data.items[i].data.SEQ === SEQ) {
+                                        store_gridDataCommInfo.data.items[i].data.TCOMIS = CCOMIS;
+                                        store_gridDataCommInfo.data.items[i].data.DCOMIS = DCOMIS;
+                                        store_gridDataCommInfo.data.items[i].data.FECFROM = FECFROM;
+                                        store_gridDataCommInfo.data.items[i].data.FECTO = FECTO;
+                                        store_gridDataCommInfo.data.items[i].data.BASEC = BASEC;
+                                        store_gridDataCommInfo.data.items[i].data.RATE = RATE;
+                                        store_gridDataCommInfo.data.items[i].data.RATEIVA = RATEIVA;
+                                        store_gridDataCommInfo.data.items[i].data.MONTO = MONTO;
+                                        store_gridDataCommInfo.data.items[i].data.MESES = MESES;
+                                        Ext.getCmp(prototype.id + '-gridDataCommInfo').getView().refresh();
+                                        break;
+                                    }
+                                }
 
+                            }
+                            Ext.getCmp(prototype.id + '-hboxEdit').hide();
+                        } else {
+                            global.Msg({msg: strMessage})
                         }
-                        Ext.getCmp(prototype.id + '-hboxEdit').hide();
                     }
                 }
             }
@@ -453,12 +460,40 @@ Ext.define('Ext.Praxis.controller.payments.CreditCard.DataEntryCommCreditCardCon
             }
         });
     },
+    validacionDetalle: function(dataRow) {        
+        var store_gridDataCommInfo = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore();
+        var msjError = "";
+        for (var i = 0; i < store_gridDataCommInfo.data.length; i++) {
+            if (store_gridDataCommInfo.data.items[i].data.TCOMIS === dataRow.TCOMIS &&
+                    store_gridDataCommInfo.data.items[i].data.DCOMIS === dataRow.DCOMIS &&
+                    store_gridDataCommInfo.data.items[i].data.FECFROM === dataRow.FECFROM &&
+                    store_gridDataCommInfo.data.items[i].data.FECTO === dataRow.FECTO && dataRow.SEQ === "" /*&&
+                     store_gridDataCommInfo.data.items[i].data.BASEC === dataRow.BASEC &&
+                     store_gridDataCommInfo.data.items[i].data.RATE === dataRow.RATE &&
+                     store_gridDataCommInfo.data.items[i].data.RATEIVA === dataRow.RATEIVA &&
+                     store_gridDataCommInfo.data.items[i].data.MONTO === dataRow.MONTO &&
+                     store_gridDataCommInfo.data.items[i].data.MESES === dataRow.MESES*/) {
+                msjError = "Error: Record already exists.";
+                break;
+            } else if (store_gridDataCommInfo.data.items[i].data.TCOMIS === dataRow.TCOMIS) {
+                var tmpFrom = store_gridDataCommInfo.data.items[i].data.FECFROM;
+                var tmpTo = store_gridDataCommInfo.data.items[i].data.FECTO;
+                var tmpFromNuevo = dataRow.FECFROM;
+                var tmpToNuevo = dataRow.FECTO;
+                if (tmpFromNuevo !== tmpFrom || tmpToNuevo !== tmpTo) {
+                    msjError = "Error: Date Crossing";
+                    break;
+                }
+            }
+        }
+        return msjError;
+    },
     validacionInsert: function(beanTemp) {
         var msjResult = '';
         var store_gridDataCommInfo = Ext.getCmp(prototype.id + '-gridDataCommInfo').getStore();
         if (this.getValue("de-txtCODE") === '' || this.getValue("de-txtCODEBANK") === '' || this.getValue("de-txtCOUNTRY") === '' || this.getValue("de-txtCURRENC") === '') {
             msjResult = "You must enter the required field.";
-        } else if(store_gridDataCommInfo.data.length === 0) {
+        } else if (store_gridDataCommInfo.data.length === 0) {
             msjResult = "You must enter at least one commission.";
         }
         return msjResult;
