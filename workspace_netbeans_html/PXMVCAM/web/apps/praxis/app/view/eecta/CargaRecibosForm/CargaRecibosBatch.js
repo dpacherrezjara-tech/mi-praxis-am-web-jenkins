@@ -15,17 +15,15 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
     title: 'Cargar recibos',
     header: true,
     width: 950,
-    height: 500,
+    height: 520,
     border: false,
     resizable: false,
-    layout: {
-        type: 'border',
+    layout: {        
         align: 'center'
     },
     modal: true,
     items: [
-        {
-            region: 'center',
+        {            
             xtype: 'form',
             id: prototype.id02 + '-DataEntry-center',
             border: true,
@@ -89,125 +87,147 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
                                 }
                             ]
                         },
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    width: '99%',
+                    border: true,
+                    paddin: '2 1 2 1',
+                    layout: {
+                        type: 'hbox'                        
+                    },
+                    items: [
                         {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            width: 470,
-                            border: true,
-                            //title: 'Filtrar',
+                            xtype: 'textfield',
+                            id: prototype.id02 + '-A4096LOTE',
+                            //emptyText: 'Nº Lote',
+                            fieldLabel: 'Lote', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 40,
+                            fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
+                            enableKeyEvents: true,
+                            padding: '10 2 2 2',
+                            width: 150,
+                            listeners: {
+                                keypress: 'onTxtFilterKeypress03'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id02 + '-A4096TRXOR',
+                            fieldLabel: 'Nº Recibo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
+                            //emptyText: 'Nº Recibo', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                            fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
+                            //placeholder: 'xxx-xxxx-xxxxxx',
+                            //inputMask: '999-9999-999999',                                    
+                            enableKeyEvents: true, padding: '10 2 2 2',
+                            width: 180,
+                            listeners: {
+                                keypress: 'onTxtFilterKeypress03'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id02 + '-A4096CUENT',
+                            fieldLabel: 'Cuenta', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
+                            //emptyText: 'Cuenta', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                            fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
+                            //placeholder: 'xxx-xxxx-xxxxxx',
+                            //inputMask: '999-9999-999999',                                    
+                            enableKeyEvents: true, padding: '10 2 2 2',
+                            width: 150,
+                            listeners: {
+                                keypress: 'onTxtFilterKeypress03'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id02 + '-A4096MDATX',
+                            fieldLabel: 'Mda', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
+                            //emptyText: 'Mda', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
+                            fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
+                            //placeholder: 'xxx-xxxx-xxxxxx',
+                            //inputMask: '999-9999-999999',                                    
+                            enableKeyEvents: true, padding: '10 2 2 2',                            
+                            enforceMaxLength: true,
+                            maxLength: 3,
+                            width: 100,
+                            listeners: {
+                                keypress: 'onTxtFilterKeypress03'
+                            }
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id02 + '-A4096STREF',
+                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
+                            //emptyText: 'Estado Carga', //labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "TODOS"],
+                                    ["1", "MATCH"],
+                                    ["0", "UNMATCH"],
+                                    ["2", "PROCESADO DB RECIBOS"],
+                                    ["3", "RE-PROCESADO REF."]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            forceSelection: true,
+                            caseSensitive: false,
+                            editable: true,
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            width: 150,
+                            value: "",
+                            enableKeyEvents: true,
+                            padding: '10 2 2 2',
+                            listeners: {
+                                change: 'cmbfiltro_clickHandler03'
+                            }
+                        },
+                        {
+                            xtype: 'toolbar',
+                            //dock: 'bottom',
+                            //ui: 'footer',
+                            margin: '1 0 1 1',
+//                            layout: {
+//                                type: 'hbox',
+//                                pack: 'end'
+//                            },
+                            //fieldStyle: 'text-align:center',
+//                            defaults: {
+//                                scale: 'small'
+//                            },
                             items: [
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.id02 + '-A4096LOTE',
-                                    emptyText: 'Nº Lote',
-                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
-                                    enableKeyEvents: true, 
-                                    padding: '10 2 2 2',
-                                    width: 95,
+                                    xtype: 'button',
+                                    id: prototype.id02 + '-btnSearch',
+                                    icon: 'resources/img/botones/search.png',
+                                    tooltip: 'Buscar',
                                     listeners: {
-                                        keypress: 'onTxtFilterKeypress03'
+                                        click: 'search_det_loadbatch'
                                     }
                                 },
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.id02 + '-A4096TRXOR',
-                                    emptyText: 'Nº Recibo', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
-                                    //placeholder: 'xxx-xxxx-xxxxxx',
-                                    //inputMask: '999-9999-999999',                                    
-                                    enableKeyEvents: true, padding: '10 2 2 2',
-                                    width: 120,
+                                    xtype: 'button',
+                                    id: prototype.id02 + '-btn-asignar-cliente',
+                                    icon: 'resources/img/botones/user.png',
+                                    text: 'Asignar Cliente',
                                     listeners: {
-                                        keypress: 'onTxtFilterKeypress03'
+                                        click: 'onfrmReferenciaManualClick'
                                     }
                                 },
                                 {
-                                    xtype: 'textfield',
-                                    id: prototype.id02 + '-A4096CUENT',
-                                    emptyText: 'Cuenta', //labelAlign: 'top', labelStyle: 'font-weight: bold;', labelWidth: 120,
-                                    fieldStyle: 'text-align:center;font-weight: bold;font-size:12px;',
-                                    //placeholder: 'xxx-xxxx-xxxxxx',
-                                    //inputMask: '999-9999-999999',                                    
-                                    enableKeyEvents: true, padding: '10 2 2 2',
-                                    width: 70,
+                                    xtype: 'button',
+                                    id: prototype.id02 + '-btn-excel',
+                                    icon: 'resources/img/botones/excel.png',
+                                    hidden: true, //descarga pendiente
                                     listeners: {
-                                        keypress: 'onTxtFilterKeypress03'
+                                        click: 'onExportXlsClick'
                                     }
-                                },
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id02 + '-A4096STREF',
-                                    //emptyText: 'Estado Carga', //labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                                    store: new Ext.data.SimpleStore({
-                                        fields: ['code', 'name'],
-                                        data: [
-                                            ["", "TODOS"],
-                                            ["1", "MATCH"],
-                                            ["0", "UNMATCH"],
-                                            ["2", "PROCESADO DB RECIBOS"],
-                                            ["3", "RE-PROCESADO REF."]
-                                        ]
-                                    }),
-                                    queryMode: 'local',
-                                    triggerAction: 'all',
-                                    autoSelect: false,
-                                    forceSelection: true,
-                                    caseSensitive: false,
-                                    editable: true,
-                                    typeAhead: true,
-                                    valueField: 'code', displayField: 'name',
-                                    width: 80,
-                                    value: "",
-                                    enableKeyEvents: true,
-                                    padding: '10 2 2 2',
-                                    listeners: {
-                                        change: 'cmbfiltro_clickHandler03'
-                                    }
-                                },
-                                {
-                                    xtype: 'toolbar',
-                                    dock: 'bottom',
-                                    ui: 'footer',
-                                    margin: '1 0 1 1',
-                                    layout: {
-                                        pack: 'center'
-                                    },
-                                    fieldStyle: 'text-align:center',
-                                    defaults: {
-                                        scale: 'medium'
-                                    },
-                                    items: [
-                                        {xtype: 'tbseparator'},
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id02 + '-btnSearch',
-                                            icon: 'resources/img/botones/search.png',  
-                                            tooltip: 'Buscar',
-                                            listeners: {
-                                                click: 'search_det_loadbatch'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id02 + '-btn-asignar-cliente',
-                                            icon: 'resources/img/botones/user.png',  
-                                            tooltip: 'Asignar Cliente',
-                                            listeners: {
-                                                click: 'onfrmReferenciaManualClick'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id02 + '-btn-excel',
-                                            icon: 'resources/img/botones/excel.png',
-                                            hidden: true, //descarga pendiente
-                                            listeners: {
-                                                click: 'onExportXlsClick'
-                                            }
-                                        }
-                                        
-                                    ]
                                 }
+
                             ]
                         }
                     ]
@@ -240,17 +260,8 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.CargaRecibosBatch', {
             },
             style: 'aling:center padding: 5px;',
             items: [
-//                {
-//                    xtype: 'button',
-//                    id: prototype.id02 + '-btn-save',
-//                    text: 'Procesar',
-//                    icon: 'resources/img/botones/process.png',
-//                    listeners: {
-//                        click: 'onSaveClick'
-//                    }
-//                },
                 {
-                    text: 'Close',
+                    text: 'Cerrar',
                     id: prototype.id02 + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
                     listeners: {
