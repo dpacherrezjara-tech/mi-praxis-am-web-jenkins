@@ -160,15 +160,16 @@ Ext.define('Ext.Praxis.controller.eecta.CargaRecibos.CargaRecibosBatchController
         bean.VP_TRXOR = Ext.getCmp(prototype.id02 + '-A4096TRXOR').getValue();
         bean.VP_STREF = Ext.getCmp(prototype.id02 + '-A4096STREF').getValue();
         bean.VP_CUENT = Ext.getCmp(prototype.id02 + '-A4096CUENT').getValue();
-        
+        bean.VP_MDATX = Ext.getCmp(prototype.id02 + '-A4096MDATX').getValue();
+                
         if (bean.VP_STREF !== '' ){
-            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' && bean.VP_CUENT ===''  ){
+            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' && bean.VP_CUENT ==='' && bean.VP_MDATX === ''  ){
                 global.Msg({msg: 'Ingrese Nº Lote, Recibo o Cuenta'});
                 return;
             }
         };
         if (bean.VP_STREF === '' ){
-            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' && bean.VP_CUENT ==='' ){
+            if (bean.VP_TRXOR === '' && bean.VP_LOTE === '' && bean.VP_CUENT ==='' && bean.VP_MDATX === '' ){
                 global.Msg({msg: 'Ingrese Nº lote, Recibo o cuenta **'});
                 return;
             }
