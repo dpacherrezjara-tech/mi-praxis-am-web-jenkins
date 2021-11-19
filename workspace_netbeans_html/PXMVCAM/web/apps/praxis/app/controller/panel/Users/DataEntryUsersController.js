@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 
         }
         this.setValue("cboCity", "");
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
         this.limpiarCampos();        

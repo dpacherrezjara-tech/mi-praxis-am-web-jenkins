@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         Ext.getCmp(prototype.id + '-label_required03').hide();
         Ext.getCmp(prototype.id + '-label_CtaSubType').setWidth(110);
         Ext.getCmp(prototype.id + '-label_Category').setWidth(95);
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
 //        this.setComboBoxItemData(rec.get('A1740TIPO'));

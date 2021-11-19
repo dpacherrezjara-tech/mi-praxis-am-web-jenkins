@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryGroupController', {
      */
     // <editor-fold defaultstate="collapsed" desc="Configuracion y Validaciones">
 
-    afterRender: function() { global.AccessControlMaganer();
+    afterRender: function() { // global.AccessControlMaganer();
         var p = this.view.params;
         this.setStoreData();
         this.getDataInputs();

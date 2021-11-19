@@ -36,7 +36,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
 
     },
     getDataInputs: function() {

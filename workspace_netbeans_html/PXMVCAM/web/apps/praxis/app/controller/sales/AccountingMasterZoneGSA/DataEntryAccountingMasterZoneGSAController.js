@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterZoneGSA.DataEntryAccount
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
 
     },
     getDataInputs: function() {

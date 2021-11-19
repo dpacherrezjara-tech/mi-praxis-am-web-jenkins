@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.controller.flown.CatalogueFlight.DataEntryCatalogueFlight
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     }
     ,
     setStoreData: function() {

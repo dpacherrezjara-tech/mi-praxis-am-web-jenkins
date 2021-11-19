@@ -23,7 +23,7 @@ Ext.define('Ext.Praxis.controller.sales.AirlineMasterFile.DataEntryAirlineMaster
 //                Ext.getCmp(prototype.id + '-txtA006PAIS').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
 

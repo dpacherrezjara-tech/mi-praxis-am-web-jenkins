@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.controller.sales.CalendarBSP.DataEntryCalendarBSPControll
                 Ext.getCmp(prototype.id + '-txtA1529ISOC').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
         Ext.getCmp(prototype.id + '-txtA1529ISOC').setValue(rec.get('A1529ISOC'));
