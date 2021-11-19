@@ -167,7 +167,8 @@ public class CargaRecibosController extends BaseController {
             filter.VP_TRXOR = request.getParameter("VP_TRXOR");
             filter.VP_STREF = request.getParameter("VP_STREF");
             filter.VP_CUENT = request.getParameter("VP_CUENT");
-                        
+            filter.VP_MDATX = request.getParameter("VP_MDATX");
+            
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 18;
             start = (start != 0 ? start : 0);
@@ -634,7 +635,8 @@ public class CargaRecibosController extends BaseController {
     @RequestMapping(value = "getDonwloadDocumentInvoice")
     public @ResponseBody
     void getDonwloadDocumentInvoice(HttpServletRequest request, HttpServletResponse response) {
-        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD_DJANGO").toString();        
+//        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD_DJANGO").toString(); // NO USAR 
+        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();         
         try {            
             String vl_document_path = request.getParameter("document_path");
             String[] arrOfStr  = vl_document_path.split("/", 2);
