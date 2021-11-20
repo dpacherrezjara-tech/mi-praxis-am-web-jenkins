@@ -9,32 +9,48 @@ package net.miatech.praxis.payment;
  *
  * @author ggutierrez
  */
-public class A4113 {
-    
+public class A4115 {
     
     public String CCUST = "";
     public String PRDA = "";
-    public String PMERCHID = "";
+    public String RECTYPE = "";
+    public String MERCHID = "";
+    public String STYPECD = "";
     public String AXPAYNBR = "";
     public String PAYDATE = "";
     public String PCURRENCY = "";
     
-    public double PNETAMOU = 0;
-    public double PGROSAMOU = 0;
-    public double PDISCAMOU = 0;
-    public double PSFEEAMOU = 0;
-    public double PADJAMOUN = 0;
-    public double PTAXAMOU = 0;
-    public double ODBALAMOU = 0;
+    public String SMERCHID = "";
+    public String BSUMDATE = "";
+    public String AXPRODAT = "";
+    public String SIREFNBR = "";
+    public String SCURRENCY = "";
+    
+    public String OSETDATE = "";
+    
+    public double SGROSAMOS = 0;
+    public double GROSAMOUN = 0;
+    public double DISCAMOUN = 0;
+    public double SFEEAMOUN = 0;
+    public double TAXAMOUN = 0;
+    public double NETAMOUN = 0;
+    public double SDISCRATE = 0;
+    public double STAXRATE = 0;
+    public double TRANCOUNT = 0;
+    public int TRACKID = 0;
+    public String INSTANBR = "";
+    
+    public double SDGROSSA = 0;
+    public double SCGROSSA = 0;
     
     //Result Conciliation SUMMARY
-    public double NETAMOUNC = 0;
+    
     public double GROSAMOUNC = 0;
     public double DISCAMOUNC = 0;
-    public double SFEEAMOUNC = 0;
-    public double ADJAMOUNC = 0;
     public double TAXAMOUNC = 0;
-    public double ODBALAMOUC = 0;
+    public double NETAMOUNC = 0;
+    public double TRANCOUNTC = 0;
+    
     public String CERROR = "";
     public String desCERROR = "";
     
@@ -45,6 +61,5 @@ public class A4113 {
     public String USUP = "";
     public String FEUP = "";
     public String HOUP = "";
-    
     
 }
