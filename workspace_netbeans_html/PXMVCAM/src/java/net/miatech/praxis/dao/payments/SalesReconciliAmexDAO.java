@@ -17,6 +17,7 @@ import net.miatech.beans.A1691Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A4113Filter;
+import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -112,7 +113,22 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PADJAMOUN = rst.getDouble("PADJAMOUN");
                     beanTkt.PTAXAMOU = rst.getDouble("PTAXAMOU");
                     beanTkt.ODBALAMOU = rst.getDouble("ODBALAMOU");
-
+                    
+                    beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
+                    beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                    beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                    beanTkt.SFEEAMOUNC = rst.getDouble("SFEEAMOUNC");
+                    beanTkt.ADJAMOUNC = rst.getDouble("ADJAMOUNC");
+                    beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                    beanTkt.ODBALAMOUC = rst.getDouble("ODBALAMOUC");
+                    beanTkt.CERROR = rst.getString("CERROR");
+                    
+                    if(beanTkt.CERROR.equals("01")){
+                        beanTkt.desCERROR = "Difference";
+                    }else if(beanTkt.CERROR.equals("00")){
+                        beanTkt.desCERROR = "Conciliate";
+                    }
+                    
                     lstTkts.add(beanTkt);
                 }
                 rst.close();
@@ -142,7 +158,109 @@ public class SalesReconciliAmexDAO {
         return lstTkts;
     }
     
-    
+    public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
+
+        List<A4115Filter> lstTkts = new ArrayList<A4115Filter>(0);
+        A4115Filter beanTkt;
+        long lngTotQMATCH = 0, lngTotQBANK = 0, lngTotQBANK_R = 0, lngTotQPAY = 0, lngTotQDIFF = 0, total = 0;
+        long lngTotQTYTRA = 0, lngTotQTYDOC = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04269(?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATEFROM);
+            cstmt.setString(3, filter.IN_DATETO);
+            cstmt.setString(4, filter.IN_DATE);
+            cstmt.setString(5, filter.IN_MERCHID);
+
+            cstmt.execute();
+                
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+
+                beanTkt = new A4115Filter();
+                beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
+                beanTkt.IN_DATETO = filter.IN_DATETO.trim();
+                beanTkt.IN_DATE = filter.IN_DATE.trim();
+
+
+                beanTkt.DATE = rst.getString("DATE").trim();
+                beanTkt.PRDA = rst.getString("PRDA").trim();
+                beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
+                beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                beanTkt.STYPECD = rst.getString("STYPECD").trim();
+                beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
+                beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
+                beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
+                beanTkt.SIREFNBR = rst.getString("SIREFNBR").trim();
+                beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
+                beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+
+                beanTkt.SGROSAMOS = rst.getDouble("SGROSAMOS");
+                beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
+                beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                beanTkt.TAXAMOUN = rst.getDouble("TAXAMOUN");
+                beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
+                beanTkt.SDGROSSA = rst.getDouble("SDGROSSA");
+                beanTkt.SCGROSSA = rst.getDouble("SCGROSSA");
+                
+                beanTkt.TRANCOUNT = rst.getDouble("TRANCOUNT");
+                beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
+                beanTkt.OSETDATE = rst.getString("OSETDATE").trim();
+
+                
+                beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
+                beanTkt.TRANCOUNTC = rst.getDouble("TRANCOUNTC");
+                
+                beanTkt.CERROR = rst.getString("CERROR");
+
+                if(beanTkt.CERROR.equals("01")){
+                    beanTkt.desCERROR = "Difference";
+                }else if(beanTkt.CERROR.equals("00")){
+                    beanTkt.desCERROR = "Conciliate";
+                }
+
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
     
     // ---------------------------------------------------------------------------------------------------------------
 

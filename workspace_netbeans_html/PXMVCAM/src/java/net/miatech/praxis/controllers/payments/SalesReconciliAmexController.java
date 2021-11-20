@@ -21,6 +21,7 @@ import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.SalesReconciliAmexLogic;
 import net.miatech.praxis.payment.filter.A4113Filter;
+import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -95,4 +96,40 @@ public class SalesReconciliAmexController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "searchDetSubmission")
+    public @ResponseBody
+    String searchDetSubmission(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- SalesReconciliAmex : searchDetSubmission-------------");
+
+        map.put("success", true);
+        List<A4115Filter> lst = this.getListSubmission(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4115Filter> getListSubmission(HttpServletRequest request, Boolean bExcel) {
+
+        List<A4115Filter> lst = new ArrayList<>(0);
+        A4115Filter filter = new A4115Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4115Filter.class);
+            
+            lst = logic.loadPX570SQP04269(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+    
+    
+    
 }
