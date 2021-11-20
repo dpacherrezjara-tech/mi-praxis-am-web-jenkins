@@ -69,6 +69,10 @@ public class A2331 {
     public String RUTA3 = "";
     public String RUTA4 = "";
     public String INDCPNS = "";
+    public String INDCPNSUL = "";
+    public String INDCPN = "";
+    public String CRULE = "";
+    public String FVCTO = "";
 
     //CAMPOS A2335
     public double OPEAMOUNT = 0;
