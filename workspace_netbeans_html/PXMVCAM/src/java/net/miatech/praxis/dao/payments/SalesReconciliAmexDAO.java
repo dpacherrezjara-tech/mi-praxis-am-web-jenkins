@@ -168,7 +168,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04269(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04269(?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -180,6 +180,8 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(3, filter.IN_DATETO);
             cstmt.setString(4, filter.IN_DATE);
             cstmt.setString(5, filter.IN_MERCHID);
+            cstmt.setString(6, filter.IN_AXPAYNBR);
+            cstmt.setString(7, filter.IN_PCURRENCY);
 
             cstmt.execute();
                 
@@ -190,7 +192,10 @@ public class SalesReconciliAmexDAO {
                 beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
                 beanTkt.IN_DATETO = filter.IN_DATETO.trim();
                 beanTkt.IN_DATE = filter.IN_DATE.trim();
-
+                beanTkt.strDATE = filter.strDATE.trim();
+                beanTkt.IN_MERCHID = filter.IN_MERCHID.trim();
+                beanTkt.IN_AXPAYNBR = filter.IN_AXPAYNBR.trim();
+                beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
 
                 beanTkt.DATE = rst.getString("DATE").trim();
                 beanTkt.PRDA = rst.getString("PRDA").trim();
