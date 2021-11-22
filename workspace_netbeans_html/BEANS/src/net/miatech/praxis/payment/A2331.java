@@ -70,6 +70,9 @@ public class A2331 {
     public String RUTA4 = "";
     public String INDCPNS = "";
     public String INDCPNSUL = "";
+    public String INDCPNSL = "";
+    public String DATSABF = "";
+    public String DATSABL = "";
     public String INDCPN = "";
     public String CRULE = "";
     public String FVCTO = "";

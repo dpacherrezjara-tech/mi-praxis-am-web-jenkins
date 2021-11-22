@@ -128,9 +128,10 @@ public class DataRequestedByDateDAO {
                 objRtn.INDCPN = rs01.getString("INDCPN").trim();
                 objRtn.STUSO = rs01.getString("STUSO").trim();
                 objRtn.INDCPNS = rs01.getString("INDCPNS").trim();
-                objRtn.INDCPNSUL = rs01.getString("INDCPNSUL").trim();
+                objRtn.DATSABF = rs01.getString("DATSABF").trim();
+                objRtn.INDCPNSL = rs01.getString("INDCPNSL").trim();
                 objRtn.STUSOS = rs01.getString("STUSOS").trim();
-                objRtn.CRULE = rs01.getString("CRULE").trim();                                        
+                objRtn.DATSABL = rs01.getString("DATSABL").trim();                                        
                 objRtn.FSELEC = rs01.getString("FSELEC").trim();
                 objRtn.FECSELEC = rs01.getString("FECSELEC").trim();
                 objRtn.FVCTO = rs01.getString("FVCTO").trim();

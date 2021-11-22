@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1610,
+                            width: 1690,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1610,
+                                    width: 1690,
                                     height: 530,
                                     columnLines: true,
                                     /*features: [{
@@ -155,33 +155,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Uses', dataIndex: 'STUSOS', width: 90,
-                                            },
-                                            {
-                                                text: 'Indicator',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Cpns Sabre', dataIndex: 'INDCPNS', width: 80
-                                                    },                                                    
-                                                ]
-                                            },
-                                            {
-                                                text: 'GDS',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Last', dataIndex: 'INDCPNSUL', width: 80
-                                                    },                                                    
-                                                ]
+                                                text: 'Uses', dataIndex: 'STUSO', width: 90,
                                             },
                                             {
                                                 text: 'Uses',
@@ -197,7 +171,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Case',
+                                                text: 'Used Cpn',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -205,10 +179,49 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Rules', dataIndex: 'CRULE', width: 80
+                                                        text: 'Sabre First', dataIndex: 'INDCPNS', width: 80
+                                                    },                                                    
+                                                ]
+                                            },                                            
+                                            {
+                                                text: 'Date Upd.',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'First Sabre', dataIndex: 'DATSABF', width: 80
+                                                    },                                                    
+                                                ]
+                                            },                                            
+                                            {
+                                                text: 'Used Cpn',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Sabre Last', dataIndex: 'INDCPNSL', width: 80
                                                     },                                                    
                                                 ]
                                             },
+                                            {
+                                                text: 'Date Upd.',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Last Sabre', dataIndex: 'DATSABL', width: 80
+                                                    },                                                    
+                                                ]
+                                            },  
                                             {
                                                 text: 'Selection',
                                                 defaults: {
