@@ -269,7 +269,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
         
         this.beanSubmission.IN_MERCHID = rowData.data.PMERCHID;
+        this.beanSubmission.IN_AXPAYNBR = rowData.data.AXPAYNBR;
+        this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
         
+        this.beanSubmission.strDATE = rowData.data.DATE;
 //        console.log(this.beanSubmission);
         
         me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);
@@ -299,8 +302,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                         });
                     } else {
                         console.log(obj);
-//                        var data = obj.data.items[0].data;
-
+                        
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+                        
+                        if (data.IN_DATE === "PAYDATE") {
+                            Ext.getCmp(prototype.id + '-htDateSunmission').setText('Payment');
+                            Ext.getCmp(prototype.id + '-gridDetSubmission').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID 
+                                                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                        } else {
+                            Ext.getCmp(prototype.id + '-htDateSunmission').setText('Processing');
+                            Ext.getCmp(prototype.id + '-gridDetSubmission').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID 
+                                                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                        }
+                        
+                                                                
+                        
+                                                                
+                                                                
 //                        Ext.getCmp(prototype.id + '-gridDetSubmission').setTitle('<center style="font-size:12px;">' + data.strTitulo + '</center>');
 //                        Ext.getCmp(prototype.id + '-lblTotB_QMATCH').setText(Ext.util.Format.number(data.lngTotQMATCH, '0,000'));
 //                        Ext.getCmp(prototype.id + '-lblTotB_QPAS48').setText(Ext.util.Format.number(data.lngTotQPAS48, '0,000'));
