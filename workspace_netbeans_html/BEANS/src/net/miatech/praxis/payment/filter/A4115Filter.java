@@ -21,9 +21,9 @@ public class A4115Filter extends A4115 {
     
 //    public String IN_SDATE = "";
 //    public String IN_EPAAMEDATA = "";
-//    public String IN_MERCHN = "";
-//    public String IN_PRDA = "";
-//    public String IN_SETTLD = "";
+    public String strDATE = "";
+    public String IN_AXPAYNBR = "";
+    public String IN_PCURRENCY = "";
     public String IN_MERCHID = "";
     public String DES_MERCHANT = "";
     
