@@ -223,54 +223,47 @@
             <file>file:/D:/repository/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/ConciliationARC/DataEntryConciliationARCController.js</file>
         </group>
         <group name="PRAXIS AM GIT">
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/panel/PerPro/DataEntryPerProController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/payments/DataRequestedByBankController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/classes/App.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/jsp/login.jsp</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterProcess2/DataEntryReverseAccountingMasterProcess2Controller.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/classes/ProMail.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/panel/UsersForm/Info.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/screens/ScrProrrateoNewController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/program/ProrrateoNewLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/CommissionBSPASRController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/CommissionBSPASRForm/DataEntrySend.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/DefaultController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/program/ProMasterTicketLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/sales/CommissionBSPASRLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProMasterTicketForm/DataEntry.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/payments/InputsLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/sales/InvoiceCommissionConsortiaController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/payments/InputsController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProFacsimil/FacsimilNewController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/CommissionBSPASR/DataEntrySendCommissionBSPASRController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterPagaTodo/DataEntryAccountingMasterPagaTodoController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AgentsMasterFile/AgentsMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterBINES/DataEntryAccountingMasterBINESController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/AircraftMaster/DataEntryAircraftMasterController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AuditControl/DataEntryAuditControlController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/ZoneMasterFile/DataEntryZoneMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/RegionsMasterFile/DataEntryRegionsMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/AccountingMasterProcess/DataEntryAccountingMasterProcessController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/AccountingMasterFlown/DataEntryAccountingMasterFlownController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterSales/DataEntryAccountingMasterSalesController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterInvoiceForm/DataEntryAccountingMasterInvoiceFormController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterZoneGSA/DataEntryAccountingMasterZoneGSAController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterProcess2/DataEntryAccountingMasterProcess2Controller.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/program/UserDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProFacsimil/ProFacsimilController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/screens/ScrAdmAcmForm.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/payments/InputsDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/payments/InputsForm/Info.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/sales/AccountingMasterTAXForm/Filters.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/panel/UsersForm/DataEntry.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/panel/UsersController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProMasterTicketForm/Info.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/RatesExchange/DataEntryRatesExchangeController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterUATP/DataEntryAccountingMasterUATPController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterTNU/DataEntryAccountingMasterTNUController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/resources/js/global.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/program/UserLogic.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/panel/PanelLogic.java</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterTravel/DataEntryAccountingMasterTravelController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AgentsMasterFile/DataEntryAgentsMasterFileController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/panel/Users/UsersController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/flown/ForecastDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProFacsimilForm/Info.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/ConsortiumCommissionsDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/program/ProMasterTicketController.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/program/ProMasterTicketForm/ProMasterTicketForm.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/ProMasterTicketController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/panel/PanelDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/DataEntryLogProMasterTicketController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/panel/Users/DataEntryUsersController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/program/ProMasterTicket/DataEntryProMasterTicketController.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/sales/CommissionBSPASRDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/resources/js/controllers/frmLogin.js</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/program/ProMasterTicketDAO.java</file>
-            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterProcess2/AccountingMasterProcess2Controller.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterCCAM/DataEntryAccountingMasterCCAMController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterTAX/DataEntryAccountingMasterTAXController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/SalesAnalysisByAgent/SalesAnalysisByAgentController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AirlineMasterFile/DataEntryAirlineMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterDecision/DataEntryAccountingMasterDecisionController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/Root.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/main/MainController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/MasterBundles/DataEntryMasterBundlesController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/BundlesReport/BundlesReportController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/TAXRATD/DataEntryTAXRATDController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingSupplier/DataEntryAccountingSupplierController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/Resolution024/DataEntryResolution024Controller.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/TAXDetail/DataEntryTAXDetailController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/CountryMasterFile/DataEntryCountryMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/TAXTTBS/DataEntryTAXTTBSController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingMasterClient/DataEntryAccountingMasterClientController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/AccountingTaxdetailForm/DataEntryAccountingTaxdetailController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/CalendarARC/DataEntryCalendarARCController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/CityMasterFile/DataEntryCityMasterFileController.js</file>
+            <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/WEB-INF/configs/CFGI0001.properties</file>
         </group>
     </open-files>
 </project-private>

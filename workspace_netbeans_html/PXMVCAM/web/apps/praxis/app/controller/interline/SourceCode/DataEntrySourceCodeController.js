@@ -46,7 +46,7 @@
                 }
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     mostrarData: function() {
         this.setValue('txtCODSOUR', this.bean.CODSOUR);

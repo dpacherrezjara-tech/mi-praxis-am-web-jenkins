@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.controller.interline.AccountingMasterInterli.DataEntryAcc
                 break;
         }
         this.focus('txtA1740TITRA');
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     Handler_Change_DocumentType: function() {
         var TypeDocument = this.getValue("txtA1740TITRA");

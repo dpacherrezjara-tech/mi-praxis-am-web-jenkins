@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.controller.flown.SSIMDuplicated.DataEntrySSIMDuplicatedCo
                 Ext.getCmp(prototype.id01+'-btn-cancel').show();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     onPrevClick: function() {
         var all = this.p.all;

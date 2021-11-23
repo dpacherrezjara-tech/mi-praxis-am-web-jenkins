@@ -32,7 +32,7 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     onFocusLeaveOpe: function(obj) {
         console.log(obj.getValue());
