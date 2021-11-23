@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1690,
+                width: 1750,
                 height: 'auto',
                 align: 'center'
             },
@@ -118,7 +118,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                     {text: 'Date', dataIndex: 'LINKDATE', width: 75},
                                                     {text: 'Time', dataIndex: 'LINKHORA', width: 75}
                                                 ]
-                                            },                                            
+                                            },
                                             {
                                                 text: 'Date',
                                                 defaults: {
@@ -151,7 +151,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Cpns Sales', dataIndex: 'INDCPN', width: 80
-                                                    },                                                    
+                                                    },
                                                 ]
                                             },
                                             {
@@ -167,7 +167,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Last', dataIndex: 'STUSOS', width: 80
-                                                    },                                                    
+                                                    },
                                                 ]
                                             },
                                             {
@@ -180,9 +180,9 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Sabre First', dataIndex: 'INDCPNS', width: 80
-                                                    },                                                    
+                                                    },
                                                 ]
-                                            },                                            
+                                            },
                                             {
                                                 text: 'Date Upd.',
                                                 defaults: {
@@ -193,9 +193,9 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'First Sabre', dataIndex: 'DATSABF', width: 80
-                                                    },                                                    
+                                                    },
                                                 ]
-                                            },                                            
+                                            },
                                             {
                                                 text: 'Used Cpn',
                                                 defaults: {
@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Sabre Last', dataIndex: 'INDCPNSL', width: 80
-                                                    },                                                    
+                                                    },
                                                 ]
                                             },
                                             {
@@ -219,11 +219,11 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Last Sabre', dataIndex: 'DATSABL', width: 80
-                                                    },                                                    
+                                                    },
                                                 ]
-                                            },  
+                                            },
                                             {
-                                                text: 'Selection',
+                                                text: 'Accounting',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -231,15 +231,15 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Flag', dataIndex: 'FSELEC', width: 80
-                                                    },   
+                                                        text: 'ID', dataIndex: 'IDCON', width: 80
+                                                    },
                                                     {
-                                                        text: 'Date', dataIndex: 'FECSELEC', width: 80
-                                                    }, 
+                                                        text: 'Date', dataIndex: 'FCONT', width: 80
+                                                    },
                                                 ]
                                             },
                                             {
-                                                text: 'Expiration',
+                                                text: 'Rule',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -247,10 +247,163 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'FVCTO', width: 80
-                                                    },                                                       
+                                                        text: 'Policy', dataIndex: 'strDescCRULE', width: 80
+                                                    },
                                                 ]
                                             },
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridStatusSabre',
+                            hidden: true,
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+//                            height: 'auto',
+                            width: 1750,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataStatusSabre',
+                                    width: 1750,
+                                    height: 530,
+                                    columnLines: true,
+                                    /*features: [{
+                                     ftype: 'summary'
+                                     }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Reception',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'A3676FRECE', width: 80,
+                                                        /*renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                         metaData.style = "color:#057ECB;";
+                                                         value = '<b>' + value + '</b>';
+                                                         return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                         }*/
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Ticket', dataIndex: 'TICKET', width: 100,
+                                            },
+                                            {
+                                                text: 'Coupon', dataIndex: 'A3676CUPON', width: 60,
+                                            },
+                                            {
+                                                text: 'Seq', dataIndex: 'A3676SEQ', width: 50,
+                                            },
+                                            {
+                                                text: 'Status',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Concili. Cpn', dataIndex: 'A3676STCON', width: 90,
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Robot',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Status', dataIndex: 'A3676STROB', width: 55,
+                                                    },
+                                                    {
+                                                        text: 'Coupon', dataIndex: 'A3676CPNRB', width: 60,
+                                                    },
+                                                    {
+                                                        text: 'Curr.', dataIndex: 'A3676CURRB', width: 55,
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'A3676MONRB', width: 75,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Reference', dataIndex: 'A3676REFRB', width: 300,
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Curr.', dataIndex: 'A3676CUR', width: 55,
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'A3676MONTO', width: 75,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background:";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Status Coupon',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Start', dataIndex: 'A3676STINI', width: 90,
+                                                    },
+                                                    {
+                                                        text: 'End', dataIndex: 'A3676STFIN', width: 90,
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Description', dataIndex: 'A3676DESCR', width: 90,
+                                            },
+                                            {
+                                                text: 'Result', dataIndex: 'A3676RESUL', width: 120,
+                                            },
+                                            {
+                                                text: 'Reference', dataIndex: 'A3676REFER', width: 300,
+                                            },
+                                                    /*{
+                                                     text: 'Link',
+                                                     defaults: {
+                                                     menuDisabled: true,
+                                                     sortable: false,
+                                                     align: 'center'
+                                                     },
+                                                     columns: [
+                                                     {text: 'Date', dataIndex: 'LINKDATE', width: 75},
+                                                     {text: 'Time', dataIndex: 'LINKHORA', width: 75}
+                                                     ]
+                                                     }, */
                                         ]
                                     }
                                 }

@@ -52,6 +52,7 @@ public class A2331Filter extends A2331 {
     public String strDescCountry = "";
     public String strDescCard = "";
     public String strDescStatus = "";
+    public String strDescCRULE = "";
     public String strDescMerchn = "";
     public String strTitulo = "";
     public String strUsoCpn1 = "";

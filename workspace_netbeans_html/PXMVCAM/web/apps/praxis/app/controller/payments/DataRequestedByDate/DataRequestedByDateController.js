@@ -142,11 +142,11 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         var storeComboDataDay = win.getStoreDays(true);
 
         /*var month = this.fecha.getMonth() + 1;
-
-        if (month < 10) {
-            month = '0' + month;
-        }
-*/
+         
+         if (month < 10) {
+         month = '0' + month;
+         }
+         */
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateDay').bindStore(storeComboDataDay);
@@ -172,8 +172,8 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 //["SENTDATE", "Reception Date"],
                 //["SALEDATE", "Sale Date"],
                 ["FECR", "Creation Date"],
-                //["FECSELEC", "GDS Date"],
-                //["DATEN", "Bank Date"]
+                        //["FECSELEC", "GDS Date"],
+                        //["DATEN", "Bank Date"]
             ]
         }));
         cmbFecFiltro.setValue("FECR");
@@ -181,8 +181,18 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         this.btnSearch_click();
     },
     cmbTranType_changeHandler: function() {
-        this.setFormatParameter()
-        this.btnSearch_click();
+        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
+        console.log(selectedValue);
+        switch (selectedValue) {
+            case 'cb':
+                this.setFormatParameter();
+                this.search();
+                break;
+            case 'ss':
+                this.setFormatParameterInteract();
+                this.searchInteract();
+                break;
+        }
     },
     setFormatParameter: function() {
         me.bean = {};
@@ -203,11 +213,30 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         };
         console.log(searchParams);
     },
-    btnSearch_click: function(obj, e) {
+    setFormatParameterInteract: function() {
+        me.bean = {};
 
+        me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateDay').getValue();
+
+        me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+        console.log(searchParams);
+    },
+    btnSearch_click: function(obj, e) {
+        
         Ext.getCmp(prototype.id + '-pie').show();
-        this.setFormatParameter();
-        this.search();
+        this.cmbTranType_changeHandler();
+        //this.setFormatParameter();
+        //this.search();
     },
     search: function() {
         win.lblUser_toolTip("Estructura: A2331");
@@ -270,6 +299,49 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },
+    searchInteract: function() {
+        win.lblUser_toolTip("Estructura: A3676");
+        me.panelActual = '-panelGridStatusSabre';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchInteractSabre'
+                }, listeners: {
+                    beforeload: function(obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                        obj.proxy.extraParams = searchParams;
+                    },
+                    load: function(obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                        console.log(obj.data);
+                        var pag = Ext.getCmp(prototype.id + '-paggin');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            var data = obj.data.items[0].data;
+                            console.log(data);
+                        }
+                        me.setWidthPie();
+                    }
+                }
+            });
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataStatusSabre').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+        }
+    },
     onViewDetCard: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
 //        me.drillDown.push(me.panelActual);
@@ -298,7 +370,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
 
         me.paramsDetail.beanString = JSON.stringify(this.beanDetCard);
         this.setGridDataDetCard_2();
-    },        
+    },
     onViewDetUsos: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         me.drillDown.push(me.panelActual);
@@ -333,7 +405,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 msg: 'Data not found.'
             });
         }
-    },    
+    },
     validateFields: function() {
         var msj = '';
         var bean = searchParams.bean;
@@ -479,6 +551,9 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         switch (me.panelActual) {
             case  '-panelGridData':
                 me.pagginActual = '-paggin';
+                break;
+            case  '-panelGridStatusSabre':
+                me.pagginActual = '-paggin2';
                 break;
         }
     },

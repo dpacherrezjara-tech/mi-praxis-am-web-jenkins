@@ -76,6 +76,8 @@ public class A2331 {
     public String INDCPN = "";
     public String CRULE = "";
     public String FVCTO = "";
+    public String FCONT = "";
+    public String IDCON = "";
 
     //CAMPOS A2335
     public double OPEAMOUNT = 0;

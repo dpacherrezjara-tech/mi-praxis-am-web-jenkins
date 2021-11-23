@@ -148,6 +148,19 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
+                {
+                    xtype: 'radiogroup',
+                    margin: '0 0 0 40',
+                    id: prototype.id + '-radiogroupType',
+                    items: [
+                        {boxLabel: '<strong style="color:#148D28" >Chargeback</strong>', name: 'rbgType', inputValue: 'cb', width: 100, checked: true},
+                        {xtype: 'tbspacer', width: 30},
+                        {boxLabel: '<strong style="color:#148D28" >Status Interact Sabre</strong>', name: 'rbgType', inputValue: 'ss', width: 150}
+                    ],
+                    listeners: {
+                        change: 'cmbTranType_changeHandler'
+                    }
+                }
                 /*{
                     xtype: 'combo',
                     id: prototype.id + '-cmbCardType',
