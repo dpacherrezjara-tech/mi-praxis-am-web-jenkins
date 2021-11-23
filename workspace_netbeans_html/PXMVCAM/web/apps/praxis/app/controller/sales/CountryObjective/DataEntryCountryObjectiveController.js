@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.controller.sales.CountryObjective.DataEntryCountryObjecti
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     // <editor-fold defaultstate="collapsed" desc="mostrarData">
     mostrarData: function(rec) {

@@ -47,7 +47,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterFlown.DataEntryAccountin
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     setStoreCombos: function(tipo) {
         var combo, value;

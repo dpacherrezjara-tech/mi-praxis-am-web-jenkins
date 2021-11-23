@@ -11,8 +11,7 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
     },
     afterRender: function(){
         this.p = this.view.params;
-        console.log("this.p");
-        //console.log(this.p.rec.data.CITY);
+        
         switch( this.p.action ){
             case 'U':
                 this.mostrarData(this.p.rec);
@@ -20,20 +19,19 @@ Ext.define('Ext.Praxis.controller.panel.Users.DataEntryUsersController',{
                 Ext.getCmp(prototype.id+'-btn-update').show();
                 Ext.getCmp(prototype.id+'-btn-delete').show();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
-                this.setValue("cboCity", this.p.rec.data.CITY);
                 break;
             case 'I':
                 Ext.getCmp(prototype.id+'-btn-save').show();
                 Ext.getCmp(prototype.id+'-btn-update').hide();
                 Ext.getCmp(prototype.id+'-btn-delete').hide();
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
-                this.setValue("cboCity", "");
 //                Ext.getCmp(prototype.id + '-obj').setValue("X");
 //                Ext.getCmp(prototype.id + '-obj').focus();
-                break;                                
+                break;                
+                
         }
-        
-        global.AccessControlMaganer();
+        this.setValue("cboCity", "");
+        // global.AccessControlMaganer();
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
         this.limpiarCampos();        

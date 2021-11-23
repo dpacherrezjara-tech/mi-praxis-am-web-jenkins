@@ -1412,23 +1412,22 @@ var LarSyrExt = function () {
             console.log(prototype.id);
             console.log(accessSelect);
             if(accessSelect.PERMC==='N'){
-                //if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').hide();
-                //if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').hide();
-            }/*else{
+                if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').hide();
+                if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').hide();
+            }else{
                 if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').show();
                 if(Ext.getCmp(prototype.id+'-btnAdd')) Ext.getCmp(prototype.id+'-btnAdd').show();
-            }*/
+            }
             if(accessSelect.PERMM==='N'){
-                //if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').hide();
-            }/*else{
-                //if(Ext.getCmp(prototype.id+'-btn-save')) Ext.getCmp(prototype.id+'-btn-save').show();
+                if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').hide();
+            }else{
                 if(Ext.getCmp(prototype.id+'-btn-update')) Ext.getCmp(prototype.id+'-btn-update').show();
-            }*/
+            }
             if(accessSelect.PERME==='N'){
-                //if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').hide();
-            }/*else{
+                if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').hide();
+            }else{
                 if(Ext.getCmp(prototype.id+'-btn-delete')) Ext.getCmp(prototype.id+'-btn-delete').show();
-            }*/
+            }
         }
     };
     this.PX_UTILS_URL = 'js/praxis.ui-1.0/praxis.utils-1.0.js';

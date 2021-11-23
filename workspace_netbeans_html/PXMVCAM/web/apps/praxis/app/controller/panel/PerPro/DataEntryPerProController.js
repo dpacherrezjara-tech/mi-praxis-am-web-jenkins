@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.panel.PerPro.DataEntryPerProController',{
 //                Ext.getCmp(prototype.id + '-obj').focus();
                 break;                
         }
-        global.AccessControlMaganer();
+        // global.AccessControlMaganer();
     },
     onMostrarCampoChange: function(cmp, newValue, oldValue, eOpts) {
         this.limpiarCampos();

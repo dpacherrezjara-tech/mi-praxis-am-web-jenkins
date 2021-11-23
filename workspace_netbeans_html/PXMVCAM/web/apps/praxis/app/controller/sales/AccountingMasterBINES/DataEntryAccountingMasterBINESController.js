@@ -257,6 +257,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterBINES.DataEntryAccountin
             }
         });
     },
+    onCancelClick: function(btn){
+        this.view.close();
+    },
     validateForm: function() {
 
 
