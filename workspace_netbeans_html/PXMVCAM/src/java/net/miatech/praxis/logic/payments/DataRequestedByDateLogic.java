@@ -16,6 +16,7 @@ import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A2290Filter;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.praxis.payment.filter.A2345Filter;
+import net.miatech.beans.A3676Filter;
 
 public class DataRequestedByDateLogic {
 
@@ -27,5 +28,9 @@ public class DataRequestedByDateLogic {
     
     public List<A2331Filter> loadPX573SQP04266(A2331Filter filter) throws SQLException, Exception {
         return DataRequestedByDateDAO.loadPX573SQP04266(filter);
+    } 
+    
+    public List<A3676Filter> loadPX573SQP04276(A3676Filter filter) throws SQLException, Exception {
+        return DataRequestedByDateDAO.loadPX573SQP04276(filter);
     }        
 }

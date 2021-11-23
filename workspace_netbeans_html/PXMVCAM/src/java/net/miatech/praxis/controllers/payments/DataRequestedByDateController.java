@@ -20,6 +20,7 @@ import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.DataRequestedByDateLogic;
 import net.miatech.praxis.payment.filter.A2331Filter;
+import net.miatech.beans.A3676Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -105,6 +106,55 @@ public class DataRequestedByDateController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "searchInteractSabre")
+    public @ResponseBody
+    String searchInteractSabre(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- DataRequestedByDate : searchInteractSabre-------------");
+
+        map.put("success", true);
+        List<A3676Filter> lst = this.getListInteractSabre(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A3676Filter> getListInteractSabre(HttpServletRequest request, Boolean bExcel) {
+
+        List<A3676Filter> lst = new ArrayList<>(0);
+        A3676Filter filter = new A3676Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new DataRequestedByDateLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3676Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX573SQP04276(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -148,7 +198,7 @@ public class DataRequestedByDateController extends BaseController {
             Iterator iter = listaData.iterator();
              // ====== CREANDO TITULOS ======================================
 
-             // ======  Nivel 1 ==========
+            // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
             Cell CH1_0 = row1.createCell(0);
             Cell CH1_1 = row1.createCell(1);
@@ -169,6 +219,7 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH1_16 = row1.createCell(16);
             Cell CH1_17 = row1.createCell(17);
             Cell CH1_18 = row1.createCell(18);
+            Cell CH1_19 = row1.createCell(19);
 
             CH1_0.setCellValue("Creation");
             CH1_1.setCellValue("Sending");
@@ -182,13 +233,14 @@ public class DataRequestedByDateController extends BaseController {
             CH1_9.setCellValue("Status");
             CH1_10.setCellValue("Indicator");
             CH1_11.setCellValue("Uses");
-            CH1_12.setCellValue("Indicator");
-            CH1_13.setCellValue("GDS");
-            CH1_14.setCellValue("Uses");
-            CH1_15.setCellValue("Case");
-            CH1_16.setCellValue("Selection");
-            CH1_17.setCellValue("");
-            CH1_18.setCellValue("Expiration");
+            CH1_12.setCellValue("Uses");
+            CH1_13.setCellValue("Used Cpn");
+            CH1_14.setCellValue("Date upd.");
+            CH1_15.setCellValue("Used Cpn");
+            CH1_16.setCellValue("Date upd.");
+            CH1_17.setCellValue("Selection");
+            CH1_18.setCellValue("");
+            CH1_19.setCellValue("Expiration");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -209,15 +261,16 @@ public class DataRequestedByDateController extends BaseController {
             CH1_16.setCellStyle(headerStyle);
             CH1_17.setCellStyle(headerStyle);
             CH1_18.setCellStyle(headerStyle);
+            CH1_19.setCellStyle(headerStyle);
 
- //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 17));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
             ++vj;
              //============================================
 
-             // ======  Nivel 2 ==========
+            // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
             Cell CH2_0 = row2.createCell(0);
             Cell CH2_1 = row2.createCell(1);
@@ -238,6 +291,7 @@ public class DataRequestedByDateController extends BaseController {
             Cell CH2_16 = row2.createCell(16);
             Cell CH2_17 = row2.createCell(17);
             Cell CH2_18 = row2.createCell(18);
+            Cell CH2_19 = row2.createCell(19);
 
             CH2_0.setCellValue("Date");
             CH2_1.setCellValue("Bank to AM");
@@ -251,13 +305,14 @@ public class DataRequestedByDateController extends BaseController {
             CH2_9.setCellValue("");
             CH2_10.setCellValue("Cpns Sales");
             CH2_11.setCellValue("");
-            CH2_12.setCellValue("Cpns Sabre");
-            CH2_13.setCellValue("Last");
-            CH2_14.setCellValue("Last");
-            CH2_15.setCellValue("Rules");
-            CH2_16.setCellValue("Flag");
-            CH2_17.setCellValue("Date");
+            CH2_12.setCellValue("Last");
+            CH2_13.setCellValue("Sabre First");
+            CH2_14.setCellValue("First Sabre");
+            CH2_15.setCellValue("Sabre Last");
+            CH2_16.setCellValue("Last Sabre");
+            CH2_17.setCellValue("Flag");
             CH2_18.setCellValue("Date");
+            CH2_19.setCellValue("Date");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -278,14 +333,15 @@ public class DataRequestedByDateController extends BaseController {
             CH2_16.setCellStyle(headerStyle);
             CH2_17.setCellStyle(headerStyle);
             CH2_18.setCellStyle(headerStyle);
+            CH2_19.setCellStyle(headerStyle);
 
- //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
             ++vj;
-             //============================================
+            //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -308,6 +364,7 @@ public class DataRequestedByDateController extends BaseController {
                 Cell rcell16 = row1.createCell(16);
                 Cell rcell17 = row1.createCell(17);
                 Cell rcell18 = row1.createCell(18);
+                Cell rcell19 = row1.createCell(19);
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
                 rcell1.setCellValue(listaData.get(vi).SENTDATE);
@@ -320,14 +377,15 @@ public class DataRequestedByDateController extends BaseController {
                 rcell8.setCellValue(listaData.get(vi).TICKET);
                 rcell9.setCellValue(listaData.get(vi).strDescStatus);
                 rcell10.setCellValue(listaData.get(vi).INDCPN);
-                rcell11.setCellValue(listaData.get(vi).STUSOS);
-                rcell12.setCellValue(listaData.get(vi).INDCPNS);
-                rcell13.setCellValue(listaData.get(vi).INDCPNSUL);
-                rcell14.setCellValue(listaData.get(vi).STUSOS);
-                rcell15.setCellValue(listaData.get(vi).CRULE);
-                rcell16.setCellValue(listaData.get(vi).FSELEC);
-                rcell17.setCellValue(listaData.get(vi).FECSELEC);
-                rcell18.setCellValue(listaData.get(vi).FVCTO);
+                rcell11.setCellValue(listaData.get(vi).STUSO);
+                rcell12.setCellValue(listaData.get(vi).STUSOS);
+                rcell13.setCellValue(listaData.get(vi).INDCPNS);
+                rcell14.setCellValue(listaData.get(vi).DATSABF);
+                rcell15.setCellValue(listaData.get(vi).INDCPNSL);
+                rcell16.setCellValue(listaData.get(vi).DATSABL);
+                rcell17.setCellValue(listaData.get(vi).IDCON);
+                rcell18.setCellValue(listaData.get(vi).FCONT);
+                rcell19.setCellValue(listaData.get(vi).strDescCRULE);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -352,8 +410,9 @@ public class DataRequestedByDateController extends BaseController {
             sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true);
+            sheet.autoSizeColumn(19, true);
 
-             //============================================
+            //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
