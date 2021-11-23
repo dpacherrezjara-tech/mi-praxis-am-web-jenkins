@@ -90,6 +90,7 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             fieldStyle: 'text-align: center;'
 //                    padding: '5px 7px 5px 0px'
                         },
+                        
                         {xtype: 'tbspacer', width: 4},
                         {
                             xtype: 'combo',
@@ -128,9 +129,9 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             valueField: 'code', displayField: 'name',
                             width: 60,
                             typeAhead: true,
-                            emptyText: 'All',                            
+                            emptyText: 'All',
                             listeners: {
-                                change: 'onFromMonthChange',                               
+                                change: 'onFromMonthChange',
                                 keypress: 'onTextKeypress'
                             }
                         },
@@ -148,9 +149,9 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             valueField: 'code', displayField: 'name',
                             emptyText: 'All',
                             width: 60,
-                            typeAhead: true,                            
+                            typeAhead: true,
                             listeners: {
-                                change: 'onFromDayChange',                                
+                                change: 'onFromDayChange',
                                 keypress: 'onTextKeypress'
                             }
                         },
@@ -232,14 +233,14 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             triggerAction: 'all',
                             autoSelect: false,
                             enableKeyEvents: true,
-                            autocomplete: true,                          
+                            autocomplete: true,
                             readOnly: false,
                             editable: false,
                             valueField: 'code',
                             displayField: 'name',
                             emptyText: 'All',
                             width: 180,
-                            labelWidth:60,
+                            labelWidth: 60,
                             hidden: false
                         }
                         ,
@@ -253,16 +254,17 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             enableKeyEvents: true,
                             autocomplete: true,
                             allowBlank: true,
+                            selectOnFocus: true,
                             readOnly: false,
-                            editable: false,
+                            editable: true,
                             valueField: 'A006PAIS',
                             displayField: 'A006NOMBRE',
                             emptyText: 'All',
                             width: 290,
-                             labelWidth:60,
+                            labelWidth: 60,
                             anyMatch: false,
                             hidden: false,
-                            hiddenLabel: false                            
+                            hiddenLabel: false
                         }
                         ,
                         {
@@ -297,11 +299,12 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                                     queryMode: 'local',
                                     triggerAction: 'all',
                                     autoSelect: false,
+                                    selectOnFocus: true,
                                     enableKeyEvents: true,
                                     autocomplete: true,
                                     allowBlank: true,
                                     readOnly: false,
-                                    editable: false,
+                                    editable: true,
                                     valueField: 'CODE',
                                     displayField: 'NAME',
                                     emptyText: 'All',
@@ -326,7 +329,7 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                                     enforceMaxLength: true,
                                     labelWidth: 120,
                                     width: 250,
-                                    hidden: false,
+                                    hidden: true,
                                     hiddenLabel: false,
                                     maskRe: /[0-9]/
                                 },
@@ -344,7 +347,7 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                                     maxLength: 13,
                                     width: 220,
                                     labelWidth: 60,
-                                    hidden: false,
+                                    hidden: true,
                                     hiddenLabel: false,
                                     maskRe: /[0-9]/
                                 }
@@ -372,11 +375,14 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             fieldLabel: 'Search By',
                             horizontal: true,
                             items: [
-                                {boxLabel: '<strong >ACCB </strong>', name: 'rb', inputValue: 'rbACCB', width: 80, checked: true},
-                                {boxLabel: '<strong >Settlement </strong>', name: 'rb', inputValue: 'rbSETT', width: 120},
-                                {boxLabel: '<strong >Payments </strong>', name: 'rb', inputValue: 'rbPAY', width: 120},
-                                {boxLabel: '<strong >Source </strong>', name: 'rb', inputValue: 'btnCITY', width: 100}
-                            ]
+                                {boxLabel: '<strong >ACCB </strong>', name: 'rbgSearch', inputValue: 'rbACCB', width: 80, checked: true},
+                                {boxLabel: '<strong >Settlement </strong>', name: 'rbgSearch', inputValue: 'rbSETT', width: 120},
+                                {boxLabel: '<strong >Payments </strong>', name: 'rbgSearch', inputValue: 'rbPAY', width: 120},
+                                //{boxLabel: '<strong >Source </strong>', name: 'rbgSearch', inputValue: 'rbSRC', width: 100}
+                            ],
+                            listeners: {
+                                change: 'rbgPRINC_ChangeType'
+                            }
                         }
                         ,
                         {xtype: 'tbspacer', width: 900}
@@ -402,11 +408,14 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             fieldLabel: 'Group By',
                             horizontal: false,
                             items: [
-                                {boxLabel: '<strong style="color:#046aaa" >Currency   </strong>', name: 'rbn', inputValue: 'rbCURR', width: 100, checked: true},
-                                {boxLabel: '<strong style="color:#046aaa" >Country </strong>', name: 'rbn', inputValue: 'rbCOUN', width: 100},
-                                {boxLabel: '<strong style="color:#046aaa" >Credit Card Code </strong>', name: 'rbn', inputValue: 'rbTARJ', width: 130}
+                                {boxLabel: '<strong style="color:#046aaa" >Currency   </strong>', name: 'rbgGroup', inputValue: 'rbCURR', width: 100, checked: true},
+                                {boxLabel: '<strong style="color:#046aaa" >Country </strong>', name: 'rbgGroup', inputValue: 'rbCOUN', width: 100},
+                                {boxLabel: '<strong style="color:#046aaa" >Credit Card Code </strong>', name: 'rbgGroup', inputValue: 'rbTARJ', width: 130}
 
-                            ]
+                            ],
+                            listeners: {
+                                change: 'rbgSELEC_ChangeType'
+                            }
                         }
                         ,
                         {
@@ -414,8 +423,12 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Filters', {
                             id: prototype.id + '-chkDetail',
                             margin: '0 20 0 30',
                             width: 80,
+                            //hidden:true,
                             boxLabel: '<b>Detail</b>',
-                            inputValue: '1'
+                            inputValue: '1',
+                            listeners: {
+                                change: 'chkDetail_ChangeValue'
+                            }
                         }
                     ]
                 }
