@@ -10,9 +10,9 @@ import java.util.List;
 import net.miatech.beans.A1691Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesReconciliAmexDAO;
-import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
+import net.miatech.praxis.payment.filter.A4116Filter;
 
 /**
  *
@@ -33,7 +33,11 @@ public class SalesReconciliAmexLogic {
     
     public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04269(filter);
-   }
+    }
+    
+    public List<A4116Filter> loadPX570SQP04270(A4116Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04270(filter);
+    }
     
     
     
