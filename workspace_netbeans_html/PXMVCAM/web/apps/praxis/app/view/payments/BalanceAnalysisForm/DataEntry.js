@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysis.DataEntry',{
                 style: 'margin: 3px;',
                 border: false
             },
+            
             items:[
                 {
                     xtype: 'panel',
