@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterInvoiceForm.DataEntryAcc
                 Ext.getCmp(prototype.id2 + '-btn-delete').show();
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
 
     },
     onLoadCmbMasterFG: function (opcion) {

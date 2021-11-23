@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.controller.sales.Resolution024.DataEntryResolution024Cont
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
     },
     setStoreData: function() {
 //        var cmbCurrency = Ext.getCmp(prototype.id + '-cmbCurrency');

@@ -35,7 +35,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterBINES.DataEntryAccountin
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
 
     },
     setDataStore: function() {
@@ -256,6 +256,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterBINES.DataEntryAccountin
                 }
             }
         });
+    },
+    onCancelClick: function(btn){
+        this.view.close();
     },
     validateForm: function() {
 

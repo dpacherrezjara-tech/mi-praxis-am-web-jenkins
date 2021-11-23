@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.controller.sales.AuditControl.DataEntryAuditControlContro
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
     },
     setStoreData: function() {
         this.loadCombo();

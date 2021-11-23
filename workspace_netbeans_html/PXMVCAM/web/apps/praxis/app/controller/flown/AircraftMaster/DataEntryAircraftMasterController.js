@@ -25,7 +25,7 @@ Ext.define('Ext.Praxis.controller.flown.AircraftMaster.DataEntryAircraftMasterCo
                 Ext.getCmp(prototype.id+'-btnDelete').show();
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
     },
     HabilitarCampoClave: function() {
         Ext.getCmp(prototype.id+'-txtEQUIPO').setReadOnly(false);

@@ -25,7 +25,7 @@ Ext.define('Ext.Praxis.controller.sales.RegionsMasterFile.DataEntryRegionsMaster
                 Ext.getCmp(prototype.id + '-txtA128TIPO').focus();
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
         this.strTipoPK = rec.get('A128TIPO');

@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.controller.sales.CountryMasterFile.DataEntryCountryMaster
                 Ext.getCmp(prototype.id + '-valCurrencyNum').hide();
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
     },
     getDataInputs: function(rec) {
 

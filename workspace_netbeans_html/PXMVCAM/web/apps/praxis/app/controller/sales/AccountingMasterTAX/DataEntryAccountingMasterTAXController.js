@@ -32,7 +32,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingM
                 Ext.getCmp(prototype.id + '-cmbCountry2').focus();
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
 //        Ext.getCmp(prototype.id + '-label_required01').show();
 //        Ext.getCmp(prototype.id + '-label_required02').hide();
 //        Ext.getCmp(prototype.id + '-label_required03').hide();

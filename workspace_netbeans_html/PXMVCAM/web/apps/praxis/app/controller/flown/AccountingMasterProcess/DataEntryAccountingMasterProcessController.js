@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryAccount
                 this.view.setHeight(this.view.getHeight());
                 break;
         }
-        // global.AccessControlMaganer();
+        global.AccessControlMaganer();
     }
     ,
     setStoreData: function() {
