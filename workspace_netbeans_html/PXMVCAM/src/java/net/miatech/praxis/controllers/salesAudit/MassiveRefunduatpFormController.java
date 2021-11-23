@@ -960,7 +960,12 @@ public class MassiveRefunduatpFormController extends BaseController {
 
             }
             if (result.equals("")) {
-                result = logic.subirExcel(lstGeneral);
+                if(!lstGeneral.isEmpty()){
+                   result = logic.subirExcel(lstGeneral);
+                }else{
+                    result = "The layout is incorrect  "+filename;
+                }
+               
             }
 
             // byte[] bytes = file.getBytes();
