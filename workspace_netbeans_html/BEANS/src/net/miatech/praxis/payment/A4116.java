@@ -9,7 +9,7 @@ package net.miatech.praxis.payment;
  *
  * @author ggutierrez
  */
-public class A4115 {
+public class A4116 {
     
     public String CCUST = "";
     public String PRDA = "";
@@ -25,32 +25,35 @@ public class A4115 {
     public String AXPRODAT = "";
     public String SIREFNBR = "";
     public String SCURRENCY = "";
-    public String IDITEMS = "";
     
-    public String OSETDATE = "";
+    public String LMERCHID = "";
+    public String INVORNBR = "";
+    public String SELLERID = "";
+    public String SCARDN = "";
+    public String ISREFNBR = "";
     
-    public double SGROSAMOS = 0;
+    public String TRANSDATE = "";
+    public String TRANSID = "";
+    public String SAUTHOC = "";
+        
     public double GROSAMOUN = 0;
-    public double DISCAMOUN = 0;
-    public double SFEEAMOUN = 0;
-    public double TAXAMOUN = 0;
-    public double NETAMOUN = 0;
-    public double SDISCRATE = 0;
-    public double STAXRATE = 0;
-    public double TRANCOUNT = 0;
-    public int TRACKID = 0;
+    public double TGROSAMOUN = 0;
+//    public double DISCAMOUN = 0;
+//    public double SFEEAMOUN = 0;
+//    public double TAXAMOUN = 0;
+//    public double NETAMOUN = 0;
+//    public double SDISCRATE = 0;
+//    public double STAXRATE = 0;
+//    public double TRANCOUNT = 0;
+//    public int TRACKID = 0;
     public String INSTANBR = "";
-    
-    public double SDGROSSA = 0;
-    public double SCGROSSA = 0;
     
     //Result Conciliation SUMMARY
     
     public double GROSAMOUNC = 0;
-    public double DISCAMOUNC = 0;
-    public double TAXAMOUNC = 0;
-    public double NETAMOUNC = 0;
-    public double TRANCOUNTC = 0;
+    public double TGROSAMOUC = 0;
+    public double FINSAMOUC = 0;
+    public double SINSAMOUC = 0;
     
     public String CERROR = "";
     public String desCERROR = "";
