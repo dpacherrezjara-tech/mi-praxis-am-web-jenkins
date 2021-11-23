@@ -429,6 +429,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
+    onRendererColumnTYPE: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        switch (String(record.get('A4076TYPE'))) {
+            case 'MA':
+                value = 'LAYOUT DETAIL';
+                break;
+            case 'GP':
+                value = 'LAYOUT TOTAL';
+                break;
+        }
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
+    },
     onRendererColumnBase: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
         switch (String(record.get('A4076BASE'))) {
