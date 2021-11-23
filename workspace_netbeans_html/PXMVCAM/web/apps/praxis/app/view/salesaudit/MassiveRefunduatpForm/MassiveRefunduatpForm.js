@@ -395,8 +395,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     {text: 'Folio', dataIndex: 'A4076PREME', width: 150, align: 'center', renderer: 'onRendererColumnOnPreme'},
                                     {text: 'System <br> date', dataIndex: 'A4076FREGI', width: 100, sortable: true, align: 'center'},
                                     {text: 'Auditor', dataIndex: 'A4076REGIS', width: 100},
-                                    {text: 'Base', dataIndex: 'A4076BASE', width: 100, renderer: 'onRendererColumnBase'},
-                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100},
+                                    //{text: 'Base', dataIndex: 'A4076BASE', width: 100, renderer: 'onRendererColumnBase'},
+                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100,renderer: 'onRendererColumnTYPE'},
                                     {text: 'Ticket Qty',
                                         columns: [
                                             {
@@ -567,7 +567,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                 items: [
                                     {text: 'Base', dataIndex: 'A4076BASE', width: 60, renderer: 'onRendererColumnBase'},
                                     {text: 'Type', dataIndex: 'A4076TYPE', width: 100},
-                                    {text: 'Ticket', dataIndex: 'A4076TICKET', width: 100},
+                                    {text: 'Ticket', dataIndex: 'A4076TICKET', width: 120},
                                     {text: 'CPN', dataIndex: 'A4076CPN', width: 40},
                                     {text: 'USE', dataIndex: 'A4076USO', width: 40},
                                     {text: 'System<br>Date', dataIndex: 'A4076FREVI', width: 70},
