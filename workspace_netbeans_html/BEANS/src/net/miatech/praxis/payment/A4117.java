@@ -9,7 +9,7 @@ package net.miatech.praxis.payment;
  *
  * @author ggutierrez
  */
-public class A4116 {
+public class A4117 {
     
     public String CCUST = "";
     public String PRDA = "";
@@ -19,13 +19,13 @@ public class A4116 {
     public String AXPAYNBR = "";
     public String PAYDATE = "";
     public String PCURRENCY = "";
+    public String IDITEMS = "";
     
     public String SMERCHID = "";
     public String BSUMDATE = "";
     public String AXPRODAT = "";
     public String SIREFNBR = "";
     public String SCURRENCY = "";
-    public String IDITEMS = "";
     
     public String LMERCHID = "";
     public String INVORNBR = "";
@@ -36,25 +36,16 @@ public class A4116 {
     public String TRANSDATE = "";
     public String TRANSID = "";
     public String SAUTHOC = "";
+    public String IDITEMP = "";
+    public String FEECODE = "";
         
-    public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;
-//    public double DISCAMOUN = 0;
-//    public double SFEEAMOUN = 0;
-//    public double TAXAMOUN = 0;
-//    public double NETAMOUN = 0;
-//    public double SDISCRATE = 0;
-//    public double STAXRATE = 0;
-//    public double TRANCOUNT = 0;
-//    public int TRACKID = 0;
-    public String INSTANBR = "";
-    
+    public double DISCRATE = 0;
+    public double DISCAMOUN = 0;
+        
     //Result Conciliation SUMMARY
-    
-    public double GROSAMOUNC = 0;
     public double TGROSAMOUC = 0;
-    public double FINSAMOUC = 0;
-    public double SINSAMOUC = 0;
+    public double DISCAMOUNC = 0;
     
     public String CERROR = "";
     public String desCERROR = "";
