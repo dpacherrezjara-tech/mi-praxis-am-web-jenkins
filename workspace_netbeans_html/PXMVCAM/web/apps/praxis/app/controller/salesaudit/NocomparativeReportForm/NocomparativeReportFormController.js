@@ -391,11 +391,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.NocomparativeReportForm.Nocomparati
         var back = Ext.getCmp(prototype.idnocompara + '-btn-back');
         var excel = Ext.getCmp(prototype.idnocompara + '-btn-excel');
         var excel2 = Ext.getCmp(prototype.idnocompara + '-btn-excel2');
+        var filters=Ext.getCmp(prototype.idnocompara + '-contenedor-filters');
 
         gridData.hide();
         totalDeta.hide();
         total.hide();
         excel2.hide();
+        filters.hide();
 
         gridDetalle.show();
         totalDeta2.show();
@@ -468,6 +470,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.NocomparativeReportForm.Nocomparati
         Ext.getCmp(prototype.id + '-lbl-totalDeta2').setVisible(true);
         Ext.getCmp(prototype.id + '-btn-back').setVisible(false);
         Ext.getCmp(prototype.id + '-btn-excel').setVisible(false);
+        var filters=Ext.getCmp(prototype.idnocompara + '-contenedor-filters');
+        filters.show();
     },
     onClearClick: function (obj, e) {
         Ext.getCmp(prototype.idnocompara + '-gridData').getStore().removeAll();

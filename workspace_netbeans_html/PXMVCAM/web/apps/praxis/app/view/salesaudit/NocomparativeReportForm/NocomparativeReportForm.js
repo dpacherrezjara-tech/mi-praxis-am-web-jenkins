@@ -390,7 +390,7 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                             id: prototype.idnocompara + '-gridData',
                             columnLines: true,
                             autoScroll: true,
-                            width: 600,
+                            width: 900,
                             height: 600,
                             features: [{
                                     //id: 'group',
@@ -409,9 +409,9 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'System <br> date', dataIndex: 'A3951FREGI', width: 100, sortable: true, align: 'center'},
-                                    {text: 'Country', dataIndex: 'A3951PAIS', width: 80, align: 'center', renderer: 'onRendererColumnOnPais'},
-                                    {text: 'Total', dataIndex: 'A3951CANTI', width: 120, align: 'right',
+                                    {text: 'System <br> date', dataIndex: 'A3951FREGI', width: 150, sortable: true, align: 'center'},
+                                    {text: 'Country', dataIndex: 'A3951PAIS', width: 150, align: 'center', renderer: 'onRendererColumnOnPais'},
+                                    {text: 'Total', dataIndex: 'A3951CANTI', width: 150, align: 'right',
                                         cls: 'column_header_double',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
@@ -420,7 +420,7 @@ Ext.define('Ext.Praxis.view.salesaudit.NocomparativeReportForm.NocomparativeRepo
                                             xtype: 'numberfield'
                                         }
                                     },
-                                    {text: 'Status', dataIndex: 'A3951FLAG', width: 200, sortable: false, align: 'right'},
+                                    {text: 'Status', dataIndex: 'A3951FLAG', width: 300, sortable: false, align: 'right'},
                                     {
                                         text: '',
                                         dataIndex: '',
