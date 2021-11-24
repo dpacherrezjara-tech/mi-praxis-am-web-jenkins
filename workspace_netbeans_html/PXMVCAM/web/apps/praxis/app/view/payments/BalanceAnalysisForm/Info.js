@@ -66,16 +66,16 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Info', {
                                     defaults: {
                                         //                                padding: '20 0 0 10',
                                         bodyStyle: 'background-color: #E3EAEF;',
-                                        width: 1180,
-                                        height: 350,
+                                        width: 1194,
+                                        height: 550,
                                         columnLines: true
                                     },
                                     items: [
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataMain',
-                                            height: 350,
-                                            width: 1180,
+                                            height: 400,
+                                            width: 1194,
                                             hidden: false,
                                             columnLines: true,
                                             features: [{
@@ -2177,16 +2177,16 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Info', {
                                     defaults: {
                                         //                                padding: '20 0 0 10',
                                         bodyStyle: 'background-color: #E3EAEF;',
-                                        width: 1350,
-                                        height: 350,
+                                        width: 1364,
+                                        height: 400,
                                         columnLines: true
                                     },
                                     items: [
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataMainSettCurr',
-                                            height: 350,
-                                            width: 1350,
+                                            height: 400,
+                                            width: 1364,
                                             hidden: false,
                                             columnLines: true,
                                             features: [{
@@ -3299,16 +3299,16 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Info', {
                                     defaults: {
                                         //                                padding: '20 0 0 10',
                                         bodyStyle: 'background-color: #E3EAEF;',
-                                        width: 1180,
-                                        height: 350,
+                                        width: 1194,
+                                        height: 400,
                                         columnLines: true
                                     },
                                     items: [
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDataMainPayCurr',
-                                            height: 350,
-                                            width: 1180,
+                                            height: 400,
+                                            width: 1194,
                                             hidden: false,
                                             columnLines: true,
                                             features: [{
@@ -4819,16 +4819,16 @@ Ext.define('Ext.Praxis.view.payments.BalanceAnalysisForm.Info', {
                                     defaults: {
                                         //                                padding: '20 0 0 10',
                                         bodyStyle: 'background-color: #E3EAEF;',
-                                        width: 860,
-                                        height: 350,
+                                        width: 874,
+                                        height: 400,
                                         columnLines: true
                                     },
                                     items: [
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDetailACCB_Curr',
-                                            height: 350,
-                                            width: 860,
+                                            height: 400,
+                                            width: 874,
                                             hidden: false,
                                             columnLines: true,
                                             features: [{
