@@ -12,6 +12,7 @@ import net.miatech.praxis.dao.eecta.RegistroVentaOALDAO;
 import net.miatech.praxis.eecta.SQP04163Filter;
 import net.miatech.praxis.eecta.SQP04164Filter;
 import net.miatech.praxis.eecta.SQP04173Filter;
+import net.miatech.praxis.eecta.SQP04256Filter;
 
 /**
  *
@@ -32,8 +33,13 @@ public class RegistroVentaOALLogic {
     public SQP04164Filter setSQP04164Filter(SQP04164Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04164Filter(filter);
     }
+
     public List<SQP04173Filter> getSQP04173Filter(SQP04173Filter filter) throws SQLException, Exception {
         return objDAO.getSQP04173Filter(filter);
     }
-    
+
+    public SQP04256Filter setSQP04256Filter(SQP04256Filter filter) throws SQLException, Exception {
+        return objDAO.setSQP04256Filter(filter);
+    }
+
 }
