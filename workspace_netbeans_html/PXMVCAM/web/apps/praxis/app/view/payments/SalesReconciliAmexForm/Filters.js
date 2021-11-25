@@ -150,6 +150,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-checkSettlement',
+                    margin: '0 0 0 15',
+                    width: 120,
+                    boxLabel: 'Settlement',
+                    inputValue: '1'
+                },
 //                {
 //                    xtype: 'textfield',
 //                    fieldLabel: 'Merchant Number:',

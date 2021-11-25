@@ -39,8 +39,10 @@ public class A4116 {
         
     public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;
+    public int NBRINSTA = 0;
 //    public double DISCAMOUN = 0;
-//    public double SFEEAMOUN = 0;
+    public double SFEEAMOU = 0;
+    public double ACCEAMOU = 0;
 //    public double TAXAMOUN = 0;
 //    public double NETAMOUN = 0;
 //    public double SDISCRATE = 0;

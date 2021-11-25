@@ -26,26 +26,26 @@ public class SalesReconciliAmexLogic {
     public void setSession(IServerSession ss) {
         SalesReconciliAmexDAO.setSession(ss);
     }
-    
-    
+
     public List<A4113Filter> loadPX570SQP04257(A4113Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04257(filter);
     }
-    
+
     public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04269(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04270(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04270(filter);
     }
-    
+
     public List<A4117Filter> loadPX570SQP04278(A4117Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04278(filter);
     }
-    
-    
-    //-----------------------------------------------------------------------------------------
-    
 
+    public List<A4116Filter> loadPX570SQP04275(A4116Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04275(filter);
+    }
+
+    //-----------------------------------------------------------------------------------------
 }
