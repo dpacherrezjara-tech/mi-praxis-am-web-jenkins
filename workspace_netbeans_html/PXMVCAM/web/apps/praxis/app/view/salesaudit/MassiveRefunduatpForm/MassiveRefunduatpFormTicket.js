@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             value: 'xxxxxx',
                             readOnly: true
                         },
-                         {
+                        {
                             xtype: 'textfield',
                             id: prototype.idMassiveRefunduatpFormTicket + '-txtuse',
                             fieldLabel: 'USE',
@@ -88,7 +88,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             width: 180,
                             value: 'xxxxxx',
                             readOnly: true
-                        }                        
+                        }
 
                     ]
                 },
@@ -212,7 +212,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                         {
                             xtype: 'grid',
                             id: prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT',
-                            title: 'FORM OF PAYMENT',
+                            title: 'FORM OF PAYMENT', hidden: true,
                             columnLines: true,
                             selModel: 'cellmodel',
 
@@ -303,39 +303,39 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             },
                             height: 200,
                             width: 500
-                        }, /*{
-                         xtype: 'grid',
-                         id: prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT',
-                         title: 'FORM OF PAYMENT',
-                         columnLines: true,
-                         autoScroll: true,
-                         features: [
-                         {
-                         dock: 'bottom',
-                         ftype: 'summary'
-                         }
-                         ],
-                         columns: {
-                         items: [
-                         {text: 'Type', dataIndex: 'A4077CFOP', width: 70},
-                         {text: 'Card Type', dataIndex: 'A4077TYCAR', width: 45},
-                         {text: 'Credit Card<br> Number', dataIndex: 'A4077NTARJ', width: 250},
-                         {text: 'Cur', dataIndex: 'A4077CUR', width: 50},
-                         {text: 'Amount', dataIndex: 'A4077TOTAL', width: 90, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
-                         ],
-                         defaults: {
-                         sortable: false,
-                         menuDisabled: true,
-                         align: 'center'
-                         }
-                         },
-                         height: 200,
-                         flex: 1
-                         },*/
+                        },
+                        {
+                            xtype: 'grid',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-gridFop',
+                            title: 'FORM OF PAYMENT',
+                            columnLines: true, hidden: true,
+                            autoScroll: true,
+                            features: [
+                                {
+                                    dock: 'bottom',
+                                    ftype: 'summary'
+                                }
+                            ],
+                            columns: {
+                                items: [
+                                    {text: 'Type', dataIndex: 'A4077CFOP', width: 70},
+                                    {text: 'Card Type', dataIndex: 'A4077TYCAR', width: 45},
+                                    {text: 'Credit Card<br> Number', dataIndex: 'A4077NTARJ', width: 250},
+                                    {text: 'Net', dataIndex: 'A4077TOTAL', width: 90, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'},
+                                ],
+                                defaults: {
+                                    sortable: false,
+                                    menuDisabled: true,
+                                    align: 'center'
+                                }
+                            },
+                            height: 200,
+                            width: 500
+                        },
                         {
                             xtype: 'grid',
                             id: prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes',
-                            columnLines: true,
+                            columnLines: true, hidden: true,
                             title: 'TAXES AM',
                             autoScroll: true,
                             selModel: 'cellmodel',
@@ -415,35 +415,35 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             },
                             height: 200,
                             width: 450
+                        },
+                        {
+                            xtype: 'grid',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-gridTax',
+                            title: 'TAXES', hidden: true,
+                            columnLines: true,
+                            autoScroll: true,
+                            features: [
+                                {
+                                    dock: 'bottom',
+                                    ftype: 'summary'
+                                }
+                            ],
+                            columns: {
+                                items: [
+                                    {text: 'Cur', dataIndex: 'A4078MONED', width: 45},
+                                    {text: 'Tax</br>Code', dataIndex: 'A4078CDTAX', width: 80},
+                                    {text: 'Ato', dataIndex: 'A4078CDATO', width: 60},
+                                    {text: 'Amount', dataIndex: 'A4078TXDIF', width: 150, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
+                                ],
+                                defaults: {
+                                    sortable: false,
+                                    menuDisabled: true,
+                                    align: 'center'
+                                }
+                            },
+                            height: 200,
+                            width: 330
                         }
-                        /*{
-                         xtype: 'grid',
-                         id: prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes',
-                         title: 'TAXES',
-                         columnLines: true,
-                         autoScroll: true,
-                         features: [
-                         {
-                         dock: 'bottom',
-                         ftype: 'summary'
-                         }
-                         ],
-                         columns: {
-                         items: [
-                         {text: 'Cur', dataIndex: 'A4078MONED', width: 45},
-                         {text: 'Tax</br>Code', dataIndex: 'A4078CDTAX', width: 80},
-                         {text: 'Ato', dataIndex: 'A4078CDATO', width: 60},
-                         {text: 'Amount', dataIndex: 'A4078TXDIF', width: 90, align: 'right', summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'}
-                         ],
-                         defaults: {
-                         sortable: false,
-                         menuDisabled: true,
-                         align: 'center'
-                         }
-                         },
-                         height: 200,
-                         width: 330
-                         }*/
                     ]
                 },
                 {
@@ -657,7 +657,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                 {
                     icon: 'resources/img/botones/24x24/1337982029_3floppy_unmount.png',
                     text: 'Save', id: prototype.idMassiveRefunduatpFormTicket + '-Save',
-                    height: 30,
+                    height: 30,hidden: true,
                     scale: 'medium',
                     listeners: {
                         click: 'onClickSave'
