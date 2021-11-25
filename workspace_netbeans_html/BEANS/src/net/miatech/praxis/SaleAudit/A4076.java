@@ -155,7 +155,16 @@ public class A4076 {
     public String A4076USO3;
     public String A4076USO4;
     public double A4076NETK;
+    public String A4076TRNCU;
 
+    public String getA4076TRNCU() {
+        return A4076TRNCU;
+    }
+
+    public void setA4076TRNCU(String A4076TRNCU) {
+        this.A4076TRNCU = A4076TRNCU;
+    }
+    
     public String getA4076USO1() {
         return A4076USO1;
     }
