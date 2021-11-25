@@ -140,8 +140,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         CmbType.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "MA", "name": "LAYOUT UATP"},
-                {"code": "GP", "name": "LAYOUT LAYOUT"}
+                {"code": "MA", "name": "LAYOUT DETAIL"},
+                {"code": "GP", "name": "LAYOUT TOTAL"}
 
 
             ]
@@ -392,11 +392,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 value = 'TAX ERROR';
                 break;
             case 'H':
-                color = '#81F781';
+                color = '#D6B1B0';
                 value = 'HIGHER AMOUNT FOR SALE';
                 break;
             case 'M':
-                 color = '#F3F781';
+                 color = '#D584F0';
                  value = 'MODIFIED';
                  break;    
             case 'R':
