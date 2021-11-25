@@ -396,7 +396,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 value = 'HIGHER AMOUNT FOR SALE';
                 break;
             case 'M':
-                 color = '#D584F0';
+                 color = '#CFC2D8';
                  value = 'MODIFIED';
                  break;    
             case 'R':
