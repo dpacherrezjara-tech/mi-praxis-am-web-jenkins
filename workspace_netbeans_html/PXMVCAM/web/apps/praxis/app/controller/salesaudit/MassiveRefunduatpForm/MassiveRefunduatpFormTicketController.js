@@ -114,7 +114,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
 
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtfolio').setValue(rec.get('A4076PREME') + '-' + rec.get('A4076ANIO'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttkt').setValue(rec.get('A4076TICKET'));
-        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttrnc').setValue(rec.get('A4076TRNCO'));
+        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttrnc').setValue(rec.get('A4076TRNCU'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtType').setValue(rec.get('A4076TYPE'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtBase').setValue(rec.get('A4076BASE'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtRefe').setValue(rec.get('A4076REFE'));
@@ -139,6 +139,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtToca1').setValue(Ext.util.Format.number(rec.get('A4076TAXCO'), '0,000.00'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTcambi2').setValue(Ext.util.Format.number(rec.get('A4076TCMBT'), '0,000.00'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalPraxis').setValue(Ext.util.Format.number(rec.get('A4076NETK'), '0,000.00'));
+        if (rec.get('A4076TYPE') === 'LAYOUT TOTAL') {
+            Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotal').setReadOnly(false);
+        } else {
+            Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotal').setReadOnly(true);
+        }
 
         //me.onTotalRFND();
     },
@@ -203,6 +208,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         //
         var txtCommi1 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtCommi1').getValue().replaceAll(',', '');
         var txtToca1 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtToca1').getValue().replaceAll(',', '');
+        //
+        var vl_txttrnc = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttrnc').getValue();
 
         // validacion de la razon
         if (Ext.String.trim(txtArgument).length === 0) {
@@ -219,7 +226,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             return;
         }
 
-        if (ComboEstatus !== 'M') {
+        if (ComboEstatus === 'M') {
             // validaciones Taxes
             var grid01 = Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes');
             var gridTaxes = grid01.getStore().getCount();
@@ -305,15 +312,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                     }
                 }
                 vl_netofop = (txtTotal - vl_netofop);
-                if (vl_netofop !== 0) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'the total fop must be equal to the total refund');
-                    return;
+                if (Ext.String.trim(vl_txttrnc) !== 'EXCH') {
+                    if (vl_netofop !== 0) {
+                        Ext.Msg.alert('.: PRAXIS :.', 'the total fop must be equal to the total refund');
+                        return;
+                    }
                 }
+
             }
             if (TotalPRAXIS > 0) {
-                if (parseFloat(txtTotal) > TotalPRAXIS) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'The total to be RFND is greater than the amount in PRAXIS');
-                    return;
+                if (Ext.String.trim(vl_txttrnc) !== 'EXCH') {
+                    if (parseFloat(txtTotal) > TotalPRAXIS) {
+                        Ext.Msg.alert('.: PRAXIS :.', 'The total to be RFND is greater than the amount in PRAXIS');
+                        return;
+                    }
                 }
             }
         }
@@ -356,6 +368,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         me.beanguardar.IN_STATUS = Ext.String.trim(ComboEstatus);
         me.beanguardar.A4076DESC = Ext.String.trim(txtArgument);
         me.beanguardar.IN_TICKET = Ext.String.trim(txttkt);
+       // me.beanguardar.A4076NETK = txtTotalPRAXIS;
 
 
         var mask = new Ext.LoadMask(Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-win'), {
@@ -408,7 +421,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
     onDeleteFopClick: function (grid, rowIndex, colIndex) {
         var me = this;
         var store = grid.getStore();
-         var recdato = store.getAt(rowIndex);
+        var recdato = store.getAt(rowIndex);
         var paramsGuardarFOP = {};
         //
         rec = me.view.params.rec;
@@ -502,7 +515,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                                 if (res.data === 'RECORD DELETED') {
                                     vp_icon = 1;
                                     grid.getStore().removeAt(rowIndex);
-                                     me.onSumaTaxGrid();
+                                    me.onSumaTaxGrid();
                                 }
                                 global.Msg({msg: res.data, icon: vp_icon, fn: function () {
                                     }});
