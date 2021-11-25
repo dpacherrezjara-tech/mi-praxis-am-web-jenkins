@@ -116,15 +116,15 @@ public class InvoiceCommissionConsortiaDAO {
                 objRtn.A2444IVA16 = rs01.getDouble("A2444IVA16");
                 //New
                 objRtn.A2447COD = rs01.getString("A2447COD");
-                objRtn.A2447COD2 = rs01.getString("A2447COD2");
                 objRtn.A2447COMBA = rs01.getDouble("A2447COMBA");
                 objRtn.A2447IVACB = rs01.getDouble("A2447IVACB");
+                /*objRtn.A2447COD2 = rs01.getString("A2447COD2");
                 objRtn.A2447COMB2 = rs01.getDouble("A2447COMB2");
                 objRtn.A2447IVAC2 = rs01.getDouble("A2447IVAC2");
                 objRtn.A2447NFAC1 = rs01.getString("A2447NFAC1");
                 objRtn.A2447NFAC2 = rs01.getString("A2447NFAC2");
                 objRtn.A2447FFAC1 = rs01.getString("A2447FFAC1");
-                objRtn.A2447FFAC2 = rs01.getString("A2447FFAC2");
+                objRtn.A2447FFAC2 = rs01.getString("A2447FFAC2");*/
                 //Pagin
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -194,13 +194,13 @@ public class InvoiceCommissionConsortiaDAO {
 
     public SQP00802Filter setPX112S02A1757(SQP00802Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL SQP00802(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL SQP00802(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(27, Types.VARCHAR);
-            cstmt.registerOutParameter(28, Types.VARCHAR);
+            cstmt.registerOutParameter(20, Types.VARCHAR);
+            cstmt.registerOutParameter(21, Types.VARCHAR);
 
             cstmt.setString(1, filter.VP_ACTION);
             cstmt.setString(2, filter.VP_A2447CCUST);
@@ -221,17 +221,17 @@ public class InvoiceCommissionConsortiaDAO {
             cstmt.setString(17, filter.VP_A2447COD);
             cstmt.setDouble(18, filter.VP_A2447COMBA);
             cstmt.setDouble(19, filter.VP_A2447IVACB);
-            cstmt.setString(20, filter.VP_A2447COD2);
+            /*cstmt.setString(20, filter.VP_A2447COD2);
             cstmt.setDouble(21, filter.VP_A2447COMB2);
             cstmt.setDouble(22, filter.VP_A2447IVAC2);
             cstmt.setString(23, filter.VP_A2447NFAC1);
             cstmt.setString(24, filter.VP_A2447NFAC2);
             cstmt.setString(25, filter.VP_A2447FFAC1);
-            cstmt.setString(26, filter.VP_A2447FFAC2);
+            cstmt.setString(26, filter.VP_A2447FFAC2);*/
 
             cstmt.execute();
-            filter.dbException.SQLCODE = cstmt.getString(27);
-            filter.dbException.MESSAGE = cstmt.getString(28);
+            filter.dbException.SQLCODE = cstmt.getString(20);
+            filter.dbException.MESSAGE = cstmt.getString(21);
         } finally {
             if (cstmt != null) {
                 try {
@@ -281,8 +281,8 @@ public class InvoiceCommissionConsortiaDAO {
                 objRtn.A2447CAMCO = rs01.getDouble("A2447CAMCO");
                 objRtn.A2447COMBA = rs01.getDouble("A2447COMBA");
                 objRtn.A2447IVACB = rs01.getDouble("A2447IVACB");
-                objRtn.A2447COMB2 = rs01.getDouble("A2447COMB2");
-                objRtn.A2447IVAC2 = rs01.getDouble("A2447IVAC2");
+                /*objRtn.A2447COMB2 = rs01.getDouble("A2447COMB2");
+                objRtn.A2447IVAC2 = rs01.getDouble("A2447IVAC2");*/
                 
                 lstRtn.add(objRtn);
             }
