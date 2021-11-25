@@ -14,6 +14,7 @@ import net.miatech.praxis.payment.filter.A4113Filter;
 import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
+import net.miatech.praxis.payment.filter.A4118Filter;
 
 /**
  *
@@ -41,6 +42,10 @@ public class SalesReconciliAmexLogic {
 
     public List<A4117Filter> loadPX570SQP04278(A4117Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04278(filter);
+    }
+    
+    public List<A4118Filter> loadPX570SQP04279(A4118Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04279(filter);
     }
 
     public List<A4116Filter> loadPX570SQP04275(A4116Filter filter) throws SQLException, Exception {
