@@ -523,11 +523,16 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     },
     exportExcel: function() {
 
-        this.setFormatParameter();
+        //this.setFormatParameter();
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
+                this.setFormatParameter();
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridStatusSabre':
+                this.setFormatParameterInteract();
+                global.getFile(prototype.url + '/getXLSXInteractSabre?beanString=' + searchParams.beanString);
                 break;
         }
     },
