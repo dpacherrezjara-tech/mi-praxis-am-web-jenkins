@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
     title: 'Invoice Commission Consortia',
     header: true,
     width: 600,
-    height: 900,
+    height: 650,
     border: false,
     resizable: false,
     layout: {
@@ -136,7 +136,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             required: true,
                                             disabled: false,
                                             readOnly: false,
-                                            width: 250,
+                                            width: 210,
                                             labelWidth: 0,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
@@ -157,8 +157,37 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             labelAlign: 'left',
                                             width: 50,
                                             padding: '2px 5px 2px 10px',
+                                            html: '<strong style="color:#000;  ">Code</strong>'
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtA1757COD',
+                                            required: true,
+                                            disabled: false,
+                                            readOnly: false,
+                                            width: 40,
+                                            labelWidth: 0,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            padding: '2px 5px 2px 3px',
+                                            maxLength: 3,
+                                            // maskRe: /[0-9]/,
+                                            listeners: {
+                                                change: 'onUpperValue',
+                                                focusleave: 'habilitar_cargos',
+                                                keypress: function(obj , e ){
+                                                    if ( e.getKey() === e.ENTER ){
+                                                        Ext.getCmp(prototype.id+'-txtA1757COMM').focus();
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'left',
+                                            width: 50,
+                                            padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;  ">Seq.</strong>'
-
                                         },
                                         {
                                             xtype: 'textfield',
@@ -174,7 +203,6 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                                 change: 'onUpperValue'
                                             }
                                         }
-
                                     ]
                                 },
                                 {
@@ -440,9 +468,9 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             maxLength: 13,
                                             //maskRe: /0-9./,
                                             maskRe:/[1234567890\.]/,
-                                            listeners: {                                            
+                                            listeners: {
                                                 focus: 'onFocusNumberfield',
-                                                focusleave: 'set_Calculatedifference',                                                
+                                                focusleave: 'set_Calculatedifference',
                                                 keypress: function(obj , e ){
                                                     if ( e.getKey() === e.ENTER ){
                                                         Ext.getCmp(prototype.id+'-txtA1757IVA').focus();
@@ -549,7 +577,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                                 focusleave: 'getTotalPref',  
                                                 keypress: function(obj , e ){
                                                     if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757COD').focus();
+                                                        Ext.getCmp(prototype.id+'-txtA1757STATU').focus();
                                                     }
                                                 }
                                             }
@@ -629,132 +657,6 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                         {
                                             xtype: 'label',
                                             labelAlign: 'right',
-                                            width: 550,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">-------------------------------------------------------------------------------------------------------</strong>'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'right',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Code</strong>'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757COD',
-                                            required: true,
-                                            disabled: false,
-                                            readOnly: false,
-                                            width: 99,
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            maxLength: 3,
-                                            // maskRe: /[0-9]/,
-                                            listeners: {
-                                                change: 'onUpperValue',
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757NFAC1').focus();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'left',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;  ">Number</strong>'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757NFAC1',
-                                            required: true,
-                                            disabled: false,
-                                            readOnly: false,
-                                            width: 99,
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            maxLength: 40,
-                                            // maskRe: /[0-9]/,
-                                            listeners: {
-                                                change: 'onUpperValue',
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757FFAC1').focus();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'left',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Date</strong>'
-                                        },
-                                        {
-                                            xtype: 'datefield',
-                                            format: 'Y/m/d',
-                                            id: prototype.id + '-txtA1757FFAC1',
-                                            maskRe: /[0-9/]/,
-                                            enforceMaxLength: true,
-                                            enableKeyEvents: true,
-                                            padding: '2px 5px 2px 3px',
-                                            maxLength: 10,
-                                            width: 99,
-                                            listeners: {
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757COMBA').focus();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'right',
                                             width: 100,
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;">Charge</strong>'
@@ -764,7 +666,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             id: prototype.id + '-txtA1757COMBA',
                                             required: true,
                                             disabled: false,
-                                            readOnly: false,
+                                            readOnly: true,
                                             width: 99,
                                             labelWidth: 0,
                                             value: '0.00',
@@ -865,7 +767,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             id: prototype.id + '-txtA1757IVACB',
                                             required: true,
                                             disabled: false,
-                                            readOnly: false,
+                                            readOnly: true,
                                             width: 99,
                                             labelWidth: 0,
                                             value: '0.00',
@@ -945,351 +847,6 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
 //                                            listeners: {
 //                                                change: 'onUpperValue'
 //                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'right',
-                                            width: 550,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">-------------------------------------------------------------------------------------------------------</strong>'
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'right',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Code</strong>'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757COD2',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: false,
-                                            width: 99,
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            maxLength: 3,
-                                            // maskRe: /[0-9]/,
-                                            listeners: {
-                                                change: 'onUpperValue',
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757NFAC2').focus();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'left',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;  ">Number</strong>'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757NFAC2',
-                                            required: true,
-                                            disabled: false,
-                                            readOnly: false,
-                                            width: 99,
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            maxLength: 40,
-                                            // maskRe: /[0-9]/,
-                                            listeners: {
-                                                change: 'onUpperValue',
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757FFAC2').focus();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'left',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Date</strong>'
-                                        },
-                                        {
-                                            xtype: 'datefield',
-                                            format: 'Y/m/d',
-                                            id: prototype.id + '-txtA1757FFAC2',
-                                            maskRe: /[0-9/]/,
-                                            enforceMaxLength: true,
-                                            enableKeyEvents: true,
-                                            padding: '2px 5px 2px 3px',
-                                            maxLength: 10,
-                                            width: 99,
-                                            listeners: {
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757COMB2').focus();
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'right',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">Charge</strong>'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757COMB2',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: false,
-                                            width: 99,
-                                            labelWidth: 0,
-                                            value: '0.00',
-                                            fieldStyle: 'text-align:right',
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',                                            
-                                            maskRe:/[1234567890\.]/,
-                                            listeners: {                                                
-                                                focus: 'onFocusNumberfield',
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757IVAC2').focus();
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757COMB2_P',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: true,
-                                            width: 99,
-                                            value: '0.00',
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            fieldStyle: 'text-align:right',
-                                            padding: '2px 5px 2px 3px',
-                                            margin: '0 0 0 8',
-                                            maxLength: 13
-//                                            maskRe: /0-9./,
-//                                            listeners: {
-//                                                change: 'onUpperValue'
-//                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757COMB2_IN',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: true,
-                                            width: 99,
-                                            value: '0.00',
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            fieldStyle: 'text-align:right',
-                                            margin: '0 0 0 0'
-//                                            maxLength: 13,
-//                                            maskRe: /0-9./,
-//                                            
-//                                            listeners: {
-//                                                change: 'onUpperValue'
-//                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757COMB2_D',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: true,
-                                            width: 99,
-                                            value: '0.00',
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            fieldStyle: 'text-align:right',
-                                            margin: '0 0 0 0'
-//                                            maxLength: 13,
-//                                            maskRe: /0-9./,
-//                                            margin: '0 0 0 8',
-//                                            listeners: {
-//                                                change: 'onUpperValue'
-//                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'right',
-                                            width: 100,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">IVA Comm Bank</strong>'
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757IVAC2',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: false,
-                                            width: 99,
-                                            labelWidth: 0,
-                                            value: '0.00',
-                                            fieldStyle: 'text-align:right',
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',                                            
-                                            maskRe:/[1234567890\.]/,
-                                            listeners: {                                                
-                                                focus: 'onFocusNumberfield',
-                                                focusleave: 'getTotalPref',
-                                                keypress: function(obj , e ){
-                                                    if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757STATU').focus();
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757IVAC2_P',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: true,
-                                            width: 99,
-                                            value: '0.00',
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            fieldStyle: 'text-align:right',
-                                            padding: '2px 5px 2px 3px',
-                                            margin: '0 0 0 8',
-                                            maxLength: 13
-//                                            maskRe: /0-9./,
-//                                            listeners: {
-//                                                change: 'onUpperValue'
-//                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757IVAC2_IN',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: true,
-                                            width: 99,
-                                            value: '0.00',
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            fieldStyle: 'text-align:right',
-                                            margin: '0 0 0 0'
-//                                            maxLength: 13,
-//                                            maskRe: /0-9./,
-//                                            
-//                                            listeners: {
-//                                                change: 'onUpperValue'
-//                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-txtA1757IVAC2_D',
-                                            //required: true,
-                                            disabled: false,
-                                            readOnly: true,
-                                            width: 99,
-                                            value: '0.00',
-                                            labelWidth: 0,
-                                            enableKeyEvents: true,
-                                            enforceMaxLength: true,
-                                            padding: '2px 5px 2px 3px',
-                                            fieldStyle: 'text-align:right',
-                                            margin: '0 0 0 0'
-//                                            maxLength: 13,
-//                                            maskRe: /0-9./,
-//                                            margin: '0 0 0 8',
-//                                            listeners: {
-//                                                change: 'onUpperValue'
-//                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'column',
-                                    margin: '1 0 1 0',
-                                    border: false,
-                                    // bodyStyle: 'background: #E5ECEF',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            labelAlign: 'right',
-                                            width: 550,
-                                            padding: '2px 5px 2px 10px',
-                                            html: '<strong style="color:#000;">-------------------------------------------------------------------------------------------------------</strong>'
                                         }
                                     ]
                                 },
@@ -1537,7 +1094,6 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             width: 100,
                                             padding: '2px 5px 2px 10px',
                                             html: '<strong style="color:#000;">Status</strong>'
-
                                         },
                                         {
                                             xtype: 'textfield',
@@ -1556,7 +1112,6 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                             listeners: {
                                                 change: 'onUpperValue'
                                             }
-                                            
                                         },
                                         {
                                             xtype: 'label',
