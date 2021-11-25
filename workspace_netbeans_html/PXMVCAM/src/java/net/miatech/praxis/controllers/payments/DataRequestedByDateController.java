@@ -238,9 +238,9 @@ public class DataRequestedByDateController extends BaseController {
             CH1_14.setCellValue("Date upd.");
             CH1_15.setCellValue("Used Cpn");
             CH1_16.setCellValue("Date upd.");
-            CH1_17.setCellValue("Selection");
+            CH1_17.setCellValue("Acounting");
             CH1_18.setCellValue("");
-            CH1_19.setCellValue("Expiration");
+            CH1_19.setCellValue("Rule");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -310,9 +310,9 @@ public class DataRequestedByDateController extends BaseController {
             CH2_14.setCellValue("First Sabre");
             CH2_15.setCellValue("Sabre Last");
             CH2_16.setCellValue("Last Sabre");
-            CH2_17.setCellValue("Flag");
+            CH2_17.setCellValue("ID");
             CH2_18.setCellValue("Date");
-            CH2_19.setCellValue("Date");
+            CH2_19.setCellValue("Policy");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
