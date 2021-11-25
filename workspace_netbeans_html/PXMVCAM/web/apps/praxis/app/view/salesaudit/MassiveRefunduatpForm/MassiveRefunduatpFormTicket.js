@@ -88,25 +88,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             width: 180,
                             value: 'xxxxxx',
                             readOnly: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtType',
-                            fieldLabel: 'Type',
-                            labelWidth: 35,
-                            width: 180,
-                            value: 'xxxxxx',
-                            readOnly: true
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.idMassiveRefunduatpFormTicket + '-txtBase',
-                            fieldLabel: 'Base',
-                            labelWidth: 35,
-                            width: 180,
-                            value: 'xxxxxx',
-                            readOnly: true
-                        }
+                        }                        
 
                     ]
                 },
@@ -194,6 +176,24 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             fieldLabel: 'Tdoc',
                             labelWidth: 35,
                             width: 150,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtType',
+                            fieldLabel: 'Type',
+                            labelWidth: 35,
+                            width: 180,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtBase',
+                            fieldLabel: 'Base',
+                            labelWidth: 35,
+                            width: 180,
                             value: 'xxxxxx',
                             readOnly: true
                         }
