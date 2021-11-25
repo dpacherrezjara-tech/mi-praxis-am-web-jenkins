@@ -6,14 +6,15 @@
 package net.miatech.praxis.payment.filter;
 
 import net.miatech.beans.Pagination;
-import net.miatech.praxis.payment.A4115;
+import net.miatech.praxis.payment.A4118;
 
 /**
  *
  * @author ggutierrez
  */
-public class A4115Filter extends A4115 {
+public class A4118Filter extends A4118 {
 
+    public String RN = "";
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
     public String IN_DATE = "";
@@ -31,6 +32,7 @@ public class A4115Filter extends A4115 {
     public long totSGROSAMOS = 0;
     public long totGROSAMOUN = 0;
     public long totDISCAMOUN = 0;
+    public long totSFEEAMOUN = 0;
     public long totTAXAMOUN = 0;
     public long totNETAMOUN = 0;
     public long totSDGROSSA = 0; 

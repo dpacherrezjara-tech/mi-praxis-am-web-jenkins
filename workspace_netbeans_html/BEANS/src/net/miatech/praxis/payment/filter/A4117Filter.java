@@ -27,6 +27,13 @@ public class A4117Filter extends A4117 {
     public String IN_IDITEMS = "";
     public String DES_MERCHANT = "";
     
+    // Totales
+    public long totTGROSAMOUN = 0;
+    public long totDISCRATE = 0;
+    public long totDISCAMOUN = 0;
+    public long totTGROSAMOUC = 0;
+    public long totDISCAMOUNC = 0;
+    
     public Pagination page = new Pagination();
     
 }
