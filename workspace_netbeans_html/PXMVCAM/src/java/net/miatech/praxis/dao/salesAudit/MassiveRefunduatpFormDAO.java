@@ -496,6 +496,7 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076TTAX = rs01.getDouble("A4076TTAX");
                 objRtn.A4076AGENCY = rs01.getString("AGENCY");
                 objRtn.A4076ESTADO = rs01.getString("A4076ESTADO");
+                 objRtn.A4076TRNCU = rs01.getString("A4076TRNCU");
 
                 objRtn.A4076CPN1 = rs01.getString("A4076CPN1");
                 objRtn.A4076CPN2 = rs01.getString("A4076CPN2");
@@ -507,7 +508,7 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076USO3 = rs01.getString("A4076USO3");
                 objRtn.A4076USO4 = rs01.getString("A4076USO4");
                 objRtn.A4076DESC = rs01.getString("A4076DESC");
-                objRtn.A4076NETK = rs01.getDouble("A4076NETK");
+                objRtn.A4076NETK = rs01.getDouble("A4076NETK");               
 
                 lstRtn.add(objRtn);
             }
@@ -561,9 +562,10 @@ public class MassiveRefunduatpFormDAO {
             cs.setString("IN_MONTT", filter.A4076MONTT);
             cs.setDouble("IN_EQVTK", filter.A4076EQVTK);
             cs.setDouble("IN_TTAX", filter.A4076TTAX);
-            cs.setDouble("IN_NETO", filter.A4076TARTK);
+            cs.setDouble("IN_NETO", filter.A4076NETO);
             cs.setDouble("IN_COMI", filter.A4076COMI);
             cs.setDouble("IN_TAXCO", filter.A4076TAXCO);
+            //cs.setDouble("IN_NETK", filter.A4076NETK);
             cs.setString("IN_STATUS", filter.IN_STATUS);
             cs.setString("IN_DESC", filter.A4076DESC);
             cs.setString("IN_LSTATaxes", lstaTaxes);
