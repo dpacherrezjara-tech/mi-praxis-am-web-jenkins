@@ -104,6 +104,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     onUpperValue: function(field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
+    
+    
+    
     obtainData: function() {
 
         var month = this.fecha.getMonth() + 1;
@@ -307,11 +310,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetSubmission: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
-
-        me.drillDown.push(me.panelActual);
-        me.panelActual = '-boxDetSubmission';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-
+        
         this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
         this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
         this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
@@ -324,7 +323,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 //        console.log(this.beanSubmission);
 
         me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);
-        this.setGridDataDetSubmission();
+        
+//        var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
+        
+        if(columnNum === 8){
+            me.drillDown.push(me.panelActual);
+            me.panelActual = '-boxDetChargeback';
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+            
+            this.setGridDataDetChargeback();
+            
+        }else{
+            me.drillDown.push(me.panelActual);
+            me.panelActual = '-boxDetSubmission';
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+            
+            this.setGridDataDetSubmission();
+        }
     },
     setGridDataDetSubmission: function() {
         win.lblUser_toolTip("Estructura: A4115");
@@ -363,6 +378,48 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         global.clear();
         Ext.getCmp(prototype.id + '-gridDetSubmission').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+
+    },
+    setGridDataDetChargeback: function() {
+        
+        console.log('setGridDataDetChargeback');
+        win.lblUser_toolTip("Estructura: A4118");
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetChargeback'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = me.paramsDetail;
+                },
+                load: function(obj) {
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log(obj);
+
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+//
+                        if (data.IN_DATE === "PAYDATE") {
+//                            Ext.getCmp(prototype.id + '-htDateChargeback').setText('Payment');
+                            Ext.getCmp(prototype.id + '-gridDetChargeback').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
+                                    + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                        } else {
+//                            Ext.getCmp(prototype.id + '-htDateChargeback').setText('Processing');
+                            Ext.getCmp(prototype.id + '-gridDetChargeback').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
+                                    + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
+                        }
+                    }
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetChargeback').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
