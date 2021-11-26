@@ -150,6 +150,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-checkSettlement',
+                    margin: '0 0 0 15',
+                    width: 120,
+                    boxLabel: 'Settlement',
+                    inputValue: '1'
+                },
+//                {
+//                    xtype: 'checkboxfield',
+//                    id: prototype.id + '-chkChargeback',
+//                    margin: '0 0 0 15',
+//                    width: 200,
+//                    boxLabel: 'Chargeback & Adjustment',
+////                    inputValue: '0',
+//                    checked: false,
+////                    listeners:{
+////                        change: 'btnSearch_click'
+////                    }
+//                },
 //                {
 //                    xtype: 'textfield',
 //                    fieldLabel: 'Merchant Number:',

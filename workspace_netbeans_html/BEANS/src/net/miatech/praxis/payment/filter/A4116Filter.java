@@ -20,10 +20,16 @@ public class A4116Filter extends A4116 {
     public String IN_DATE = "";
     public String DATE = "";
     
+    public double DISCAMOUN_IMPORT = 0;
+    public double DISCAMOUN_IVA = 0;
+    public double DISCRATE_IMPORT = 0;
+    public double DISCRATE_IVA = 0;
+    
     public String strDATE = "";
     public String IN_AXPAYNBR = "";
     public String IN_PCURRENCY = "";
     public String IN_MERCHID = "";
+    public String IN_PAYDATE = "";
     public String IN_IDITEMS = "";
     public String DES_MERCHANT = "";
     
