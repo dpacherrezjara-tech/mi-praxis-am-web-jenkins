@@ -538,7 +538,7 @@ public class SalesReconciliBoomerController extends BaseController {
     public @ResponseBody
     void getXLSXDetHeaderByPeriod(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXDetHeaderByPeriod");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Report Layout 1  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -976,7 +976,7 @@ public class SalesReconciliBoomerController extends BaseController {
                 rcell4.setCellValue("MXN");
                 rcell5.setCellValue("R");
                 rcell6.setCellValue("N/A");
-                rcell7.setCellValue("*821");
+                rcell7.setCellValue("*8221");
                 rcell8.setCellValue("2103");                
                 rcell9.setCellValue(listaData.get(vi).SPNR);                
                 rcell10.setCellValue("F");
