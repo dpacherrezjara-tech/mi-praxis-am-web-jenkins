@@ -675,6 +675,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TAXAMOUN = rst.getDouble("TAXAMOUN");
                     beanTkt.NETAMOUN = rst.getDouble("NETAMOUN");
                     beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
+                    beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
 
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
                     beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
@@ -889,6 +890,7 @@ public class SalesReconciliAmexDAO {
                 beanTkt.SCARDN = rst.getString("SCARDN").trim();
                 beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                 beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
+                beanTkt.INVORNBR = rst.getString("INVORNBR");
                 beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
                 beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
                 beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");

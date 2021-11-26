@@ -31,6 +31,7 @@ public class A4118 {
     public String SCURRENCY = "";
     public String IDITEMS = "";
     public String ISREFNBR = "";
+    public String INVORNBR = "";
     
     public String OSETDATE = "";
     
