@@ -206,6 +206,8 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        
+        me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
 
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -224,13 +226,27 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-
+        
+        me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
+        
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
             bean: me.bean
         };
         console.log(searchParams);
+    },
+    BuscarTKT_keyDownHandler: function(obj, e, eOpts) {
+        switch (e.getKey()) {
+                case 13:
+                    if (win.getValue('txtTICKET').trim().length === 13) {
+                        this.btnSearch_click();                        
+                    } else {
+                        win.setValue('txtTICKET', '');
+                        global.Msg({msg: 'Ticket number must contain 13 digits.'});
+                    }                   
+                break;                
+            }
     },
     btnSearch_click: function(obj, e) {
         
