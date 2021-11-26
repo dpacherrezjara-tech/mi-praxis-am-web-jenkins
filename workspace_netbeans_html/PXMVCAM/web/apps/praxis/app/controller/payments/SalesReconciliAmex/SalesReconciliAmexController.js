@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     childs: '5',
     bean: '',
     beanSubmission: {},
+    beanSettlement: {},
     beanTransaction: {},
     beanPricing: {},
     beanDay: {},
@@ -104,9 +105,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     onUpperValue: function(field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    
-    
-    
     obtainData: function() {
 
         var month = this.fecha.getMonth() + 1;
@@ -200,9 +198,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         console.log('checkEvent')
         if (obj.getValue()) {
             this.optionCheck = 1;
-            
+
         } else {
-            this.optionCheck = 0;            
+            this.optionCheck = 0;
         }
         this.btnSearch_click();
     },
@@ -223,12 +221,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     btnSearch_click: function(obj, e) {
         var selected_value = Ext.getCmp(prototype.id + '-checkSettlement').getValue();
         this.setFormatParameter();
-        if(selected_value) {
+        if (selected_value) {
             this.setGridDataSettlement();
         } else {
             this.setGridData();
         }
-        
+
     },
     setGridDataSettlement: function() {
         win.lblUser_toolTip("Estructura: A4116");
@@ -245,12 +243,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                        
-                        var pag = Ext.getCmp(prototype.id + '-paggin9');
-                        var pagData = pag.getPageData();
-                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin9');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
 
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
@@ -264,6 +262,73 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         global.clear();
         Ext.getCmp(prototype.id + '-gridSettlement').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
+    },
+    onGridDetSettMerchant: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxDetSettlement';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanSettlement.IN_PAYDATE = rowData.data.PAYDATE;
+        this.beanSettlement.IN_MERCHID = rowData.data.MERCHID;
+        this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
+
+        me.paramsDetail.beanString = JSON.stringify(this.beanSettlement);
+        this.setGridDataDetSettlement();
+    },
+    setGridDataDetSettlement: function() {
+        win.lblUser_toolTip("Estructura: A4116");
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetSettlement'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = me.paramsDetail;
+                },
+                load: function(obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    var pag = Ext.getCmp(prototype.id + '-paggin10');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log(obj);
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+                        Ext.getCmp(prototype.id + '-gridDetSettlement').setTitle('<center style="font-size:12px;">' + 'PAYMENT DATE: ' + data.IN_PAYDATE + ' - ' + ' MERCHANT: ' + data.IN_MERCHID + ' - ' + ' CURRENCY: ' + data.IN_PCURRENCY + '</center>');
+                    }
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetSettlement').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin10').bindStore(storeGridDatas);
+    },
+    viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        var strTkt = rowData.data.ISREFNBR;
+
+        prototypeProgram.view = 'payments-sales-reconcili-amex-form';
+        prototypeProgram.nprog = 'PX00000570';
+        prototypeProgram.title = 'Sales Reconciliation By Amex';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+
+        console.log(beanProMasterTicket);
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
     setGridData: function() {
         win.lblUser_toolTip("Estructura: A4113");
@@ -310,7 +375,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetSubmission: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
-        
+
         this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
         this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
         this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
@@ -323,21 +388,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 //        console.log(this.beanSubmission);
 
         me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);
-        
+
 //        var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
-        
-        if(columnNum === 8){
+
+        if (columnNum === 8) {
             me.drillDown.push(me.panelActual);
             me.panelActual = '-boxDetChargeback';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
-            
+
             this.setGridDataDetChargeback();
-            
-        }else{
+
+        } else {
             me.drillDown.push(me.panelActual);
             me.panelActual = '-boxDetSubmission';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
-            
+
             this.setGridDataDetSubmission();
         }
     },
@@ -382,7 +447,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     setGridDataDetChargeback: function() {
-        
+
         console.log('setGridDataDetChargeback');
         win.lblUser_toolTip("Estructura: A4118");
 
@@ -1175,7 +1240,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setWidthPie: function() {
 
         console.log(me.panelActual);
-        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxSettlement') {
+        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -1212,6 +1277,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case '-boxSettlement':
                 me.pagginActual = '-paggin9';
+                break;
+            case '-boxDetSettlement':
+                me.pagginActual = '-paggin10';
                 break;
         }
     },

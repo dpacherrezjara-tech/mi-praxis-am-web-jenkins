@@ -30,6 +30,7 @@ public class A4118 {
     public String SIREFNBR = "";
     public String SCURRENCY = "";
     public String IDITEMS = "";
+    public String ISREFNBR = "";
     
     public String OSETDATE = "";
     
