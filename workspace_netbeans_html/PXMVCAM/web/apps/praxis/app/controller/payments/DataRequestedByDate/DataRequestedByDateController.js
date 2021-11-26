@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     beanMerchantByS: {},
     beanByMerchant: {},
     searchParamsTkt: {},
+    beanChargeback: {},
     paginActual: '',
     drillDown: [],
     lstCountry: [],
@@ -342,6 +343,25 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
             Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
         }
     },
+        viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+        var strTkt = rowData.data.TICKET;
+        
+        prototypeProgram.view = 'payments-data-requested-by-date-form';
+        prototypeProgram.nprog = 'PX00000573';
+        prototypeProgram.title = 'Data Requested By Date';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
+        
+        console.log(beanProMasterTicket);
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    }, 
     onViewDetCard: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
 //        me.drillDown.push(me.panelActual);

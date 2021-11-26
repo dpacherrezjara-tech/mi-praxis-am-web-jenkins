@@ -136,7 +136,14 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Ticket', dataIndex: 'TICKET', width: 120
+                                                text: 'Ticket', dataIndex: 'TICKET', width: 120,
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
                                             },
                                             {
                                                 text: 'Status', dataIndex: 'strDescStatus', width: 90,
@@ -306,6 +313,13 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                             },
                                             {
                                                 text: 'Ticket', dataIndex: 'TICKET', width: 100,
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
                                             },
                                             {
                                                 text: 'Coupon', dataIndex: 'A3676CUPON', width: 60,
