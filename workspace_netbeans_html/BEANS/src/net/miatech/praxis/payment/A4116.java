@@ -26,6 +26,7 @@ public class A4116 {
     public String SIREFNBR = "";
     public String SCURRENCY = "";
     public String IDITEMS = "";
+    public String IDITEMT = "";
     
     public String LMERCHID = "";
     public String INVORNBR = "";

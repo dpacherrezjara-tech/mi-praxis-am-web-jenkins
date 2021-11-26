@@ -598,6 +598,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
         this.setGridDataDetPricing();
     },
+    onGridDetPricingByItemt: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxDetPricing';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanPricing.IN_DATEFROM = rowData.data.IN_DATEFROM;
+        this.beanPricing.IN_DATETO = rowData.data.IN_DATETO;
+        this.beanPricing.IN_DATE = rowData.data.IN_DATE;
+
+        this.beanPricing.strDATE = rowData.data.strDATE;
+        this.beanPricing.IN_MERCHID = rowData.data.MERCHID;
+        this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
+        this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
+
+        this.beanPricing.IN_IDITEMS = rowData.data.IN_IDITEMS;
+        this.beanPricing.IN_IDITEMT = rowData.data.IDITEMT;
+
+        console.log(this.beanPricing);
+
+        me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
+        this.setGridDataDetPricing();
+    },
     setGridDataDetPricing: function() {
         win.lblUser_toolTip("Estructura: A4117");
 

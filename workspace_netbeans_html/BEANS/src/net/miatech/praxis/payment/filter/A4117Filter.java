@@ -25,6 +25,7 @@ public class A4117Filter extends A4117 {
     public String IN_PCURRENCY = "";
     public String IN_MERCHID = "";
     public String IN_IDITEMS = "";
+    public String IN_IDITEMT = "";
     public String DES_MERCHANT = "";
     
     // Totales
