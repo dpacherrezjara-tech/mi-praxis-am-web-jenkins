@@ -15,6 +15,7 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoices.PassengerInvoicesC
     bean40: {},
     beanS30: {},
     paramsDetailExcel: {},
+    searchParamsAnual: {},
     tipo: '',
     NPROG: 'PX00000185',
     init: function(view) {
@@ -353,6 +354,39 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoices.PassengerInvoicesC
             option.setVisible(true);
         }
     },
+    btnTXT_click: function(obj, e) {     
+        var msj = '';
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Download TXT annual ?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'ok') {
+                        this.exportTXT();
+                    }
+                }
+            });
+        }
+    },
+    exportTXT: function(obj, e) {        
+        me.bean = {};
+        me.bean.BDATE = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
+
+        var beanString = JSON.stringify(me.bean);
+        searchParamsAnual = {
+            beanString: beanString
+        };
+        console.log(searchParamsAnual);
+        
+        global.getFile(prototype.url + '/downloadTxt?beanString=' + searchParamsAnual.beanString + '&flagByMonth=A' );
+    },
     btnExcel_click: function(obj, e) {
        
      
@@ -377,7 +411,6 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoices.PassengerInvoicesC
         }
     
     },
-    
     exportExcel: function() {
         
         var panel = this.peek().substr(this.peek().indexOf('-')+1);
