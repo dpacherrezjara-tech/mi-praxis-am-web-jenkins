@@ -33,6 +33,7 @@ public class A4118Filter extends A4118 {
     public long totGROSAMOUN = 0;
     public long totDISCAMOUN = 0;
     public long totSFEEAMOUN = 0;
+    public long totSFEEAMOUNC = 0;
     public long totTAXAMOUN = 0;
     public long totNETAMOUN = 0;
     public long totSDGROSSA = 0; 

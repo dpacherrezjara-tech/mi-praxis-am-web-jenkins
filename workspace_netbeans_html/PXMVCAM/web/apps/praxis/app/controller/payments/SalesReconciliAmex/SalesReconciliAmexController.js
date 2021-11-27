@@ -577,6 +577,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetPricing: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxDetPricing';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanPricing.IN_DATEFROM = rowData.data.IN_DATEFROM;
+        this.beanPricing.IN_DATETO = rowData.data.IN_DATETO;
+        this.beanPricing.IN_DATE = rowData.data.IN_DATE;
+
+        this.beanPricing.strDATE = rowData.data.strDATE;
+        this.beanPricing.IN_MERCHID = rowData.data.MERCHID;
+        this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
+        this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
+
+        this.beanPricing.IN_IDITEMS = '';
+        this.beanPricing.IN_IDITEMT = '';
+
+        console.log(this.beanPricing);
+
+        me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
+        this.setGridDataDetPricing();
+    },
+    onGridDetPricingByItemt: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetPricing';
@@ -591,7 +614,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanPricing.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanPricing.IN_PCURRENCY = rowData.data.PCURRENCY;
 
-        this.beanPricing.IN_IDITEMS = rowData.data.IN_IDITEMS;
+        this.beanPricing.IN_IDITEMS = rowData.data.IDITEMS;
+        this.beanPricing.IN_IDITEMT = rowData.data.IDITEMT;
 
         console.log(this.beanPricing);
 
@@ -631,7 +655,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl: ' + data.IN_IDITEMS + '</center>');
+                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
                                         + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
@@ -641,7 +665,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.getCmp(prototype.id + '-htDatePricing').setText('Processing');
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl: ' + data.IN_IDITEMS + '</center>');
+                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
                                         + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENC + '</center>');

@@ -37,6 +37,7 @@ public class A4117 {
     public String TRANSID = "";
     public String SAUTHOC = "";
     public String IDITEMP = "";
+    public String IDITEMT = "";
     public String FEECODE = "";
         
     public double TGROSAMOUN = 0;

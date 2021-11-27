@@ -31,6 +31,7 @@ public class A4118 {
     public String SCURRENCY = "";
     public String IDITEMS = "";
     public String ISREFNBR = "";
+    public String INVORNBR = "";
     
     public String OSETDATE = "";
     
@@ -38,6 +39,7 @@ public class A4118 {
     public double GROSAMOUN = 0;
     public double DISCAMOUN = 0;
     public double SFEEAMOUN = 0;
+    public double SFEEAMOUNC = 0;
     public double TAXAMOUN = 0;
     public double NETAMOUN = 0;
     public double SDISCRATE = 0;
