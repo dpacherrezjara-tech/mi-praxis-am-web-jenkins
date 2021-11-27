@@ -969,9 +969,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                     id: prototype.id + '-gridDetPricing',
                                     width: 1322,
                                     columnLines: true,
-                                    features: [{
+                                    /*features: [{
                                             ftype: 'summary'
-                                        }],
+                                        }],*/
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
