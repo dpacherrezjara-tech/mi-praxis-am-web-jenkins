@@ -145,6 +145,7 @@ public class DataRequestedByDateDAO {
                 objRtn.FVCTO = rs01.getString("FVCTO").trim();
                 objRtn.FCONT = rs01.getString("FCONT").trim();
                 objRtn.IDCON = rs01.getString("IDCON").trim();
+                objRtn.DATAPLICA = rs01.getString("DATAPLICA").trim();
                 objRtn.CRULE = rs01.getString("CRULE").trim();
                 if (hmDescCRULE.containsKey(objRtn.CRULE)) {
                     objRtn.strDescCRULE = hmDescCRULE.get(objRtn.CRULE).toString();

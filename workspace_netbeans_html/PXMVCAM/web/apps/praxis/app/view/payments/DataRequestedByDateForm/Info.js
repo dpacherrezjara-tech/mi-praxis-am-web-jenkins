@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1690,
+                                    width: 1670,
                                     height: 530,
                                     columnLines: true,
                                     /*features: [{
@@ -146,9 +146,6 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'strDescStatus', width: 90,
-                                            },
-                                            {
                                                 text: 'Indicator',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -162,10 +159,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Uses', dataIndex: 'STUSO', width: 90,
-                                            },
-                                            {
-                                                text: 'Uses',
+                                                text: 'Used Praxis',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -173,12 +167,23 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Last', dataIndex: 'STUSOS', width: 80
+                                                        text: 'First', dataIndex: 'STUSO', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#d5f4d5;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Last', dataIndex: 'STUSOS', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#d5f4d5;";
+                                                            return value;
+                                                        }
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: 'Used Cpn',
+                                                text: 'Used Sabre',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -186,46 +191,69 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Sabre First', dataIndex: 'INDCPNS', width: 80
+                                                        text: 'First',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Status', dataIndex: 'INDCPNS', width: 80,
+                                                                listeners: {
+                                                                    click: 'onDetByStatus'
+                                                                },
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    value = '<b>' + value + '</b>';
+                                                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Date', dataIndex: 'DATSABF', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
                                                     },
-                                                ]
-                                            },
-                                            {
-                                                text: 'Date Upd.',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
                                                     {
-                                                        text: 'First Sabre', dataIndex: 'DATSABF', width: 80
+                                                        text: 'Date',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Application', dataIndex: 'DATAPLICA', width: 80
+                                                            },
+                                                        ]
                                                     },
-                                                ]
-                                            },
-                                            {
-                                                text: 'Used Cpn',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
                                                     {
-                                                        text: 'Sabre Last', dataIndex: 'INDCPNSL', width: 80
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                text: 'Date Upd.',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Last Sabre', dataIndex: 'DATSABL', width: 80
+                                                        text: 'Last',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Status', dataIndex: 'INDCPNSL', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Date', dataIndex: 'DATSABL', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
                                                     },
                                                 ]
                                             },

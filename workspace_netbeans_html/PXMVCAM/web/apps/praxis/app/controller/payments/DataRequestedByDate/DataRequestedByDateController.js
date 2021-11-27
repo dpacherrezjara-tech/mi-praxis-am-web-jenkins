@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        
+
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
 
         var beanString = JSON.stringify(me.bean);
@@ -226,9 +226,9 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        
+
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
-        
+
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -238,18 +238,18 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     },
     BuscarTKT_keyDownHandler: function(obj, e, eOpts) {
         switch (e.getKey()) {
-                case 13:
-                    if (win.getValue('txtTICKET').trim().length === 13) {
-                        this.btnSearch_click();                        
-                    } else {
-                        win.setValue('txtTICKET', '');
-                        global.Msg({msg: 'Ticket number must contain 13 digits.'});
-                    }                   
-                break;                
-            }
+            case 13:
+                if (win.getValue('txtTICKET').trim().length === 13) {
+                    this.btnSearch_click();
+                } else {
+                    win.setValue('txtTICKET', '');
+                    global.Msg({msg: 'Ticket number must contain 13 digits.'});
+                }
+                break;
+        }
     },
     btnSearch_click: function(obj, e) {
-        
+
         Ext.getCmp(prototype.id + '-pie').show();
         this.cmbTranType_changeHandler();
         //this.setFormatParameter();
@@ -359,25 +359,84 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
             Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
         }
     },
-        viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
-        
+    viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+
         var strTkt = rowData.data.TICKET;
-        
+
         prototypeProgram.view = 'payments-data-requested-by-date-form';
         prototypeProgram.nprog = 'PX00000573';
         prototypeProgram.title = 'Data Requested By Date';
         prototypeProgram.modulo = '';
 
         var beanProMasterTicket = {};
-        
+
         beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
         beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
         beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
-        
+
         console.log(beanProMasterTicket);
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
-    }, 
+    },
+    onDetByStatus: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridStatusSabre';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        me.bean = {};
+        me.bean.IN_DATEFROM = '';
+        me.bean.IN_DATETO = '';
+        me.bean.IN_TKT = rowData.data.TICKET;
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+        console.log(searchParams);
+
+        this.onGridDetByStatus();
+    },
+    onGridDetByStatus: function() {
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchInteractSabre'
+                }, listeners: {
+                    beforeload: function(obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                        obj.proxy.extraParams = searchParams;
+                    },
+                    load: function(obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                        console.log(obj.data);
+                        var pag = Ext.getCmp(prototype.id + '-paggin');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            var data = obj.data.items[0].data;
+                            console.log(data);
+                        }
+                        me.setWidthPie();
+                    }
+                }
+            });
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataStatusSabre').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+        }
+    },
     onViewDetCard: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
 //        me.drillDown.push(me.panelActual);
