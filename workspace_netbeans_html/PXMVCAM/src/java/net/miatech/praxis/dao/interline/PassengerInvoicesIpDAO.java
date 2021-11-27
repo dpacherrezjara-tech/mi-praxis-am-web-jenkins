@@ -3310,7 +3310,7 @@ public class PassengerInvoicesIpDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03905_MP(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04280(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
