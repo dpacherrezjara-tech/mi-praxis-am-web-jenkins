@@ -203,12 +203,12 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesIpForm.Options', {
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel'
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btnTxt',
-//                            icon: 'resources/img/botones/txt.png',
-//                            tooltip: 'Export TXT'
-//                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnTxt',
+                            icon: 'resources/img/botones/txt.png',
+                            tooltip: 'Export TXT'
+                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnClear',
