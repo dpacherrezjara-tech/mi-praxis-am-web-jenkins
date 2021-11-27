@@ -66,6 +66,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
             '#SalesReconciliBoomerForm-btnExcel': {
                 click: this.btnExcel_click
             },
+            '#SalesReconciliBoomerForm-btnExcel2': {
+                click: this.btnExcel2_click
+            },
             '#SalesReconciliBoomerForm-btnFilter': {
                 click: this.btnFilter_click
             },
@@ -815,11 +818,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             var data = {};
                             data = gridDetHeader[0];
                             console.log(layout);
-                            if (layout === 'first'){
+                            if (layout === 'first') {
                                 Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + '</center>');
-                            } else if (layout === 'second'){
+                            } else if (layout === 'second') {
                                 Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + '</center>');
-                            }                            
+                            }
 
                         } else {
                             global.Msg({
@@ -833,21 +836,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
         global.clear();
         //gridDataHeaderDetailByPeriod2nd
-        if (layout === 'first'){
+        if (layout === 'first') {
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').setVisible(false);
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setVisible(true);
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setStore(storeGridDatas);
-        } else if (layout === 'second'){
+        } else if (layout === 'second') {
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setVisible(false);
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').setVisible(true);
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').setStore(storeGridDatas);
         }
-        
+
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
     },
-    cmbLayout_clickHandler: function (){
+    cmbLayout_clickHandler: function() {
         this.SetOnGridDetHeaderByPeriod();
     },
     OnGridDetDayFromHeader: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
@@ -1581,19 +1584,51 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                 break;
             case  '-panelGridDataHeaderDetail':
                 global.getFile(prototype.url + '/getXLSXDetDataHeader?beanString=' + me.paramsDetailDay.beanString);
-                break;           
+                break;
             case  '-panelDetail':
                 global.getFile(prototype.url + '/getXLSXSearchDetail?beanString=' + me.paramsDetailDay.beanString);
-                break;           
+                break;
             case  '-panelDetailByPNR':
                 global.getFile(prototype.url + '/getXLSXSearchByPNR?beanString=' + me.beanSearch.beanString);
-                break;           
+                break;
             case  '-panelGridDataHeaderDetailByPeriod':
                 if (layout === 'first') {
                     global.getFile(prototype.url + '/getXLSXDetHeaderByPeriod?beanString=' + me.paramsDetailDay.beanString);
                 } else if (layout === 'second') {
                     global.getFile(prototype.url + '/getXLSXDetHeaderByPeriod2nd?beanString=' + me.paramsDetailDay.beanString);
-                }                
+                }
+                break;
+        }
+    },
+        btnExcel2_click: function(obj, e) {
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Download Excel ?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function(btn) {
+                    if (btn === 'ok') {
+                        this.exportExcel2();
+                    }
+                }
+            });
+        }
+    },
+    exportExcel2: function() {
+        //this.setFormatParameter();
+        console.log(me.panelActual);        
+        switch (me.panelActual) {
+            case  '-panelGridDataHeaderDetail':
+                console.log(me.paramsDetailDay.beanString);
+                global.getFile(prototype.url + '/getXLSXSearchDetailByPeriod?beanString=' + me.paramsDetailDay.beanString);
                 break;
         }
     },
