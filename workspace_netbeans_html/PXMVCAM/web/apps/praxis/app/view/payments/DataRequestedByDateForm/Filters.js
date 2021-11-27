@@ -149,6 +149,22 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Filters', {
                     anchor: '100%'
                 },
                 {
+                    xtype: 'textfield',
+                    fieldLabel: 'Ticket:',
+                    id: prototype.id+'-txtTICKET',
+                    margin: '0 0 0 9',
+                    allowBlank: true,
+                    maskRe: /[0-9]/,
+                    enforceMaxLength: true,
+                    maxLength:13,
+                    labelWidth: 70,
+                    width: 190,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: 'BuscarTKT_keyDownHandler'
+                    }
+                },
+                {
                     xtype: 'radiogroup',
                     margin: '0 0 0 40',
                     id: prototype.id + '-radiogroupType',

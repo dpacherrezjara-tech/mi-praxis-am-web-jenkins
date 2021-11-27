@@ -36,6 +36,7 @@ public class A2331Filter extends A2331 {
     public String IN_SELECT = "";
     public String IN_TDOC = "";
     public String IN_COUNTRY = "";
+    public String IN_TKT = "";
 
     public String strDescription = "";
     public String strDescription1 = "";
