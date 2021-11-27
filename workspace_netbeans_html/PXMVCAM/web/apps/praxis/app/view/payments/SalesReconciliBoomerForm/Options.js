@@ -165,6 +165,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnExcel2',
+                            icon: 'resources/img/botones/attach.png',
+                            tooltip: 'Export to Excel'
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel'
