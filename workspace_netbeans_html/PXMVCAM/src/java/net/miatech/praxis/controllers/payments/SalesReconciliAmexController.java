@@ -25,6 +25,7 @@ import net.miatech.praxis.payment.filter.A4115Filter;
 import net.miatech.praxis.payment.filter.A4116Filter;
 import net.miatech.praxis.payment.filter.A4117Filter;
 import net.miatech.praxis.payment.filter.A4118Filter;
+import net.miatech.beans.SQP00697Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -44,6 +45,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  *
@@ -366,4 +368,32 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
+
+    @RequestMapping(value = "/searchPNR")
+    public @ResponseBody
+    String searchPNR(ModelMap map, HttpServletRequest request) {
+        
+        SQP00697Filter filter = new SQP00697Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            SalesReconciliAmexLogic logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            List<SQP00697Filter> listaData = logic.loadSQP00697(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+        } catch (SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
 }
