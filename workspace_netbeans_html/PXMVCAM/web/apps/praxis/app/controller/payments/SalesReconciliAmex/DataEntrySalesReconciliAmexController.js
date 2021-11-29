@@ -15,33 +15,258 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySalesReco
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
         meDE = this;
+                
         this.p = this.view.params;
         this.actionCode = this.p.action;
-        this.bean = this.p.rec;
-        this.lstCountry = this.p.lstCountry;
-        this.obtainData();
+        this.bean = this.p.rec.data;
+
     },
     afterRender: function() {
-        this.obtainData();
-        switch (this.actionCode) {
-//            case 'I':
-//                console.log('dd');
-//
-//                Ext.getCmp(prototype.id + '-btn-save').show();
+                
+        Ext.getCmp(prototype.id + '-1-txtPNR').setValue(this.bean.INVORNBR);
+        this.execSearch();
+//        this.obtainData();
+//        switch (this.actionCode) {
+////            case 'I':
+////                console.log('dd');
+////
+////                Ext.getCmp(prototype.id + '-btn-save').show();
+////                Ext.getCmp(prototype.id + '-btn-update').hide();
+////                Ext.getCmp(prototype.id + '-btn-delete').hide();
+////                Ext.getCmp(prototype.id + '-btn-cancel').show();
+////                break;
+//            case 'U':
+//                this.getData();
+////                this.DeshabilitarCampoClave();
+//                Ext.getCmp(prototype.id + '-btn-save').hide();
 //                Ext.getCmp(prototype.id + '-btn-update').hide();
 //                Ext.getCmp(prototype.id + '-btn-delete').hide();
 //                Ext.getCmp(prototype.id + '-btn-cancel').show();
 //                break;
-            case 'U':
-                this.getData();
-//                this.DeshabilitarCampoClave();
-                Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
-                Ext.getCmp(prototype.id + '-btn-cancel').show();
+//        }
+    },
+    
+    onTextKeypress: function(obj, e, eOpts) {
+        
+        if (e.getKey() === e.ENTER) {
+            this.execSearch();
+        }
+    },
+    
+    execSearch: function() {
+        
+        var selectedValue = win.getValue('1-cbxSearchBy');
+	if(selectedValue !== ''){
+            this.bean.IN_TFILTER = parseInt(selectedValue);
+            switch(this.bean.IN_TFILTER){
+                case 1:
+                    this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
+                    break;
+                case 2:
+                    this.bean.IN_TEXT = win.getValue('1-txtPassenger');
+                    break;
+                case 3:
+                    this.bean.IN_TEXT = win.getValue('1-txtPNR');
+                    break;
+                case 4:
+                    this.bean.IN_TEXT = win.getValue('1-txtNREF_P1')+win.getValue('1-txtNREF_P2');
+                    break;
+                case 5:
+                    this.bean.IN_TEXT = win.getValue('1-txtIATA');
+                    break;
+                case 6:
+                    this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
+                    break;
+            }
+            
+            
+            if(this.bean.IN_TEXT === null || this.bean.IN_TEXT === ""){
+                return;
+            }   
+            
+            if(win.getValue('1-txtToDate') === null && win.getValue('1-txtFromDate') !== null){
+                Ext.getCmp(prototype.id+'-1-txtToDate').setValue(win.getValue('1-txtFromDate'));
+                //txtToDate.text = txtFromDate.text;
+            }
+            else{
+                if(win.getValue('1-txtFromDate') === null && win.getValue('1-txtToDate') !== null){
+                    Ext.getCmp(prototype.id+'-1-txtFromDate').setValue(win.getValue('1-txtToDate'));
+                    //txtFromDate.text = txtToDate.text;
+                }
+            }
+            
+            this.bean.IN_IATA = (win.getValue('1-txtIATA') || '').trim();
+            
+            if(this.bean.IN_TFILTER == 5 && this.bean.IN_IATA == ''){
+                alert("Please enter issue date range and IATA");
+                return;
+            }
+
+            if(this.bean.IN_IATA != ''){
+                if(this.bean.IN_IATA.length != 8){
+                    alert("IATA number must be 8 characters");
+                    return;
+                }else{
+                    if((win.getValue('1-txtFromDate') === null || win.getValue('1-txtToDate') === null) && this.bean.IN_TFILTER == 5){
+                        alert("Please enter issue date range");
+                        return;
+                    }
+                }
+            }
+            
+            this.bean.IN_DATE_FROM = Ext.util.Format.date(win.getValue('1-txtFromDate'), 'Ymd');
+            this.bean.IN_DATE_TO = Ext.util.Format.date(win.getValue('1-txtToDate'), 'Ymd');
+            
+            console.log({ BEAN_SEARCH: this.bean });
+            
+            this.searchPNR(this.bean);
+	}
+    },
+    
+    //<editor-fold defaultstate="collapsed" desc="searchPNR">
+    searchPNR: function (bean) {
+        console.log('searchPNR');
+        var me01 = this;
+        var storeGridDatas = Ext.create('Ext.Praxis.store.program.GridData', {
+            proxy: {
+                url: prototype.url+'/searchPNR'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    win.lblUser_toolTip("Estructura: A720");
+                    
+                    if (res.success) {
+                        if (obj.data.length > 0) {
+                            
+                            console.log(obj.data);
+                            if (obj.data.length === 1) {
+                                console.log('_obj.data.items_');
+                                console.log(obj.data.items);
+                                console.log(obj.data.items[0].data);
+                                me01.gridData_act1_clickHandler(obj.data.items[0].data);
+                            }
+                        } else {
+                            if (parseInt(win.getValue('1-cbxSearchBy')) === 1) {
+                                console.log('_1-cbxSearchBy_');
+                                me01.beanProMasterTicket = {};
+                                me01.beanProMasterTicket.IN_CIA  = win.getValue('1-txtTicketCia');
+                                me01.beanProMasterTicket.IN_FORMA= win.getValue('1-txtTicketForSer').substr(0, 4); 
+                                me01.beanProMasterTicket.IN_SERIE= win.getValue('1-txtTicketForSer').substr(4, 6);
+                                me01.beanProMasterTicket.IN_SEQ  = '00';
+                                
+                                meDE.params.actionCode = 'VIEWTICKET_FOR_BWRMASTERTICKET';
+                                meDE.params.bean = me01.beanProMasterTicket;
+                                meDE.startDisplay();
+                                Ext.getCmp('DataEntryProMasterTicketForm').hide();
+                            } else if (parseInt(win.getValue('1-cbxSearchBy')) === 6) {
+                                console.log('_ACT_VIEW_BY_TKT_ADM_');
+                                me01.beanProMasterTicket = {};
+                                me01.beanProMasterTicket.IN_CIA  = win.getValue('1-txtTicketCia');
+                                me01.beanProMasterTicket.IN_FORMA= win.getValue('1-txtTicketForSer').substr(0, 4); 
+                                me01.beanProMasterTicket.IN_SERIE= win.getValue('1-txtTicketForSer').substr(4, 6);
+                                me01.beanProMasterTicket.IN_SEQ  = '00';
+                                
+                                meDE.params.actionCode = 'ACT_VIEW_BY_TKT_ADM';
+                                meDE.params.bean = me01.beanProMasterTicket;
+                                //meDE.startDisplay();
+                                //Ext.getCmp('DataEntryProMasterTicketForm').hide();
+                            } else {
+                                Ext.getCmp(prototype.id+'-1-gridData').getStore().removeAll();
+                                Ext.getCmp(prototype.id+'-1-pie').hide();
+                                Ext.getCmp(prototype.id+'-1-lblPagActual').setText('0');
+                                global.Msg({msg: win.STR_NO_DATA});
+                            }
+                        }
+                    } else global.Msg({msg: res.sesion});
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id+'-1-gridData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id+'-1-paggin').bindStore(storeGridDatas);
+    },
+    //</editor-fold>
+    
+    gridData_act1_clickHandler: function (column, e, row, column2, x) {
+        
+        console.log(meDE);
+        
+        var data = {};
+        if (column.TICKET === undefined) {
+            data = x.record.data;
+        } else {
+            data = column;
+        }
+        var strTkt = data.TICKET;
+        
+        prototypeProgram.view = 'payments-sales-reconcili-amex-form';
+        prototypeProgram.nprog = 'PX00000570';
+        prototypeProgram.title = 'Sales Reconciliation By Amex';
+        prototypeProgram.modulo = '';
+        
+        var beanProMasterTicket = {};
+	
+	beanProMasterTicket = {};
+        
+	beanProMasterTicket.IN_CIA  = strTkt.substr(0, 3);
+	beanProMasterTicket.IN_FORMA= strTkt.substr(3, 4); 
+	beanProMasterTicket.IN_SERIE= strTkt.substr(7, 6);
+	beanProMasterTicket.IN_SEQ  = win.stringPad(data.A720SEQ, '0', 2);
+        
+        console.log(beanProMasterTicket);
+        
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+//        Ext.getCmp(prototype.id + '-dataEntry').hide();
+        Ext.getCmp(prototype.id + '-btn-cancel').fireEvent('click', {});
+        
+//	if (parseInt(win.getValue('1-cbxSearchBy')) === 6) {
+//            meDE.actionCode = 'ACT_VIEW_BY_TKT_ADM';
+//        }
+//        else
+//        {
+//            meDE.actionCode = 'VIEWTICKET_FOR_BWRMASTERTICKET';
+//        }
+//        meDE.bean = this.beanProMasterTicket;
+//        
+//        meDE.startDisplay();
+//	meDE.dataEntry.hide(); //Ext.getCmp('DataEntryProMasterTicketForm').hide();
+    },
+    startDisplay: function () {
+        
+        console.log('startDisplay');
+        console.log(this.actionCode);
+        console.log(this.actionCode);
+        
+        win.visible('1-boxSearchFilter', true);
+        switch (this.actionCode) {
+            case meDE.SELECT_BY_TKT_2:
+                win.setValue('1-cbxSearchBy', "1");
+                this.cbxSearchBy_changeHandler();
+                if (this.ticketNumber.length === 13) {
+                    win.setValue('1-txtTicketCia', this.ticketNumber.substr(0, 3));
+                    win.setValue('1-txtTicketForSer', this.ticketNumber.substr(3));
+                    this.imgSearch_clickHandler();
+                }
+                break;
+            case meDE.SELECT_BY_PAX:
+                win.setValue('1-cbxSearchBy', "2");
+                this.cbxSearchBy_changeHandler();
+                break;
+            case meDE.SELECT_BY_PNR:
+                win.setValue('1-cbxSearchBy', "3");
+                this.cbxSearchBy_changeHandler();
+                break;
+            case meDE.SELECT_BY_CC:
+                win.setValue('1-cbxSearchBy', "4");
+                this.cbxSearchBy_changeHandler();
                 break;
         }
     },
+    
     mostrarData: function() {
         this.setValue('de-txtNAID', this.beanResult.BAID);
         this.setValue('de-cmbSTVAL', this.beanResult.STVAL);
@@ -360,10 +585,5 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySalesReco
     onUpperValue: function(field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onTextKeypress: function(obj, e, eOpts) {
-        if (e.getKey() === e.ENTER) {
-//            this.btnSearch_click();
-        }
-    }
 // </editor-fold>
 });

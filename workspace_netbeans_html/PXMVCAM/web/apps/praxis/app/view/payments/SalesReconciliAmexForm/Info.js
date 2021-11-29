@@ -827,9 +827,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 120,
+                                                        listeners: {
+                                                            click: 'onViewPNR'
+                                                        }, 
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return value;
+//                                                            value = '<br>' + value + '<br>';
+                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {text: 'Seller ID', dataIndex: 'SELLERID', width: 100,
