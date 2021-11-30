@@ -525,6 +525,7 @@ public class MerchantNumberDAO {
                 bean = new A2354Filter();
                 bean.RN = rst.getLong("RN");
                 bean.MERCHN = rst.getString("MERCHN").trim();
+                bean.MERCHP = rst.getString("MERCHP").trim();
                 bean.DESCR = rst.getString("DESCR").trim();
                 bean.RSOCIAL = rst.getString("RSOCIAL").trim();
                 bean.CANAL = rst.getString("CANAL").trim();
@@ -575,7 +576,7 @@ public class MerchantNumberDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -595,10 +596,12 @@ public class MerchantNumberDAO {
             cstmt.setString(10, filter.DIRCLIT1.trim());
             cstmt.setString(11, filter.CODCLIT2.trim());
             cstmt.setString(12, filter.DIRCLIT2.trim());
+            cstmt.setString(13, filter.MERCHP.trim());
 
-            cstmt.setString(13, session.getUserView().getUserInfo().USR);
-            cstmt.setString(14, Functions.getFechaActual());
-            cstmt.setString(15, Functions.getHoraActual());
+
+            cstmt.setString(14, session.getUserView().getUserInfo().USR);
+            cstmt.setString(15, Functions.getFechaActual());
+            cstmt.setString(16, Functions.getHoraActual());
             cstmt.execute();
 
         } catch (Exception e) {

@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry',{
     controller: 'DataEntryMerchantNumberController',
     title:'Merchant Number - Data Entry Form',
     header:true,
-    height:430,
+    height:460,
     width:765,
     resizable:false,
     layout:'fit',
@@ -154,6 +154,37 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry',{
                                     fieldStyle: 'text-align:left;',
                                     maxChars: '40',
                                     width: 520
+                                },
+                              
+                                { xtype: 'tbspacer', width: 50 }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '4 2 4 20',
+//                            bodyStyle: 'background:#E5ECEF;',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Merchant Payment',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 150
+                                },
+                                { xtype: 'tbspacer', width: 4 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtMERCHP',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    maxChars: '15',
+                                    width: 100
                                 },
                               
                                 { xtype: 'tbspacer', width: 50 }

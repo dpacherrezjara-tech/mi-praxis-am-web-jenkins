@@ -21,7 +21,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                 border: false,
                 width: 1600,
                 height: 700,
-                margin: '0 0 0 -40',
+                margin: '0 0 0 -10',
                 align: 'center'
             },
             
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                             padding: '1',
                             border:true,
                             height: 550,
-                            width: 1450,  
+                            width: 1530,  
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id+'-gridDataAirport',
                                     height: 510,
-                                    width: 1500,
+                                    width: 1580,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -69,7 +69,17 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                         },
                                         items: [
                                             {text: 'Nbr', dataIndex: 'RN', width: 40},
-                                            {text: 'Merchant Nbr.', dataIndex: 'MERCHN', width: 75},
+                                            {
+                                             text: 'Merchant',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Nbr.', dataIndex: 'MERCHN', width: 75}
+                                                ]   
+                                            },
                                             {text: 'Merchant Name', dataIndex: 'DESCR', width: 190,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
@@ -95,6 +105,17 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                         }
                                                     }
                                                 ]
+                                            },
+                                            {
+                                             text: 'Merchant',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Payment', dataIndex: 'MERCHP', width: 75}
+                                                ]   
                                             },
                                             {
                                              text: 'IATA',
