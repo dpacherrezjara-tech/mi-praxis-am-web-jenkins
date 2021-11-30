@@ -1,34 +1,34 @@
-Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
+Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry',{
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryMerchantNumberForm',
-    requires: [
+    requires:[
         'Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumberController'
     ],
     controller: 'DataEntryMerchantNumberController',
-    title: 'Merchant Number - Data Entry Form',
-    header: true,
-    height: 480,
-    width: 765,
-    resizable: false,
-    layout: 'fit',
-    modal: true,
+    title:'Merchant Number - Data Entry Form',
+    header:true,
+    height:460,
+    width:765,
+    resizable:false,
+    layout:'fit',
+    modal:true,
     border: false,
     defaults: {
         border: false
     },
-    items: [
+    items:[
         {
             xtype: 'form',
-            defaults: {
+            defaults:{
                 style: 'margin: 3px;',
                 border: false
             },
-            items: [
+            items:[
                 {
                     xtype: 'panel',
                     bodyStyle: 'background: transparent;"',
                     layout: 'vbox',
-                    width: 930,
+                    width:930,
                     defaults: {
                         anchor: '100%'
                     },
@@ -43,8 +43,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 anchor: '100%',
                                 width: 1080
                             },
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
+                            items: [                                                       
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
                                     text: 'Merchant Nbr.',
@@ -61,10 +61,10 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                         'data-qtip': 'Mandatory Field'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 5},
+                                { xtype: 'tbspacer', width: 5 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtMERCHN',
+                                    id:prototype.id+'-de-txtMERCHN',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     editable: true,
@@ -74,30 +74,30 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     readOnly: false,
                                     width: 290
                                 },
-                                {xtype: 'tbspacer', width: 40},
+                                { xtype: 'tbspacer', width: 40 },
                                 {
                                     xtype: 'label',
                                     text: 'Canal: ',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 5},
+                                { xtype: 'tbspacer', width: 5 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCANAL',
+                                    id:prototype.id+'-de-txtCANAL',
                                     fieldStyle: 'text-align:left;',
                                     enforceMaxLength: true,
                                     maxLength: 3,
                                     width: 60,
                                     maskRe: /[a-zA-Z]/,
-                                    listeners: {
+                                    listeners:{
                                         change: 'onUpperValue'
                                     }
                                 }
                                 ,
-                                {xtype: 'tbspacer', width: 105}
+                                { xtype: 'tbspacer', width: 105 }
                             ]
-                        },
+                        }, 
                         {
                             xtype: 'panel',
                             layout: 'hbox',
@@ -108,24 +108,24 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 anchor: '100%',
                                 width: 1080
                             },
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
+                            items: [                                                       
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
                                     text: 'Merchant Name',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 150
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtDESCR',
+                                    id:prototype.id+'-de-txtDESCR',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:left;',
                                     maxChars: '40',
                                     width: 520
                                 },
-                                {xtype: 'tbspacer', width: 50}
+                                { xtype: 'tbspacer', width: 50 }
                             ]
                         },
                         {
@@ -139,23 +139,55 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 width: 1080
                             },
                             items: [
-                                {xtype: 'tbspacer', width: 7},
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
                                     text: 'Social Reason',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 150
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtRSOCIAL',
+                                    id:prototype.id+'-de-txtRSOCIAL',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:left;',
                                     maxChars: '40',
                                     width: 520
                                 },
-                                {xtype: 'tbspacer', width: 50}
+                              
+                                { xtype: 'tbspacer', width: 50 }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '4 2 4 20',
+//                            bodyStyle: 'background:#E5ECEF;',
+                            defaults: {
+                                anchor: '100%',
+                                width: 1080
+                            },
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Merchant Payment',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 150
+                                },
+                                { xtype: 'tbspacer', width: 4 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtMERCHP',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    maxChars: '15',
+                                    width: 100
+                                },
+                              
+                                { xtype: 'tbspacer', width: 50 }
                             ]
                         },
                         {
@@ -165,7 +197,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                             margin: '4 2 4 20',
 //                            bodyStyle: 'background:#E5ECEF;',
                             items: [
-                                {xtype: 'tbspacer', width: 7},
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
                                     text: 'IATA Code',
@@ -175,18 +207,18 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 150
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCIATA',
+                                    id:prototype.id+'-de-txtCIATA',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:left;',
                                     enforceMaxLength: true,
-                                    width: 150,
+                                    width: 100,
                                     maskRe: /[1-9]/,
-                                    maxLength: 8
+                                    maxLength: 8                                  
                                 },
-                                {xtype: 'tbspacer', width: 30},
+                                { xtype: 'tbspacer', width: 80 },
                                 {
                                     xtype: 'label',
                                     text: ' Name',
@@ -196,10 +228,10 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtNameIATA',
+                                    id:prototype.id+'-de-txtNameIATA',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     readOnly: true,
 //                                    enforceMaxLength: true,
@@ -208,7 +240,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     maskRe: /[a-zA-Z]/
 //                                    maxLength: 5
                                 },
-                                {xtype: 'tbspacer', width: 5}
+                                { xtype: 'tbspacer', width: 5 }
                             ]
                         },
                         {
@@ -217,9 +249,9 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                             border: false,
                             margin: '4 2 4 20',
 //                            bodyStyle: 'background:#E5ECEF;',
-
+                            
                             items: [
-                                {xtype: 'tbspacer', width: 7},
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
                                     text: 'Country',
@@ -229,18 +261,18 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 150
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSCOUNTRY',
+                                    id:prototype.id+'-de-txtSCOUNTRY',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     enforceMaxLength: true,
                                     fieldStyle: 'text-align:left;',
-                                    width: 150,
+                                    width: 100,
                                     maskRe: /[a-zA-Z]/,
                                     maxLength: 2
                                 },
-                                {xtype: 'tbspacer', width: 30},
+                                { xtype: 'tbspacer', width: 80 },
                                 {
                                     xtype: 'label',
                                     text: 'Name',
@@ -250,10 +282,10 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 4},
+                                { xtype: 'tbspacer', width: 4 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtNameCTRY',
+                                    id:prototype.id+'-de-txtNameCTRY',
                                     style: 'font-weight:bold;color:#0B333C;',
 //                                    enforceMaxLength: true,
                                     fieldStyle: 'text-align:left;',
@@ -262,216 +294,171 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     maskRe: /[a-zA-Z]/
 //                                    maxLength: 5
                                 },
-                                {xtype: 'tbspacer', width: 5}
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '4 2 4 20',
-//                            bodyStyle: 'background:#E5ECEF;',
-
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'label',
-                                    text: 'Unidad Operativa',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 150
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'combo',
-                                    id: prototype.id + '-de-cmbUNIOPE',
-                                    queryMode: 'local',
-                                    width: 150,
-                                    fieldStyle: 'color:#074066;',
-                                    queryMode: 'local',
-                                    forceSelection: true,
-                                    selectOnFocus: false,
-                                    caseSensitive: false,
-                                    autoSelect: true,
-                                    editable: false,
-                                    disabled: false,
-                                    typeAhead: true,
-                                    valueField: 'code',
-                                    displayField: 'name',
-                                    enableKeyEvents: true,
-                                    triggerAction: 'all'
-                                },
-                                {xtype: 'tbspacer', width: 30},
-                                {xtype: 'tbspacer', width: 50},
-                                {xtype: 'tbspacer', width: 4},
-                                {xtype: 'tbspacer', width: 286},
-                                {xtype: 'tbspacer', width: 5}
+                                { xtype: 'tbspacer', width: 5 } 
                             ]
                         },
                         // <editor-fold defaultstate="collapsed" desc="Commission Policy Information">
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
+                            {
+                                xtype: 'panel',
+                                layout: 'hbox',
+                                border: false,
 //                                bodyStyle: 'background:#E5ECEF;',
 //                                bodyStyle: 'background:#efe5e5',
-                            margin: '2 2 0 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
-                            items: [
-                                {
-                                    xtype: 'label',
-                                    html: '<strong style="color:#121E31; text-decoration: underline; ">Commission Policy Information</strong>',
+                                margin: '2 2 0 20',
+                                defaults: {
+                                    anchor: '100%',
+                                    width: 1080
+                                },
+                                items: [   
+                                    {
+                                        xtype: 'label',
+                                        html: '<strong style="color:#121E31; text-decoration: underline; ">Commission Policy Information</strong>',
 //                                        bodyStyle: 'background:#E5ECEF;',
-                                    fontSize: '11',
-                                    margin: '0 0 0 7',
-                                    width: 234,
-                                    height: 20
-                                },
-                                {xtype: 'tbspacer', width: 470}
-                            ]
-                        },
-                        // </editor-fold>
-                        // <editor-fold defaultstate="collapsed" desc="Client Code 1">
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-//                                bodyStyle: 'background:#E5ECEF;',
-                            bodyStyle: 'background:#efe5e5',
-                            margin: '4 2 4 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
+                                        fontSize: '11',
+                                        margin: '0 0 0 7',
+                                        width: 234,
+                                        height: 20
+                                    },
+                                    { xtype: 'tbspacer', width: 470}
+                                ]
                             },
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'label',
-                                    text: 'Client Code 1',
-                                    style: 'font-weight:bold;color:#121E31;',
-                                    width: 120,
-                                    padding: '3 0'
+                            // </editor-fold>
+                            // <editor-fold defaultstate="collapsed" desc="Client Code 1">
+                            {
+                                xtype: 'panel',
+                                layout: 'hbox',
+                                border: false,
+//                                bodyStyle: 'background:#E5ECEF;',
+                                bodyStyle: 'background:#efe5e5',
+                                margin: '4 2 4 20',
+                                defaults: {
+                                    anchor: '100%',
+                                    width: 1080
                                 },
-                                {xtype: 'tbspacer', width: 35},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCODCLIT1',
-                                    fieldStyle: 'text-align:left',
-                                    //                                    margin: '0 0 0 3',
-                                    enforceMaxLength: true,
-                                    maxLength: 5,
+                                items: [                                                       
+                                    { xtype: 'tbspacer', width: 7 },
+                                    {
+                                        xtype: 'label',
+                                        text: 'Client Code 1',
+                                        style: 'font-weight:bold;color:#121E31;',
+                                        width: 120,
+                                        padding: '3 0'
+                                    },
+                                    {xtype: 'tbspacer', width: 35},
+                                    {
+                                        xtype: 'textfield',
+                                        id: prototype.id+'-de-txtCODCLIT1',
+                                        fieldStyle: 'text-align:left',
+    //                                    margin: '0 0 0 3',
+                                        enforceMaxLength: true,
+                                        maxLength: 5,
 //                                        readOnly: true,
-                                    width: 70
-                                },
-                                {xtype: 'tbspacer', width: 110},
-                                {
-                                    xtype: 'label',
-                                    text: 'Client Address 1',
-                                    style: 'font-weight:bold;color:#121E31;',
-                                    width: 100,
-                                    padding: '3 0'
-                                },
-                                {xtype: 'tbspacer', width: 20},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtDIRCLIT1',
-                                    fieldStyle: 'text-align:left',
-                                    margin: '0 0 0 3',
-                                    enforceMaxLength: true,
-                                    maxLength: 8,
+                                        width: 70
+                                    },
+                                    {xtype: 'tbspacer', width: 110},
+                                    {
+                                        xtype: 'label',
+                                        text: 'Client Address 1',
+                                        style: 'font-weight:bold;color:#121E31;',
+                                        width: 100,
+                                        padding: '3 0'
+                                    },
+                                    {xtype: 'tbspacer', width: 20},
+                                    {
+                                        xtype: 'textfield',
+                                        id: prototype.id+'-de-txtDIRCLIT1',
+                                        fieldStyle: 'text-align:left',
+                                        margin: '0 0 0 3',
+                                        enforceMaxLength: true,
+                                        maxLength: 8,
 //                                        readOnly: true,
-                                    width: 218
-                                },
-                                {xtype: 'tbspacer', width: 30}
-                            ]
-                        },
-                        // </editor-fold>
+                                        width: 218
+                                    },
+                                    { xtype: 'tbspacer', width: 30}
+                                ]
+                            },
+                            // </editor-fold>
                         // <editor-fold defaultstate="collapsed" desc="Chargeback Policy Information">
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
+                            {
+                                xtype: 'panel',
+                                layout: 'hbox',
+                                border: false,
 //                                bodyStyle: 'background:#E5ECEF;',
 //                                bodyStyle: 'background:#efe5e5',
-                            margin: '2 2 0 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
-                            },
-                            items: [
-                                {
-                                    xtype: 'label',
-                                    html: '<strong style="color:#121E31; text-decoration: underline; ">Chargeback Policy Information</strong>',
+                                margin: '2 2 0 20',
+                                defaults: {
+                                    anchor: '100%',
+                                    width: 1080
+                                },
+                                items: [   
+                                    {
+                                        xtype: 'label',
+                                        html: '<strong style="color:#121E31; text-decoration: underline; ">Chargeback Policy Information</strong>',
 //                                        bodyStyle: 'background:#E5ECEF;',
-                                    fontSize: '11',
-                                    margin: '0 0 0 7',
-                                    width: 234,
-                                    height: 20
-                                },
-                                {xtype: 'tbspacer', width: 665}
-                            ]
-                        },
-                        // </editor-fold>
-                        // <editor-fold defaultstate="collapsed" desc="Client Code 1">
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-//                                bodyStyle: 'background:#E5ECEF;',
-                            bodyStyle: 'background:#efe5e5',
-                            margin: '4 2 4 20',
-                            defaults: {
-                                anchor: '100%',
-                                width: 1080
+                                        fontSize: '11',
+                                        margin: '0 0 0 7',
+                                        width: 234,
+                                        height: 20
+                                    },
+                                    { xtype: 'tbspacer', width: 665}
+                                ]
                             },
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'label',
-                                    text: 'Client Code 2',
-                                    style: 'font-weight:bold;color:#121E31;',
-                                    width: 120,
-                                    padding: '3 0'
+                            // </editor-fold>
+                            // <editor-fold defaultstate="collapsed" desc="Client Code 1">
+                            {
+                                xtype: 'panel',
+                                layout: 'hbox',
+                                border: false,
+//                                bodyStyle: 'background:#E5ECEF;',
+                                bodyStyle: 'background:#efe5e5',
+                                margin: '4 2 4 20',
+                                defaults: {
+                                    anchor: '100%',
+                                    width: 1080
                                 },
-                                {xtype: 'tbspacer', width: 35},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCODCLIT2',
-                                    fieldStyle: 'text-align:left',
-                                    //                                    margin: '0 0 0 3',
-                                    enforceMaxLength: true,
-                                    maxLength: 5,
+                                items: [                                                       
+                                    { xtype: 'tbspacer', width: 7 },
+                                    {
+                                        xtype: 'label',
+                                        text: 'Client Code 2',
+                                        style: 'font-weight:bold;color:#121E31;',
+                                        width: 120,
+                                        padding: '3 0'
+                                    },
+                                    {xtype: 'tbspacer', width: 35},
+                                    {
+                                        xtype: 'textfield',
+                                        id: prototype.id+'-de-txtCODCLIT2',
+                                        fieldStyle: 'text-align:left',
+    //                                    margin: '0 0 0 3',
+                                        enforceMaxLength: true,
+                                        maxLength: 5,
 //                                        readOnly: true,
-                                    width: 70
-                                },
-                                {xtype: 'tbspacer', width: 110},
-                                {
-                                    xtype: 'label',
-                                    text: 'Client Address 2',
-                                    style: 'font-weight:bold;color:#121E31;',
-                                    width: 100,
-                                    padding: '3 0'
-                                },
-                                {xtype: 'tbspacer', width: 20},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtDIRCLIT2',
-                                    fieldStyle: 'text-align:left',
-                                    margin: '0 0 0 3',
-                                    enforceMaxLength: true,
-                                    maxLength: 8,
+                                        width: 70
+                                    },
+                                    {xtype: 'tbspacer', width: 110},
+                                    {
+                                        xtype: 'label',
+                                        text: 'Client Address 2',
+                                        style: 'font-weight:bold;color:#121E31;',
+                                        width: 100,
+                                        padding: '3 0'
+                                    },
+                                    {xtype: 'tbspacer', width: 20},
+                                    {
+                                        xtype: 'textfield',
+                                        id: prototype.id+'-de-txtDIRCLIT2',
+                                        fieldStyle: 'text-align:left',
+                                        margin: '0 0 0 3',
+                                        enforceMaxLength: true,
+                                        maxLength: 8,
 //                                        readOnly: true,
-                                    width: 218
-                                },
-                                {xtype: 'tbspacer', width: 30}
-                            ]
-                        }
-                        // </editor-fold>
+                                        width: 218
+                                    },
+                                    { xtype: 'tbspacer', width: 30}
+                                ]
+                            }
+                            // </editor-fold>
                     ]
                 },
                 // <editor-fold defaultstate="collapsed" desc="ControlData">
@@ -486,7 +473,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                         anchor: '100%',
                         width: 1080
                     },
-                    items: [
+                    items: [   
                         {
                             xtype: 'label',
                             html: '<strong style="color:#121E31; text-decoration: underline; ">Control Data</strong>',
@@ -499,8 +486,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                     ]
                 },
                 // </editor-fold>
-
-                {
+                
+                {           
                     items: [
                         {
                             xtype: 'panel',
@@ -510,8 +497,8 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
+                            items:[
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
                                     text: 'Creator User ',
@@ -521,14 +508,14 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtUSCR',
+                                    id:prototype.id+'-txtUSCR',
                                     readOnly: true,
                                     width: 80,
-                                    listeners: {
+                                    listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 20},
+                                { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
                                     text: 'Creation Date',
@@ -537,14 +524,14 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFECR',
+                                    id:prototype.id+'-txtFECR',
                                     readOnly: true,
                                     width: 80,
-                                    listeners: {
+                                    listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 20},
+                                { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
                                     text: 'Creation Time',
@@ -553,10 +540,10 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtHOCR',
+                                    id:prototype.id+'-txtHOCR',
                                     readOnly: true,
                                     width: 80,
-                                    listeners: {
+                                    listeners:{
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -564,14 +551,15 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                         },
                         {
                             xtype: 'panel',
-                            border: false,
+                            border:false,
                             layout: 'hbox',
                             margin: '5 0 10 50',
+                            
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
+                            items:[
+                                { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
                                     text: 'User Update',
@@ -580,14 +568,14 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtUSUP',
+                                    id:prototype.id+'-txtUSUP',
                                     readOnly: true,
                                     width: 80,
-                                    listeners: {
+                                    listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 20},
+                                { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
                                     text: 'Update Date',
@@ -596,14 +584,14 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFEUP',
+                                    id:prototype.id+'-txtFEUP',
                                     readOnly: true,
                                     width: 80,
-                                    listeners: {
+                                    listeners:{
                                         change: 'onUpperValue'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 20},
+                                { xtype: 'tbspacer', width: 20 },
                                 {
                                     xtype: 'label',
                                     text: 'Update Time',
@@ -612,10 +600,10 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtHOUP',
+                                    id:prototype.id+'-txtHOUP',
                                     readOnly: true,
                                     width: 80,
-                                    listeners: {
+                                    listeners:{
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -627,54 +615,54 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
             ]
         }
     ],
-    dockedItems: [
+    dockedItems:[
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout: {
+            layout:{
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults: {
+            defaults:{
                 scale: 'medium'
             },
-            items: [
+            items:[
                 {
                     text: 'Save',
-                    id: prototype.id + '-btn-save',
+                    id:prototype.id+'-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners: {
+                    listeners:{
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id: prototype.id + '-btn-update',
+                    id:prototype.id+'-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners: {
+                    listeners:{
                         click: 'onUpdateClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id: prototype.id + '-btn-delete',
+                    id:prototype.id+'-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners: {
+                    listeners:{
                         click: 'onDeleteClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id: prototype.id + '-btn-cancel',
+                    id:prototype.id+'-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners: {
+                    listeners:{
                         click: 'onCancelClick'
                     }
                 }
             ]
         }
     ]
-}
+  }
 );

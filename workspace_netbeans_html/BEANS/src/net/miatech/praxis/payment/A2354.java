@@ -12,6 +12,7 @@ public class A2354 {
 
     public String CCUST = "";
     public String MERCHN = "";
+    public String MERCHP = "";
     public String DESCR = "";
     public String RSOCIAL = "";
     public String CIATA = "";

@@ -57,6 +57,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 //        console.log(meDE.beanResult);
 //        console.log(this.beanResult.CODEREJ);
         this.setValue('de-txtMERCHN', this.beanResult.MERCHN);
+        this.setValue('de-txtMERCHP', this.beanResult.MERCHP);
         this.setValue('de-txtDESCR', this.beanResult.DESCR);
         this.setValue('de-txtRSOCIAL', this.beanResult.RSOCIAL);
         this.setValue('de-txtCIATA', this.beanResult.CIATA);
@@ -83,6 +84,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 //        console.log('llenarData');
 
         beanTemp.MERCHN = this.getValue("de-txtMERCHN");
+        beanTemp.MERCHP = this.getValue("de-txtMERCHP");
         beanTemp.DESCR = this.getValue("de-txtDESCR");
         beanTemp.RSOCIAL = this.getValue("de-txtRSOCIAL");
         beanTemp.CIATA = this.getValue("de-txtCIATA");

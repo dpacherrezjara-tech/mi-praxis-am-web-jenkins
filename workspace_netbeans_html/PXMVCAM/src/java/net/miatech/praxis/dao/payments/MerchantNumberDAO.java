@@ -489,49 +489,43 @@ public class MerchantNumberDAO {
 
         List<A2354Filter> lstData = new ArrayList<A2354Filter>(0);
         A2354Filter bean;
-        
-        HashMap<String, String> hmDescUNIOPE = new HashMap<String, String>();
-        hmDescUNIOPE.put("1", "Aerovias MX");
-        hmDescUNIOPE.put("2", "Aeromexico Cargo");
-        hmDescUNIOPE.put("3", "PLM");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00933_GG(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00933(?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
-            cstmt.registerOutParameter(8, Types.INTEGER);
-            cstmt.registerOutParameter(9, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_MERCHN.trim());
             cstmt.setString(3, filter.IN_RSOCIAL.trim());
-            cstmt.setString(4, filter.IN_UNIOPE.trim());
-            cstmt.setString(5, filter.IN_CANAL.trim());
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 bean = new A2354Filter();
                 bean.RN = rst.getLong("RN");
                 bean.MERCHN = rst.getString("MERCHN").trim();
+                bean.MERCHP = rst.getString("MERCHP").trim();
                 bean.DESCR = rst.getString("DESCR").trim();
                 bean.RSOCIAL = rst.getString("RSOCIAL").trim();
                 bean.CANAL = rst.getString("CANAL").trim();
@@ -541,12 +535,6 @@ public class MerchantNumberDAO {
                 bean.CODCLIT2 = rst.getString("CODCLIT2").trim();
                 bean.DIRCLIT2 = rst.getString("DIRCLIT2").trim();
                 bean.strDescrip = rst.getString("DES_IATA").trim();
-                bean.UNIOPE = rst.getString("UNIOPE").trim();                
-                if (hmDescUNIOPE.containsKey(rst.getString("UNIOPE").trim().toUpperCase())) {
-                    bean.strDescripUNIOPE = hmDescUNIOPE.get(rst.getString("UNIOPE").trim()).toString();
-                } else {
-                    bean.strDescripUNIOPE = rst.getString("UNIOPE").trim();
-                }
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -603,12 +591,13 @@ public class MerchantNumberDAO {
             cstmt.setString(6, filter.CIATA.trim());
             cstmt.setString(7, filter.CANAL.trim());
             cstmt.setString(8, filter.SCOUNTRY.trim());
-            cstmt.setString(9, filter.UNIOPE.trim());
 
-            cstmt.setString(10, filter.CODCLIT1.trim());
-            cstmt.setString(11, filter.DIRCLIT1.trim());
-            cstmt.setString(12, filter.CODCLIT2.trim());
-            cstmt.setString(13, filter.DIRCLIT2.trim());
+            cstmt.setString(9, filter.CODCLIT1.trim());
+            cstmt.setString(10, filter.DIRCLIT1.trim());
+            cstmt.setString(11, filter.CODCLIT2.trim());
+            cstmt.setString(12, filter.DIRCLIT2.trim());
+            cstmt.setString(13, filter.MERCHP.trim());
+
 
             cstmt.setString(14, session.getUserView().getUserInfo().USR);
             cstmt.setString(15, Functions.getFechaActual());
@@ -671,8 +660,6 @@ public class MerchantNumberDAO {
                 objRtn.DIRCLIT1 = rs01.getString("DIRCLIT1").trim();
                 objRtn.CODCLIT2 = rs01.getString("CODCLIT2").trim();
                 objRtn.DIRCLIT2 = rs01.getString("DIRCLIT2").trim();
-                objRtn.UNIOPE = rs01.getString("UNIOPE").trim();
-                
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
                 objRtn.HOCR = rs01.getString("HOCR");
