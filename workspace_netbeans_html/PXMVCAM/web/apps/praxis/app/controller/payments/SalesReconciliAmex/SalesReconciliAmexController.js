@@ -1131,20 +1131,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     btnAdd_click: function() {
         this.winDataEntry('I');
     },
-    onEditClick: function(grid, rowIndex, colIndex) {
-        var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry('U', rec);
+    onViewPNR: function(a, b, c, d, e, rowData) {
+        
+//        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry('', rowData);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-
+                
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
                 action: action,
                 rec: rec,
-                lstCountry: me.lstCountry
+//                lstCountry: me.lstCountry
             }
         }).show();
     },
