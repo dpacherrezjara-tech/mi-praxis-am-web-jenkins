@@ -648,6 +648,7 @@ public class MerchantNumberDAO {
 
                 objRtn.CCUST = rs01.getString("CCUST");
                 objRtn.MERCHN = rs01.getString("MERCHN").trim();
+                objRtn.MERCHP = rs01.getString("MERCHP").trim();
                 objRtn.DESCR = rs01.getString("DESCR").trim();
                 objRtn.RSOCIAL = rs01.getString("RSOCIAL").trim();
                 objRtn.CIATA = rs01.getString("CIATA").trim();

@@ -201,6 +201,8 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
     },
     onEditClick: function(grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
+        console.log('--------->');
+        console.log(rec);
         this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
