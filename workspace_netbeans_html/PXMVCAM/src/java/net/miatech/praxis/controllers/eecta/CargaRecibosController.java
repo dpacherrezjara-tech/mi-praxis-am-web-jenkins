@@ -45,6 +45,7 @@ import net.miatech.praxis.eecta.SQP04253Filter;
 import net.miatech.praxis.eecta.SQP04254Filter;
 import net.miatech.praxis.eecta.SQP04255Filter;
 import net.miatech.praxis.eecta.SQP04259Filter;
+import net.miatech.praxis.eecta.SQP04260Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.CargaRecibosLogic;
 import net.miatech.utils.Functions;
@@ -704,6 +705,32 @@ public class CargaRecibosController extends BaseController {
             JsonArray gson_detail = parser.parse(request.getParameter("json_detail")).getAsJsonArray();
             filter.VP_JSON = gson_detail.toString();            
             objRtn = logic.setSQP04259Filter(filter);            
+            map.put("success", true);
+            map.put("objRtn", objRtn);
+        } catch (Exception ex) {
+            objRtn.dbException.SQLCODE = "0"; //[Ext.Msg.ERROR, Ext.Msg.INFO, Ext.Msg.WARNING, Ext.Msg.QUESTION];
+            objRtn.dbException.MESSAGE = ex.toString(); 
+            map.put("objRtn", objRtn);
+            map.put("success", true);
+            map.put("sesion", ex.getMessage());
+            //throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
+    }
+    @RequestMapping(value = "setAnulaReciboAsignadoCliente")
+    public @ResponseBody
+    String setAnulaReciboAsignadoCliente(ModelMap map, HttpServletRequest request) {
+        SQP04260Filter filter = new SQP04260Filter();
+        SQP04260Filter objRtn = new SQP04260Filter();
+        logic = new CargaRecibosLogic();
+        try {
+            logic.setSession(this.serverSession.getServerSession());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());                      
+//            JsonParser parser = new JsonParser();
+//            JsonArray gson_detail = parser.parse(request.getParameter("json_detail")).getAsJsonArray();
+//            filter.VP_JSON = gson_detail.toString();            
+            objRtn = logic.setSQP04260Filter(filter);            
             map.put("success", true);
             map.put("objRtn", objRtn);
         } catch (Exception ex) {
