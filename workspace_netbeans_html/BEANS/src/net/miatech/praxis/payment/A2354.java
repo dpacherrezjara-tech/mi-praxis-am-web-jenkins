@@ -12,6 +12,7 @@ public class A2354 {
 
     public String CCUST = "";
     public String MERCHN = "";
+    public String MERCHP = "";
     public String DESCR = "";
     public String RSOCIAL = "";
     public String CIATA = "";
@@ -22,7 +23,7 @@ public class A2354 {
     public String DIRCLIT2 = "";
     public String CODCLIT1 = "";
     public String DIRCLIT1 = "";
-    public String UNIOPE = "";
+    public String UNIOPE = "";    
     //Variables del Sistema
     public String USCR = "";
     public String FECR = "";

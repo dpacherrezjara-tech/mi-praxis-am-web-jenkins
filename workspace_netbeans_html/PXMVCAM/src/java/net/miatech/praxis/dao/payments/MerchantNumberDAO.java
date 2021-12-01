@@ -532,6 +532,7 @@ public class MerchantNumberDAO {
                 bean = new A2354Filter();
                 bean.RN = rst.getLong("RN");
                 bean.MERCHN = rst.getString("MERCHN").trim();
+                bean.MERCHP = rst.getString("MERCHP").trim();
                 bean.DESCR = rst.getString("DESCR").trim();
                 bean.RSOCIAL = rst.getString("RSOCIAL").trim();
                 bean.CANAL = rst.getString("CANAL").trim();
@@ -588,7 +589,7 @@ public class MerchantNumberDAO {
 
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -597,22 +598,23 @@ public class MerchantNumberDAO {
 
             cstmt.setString(1, option);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
-            cstmt.setString(3, filter.MERCHN.trim());
+            cstmt.setString(3, filter.MERCHN.trim());            
             cstmt.setString(4, filter.DESCR.trim());
             cstmt.setString(5, filter.RSOCIAL.trim());
             cstmt.setString(6, filter.CIATA.trim());
             cstmt.setString(7, filter.CANAL.trim());
             cstmt.setString(8, filter.SCOUNTRY.trim());
-            cstmt.setString(9, filter.UNIOPE.trim());
+            cstmt.setString(9, filter.UNIOPE.trim());            
 
             cstmt.setString(10, filter.CODCLIT1.trim());
             cstmt.setString(11, filter.DIRCLIT1.trim());
             cstmt.setString(12, filter.CODCLIT2.trim());
             cstmt.setString(13, filter.DIRCLIT2.trim());
+            cstmt.setString(14, filter.MERCHP.trim());
 
-            cstmt.setString(14, session.getUserView().getUserInfo().USR);
-            cstmt.setString(15, Functions.getFechaActual());
-            cstmt.setString(16, Functions.getHoraActual());
+            cstmt.setString(15, session.getUserView().getUserInfo().USR);
+            cstmt.setString(16, Functions.getFechaActual());
+            cstmt.setString(17, Functions.getHoraActual());
             cstmt.execute();
 
         } catch (Exception e) {
@@ -659,6 +661,7 @@ public class MerchantNumberDAO {
 
                 objRtn.CCUST = rs01.getString("CCUST");
                 objRtn.MERCHN = rs01.getString("MERCHN").trim();
+                objRtn.MERCHP = rs01.getString("MERCHP").trim();
                 objRtn.DESCR = rs01.getString("DESCR").trim();
                 objRtn.RSOCIAL = rs01.getString("RSOCIAL").trim();
                 objRtn.CIATA = rs01.getString("CIATA").trim();
