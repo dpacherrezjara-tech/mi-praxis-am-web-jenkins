@@ -134,7 +134,7 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
                 }else{
                     this.search(this.bean,e);
                 }
-            }else if ( tipo_fil == '1' ){
+            }else if ( tipo_fil === '1' ){
                 this.bean.IN_A1698FREGI = Ext.util.Format.date(this.getValue("txtA1698FCARG"), 'Ymd');
                 if (this.bean.IN_A1698FREGI === ''){
                     global.Msg({ msg: 'Required Field, Processing Date' });
@@ -236,6 +236,21 @@ Ext.define('Ext.Praxis.controller.sales.LoadControlASR.LoadControlASRController'
         });
         Ext.getCmp(prototype.id+'-gridControlLoadRep').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id+'-paggin3').bindStore(storeGridDatas);
+    },
+    exportExcel: function(_path) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    global.getFile(prototype.url + _path);
+                }
+            }
+        });
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="loadASR">
