@@ -257,6 +257,35 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "/searchFlightManifest")
+    public @ResponseBody
+    String searchFlightManifest(ModelMap map, HttpServletRequest request) {
+        A3729Filter filter = new A3729Filter();
+        Gson gson = new Gson();
+        String beanString;
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A3729Filter> listaData = logic.loadPX095SQP04286(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
 
     @RequestMapping(value = "/searchDetailNFLIGHT")
     public @ResponseBody

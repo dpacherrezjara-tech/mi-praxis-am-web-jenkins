@@ -297,7 +297,18 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             listeners: {
                                 keypress: 'onTextKeypress'
                             }
-                        }
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkManifest',
+                            boxLabel: '<b>Flight Manifest</b>',
+                            checked: false,
+                            width: 120,
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
+                        },
                     ]
                 },
                 {

@@ -52,6 +52,10 @@ public class FlightConciliationLogic {
         return objDAO.loadPX095SGGA3729(filter);
     }
     
+    public List<A3729Filter> loadPX095SQP04286(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.loadPX095SQP04286(filter);
+    }
+    
     public List<A1692Filter> loadPX095S05A1692(A1691Filter2 filter, String strTipo, HashMap<String, String> hmPaises) throws SQLException, Exception {
         return objDAO.loadPX095S05A1692(filter, strTipo, hmPaises);
     }
