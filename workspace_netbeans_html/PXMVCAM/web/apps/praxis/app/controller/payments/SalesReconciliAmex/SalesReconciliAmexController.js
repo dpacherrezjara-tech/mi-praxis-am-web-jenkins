@@ -276,7 +276,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.setGridDataDetSettlement();
     },
     setGridDataDetSettlement: function() {
-        win.lblUser_toolTip("Estructura: A4116");
+        win.lblUser_toolTip("Estructura: A4116/A4117/A4118");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -550,7 +550,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl: ' + data.IN_IDITEMS + '</center>');
+                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
                                         + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
@@ -560,7 +560,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.getCmp(prototype.id + '-htDateTransaction').setText('Processing');
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl: ' + data.IN_IDITEMS + '</center>');
+                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetTransaction').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
                                         + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENC + '</center>');
@@ -656,7 +656,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl Sub.: ' + data.IN_IDITEMS + '</center>');
+                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Payment Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
                                         + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '</center>');
@@ -666,7 +666,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.getCmp(prototype.id + '-htDatePricing').setText('Processing');
                             if (data.IN_IDITEMS !== '') {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
-                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  Item Correl Sub.: ' + data.IN_IDITEMS + '</center>');
+                                        + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENCY + '  -  ID Sub.: ' + data.IN_IDITEMS + '</center>');
                             } else {
                                 Ext.getCmp(prototype.id + '-gridDetPricing').setTitle('<center style="font-size:12px;">Processing Date: ' + data.strDATE + '  -  Merchant ID: ' + data.IN_MERCHID
                                         + '  -  Payment Number: ' + data.IN_AXPAYNBR + '  -  Currency: ' + data.IN_PCURRENC + '</center>');
