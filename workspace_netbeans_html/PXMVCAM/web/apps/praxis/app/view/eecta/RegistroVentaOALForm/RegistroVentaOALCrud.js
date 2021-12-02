@@ -63,7 +63,7 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                             maxLength: 13,
                                             listeners: {
                                                 change: 'onUpperValue',
-                                                focusleave: 'fn_completar_cia',
+                                                //focusleave: 'fn_completar_cia',
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
                                                         Ext.getCmp(prototype.id01 + '-A4069CIA').focus();
