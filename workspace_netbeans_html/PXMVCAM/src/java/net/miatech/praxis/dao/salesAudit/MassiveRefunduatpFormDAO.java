@@ -438,7 +438,7 @@ public class MassiveRefunduatpFormDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04193(?,?,?,?)}";
+        String SQLCLL01 = "{CALL LIBSAP26.SQP04193(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -449,6 +449,8 @@ public class MassiveRefunduatpFormDAO {
             cstmt01.setString(2, filter.IN_PREME);
             cstmt01.setString(3, filter.IN_DATEFROM);
             cstmt01.setString(4, filter.IN_USER);
+             cstmt01.setString(5, filter.IN_TICKET);
+              cstmt01.setString(6, filter.IN_IATA);
 
             cstmt01.execute();
 

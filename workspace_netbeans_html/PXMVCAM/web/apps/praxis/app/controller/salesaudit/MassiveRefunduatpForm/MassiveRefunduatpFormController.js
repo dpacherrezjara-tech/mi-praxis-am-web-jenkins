@@ -396,13 +396,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 value = 'HIGHER AMOUNT FOR SALE';
                 break;
             case 'M':
-                 color = '#CFC2D8';
-                 value = 'MODIFIED';
-                 break;    
+                color = '#CFC2D8';
+                value = 'MODIFIED';
+                break;
             case 'R':
-                 color = '#E5B2B2';
-                 value = 'REJECT';
-                 break;
+                color = '#E5B2B2';
+                value = 'REJECT';
+                break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
@@ -528,6 +528,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         me.bean2.IN_PREME = rec.data.A4076PREME;
         me.bean2.IN_DATEFROM = rec.data.A4076FREGI;
         me.bean2.IN_USER = rec.data.A4076REGIS;
+        if (Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtFrmaSerie').getValue() !== '') {
+            me.bean2.IN_TICKET = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtCia').getValue() + "" + Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtFrmaSerie').getValue();
+        } else {
+            me.bean2.IN_TICKET = '';
+        }
+
+        me.bean2.IN_IATA = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtIATA').getValue();
         //
         Ext.getCmp(prototype.idMassiveRefunduatpForm + '-grid').getStore().removeAll();
         Ext.getCmp(prototype.idMassiveRefunduatpForm + '-grid').getStore().loadPage(1, {
