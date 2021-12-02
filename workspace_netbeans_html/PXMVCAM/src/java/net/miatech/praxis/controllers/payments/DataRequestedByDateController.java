@@ -155,6 +155,55 @@ public class DataRequestedByDateController extends BaseController {
         return lst;
     }
 
+    @RequestMapping(value = "searchDifference")
+    public @ResponseBody
+    String searchDifference(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- DataRequestedByDate : searchDifference-------------");
+
+        map.put("success", true);
+        List<A2331Filter> lst = this.getListDifference(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A2331Filter> getListDifference(HttpServletRequest request, Boolean bExcel) {
+
+        List<A2331Filter> lst = new ArrayList<>(0);
+        A2331Filter filter = new A2331Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new DataRequestedByDateLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2331Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX573SQP04287(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -198,7 +247,7 @@ public class DataRequestedByDateController extends BaseController {
             Iterator iter = listaData.iterator();
              // ====== CREANDO TITULOS ======================================
 
-             // ======  Nivel 1 ==========
+            // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
             Cell CH1_0 = row1.createCell(0);
             Cell CH1_1 = row1.createCell(1);
@@ -263,17 +312,17 @@ public class DataRequestedByDateController extends BaseController {
             CH1_18.setCellStyle(headerStyle);
             CH1_19.setCellStyle(headerStyle);
 
- //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 16));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
-            
+
             ++vj;
              //============================================
 
-             // ======  Nivel 2 ==========
+            // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
             Cell CH2_0 = row2.createCell(0);
             Cell CH2_1 = row2.createCell(1);
@@ -338,13 +387,13 @@ public class DataRequestedByDateController extends BaseController {
             CH2_18.setCellStyle(headerStyle);
             CH2_19.setCellStyle(headerStyle);
 
- //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 12, 13));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 15, 16));
             ++vj;
              //============================================
 
-             // ======  Nivel 3 ==========
+            // ======  Nivel 3 ==========
             Row row3 = sheet.createRow(vj);
             Cell CH3_0 = row3.createCell(0);
             Cell CH3_1 = row3.createCell(1);
@@ -409,7 +458,7 @@ public class DataRequestedByDateController extends BaseController {
             CH3_18.setCellStyle(headerStyle);
             CH3_19.setCellStyle(headerStyle);
 
- //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 2, 2));
@@ -426,7 +475,7 @@ public class DataRequestedByDateController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 18, 18));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
             ++vj;
-             //============================================
+            //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -497,7 +546,7 @@ public class DataRequestedByDateController extends BaseController {
             sheet.autoSizeColumn(18, true);
             sheet.autoSizeColumn(19, true);
 
-             //============================================
+            //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 

@@ -193,6 +193,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 this.setFormatParameterInteract();
                 this.searchInteract();
                 break;
+            case 'sd':
+                this.setFormatParameter();
+                this.searchDifference();
+                break;
         }
     },
     setFormatParameter: function() {
@@ -357,6 +361,67 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataStatusSabre').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+        }
+    },
+    searchDifference: function() {
+        win.lblUser_toolTip("Estructura: A2331");
+        me.panelActual = '-panelGridDifference';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchDifference'
+                }, listeners: {
+                    beforeload: function(obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                        obj.proxy.extraParams = searchParams;
+                    },
+                    load: function(obj) {
+                        Ext.getCmp(prototype.id + '-contentInfo').unmask();
+//                        console.log(obj.data);
+                        var pag = Ext.getCmp(prototype.id + '-paggin3');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            var data = obj.data.items[0].data;
+                            console.log(data);
+
+                            var IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+                            var titIN_DATE = '';
+
+                            if (IN_DATE === 'SALEDATE') {
+                                titIN_DATE = 'Sales';
+                            } else if (IN_DATE === 'FECR') {
+                                titIN_DATE = 'Creation';
+                            } else if (IN_DATE === 'DATEN') {
+                                titIN_DATE = 'Bank';
+                            } else if (IN_DATE === 'FECSELEC') {
+                                titIN_DATE = 'GDS';
+                            } else {
+                                titIN_DATE = 'Reception';
+                            }
+
+                            Ext.getCmp(prototype.id + '-adgTitFechaDiff').setText(titIN_DATE);
+
+                        }
+                        me.setWidthPie();
+                    }
+                }
+            });
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataDifference').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
         }
     },
     viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
@@ -654,6 +719,9 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 break;
             case  '-panelGridStatusSabre':
                 me.pagginActual = '-paggin2';
+                break;
+            case  '-panelGridDifference':
+                me.pagginActual = '-paggin3';
                 break;
         }
     },
