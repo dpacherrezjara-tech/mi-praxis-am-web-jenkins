@@ -453,6 +453,264 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                         },
                         {
                             xtype: 'panel',
+                            id: prototype.id + '-panelGridDifference',
+                            hidden: true,
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+//                            height: 'auto',
+                            width: 1690,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataDifference',
+                                    width: 1670,
+                                    height: 530,
+                                    columnLines: true,
+                                    /*features: [{
+                                     ftype: 'summary'
+                                     }],*/
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: '',
+                                                id: prototype.id + '-adgTitFechaDiff',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'DATE', width: 85,
+                                                        /*renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                         metaData.style = "color:#057ECB;";
+                                                         value = '<b>' + value + '</b>';
+                                                         return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                         }*/
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Sending Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Bank to AM', dataIndex: 'SENTDATE', width: 90}
+                                                ]
+                                            },
+                                            {
+                                                text: 'IATA', dataIndex: 'AGENTE', width: 90,
+                                            },
+                                            {
+                                                text: 'Sending Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'to IATA', dataIndex: 'IATADATE', width: 90}
+                                                ]
+                                            },
+                                            {
+                                                text: 'Link',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'LINKDATE', width: 75},
+                                                    {text: 'Time', dataIndex: 'LINKHORA', width: 75}
+                                                ]
+                                            },
+                                            {
+                                                text: 'Date',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Sending', dataIndex: 'DATES', width: 80
+                                                    },
+                                                    {
+                                                        text: 'Notification', dataIndex: 'DATEN', width: 80,
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Ticket', dataIndex: 'TICKET', width: 120,
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Indicator',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Cpns Sales', dataIndex: 'INDCPN', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Used Praxis',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'First', dataIndex: 'STUSO', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#d5f4d5;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Last', dataIndex: 'STUSOS', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#d5f4d5;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Used Sabre',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'First',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Status', dataIndex: 'INDCPNS', width: 80,
+                                                                listeners: {
+                                                                    click: 'onDetByStatus'
+                                                                },
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    value = '<b>' + value + '</b>';
+                                                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Date', dataIndex: 'DATSABF', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Date',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Application', dataIndex: 'DATAPLICA', width: 80
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Last',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Status', dataIndex: 'INDCPNSL', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Date', dataIndex: 'DATSABL', width: 80,
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                                    return value;
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Accounting',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'ID', dataIndex: 'IDCON', width: 80
+                                                    },
+                                                    {
+                                                        text: 'Date', dataIndex: 'FCONT', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Rule',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Policy', dataIndex: 'strDescCRULE', width: 80
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
                             id: prototype.id + '-pie',
                             layout: {
                                 type: 'hbox',

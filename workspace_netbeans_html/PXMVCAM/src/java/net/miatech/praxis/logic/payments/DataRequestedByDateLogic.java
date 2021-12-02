@@ -25,12 +25,16 @@ public class DataRequestedByDateLogic {
     public void setSession(IServerSession ss) {
         DataRequestedByDateDAO.setSession(ss);
     }
-    
+
     public List<A2331Filter> loadPX573SQP04266(A2331Filter filter) throws SQLException, Exception {
         return DataRequestedByDateDAO.loadPX573SQP04266(filter);
-    } 
-    
+    }
+
     public List<A3676Filter> loadPX573SQP04276(A3676Filter filter) throws SQLException, Exception {
         return DataRequestedByDateDAO.loadPX573SQP04276(filter);
-    }        
+    }
+
+    public List<A2331Filter> loadPX573SQP04287(A2331Filter filter) throws SQLException, Exception {
+        return DataRequestedByDateDAO.loadPX573SQP04287(filter);
+    }
 }
