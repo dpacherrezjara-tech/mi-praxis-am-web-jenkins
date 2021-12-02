@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALCrud', {
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4069CIA',
                                             fieldLabel: 'Airline Code', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                                            width: 160,
+                                            width: 160, value:'139',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 3,
