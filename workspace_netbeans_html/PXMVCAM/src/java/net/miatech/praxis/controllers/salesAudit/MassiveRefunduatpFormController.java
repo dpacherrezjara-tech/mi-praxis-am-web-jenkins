@@ -1612,7 +1612,7 @@ public class MassiveRefunduatpFormController extends BaseController {
 
                 CH_00.setCellValue(listaData.get(vi).A4076BASE);
                 CH_01.setCellValue(listaData.get(vi).A4076TYPE);
-                CH_02.setCellValue(listaData.get(vi).IN_TICKET);
+                CH_02.setCellValue(listaData.get(vi).A4076TICKET);
                 CH_03.setCellValue(listaData.get(vi).A4076CPN);
                 CH_04.setCellValue(listaData.get(vi).A4076FREVI);
                 CH_05.setCellValue(listaData.get(vi).A4076FVTA);
@@ -1644,6 +1644,18 @@ public class MassiveRefunduatpFormController extends BaseController {
                         break;
                     case "T":
                         vl_A4076FLAG = "ATO ERROR";
+                        break;
+                    case "B":
+                        vl_A4076FLAG = "TAX ERROR";
+                        break;
+                    case "H":
+                        vl_A4076FLAG = "HIGHER AMOUNT FOR SALE";
+                        break;
+                    case "M":
+                        vl_A4076FLAG = "MODIFIED";
+                        break;
+                    case "R":
+                        vl_A4076FLAG = "REJECT";
                         break;
                 }
                 CH_15.setCellValue(vl_A4076FLAG);
