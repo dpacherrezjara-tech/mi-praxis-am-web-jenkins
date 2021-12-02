@@ -388,7 +388,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 }
                             } else {
                                 if (!fileA4076.A4076MONTT.equals(fileA4076.A4076MDA)) {
-                                    result = "THE TARIFA CURRENCY MUST BE THE SAME AS REPORTED IN COLUMN D " + fileA4076.A4076TICKET;
+                                    result = "THE RATE CURRENCY MUST BE THE SAME AS REPORTED IN COLUMN D " + fileA4076.A4076TICKET;
                                     break;
                                 }
                             }
@@ -414,6 +414,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX1 = 0;
                             }
+                            if (!fileA4076.A4076TAX1.equals("") && fileA4076.A4076MONTAX1 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX1 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX1.equals("") && fileA4076.A4076MONTAX1 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX1 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX2 **
                              */
@@ -435,6 +443,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX2 = Float.parseFloat(getCellValue(currentRow.getCell(25)));
                             } else {
                                 fileA4076.A4076MONTAX2 = 0;
+                            }
+
+                            if (!fileA4076.A4076TAX2.equals("") && fileA4076.A4076MONTAX2 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX2 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX2.equals("") && fileA4076.A4076MONTAX2 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX2 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX3 **
@@ -458,6 +475,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX3 = 0;
                             }
+
+                            if (!fileA4076.A4076TAX3.equals("") && fileA4076.A4076MONTAX3 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX3 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX3.equals("") && fileA4076.A4076MONTAX3 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX3 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX4 **
                              */
@@ -479,6 +505,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX4 = Float.parseFloat(getCellValue(currentRow.getCell(31)));
                             } else {
                                 fileA4076.A4076MONTAX4 = 0;
+                            }
+
+                            if (!fileA4076.A4076TAX4.equals("") && fileA4076.A4076MONTAX4 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX4 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX4.equals("") && fileA4076.A4076MONTAX4 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX4 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX5 **
@@ -503,6 +538,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX5 = 0;
                             }
 
+                            if (!fileA4076.A4076TAX5.equals("") && fileA4076.A4076MONTAX5 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX5 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX5.equals("") && fileA4076.A4076MONTAX5 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX5 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX6 **
                              */
@@ -524,6 +567,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX6 = Float.parseFloat(getCellValue(currentRow.getCell(37)));
                             } else {
                                 fileA4076.A4076MONTAX6 = 0;
+                            }
+
+                            if (!fileA4076.A4076TAX6.equals("") && fileA4076.A4076MONTAX6 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX6 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX6.equals("") && fileA4076.A4076MONTAX6 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX6 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX7 **
@@ -547,6 +599,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX7 = 0;
                             }
+
+                            if (!fileA4076.A4076TAX7.equals("") && fileA4076.A4076MONTAX7 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX7 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX7.equals("") && fileA4076.A4076MONTAX7 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX7 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX8 **
                              */
@@ -568,6 +629,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX8 = Float.parseFloat(getCellValue(currentRow.getCell(43)));
                             } else {
                                 fileA4076.A4076MONTAX8 = 0;
+                            }
+
+                            if (!fileA4076.A4076TAX8.equals("") && fileA4076.A4076MONTAX8 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX8 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX8.equals("") && fileA4076.A4076MONTAX8 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX8 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX9 **
@@ -591,6 +661,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX9 = 0;
                             }
+
+                            if (!fileA4076.A4076TAX9.equals("") && fileA4076.A4076MONTAX9 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX9 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX9.equals("") && fileA4076.A4076MONTAX9 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX9 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX10 **
                              */
@@ -612,6 +691,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX10 = Float.parseFloat(getCellValue(currentRow.getCell(49)));
                             } else {
                                 fileA4076.A4076MONTAX10 = 0;
+                            }
+                            if (!fileA4076.A4076TAX10.equals("") && fileA4076.A4076MONTAX10 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX10 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX10.equals("") && fileA4076.A4076MONTAX10 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX10 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX11 **
@@ -635,6 +722,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX11 = 0;
                             }
+
+                            if (!fileA4076.A4076TAX11.equals("") && fileA4076.A4076MONTAX11 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX11 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX11.equals("") && fileA4076.A4076MONTAX11 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX11 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX13 **
                              */
@@ -656,6 +752,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX12 = Float.parseFloat(getCellValue(currentRow.getCell(55)));
                             } else {
                                 fileA4076.A4076MONTAX12 = 0;
+                            }
+
+                            if (!fileA4076.A4076TAX12.equals("") && fileA4076.A4076MONTAX12 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX12 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX12.equals("") && fileA4076.A4076MONTAX12 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX12 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX13 **
@@ -679,6 +784,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX13 = 0;
                             }
+                            if (!fileA4076.A4076TAX13.equals("") && fileA4076.A4076MONTAX13 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX13 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX13.equals("") && fileA4076.A4076MONTAX13 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX13 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX14 **
                              */
@@ -701,6 +814,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX14 = 0;
                             }
+
+                            if (!fileA4076.A4076TAX14.equals("") && fileA4076.A4076MONTAX14 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX10 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX14.equals("") && fileA4076.A4076MONTAX14 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX10 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
                             /**
                              * **TAX15 **
                              */
@@ -722,6 +844,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX15 = Float.parseFloat(getCellValue(currentRow.getCell(64)));
                             } else {
                                 fileA4076.A4076MONTAX15 = 0;
+                            }
+                            if (!fileA4076.A4076TAX15.equals("") && fileA4076.A4076MONTAX15 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX15 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX15.equals("") && fileA4076.A4076MONTAX15 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX15 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX16 **
@@ -746,6 +876,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX16 = 0;
                             }
 
+                            if (!fileA4076.A4076TAX16.equals("") && fileA4076.A4076MONTAX16 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX16 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX16.equals("") && fileA4076.A4076MONTAX16 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX16 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
+
                             /**
                              * **TAX17 **
                              */
@@ -767,6 +906,14 @@ public class MassiveRefunduatpFormController extends BaseController {
                                 fileA4076.A4076MONTAX17 = Float.parseFloat(getCellValue(currentRow.getCell(70)));
                             } else {
                                 fileA4076.A4076MONTAX17 = 0;
+                            }
+                            if (!fileA4076.A4076TAX17.equals("") && fileA4076.A4076MONTAX17 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX17 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX17.equals("") && fileA4076.A4076MONTAX17 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX10 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
                             }
                             /**
                              * **TAX18 **
@@ -790,6 +937,15 @@ public class MassiveRefunduatpFormController extends BaseController {
                             } else {
                                 fileA4076.A4076MONTAX18 = 0;
                             }
+                            if (!fileA4076.A4076TAX18.equals("") && fileA4076.A4076MONTAX18 == 0) {
+                                result = "IT IS REPORTING CURRENCY IN TAX18 AND IT IS NOT REPORTING THE AMOUNT " + fileA4076.A4076TICKET;
+                                break;
+                            }
+                            if (fileA4076.A4076TAX18.equals("") && fileA4076.A4076MONTAX18 != 0) {
+                                result = "IT IS REPORTING AMOUNT IN TAX18 AND IT IS NOT REPORTING THE CURRENCY " + fileA4076.A4076TICKET;
+                                break;
+                            }
+
                             if (!getCellValue(currentRow.getCell(74)).equals("")) {
                                 fileA4076.A4076NETO = Float.parseFloat(getCellValue(currentRow.getCell(74)));
                             } else {
