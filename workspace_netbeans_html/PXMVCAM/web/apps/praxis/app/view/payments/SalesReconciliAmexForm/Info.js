@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1690,
+                width: 1800,
                 height: 'auto',
                 align: 'center'
             },
@@ -334,7 +334,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1690,
+                            width: 1800,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -344,7 +344,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetSubmission',
-                                    width: 1690,
+                                    width: 1780,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -359,6 +359,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {
                                                 text: 'Payment',
                                                 id: prototype.id + '-htDateSunmission',
+                                                hidden: true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -395,7 +396,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: 'Status', dataIndex: 'desCERROR', width: 90,
+                                                    {text: 'Status', dataIndex: 'desCERROR', width: 75,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.CERROR === '00') {
                                                                 metaData.style = "text-align:center;background-color:#C6E5B1;";
@@ -435,13 +436,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Sales<br>Merchant ID', dataIndex: 'SMERCHID', width: 100,
+                                                    {text: 'Sales<br>Merchant ID', dataIndex: 'SMERCHID', width: 85,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Item <br> Correl.', dataIndex: 'IDITEMS', width: 70,
+                                                    {text: 'ID <br> Sub.', dataIndex: 'IDITEMS', width: 60,
                                                         listeners: {
                                                             click: 'onGridDetTransaction'
                                                         },
@@ -451,7 +452,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: 'Submis<br>Date', dataIndex: 'BSUMDATE', width: 90,
+                                                    {text: 'Submis<br>Date', dataIndex: 'BSUMDATE', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
@@ -463,13 +464,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Invoice Number', dataIndex: 'SIREFNBR', width: 130,
+                                                    {text: 'Invoice Number', dataIndex: 'SIREFNBR', width: 120,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Curr', dataIndex: 'SCURRENCY', width: 60,
+                                                    {text: 'Curr', dataIndex: 'SCURRENCY', width: 60, hidden: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
@@ -478,23 +479,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'GROSS', dataIndex: 'GROSAMOUN', width: 100,
-                                                listeners: {
-//                                                    click: 'onGridDetBankS'
-                                                },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totGROSAMOUN, '0,000.00') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'Discount',
+                                                text: 'Submission',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -502,9 +487,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Commission', dataIndex: 'DISCAMOUN', width: 100,
+                                                        text: 'GROSS', dataIndex: 'GROSAMOUN', width: 90,
                                                         listeners: {
-                                                            //                                                    click: 'onGridDetBankS'
+//                                                    click: 'onGridDetBankS'
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
@@ -514,57 +499,83 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totGROSAMOUN, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'TAX <br> Commission', dataIndex: 'TAXAMOUN', width: 100,
+                                                        text: 'Discount',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Commission', dataIndex: 'DISCAMOUN', width: 90,
+                                                                listeners: {
+                                                                    //                                                    click: 'onGridDetBankS'
+                                                                },
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totDISCAMOUN, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'TAX <br> Commission', dataIndex: 'TAXAMOUN', width: 90,
+                                                                listeners: {
+                                                                    //                                                    click: 'onGridDetBankS'
+                                                                },
+                                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totTAXAMOUN, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'NET', dataIndex: 'NETAMOUN', width: 90,
                                                         listeners: {
-                                                            //                                                    click: 'onGridDetBankS'
+//                                                    click: 'onGridDetBankS'
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
+//                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totTAXAMOUN, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totNETAMOUN, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Transac.<br>Count', dataIndex: 'TRANCOUNT', width: 60,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTRANCOUNT, '0,000') + '<b>';
                                                         }
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: 'NET', dataIndex: 'NETAMOUN', width: 100,
-                                                listeners: {
-//                                                    click: 'onGridDetBankS'
-                                                },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-//                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totNETAMOUN, '0,000.00') + '<b>';
-                                                }
-                                            },
-                                            {text: 'Transaction <br> Count', dataIndex: 'TRANCOUNT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
-                                                    return value;
-                                                },
-                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetSubmission').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totTRANCOUNT, '0,000') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'Result Conciliation Submission',
+                                                text: 'Result Conciliation Submission vs Transaction/Pricing',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -572,7 +583,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'GROSS', dataIndex: 'GROSAMOUNC', width: 100,
+                                                        text: 'GROSS', dataIndex: 'GROSAMOUNC', width: 90,
                                                         listeners: {
                                                             //                                                    click: 'onGridDetBankS'
                                                         },
@@ -597,7 +608,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Commission', dataIndex: 'DISCAMOUNC', width: 100,
+                                                                text: 'Commission', dataIndex: 'DISCAMOUNC', width: 90,
                                                                 listeners: {
                                                                     //                                                    click: 'onGridDetBankS'
                                                                 },
@@ -614,7 +625,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 }
                                                             },
                                                             {
-                                                                text: 'TAX <br> Commission', dataIndex: 'TAXAMOUNC', width: 100,
+                                                                text: 'TAX <br> Commission', dataIndex: 'TAXAMOUNC', width: 90,
                                                                 listeners: {
                                                                     //                                                    click: 'onGridDetBankS'
                                                                 },
@@ -633,7 +644,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         ]
                                                     },
                                                     {
-                                                        text: 'NET', dataIndex: 'NETAMOUNC', width: 100,
+                                                        text: 'NET', dataIndex: 'NETAMOUNC', width: 90,
                                                         listeners: {
                                                             //                                                    click: 'onGridDetBankS'
                                                         },
@@ -650,7 +661,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Transac. <br> Count', dataIndex: 'TRANCOUNTC', width: 100,
+                                                        text: 'Transac.<br>Count', dataIndex: 'TRANCOUNTC', width: 60,
                                                         listeners: {
                                                             //                                                    click: 'onGridDetBankS'
                                                         },
@@ -677,7 +688,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Sub Debit <br> GROSS', dataIndex: 'SDGROSSA', width: 100,
+                                                        text: 'Sub Debit<br>GROSS', dataIndex: 'SDGROSSA', width: 90,
                                                         listeners: {
 //                                                    click: 'onGridDetBankS'
                                                         },
@@ -693,7 +704,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Sub Credit <br> GROSS', dataIndex: 'SCGROSSA', width: 100,
+                                                        text: 'Sub Credit <br> GROSS', dataIndex: 'SCGROSSA', width: 75,
                                                         listeners: {
 //                                                    click: 'onGridDetBankS'
                                                         },
@@ -709,7 +720,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totSCGROSSA, '0,000.00') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Installment <br> Number', dataIndex: 'INSTANBR', width: 100,
+                                                    {text: 'Installment <br> Number', dataIndex: 'INSTANBR', width: 85,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             return value;
@@ -720,7 +731,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return '<b>' + Ext.util.Format.number(data.totINSTANBR, '0,000') + '<b>';
                                                         }
                                                     },
-                                                    {text: 'Orig. Settle <br> Date', dataIndex: 'OSETDATE', width: 110,
+                                                    {text: 'Orig. Settle<br>Date', dataIndex: 'OSETDATE', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             return value;
@@ -741,7 +752,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1690,
+                            width: 1700,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -767,6 +778,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {
                                                 text: 'Payment',
                                                 id: prototype.id + '-htDateTransaction',
+                                                hidden: true,
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -804,7 +816,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Status', dataIndex: 'desCERROR', width: 100,
+                                            {text: 'Status', dataIndex: 'desCERROR', width: 90,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.CERROR === '00') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
@@ -825,13 +837,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Merchant <br> Location ID', dataIndex: 'LMERCHID', width: 100,
+                                                    {text: 'Merchant <br> Location ID', dataIndex: 'LMERCHID', width: 90,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Item <br> Correl.', dataIndex: 'IDITEMT', width: 70,
+                                                    {text: 'ID<br>Tran.', dataIndex: 'IDITEMT', width: 70,
                                                         listeners: {
                                                             click: 'onGridDetPricingByItemt'
                                                         },
@@ -850,7 +862,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
-                                                    {text: 'Seller ID', dataIndex: 'SELLERID', width: 100,
+                                                    {text: 'Seller ID', dataIndex: 'SELLERID', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
@@ -862,7 +874,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Approval  <br> Code', dataIndex: 'SAUTHOC', width: 90,
+                                                    {text: 'Approval<br>Code', dataIndex: 'SAUTHOC', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
@@ -1081,13 +1093,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'ID Item <br> Correl. Transact.', dataIndex: 'IDITEMT', width: 110,
+                                                    {text: 'ID<br>Tran.', dataIndex: 'IDITEMT', width: 110,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'ID Item  <br> Correl.Pric', dataIndex: 'IDITEMP', width: 80,
+                                                    {text: 'ID<br>Pric.', dataIndex: 'IDITEMP', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
@@ -1138,13 +1150,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA";
-                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
                                                             return value;
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetPricing').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCRATE, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totDISCRATE, '0,000.00 %') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -1233,7 +1245,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1690,
+                            width: 1730,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -1243,7 +1255,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetChargeback',
-                                    width: 1690,
+                                    width: 1730,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary'
@@ -1545,7 +1557,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1690,
+                            width: 900,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -1555,7 +1567,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridSettlement',
-                                    width: 875,
+                                    width: 845,
                                     height: 'auto',
                                     columnLines: true,
                                     columns: {
@@ -1611,34 +1623,44 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
 //                                                    click: 'onGridDetBankS'
                                                 },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
+                                                    metaData.style = "text-align:right;background-color:#B2FAC6";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
                                             {
-                                                text: '% <br> Commission', dataIndex: 'DISCRATE_IMPORT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Amount <br> Commission', dataIndex: 'DISCAMOUN_IMPORT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'IVA <br> Commission', dataIndex: 'DISCAMOUN_IVA', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                                text: 'Commission',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Rate', dataIndex: 'DISCRATE_IMPORT', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#FCF6DC";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'DISCAMOUN_IMPORT', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#FCF6DC";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'VAT', dataIndex: 'DISCAMOUN_IVA', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#f5edc9";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 100,
@@ -1667,7 +1689,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1690,
+                            width: 1630,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -1677,7 +1699,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetSettlement',
-                                    width: 1690,
+                                    width: 1630,
                                     height: 'auto',
                                     columnLines: true,
                                     columns: {
@@ -1739,7 +1761,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 100},
+                                            {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 100,
+                                                listeners: {
+                                                    click: 'onViewPNR'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+//                                                            value = '<br>' + value + '<br>';
+                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
                                             {text: 'Indust.Speci. <br> Ref.Nbr', dataIndex: 'ISREFNBR', width: 120,
                                                 listeners: {
                                                     click: 'viewTicket'
@@ -1750,16 +1781,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {text: 'Card Number', dataIndex: 'SCARDN', width: 140},
-                                            {text: 'Auth. Nbr.', dataIndex: 'SAUTHOC', width: 80},
+                                            {text: 'Auth.', dataIndex: 'SAUTHOC', width: 70},
                                             {text: 'Installment <br> Plan', dataIndex: 'NBRINSTA', width: 90},
-                                            {text: 'Installments', dataIndex: 'INSTANBR', width: 90},
+                                            {text: 'Installment<br>Number', dataIndex: 'INSTANBR', width: 90},
                                             {
                                                 text: 'Total <br> Amount', dataIndex: 'GROSAMOUN', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
+                                                    metaData.style = "text-align:right;background-color:#B2FAC6";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
@@ -1776,28 +1807,38 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: '% <br> Commission', dataIndex: 'DISCRATE_IMPORT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Amount <br> Commission', dataIndex: 'DISCAMOUN_IMPORT', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'IVA <br> Commission', dataIndex: 'DISCAMOUN_IVA', width: 100,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
+                                                text: 'Commission',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Rate', dataIndex: 'DISCRATE_IMPORT', width: 70,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#FCF6DC";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Amount', dataIndex: 'DISCAMOUN_IMPORT', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#FCF6DC";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'VAT', dataIndex: 'DISCAMOUN_IVA', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#f5edc9";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 100,
