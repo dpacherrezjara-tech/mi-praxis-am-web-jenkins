@@ -20,6 +20,7 @@ import net.miatech.praxis.eecta.SQP04253Filter;
 import net.miatech.praxis.eecta.SQP04254Filter;
 import net.miatech.praxis.eecta.SQP04255Filter;
 import net.miatech.praxis.eecta.SQP04259Filter;
+import net.miatech.praxis.eecta.SQP04260Filter;
 
 /**
  *
@@ -75,5 +76,9 @@ public class CargaRecibosLogic {
      public SQP04259Filter setSQP04259Filter(SQP04259Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04259Filter(filter);
     }
+      public SQP04260Filter setSQP04260Filter(SQP04260Filter filter) throws SQLException, Exception {
+        return objDAO.setSQP04260Filter(filter);
+    }
+     
     
 }

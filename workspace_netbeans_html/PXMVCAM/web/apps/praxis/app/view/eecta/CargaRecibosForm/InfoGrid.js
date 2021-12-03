@@ -64,7 +64,22 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
 //                                }
 //                            },
                             columns: {
-                                items: [                                    
+                                items: [  
+                                    {
+                                        xtype: 'actioncolumn',                                        
+                                        sortable: false,
+                                        width: 40,
+                                        align: 'center',
+                                        locked: true,
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-image-trash',
+                                                tooltip: 'Anular',
+                                                handler: 'get_anular_recibo'                                                
+                                            }
+                                        ]
+
+                                    },
                                     {text: 'Nº Lote', dataIndex: 'A4103LOTE', width: 80, align: 'center', locked: true},                                    
                                     {text: 'Fecha<br>Recibo', dataIndex: 'A4103FECRC', align: 'center', width: 70, locked: true},
                                     {text: 'Fecha<br>Deposito', dataIndex: 'A4103FECDP', align: 'center', width: 70, locked: true},
@@ -145,7 +160,13 @@ Ext.define('Ext.Praxis.view.eecta.CargaRecibosForm.InfoGrid', {
                             viewConfig: {
                                 stripeRows: true,
                                 enableTextSelection: true,
-                                markDirty: false
+                                markDirty: false,
+                                getRowClass: function (record, rowIndex, rowParams, store) {                                    
+                                    if ( record.data.A4103STAT === "A" )                  
+                                         return 'rowC';                                        
+//                                    if (rowIndex % 2 === 0)
+//                                        return 'rowA';
+                                }
                             },
                             trackMouseOver: true,
                             scope: this,
