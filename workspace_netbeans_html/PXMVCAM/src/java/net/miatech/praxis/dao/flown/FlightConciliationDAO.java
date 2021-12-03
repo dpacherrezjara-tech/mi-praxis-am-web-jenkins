@@ -1473,6 +1473,12 @@ public class FlightConciliationDAO {
                         beanCons.strDescCARRIVA = hmAeropuertos.get(rst.getString("CARRIVA").trim()).toString();
                     }
                     beanCons.LEGSEQ = rst.getString("LEGSEQ").trim();
+                    beanCons.FDUP = rst.getString("FDUP").trim();
+                    
+                    if(beanCons.FDUP.equals("Y")){
+                        beanCons.FDUP = "DUPLICATE";
+                    }
+                    
                     beanCons.NPLANE = rst.getString("NPLANE").trim();
                     beanCons.ZONA = rst.getString("ZONA").trim();
                     //beanCons.STORG = rst.getString("STORG").trim();

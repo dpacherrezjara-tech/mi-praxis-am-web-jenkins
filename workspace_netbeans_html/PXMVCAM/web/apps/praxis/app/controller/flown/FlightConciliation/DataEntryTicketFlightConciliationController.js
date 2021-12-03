@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
     init: function(view) {
         meEntryTick = this;
         this.p = this.view.params;
-//        console.log(this.p);
+        console.log(this.p);
     },
     afterRender: function(){
         switch( this.p.actionCode ){
@@ -92,6 +92,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         Ext.getCmp(prototype.id + '-txtFOPERZUL').setValue("");
         Ext.getCmp(prototype.id + '-txtNPLANE').setValue("");
         Ext.getCmp(prototype.id + '-txtLEGSEQ').setValue("");
+        Ext.getCmp(prototype.id + '-txtFDUP').setValue("");
         Ext.getCmp(prototype.id + '-cmbFTE').setValue("");
         Ext.getCmp(prototype.id + '-cmbSTORG').setValue("");
         Ext.getCmp(prototype.id + '-cmbSTVAL').setValue("");
@@ -345,6 +346,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         this.setValue("txtFOPERZUL", bean.FOPERZUL);
         this.setValue("txtNPLANE", bean.NPLANE);
         this.setValue("txtLEGSEQ", bean.LEGSEQ);
+        this.setValue("txtFDUP", bean.FDUP);
         if (bean.CCIA !== '139') {
             this.setValue("cmbSTORG", "1");
         } else if(bean.CCIA === '139') {
@@ -458,6 +460,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryTicketFlight
         beanOption.FOPERZUL = Ext.util.Format.date(this.getValue("txtFOPERZUL"), 'Ymd');
         beanOption.NPLANE = this.getValue("txtNPLANE");
         beanOption.LEGSEQ = this.getValue("txtLEGSEQ");
+        beanOption.FDUP = this.getValue("txtFDUP");
         beanOption.FTE = this.getValue("cmbFTE");
         beanOption.CDOC = this.getValue("txtCDOC");
         beanOption.TDOC = this.getValue("cmbTDOC");
