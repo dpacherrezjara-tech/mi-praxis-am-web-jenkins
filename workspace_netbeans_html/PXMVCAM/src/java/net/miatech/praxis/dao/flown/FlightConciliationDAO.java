@@ -763,6 +763,10 @@ public class FlightConciliationDAO {
                     beanCons.descFSABRE = "Found";
                 } else if (rst.getString("FSABRE").trim().equals("2")) {
                     beanCons.descFSABRE = "Found but not matching coupon";
+                } else if (rst.getString("FSABRE").trim().equals("4")) {
+                    beanCons.descFSABRE = "Employee";
+                } else if (rst.getString("FSABRE").trim().equals("5")) {
+                    beanCons.descFSABRE = "Manual";
                 }
 
                 beanCons.STASABR = rst.getString("STASABR").trim();
@@ -2052,7 +2056,7 @@ public class FlightConciliationDAO {
         try {
 
 //            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
-            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04286(?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04286(?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -2061,6 +2065,7 @@ public class FlightConciliationDAO {
             cs.setString(2, filter.yearFrom + filter.monthFrom + filter.dayFrom);
             cs.setString(3, filter.yearTo + filter.monthTo + filter.dayTo);
             cs.setString(4, filter.IN_FSABRE);
+            cs.setString(5, filter.NFLIGHT);
 
             cs.execute();
 
@@ -2096,6 +2101,10 @@ public class FlightConciliationDAO {
                     beanCons.descFSABRE = "Found";
                 } else if (rst.getString("FSABRE").trim().equals("2")) {
                     beanCons.descFSABRE = "Found but not matching coupon";
+                } else if (rst.getString("FSABRE").trim().equals("4")) {
+                    beanCons.descFSABRE = "Employee";
+                } else if (rst.getString("FSABRE").trim().equals("5")) {
+                    beanCons.descFSABRE = "Manual";
                 }
 
                 beanCons.STASABR = rst.getString("STASABR").trim();

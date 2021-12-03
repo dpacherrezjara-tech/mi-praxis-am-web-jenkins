@@ -426,9 +426,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 this.exportExcel(_pathDetTkt);
             } else if (this.peek() === prototype.id + '-boxDetailFlightManifest') {
                 this.exportExcel(_pathDetFlight);
-            }
+            } 
         } else if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
 
+        } else if (Ext.getCmp(prototype.id + '-boxFlightManifest').isVisible()) {
+             console.log("")
         }
     },
     btnClear_click: function(obj, e) {
@@ -874,7 +876,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
         Ext.getCmp(prototype.id + '-gridFlightManifest').bindStore(storeGridDatas);
-        // _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
+         _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     cmbFSabre_changeHandler: function() {
