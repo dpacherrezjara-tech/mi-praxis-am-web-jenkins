@@ -156,7 +156,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {xtype: 'tbspacer', width: 90},
                         {
                             xtype: 'label',
-                            text: 'Use',
+                            text: 'Coupon Use',
                             style: 'font-weight:bold;color:#000;',
                             width: 125
                         },
