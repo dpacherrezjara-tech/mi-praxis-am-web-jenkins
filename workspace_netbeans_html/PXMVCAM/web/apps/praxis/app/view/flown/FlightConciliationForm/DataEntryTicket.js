@@ -147,11 +147,26 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtLEGSEQ',
-                            fieldStyle: 'text-align:left',
+                            fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             readOnly: true,
                             maxLength: 2,
-                            width: 100
+                            width: 40
+                        },
+                        {xtype: 'tbspacer', width: 90},
+                        {
+                            xtype: 'label',
+                            text: 'Use',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 125
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtFDUP',
+                            fieldStyle: 'text-align:center',
+                            readOnly: true,
+                            width: 90
                         }
                     ]
                 },
