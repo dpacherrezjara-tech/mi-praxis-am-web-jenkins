@@ -16,6 +16,7 @@ public class A3729 {
     public String CIA = "";
     public String FORMA = "";
     public String SERIE = "";
+    public String CUPON = "";
     
     public String NPAX = "";
     public String FNAME = "";

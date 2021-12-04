@@ -33,6 +33,8 @@ public class A3729Filter extends A3729 {
     public String IN_FSABRE = "";
     public String nameTxt = "";
     public String FA720 = "";
+    
+    public int qty_update = 0;
 
     public Pagination page = new Pagination();
     public long RN;
