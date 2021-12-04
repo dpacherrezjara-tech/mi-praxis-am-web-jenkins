@@ -111,4 +111,8 @@ public class FlightConciliationLogic {
         return objDAO.loadSQP03651();
     }
     
+    public A3729Filter SQP04282(List<A3729Filter> lstData) throws Exception {
+        return objDAO.SQP04282(lstData);
+    }
+    
 }

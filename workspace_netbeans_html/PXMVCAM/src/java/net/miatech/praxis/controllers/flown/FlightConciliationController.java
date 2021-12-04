@@ -45,6 +45,8 @@ import net.miatech.utils.Functions;
 //import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -53,12 +55,16 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.NestedServletException;
 
 // </editor-fold>
@@ -3190,5 +3196,222 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "/updateCouponA3729", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateCouponA3729(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
+        byte[] bytes = null;
+        Integer cont = 0;
+        String mensaje = "";
+        String msjResult = "";
+        String msjUpload = "";
+        A3729Filter objResult = new A3729Filter();
+        
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            
+//            String banco = request.getParameter("banco");
+//            String input = request.getParameter("input");
+            String filename = excelfile.getOriginalFilename();
+            
+            byte[] dataFile = excelfile.getBytes();
+            objResult = updateCoupon(dataFile);
+            
+            map.put("success", true);
+            map.put("objResult", objResult);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    private A3729Filter updateCoupon(byte[] bytes) throws Exception {
+        
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        logic = new FlightConciliationLogic();
+        List<A3729Filter> lstData = new ArrayList<>();
+        A3729Filter res = new A3729Filter();
+        
+        String mensaje = "Hubo un error al actualizar los tickets", strHora = Functions.getHoraActual();
+        int i = 0;
+        boolean isOk = false;
+        
+        try {
+            String strSesion = UUID.randomUUID().toString();
+            String strNomExcel = "Tickets_update." + strSesion + ".xlsx";
+            
+            String strArchivo = "C:\\Dumps\\" + strNomExcel;
+            File archivo = new File(strArchivo);
+            FileOutputStream fs = new FileOutputStream(archivo);
+            
+            fs.write(bytes);
+            fs.flush();
+            fs.close();
+         
+            DataFormatter formatter = new DataFormatter();
+            String primeraCelda="";
+            boolean escribe = false;
+                
+            FileInputStream file = new FileInputStream(new File(strArchivo));
+            // leer archivo excel
+            XSSFWorkbook worbook = new XSSFWorkbook(file);
+            //obtener la hoja que se va leer
+            XSSFSheet sheet = worbook.getSheetAt(0);
+            //obtener todas las filas de la hoja excel
+            Iterator<Row> rowIterator = sheet.iterator();
+
+//            Row row;
+            // se recorre cada fila hasta el final
+            try {
+                while (rowIterator.hasNext() ) {
+                    i++;
+                    Row row = rowIterator.next();
+                    
+                    if(i > 2){
+                        A3729Filter obj = new A3729Filter();
+                        
+                        obj.DFLIGHT = getCellValue(row.getCell(1)).trim();
+                        obj.NFLIGHT = getCellValue(row.getCell(2)).trim();
+                        obj.LNAME = getCellValue(row.getCell(3)).trim();
+                        obj.FNAME = getCellValue(row.getCell(4)).trim();
+                        obj.desPAX = getCellValue(row.getCell(5)).trim();
+                        
+                        if (obj.desPAX.equals("Adult")) {
+                            obj.TPAX = "A";
+                        } else if (obj.desPAX.equals("Children")) {
+                            obj.TPAX = "C";
+                        } else if (obj.desPAX.equals("Infant")) {
+                            obj.TPAX = "I";
+                        }
+                        
+                        
+                        obj.CHAIR = getCellValue(row.getCell(6)).trim();
+                        obj.strTicket = getCellValue(row.getCell(7)).trim().substring(0,13);
+                        
+                        obj.desSTVAL = getCellValue(row.getCell(8)).trim();
+                        
+                        if (obj.desSTVAL.trim().equals("No conciliado")) {
+                            obj.STVAL = "1";
+                        } else if (obj.desSTVAL.trim().equals("Conciliado")) {
+                            obj.STVAL = "0";
+                        }
+                        
+                        obj.CDEPART = getCellValue(row.getCell(9)).trim();
+                        obj.CARRIVA = getCellValue(row.getCell(10)).trim();
+                        obj.desSTVCR = getCellValue(row.getCell(11)).trim();
+                        
+                        if (obj.desSTVCR.trim().equals("Yes")) {
+                            obj.STVCR = "Y";
+                        } else if (obj.desSTVCR.trim().equals("")) {
+                            obj.STVCR = "";
+                        }
+                        
+                        obj.descFSABRE = getCellValue(row.getCell(12)).trim();
+                        
+                        if (obj.descFSABRE.trim().equals("Not Found")) {
+                            obj.FSABRE = "0";
+                        } else if (obj.descFSABRE.trim().equals("Found")) {
+                            obj.FSABRE = "1";
+                        } else if (obj.descFSABRE.trim().equals("Found but not matching coupon")) {
+                            obj.FSABRE = "2";
+                        } else if (obj.descFSABRE.trim().equals("Employee")) {
+                            obj.FSABRE = "4";
+                        } else if (obj.descFSABRE.trim().equals("Manual")) {
+                            obj.FSABRE = "5";
+                        }
+                        
+                        
+                        obj.STASABR = getCellValue(row.getCell(13)).trim();
+                        obj.descFSALES = getCellValue(row.getCell(14)).trim();
+                        
+                        obj.CUPON = getCellValue(row.getCell(15)).trim();
+                        
+//                        if (obj.descFSALES.trim().equals("")) {
+//                            obj.FA720 = "";
+//                        } else {
+//                            obj.FA720 = "Yes";
+//                        }
+                        
+                        lstData.add(obj);
+
+                    }
+                }
+                
+                file.close();
+                
+//                for (A3729Filter cadDet : lstData) {
+                    System.out.println("Cantidad de registros a actualizar: " + lstData.size());
+//                }
+//                
+                logic.setSession( this.serverSession.getServerSession());
+                res = logic.SQP04282(lstData);
+                
+            } catch (Exception e) {
+                e.getMessage();
+            }
+            
+            //Eliminar temporal           
+            archivo.delete();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
+        
+    }
+    
+    public static String getCellValue(Cell cell) {
+        String cellValue = "";
+        DataFormatter formatter = new DataFormatter();
+        if (cell != null) {
+            switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_NUMERIC:
+                    if (DateUtil.isCellDateFormatted(cell)) {
+//                        cellValue = formatter.formatCellValue(cell);
+                        cellValue = new SimpleDateFormat("yyyyMMdd").format(cell.getDateCellValue()) + "";
+                    } else {
+                        double value = cell.getNumericCellValue();
+                        int intValue = (int) value;
+                        cellValue = value - intValue == 0 ? String.valueOf(intValue) : String.valueOf(value);
+//                        cellValue = String.valueOf(value);
+                    }
+                    break;
+                case Cell.CELL_TYPE_STRING:
+                    cellValue = cell.getStringCellValue();
+                    break;
+                case Cell.CELL_TYPE_BOOLEAN:
+                    cellValue = String.valueOf(cell.getBooleanCellValue());
+                    break;
+                case Cell.CELL_TYPE_FORMULA:
+                    //cellValue = String.valueOf(cell.getCellFormula());
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        cellValue = formatter.formatCellValue(cell);
+                    } else {
+                        double value = cell.getNumericCellValue();
+                        int intValue = (int) value;
+                        cellValue = value - intValue == 0 ? String
+                                .valueOf(intValue) : String.valueOf(value);
+                    }
+                    break;
+                case Cell.CELL_TYPE_BLANK:
+                    cellValue = "";
+                    break;
+                case Cell.CELL_TYPE_ERROR:
+                    cellValue = "";
+                    break;
+                default:
+                    cellValue = cell.toString().trim();
+                    break;
+            }
+        }
+        return cellValue.trim();
+    }
+    
 
 }
