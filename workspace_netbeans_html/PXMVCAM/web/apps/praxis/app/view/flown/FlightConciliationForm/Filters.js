@@ -441,7 +441,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 1000 },
+                        { xtype: 'tbspacer', width: 750 },
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',
