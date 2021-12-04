@@ -19,6 +19,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     _pathDetail: '',
     _pathDetTkt: '',
     _pathDetFlight: '',
+    _pathDetFlightMain: '',
     me: '',
     NPROG: 'PX00000095',
     init: function(view) {
@@ -35,10 +36,18 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     initDate: function() {
         this.setValue('cmbDateFromYear', new Date().getFullYear());
         this.setValue('cmbDateToYear', new Date().getFullYear());
-//        var mes = new Date().getMonth()+1;
-//        if(mes < 10) mes = "0"+mes;
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
+        
+        var month = new Date().getMonth() + 1;
+        if (month < 9) {
+            Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('0' + month);
+            Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('0' + month);
+        } else {
+            Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue((month));
+            Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue((month));
+        }
+
+//        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
     },
@@ -431,6 +440,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
         } else if (Ext.getCmp(prototype.id + '-boxFlightManifest').isVisible()) {
              console.log("")
+             this.exportExcel(_pathDetFlightMain);
         }
     },
     btnClear_click: function(obj, e) {
@@ -876,7 +886,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
         Ext.getCmp(prototype.id + '-gridFlightManifest').bindStore(storeGridDatas);
-         _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
+         _pathDetFlightMain = prototype.url + '/getXLSX_Flight_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     cmbFSabre_changeHandler: function() {
@@ -1318,6 +1328,45 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }});
     },
     //</editor-fold>
+    
+    onFileLoad: function() {
+        
+        var me = this;
+//        var banco = Ext.getCmp(prototype.id + '-cmbBankCode').getValue();
+//        var input = Ext.getCmp(prototype.id + '-cmbInput').getValue();
+        var file = Ext.getCmp(prototype.id + '-file').getValue();
+        
+        if (file === '') {
+            Ext.MessageBox.alert('PRAXIS', "::: Select only one file. Please :::", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.id + '-File').focus();", 100);
+            });
+            return;
+        }
+        
+        var form = Ext.getCmp(prototype.id + '-form-01').getForm();
+        form.submit({
+            url: prototype.url + '/updateCouponA3729',
+            waitMsg: 'Uploading your sure to upload the file...',
+            params: {fileName: file},
+            success: function (fp, o) {
+                var res = Ext.decode(o.response.responseText);
+                console.log(res);
+                
+                if (res.success) {
+                    var msjResult = res.objResult.qty_update;
+                    global.Msg({msg: 'Se actualizarion ' + msjResult + ' tickets.' });
+                }else{
+                    global.Msg({msg: "Error Excel Load"});
+                }
+//                Ext.getCmp(prototype.id+'-btn-upload').enable(true);
+            },
+            failure: function(response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+        
+    },
 
     exportExcel: function(_path) {
         console.log('exportExcel');
