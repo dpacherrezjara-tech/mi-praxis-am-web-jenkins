@@ -1557,7 +1557,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 900,
+                            width: 1545,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -1567,7 +1567,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridSettlement',
-                                    width: 845,
+                                    width: 1530,
                                     height: 'auto',
                                     columnLines: true,
                                     columns: {
@@ -1678,6 +1678,71 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
+                                            {
+                                                text: 'VAT COM<br>1+2', dataIndex: 'TAXAMOUN_AD', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Chargeback',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'GROSAMOUN', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commission', dataIndex: 'DISCAMOUN', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'VAT', dataIndex: 'TAXAMOUN_CB', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Net Amount<br>to Receive AM', dataIndex: 'NETAMOUN', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Currency<br>Settlement', dataIndex: 'PCURRENCY', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Net Amount<br>to Receive', dataIndex: 'NETAMOUNC', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
                                         ]
                                     }
                                 }
@@ -1689,7 +1754,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1630,
+                            width: 1720,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -1699,7 +1764,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetSettlement',
-                                    width: 1630,
+                                    width: 1720,
                                     height: 'auto',
                                     columnLines: true,
                                     columns: {
@@ -1850,6 +1915,71 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Acceleration <br> Amount', dataIndex: 'ACCEAMOU', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'VAT COM<br>1+2', dataIndex: 'TAXAMOUN_AD', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Chargeback',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'GROSAMOUN', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Commission', dataIndex: 'DISCAMOUN', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'VAT', dataIndex: 'TAXAMOUN_CB', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Net Amount<br>to Receive AM', dataIndex: 'NETAMOUN', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Currency<br>Settlement', dataIndex: 'IN_PCURRENCY', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Calculated<br>Commission ', dataIndex: 'DISCAMOSC', width: 100,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
