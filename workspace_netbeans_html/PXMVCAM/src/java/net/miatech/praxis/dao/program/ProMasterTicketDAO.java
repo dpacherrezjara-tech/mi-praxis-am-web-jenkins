@@ -2520,6 +2520,7 @@ public class ProMasterTicketDAO {
 
                             objRtn03.fileA713.A713MONREG = rs03.getString("A713MONREG");
                             objRtn03.fileA713.A713FECVTA = rs03.getString("A713FECVTA");
+                            objRtn03.fileA713.A713TDOC = rs03.getString("A713TDOC");
                             //<editor-fold defaultstate="collapsed" desc="{...} A713 Coupon 1">
                             objRtn03.fileA713.A713CONEX1 = rs03.getString("A713CONEX1");
                             objRtn03.fileA713.A713RUTA0 = rs03.getString("A713RUTA0");
