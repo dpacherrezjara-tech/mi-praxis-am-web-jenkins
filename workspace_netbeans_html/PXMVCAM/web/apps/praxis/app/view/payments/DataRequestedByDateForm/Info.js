@@ -149,6 +149,17 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                              ]
                                              },*/
                                             {
+                                                text: 'PNR', dataIndex: 'PNR', width: 65,
+                                                listeners: {
+                                                    click: 'onViewPNR'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";                                                    
+                                                    value = '<b>' + value + '<b>';
+                                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {
                                                 text: 'Merchant', dataIndex: 'MERCHN', width: 80
                                             },
                                             {
@@ -177,9 +188,6 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                 ]
-                                            },
-                                            {
-                                                text: 'PNR', dataIndex: 'PNR', width: 65
                                             },
                                             {
                                                 text: 'Ticket', dataIndex: 'TICKET', width: 120,
@@ -573,6 +581,17 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                             {
                                                 text: 'IATA', dataIndex: 'AGENTE', width: 90,
                                             },
+                                            {
+                                                text: 'PNR', dataIndex: 'PNR', width: 65,
+                                                listeners: {
+                                                    click: 'onViewPNR'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";                                                    
+                                                    value = '<b>' + value + '<b>';
+                                                    return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
                                             /*{
                                              text: 'Sending Date',
                                              defaults: {
@@ -641,9 +660,6 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                 ]
-                                            },
-                                            {
-                                                text: 'PNR', dataIndex: 'PNR', width: 65
                                             },
                                             {
                                                 text: 'Ticket', dataIndex: 'TICKET', width: 120,

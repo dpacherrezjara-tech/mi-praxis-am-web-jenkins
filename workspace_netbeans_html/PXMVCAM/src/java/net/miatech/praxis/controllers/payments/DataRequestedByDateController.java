@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,6 +22,7 @@ import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.DataRequestedByDateLogic;
 import net.miatech.praxis.payment.filter.A2331Filter;
 import net.miatech.beans.A3676Filter;
+import net.miatech.beans.SQP00697Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -202,6 +204,32 @@ public class DataRequestedByDateController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
+    }
+
+    @RequestMapping(value = "/searchPNR")
+    public @ResponseBody
+    String searchPNR(ModelMap map, HttpServletRequest request) {
+
+        SQP00697Filter filter = new SQP00697Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            DataRequestedByDateLogic logic = new DataRequestedByDateLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            List<SQP00697Filter> listaData = logic.loadSQP00697(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+        } catch (SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
     }
 
     @RequestMapping(value = "getXLSX")

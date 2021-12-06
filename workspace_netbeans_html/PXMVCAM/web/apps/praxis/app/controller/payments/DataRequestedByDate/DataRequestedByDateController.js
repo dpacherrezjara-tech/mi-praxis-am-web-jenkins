@@ -584,6 +584,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         }
         ;
     },
+    onViewPNR: function(a, b, c, d, e, rowData) {
+//      var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry('', rowData);
+    },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
@@ -593,9 +597,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
             params: {
                 action: action,
                 rec: rec,
-//                lstCountry: me.lstCountry,
-                lstCard: me.lstCard,
-                lstBank: me.lstBank
+//              lstCountry: me.lstCountry
             }
         }).show();
     },
@@ -778,7 +780,8 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveFirst();
-    }, pagPrevious: function(obj, e) {
+    },
+    pagPrevious: function(obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.movePrevious();
