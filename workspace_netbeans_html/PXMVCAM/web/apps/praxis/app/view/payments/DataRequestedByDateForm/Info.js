@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1750,
+                width: 1800,
                 height: 'auto',
                 align: 'center'
             },
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1690,
+                            width: 1710,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -50,8 +50,8 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1670,
-                                    height: 530,
+                                    width: 1690,
+                                    height: 535,
                                     columnLines: true,
                                     /*features: [{
                                      ftype: 'summary'
@@ -83,44 +83,76 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Sending Date',
+                                                text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Bank to AM', dataIndex: 'SENTDATE', width: 90}
+                                                    {
+                                                        text: 'Date', dataIndex: 'SALEDATE', width: 85,
+                                                    }
                                                 ]
                                             },
+                                            /*{
+                                             text: 'Sending Date',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {text: 'Bank to AM', dataIndex: 'SENTDATE', width: 90}
+                                             ]
+                                             },*/
                                             {
                                                 text: 'IATA', dataIndex: 'AGENTE', width: 90,
                                             },
+                                            /*{
+                                             text: 'Sending Date',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {text: 'to IATA', dataIndex: 'IATADATE', width: 90}
+                                             ]
+                                             },
+                                             {
+                                             text: 'Link',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {text: 'Date', dataIndex: 'LINKDATE', width: 75},
+                                             {text: 'Time', dataIndex: 'LINKHORA', width: 75}
+                                             ]
+                                             },
+                                             {
+                                             text: 'Date',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {
+                                             text: 'Sending', dataIndex: 'DATES', width: 80
+                                             },
+                                             {
+                                             text: 'Notification', dataIndex: 'DATEN', width: 80,
+                                             }
+                                             ]
+                                             },*/
                                             {
-                                                text: 'Sending Date',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'to IATA', dataIndex: 'IATADATE', width: 90}
-                                                ]
+                                                text: 'Merchant', dataIndex: 'MERCHN', width: 80
                                             },
                                             {
-                                                text: 'Link',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Date', dataIndex: 'LINKDATE', width: 75},
-                                                    {text: 'Time', dataIndex: 'LINKHORA', width: 75}
-                                                ]
-                                            },
-                                            {
-                                                text: 'Date',
+                                                text: 'Credit Card',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -128,12 +160,26 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Sending', dataIndex: 'DATES', width: 80
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 55
                                                     },
                                                     {
-                                                        text: 'Notification', dataIndex: 'DATEN', width: 80,
-                                                    }
+                                                        text: 'Number', dataIndex: 'CARDNBR', width: 100
+                                                    },
+                                                    {
+                                                        text: 'Auth', dataIndex: 'AUTHNBR', width: 60
+                                                    },
+                                                    {
+                                                        text: 'Auth<br>Amount', dataIndex: 'AUTAMOUNT', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
                                                 ]
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'PNR', width: 65
                                             },
                                             {
                                                 text: 'Ticket', dataIndex: 'TICKET', width: 120,
@@ -298,7 +344,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1750,
+                            width: 1800,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -308,7 +354,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataStatusSabre',
-                                    width: 1750,
+                                    width: 1800,
                                     height: 530,
                                     columnLines: true,
                                     /*features: [{
@@ -418,10 +464,10 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Start', dataIndex: 'A3676STINI', width: 90,
+                                                        text: 'Start', dataIndex: 'A3676STINI', width: 100,
                                                     },
                                                     {
-                                                        text: 'End', dataIndex: 'A3676STFIN', width: 90,
+                                                        text: 'End', dataIndex: 'A3676STFIN', width: 100,
                                                     },
                                                 ]
                                             },
@@ -432,7 +478,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 text: 'Result', dataIndex: 'A3676RESUL', width: 120,
                                             },
                                             {
-                                                text: 'Reference', dataIndex: 'A3676REFER', width: 300,
+                                                text: 'Remark', dataIndex: 'A3676REFER', width: 320,
                                             },
                                                     /*{
                                                      text: 'Link',
@@ -458,7 +504,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1690,
+                            width: 1710,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -468,8 +514,8 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataDifference',
-                                    width: 1670,
-                                    height: 530,
+                                    width: 1690,
+                                    height: 535,
                                     columnLines: true,
                                     /*features: [{
                                      ftype: 'summary'
@@ -501,44 +547,76 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Sending Date',
+                                                text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Bank to AM', dataIndex: 'SENTDATE', width: 90}
+                                                    {
+                                                        text: 'Date', dataIndex: 'SALEDATE', width: 85,
+                                                    }
                                                 ]
                                             },
+                                            /*{
+                                             text: 'Sending Date',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {text: 'Bank to AM', dataIndex: 'SENTDATE', width: 90}
+                                             ]
+                                             },*/
                                             {
                                                 text: 'IATA', dataIndex: 'AGENTE', width: 90,
                                             },
+                                            /*{
+                                             text: 'Sending Date',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {text: 'to IATA', dataIndex: 'IATADATE', width: 90}
+                                             ]
+                                             },
+                                             {
+                                             text: 'Link',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {text: 'Date', dataIndex: 'LINKDATE', width: 75},
+                                             {text: 'Time', dataIndex: 'LINKHORA', width: 75}
+                                             ]
+                                             },
+                                             {
+                                             text: 'Date',
+                                             defaults: {
+                                             menuDisabled: true,
+                                             sortable: false,
+                                             align: 'center'
+                                             },
+                                             columns: [
+                                             {
+                                             text: 'Sending', dataIndex: 'DATES', width: 80
+                                             },
+                                             {
+                                             text: 'Notification', dataIndex: 'DATEN', width: 80,
+                                             }
+                                             ]
+                                             },*/
                                             {
-                                                text: 'Sending Date',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'to IATA', dataIndex: 'IATADATE', width: 90}
-                                                ]
+                                                text: 'Merchant', dataIndex: 'MERCHN', width: 80
                                             },
                                             {
-                                                text: 'Link',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Date', dataIndex: 'LINKDATE', width: 75},
-                                                    {text: 'Time', dataIndex: 'LINKHORA', width: 75}
-                                                ]
-                                            },
-                                            {
-                                                text: 'Date',
+                                                text: 'Credit Card',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -546,12 +624,26 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Sending', dataIndex: 'DATES', width: 80
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 55
                                                     },
                                                     {
-                                                        text: 'Notification', dataIndex: 'DATEN', width: 80,
-                                                    }
+                                                        text: 'Number', dataIndex: 'CARDNBR', width: 100
+                                                    },
+                                                    {
+                                                        text: 'Auth', dataIndex: 'AUTHNBR', width: 60
+                                                    },
+                                                    {
+                                                        text: 'Auth<br>Amount', dataIndex: 'AUTAMOUNT', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background:";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
                                                 ]
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'PNR', width: 65
                                             },
                                             {
                                                 text: 'Ticket', dataIndex: 'TICKET', width: 120,

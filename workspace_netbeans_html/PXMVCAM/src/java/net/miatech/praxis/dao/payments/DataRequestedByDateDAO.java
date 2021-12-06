@@ -153,6 +153,14 @@ public class DataRequestedByDateDAO {
                     objRtn.strDescCRULE = objRtn.CRULE;
                 }
 
+                objRtn.MERCHN = rs01.getString("MERCHN").trim();
+                objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
+                objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
+                objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
+                objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                objRtn.SALEDATE = rs01.getString("SALEDATE").trim();
+                objRtn.PNR = rs01.getString("PNR").trim();
+
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -255,8 +263,8 @@ public class DataRequestedByDateDAO {
 
                 objRtn = new A3676Filter();
                 objRtn.IN_DATEFROM = filter.IN_DATEFROM;
-                objRtn.IN_DATETO = filter.IN_DATETO;               
-                
+                objRtn.IN_DATETO = filter.IN_DATETO;
+
                 objRtn.A3676FRECE = rs01.getString("A3676FRECE").trim();
                 objRtn.A3676CIA = rs01.getString("A3676CIA").trim();
                 objRtn.A3676FORMA = rs01.getString("A3676FORMA").trim();
@@ -321,7 +329,7 @@ public class DataRequestedByDateDAO {
 
         return list;
     }
-    
+
     public List<A2331Filter> loadPX573SQP04287(A2331Filter filter) throws SQLException, Exception {
 
         List<A2331Filter> list = new ArrayList<A2331Filter>();
@@ -421,6 +429,14 @@ public class DataRequestedByDateDAO {
                 } else {
                     objRtn.strDescCRULE = objRtn.CRULE;
                 }
+
+                objRtn.MERCHN = rs01.getString("MERCHN").trim();
+                objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
+                objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
+                objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
+                objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                objRtn.SALEDATE = rs01.getString("SALEDATE").trim();
+                objRtn.PNR = rs01.getString("PNR").trim();
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
