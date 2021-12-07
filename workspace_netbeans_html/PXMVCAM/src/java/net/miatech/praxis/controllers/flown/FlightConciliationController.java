@@ -3291,7 +3291,19 @@ public class FlightConciliationController extends BaseController {
                         
                         
                         obj.CHAIR = getCellValue(row.getCell(6)).trim();
-                        obj.strTicket = getCellValue(row.getCell(7)).trim().substring(0,13);
+                        
+                        try {
+                            obj.strTicket = getCellValue(row.getCell(7)).trim().substring(0,13);
+                            obj.CUPON = getCellValue(row.getCell(7)).trim().substring(13,14);
+                        } catch (Exception e) {
+                            obj.strTicket = "";
+                        }
+                        
+                        if(obj.strTicket.equals("")){
+                            System.out.println("------------- NEXT -------------");
+                            continue;
+                        }
+                        
                         
                         obj.desSTVAL = getCellValue(row.getCell(8)).trim();
                         
@@ -3329,7 +3341,7 @@ public class FlightConciliationController extends BaseController {
                         obj.STASABR = getCellValue(row.getCell(13)).trim();
                         obj.descFSALES = getCellValue(row.getCell(14)).trim();
                         
-                        obj.CUPON = getCellValue(row.getCell(15)).trim();
+//                        obj.CUPON = getCellValue(row.getCell(15)).trim();
                         
 //                        if (obj.descFSALES.trim().equals("")) {
 //                            obj.FA720 = "";
@@ -3347,7 +3359,7 @@ public class FlightConciliationController extends BaseController {
 //                for (A3729Filter cadDet : lstData) {
                     System.out.println("Cantidad de registros a actualizar: " + lstData.size());
 //                }
-//                
+               
                 logic.setSession( this.serverSession.getServerSession());
                 res = logic.SQP04282(lstData);
                 
