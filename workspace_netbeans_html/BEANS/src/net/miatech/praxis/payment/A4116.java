@@ -58,6 +58,9 @@ public class A4116 {
     public double TGROSAMOUC = 0;
     public double FINSAMOUC = 0;
     public double SINSAMOUC = 0;
+    public double RATESFEE = 0;
+    public double RATEACCE = 0;
+    public double IVACOM12 = 0;
     
     public String CERROR = "";
     public String desCERROR = "";

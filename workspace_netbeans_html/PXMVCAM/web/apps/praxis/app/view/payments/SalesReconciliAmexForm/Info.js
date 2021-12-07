@@ -1557,7 +1557,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1545,
+                            width: 1700,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -1567,7 +1567,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridSettlement',
-                                    width: 1530,
+                                    width: 1700,
                                     height: 'auto',
                                     columnLines: true,
                                     columns: {
@@ -1617,6 +1617,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return value;
                                                 }
                                             },
+                                            {text: 'Status', dataIndex: 'desCERROR', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    if (record.data.CERROR === '00') {
+                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                    } else if (record.data.CERROR === '01') {
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
+                                                    } else {
+                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                    }
+                                                    return value;
+                                                }
+                                            },
                                             {
                                                 text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
                                                 listeners: {
@@ -1649,6 +1661,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#FCF6DC";
                                                             value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'VAT Rate', dataIndex: 'DISCRATE_IVA', width: 90,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#f5edc9";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
                                                             return value;
                                                         }
                                                     },
@@ -1813,6 +1833,18 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
+                                            {text: 'Status', dataIndex: 'desCERROR', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    if (record.data.CERROR === '00') {
+                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                    } else if (record.data.CERROR === '01') {
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
+                                                    } else {
+                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                    }
+                                                    return value;
+                                                }
+                                            },
                                             {
                                                 text: 'Transaction',
                                                 defaults: {
@@ -1906,12 +1938,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: '% Commission<br>MSI_1', dataIndex: 'RATESFEE', width: 100,                                                
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                    return value;
+                                                },
+                                            },
+                                            {
                                                 text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 100,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
+                                            },
+                                            {
+                                                text: '% Commission<br>MSI_2', dataIndex: 'RATEACCE', width: 100,                                                
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                    return value;
+                                                },
                                             },
                                             {
                                                 text: 'Acceleration <br> Amount', dataIndex: 'ACCEAMOU', width: 100,
@@ -1923,6 +1971,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {
                                                 text: 'VAT COM<br>1+2', dataIndex: 'TAXAMOUN_AD', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'IVACOM12', dataIndex: 'IVACOM12', width: 100,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
