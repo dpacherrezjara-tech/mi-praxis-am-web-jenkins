@@ -116,7 +116,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'National Card Date',
+                                            {text: 'National Card Rate',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -126,15 +126,17 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                                     {text: 'Credit', dataIndex: 'RATCNAC', width: 100, align: 'center',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         }
                                                     },
                                                     {text: 'Debit', dataIndex: 'RATDNAC', width: 130, align: 'center',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         }
-                                                    },                                                    
+                                                    },
                                                 ]
                                             },
                                             {text: 'International',
@@ -147,6 +149,7 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                                     {text: 'Card Rate', dataIndex: 'RATCEXT', width: 130, align: 'center',
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         }
                                                     }
@@ -181,7 +184,12 @@ Ext.define('Ext.Praxis.view.payments.CreditCardForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Rate', dataIndex: 'RATEIVA', width: 50, align: 'right'}
+                                                    {text: 'Rate', dataIndex: 'RATEIVA', width: 50, align: 'right',
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        }}
                                                 ]
                                             },
                                             {text: 'Cliente', dataIndex: 'CLIENTE', width: 95},
