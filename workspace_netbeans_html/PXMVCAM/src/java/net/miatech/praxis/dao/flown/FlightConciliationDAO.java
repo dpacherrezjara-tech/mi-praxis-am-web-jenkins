@@ -2185,7 +2185,7 @@ public class FlightConciliationDAO {
         int QTY_UPDATE = 0;
         
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04282(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04282(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -2195,7 +2195,7 @@ public class FlightConciliationDAO {
                 
                 A3729Filter item = lstTKT.get(i);
                 try {
-                    cstmt.registerOutParameter(18, Types.INTEGER);
+                    cstmt.registerOutParameter(19, Types.INTEGER);
                     
                     cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
                     cstmt.setString(2, item.DFLIGHT.trim());
@@ -2212,13 +2212,14 @@ public class FlightConciliationDAO {
                     cstmt.setString(13, item.FSABRE.trim());
                     cstmt.setString(14, item.STASABR.trim());
                     cstmt.setString(15, item.CUPON.trim());
-                    cstmt.setString(16, Functions.getFechaActual());
-                    cstmt.setString(17, Functions.getHoraActual());
-                    cstmt.setInt(18, 0);
+                    cstmt.setString(16, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(17, Functions.getFechaActual());
+                    cstmt.setString(18, Functions.getHoraActual());
+                    cstmt.setInt(19, 0);
 
                     cstmt.execute();
 
-                    item.qty_update = cstmt.getInt(18);
+                    item.qty_update = cstmt.getInt(19);
                     QTY_UPDATE += item.qty_update;
                     
                  } catch (Exception e) {
