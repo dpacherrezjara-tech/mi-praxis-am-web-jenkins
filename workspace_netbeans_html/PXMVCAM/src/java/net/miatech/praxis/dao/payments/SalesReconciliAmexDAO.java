@@ -821,10 +821,16 @@ public class SalesReconciliAmexDAO {
                 beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                 beanTkt.DISCAMOUN_IMPORT = rst.getDouble("DISCAMOUN_IMPORT");
                 beanTkt.DISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
-                if (beanTkt.TGROSAMOUN != 0) {
-                    beanTkt.DISCRATE_IMPORT = beanTkt.DISCAMOUN_IMPORT * 100 / beanTkt.TGROSAMOUN;
+                beanTkt.DISCRATE_IMPORT = rst.getDouble("RATECOMBA");
+                beanTkt.DISCRATE_IVA = rst.getDouble("RATEIVABA");
+                beanTkt.CERROR = rst.getString("CERROR").trim();
+
+                if (beanTkt.CERROR.equals("01")) {
+                    beanTkt.desCERROR = "Difference";
+                } else if (beanTkt.CERROR.equals("00")) {
+                    beanTkt.desCERROR = "Conciliate";
                 }
-                //beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA");
+
                 beanTkt.page.PAGNUM = filter.page.PAGNUM;
                 beanTkt.page.PAGROW = filter.page.PAGROW;
                 beanTkt.page.TOTPAG = filter.page.TOTPAG;
@@ -925,8 +931,19 @@ public class SalesReconciliAmexDAO {
                 beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
                 beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
                 beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
-                beanTkt.NETAMOUN =  beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
+                beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
                 beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
+                beanTkt.CERROR = rst.getString("CERROR").trim();
+
+                if (beanTkt.CERROR.equals("01")) {
+                    beanTkt.desCERROR = "Difference";
+                } else if (beanTkt.CERROR.equals("00")) {
+                    beanTkt.desCERROR = "Conciliate";
+                }
+                
+                beanTkt.RATESFEE = rst.getDouble("RATESFEE");
+                beanTkt.RATEACCE = rst.getDouble("RATEACCE");
+                beanTkt.IVACOM12 = rst.getDouble("IVACOM12");
 
                 beanTkt.page.PAGNUM = filter.page.PAGNUM;
                 beanTkt.page.PAGROW = filter.page.PAGROW;
