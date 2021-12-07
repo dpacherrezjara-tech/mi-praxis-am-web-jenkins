@@ -53,6 +53,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -2640,7 +2641,7 @@ public class FlightConciliationController extends BaseController {
             Cell CH1_12 = row1.createCell(12);
             Cell CH1_13 = row1.createCell(13);
             Cell CH1_14 = row1.createCell(14);
-
+            
             CH1_0.setCellValue("Nbr");
             CH1_1.setCellValue("Flight");
 //            CH1_2.setCellValue("");
@@ -2656,7 +2657,7 @@ public class FlightConciliationController extends BaseController {
             CH1_12.setCellValue("Process Sabre");
 //            CH1_13.setCellValue("");
             CH1_14.setCellValue("Flag");
-
+            
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
             CH1_2.setCellStyle(headerStyle);
@@ -2890,7 +2891,7 @@ public class FlightConciliationController extends BaseController {
             CH1_12.setCellValue("Process Sabre");
 //            CH1_13.setCellValue("");
             CH1_14.setCellValue("Flag");
-
+            
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
             CH1_2.setCellStyle(headerStyle);
@@ -2987,7 +2988,11 @@ public class FlightConciliationController extends BaseController {
                 Cell rcell12 = row1.createCell(12);
                 Cell rcell13 = row1.createCell(13);
                 Cell rcell14 = row1.createCell(14);
-
+                
+//                rcell7.setCellType(Cell.CELL_TYPE_BLANK);
+//                DataFormatter df = new DataFormatter();
+//                df.formatCellValue(rcell7);
+                
                 rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).DFLIGHT);
                 rcell2.setCellValue(listaData.get(vi).NFLIGHT);
@@ -3015,7 +3020,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
+            sheet.setColumnWidth(7, 25 * 256);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
