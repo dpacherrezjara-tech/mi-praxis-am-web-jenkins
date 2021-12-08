@@ -77,6 +77,10 @@ public class DataRequestedByDateDAO {
         ResultSet rs01 = null;
         Connection cnx = null;
 
+        int contador = 0;
+        String MERCHANT = "", SCARCOD = "", CARDNBR = "", AUTHNBR = "", PNR = "";
+        boolean color = true;
+
         long QTKT = 0, QLINK = 0, QCARD = 0, QNOT = 0, QNMATCH = 0;
         double AUTAMOUNT = 0, VFOP = 0, ANOT = 0;
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04266(?,?,?,?,?,?,?,?,?)}";
@@ -112,8 +116,16 @@ public class DataRequestedByDateDAO {
             filter.page.TOTROW = cstmt.getInt(9);
 
             while (rs01.next()) {
-
                 objRtn = new A2331Filter();
+
+                if (contador == 0) {
+                    MERCHANT = rs01.getString("MERCHN").trim();
+                    SCARCOD = rs01.getString("SCARCOD").trim();
+                    CARDNBR = rs01.getString("CARDNBR").trim();
+                    AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    PNR = rs01.getString("PNR").trim();
+                }
+
                 objRtn.IN_DATE = filter.IN_DATE;
                 objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
                 objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
@@ -158,9 +170,34 @@ public class DataRequestedByDateDAO {
                 objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
                 objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
                 objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
-                objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+
+                if (contador == 0) {
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                } else if (MERCHANT.equals(rs01.getString("MERCHN").trim())
+                        & SCARCOD.equals(rs01.getString("SCARCOD").trim())
+                        & CARDNBR.equals(rs01.getString("CARDNBR").trim())
+                        & AUTHNBR.equals(rs01.getString("AUTHNBR").trim())
+                        & PNR.equals(rs01.getString("PNR").trim())) {
+                    objRtn.AUTAMOUNT = 0;
+                } else {
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                    MERCHANT = rs01.getString("MERCHN").trim();
+                    SCARCOD = rs01.getString("SCARCOD").trim();
+                    CARDNBR = rs01.getString("CARDNBR").trim();
+                    AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    PNR = rs01.getString("PNR").trim();
+
+                    color = !color;
+                }
+
                 objRtn.SALEDATE = rs01.getString("SALEDATE").trim();
                 objRtn.PNR = rs01.getString("PNR").trim();
+
+                if (color) {
+                    objRtn.COLOR = "#91b9fa";
+                } else {
+                    objRtn.COLOR = "#e6ecf5";
+                }
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -168,6 +205,7 @@ public class DataRequestedByDateDAO {
                 objRtn.page.TOTROW = filter.page.TOTROW;
 
                 list.add(objRtn);
+                contador++;
             }
 
             try {
@@ -354,6 +392,10 @@ public class DataRequestedByDateDAO {
         ResultSet rs01 = null;
         Connection cnx = null;
 
+        int contador = 0;
+        String MERCHANT = "", SCARCOD = "", CARDNBR = "", AUTHNBR = "", PNR = "";
+        boolean color = true;
+
         long QTKT = 0, QLINK = 0, QCARD = 0, QNOT = 0, QNMATCH = 0;
         double AUTAMOUNT = 0, VFOP = 0, ANOT = 0;
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04287(?,?,?,?,?,?,?,?,?)}";
@@ -389,8 +431,16 @@ public class DataRequestedByDateDAO {
             filter.page.TOTROW = cstmt.getInt(9);
 
             while (rs01.next()) {
-
                 objRtn = new A2331Filter();
+
+                if (contador == 0) {
+                    MERCHANT = rs01.getString("MERCHN").trim();
+                    SCARCOD = rs01.getString("SCARCOD").trim();
+                    CARDNBR = rs01.getString("CARDNBR").trim();
+                    AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    PNR = rs01.getString("PNR").trim();
+                }
+
                 objRtn.IN_DATE = filter.IN_DATE;
                 objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
                 objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
@@ -435,9 +485,34 @@ public class DataRequestedByDateDAO {
                 objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
                 objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
                 objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
-                objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+
+                if (contador == 0) {
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                } else if (MERCHANT.equals(rs01.getString("MERCHN").trim())
+                        & SCARCOD.equals(rs01.getString("SCARCOD").trim())
+                        & CARDNBR.equals(rs01.getString("CARDNBR").trim())
+                        & AUTHNBR.equals(rs01.getString("AUTHNBR").trim())
+                        & PNR.equals(rs01.getString("PNR").trim())) {
+                    objRtn.AUTAMOUNT = 0;
+                } else {
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                    MERCHANT = rs01.getString("MERCHN").trim();
+                    SCARCOD = rs01.getString("SCARCOD").trim();
+                    CARDNBR = rs01.getString("CARDNBR").trim();
+                    AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    PNR = rs01.getString("PNR").trim();
+
+                    color = !color;
+                }
+
                 objRtn.SALEDATE = rs01.getString("SALEDATE").trim();
                 objRtn.PNR = rs01.getString("PNR").trim();
+
+                if (color) {
+                    objRtn.COLOR = "#91b9fa";
+                } else {
+                    objRtn.COLOR = "#e6ecf5";
+                }
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -445,6 +520,7 @@ public class DataRequestedByDateDAO {
                 objRtn.page.TOTROW = filter.page.TOTROW;
 
                 list.add(objRtn);
+                contador++;
             }
 
             try {

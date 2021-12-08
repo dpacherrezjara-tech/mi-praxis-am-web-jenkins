@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1690,
+                                    width: 1705,
                                     height: 535,
                                     columnLines: true,
                                     /*features: [{
@@ -154,7 +154,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                     click: 'onViewPNR'
                                                 },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";                                                    
+                                                    metaData.style = "text-align:center;";
                                                     value = '<b>' + value + '<b>';
                                                     return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
@@ -171,18 +171,34 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Code', dataIndex: 'SCARCOD', width: 55
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 55,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
                                                     },
                                                     {
-                                                        text: 'Number', dataIndex: 'CARDNBR', width: 100
+                                                        text: 'Number', dataIndex: 'CARDNBR', width: 115,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
                                                     },
                                                     {
-                                                        text: 'Auth', dataIndex: 'AUTHNBR', width: 60
+                                                        text: 'Auth', dataIndex: 'AUTHNBR', width: 60,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
                                                     },
                                                     {
                                                         text: 'Auth<br>Amount', dataIndex: 'AUTAMOUNT', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:right;background:" + data.COLOR;
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         }
@@ -448,7 +464,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Reference', dataIndex: 'A3676REFRB', width: 300,
+                                                        text: 'Remark', dataIndex: 'A3676REFRB', width: 300,
                                                     },
                                                 ]
                                             },
@@ -522,7 +538,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataDifference',
-                                    width: 1690,
+                                    width: 1705,
                                     height: 535,
                                     columnLines: true,
                                     /*features: [{
@@ -587,7 +603,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                     click: 'onViewPNR'
                                                 },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";                                                    
+                                                    metaData.style = "text-align:center;";
                                                     value = '<b>' + value + '<b>';
                                                     return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
@@ -643,18 +659,34 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Code', dataIndex: 'SCARCOD', width: 55
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 55,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
                                                     },
                                                     {
-                                                        text: 'Number', dataIndex: 'CARDNBR', width: 100
+                                                        text: 'Number', dataIndex: 'CARDNBR', width: 115,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
                                                     },
                                                     {
-                                                        text: 'Auth', dataIndex: 'AUTHNBR', width: 60
+                                                        text: 'Auth', dataIndex: 'AUTHNBR', width: 60,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
                                                     },
                                                     {
                                                         text: 'Auth<br>Amount', dataIndex: 'AUTAMOUNT', width: 80,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background:";
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:right;background:" + data.COLOR;
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         }
