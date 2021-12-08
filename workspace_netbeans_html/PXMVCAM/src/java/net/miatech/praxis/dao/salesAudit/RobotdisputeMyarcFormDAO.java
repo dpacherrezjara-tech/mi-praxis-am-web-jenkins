@@ -36,7 +36,7 @@ public class RobotdisputeMyarcFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PXSAUDIT.SQP04293(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL LIBSAP26.SQP04293(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -58,33 +58,40 @@ public class RobotdisputeMyarcFormDAO {
             while (rs01.next()) {
                 objRtn = new A4139Filter();
 
-                if (filter.IN_ROBOT.equals("1") || filter.IN_ROBOT.equals("2")) {
-                    objRtn.A4139CCUST = rs01.getString("A4139CCUST");
-                    objRtn.A4139CANTI = rs01.getInt("A4139CANTI");
-                    objRtn.A4139FLAG = rs01.getString("A4139FLAG");
-                    objRtn.A4139FREGI = rs01.getString("A4139FREGI");
-                    objRtn.A4139HREVI = rs01.getString("A4139HREVI");
-                    objRtn.A4139ROBOT = rs01.getString("A4139ROBOT");
-                    objRtn.A4139STATO = rs01.getString("A4139STATO");
-                    objRtn.A4139TOTALPAG = rs01.getString("A4139TOTALPAG");
-                } else {
+                if (!filter.IN_OPTION.equals("2") && (filter.IN_ROBOT.equals("1") || filter.IN_ROBOT.equals("2"))) {
                     objRtn.A4139CCUST = rs01.getString("A4139CCUST");
                     objRtn.A4139PAIS = rs01.getString("A4139PAIS");
                     objRtn.A4139CANTI = rs01.getInt("A4139CANTI");
-                    objRtn.A4139STATO = rs01.getString("A4139STATO");
+                    objRtn.A4139FLAG = rs01.getString("A4139FLAG");
                     objRtn.A4139FREGI = rs01.getString("A4139FREGI");
-                    objRtn.A4139USER = rs01.getString("A4139USER");
+                    objRtn.A4139REGIS = rs01.getString("A4139REGIS");
+                    objRtn.A4139HREGI = rs01.getString("A4139HREGI");
                     objRtn.A4139ROBOT = rs01.getString("A4139ROBOT");
-                    objRtn.A4139NMEMO = rs01.getString("A4139NMEMO");
-                    objRtn.A4139CNXPA = rs01.getString("A4139CNXPA");
-                    objRtn.A4139TYPE = rs01.getString("A4139TYPE");
-                    objRtn.A4139AREA = rs01.getString("A4139AREA");
-                    objRtn.A4139BASE = rs01.getString("A4139BASE");
-                    objRtn.A4139NETO = rs01.getDouble("A4139NETO");
-                    objRtn.A4139DIAS = rs01.getString("A4139DIAS");
-                    objRtn.A4139DDATE = rs01.getString("A4139DDATE");
-                    objRtn.A4139FFILE = rs01.getString("A4139FFILE");
-                    objRtn.A4139TOTALPAG = rs01.getString("A4139TOTALPAG");
+                    objRtn.A4139FINA = rs01.getString("A4139FINA");                 
+                    objRtn.A4139TOTALPAG = rs01.getString("A4139CANTPAGI");
+                    //A4139CANTI2                    
+                    
+                } else {
+                    objRtn.A4139CCUST = rs01.getString("A4137CCUST");
+                    objRtn.A4139PAIS = rs01.getString("A4137PAIS");
+                    //objRtn.A4139CANTI = rs01.getInt("A4139CANTI");
+                    objRtn.A4139STATO = rs01.getString("A4137STATO");
+                    objRtn.A4139FLAG = rs01.getString("A4137FLAG");
+                    objRtn.A4139FREGI = rs01.getString("A4137FREGI");
+                    objRtn.A4139USER = rs01.getString("A4137USER");
+                    objRtn.A4139ROBOT = rs01.getString("A4137ROBOT");
+                    objRtn.A4139NMEMO = rs01.getString("A4137NMEMO");
+                    objRtn.A4139CNXPA = rs01.getString("A4137CNXPA");
+                    objRtn.A4139TYPE = rs01.getString("A4137TYPE");
+                    objRtn.A4139AREA = rs01.getString("A4137AREA");
+                    objRtn.A4139BASE = rs01.getString("A4137BASE");
+                    objRtn.A4139NETO = rs01.getDouble("A4137NETO");                   
+                    objRtn.A4139DDATE = rs01.getString("A4137DDATE");
+                    objRtn.A4139FFILE = rs01.getString("A4137FFILE");
+                    objRtn.A4139TOTALPAG = rs01.getString("A4137TOTALPAG");
+                    objRtn.A4139ORIGEN= rs01.getString("A4137ORIGEN");
+                    
+                    //objRtn.A4139DIAS = rs01.getString("A4139DIAS");                                        
                 }
 
                 lstRtn.add(objRtn);

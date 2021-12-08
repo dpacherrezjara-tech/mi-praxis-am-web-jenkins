@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @Scope("request")
-@RequestMapping("/RobotdisputeMyarcFormController")
+@RequestMapping("/RobotdisputeMyarcForm")
 public class RobotdisputeMyarcFormController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
@@ -149,15 +149,15 @@ public class RobotdisputeMyarcFormController extends BaseController {
             CH_01.setCellValue("Memo Issue");
             CH_02.setCellValue("System Date");
             CH_03.setCellValue("Country");
-            CH_04.setCellValue("Memo Number");
-            CH_05.setCellValue("Dispute Date");
-            CH_06.setCellValue("Memo Issue Date");
-            CH_07.setCellValue("Area");
-            CH_08.setCellValue("Type");
-            CH_09.setCellValue("User");
-            CH_10.setCellValue("Cant");
-            CH_11.setCellValue("Days");
-            CH_12.setCellValue("Status");
+            CH_04.setCellValue("Dispute Date");
+            CH_05.setCellValue("Process");
+            CH_06.setCellValue("Area");
+            CH_07.setCellValue("Type");
+            CH_08.setCellValue("Memo Number");
+            CH_09.setCellValue("Amount");
+            CH_10.setCellValue("Audit");
+            CH_11.setCellValue("Status");
+            CH_12.setCellValue("");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -207,13 +207,18 @@ public class RobotdisputeMyarcFormController extends BaseController {
                 CH_11 = row.createCell(11);
                 CH_12 = row.createCell(12);
 
-                CH_00.setCellValue(listaData.get(vi).A4139CCUST);
-                CH_01.setCellValue(listaData.get(vi).A4139CANTI);
-                CH_02.setCellValue(listaData.get(vi).A4139FLAG);
-                CH_03.setCellValue(listaData.get(vi).A4139FREVI);
-                CH_04.setCellValue(listaData.get(vi).A4139ROBOT);
-
-                CH_05.setCellValue(listaData.get(vi).A4139STATO);
+                CH_00.setCellValue(listaData.get(vi).A4139ORIGEN);
+                CH_01.setCellValue(listaData.get(vi).A4139FFILE);
+                CH_02.setCellValue(listaData.get(vi).A4139FREGI);
+                CH_03.setCellValue(listaData.get(vi).A4139PAIS);
+                CH_04.setCellValue(listaData.get(vi).A4139DDATE);
+                CH_05.setCellValue(listaData.get(vi).A4139BASE);
+                CH_06.setCellValue(listaData.get(vi).A4139AREA);
+                CH_07.setCellValue(listaData.get(vi).A4139TYPE);
+                CH_08.setCellValue(listaData.get(vi).A4139NMEMO);
+                CH_09.setCellValue(listaData.get(vi).A4139NETO);
+                CH_10.setCellValue(listaData.get(vi).A4139USER);
+                CH_11.setCellValue(listaData.get(vi).A4139FLAG);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
