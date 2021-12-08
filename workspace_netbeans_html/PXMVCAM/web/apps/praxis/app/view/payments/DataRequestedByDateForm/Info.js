@@ -464,7 +464,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Reference', dataIndex: 'A3676REFRB', width: 300,
+                                                        text: 'Remark', dataIndex: 'A3676REFRB', width: 300,
                                                     },
                                                 ]
                                             },
