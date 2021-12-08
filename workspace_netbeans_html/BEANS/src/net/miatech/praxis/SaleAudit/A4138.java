@@ -27,7 +27,15 @@ public class A4138 {
     public String A4138REVIS;
     public String A4138FREVI;
     public String A4138HREVI;
+    public String A4138ORIGE;
 
+    public String getA4138ORIGE() {
+        return A4138ORIGE;
+    }
+
+    public void setA4138ORIGE(String A4138ORIGE) {
+        this.A4138ORIGE = A4138ORIGE;
+    }
     public String getA4138CCUST() {
         return A4138CCUST;
     }

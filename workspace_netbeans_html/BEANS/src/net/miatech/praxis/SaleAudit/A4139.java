@@ -24,7 +24,9 @@ public class A4139 {
     public String A4139HREVI;
     public String A4139ROBOT;
     public String A4139STATO;
+    public String A4139FINA;
     public String A4139TOTALPAG;
+    public String A4139ORIGEN;
 
     public String A4139NMEMO;
     public String A4139CNXPA;
@@ -39,6 +41,21 @@ public class A4139 {
     public int A4139SEQ;
     public int A4139CANTI;
     public int A4139COUNT;
+
+    public String getA4139ORIGEN() {
+        return A4139ORIGEN;
+    }
+
+    public void setA4139ORIGEN(String A4139ORIGEN) {
+        this.A4139ORIGEN = A4139ORIGEN;
+    }
+    public String getA4139FINA() {
+        return A4139FINA;
+    }
+
+    public void setA4139FINA(String A4139FINA) {
+        this.A4139FINA = A4139FINA;
+    }
 
     public String getA4139USER() {
         return A4139USER;

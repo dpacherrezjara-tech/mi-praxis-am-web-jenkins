@@ -12,6 +12,8 @@ package net.miatech.praxis.SaleAudit;
 public class A4137 {
 
     public String A4137CCUST;
+    public String A4137PREME;
+    public String A4137ANIO;
     public String A4137NMEMO;
     public String A4137CNXPA;
     public String A4137PAIS;
@@ -37,11 +39,90 @@ public class A4137 {
     public String A4137REVIS;
     public String A4137FREVI;
     public String A4137HREVI;
+    public String A4137USER;
+    public String A4137SEMAFORO;
+    public String A4137DIAS;
+    public String A4137AGEN;
+    public String A4137ORIGE;
+    public String A4137MDA;
+    public String A4137FPROC;
 
     public double A4137AMOUT;
     public double A4137BALAC;
     public double A4137NETO;
     public double A4137DIFE;
+
+    public String getA4137PREME() {
+        return A4137PREME;
+    }
+
+    public void setA4137PREME(String A4137PREME) {
+        this.A4137PREME = A4137PREME;
+    }
+
+    public String getA4137ANIO() {
+        return A4137ANIO;
+    }
+
+    public void setA4137ANIO(String A4137ANIO) {
+        this.A4137ANIO = A4137ANIO;
+    }
+
+    public String getA4137FPROC() {
+        return A4137FPROC;
+    }
+
+    public void setA4137FPROC(String A4137FPROC) {
+        this.A4137FPROC = A4137FPROC;
+    }
+
+    public String getA4137MDA() {
+        return A4137MDA;
+    }
+
+    public void setA4137MDA(String A4137MDA) {
+        this.A4137MDA = A4137MDA;
+    }
+
+    public String getA4137AGEN() {
+        return A4137AGEN;
+    }
+
+    public void setA4137AGEN(String A4137AGEN) {
+        this.A4137AGEN = A4137AGEN;
+    }
+
+    public String getA4137ORIGE() {
+        return A4137ORIGE;
+    }
+
+    public void setA4137ORIGE(String A4137ORIGE) {
+        this.A4137ORIGE = A4137ORIGE;
+    }
+
+    public String getA4137USER() {
+        return A4137USER;
+    }
+
+    public void setA4137USER(String A4137USER) {
+        this.A4137USER = A4137USER;
+    }
+
+    public String getA4137SEMAFORO() {
+        return A4137SEMAFORO;
+    }
+
+    public void setA4137SEMAFORO(String A4137SEMAFORO) {
+        this.A4137SEMAFORO = A4137SEMAFORO;
+    }
+
+    public String getA4137DIAS() {
+        return A4137DIAS;
+    }
+
+    public void setA4137DIAS(String A4137DIAS) {
+        this.A4137DIAS = A4137DIAS;
+    }
 
     public String getA4137CCUST() {
         return A4137CCUST;
