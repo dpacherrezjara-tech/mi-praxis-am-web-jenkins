@@ -125,6 +125,11 @@ public class SalesReconciliAmexDAO {
                 beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
                 beanTkt.ODBALAMOUC = rst.getDouble("ODBALAMOUC");
                 beanTkt.CERROR = rst.getString("CERROR");
+                
+                beanTkt.RATECOMBA = rst.getDouble("RATECOMBA");
+                beanTkt.RATECOMBAC = rst.getDouble("RATECOMBAC");
+                beanTkt.RATEIVABA = rst.getDouble("RATEIVABA");
+                beanTkt.RATEIVABAC = rst.getDouble("RATEIVABAC");
 
                 if (beanTkt.CERROR.equals("01")) {
                     beanTkt.desCERROR = "Difference";
