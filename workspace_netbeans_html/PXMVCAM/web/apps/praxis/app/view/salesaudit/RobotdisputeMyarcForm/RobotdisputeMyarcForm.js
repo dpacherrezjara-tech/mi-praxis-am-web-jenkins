@@ -33,7 +33,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
         {
             xtype: 'panel',
             id: prototype.idRobotdisputeMyarc + '-contenedor-form',
-            width: prototype.widthContenedor,
+            width: prototype.widthWindow,
             items: [
                 {
                     xtype: 'panel',
@@ -57,6 +57,15 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                     tooltip: 'Search',
                                     listeners: {
                                         click: 'imgSearch_clickHandler'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idRobotdisputeMyarc + '-btn-search2',
+                                    iconCls: 'prx-icon-search',
+                                    tooltip: 'Search',hidden: true,
+                                    listeners: {
+                                        click: 'imgSearch_clickHandler2'
                                     }
                                 },
                                 {
@@ -227,14 +236,14 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                             }
                                         }, {
                                             xtype: 'combo',
-                                            id: prototype.idRobotdisputeMyarc + '-CmbArea', hidden: true,
+                                            id: prototype.idRobotdisputeMyarc + '-CmbArea',
                                             fieldLabel: 'Area',
                                             queryMode: 'local',
                                             displayField: 'name',
                                             valueField: 'code',
                                             width: 250,
                                             labelWidth: 50,
-                                            labelAlign: 'right',
+                                            labelAlign: 'right', hidden: true,
                                             emptyText: '',
                                             listConfig: {
                                                 minWidth: 200
@@ -245,12 +254,12 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.idRobotdisputeMyarc + '-Audit', hidden: true,
+                                            id: prototype.idRobotdisputeMyarc + '-Audit',
                                             fieldLabel: 'Audit',
                                             maskRe: /[A-Z,a-z,Ñ,ñ]/,
                                             maxLength: 10,
                                             enforceMaxLength: 10,
-                                            labelWidth: 50,
+                                            labelWidth: 50, hidden: true,
                                             width: 110,
                                             listeners: {
                                                 specialkey: 'onSearchkey',
@@ -293,9 +302,9 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                 },
                                 items: [
                                     {text: 'System <br> date', dataIndex: 'A4139FREGI', width: 100, sortable: true, align: 'center'},
-                                    {text: 'Robot', dataIndex: 'A3268ROBOT', width: 250, sortable: false, align: 'center'},
-                                    {text: 'Country', dataIndex: 'A3268PAIS', width: 80, align: 'center', renderer: 'onRendererColumnOnPais'},
-                                    {text: 'Processed', dataIndex: 'A3268CANT', width: 100, align: 'right',
+                                    {text: 'Robot', dataIndex: 'A4139ROBOT', width: 250, sortable: false, align: 'center'},
+                                    {text: 'Country', dataIndex: 'A4139PAIS', width: 80, align: 'center', renderer: 'onRendererColumnOnPais'},
+                                    {text: 'Processed', dataIndex: 'A4139CANTI', width: 100, align: 'right',
                                         //cls: 'column_header_double',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
@@ -304,7 +313,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                             xtype: 'numberfield'
                                         }
                                     },
-                                    {text: 'Status', dataIndex: 'A3268STATUS', width: 200, sortable: false, align: 'right'},
+                                    {text: 'Status', dataIndex: 'A4139FLAG', width: 200, sortable: false, align: 'right'},
                                     {
                                         text: '',
                                         dataIndex: '',
@@ -318,7 +327,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                         {
                             xtype: 'grid',
                             id: prototype.idRobotdisputeMyarc + '-gridDetalle',
-                            width: prototype.widthContenedor,
+                            width: prototype.widthWindow,
                             hidden: true,
                             height: 600,
                             columnLines: true,
@@ -329,24 +338,21 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Origin', dataIndex: 'A4139BASE', align: 'center', width: 75, sortable: false},
-                                    {text: 'Memo <br> Issue', dataIndex: 'A4139FFILE', align: 'center', width: 50, sortable: false},
+                                    {text: 'Origin', dataIndex: 'A4139ORIGEN', align: 'center', width: 100, sortable: false},
+                                    {text: 'Memo <br> Issue', dataIndex: 'A4139FFILE', align: 'center', width: 90, sortable: false},
                                     {text: 'System <br> Date', dataIndex: 'A4139FREGI', align: 'center', width: 70, sortable: false},
                                     {text: 'Country', dataIndex: 'A4139PAIS', align: 'center', width: 70, sortable: false},
-                                    {text: 'Memo Number', dataIndex: 'A4139NMEMO', align: 'center', width: 100, sortable: false},
                                     {text: 'Dispute <br> Date', dataIndex: 'A4139DDATE', align: 'center', width: 100, sortable: false},
+                                    {text: 'Process', dataIndex: 'A4139BASE', align: 'left', width: 120, sortable: false},
                                     {text: 'Area', dataIndex: 'A4139AREA', align: 'left', width: 120, sortable: false},
                                     {text: 'Type', dataIndex: 'A4139TYPE', align: 'left', width: 120, sortable: false},
+                                    {text: 'Memo Number', dataIndex: 'A4139NMEMO', align: 'center', width: 100, sortable: false},
+                                    {text: 'Amount', dataIndex: 'A4139NETO', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Audit', dataIndex: 'A4139USER', width: 100, align: 'right'},
-                                    {text: 'Days', dataIndex: 'A3268DIAS', width: 50, align: 'center'},
-                                    {text: 'Status', dataIndex: 'A3268FLAG', width: 140, align: 'right'},
-                                    {
-                                        text: '',
-                                        dataIndex: '',
-                                        width: 60,
-                                        renderer: 'onRendererColumnOnStatus'
-                                    }                                    
-                                    
+                                    //{text: 'Days', dataIndex: 'A3268DIAS', width: 50, align: 'center'},
+                                    {text: 'Status', dataIndex: 'A4139FLAG', width: 140, align: 'right'}
+                                    //{ text: '',dataIndex: '',width: 60,renderer: 'onRendererColumnOnStatus'}
+
                                 ]
                             }, viewConfig: {
                                 //trackOver: false,

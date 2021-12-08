@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
 
     bean: {},
     bean2: {},
+    bean3: {},
     /**
      * Constructor
      */
@@ -21,7 +22,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
         this.setStores();
     },
     onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        switch (String(record.get('A3268STATO'))) {
+        switch (String(record.get('A4139FINA'))) {
             case 'D':
                 value = 'silver';
                 break;
@@ -61,7 +62,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
         var store02 = Ext.create('Ext.data.Store', {
             proxy: {
                 type: 'ajax',
-                url: prototype.url + '/SearchDebitosDetail/',
+                url: prototype.url + '/SearchDebitos/',
                 timeout: '300000',
                 reader: {
                     type: 'json',
@@ -126,7 +127,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
         obj.setValue('1');
     },
     onSearchkey: function (f, e) {
-        if (e.getKey() == e.ENTER) {
+        if (e.getKey() === e.ENTER) {
             this.imgSearch_clickHandler();
         }
 
@@ -143,12 +144,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
     onBackClick: function (obj, e) {
         Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridData').setVisible(true);
         Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-total').setVisible(true);
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-btn-search').setVisible(true);
 
         //Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-total').setText('0');
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-CmbArea').setValue("");
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-Audit').setValue("");
         Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridDetalle').setVisible(false);
         Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-totalDeta').setVisible(false);
         Ext.getCmp(prototype.idRobotdisputeMyarc + '-btn-back').setVisible(false);
         Ext.getCmp(prototype.idRobotdisputeMyarc + '-btn-excel').setVisible(false);
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-btn-search2').setVisible(false);
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-CmbArea').setVisible(false);
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-Audit').setVisible(false);
     },
     imgSearch_clickHandler: function (obj, records, eOpts) {
         var cmbsearch = Ext.getCmp(prototype.idRobotdisputeMyarc + '-search-type').getValue();
@@ -156,53 +163,52 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
         var txtDateTo = Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateTo').getRawValue();
         var CmbRobot = Ext.getCmp(prototype.idRobotdisputeMyarc + '-ComboRobot').getValue();
         var CmbStatus = Ext.getCmp(prototype.idRobotdisputeMyarc + '-CmbStatus').getValue();
-        if (cmbsearch == '') {
+        if (cmbsearch === '') {
             Ext.MessageBox.alert('PRAXIS', "Select Search Type", function (btn, text) {
-                if (btn == 'ok' || btn == 'cancel')
+                if (btn === 'ok' || btn === 'cancel')
                     setTimeout("Ext.getCmp(prototype.idRobotdisputeMyarc + '-search-type').focus();", 100);
             });
             return;
         }
-        if (txtDateFrom == '') {
+        if (txtDateFrom === '') {
             Ext.MessageBox.alert('PRAXIS', "Enter Date From", function (btn, text) {
-                if (btn == 'ok' || btn == 'cancel')
+                if (btn === 'ok' || btn === 'cancel')
                     setTimeout("Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateFrom').focus();", 100);
             });
             return;
         }
-        if (txtDateTo == '') {
+        if (txtDateTo === '') {
             Ext.MessageBox.alert('PRAXIS', "Enter Date To", function (btn, text) {
-                if (btn == 'ok' || btn == 'cancel')
+                if (btn === 'ok' || btn === 'cancel')
                     setTimeout("Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateTo').focus();", 100);
             });
             return;
         }
-        if (txtDateFrom != '' && txtDateTo != '') {
+        if (txtDateFrom !== '' && txtDateTo !== '') {
 
-            if (global.existeFecha(txtDateFrom) != '') {
+            if (global.existeFecha(txtDateFrom) !== '') {
                 Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateFrom), function (btn, text) {
-                    if (btn == 'ok' || btn == 'cancel')
+                    if (btn === 'ok' || btn === 'cancel')
                         setTimeout("Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateFrom').focus();", 100);
                 });
                 return;
             }
 
-            if (global.existeFecha(txtDateTo) != '') {
+            if (global.existeFecha(txtDateTo) !== '') {
                 Ext.MessageBox.alert('PRAXIS', global.existeFecha(txtDateTo), function (btn, text) {
-                    if (btn == 'ok' || btn == 'cancel')
+                    if (btn === 'ok' || btn === 'cancel')
                         setTimeout("Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateTo').focus();", 100);
                 });
                 return;
             }
             if (Date.parse(Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateFrom').getValue()) > Date.parse(Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateTo').getValue())) {
                 Ext.MessageBox.alert('PRAXIS', "the starting date must be less than the end date", function (btn, text) {
-                    if (btn == 'ok' || btn == 'cancel')
+                    if (btn === 'ok' || btn === 'cancel')
                         setTimeout("Ext.getCmp(prototype.idRobotdisputeMyarc + '-txtFilterDateTo').focus();", 100);
                 });
                 return;
             }
         }
-        Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridData').getStore().removeAll();
         //datos capturados del texto
         this.bean.IN_OPTION = cmbsearch;
         this.bean.IN_DATEFROM = txtDateFrom;
@@ -227,7 +233,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
 
                 }, callback: function (records, operation, success) {
                     if (records.length !== 0) {
-                        Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-total').setText(records[0].data.A3268TOTALPAG);
+                        Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-total').setText(records[0].data.A4139TOTALPAG);
                     } else {
                         Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-total').setText('0');
                         global.Msg({msg: "Data not found.", icon: 2, fn: function () {
@@ -340,20 +346,64 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
 
     },
     searchform_detalle_Dispute_excel: function () {
-        if (this.bean2.IN_COUNTRY != '') {
-            me.exportExcel(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(this.bean2)));
+        var me = this;
+        var CmbRobot = Ext.getCmp(prototype.idRobotdisputeMyarc + '-ComboRobot').getValue();
+        var CmbArea = Ext.getCmp(prototype.idRobotdisputeMyarc + '-CmbArea').getValue();
+        var Audit = Ext.getCmp(prototype.idRobotdisputeMyarc + '-Audit').getValue();
+        me.bean3.IN_OPTION = '2';
+        me.bean3.IN_DATEFROM = me.bean2.IN_DATEFROM;
+        me.bean3.IN_ROBOT = CmbRobot;
+        me.bean3.IN_AREA = CmbArea;
+        me.bean3.IN_USER = Audit;
+        if (me.bean2.IN_DATEFROM !== '') {
+            me.exportExcel(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(me.bean3)));
         } else {
-            Ext.MessageBox.alert('PRAXIS', "Select Country");
+            Ext.MessageBox.alert('PRAXIS', "Select Filters");
             return;
         }
+    },
+    onColumnAmountRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = "background:#D5F4D5 !important";
+        return Ext.util.Format.number(value, '0,000.00');
     },
     onRendererColumnOnPais: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "font-weight:bold !important; color:blue !important; cursor: pointer !important; text-decoration: underline;";
         return '<span onclick="Ext.getCmp(prototype.idRobotdisputeMyarc + \'-Contenedor\').getController().OnDetail01(' + rowIndex + ');">' + value + '</span>'
     },
+    imgSearch_clickHandler2: function () {
+        var me = this;
+        var CmbRobot = Ext.getCmp(prototype.idRobotdisputeMyarc + '-ComboRobot').getValue();
+        var CmbArea = Ext.getCmp(prototype.idRobotdisputeMyarc + '-CmbArea').getValue();
+        var Audit = Ext.getCmp(prototype.idRobotdisputeMyarc + '-Audit').getValue();
+        me.bean3.IN_OPTION = '2';
+        me.bean3.IN_DATEFROM = me.bean2.IN_DATEFROM;
+        me.bean3.IN_ROBOT = CmbRobot;
+        me.bean3.IN_AREA = CmbArea;
+        me.bean3.IN_USER = Audit;
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridDetalle').getStore().removeAll();
+        Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridDetalle').getStore().loadPage(1, {
+            params: {
+                beanString: JSON.stringify(me.bean3)
+
+            }, callback: function (records, operation, success) {
+                if (records.length !== 0) {
+                    Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-totalDeta').setText(records[0].data.A4139TOTALPAG);
+                } else {
+                    Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-totalDeta').setText('0');
+                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                        }});
+
+                }
+                //Ext.getCmp(prototype.idRobotdisputeMyarc + '-country').setValue(records[0].data.A3388TOTALPAG);
+
+            }
+        });
+    },
     OnDetail01: function (rowIndex) {
         var gridData = Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridData');
         var total = Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-total');
+        var search1 = Ext.getCmp(prototype.idRobotdisputeMyarc + '-btn-search');
+        var search2 = Ext.getCmp(prototype.idRobotdisputeMyarc + '-btn-search2');
 
         var gridDetalle = Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridDetalle');
         var totalDeta = Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-totalDeta');
@@ -364,6 +414,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
 
         gridData.hide();
         total.hide();
+        search1.hide();
 
         gridDetalle.show();
         totalDeta.show();
@@ -371,6 +422,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
         excel.show();
         CmbArea.show();
         Audit.show();
+        search2.show();
 
         ///CARGANDO EL DETALLE DE LA GRTILLA 
         var grid = Ext.getCmp(prototype.idRobotdisputeMyarc + '-gridData');
@@ -380,8 +432,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
         var CmbRobot = Ext.getCmp(prototype.idRobotdisputeMyarc + '-ComboRobot').getValue();
         var CmbArea = Ext.getCmp(prototype.idRobotdisputeMyarc + '-CmbArea').getValue();
         var Audit = Ext.getCmp(prototype.idRobotdisputeMyarc + '-Audit').getValue();
-        this.bean2.IN_OPTION = '3';
-        this.bean2.IN_DATEFROM = rec.data.A3268FREGI;
+        this.bean2.IN_OPTION = '2';
+        this.bean2.IN_DATEFROM = rec.data.A4139FREGI;
         this.bean2.IN_ROBOT = CmbRobot;
         this.bean2.IN_AREA = CmbArea;
         this.bean2.IN_USER = Audit;
@@ -391,8 +443,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
                 beanString: JSON.stringify(this.bean2)
 
             }, callback: function (records, operation, success) {
-                if (records.length != 0) {
-                    Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-totalDeta').setText(records[0].data.A3268TOTALPAG);
+                if (records.length !== 0) {
+                    Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-totalDeta').setText(records[0].data.A4139TOTALPAG);
                 } else {
                     Ext.getCmp(prototype.idRobotdisputeMyarc + '-lbl-totalDeta').setText('0');
                     global.Msg({msg: "Data not found.", icon: 2, fn: function () {

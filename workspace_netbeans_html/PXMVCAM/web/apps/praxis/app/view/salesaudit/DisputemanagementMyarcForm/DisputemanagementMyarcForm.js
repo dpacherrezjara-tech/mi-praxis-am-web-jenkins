@@ -1,8 +1,8 @@
 
-prototype.idDisputemanageMyarcDisputemanageMyarc = 'DisputemanagementMyarcForm';
+prototype.idDisputeGestionMyarc = 'DetailDisputeGestionMyarc';
 prototype.url = CONTEXTPATH + '/DisputemanagementMyarcForm';
-prototype.widthWindow = 1366;
-prototype.heightWindow = 768;
+prototype.widthContenedor = 1366;
+prototype.heightContenedor = 768;
 
 Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DisputemanagementMyarcForm', {
     extend: 'Ext.panel.Panel',
@@ -10,6 +10,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
 
     requires: [
         'Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputemanagementMyarcFormController',
+        'Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeGestionMyarc'
     ],
 
     controller: 'DisputemanagementMyarcFormController',
@@ -210,8 +211,8 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idDisputemanageMyarc + '-ComboOrigin', hidden: true,
-                                            fieldLabel: 'Origin',
+                                            id: prototype.idRobotdisputeMyarc + '-ComboBase', hidden: true,
+                                            fieldLabel: 'Base',
                                             queryMode: 'local',
                                             displayField: 'name',
                                             valueField: 'code',
@@ -255,7 +256,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                             listeners: {
                                                 specialkey: 'onSearchkey'
                                             }
-                                        }                                        
+                                        }
 
 
                                     ]
@@ -273,64 +274,38 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idDisputemanageMyarc + '-ComboSource',
-                                            fieldLabel: 'Source',
+                                            id: prototype.idRobotdisputeMyarc + '-CmbStatus',
+                                            fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',
                                             valueField: 'code',
-                                            width: 120,
+                                            width: 250,
                                             labelWidth: 50,
                                             labelAlign: 'right',
                                             emptyText: '',
                                             listConfig: {
-                                                minWidth: 150
+                                                minWidth: 200
                                             },
                                             listeners: {
-                                                afterrender: 'onCmbSourceAfterRender',
-                                                select: 'onCmbSourceSelect'
+                                                afterrender: 'onCmbStatusAfterRender'
                                             }
-                                        }, {
+                                        },
+                                        {
                                             xtype: 'combo',
-                                            id: prototype.idDisputemanageMyarc + '-ComboChannel', hidden: true,
-                                            fieldLabel: 'Channel',
+                                            id: prototype.idDisputemanageMyarc + '-ComboOrigin', hidden: true,
+                                            fieldLabel: 'Origin',
                                             queryMode: 'local',
                                             displayField: 'name',
                                             valueField: 'code',
-                                            width: 120,
+                                            width: 250,
                                             labelWidth: 50,
                                             labelAlign: 'right',
                                             emptyText: '',
                                             listConfig: {
-                                                minWidth: 120
+                                                minWidth: 200
                                             },
                                             listeners: {
-                                                afterrender: 'onCmbChannelAfterRender'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDisputemanageMyarc + '-Currency',
-                                            fieldLabel: 'Currency',
-                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                                            maxLength: 2,
-                                            enforceMaxLength: 2,
-                                            labelWidth: 50,
-                                            width: 110,
-                                            listeners: {
-                                                specialkey: 'onSearchkey',
-                                                change: 'onchange'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.idDisputemanageMyarc + '-TourCode',
-                                            fieldLabel: 'Tour Code',
-                                            maxLength: 15,
-                                            enforceMaxLength: 15,
-                                            labelWidth: 60,
-                                            width: 150,
-                                            listeners: {
-                                                specialkey: 'onSearchkey'
+                                                afterrender: 'onCmbStatusAfterRender'
                                             }
                                         },
                                         {
@@ -342,25 +317,10 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                             maxLength: 10,
                                             enforceMaxLength: 10,
                                             labelWidth: 30,
-                                            width: 120,
+                                            width: 150,
                                             listeners: {
                                                 specialkey: 'onSearchkey',
                                                 change: 'onchange'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'combo',
-                                            id: prototype.idDisputemanageMyarc + '-cmbError',
-                                            fieldLabel: 'Reasons',
-                                            queryMode: 'local',
-                                            displayField: 'A2548DESC1',
-                                            valueField: 'A2548CODR1',
-                                            width: 200,
-                                            labelWidth: 50,
-                                            labelAlign: 'right',
-                                            emptyText: '',
-                                            listConfig: {
-                                                minWidth: 200
                                             }
                                         }
                                     ]
@@ -388,8 +348,8 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                             xtype: 'grid',
                             id: prototype.idDisputemanageMyarc + '-gridData',
                             // flex: 1,
-                            width: prototype.widthContenedor,
-                            height: prototype.heightContenedor,
+                            width: 1300,
+                            height: 500,
                             columnLines: true,
                             columns: {
                                 defaults: {
@@ -398,97 +358,22 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Memo <br> number', dataIndex: 'A2548NMEMO', align: 'center', width: 90},
-                                    {text: 'Country', dataIndex: 'A2548PAIS', align: 'center', width: 60},
-                                    {text: 'IATA', dataIndex: 'A2548IATA', align: 'center', width: 70},
-                                    {text: 'Agency', dataIndex: 'AGENCY', width: 150, renderer: 'onRendererColumnAttr'},
-                                    {text: 'Currency', dataIndex: 'A2548MDA', width: 70, align: 'center'},
-                                    {
-                                        text: 'Fare', dataIndex: 'A2548NETO', width: 80, sortable: false,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
-                                            return win.formatDblNumber(value);
-                                        }
-                                    },
-                                    {text: 'Source', dataIndex: 'A2548FTE', width: 55, align: 'center'},
-                                    {text: 'Dispute <br> Date', dataIndex: 'A2548FDISP', align: 'center', width: 100},
-                                    {text: 'System <br> Date', dataIndex: 'A2548FREGI', align: 'center', width: 70},
-                                    {text: 'Audit', dataIndex: 'A2548REGIS', width: 90, align: 'right'},
-                                    {text: 'Origin', dataIndex: 'A2548BASE', align: 'center', width: 80},
-                                    {text: 'Area', dataIndex: 'A2548AREADES', align: 'center', width: 100},
-                                    {
-                                        text: 'Status', dataIndex: 'A2548FLAG', flex: 1, sortable: false,
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                            var data = record.data;
-                                            var backgroundColor =
-                                                    data.A2548FLAG === 'A' ? "#99FFCC" :
-                                                    (data.A2548FLAG === 'U') ? "#0099FF" :
-                                                    (data.A2548FLAG === 'X') ? "#FF0000" :
-                                                    (data.A2548FLAG === 'C') ? "#D329E8" :
-                                                    (data.A2548FLAG === 'P') ? "#14C92F" :
-                                                    (data.A2548FLAG === 'I') ? "#14C92F" :
-                                                    (data.A2548FLAG === 'F') ? "#14C92F" :
-                                                    (data.A2548FLAG === 'Z') ? "#F8D169" :
-                                                    (data.A2548FLAG === 'R') ? "#F2A60D" :
-                                                    (data.A2548FLAG === 'J') ? "#69D3F8" :
-                                                    (data.A2548FLAG === 'D') ? "#FF9966" :
-                                                    (data.A2548FLAG === 'E') ? "#E8400C" :
-                                                    (data.A2548FLAG === 'W') ? "#A50C88" :
-                                                    (data.A2548FLAG === 'B') ? "#CC9966" :
-                                                    (data.A2548FLAG === 'Y') ? "#CCFF00" :
-                                                    (data.A2548FLAG === 'N') ? "#FF0000" :
-                                                    (data.A2548FLAG === 'O') ? "#B03A2E" :
-                                                    (data.A2548FLAG === 'Q') ? "#DC7633" :
-                                                    (data.A2548FLAG === 'L') ? "#B280CC" : "#FFFFFF";
-                                            var fontWeight = (data.A2548FLAG === 'X' ? 'bold' : 'bold');
-                                            metaData.style = "text-align:center;background-color:" + backgroundColor + ";font-weight:" + fontWeight + ";";
-                                            var dat = "";
-                                            if (data.A2548FLAG === "A")
-                                                dat = "Approved";
-                                            if (data.A2548FLAG === "U")
-                                                dat = "Cleared Up";
-                                            if (data.A2548FLAG === "X")
-                                                dat = "Canceled";
-                                            if (data.A2548FLAG === "C")
-                                                dat = "Condoned";
-                                            if (data.A2548FLAG === "I")
-                                                dat = "Billed GDS";
-                                            if (data.A2548FLAG === "P")
-                                                dat = "Billed";
-                                            if (data.A2548FLAG === "F")
-                                                dat = "Accredited";
-                                            if (data.A2548FLAG === "Z")
-                                                dat = "Authorized";
-                                            if (data.A2548FLAG === "N")
-                                                dat = "Rejected";
-                                            if (data.A2548FLAG === "R")
-                                                dat = "Reaudited";
-                                            if (data.A2548FLAG === "J")
-                                                dat = "Justified";
-                                            if (data.A2548FLAG === "D")
-                                                dat = "Disputed";
-                                            if (data.A2548FLAG === "E")
-                                                dat = "Rejecte Disputed";
-                                            if (data.A2548FLAG === "W")
-                                                dat = "Approve Disputed";
-                                            if (data.A2548FLAG === "B" && data.A2548TRNCU === 'ADMA')
-                                                dat = "Adm na BSPlink/MM";
-                                            if (data.A2548FLAG === "B" && data.A2548TRNCU !== 'ADMA')
-                                                dat = "Acm na BSPlink/MM";
-                                            if (data.A2548FLAG === "O")
-                                                dat = "IATA Disabled";
-                                            if (data.A2548FLAG === "Q")
-                                                dat = "Unregistered Client";
-                                            if (data.A2548FLAG === "L" && data.A2548TRNCU === 'ADMB')
-                                                dat = "Adm BSPlink/MM";
-                                            if (data.A2548FLAG === "L" && data.A2548TRNCU !== 'ADMB')
-                                                dat = "Acm BSPlink/MM";
-                                            if (data.A2548FLAG === "Y")
-                                                dat = "Pending";
-                                            return dat;
-                                        }
-                                    },
-                                    {text: 'Days', dataIndex: 'A2548DIAS', width: 50, align: 'center'},
+                                    {text: 'Origin', dataIndex: 'A4137ORIGE', align: 'center', width: 80},
+                                    {text: 'Memo <br> number', dataIndex: 'A4137NMEMO', align: 'center', width: 90},
+                                    {text: 'Country', dataIndex: 'A4137PAIS', align: 'center', width: 60},
+                                    {text: 'IATA', dataIndex: 'A4137IATA', align: 'center', width: 70},
+                                    {text: 'Agency', dataIndex: 'A4137AGEN', width: 150, renderer: 'onRendererColumnAttr'},
+                                    {text: 'Currency', dataIndex: 'A4137MDA', width: 70, align: 'center'},
+                                    {text: 'Amount', dataIndex: 'A4137NETO', width: 120, renderer: 'onColumnAmountRenderer'},
+                                    {text: 'Processing<br>Date', dataIndex: 'A4137FPROC', width: 80},
+                                    {text: 'Dispute <br> Date', dataIndex: 'A4137DDATE', align: 'center', width: 100},
+                                    {text: 'System <br> Date', dataIndex: 'A4137FREGI', align: 'center', width: 70},
+                                    {text: 'Audit', dataIndex: 'A4137USER', width: 90, align: 'right'},
+                                    {text: 'Base', dataIndex: 'A4137BASE', align: 'center', width: 80},
+                                    {text: 'Area', dataIndex: 'A4137AREA', align: 'center', width: 100},
+                                    {text: 'Status', dataIndex: 'A4137FLAG', width: 130, sortable: false, renderer: 'onRendererColumnStatus'},
+                                    {text: 'Status MyArc', dataIndex: 'A4137STATO', width: 130, sortable: false},
+                                    {text: 'Days', dataIndex: 'A4137DIAS', width: 50, align: 'center'},
                                     {
                                         text: '',
                                         dataIndex: '',
@@ -508,17 +393,6 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                             }
                                         ]
                                     }
-                                    /*{
-                                     text: 'ADM<br>Tracing', dataIndex: '', width: 60, renderer: 'onRendererColumnOnLote'
-                                     listeners: {
-                                     click: 'searchDocumt'
-                                     },
-                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                     var data = record.data;
-                                     var src = ( data.A2548NMEMO!=='') ? 'resources/img/icon/16x16/search_docum.png' : '';
-                                     return '<a href="#salesaudit-dispute-gestion-bsplink"><img src="'+src+'"></a>';
-                                     }
-                                     }*/
 
 
 
