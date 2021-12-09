@@ -35,6 +35,12 @@ public class A4113 {
     public double ADJAMOUNC = 0;
     public double TAXAMOUNC = 0;
     public double ODBALAMOUC = 0;
+    
+    public double RATECOMBA = 0;
+    public double RATECOMBAC = 0;
+    public double RATEIVABA = 0;
+    public double RATEIVABAC = 0;    
+    
     public String CERROR = "";
     public String desCERROR = "";
     
