@@ -130,6 +130,15 @@ public class SalesReconciliAmexDAO {
                 beanTkt.RATECOMBAC = rst.getDouble("RATECOMBAC");
                 beanTkt.RATEIVABA = rst.getDouble("RATEIVABA");
                 beanTkt.RATEIVABAC = rst.getDouble("RATEIVABAC");
+                
+                //Diferencias
+                beanTkt.DIFF_PGROSAMOU = beanTkt.PGROSAMOU - beanTkt.GROSAMOUNC;
+                beanTkt.DIFF_PDISCAMOU = beanTkt.PDISCAMOU - beanTkt.DISCAMOUNC;
+                beanTkt.DIFF_PSFEEAMOU = beanTkt.PSFEEAMOU - beanTkt.SFEEAMOUNC;
+                beanTkt.DIFF_PADJAMOUN = beanTkt.PADJAMOUN - beanTkt.ADJAMOUNC;
+                beanTkt.DIFF_PTAXAMOU = beanTkt.PTAXAMOU - beanTkt.TAXAMOUNC;
+                beanTkt.DIFF_ODBALAMOU = beanTkt.ODBALAMOU - beanTkt.ODBALAMOUC;
+                beanTkt.DIFF_PNETAMOU = beanTkt.PNETAMOU - beanTkt.NETAMOUNC;
 
                 if (beanTkt.CERROR.equals("01")) {
                     beanTkt.desCERROR = "Difference";
@@ -549,6 +558,7 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
+                    beanTkt.DISCRATEBA = rst.getDouble("DISCRATEBA");
                     beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
 
                     beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");

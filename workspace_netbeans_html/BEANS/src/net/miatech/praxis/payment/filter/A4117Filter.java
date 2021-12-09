@@ -31,6 +31,7 @@ public class A4117Filter extends A4117 {
     // Totales
     public long totTGROSAMOUN = 0;
     public long totDISCRATE = 0;
+    public long totDISCRATEBA = 0;
     public long totDISCAMOUN = 0;
     public long totTGROSAMOUC = 0;
     public long totDISCAMOUNC = 0;

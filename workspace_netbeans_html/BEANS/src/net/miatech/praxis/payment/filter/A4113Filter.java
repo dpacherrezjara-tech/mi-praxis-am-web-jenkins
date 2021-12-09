@@ -27,6 +27,15 @@ public class A4113Filter extends A4113 {
     public String IN_NBATCH = "";
     public String DES_MERCHANT = "";
     
+    //Diferencias
+    public double DIFF_PGROSAMOU = 0;
+    public double DIFF_PDISCAMOU = 0;
+    public double DIFF_PSFEEAMOU = 0;
+    public double DIFF_PADJAMOUN = 0;
+    public double DIFF_PTAXAMOU = 0;
+    public double DIFF_ODBALAMOU = 0;
+    public double DIFF_PNETAMOU = 0;
+    
     public Pagination page = new Pagination();
     
 }

@@ -42,6 +42,7 @@ public class A4117 {
         
     public double TGROSAMOUN = 0;
     public double DISCRATE = 0;
+    public double DISCRATEBA = 0;
     public double DISCAMOUN = 0;
         
     //Result Conciliation SUMMARY
