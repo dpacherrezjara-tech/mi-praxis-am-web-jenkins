@@ -1979,7 +1979,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Net Amount<br>to Receive', dataIndex: 'NETAMOUNC', width: 100,
+                                                text: 'Reconciled<br>Net Amount', dataIndex: 'NETAMOUNC', width: 100,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                    metaData.style = "text-align:right;background-color:#B2FAC6"; 
                                                     value = Ext.util.Format.number(value, '0,000.00');
