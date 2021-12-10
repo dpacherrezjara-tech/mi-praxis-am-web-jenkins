@@ -209,7 +209,7 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
                 Ext.getCmp(prototype.id + '-txtPais').hide();
                 Ext.getCmp(prototype.id + '-cmbChannel').hide();
                 Ext.getCmp(prototype.id + '-panelLista').hide();
-                Ext.getCmp(prototype.id + '-gridData2').setWidth(1750);
+                Ext.getCmp(prototype.id + '-gridData2').setWidth(1770);
                 break;
             case '1':
                 Ext.getCmp(prototype.id + '-txtCia').show();
@@ -230,7 +230,7 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
                 Ext.getCmp(prototype.id + '-txtPais').hide();
                 Ext.getCmp(prototype.id + '-cmbChannel').hide();
                 Ext.getCmp(prototype.id + '-panelLista').hide();
-                Ext.getCmp(prototype.id + '-gridData2').setWidth(1750);
+                Ext.getCmp(prototype.id + '-gridData2').setWidth(1770);
                 break;
             case '2':
                 Ext.getCmp(prototype.id + '-txtCia').hide();
@@ -251,7 +251,7 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
                 Ext.getCmp(prototype.id + '-txtPais').hide();
                 Ext.getCmp(prototype.id + '-cmbChannel').hide();
                 Ext.getCmp(prototype.id + '-panelLista').show();
-                Ext.getCmp(prototype.id + '-gridData2').setWidth(1350);
+                Ext.getCmp(prototype.id + '-gridData2').setWidth(1370);
                 break;
             case '3':
                 Ext.getCmp(prototype.id + '-txtCia').hide();
@@ -272,7 +272,7 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
                 Ext.getCmp(prototype.id + '-txtPais').hide();
                 Ext.getCmp(prototype.id + '-cmbChannel').hide();
                 Ext.getCmp(prototype.id + '-panelLista').show();
-                Ext.getCmp(prototype.id + '-gridData2').setWidth(1350);
+                Ext.getCmp(prototype.id + '-gridData2').setWidth(1370);
                 break;
         }
     },
