@@ -133,6 +133,9 @@ public class BwrQueryRefundController extends BaseController {
             mapProperties = new HashMap<>();
             mapProperties.put("A3389REGAS", "AUTOPR");
             lstData.add(mapProperties);
+            mapProperties = new HashMap<>();
+            mapProperties.put("A3389REGAS", "AUTOPRC11");
+            lstData.add(mapProperties);
 
             for (int vi = 0; vi < lst.size(); ++vi) {
                 mapProperties = new HashMap<>();
