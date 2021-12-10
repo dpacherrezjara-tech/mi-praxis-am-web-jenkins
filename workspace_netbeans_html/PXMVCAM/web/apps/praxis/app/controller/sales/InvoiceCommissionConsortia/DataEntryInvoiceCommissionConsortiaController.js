@@ -605,7 +605,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
         Ext.getCmp(prototype.id + '-txtA1757TCASH').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757COMBA').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757IVACB').setValue('0.00');
-        Ext.getCmp(prototype.id + '-txtA1757COD').setValue('');
+        //Ext.getCmp(prototype.id + '-txtA1757COD').setValue('');
         // Dtos de pre.factura				
         Ext.getCmp(prototype.id + '-txtA1757CAMCO_P').setValue('0.00');
         Ext.getCmp(prototype.id + '-txtA1757COMIV_P').setValue('0.00');

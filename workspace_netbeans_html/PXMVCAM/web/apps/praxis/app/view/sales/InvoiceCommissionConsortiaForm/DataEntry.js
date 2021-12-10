@@ -147,7 +147,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                                 change: 'onUpperValue',
                                                 keypress: function(obj , e ){
                                                     if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-de-txtA1757FFACT').focus();
+                                                        Ext.getCmp(prototype.id+'-txtA1757COD').focus();
                                                     }
                                                 }
                                             }
@@ -177,7 +177,7 @@ Ext.define('Ext.Praxis.view.sales.InvoiceCommissionConsortiaForm.DataEntry', {
                                                 focusleave: 'habilitar_cargos',
                                                 keypress: function(obj , e ){
                                                     if ( e.getKey() === e.ENTER ){
-                                                        Ext.getCmp(prototype.id+'-txtA1757COMM').focus();
+                                                        Ext.getCmp(prototype.id+'-de-txtA1757FFACT').focus();
                                                     }
                                                 }
                                             }
