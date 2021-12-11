@@ -508,9 +508,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         items: [
                                                             {
                                                                 icon: 'resources/img/botones/24x24/dollar.png',
-                                                                getClass: function(v, meta, rec) {                                                                    
+                                                                getClass: function(v, meta, rec) {
                                                                     if (rec.data.DIFF_PNETAMOU > -1) {
-                                                                        metaData.css = 'x-hide-display';                                                                        
+                                                                        metaData.css = 'x-hide-display';
                                                                         return v;
                                                                     } else {
                                                                         meta.tdAttr = 'data-qtip="Debit Memo"';
@@ -962,7 +962,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetTransaction',
-                                    width: 1690,
+                                    width: 1590,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -1111,7 +1111,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Sub.Gros. <br> Amoun P.Cur', dataIndex: 'GROSAMOUN', width: 100,
+                                                text: 'Sub.Gros. <br> Amoun P.Cur', dataIndex: 'GROSAMOUN', width: 100, hidden: true,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -1146,11 +1146,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'GROSS', dataIndex: 'GROSAMOUNC', width: 100,
+                                                        text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUC', width: 100,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
+                                                        },
+                                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetTransaction').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TGROSAMOUNC_TOTAL, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -1324,11 +1329,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                    
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                     if (record.data.DISCRATE === -16 || record.data.DISCRATE === 16) {
                                                         return '';
-                                                    } else {                                                        
+                                                    } else {
                                                         value = Ext.util.Format.number(value, '0,000.00');
                                                         return value;
                                                     }
@@ -1401,7 +1406,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                     if (record.data.DISCRATEBA === -16 || record.data.DISCRATEBA === 16) {
                                                         return '';
-                                                    } else {                                                        
+                                                    } else {
                                                         value = Ext.util.Format.number(value, '0,000.00');
                                                         return value;
                                                     }

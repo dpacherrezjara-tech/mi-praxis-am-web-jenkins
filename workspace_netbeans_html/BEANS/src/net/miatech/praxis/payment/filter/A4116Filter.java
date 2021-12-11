@@ -25,6 +25,7 @@ public class A4116Filter extends A4116 {
     public double DISCRATE_IMPORT = 0;
     public double DISCRATE_IVA = 0;
     public double TGROSAMOUN_TOTAL = 0;
+    public double TGROSAMOUNC_TOTAL = 0;
     public double DISCAMOUN = 0;
     public double TAXAMOUN_CB = 0;
     public double TAXAMOUN_AD = 0;

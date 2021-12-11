@@ -332,6 +332,7 @@ public class SalesReconciliAmexDAO {
         long lngTotQMATCH = 0, lngTotQBANK = 0, lngTotQBANK_R = 0, lngTotQPAY = 0, lngTotQDIFF = 0, total = 0;
         long lngTotQTYTRA = 0, lngTotQTYDOC = 0;
         double TGROSAMOUN_TOTAL = 0;
+        double TGROSAMOUNC_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -372,6 +373,7 @@ public class SalesReconciliAmexDAO {
             rst = cstmt.getResultSet();
             while (rst.next()) {
                 TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN_TOTAL");
+                TGROSAMOUNC_TOTAL = rst.getDouble("TGROSAMOUNC_TOTAL");
             }
             rst.close();
 
@@ -417,6 +419,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
+                    beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
 
                     beanTkt.TRANSDATE = rst.getString("TRANSDATE");
                     beanTkt.TRANSID = rst.getString("TRANSID");
