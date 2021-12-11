@@ -45,6 +45,7 @@ import net.miatech.utils.Functions;
 //import org.apache.commons.codec.binary.Base64;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Font;
@@ -53,6 +54,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -2610,14 +2612,18 @@ public class FlightConciliationController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+//            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+//            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+//            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+//            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            
+            DataFormat fmt = workbook.createDataFormat();
+            bodyStyle.setDataFormat(fmt.getFormat("@"));
+            
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2640,7 +2646,7 @@ public class FlightConciliationController extends BaseController {
             Cell CH1_12 = row1.createCell(12);
             Cell CH1_13 = row1.createCell(13);
             Cell CH1_14 = row1.createCell(14);
-
+            
             CH1_0.setCellValue("Nbr");
             CH1_1.setCellValue("Flight");
 //            CH1_2.setCellValue("");
@@ -2656,7 +2662,7 @@ public class FlightConciliationController extends BaseController {
             CH1_12.setCellValue("Process Sabre");
 //            CH1_13.setCellValue("");
             CH1_14.setCellValue("Flag");
-
+            
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
             CH1_2.setCellStyle(headerStyle);
@@ -2753,6 +2759,8 @@ public class FlightConciliationController extends BaseController {
                 Cell rcell12 = row1.createCell(12);
                 Cell rcell13 = row1.createCell(13);
                 Cell rcell14 = row1.createCell(14);
+                
+                rcell7.setCellStyle(bodyStyle);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).DFLIGHT);
@@ -2782,6 +2790,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
+            sheet.setColumnWidth(7, 25 * 256);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
@@ -2844,14 +2853,18 @@ public class FlightConciliationController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+//            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+//            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+//            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+//            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+           
+            DataFormat fmt = workbook.createDataFormat();
+            bodyStyle.setDataFormat(fmt.getFormat("@"));
+
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2890,7 +2903,7 @@ public class FlightConciliationController extends BaseController {
             CH1_12.setCellValue("Process Sabre");
 //            CH1_13.setCellValue("");
             CH1_14.setCellValue("Flag");
-
+            
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
             CH1_2.setCellStyle(headerStyle);
@@ -2987,7 +3000,9 @@ public class FlightConciliationController extends BaseController {
                 Cell rcell12 = row1.createCell(12);
                 Cell rcell13 = row1.createCell(13);
                 Cell rcell14 = row1.createCell(14);
-
+                                    
+                rcell7.setCellStyle(bodyStyle);
+                
                 rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).DFLIGHT);
                 rcell2.setCellValue(listaData.get(vi).NFLIGHT);
@@ -3015,7 +3030,7 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(4, true);
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
+            sheet.setColumnWidth(7, 25 * 256);
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
