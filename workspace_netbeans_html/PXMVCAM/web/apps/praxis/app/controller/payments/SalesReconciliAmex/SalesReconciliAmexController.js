@@ -309,6 +309,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         global.clear();
         Ext.getCmp(prototype.id + '-gridDetSettlement').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetSettlement').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin10').bindStore(storeGridDatas);
     },
     viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
