@@ -444,11 +444,15 @@ public class SalesReconciliBoomerDAO {
         A2324Filter beanTkt;
         long totSVFOP = 0;
         long totSVFOPS = 0;
+        long totTOTCOMISI = 0;
+        long totIVA = 0;
+        long totTOT_DESC = 0;
+        long totNET = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04021(?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04021(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -463,6 +467,8 @@ public class SalesReconciliBoomerDAO {
             cstmt.setString(2, filter.strFecFiltro);
             cstmt.setString(3, filter.IN_TDOC.trim());
             cstmt.setString(4, filter.DATE.trim());
+            cstmt.setString(5, filter.IN_FECHA_FROM.trim());
+            cstmt.setString(6, filter.IN_FECHA_TO.trim());
 //            cstmt.setString(7, filter.IN_BANK);
 //            cstmt.setString(8, filter.IN_CARDC.trim());
 //            //cstmt.setString(9, filter.IN_CARDN.trim());
@@ -486,6 +492,10 @@ public class SalesReconciliBoomerDAO {
             while (rst.next()) {
                 totSVFOP = rst.getLong("SVFOP");
                 totSVFOPS = rst.getLong("SVFOPS");
+                totTOTCOMISI = rst.getLong("TOTCOMISI");
+                totIVA = rst.getLong("IVA");
+                totTOT_DESC = totTOTCOMISI + totIVA;
+                totNET = totSVFOP - totTOT_DESC;
             }
             rst.close();
 
@@ -532,9 +542,19 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SVFOPS = rst.getLong("SVFOPS");
                     beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
 
+                    beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
+                    beanTkt.IVA = rst.getLong("IVA");
+                    beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
+                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+
                     beanTkt.totSVFOP = totSVFOP;
                     beanTkt.totSVFOPS = totSVFOPS;
                     beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+
+                    beanTkt.totTOTCOMISI = totTOTCOMISI;
+                    beanTkt.totIVA = totIVA;
+                    beanTkt.totTOT_DESC = totTOT_DESC;
+                    beanTkt.totNET = totNET;
 
 //                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
 //                    beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -1324,6 +1344,10 @@ public class SalesReconciliBoomerDAO {
         A2324Filter beanTkt;
         long totSVFOP = 0;
         long totSVFOPS = 0;
+        long totTOTCOMISI = 0;
+        long totIVA = 0;
+        long totTOT_DESC = 0;
+        long totNET = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1365,6 +1389,10 @@ public class SalesReconciliBoomerDAO {
             while (rst.next()) {
                 totSVFOP = rst.getLong("SVFOP");
                 totSVFOPS = rst.getLong("SVFOPS");
+                totTOTCOMISI = rst.getLong("TOTCOMISI");
+                totIVA = rst.getLong("IVA");
+                totTOT_DESC = totTOTCOMISI + totIVA;
+                totNET = totSVFOP - totTOT_DESC;
             }
             rst.close();
 
@@ -1411,9 +1439,19 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SVFOPS = rst.getLong("SVFOPS");
                     beanTkt.difSVFOP = rst.getLong("SVFOP") - rst.getLong("SVFOPS");
 
+                    beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
+                    beanTkt.IVA = rst.getLong("IVA");
+                    beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
+                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+
                     beanTkt.totSVFOP = totSVFOP;
                     beanTkt.totSVFOPS = totSVFOPS;
                     beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
+
+                    beanTkt.totTOTCOMISI = totTOTCOMISI;
+                    beanTkt.totIVA = totIVA;
+                    beanTkt.totTOT_DESC = totTOT_DESC;
+                    beanTkt.totNET = totNET;
 
 //                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
 //                    beanTkt.page.PAGROW = filter.page.PAGROW;
