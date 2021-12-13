@@ -876,8 +876,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.beanDetDay.strFecFiltro = rowData.data.strFecFiltro;
-        this.beanDetDay.IN_FECHA_FROM = rowData.data.IN_SDATE;
-        this.beanDetDay.IN_FECHA_TO = rowData.data.IN_TDOC;
+        this.beanDetDay.IN_FECHA_FROM = '';
+        this.beanDetDay.IN_FECHA_TO = '';
         this.beanDetDay.IN_TDOC = rowData.data.IN_PAYMENT;
 
         this.beanDetDay.strFormatDate = rowData.data.strFormatDate;
@@ -1520,6 +1520,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
             }
         }).show();
     },
+    winDataEntryExportByDate: function() {
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliBoomerForm.DataEntryExportByDate', {
+            id: prototype.id + '-dataEntry', 
+            params: {
+                action: 'E'
+            }
+        }).show();
+    },
     btnBack_click: function(obj, e) {
         console.log(me.panelActual);
         Ext.getCmp(prototype.id + '-btnAdd').setVisible(false);
@@ -1562,25 +1570,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
 
     },
     btnExcel_click: function(obj, e) {
-
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
+        console.log(me.panelActual);
+        if (me.panelActual === '-panelDetail') {
+            this.winDataEntryExportByDate();
         } else {
-            Ext.Msg.show({
-                title: '.:PRAXIS:.',
-                msg: 'Download Excel ?',
-                buttons: Ext.MessageBox.OKCANCEL,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function(btn) {
-                    if (btn === 'ok') {
-                        this.exportExcel();
+            var msj = this.validateFields();
+            if (msj !== '') {
+                global.Msg({msg: msj
+                });
+            } else {
+                Ext.Msg.show({
+                    title: '.:PRAXIS:.',
+                    msg: 'Download Excel ?',
+                    buttons: Ext.MessageBox.OKCANCEL,
+                    scope: this,
+                    icon: Ext.MessageBox.QUESTION,
+                    modal: true,
+                    fn: function(btn) {
+                        if (btn === 'ok') {
+                            this.exportExcel();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     },
     exportExcel: function() {
@@ -1594,9 +1606,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
             case  '-panelGridDataHeaderDetail':
                 global.getFile(prototype.url + '/getXLSXDetDataHeader?beanString=' + me.paramsDetailDay.beanString);
                 break;
-            case  '-panelDetail':
-                global.getFile(prototype.url + '/getXLSXSearchDetail?beanString=' + me.paramsDetailDay.beanString);
-                break;
+//            case  '-panelDetail':
+//                //Dataentry aquí
+//                
+//                //global.getFile(prototype.url + '/getXLSXSearchDetail?beanString=' + me.paramsDetailDay.beanString);
+//                break;
             case  '-panelDetailByPNR':
                 global.getFile(prototype.url + '/getXLSXSearchByPNR?beanString=' + me.beanSearch.beanString);
                 break;

@@ -82,6 +82,10 @@ public class A2324Filter extends A2324 {
     public double totTOTCOMISI = 0.0;
     public double IVA = 0.0;    
     public double totIVA = 0.0;    
+    public double TOT_DESC = 0.0;
+    public double totTOT_DESC = 0.0;
+    public double NET = 0.0;    
+    public double totNET = 0.0;    
 
     //BOOMER
     public String TDOCB = "";
