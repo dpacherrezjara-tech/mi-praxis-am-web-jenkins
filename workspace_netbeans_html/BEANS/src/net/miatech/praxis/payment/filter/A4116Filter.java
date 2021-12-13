@@ -32,6 +32,21 @@ public class A4116Filter extends A4116 {
     public double NETAMOUN = 0;
     public double NETAMOUNC = 0;
     public double DISCAMOSC = 0;
+    public double GROSAMOUN_CB = 0;
+    
+    public double totGROSAMOUN = 0;
+    public double totTGROSAMOUN = 0;
+    public double totDISCAMOUN_IMPORT = 0;
+    public double totDISCAMOUN_IVA = 0;
+    public double totSFEEAMOU = 0;
+    public double totACCEAMOU = 0;
+    public double totTAXAMOUN_AD = 0;
+    public double totIVACOM12 = 0;
+    public double totGROSAMOUN_CB = 0;
+    public double totDISCAMOUN = 0;
+    public double totTAXAMOUN_CB = 0;
+    public double totNETAMOUN = 0;
+    public double totDISCAMOSC = 0;
     
     public String strDATE = "";
     public String IN_AXPAYNBR = "";
