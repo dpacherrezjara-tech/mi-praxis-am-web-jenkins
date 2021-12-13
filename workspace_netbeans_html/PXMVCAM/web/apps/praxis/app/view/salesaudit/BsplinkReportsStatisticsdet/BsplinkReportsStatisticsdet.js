@@ -435,6 +435,11 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkReportsStatisticsdet.BsplinkReport
                                                         width: 80
                                                     },
                                                     {
+                                                        text: 'Sale </br>date',
+                                                        dataIndex: 'A3389FECOR',
+                                                        width: 80
+                                                    },
+                                                    {
                                                         text: 'Application </br>date',
                                                         dataIndex: 'A3389FAPPI',
                                                         width: 80

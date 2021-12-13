@@ -127,6 +127,7 @@ public class BsplinkReportsStatisticsdetDAO {
                 objRtn.A3389PENAL = rs01.getDouble("A3389PENAL");
                 objRtn.A3389PORPE = rs01.getDouble("A3389PORPE");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
+                objRtn.A3389FECOR = rs01.getString("A3389FVNTA");
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
