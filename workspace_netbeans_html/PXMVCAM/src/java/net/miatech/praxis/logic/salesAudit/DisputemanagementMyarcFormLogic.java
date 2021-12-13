@@ -32,4 +32,7 @@ public class DisputemanagementMyarcFormLogic {
     public String insertTracing(A4137Filter filter) throws SQLException, Exception {
         return MyarcFormDAO.insertTracing(filter);
     }
+    public String insertFile(A4137Filter filter) throws SQLException, Exception {
+        return MyarcFormDAO.insertFile(filter);
+    }
 }

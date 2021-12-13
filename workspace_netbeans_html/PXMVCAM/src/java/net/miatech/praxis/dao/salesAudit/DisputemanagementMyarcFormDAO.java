@@ -229,6 +229,7 @@ public class DisputemanagementMyarcFormDAO {
                     objlst_disputa.A4138HREGI = rs03.getString("A4138HREGI");
                     objlst_disputa.A4138ORIGE = rs03.getString("A4138ORIGE");
                     objlst_disputa.A4138TYPE = rs03.getString("A4138TYPE");
+                    objlst_disputa.A4138STAR = rs03.getString("A4138STAR");
                     lst_disputa.add(objlst_disputa);
                 }
             }
@@ -290,6 +291,48 @@ public class DisputemanagementMyarcFormDAO {
             cs.setString("IN_FREGI", Functions.getFechaActual());
             cs.setString("IN_HREGI", Functions.getHoraActual());
             //cs.setString("IN_OLD", filter.CAMPO);
+
+            cs.execute();
+
+            rst = cs.getResultSet();
+
+            while (rst.next()) {
+                STR_RESULT = rst.getString("VMESSAGE");
+            }
+            cs.close();
+        } catch (SQLException e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } catch (Exception e) {
+            logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+        } finally {
+            strSQL = null;
+            session.getCNXIBMDB2().close();
+        }
+
+        return STR_RESULT;
+    }
+
+    public String insertFile(A4137Filter filter) throws SQLException, Exception {
+        CallableStatement cs = null;
+        ResultSet rst = null;
+        String strSQL;
+        String STR_RESULT = "";
+
+        session.getCNXIBMDB2().open();
+        try {
+            String SQLCLL01 = "{CALL LIBSAP26.SQP04297(?,?,?,?,?,?,?,?,?)}";
+            cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
+            cs.setString("IN_PREME", filter.IN_PREME);
+            cs.setString("IN_ANIO", filter.IN_ANIO);
+            cs.setString("IN_CNXPA", filter.IN_CNXPA);
+            cs.setString("IN_NUMBERADM", filter.IN_NUMBERADM);
+            cs.setString("IN_PAIS", filter.IN_PAIS);
+
+            cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);
+            cs.setString("IN_FREGI", Functions.getFechaActual());
+            cs.setString("IN_HREGI", Functions.getHoraActual());
 
             cs.execute();
 
