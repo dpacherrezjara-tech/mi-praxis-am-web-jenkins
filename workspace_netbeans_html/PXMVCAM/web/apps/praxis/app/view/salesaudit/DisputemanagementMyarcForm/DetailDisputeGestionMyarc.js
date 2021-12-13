@@ -193,8 +193,8 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Ticket', dataIndex: 'A2548TIKET', align: 'center',  width: 100, sortable: false},
-                                    {text: 'Cur.', dataIndex: 'A2548MDA', align: 'center',  width: 40, sortable: false},
+                                    {text: 'Ticket', dataIndex: 'A2548TIKET', align: 'center', width: 100, sortable: false},
+                                    {text: 'Cur.', dataIndex: 'A2548MDA', align: 'center', width: 40, sortable: false},
                                     {text: 'Fare', dataIndex: 'A2548TARID', flex: 1, align: 'right',
                                         renderer: 'onColumnAirlineRenderer', summaryType: 'sum',
                                         summaryRenderer: 'OnAirlineSummary'
@@ -307,6 +307,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                                         }
                                     },
                                     {text: 'Status', dataIndex: 'A4138STAT', align: 'center', width: 100, sortable: false},
+                                    {text: 'File Status', dataIndex: 'A4138STAR', align: 'center', width: 100, sortable: false},
                                     {
                                         text: 'File',
                                         dataIndex: 'A4138ARCHV',
@@ -369,7 +370,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                     items: [{
                             xtype: 'filefield',
                             //layout: 'hbox',
-                            id: prototype.idDisputeGestionMyarc + '-File', 
+                            id: prototype.idDisputeGestionMyarc + '-File',
                             name: 'fileaudito', //prototype.id1 + '-File',
                             fieldLabel: 'File',
                             allowBlank: true,
@@ -400,7 +401,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
 
                         {
                             xtype: 'combo',
-                            id: prototype.idDisputeGestionMyarc + '-ComboStatus', 
+                            id: prototype.idDisputeGestionMyarc + '-ComboStatus',
                             fieldLabel: 'Status',
                             queryMode: 'local',
                             displayField: 'name',
@@ -419,7 +420,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                         },
                         {
                             xtype: 'combo',
-                            id: prototype.idDisputeGestionMyarc + '-ComboStatus2', 
+                            id: prototype.idDisputeGestionMyarc + '-ComboStatus2',
                             hidden: true,
                             fieldLabel: 'Status Accpted',
                             queryMode: 'local',
@@ -435,6 +436,22 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                             listeners: {
                                 afterrender: 'onCmbStatusAfterRender'
                             }
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'fieldcontainer',
+                            //fieldLabel: 'File',
+                            defaultType: 'checkboxfield',
+                            items: [
+                                {
+                                    boxLabel: 'File',
+                                    id: prototype.idDisputeGestionMyarc + '-checkboxArchivo',
+                                    name: 'File',
+                                    inputValue: '1',
+                                    width: 40,
+                                    labelWidth: 80
+                                }
+                            ]
                         }
 
                     ]
@@ -458,6 +475,15 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                 scale: 'medium'
             },
             items: [{
+                    icon: 'resources/img/botones/16x16/1400098721_cv.png',
+                    text: 'File',
+                    id: prototype.idDisputeGestionMyarc + '-BtnFile',
+                    height: 30,
+                    scale: 'medium',
+                    listeners: {
+                        click: 'onClickFile'
+                    }
+                }, {
                     icon: 'resources/img/botones/24x24/1337982029_3floppy_unmount.png',
                     text: 'Save',
                     id: prototype.idDisputeGestionMyarc + '-BtnSave',

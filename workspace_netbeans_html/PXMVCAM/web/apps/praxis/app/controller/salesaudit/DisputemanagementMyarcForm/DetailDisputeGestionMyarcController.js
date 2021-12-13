@@ -90,16 +90,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
         var ComboStatus = Ext.getCmp(prototype.idDisputeGestionMyarc + '-ComboStatus');
         var ComboStatus2 = Ext.getCmp(prototype.idDisputeGestionMyarc + '-ComboStatus2');
         var BtnSave = Ext.getCmp(prototype.idDisputeGestionMyarc + '-BtnSave');
+        var checkboxArchivo = Ext.getCmp(prototype.idDisputeGestionMyarc + '-checkboxArchivo');
         if (rec.data.A4137STATO === 'PENDING TO WORK' || rec.data.A4137STATO === 'ERROR SENDING TO MYARC') {
             File.show();
             ComboStatus.show();
             ComboStatus2.show();
             BtnSave.show();
+            checkboxArchivo.show();
         } else {
             File.hide();
             ComboStatus.hide();
             ComboStatus2.hide();
             BtnSave.hide();
+            checkboxArchivo.hide();
         }
 
     },
@@ -248,6 +251,50 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
 
 
 
+    },
+    onClickFile: function (btn) {
+        var me = this;
+        rec = me.view.params.rec;
+        me.beanTMP.IN_PREME = rec.data.A4137PREME;
+        me.beanTMP.IN_ANIO = rec.data.A4137ANIO;
+        me.beanTMP.IN_NUMBERADM = rec.data.A4137NMEMO;
+        me.beanTMP.IN_CNXPA = rec.data.A4137CNXPA;
+         me.beanTMP.IN_PAIS = rec.data.A4137PAIS;
+        global.Msg({
+            msg: 'Insert File?',
+            icon: 3,
+            buttons: 3,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    var mask = new Ext.LoadMask(Ext.getCmp(prototype.idDisputeGestionMyarc + '-PrincipalContenedor'), {
+                        msg: 'Please Wait....'
+                    });
+                    mask.show();
+                    Ext.Ajax.request({
+                        url: me.urlWin01 + '/insertFile/',
+                        params: {beanString: JSON.stringify(me.beanTMP)},
+                        success: function (response, options) {
+                            mask.hide();
+                            var res = Ext.decode(response.responseText);
+                            var vp_icon = 0;
+                            if (res.result === 'Proceso Culminado') {
+                                vp_icon = 1;
+                            }
+                            global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                    if (vp_icon === 1) {
+                                        Ext.getCmp(prototype.idDisputemanageMyarcDisputemanageMyarc + '-Contenedor').getController().imgSearch_clickHandler(false);
+                                        me.view.close();
+
+                                    }
+
+
+                                }});
+                        }
+                    });
+                }
+
+            }
+        });
     },
     OnColumnAuditorRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var archivo = '';

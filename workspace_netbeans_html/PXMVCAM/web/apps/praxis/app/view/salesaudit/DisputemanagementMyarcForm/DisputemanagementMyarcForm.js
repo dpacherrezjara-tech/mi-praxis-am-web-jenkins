@@ -15,7 +15,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
 
     controller: 'DisputemanagementMyarcFormController',
 
-    id: prototype.idDisputemanageMyarcDisputemanageMyarc + '-Contenedor',
+    id: prototype.idDisputemanageMyarc + '-Contenedor',
 
     layout: {
         type: 'vbox',
@@ -211,7 +211,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRobotdisputeMyarc + '-ComboBase', hidden: true,
+                                            id: prototype.idDisputemanageMyarc + '-ComboBase', hidden: true,
                                             fieldLabel: 'Base',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -274,7 +274,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                     items: [
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idRobotdisputeMyarc + '-CmbStatus',
+                                            id: prototype.idDisputemanageMyarc + '-CmbStatus',
                                             fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',
