@@ -25,24 +25,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
 
     },
     OnBeforeShow: function () {
-        prototype.url = CONTEXTPATH + '/DisputemanagementMyarcForm';
         prototype.url02 = CONTEXTPATH + '/BwrBSPLINKRFND';
         prototype.idDisputeGestionMyarc = 'DetailDisputeGestionMyarc';
+        prototype.url = CONTEXTPATH + '/DisputemanagementMyarcForm';
         prototype.widthContenedor = 1366;
         prototype.heightContenedor = 768;
-        //prototype.idDisputemanageMyarc1 = 'DetailDisputeGestionBsplink';
-        //prototype.idDisputemanageMyarc3 = 'DisputeFileViewer';
 
     },
     setUser: function () {
+         var me = this;
         Ext.Ajax.request({
-            url: prototype.url02 + '/getUser',
+            url: prototype.url02 + '/getUser/',
             timeout: 60000000,
             method: 'POST',
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-Audit').setValue(Ext.String.trim(res.user.USR));
-                //me.imgSearch_clickHandler();
+                me.imgSearch_clickHandler();
             }
         });
     },
@@ -201,15 +200,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
                 color = '#FF9966';
                 value = 'Disputed';
                 break;
-              case 'DE':
+            case 'DE':
                 color = '#F78181';
                 value = 'Rejected dispute';
                 break;
             case 'WA':
                 color = '#F3EFB6';
                 value = 'Approved dispute';
-                break;                
-            
+                break;
+
                 //{"code": "G", "name": "POST BILLING"},
         }
 
@@ -329,7 +328,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         var CombArea = Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboArea').getValue();
         var txtnmemo = Ext.getCmp(prototype.idDisputemanageMyarc + '-nmemo').getValue();
         var txtAudit = Ext.getCmp(prototype.idDisputemanageMyarc + '-Audit').getValue();
-        var CmbStatus = Ext.getCmp(prototype.idRobotdisputeMyarc + '-CmbStatus').getValue();
+        var CmbStatus = Ext.getCmp(prototype.idDisputemanageMyarc + '-CmbStatus').getValue();
         var ComboBase = Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboBase').getValue();
         if (cmbsearch === '') {
             Ext.MessageBox.alert('PRAXIS', "Select Search Type", function (btn, text) {

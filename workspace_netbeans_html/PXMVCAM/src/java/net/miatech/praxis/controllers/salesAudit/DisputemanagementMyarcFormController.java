@@ -94,13 +94,19 @@ public class DisputemanagementMyarcFormController extends BaseController {
             }
 
             lst = logic.SearchReportMyarc(filter);
-        } catch (Exception e) {
-            throw new SpringException(e);
-        }
 
-        map.put("success", true);
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
-        map.put("data", lst);
+            map.put("success", true);
+            map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+            map.put("data", lst);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            System.out.println("Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            System.out.println("Se produjo un error. " + e.getMessage());
+        }
 
         return new Gson().toJson(map);
     }
@@ -169,19 +175,24 @@ public class DisputemanagementMyarcFormController extends BaseController {
                 map04.put("A4138HREGI", lst.lst_disputa.get(vi).A4138HREGI);
                 map04.put("A4138ORIGE", lst.lst_disputa.get(vi).A4138ORIGE);
                 map04.put("A4138TYPE", lst.lst_disputa.get(vi).A4138TYPE);
+                map04.put("A4138STAR", lst.lst_disputa.get(vi).A4138STAR);
 
                 lst_DispuRazon.add(map04);
             }
             // </editor-fold>
-
+            map.put("success", true);
+            map.put("lst_dataIni", lst_dataIni);
+            map.put("lst_DispuRazon", lst_DispuRazon);
+            map.put("lst_RazonEmision", lst_RazonEmision);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            System.out.println("Se produjo un error. " + e.getMessage());
         } catch (Exception e) {
-            throw new SpringException(e);
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            System.out.println("Se produjo un error. " + e.getMessage());
         }
-
-        map.put("success", true);
-        map.put("lst_dataIni", lst_dataIni);
-        map.put("lst_DispuRazon", lst_DispuRazon);
-        map.put("lst_RazonEmision", lst_RazonEmision);
 
         return new Gson().toJson(map);
     }
@@ -263,7 +274,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
 
         return mensaje;
     }
-    
+
     @RequestMapping(value = "/getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -317,7 +328,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11,CH_12, CH_13, CH_14, CH_15;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -354,7 +365,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
             CH_13.setCellValue("Status");
             CH_14.setCellValue("Status MYARC");
             CH_15.setCellValue("Days");
-            
+
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
@@ -438,8 +449,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
                 CH_13.setCellValue(Status);
                 CH_14.setCellValue(listaData.get(vi).A4137STATO);
                 CH_15.setCellValue(listaData.get(vi).A4137DIAS);
-                
-               
+
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
                 CH_02.setCellStyle(bodyStyle);
@@ -493,6 +503,29 @@ public class DisputemanagementMyarcFormController extends BaseController {
             throw new SpringException(e);
         }
     }
-    
+
+    @RequestMapping(value = "insertFile")
+    public @ResponseBody
+    String insertFile(ModelMap map, HttpServletRequest request) {
+        A4137Filter filter = new A4137Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic = new DisputemanagementMyarcFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            String result = logic.insertFile(filter);
+
+            map.put("success", true);
+            map.put("result", result);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
 
 }

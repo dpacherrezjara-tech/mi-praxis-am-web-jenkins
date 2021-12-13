@@ -28,7 +28,16 @@ public class A4138 {
     public String A4138FREVI;
     public String A4138HREVI;
     public String A4138ORIGE;
+    public String A4138STAR;
 
+    public String getA4138STAR() {
+        return A4138STAR;
+    }
+
+    public void setA4138STAR(String A4138STAR) {
+        this.A4138STAR = A4138STAR;
+    }
+    
     public String getA4138ORIGE() {
         return A4138ORIGE;
     }
