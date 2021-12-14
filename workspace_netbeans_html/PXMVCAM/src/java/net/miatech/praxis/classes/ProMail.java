@@ -6,6 +6,7 @@ package net.miatech.praxis.classes;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -631,6 +632,121 @@ public class ProMail {
             }
         }*/
         return envioExitoso;
+    }
+    
+    public boolean sendEmailMDP(String emisor, String asunto, List<String> receptores, List<String> Ccpy, String mensaje, List<String> adjuntos, String correoMask) throws IOException {
+        
+        //Para medios de Pago
+        boolean envioExitoso = true;
+        
+//        ServerSession serverSession = new ServerSession();
+        
+        try {
+            String usuario = correoMask; //Correo con el que saldra el email enviado ("from")
+            //TEMPORAL
+            //emisor = "rmayta@miatech.net"; 
+            Properties props = System.getProperties();
+            //Se define el servidor de correos
+            /*props.put("mail.smtp.host", serverSession.getProperty("APP_SERVER_MAIL_HOST"));
+            props.put("mail.smtp.port", serverSession.getProperty("APP_SERVER_MAIL_PORT"));
+            props.put("mail.smtp.starttls.enable","true");*/
+            props.put("mail.smtp.host","m.outlook.com" );
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.starttls.enable","true");
+            
+            props.put("mail.smtp.ssl.protocols","TLSv1.2");
+            
+            //props.setProperty("mail.smtp.user", emisor);
+            props.setProperty("mail.smtp.user", usuario);
+            props.setProperty("mail.smtp.auth", "true");
+            //Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net", "notificaciones123"); // Tener Clave del quien Envia 
+            Authenticator auth;
+            if(emisor.contains("amcscaclaracioncontracargousaeur")){
+                auth = new SMTPAuthenticator("amcscaclaracioncontracargousaeur@miatech.net", "Amcargo365");
+            }else{
+                auth = new SMTPAuthenticator("amaclaracionescontracargos@miatech.net", "Am@claraciones");
+            }
+            
+            Session session = Session.getInstance(props, auth);            
+            //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
+            session.setDebug(true);
+            MimeMessage message = new MimeMessage(session);
+            InternetAddress[] dest = new InternetAddress[receptores.size()];
+            for (int i = 0; i < dest.length; i++) {
+                dest[i] = new InternetAddress(receptores.get(i));
+            }
+            // Correo con copy To
+            InternetAddress[] Ccp = new InternetAddress[Ccpy.size()];
+            for (int i = 0; i < Ccp.length; i++) {
+                Ccp[i] = new InternetAddress(Ccpy.get(i));
+            }
+            
+            //Se define qui&amp;eacute;n es el emisor del e-mail
+            message.setFrom(new InternetAddress(usuario));
+            InternetAddress[] replyTo = new InternetAddress[1];
+            replyTo[0] = new InternetAddress(usuario);
+            message.setReplyTo(replyTo);
+            //Se definen el o los destinatarios
+            message.addRecipients(Message.RecipientType.TO, dest);
+            message.addRecipients(Message.RecipientType.BCC, Ccp );
+            //message.addRecipients(Message.RecipientType.BCC, dest);
+            //Se defina el asunto del e-mail
+            message.setSubject(asunto);
+
+            //Se seteo el mensaje del e-mail
+            MimeBodyPart messageBodyPart = new MimeBodyPart();            
+            messageBodyPart.setContent(mensaje, "text/html");
+
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            //Se adjuntan los archivos al correo
+            if (adjuntos != null && adjuntos.size() > 0) {
+                for (String rutaAdjunto : adjuntos) {
+                    messageBodyPart = new MimeBodyPart();
+                    File f = new File(rutaAdjunto);
+                    if (f.exists()) {
+                        DataSource source = new FileDataSource(rutaAdjunto);
+                        messageBodyPart.setDataHandler(new DataHandler(source));
+                        messageBodyPart.setFileName(f.getName());
+                        multipart.addBodyPart(messageBodyPart);
+                    }
+                }
+            }
+
+            //Se junta el mensaje y los archivos adjuntos
+            message.setContent(multipart);
+
+            boolean oK = this.transportSend(message);
+            while (!oK) {                
+                oK = this.transportSend(message);
+            }
+       
+        } catch (Exception e) {
+            e.getMessage();
+            e.toString();
+            logError.error("Data Request By Bank (proMail.enviaMDP) - Message: " + e.getMessage() + " Stacktrace: " + e.getMessage() + "**" + e.getStackTrace().toString());
+            envioExitoso = false;
+        }
+        
+        return envioExitoso;
+    }
+    
+    public boolean transportSend(MimeMessage message){
+        
+        boolean ennvioOk = false;
+        try {
+            //Se env&amp;iacute;a el e-mail
+            Transport.send(message);
+            ennvioOk = true;
+        } catch (Exception e) {
+            e.getMessage();
+            ennvioOk = false;
+        }
+
+        return ennvioOk;
+    
     }
     
     public boolean enviaMDP_2(String emisor, String asunto, List<String> receptores, List<String> Ccpy, String mensaje, List<String> adjuntos, String correoMask) {
