@@ -365,7 +365,15 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByBankForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'to Bank', dataIndex: 'DATES', width: 80
+                                                        text: 'to Bank', dataIndex: 'DATES', width: 80,
+                                                        listeners: {
+                                                            click: 'onSendEmail'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {                                                     
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-data-requested-by-bank-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
                                                     }
                                                 ]
                                             },

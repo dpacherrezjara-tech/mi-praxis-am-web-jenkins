@@ -864,7 +864,7 @@ public class DataRequestedByBankController extends BaseController {
                     lstPdfAdjZip.add(zipName);
 
 //                    iboolean = proMail.enviaMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdj, emisor);
-                    iboolean = proMail.enviaMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
+                    iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
                     
                     if (iboolean) {
                         info.add("Email Sent.");
@@ -899,6 +899,245 @@ public class DataRequestedByBankController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    @RequestMapping(value = "sendEmail")
+    public @ResponseBody
+    String sendEmail(ModelMap map, HttpServletRequest request) {
+        
+        System.out.println("-------------- DataRequestedByBank : sendEmail-------------");
+        String listas = "";
+        Gson gson = new Gson();
+        A2331Filter aclaracion;
+        A2331Filter fecha;
+        boolean iboolean;
+        String msj = "", strTabla = "";
+        List<A2331Filter> listaAclaraciones = new ArrayList<>();
+        int contador = 0;
+        List<A2331Filter> lstFolioCCAdj = new ArrayList<>();
+        List<String> lstImagenesAdj = new ArrayList<String>();
+        List<String> lstPdfAdj = new ArrayList<String>();
+        List<String> lstPdfAdjName = new ArrayList<String>();
+        String strCarpeta = "\\\\" + serverSession.getServerSession().getPropertySession().get("RUTA_REPOSITORY") + "\\am\\INSUMOS-MEDIOS-PAGOS\\BDR\\";
+        HashMap nomAutorizacion = new HashMap();
+        boolean hayUS = false, hayOtPais = false;
+        List<String> info = new ArrayList<>(0);
+        
+
+        try {
+            logic = new DataRequestedByBankLogic();
+            logic.setSession(this.serverSession.getServerSession());
+                        
+            listas = request.getParameter("listaRow");
+            A2331Filter[] listaxFechaRemesa = gson.fromJson(listas, A2331Filter[].class);
+
+            if (listaxFechaRemesa != null && listaxFechaRemesa.length > 0) {
+                for (int x = 0; x < listaxFechaRemesa.length; x++) {
+                    fecha = listaxFechaRemesa[x];
+//                    if (fecha.STVAL.trim().equals("3")) {
+                        //Obtiene la lista de aclaraciones de esa fecha
+                        listaAclaraciones = logic.loadPX404SQP01899(fecha);
+
+                        contador = 0;
+                        if (listaAclaraciones != null && listaAclaraciones.size() > 0) {
+                            for (int i = 0; i < listaAclaraciones.size(); i++) {
+                                aclaracion = listaAclaraciones.get(i);
+                                
+                                // <editor-fold defaultstate="collapsed" desc="Actualiza la informacion">
+                                //Actualiza la informacion
+//                                if (aclaracion.DATES.trim().isEmpty()) {
+
+//                                    msj = logic.loadPX404SQP01900(aclaracion, "4");
+                                    //msj = "SUCCESS";
+//                                    if (msj.contains("SUCCESS")) {
+
+                                        contador++;
+                                        if (aclaracion.strFlag.trim().equals("CC")) {
+                                            //Call Center y Web
+                                            A2331Filter beanInfo = logic.loadPX405SQP01958(aclaracion);
+                                            lstFolioCCAdj.add(beanInfo);
+                                        } else {
+
+                                            lstImagenesAdj.add(strCarpeta + aclaracion.SENTDATE + "\\" + aclaracion.RUTA);
+                                            nomAutorizacion.put(strCarpeta + aclaracion.SENTDATE + "\\" + aclaracion.RUTA, aclaracion.AUTHNBR);
+                                        }
+
+                                        strTabla += "<tr><td align='center'>" + aclaracion.FOLIO
+                                                + "</td><td align='center'>" + aclaracion.SENTDATE + "</td></tr>";
+//                                    }
+
+//                                } else {
+//                                    msj += " Clarification already sent to BANK. Authorization Nbr: " + aclaracion.AUTHNBR.trim();
+//                                }
+                                if (aclaracion.SCOUNTRY.trim().equals("US")) {
+                                    hayUS = true;
+                                } else {
+                                    hayOtPais = true;
+                                }
+                                // </editor-fold>
+                            }
+                            //if (contador != listaData.size()) {
+                            msj += " Clarifications Sent: " + contador;
+                            //}
+
+                        } else {
+                            msj = "Error. Information not found";
+                        }
+
+//                    } else {
+//                        msj = "Error : Information is not linked yet.";
+//                        break;
+//                    }
+                }
+            } else {
+                msj = "Error. There is not information to send.";
+            }
+
+            if (!msj.contains("Error") && !msj.contains("ERROR")) {
+                //CODIGO DE MAIL Y SU ATTACHMENT
+                ProMail proMail = new ProMail();
+                List<String> receptores = new ArrayList<String>();
+                String emisor = "";
+                
+                
+                if (hayUS && hayOtPais) {
+                    receptores.add("amaclaracionescontracargos@aeromexico.com");
+                    receptores.add("amcscaclaracioncontracargousaeur@aeromexico.com");
+                    emisor = "amaclaracionescontracargos@miatech.net";
+
+                } else if (hayUS) {
+//                    receptCores.add("amcscaclaracioncontracargousaeur@aeromexico.com");
+                    receptores.add("ealcibari@aeromexico.com");
+                    receptores.add("eneves@miatech.net");
+                    receptores.add("jtorres@miatech.net");
+                    emisor = "amcscaclaracioncontracargousaeur@miatech.net";
+
+                } else {
+                    receptores.add("amaclaracionescontracargos@aeromexico.com");
+                    emisor = "amaclaracionescontracargos@miatech.net";
+                }
+                
+                
+//                receptores.add("jugaz@miatech.net");
+//                emisor = "amaclaracionescontracargos@miatech.net";
+                
+                
+                // Emails CC
+                List<String> Ccp = new ArrayList<String>();
+                String strMails = "jtorres@miatech.net;ggutierrez@miatech.net";//
+                if (!strMails.trim().equals("")) {
+                    String[] parts = strMails.split(";");
+                    for (int i = 0; i < parts.length; i++) {
+                        Ccp.add(parts[i]);
+                    }
+                }
+                String asunto = "Aclaraciones Aeromexico";
+                String mensaje = "<html><body><br/>Buen día:<br/><br/>"
+                        + "Anexo encontraran soporte de los siguientes números de folio que corresponden a las remesas:"
+                        + "<br/><br/><table border='2' cellspacing='0' cellpadding='3' style='border: 1px solid black;'>"
+                        + "<tr style='background-color: #2196f3'; color: #ffffff;><td align='center'>Folio</td><td align='center'>Remesa</td></tr>" + strTabla
+                        + "</table>"
+                        + "<br/><br/>Saludos.";
+                
+
+                // Genera PDF
+                for (int i = 0; i < lstImagenesAdj.size(); i++) {
+                    ProReportClarification proClarReject = new ProReportClarification();
+                    boolean success = proClarReject.createReportPDF(nomAutorizacion.get(lstImagenesAdj.get(i).toString()).toString(), lstImagenesAdj.get(i).toString());
+
+                    if (success) {
+
+                        lstPdfAdj.add(proClarReject.getFile().get(0).getAbsolutePath());
+                        lstPdfAdjName.add(proClarReject.getFile().get(0).getName() );
+                    } else {
+                        msj += " Error.(Pdf) Could not send email! ";
+                        break;
+                    }
+                }
+                for (int i = 0; i < lstFolioCCAdj.size(); i++) {
+                    ProReportClarification proClarRejectCC = new ProReportClarification();
+                    boolean success = proClarRejectCC.createReportPDF_CCW(lstFolioCCAdj.get(i).FOLIO, lstFolioCCAdj.get(i));
+
+                    if (success) {
+
+                        lstPdfAdj.add(proClarRejectCC.getFile().get(0).getAbsolutePath());
+                        lstPdfAdjName.add(proClarRejectCC.getFile().get(0).getName());
+                    } else {
+                        msj += " Error. Could not send email!";
+                        break;
+                    }
+                }
+                
+                if (!msj.contains("Error")) {
+
+                    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    Date date = new Date();
+                    String zipName = "/Dumps/Aclaraciones" + dateFormat.format(date) + ".zip";
+//                    FileOutputStream fileZip = new FileOutputStream(zipName);
+                    ZipOutputStream os = new ZipOutputStream(new FileOutputStream(zipName));
+                    for (int i = 0; i < lstPdfAdj.size(); i++) {
+                        ZipEntry entrada = new ZipEntry(lstPdfAdjName.get(i));
+                        os.putNextEntry(entrada);
+
+                        FileInputStream fis = new FileInputStream(lstPdfAdj.get(i));
+                        byte[] buffer = new byte[1024];
+                        int leido = 0;
+                        while (0 < (leido = fis.read(buffer))) {
+                            os.write(buffer, 0, leido);
+                        }
+
+                        fis.close();
+                        os.closeEntry();
+                    }
+                    os.close();
+                    List<String> lstPdfAdjZip = new ArrayList<String>();
+                    lstPdfAdjZip.add(zipName);
+
+                    iboolean = proMail.sendEmailMDP(emisor, asunto, receptores, Ccp, mensaje, lstPdfAdjZip, emisor);
+                    
+                    if (iboolean) {
+                        info.add("Email Sent.");
+                    } else {
+                        msj = "Error Sending Email";
+                        /*
+                        info.add("Could not send email!");
+                        for (int i = 0; i < listaAclaraciones.size(); i++) {
+                            aclaracion = listaAclaraciones.get(i);
+
+                            //Hace la reversión
+                            msj = logic.loadPX404SQP01900(aclaracion, "3");
+                            msj = "Information could not be updated. (Email)";
+                        }
+                        */
+                    }
+
+                } else {
+                    msj = "Error Sending Email (Pdf)";
+                    /*
+                    for (int i = 0; i < listaAclaraciones.size(); i++) {
+                        aclaracion = listaAclaraciones.get(i);
+
+                        //Hace la reversión
+                        msj = logic.loadPX404SQP01900(aclaracion, "3");
+                        msj = "Information could not be updated. (Pdf)";
+                    }
+                    */
+                }
+            }
+
+            map.put("msjError", msj);
+            map.put("info", info);
+            map.put("success", true);
+        } catch (Exception ex) {
+            logError.error("An error ocurred, pleas try again later.");
+            map.put("success", false);
+            map.put("msjError", msj);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
+    
+    
 
     @RequestMapping(value = "exportHistorical")
     public @ResponseBody
