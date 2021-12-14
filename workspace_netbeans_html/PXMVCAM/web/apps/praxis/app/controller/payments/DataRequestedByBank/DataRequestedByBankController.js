@@ -305,6 +305,58 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
         }
 
     },
+    
+    onSendEmail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+//        if(rowData.data.DATES !== '' && rowData.data.STVAL === '3'){
+        if(rowData.data.DATES !== ''){
+            console.log(rowData.data);
+            
+            Ext.Msg.show({
+                title: '.:Confirmation:.',
+                msg: 'Sure to Send Email to Bank?',
+                buttons: Ext.MessageBox.OKCANCEL,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'ok') {
+                        var lstObj = [];
+                        lstObj.push(rowData.data);
+                        
+                        console.log(lstObj);
+                        var listaRow = JSON.stringify(lstObj);
+
+                        Ext.Ajax.request({
+                            url: prototype.url + '/sendEmail',
+                            method: 'POST',
+                            timeout: 60000000,
+                            beforerequest: Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...'),
+                            params: {listaRow: listaRow},
+                            success: function (response, options) {
+                                Ext.getCmp(prototype.id + '-contentInfo').unmask('Loading...');
+                                var res = Ext.JSON.decode(response.responseText);
+                                console.log(res);
+                                var msjError = String(res.msjError);
+                //
+                                if (msjError !== "") {
+                                    global.Msg({msg: msjError});
+//                                    if (msjError.startsWith('Error')) {
+//                                        me.btnSearch_click();
+//                                    }
+//                                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                                }else{
+                                    global.Msg({msg: "Error Email"});
+                                }
+                            }
+                        });
+                    }   
+                }
+
+            });
+        }
+    },
+    
     sendEmailtoIATA: function () {
 
         var beanString = JSON.stringify(meDE.bean.data);
