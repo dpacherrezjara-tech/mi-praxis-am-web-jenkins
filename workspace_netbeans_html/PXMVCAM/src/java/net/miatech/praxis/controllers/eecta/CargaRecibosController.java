@@ -214,8 +214,9 @@ public class CargaRecibosController extends BaseController {
             String A4096ESTAD;
             String A4096CUENT;
             String A4096NRCLO;
+            String A4096FCREC;
             String A4096DESCR;
-            String A4096REFER;
+            String A4096REFER;           
                         
             //json object
             String json_texto1;
@@ -260,7 +261,13 @@ public class CargaRecibosController extends BaseController {
                         A4096ESTAD=  sheet.getCell(6)== null ? "" : sheet.getCell(6).toString(); 
                         A4096CUENT=sheet.getCell(7)== null ? "" : sheet.getCell(7).toString(); 
                         A4096NRCLO=sheet.getCell(8)== null ? "" : sheet.getCell(8).toString(); 
-                        A4096DESCR=sheet.getCell(17)== null ? "" : sheet.getCell(17).toString(); 
+                        A4096FCREC=sheet.getCell(16)== null ? "" : sheet.getCell(16).toString(); 
+                        if( A4096FCREC == ""){
+                            ERROR_FIELDS = "S";
+                            VL_INDICE = 3;
+                            break;
+                        }
+                        A4096DESCR=sheet.getCell(17)== null ? "" : sheet.getCell(17).toString();                         
                         A4096REFER=sheet.getCell(18)== null ? "" : sheet.getCell(18).toString(); 
                         //crear obj json
                         HashMap obj=new HashMap();    
@@ -273,6 +280,7 @@ public class CargaRecibosController extends BaseController {
                         obj.put("A4096ESTAD", A4096ESTAD);
                         obj.put("A4096CUENT", A4096CUENT);
                         obj.put("A4096NRCLO", A4096NRCLO);
+                        obj.put("A4096FCREC", A4096FCREC);
                         obj.put("A4096DESCR", A4096DESCR.trim());
                         obj.put("A4096REFER", A4096REFER.trim());
                         String jsonText = JSONValue.toJSONString(obj);                          
@@ -314,7 +322,8 @@ public class CargaRecibosController extends BaseController {
         String[] MESSAGE_ERROR = {
             "COLUMNA TRANSACCION ORIG. EN BLANCO ",//0
             "COLUMNA MONEDA EN BLANCO",   //1            
-            "COLUMNA IMPORTE EN BLANCO" //33
+            "COLUMNA IMPORTE EN BLANCO", //2
+            "COLUMNA FECHA(DD-MM-YYYY) EN BLANCO" //3
         };        
         return MESSAGE_ERROR[INDICE];
     }
