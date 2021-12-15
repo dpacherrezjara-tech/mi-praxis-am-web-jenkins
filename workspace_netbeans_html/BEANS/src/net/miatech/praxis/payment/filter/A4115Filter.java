@@ -28,22 +28,22 @@ public class A4115Filter extends A4115 {
     public String DES_MERCHANT = "";
 
     //Totales
-    public long totSGROSAMOS = 0;
-    public long totGROSAMOUN = 0;
-    public long totDISCAMOUN = 0;
-    public long totTAXAMOUN = 0;
-    public long totNETAMOUN = 0;
-    public long totSDGROSSA = 0; 
-    public long totSCGROSSA = 0;
+    public double totSGROSAMOS = 0;
+    public double totGROSAMOUN = 0;
+    public double totDISCAMOUN = 0;
+    public double totTAXAMOUN = 0;
+    public double totNETAMOUN = 0;
+    public double totSDGROSSA = 0; 
+    public double totSCGROSSA = 0;
     
-    public long totTRANCOUNT = 0;
-    public long totINSTANBR = 0;
+    public double totTRANCOUNT = 0;
+    public double totINSTANBR = 0;
     
-    public long totGROSAMOUNC = 0; 
-    public long totDISCAMOUNC = 0; 
-    public long totTAXAMOUNC = 0;
-    public long totNETAMOUNC = 0; 
-    public long totTRANCOUNTC = 0;
+    public double totGROSAMOUNC = 0; 
+    public double totDISCAMOUNC = 0; 
+    public double totTAXAMOUNC = 0;
+    public double totNETAMOUNC = 0; 
+    public double totTRANCOUNTC = 0;
 
     public Pagination page = new Pagination();
 

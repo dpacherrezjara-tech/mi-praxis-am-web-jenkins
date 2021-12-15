@@ -29,16 +29,16 @@ public class A4117Filter extends A4117 {
     public String DES_MERCHANT = "";
     
     // Totales
-    public long totTGROSAMOUN = 0;
-    public long totDISCRATE = 0;
-    public long totDISCRATEBA = 0;
-    public long totDISCAMOUN = 0;
-    public long totTGROSAMOUC = 0;
-    public long totDISCAMOUNC = 0;
-    public long totDISCAMOUN_IVA = 0;
-    public long totDISCAMOUN_IMPORT = 0;
-    public long totDISCAMOUNC_IVA = 0;
-    public long totDISCAMOUNC_IMPORT = 0;
+    public double totTGROSAMOUN = 0;
+    public double totDISCRATE = 0;
+    public double totDISCRATEBA = 0;
+    public double totDISCAMOUN = 0;
+    public double totTGROSAMOUC = 0;
+    public double totDISCAMOUNC = 0;
+    public double totDISCAMOUN_IVA = 0;
+    public double totDISCAMOUN_IMPORT = 0;
+    public double totDISCAMOUNC_IVA = 0;
+    public double totDISCAMOUNC_IMPORT = 0;
     
     public Pagination page = new Pagination();
     
