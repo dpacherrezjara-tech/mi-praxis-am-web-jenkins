@@ -59,17 +59,17 @@ public class SalesReconciliAmexDAO {
 
         List<A4113Filter> lstTkts = new ArrayList<A4113Filter>(0);
         A4113Filter beanTkt;
-        long totPNETAMOU = 0, totPGROSAMOU = 0, totPDISCAMOU = 0, totPSFEEAMOU = 0, totODBALAMOU = 0, totNETAMOUNC = 0;
-        long totPADJAMOUN = 0, totPTAXAMOU = 0;
-        long totGROSAMOUNC = 0, totDISCAMOUNC = 0;
-        long totSFEEAMOUNC = 0, totADJAMOUNC = 0;
-        long totTAXAMOUNC = 0, totODBALAMOUC = 0;
+        double totPNETAMOU = 0, totPGROSAMOU = 0, totPDISCAMOU = 0, totPSFEEAMOU = 0, totODBALAMOU = 0, totNETAMOUNC = 0;
+        double totPADJAMOUN = 0, totPTAXAMOU = 0;
+        double totGROSAMOUNC = 0, totDISCAMOUNC = 0;
+        double totSFEEAMOUNC = 0, totADJAMOUNC = 0;
+        double totTAXAMOUNC = 0, totODBALAMOUC = 0;
         
         
-        long totDIFF_PGROSAMOU = 0, totDIFF_PDISCAMOU = 0;
-        long totDIFF_PSFEEAMOU = 0, totDIFF_PADJAMOUN = 0;
-        long totDIFF_PTAXAMOU = 0, totDIFF_ODBALAMOU = 0;
-        long totDIFF_PNETAMOU = 0;
+        double totDIFF_PGROSAMOU = 0, totDIFF_PDISCAMOU = 0;
+        double totDIFF_PSFEEAMOU = 0, totDIFF_PADJAMOUN = 0;
+        double totDIFF_PTAXAMOU = 0, totDIFF_ODBALAMOU = 0;
+        double totDIFF_PNETAMOU = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -90,20 +90,20 @@ public class SalesReconciliAmexDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totPNETAMOU = rst.getLong("PNETAMOU");
-                totPGROSAMOU = rst.getLong("PGROSAMOU");
-                totPDISCAMOU = rst.getLong("PDISCAMOU");
-                totPSFEEAMOU = rst.getLong("PSFEEAMOU");
-                totPADJAMOUN = rst.getLong("PADJAMOUN");
-                totPTAXAMOU = rst.getLong("PTAXAMOU");
-                totODBALAMOU = rst.getLong("ODBALAMOU");
-                totNETAMOUNC = rst.getLong("NETAMOUNC");
-                totGROSAMOUNC = rst.getLong("GROSAMOUNC");
-                totDISCAMOUNC = rst.getLong("DISCAMOUNC");
-                totSFEEAMOUNC = rst.getLong("SFEEAMOUNC");
-                totADJAMOUNC = rst.getLong("ADJAMOUNC");
-                totTAXAMOUNC = rst.getLong("TAXAMOUNC");
-                totODBALAMOUC = rst.getLong("ODBALAMOUC");
+                totPNETAMOU = rst.getDouble("PNETAMOU");
+                totPGROSAMOU = rst.getDouble("PGROSAMOU");
+                totPDISCAMOU = rst.getDouble("PDISCAMOU");
+                totPSFEEAMOU = rst.getDouble("PSFEEAMOU");
+                totPADJAMOUN = rst.getDouble("PADJAMOUN");
+                totPTAXAMOU = rst.getDouble("PTAXAMOU");
+                totODBALAMOU = rst.getDouble("ODBALAMOU");
+                totNETAMOUNC = rst.getDouble("NETAMOUNC");
+                totGROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                totDISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                totSFEEAMOUNC = rst.getDouble("SFEEAMOUNC");
+                totADJAMOUNC = rst.getDouble("ADJAMOUNC");
+                totTAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                totODBALAMOUC = rst.getDouble("ODBALAMOUC");
                 
                 //Diferencias
                 totDIFF_PGROSAMOU = totPGROSAMOU - totGROSAMOUNC;
@@ -228,8 +228,8 @@ public class SalesReconciliAmexDAO {
 
         List<A4115Filter> lstTkts = new ArrayList<A4115Filter>(0);
         A4115Filter beanTkt;
-        long totSGROSAMOS = 0, totGROSAMOUN = 0, totDISCAMOUN = 0, totTAXAMOUN = 0, totNETAMOUN = 0, totSDGROSSA = 0, totSCGROSSA = 0;
-        long totGROSAMOUNC = 0, totDISCAMOUNC = 0, totTAXAMOUNC = 0, totNETAMOUNC = 0, totTRANCOUNTC = 0, totTRANCOUNT = 0, totINSTANBR = 0;
+        double totSGROSAMOS = 0, totGROSAMOUN = 0, totDISCAMOUN = 0, totTAXAMOUN = 0, totNETAMOUN = 0, totSDGROSSA = 0, totSCGROSSA = 0;
+        double totGROSAMOUNC = 0, totDISCAMOUNC = 0, totTAXAMOUNC = 0, totNETAMOUNC = 0, totTRANCOUNTC = 0, totTRANCOUNT = 0, totINSTANBR = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -254,22 +254,22 @@ public class SalesReconciliAmexDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totSGROSAMOS = rst.getLong("SGROSAMOS");
-                totGROSAMOUN = rst.getLong("GROSAMOUN");
-                totDISCAMOUN = rst.getLong("DISCAMOUN");
-                totTAXAMOUN = rst.getLong("TAXAMOUN");
-                totNETAMOUN = rst.getLong("NETAMOUN");
-                totSDGROSSA = rst.getLong("SDGROSSA");
-                totSCGROSSA = rst.getLong("SCGROSSA");
+                totSGROSAMOS = rst.getDouble("SGROSAMOS");
+                totGROSAMOUN = rst.getDouble("GROSAMOUN");
+                totDISCAMOUN = rst.getDouble("DISCAMOUN");
+                totTAXAMOUN = rst.getDouble("TAXAMOUN");
+                totNETAMOUN = rst.getDouble("NETAMOUN");
+                totSDGROSSA = rst.getDouble("SDGROSSA");
+                totSCGROSSA = rst.getDouble("SCGROSSA");
 
-                totTRANCOUNT = rst.getLong("TRANCOUNT");
-                totINSTANBR = rst.getLong("INSTANBR");
+                totTRANCOUNT = rst.getDouble("TRANCOUNT");
+                totINSTANBR = rst.getDouble("INSTANBR");
 
-                totGROSAMOUNC = rst.getLong("GROSAMOUNC");
-                totDISCAMOUNC = rst.getLong("DISCAMOUNC");
-                totTAXAMOUNC = rst.getLong("TAXAMOUNC");
-                totNETAMOUNC = rst.getLong("NETAMOUNC");
-                totTRANCOUNTC = rst.getLong("TRANCOUNTC");
+                totGROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                totDISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                totTAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                totNETAMOUNC = rst.getDouble("NETAMOUNC");
+                totTRANCOUNTC = rst.getDouble("TRANCOUNTC");
             }
             rst.close();
 //
@@ -378,8 +378,8 @@ public class SalesReconciliAmexDAO {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
-        long lngTotQMATCH = 0, lngTotQBANK = 0, lngTotQBANK_R = 0, lngTotQPAY = 0, lngTotQDIFF = 0, total = 0;
-        long lngTotQTYTRA = 0, lngTotQTYDOC = 0;
+        double lngTotQMATCH = 0, lngTotQBANK = 0, lngTotQBANK_R = 0, lngTotQPAY = 0, lngTotQDIFF = 0, total = 0;
+        double lngTotQTYTRA = 0, lngTotQTYDOC = 0;
         double TGROSAMOUN_TOTAL = 0;
         double TGROSAMOUNC_TOTAL = 0;
 
@@ -525,8 +525,8 @@ public class SalesReconciliAmexDAO {
 
         List<A4117Filter> lstTkts = new ArrayList<A4117Filter>(0);
         A4117Filter beanTkt;
-        long totTGROSAMOUN = 0, totDISCRATE = 0, totDISCAMOUN = 0, totTGROSAMOUC = 0, totDISCAMOUNC = 0;
-        long totDISCAMOUN_IVA = 0, totDISCAMOUN_IMPORT = 0, totDISCAMOUNC_IVA = 0, totDISCAMOUNC_IMPORT = 0;
+        double totTGROSAMOUN = 0, totDISCRATE = 0, totDISCAMOUN = 0, totTGROSAMOUC = 0, totDISCAMOUNC = 0;
+        double totDISCAMOUN_IVA = 0, totDISCAMOUN_IMPORT = 0, totDISCAMOUNC_IVA = 0, totDISCAMOUNC_IMPORT = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -567,12 +567,12 @@ public class SalesReconciliAmexDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totTGROSAMOUN = rst.getLong("TGROSAMOUN");
-                totTGROSAMOUC = rst.getLong("TGROSAMOUC");
-                totDISCAMOUN_IVA = rst.getLong("DISCAMOUN_IVA");
-                totDISCAMOUN_IMPORT = rst.getLong("DISCAMOUN_IMPORT");
-                totDISCAMOUNC_IVA = rst.getLong("DISCAMOUNC_IVA");
-                totDISCAMOUNC_IMPORT = rst.getLong("DISCAMOUNC_IMPORT"); 
+                totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                totTGROSAMOUC = rst.getDouble("TGROSAMOUC");
+                totDISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
+                totDISCAMOUN_IMPORT = rst.getDouble("DISCAMOUN_IMPORT");
+                totDISCAMOUNC_IVA = rst.getDouble("DISCAMOUNC_IVA");
+                totDISCAMOUNC_IMPORT = rst.getDouble("DISCAMOUNC_IMPORT"); 
             }
             rst.close();
 //
@@ -674,8 +674,8 @@ public class SalesReconciliAmexDAO {
 
         List<A4118Filter> lstTkts = new ArrayList<A4118Filter>(0);
         A4118Filter beanTkt;
-        long totGROSAMOUN = 0, totDISCAMOUN = 0, totSFEEAMOUN = 0, totTAXAMOUN = 0, totNETAMOUN = 0;
-        long totGROSAMOUNC = 0, totDISCAMOUNC = 0, totTAXAMOUNC = 0, totNETAMOUNC = 0, totSFEEAMOUNC = 0;
+        double totGROSAMOUN = 0, totDISCAMOUN = 0, totSFEEAMOUN = 0, totTAXAMOUN = 0, totNETAMOUN = 0;
+        double totGROSAMOUNC = 0, totDISCAMOUNC = 0, totTAXAMOUNC = 0, totNETAMOUNC = 0, totSFEEAMOUNC = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -715,17 +715,17 @@ public class SalesReconciliAmexDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totGROSAMOUN = rst.getLong("GROSAMOUN");
-                totDISCAMOUN = rst.getLong("DISCAMOUN");
-                totSFEEAMOUN = rst.getLong("SFEEAMOUN");
-                totSFEEAMOUNC = rst.getLong("SFEEAMOUNC");
-                totTAXAMOUN = rst.getLong("TAXAMOUN");
-                totNETAMOUN = rst.getLong("NETAMOUN");
+                totGROSAMOUN = rst.getDouble("GROSAMOUN");
+                totDISCAMOUN = rst.getDouble("DISCAMOUN");
+                totSFEEAMOUN = rst.getDouble("SFEEAMOUN");
+                totSFEEAMOUNC = rst.getDouble("SFEEAMOUNC");
+                totTAXAMOUN = rst.getDouble("TAXAMOUN");
+                totNETAMOUN = rst.getDouble("NETAMOUN");
 
-                totGROSAMOUNC = rst.getLong("GROSAMOUNC");
-                totDISCAMOUNC = rst.getLong("DISCAMOUNC");
-                totTAXAMOUNC = rst.getLong("TAXAMOUNC");
-                totNETAMOUNC = rst.getLong("NETAMOUNC");
+                totGROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                totDISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                totTAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                totNETAMOUNC = rst.getDouble("NETAMOUNC");
             }
             rst.close();
 //
@@ -977,18 +977,18 @@ public class SalesReconciliAmexDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totDISCAMOUN_IMPORT = rst.getLong("DISCAMOUN_IMPORT");
-                totDISCAMOUN_IVA = rst.getLong("DISCAMOUN_IVA");
-                totTAXAMOUN_AD = rst.getLong("TAXAMOUN_AD");
-                totTAXAMOUN_CB = rst.getLong("TAXAMOUN_CB");
-                totNETAMOUN = rst.getLong("NETAMOUN");
-                totNETAMOUNC = rst.getLong("NETAMOUNC");
-                totTGROSAMOUN = rst.getLong("TGROSAMOUN");
+                totDISCAMOUN_IMPORT = rst.getDouble("DISCAMOUN_IMPORT");
+                totDISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
+                totTAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
+                totTAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
+                totNETAMOUN = rst.getDouble("NETAMOUN");
+                totNETAMOUNC = rst.getDouble("NETAMOUNC");
+                totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
 
-                totSFEEAMOU = rst.getLong("SFEEAMOU");
-                totACCEAMOU = rst.getLong("ACCEAMOU");
-                totGROSAMOUN = rst.getLong("GROSAMOUN");
-                totDISCAMOUN = rst.getLong("DISCAMOUN");
+                totSFEEAMOU = rst.getDouble("SFEEAMOU");
+                totACCEAMOU = rst.getDouble("ACCEAMOU");
+                totGROSAMOUN = rst.getDouble("GROSAMOUN");
+                totDISCAMOUN = rst.getDouble("DISCAMOUN");
             }
             rst.close();
 //
