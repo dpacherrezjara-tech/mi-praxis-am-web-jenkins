@@ -36,6 +36,31 @@ public class A4113Filter extends A4113 {
     public double DIFF_ODBALAMOU = 0;
     public double DIFF_PNETAMOU = 0;
     
+    //Totales
+    public double totPNETAMOU = 0;
+    public double totPGROSAMOU = 0;
+    public double totPDISCAMOU = 0;
+    public double totPSFEEAMOU = 0;
+    public double totPADJAMOUN = 0;
+    public double totPTAXAMOU = 0;
+    public double totODBALAMOU = 0;
+    public double totNETAMOUNC = 0;
+    public double totGROSAMOUNC = 0;
+    public double totDISCAMOUNC = 0;
+    public double totSFEEAMOUNC = 0;
+    public double totADJAMOUNC = 0;
+    public double totTAXAMOUNC = 0;
+    public double totODBALAMOUC = 0;
+    
+    //Diferencia en totales
+    public double totDIFF_PGROSAMOU = 0;
+    public double totDIFF_PDISCAMOU = 0;
+    public double totDIFF_PSFEEAMOU = 0;
+    public double totDIFF_PADJAMOUN = 0;
+    public double totDIFF_PTAXAMOU = 0;
+    public double totDIFF_ODBALAMOU = 0;
+    public double totDIFF_PNETAMOU = 0;
+    
     public Pagination page = new Pagination();
     
 }
