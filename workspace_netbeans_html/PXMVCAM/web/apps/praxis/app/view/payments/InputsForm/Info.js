@@ -997,7 +997,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            style: 'background-color:#2e6bf4 ;',
+                                            style: 'background-color:#ffffff ;',
                                             width: 10,
                                             heigh: 30,
                                             padding: '15 5 15 5',
@@ -1020,7 +1020,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: false,
                                                     defaults: {
                                                         xtype: 'label',
-                                                        style: 'background-color:#2e6bf4 ;',
+                                                        style: 'background-color:#ffffff ;',
                                                         width: 28,
                                                         heigh: 10,
                                                         labelAlign: 'center',
@@ -1331,7 +1331,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            style: 'background-color:#2e6bf4 ;',
+                                            style: 'background-color:#ffffff ;',
                                             width: 10,
                                             heigh: 30,
                                             padding: '15 5 15 5',
@@ -1354,7 +1354,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: false,
                                                     defaults: {
                                                         xtype: 'label',
-                                                        style: 'background-color:#2e6bf4 ;',
+                                                        style: 'background-color:#ffffff ;',
                                                         width: 28,
                                                         heigh: 10,
                                                         labelAlign: 'center',
@@ -1665,7 +1665,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            style: 'background-color:#2e6bf4 ;',
+                                            style: 'background-color:#ffffff ;',
                                             width: 10,
                                             heigh: 30,
                                             padding: '15 5 15 5',
@@ -1688,7 +1688,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: false,
                                                     defaults: {
                                                         xtype: 'label',
-                                                        style: 'background-color:#2e6bf4 ;',
+                                                        style: 'background-color:#ffffff ;',
                                                         width: 28,
                                                         heigh: 10,
                                                         labelAlign: 'center',
@@ -1999,7 +1999,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            style: 'background-color:#2e6bf4 ;',
+                                            style: 'background-color:#ffffff ;',
                                             width: 10,
                                             heigh: 30,
                                             padding: '15 5 15 5',
@@ -2022,7 +2022,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: false,
                                                     defaults: {
                                                         xtype: 'label',
-                                                        style: 'background-color:#2e6bf4 ;',
+                                                        style: 'background-color:#ffffff ;',
                                                         width: 28,
                                                         heigh: 10,
                                                         labelAlign: 'center',
@@ -2333,7 +2333,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            style: 'background-color:#2e6bf4 ;',
+                                            style: 'background-color:#ffffff ;',
                                             width: 10,
                                             heigh: 30,
                                             padding: '15 5 15 5',
@@ -2356,7 +2356,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: false,
                                                     defaults: {
                                                         xtype: 'label',
-                                                        style: 'background-color:#2e6bf4 ;',
+                                                        style: 'background-color:#ffffff ;',
                                                         width: 28,
                                                         heigh: 10,
                                                         labelAlign: 'center',
@@ -2668,7 +2668,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     items: [
                                         {
                                             xtype: 'label',
-                                            style: 'background-color:#2e6bf4 ;',
+                                            style: 'background-color:#ffffff ;',
                                             width: 10,
                                             heigh: 30,
                                             padding: '15 5 15 5',
@@ -2691,7 +2691,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: false,
                                                     defaults: {
                                                         xtype: 'label',
-                                                        style: 'background-color:#2e6bf4 ;',
+                                                        style: 'background-color:#ffffff ;',
                                                         width: 28,
                                                         heigh: 10,
                                                         labelAlign: 'center',

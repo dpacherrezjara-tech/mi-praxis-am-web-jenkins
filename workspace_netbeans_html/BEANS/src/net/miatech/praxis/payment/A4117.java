@@ -44,6 +44,15 @@ public class A4117 {
     public double DISCRATE = 0;
     public double DISCRATEBA = 0;
     public double DISCAMOUN = 0;
+    
+    public double DISCRATE_IVA = 0;
+    public double DISCRATE_IMPORT = 0;
+    public double DISCRATEBA_IVA = 0;
+    public double DISCRATEBA_IMPORT = 0;
+    public double DISCAMOUN_IVA = 0;
+    public double DISCAMOUN_IMPORT = 0;
+    public double DISCAMOUNC_IVA = 0;
+    public double DISCAMOUNC_IMPORT = 0;
         
     //Result Conciliation SUMMARY
     public double TGROSAMOUC = 0;

@@ -35,6 +35,10 @@ public class A4117Filter extends A4117 {
     public long totDISCAMOUN = 0;
     public long totTGROSAMOUC = 0;
     public long totDISCAMOUNC = 0;
+    public long totDISCAMOUN_IVA = 0;
+    public long totDISCAMOUN_IMPORT = 0;
+    public long totDISCAMOUNC_IVA = 0;
+    public long totDISCAMOUNC_IMPORT = 0;
     
     public Pagination page = new Pagination();
     

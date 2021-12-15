@@ -966,7 +966,7 @@ public class InputsDAO {
                             if (tipo.equals("ACCB")) {
                                 objeto = new A1686Filter();
                                 objeto.fecha = fecha;
-                                objeto.strFormatDate = "ROJO";
+                                objeto.strFormatDate = "AMBAR";
                                 if (hm.containsKey(fecha)) {
                                     objeto.strFormatDate = "VERDE";
                                 }
@@ -974,7 +974,7 @@ public class InputsDAO {
                             } else {
                                 objeto = new A1686Filter();
                                 objeto.fecha = fecha;
-                                objeto.strFormatDate = "ROJO";
+                                objeto.strFormatDate = "AMBAR";
                                 if (hm.containsKey(fecha)) {
                                     objeto.strFormatDate = "VERDE";
                                 }

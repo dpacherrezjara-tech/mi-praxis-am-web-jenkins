@@ -638,13 +638,20 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                         mesf = (new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00').getMonth() + 1).toString();
 
                         var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
-                        var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
-
+                        var color = '';
+                        //var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00'; 
+                        if (dt.getDay() === 0 || dt.getDay() === 6) {
+                            color = '#FFFFFF'
+                        } else {
+                            color = res[i].strFormatDate === 'AMBAR' ? '#ff4d00' : '#00ff00';
+                        }
+                        
 
                         if (mesf % 2 !== 0) {
                             colorFlag = '#65C3E5';
                         } else {
                             colorFlag = '#2e6bf4';
+                            //colorFlag = '#ffffff';
                         }
                         
 //                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
