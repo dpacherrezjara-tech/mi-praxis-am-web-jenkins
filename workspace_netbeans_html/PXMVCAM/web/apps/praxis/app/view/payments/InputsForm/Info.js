@@ -72,12 +72,16 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                 columns: [
                                                     {text: 'Date', width: 100, flex: 1, dataIndex: 'strFormatDate',
                                                         listeners: {
+                                                            
                                                             click: 'searchDelivery_clickHandler'
+                                                            
                                                         },
+                                                        
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;font-weight:bold;';
                                                             return '<a href="#payments-inputs-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + value + '</a>';
                                                         }
+                                                        
                                                     },
                                                     {text: 'Time', dataIndex: 'strDescripcion1', width: 70}
                                                 ]
@@ -100,9 +104,13 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     align: 'center',
                                                     border: true
                                                 },
+                                                
                                                 columns: [
+                                                    
                                                     {text: 'Date', dataIndex: 'strFormatDate3', width: 100},
+                                                    
                                                 ]
+                                                
                                             },
                                             {text: 'Source', dataIndex: 'FUENTE', width: 100},
                                             {text: 'Total Records',
