@@ -673,6 +673,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
     
     searchDelivery_clickHandler: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         var beanDeliv = rowData.data;
+        beanDeliv.IN_FECRFILE = rowData.data.strFormatDate.replaceAll('-','');
         switch (columnNum) {
             case 4:
                 beanDeliv.IN_ERROR = '';
@@ -689,6 +690,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
             me.paramsDetail.consulta = '1';
             this.searchDelivery();
         }
+        console.log(beanDeliv);
     },
     searchDelivery: function () {
         me.setWidthPie();

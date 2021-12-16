@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                             border: true,
                             hidden: false,
                             height: 516,
-                            width: 1165,
+                            width: 1115,
                             margin: '10 0 0 150',
                             layout: {
                                 type: 'vbox',
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
                                     height: 510,
-                                    width: 1165,
+                                    width: 1115,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -70,7 +70,19 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Date', width: 100, flex: 1, dataIndex: 'strFormatDate'},
+                                                    {text: 'Date', width: 100, flex: 1, dataIndex: 'strFormatDate',
+                                                        listeners: {
+                                                            
+                                                            click: 'searchDelivery_clickHandler'
+                                                            
+                                                        },
+                                                        
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;font-weight:bold;';
+                                                            return '<a href="#payments-inputs-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + value + '</a>';
+                                                        }
+                                                        
+                                                    },
                                                     {text: 'Time', dataIndex: 'strDescripcion1', width: 70}
                                                 ]
                                             },
@@ -92,17 +104,13 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     align: 'center',
                                                     border: true
                                                 },
+                                                
                                                 columns: [
-                                                    {text: 'Date', dataIndex: 'strFormatDate3', width: 100,
-                                                        listeners: {
-                                                            click: 'searchDelivery_clickHandler'
-                                                        },
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;font-weight:bold;';
-                                                            return '<a href="#payments-inputs-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + value + '</a>';
-                                                        }
-                                                    },
+                                                    
+                                                    {text: 'Date', dataIndex: 'strFormatDate3', width: 100},
+                                                    
                                                 ]
+                                                
                                             },
                                             {text: 'Source', dataIndex: 'FUENTE', width: 100},
                                             {text: 'Total Records',
@@ -123,17 +131,11 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                             metaData.style = 'color:#057ECB;text-align:center;text-decoration:none;font-weight:bold;';
                                                             return '<a href="#payments-inputs-form" style="color:#057ECB;text-decoration:none;font-weight:bold;">' + value + '</a>';
                                                         }
-                                                    }
+                                                    },
                                                 ]
-                                            },
-                                            {text: 'Details / error Message', dataIndex: 'MENSA', width: 350,
-//                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-//                                                    var data = record.data;
-//                                                    metaData.style = "text-align:left;";
-//                                                    metaData.tdAttr = 'data-qtip="' + data.MENSA+'"';
-//                                                    return value;
-//                                                }
                                             }
+                                            ,
+                                            {text: 'Details / error Message', dataIndex: 'MENSA', width: 300}
                                         ]
                                     }
                                 }
@@ -177,7 +179,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     {text: 'Error', dataIndex: 'flagError', width: 60}
                                                 ]
                                             },
-                                            {text: 'Generation',
+                                            {text: 'Processing',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -199,7 +201,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     {text: 'Number', dataIndex: 'QRECOR', width: 60}
                                                 ]
                                             },
-                                            {text: 'Generation',
+                                            {text: 'Processing',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -609,7 +611,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                             border: true,
                             hidden: false,
                             height: 516,
-                            width: 1072,
+                            width: 1012,
                             margin: '10 0 0 150',
                             layout: {
                                 type: 'vbox',
@@ -620,7 +622,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataDetailAll',
                                     height: 510,
-                                    width: 1072,
+                                    width: 1012,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -706,7 +708,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Status', width: 160, dataIndex: 'TRFSTAT'}
+                                                    {text: 'Status', width: 100, dataIndex: 'TRFSTAT'}
                                                 ]
                                             },
                                             {text: 'Qty',
