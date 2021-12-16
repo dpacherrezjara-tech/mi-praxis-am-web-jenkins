@@ -18,6 +18,7 @@ public class A1686Filter extends A1686 {
     public String IN_FECHA_TO = "";
     public String IN_FUENTE = "";
     public String IN_ERROR = "";
+    public String IN_FECRFILE = "";
     public String strFormatDate = "";
     public String strFormatDate2 = "";
     public String strFormatDate3 = "";
