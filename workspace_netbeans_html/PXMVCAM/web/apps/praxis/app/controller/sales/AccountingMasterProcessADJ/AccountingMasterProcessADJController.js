@@ -27,33 +27,13 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.AccountingMas
         var strModulo = this.getValue('cboModulo');
         
         switch (strModulo) {
-            case 'PSALES':
-            case 'PADM':
-            case 'PFOB':
-            case 'PCONSORTIA':
-            case 'PPSALES':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PFLOWN':
-                Ext.getCmp(prototype.id+'-boxDateFilter').show();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
-                break;
-            case 'PAPINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;
-            case 'PARINT':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
-                break;            
             case 'PADJMA':
                 Ext.getCmp(prototype.id+'-boxDateFilter').show();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
                 break;
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxDateFilter').hide();
-                Ext.getCmp(prototype.id+'-boxPeriodFilter').show();
+            case 'PADJMV':
+                Ext.getCmp(prototype.id+'-boxDateFilter').show();
+                Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
                 break;
         }
     },
@@ -74,8 +54,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.AccountingMas
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         console.log(rec);
-        if(rec.data.A1955MODUL!=='PADM')
-            this.winDataEntry('U', rec);
+        this.winDataEntry('U', rec);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;

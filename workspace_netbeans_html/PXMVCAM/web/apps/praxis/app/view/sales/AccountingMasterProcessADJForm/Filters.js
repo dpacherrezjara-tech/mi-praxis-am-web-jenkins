@@ -90,13 +90,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcessADJForm.Filters', {
                                         fields: ['code', 'name'],
                                         data: [
                                             ["", "(Select)"],
-                                            ["PSALES", "Sales Accounting"],
-                                            ["PADM", "ADM Accounting"],
-                                            ["PFOB", "FOB Accounting"],
-                                            ["PCONSORTIA", "CONSORTIA Accounting"],
                                             ["PADJMA", "Manual Adjustment"],
-                                            ["PCADUCOS", "Caducos"],
-                                            ["PPSALES", "Sales Accounting Pending"]
+                                            ["PADJMV", "Massive Adjustment"]
                                         ]
                                     }),
                                     queryMode: 'local',

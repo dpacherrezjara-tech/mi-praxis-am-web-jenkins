@@ -41,16 +41,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
         var strModulo = this.getValue('cbxModulo');
         
         switch (strModulo) {
-            case 'PSALES':
-            case 'PPSALES':
             case 'PADJMA':
+            case 'PADJMV':
             case '':
                 Ext.getCmp(prototype.id+'-boxFecha').show();
                 Ext.getCmp(prototype.id+'-boxCaducos').hide();                
-                break;
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxFecha').hide();
-                Ext.getCmp(prototype.id+'-boxCaducos').show();                
                 break;
         }
     },        
@@ -86,30 +81,11 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAcco
         Ext.getCmp(prototype.id+'-cbxModulo').setReadOnly(true);
         
         switch (rec.get('A1955MODUL')) {
-            case 'PSALES': case 'PFLOWN': case 'PADJMA': case "PPSALES" :  
+            case 'PADJMA': case "PADJMV" :  
                 Ext.getCmp(prototype.id+'-boxFecha').show();
                 //Ext.getCmp(prototype.id+'-boxPeriodo').hide();
                 Ext.getCmp(prototype.id+'-boxCaducos').hide();
                 this.setValue('txtProcessDate', Ext.Date.parseDate(rec.get('A1955FPROC'), "Ymd"));
-                break;
-            /*case 'PAPINT': case 'PARINT':
-                Ext.getCmp(prototype.id+'-boxFecha').hide();
-                //Ext.getCmp(prototype.id+'-boxPeriodo').show();
-                Ext.getCmp(prototype.id+'-boxCaducos').hide();
-                this.setValue('cbxDateYear', rec.get('A1955FPROC').substring(0,4));
-                this.setValue('cbxDateMonth', rec.get('A1955FPROC').substring(4,6));
-                this.setValue('cbxDatePeriod', rec.get('A1955FPROC').substring(6,8));
-                break;*/
-            case 'PCADUCOS':
-                Ext.getCmp(prototype.id+'-boxFecha').hide();
-                //Ext.getCmp(prototype.id+'-boxPeriodo').hide();
-                Ext.getCmp(prototype.id+'-boxCaducos').show();                
-                
-                this.setValue('txtProcessDate', Ext.Date.parseDate(rec.get('A1955FPROC'), "Ymd"));
-                this.setValue('cmbDateFromYear', rec.get('A1955KEY4').substring(0,4));
-                this.setValue('cmbDateFromMonth', rec.get('A1955KEY4').substring(4,6));
-                //this.setValue('cmbDateToYear', rec.get('A1955KEY4').substring(0,4));
-                //this.setValue('cmbDateToMonth', rec.get('A1955KEY4').substring(4,6));
                 break;
         }
         

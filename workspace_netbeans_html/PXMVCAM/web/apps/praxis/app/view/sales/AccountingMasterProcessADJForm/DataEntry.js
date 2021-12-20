@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcessADJForm.DataEntry',{
         'Ext.Praxis.controller.sales.AccountingMasterProcessADJ.DataEntryAccountingMasterProcessADJController'
     ],
 
-    title:'Accounting Master Process- Data Entry Form',
+    title:'ADJ Accounting Master Process- Data Entry Form',
     header:true,
     height:260,
     width:815,
@@ -59,10 +59,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcessADJForm.DataEntry',{
                                 fields: ['code', 'name'],
                                 data: [
                                     ["", "(Select)"],
-                                    ["PSALES", "Sales Accounting"],
                                     ["PADJMA", "Manual Adjustment"],
-                                    ["PCADUCOS", "Caducos"],
-                                    ["PPSALES", "Sales Accounting Pending"]
+                                    ["PADJMV", "Massive Adjustment"]
                                 ]
                             }),
                             queryMode: 'local',
