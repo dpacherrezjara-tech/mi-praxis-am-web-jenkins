@@ -13,6 +13,13 @@ import net.miatech.praxis.flown.A3729;
  */
 public class A3729Filter extends A3729 {
 
+    public String yearFrom = "";
+    public String monthFrom = "";
+    public String dayFrom = "";
+    public String yearTo = "";
+    public String monthTo = "";
+    public String dayTo = "";
+
     public String strTicket = "";
     public String desSTVAL = "";
     public String strFormatDate = "";
@@ -22,12 +29,14 @@ public class A3729Filter extends A3729 {
     public String descFSABRE = "";
     public String descSTASABR = "";
     public String descFSALES = "";
-    
+
     public String IN_FSABRE = "";
     public String nameTxt = "";
     public String FA720 = "";
+    
+    public int qty_update = 0;
 
     public Pagination page = new Pagination();
     public long RN;
-    
+
 }
