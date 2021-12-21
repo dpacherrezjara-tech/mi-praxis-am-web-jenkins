@@ -73,7 +73,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
             Ext.getCmp(prototype.id + '-txtA1757COMM').setValue('0.00');    //COLHDG('MONTO COMISION')
             Ext.getCmp(prototype.id + '-txtA1757IVA').setValue('0.00');    //COLHDG('MONTO IVA')
             Ext.getCmp(prototype.id + '-txtA1757TCASH').setValue('0.00');    //COLHDG('TOTAL CASH')
-            Ext.getCmp(prototype.id + '-txtA1757COMBA').setValue(Ext.util.Format.number(data.A2447COMBA, '0,000.00'));    //COLHDG('COMM BANCARIA')
+            Ext.getCmp(prototype.id + '-txtA1757COMBA').setValue(Ext.util.Format.number(data.A2447CHARG, '0,000.00'));    //COLHDG('COMM BANCARIA')
             Ext.getCmp(prototype.id + '-txtA1757IVACB').setValue(Ext.util.Format.number(data.A2447IVACB, '0,000.00'));    //COLHDG('IVA COMM BANCARIA')
             // Pre-Invoice
             Ext.getCmp(prototype.id + '-txtA1757CAMCO_P').setValue('0.00');    //COLHDG('MONTO CASH - COM') 
@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
             Ext.getCmp(prototype.id + '-txtA1757COMM_D').setValue('0.00');    //COLHDG('MONTO CASH - COM') 
             Ext.getCmp(prototype.id + '-txtA1757IVA_D').setValue('0.00');    //COLHDG('MONTO CASH - COM') 
             Ext.getCmp(prototype.id + '-txtA1757TCASH_D').setValue('0.00');    //COLHDG('MONTO CASH - COM') 
-            Ext.getCmp(prototype.id + '-txtA1757COMBA_D').setValue(Ext.util.Format.number((data.A2444BANKC - data.A2447COMBA), '0,000.00'));    //COLHDG('COMM BANCARIA')
+            Ext.getCmp(prototype.id + '-txtA1757COMBA_D').setValue(Ext.util.Format.number((data.A2444BANKC - data.A2447CHARG), '0,000.00'));    //COLHDG('COMM BANCARIA')
             Ext.getCmp(prototype.id + '-txtA1757IVACB_D').setValue(Ext.util.Format.number((data.A2444IVA16 - data.A2447IVACB), '0,000.00'));    //COLHDG('IVA COMM BANCARIA')
         }else{
             Ext.getCmp(prototype.id + '-txtA1757CAMCO_D').setValue(Ext.util.Format.number((data.A2447CAMCO - data.A2444TCAMC), '0,000.00'));    //COLHDG('MONTO CASH - COM') 
@@ -351,7 +351,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
             }
         }else{
             if (params.VP_A2447COMBA === 0) {
-                mensaje = 'Enter Commission Bank Amount';
+                mensaje = 'Enter Charge Amount';
                 Ext.getCmp(prototype.id + '-txtA1757COMBA').focus();
                 return mensaje;
             }
@@ -488,7 +488,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
                             Ext.getCmp(prototype.id + '-txtA1757COMIV_IN').setValue('0.00');// MONTO COMM + IVA
                             Ext.getCmp(prototype.id + '-txtA1757CAMCO_IN').setValue('0.00');// MONTO CASH - TOTAL COMM <= (A1757COMM+A1757IVA)
                             Ext.getCmp(prototype.id + '-txtA1757TCASH_IN').setValue('0.00');// MONTO TOTAL CASH
-                            Ext.getCmp(prototype.id + '-txtA1757COMBA_IN').setValue(Ext.util.Format.number(( result[0].A2447COMBA), '0,000.00')); //COLHDG('COMM BANCARIA')
+                            Ext.getCmp(prototype.id + '-txtA1757COMBA_IN').setValue(Ext.util.Format.number(( result[0].A2447CHARG), '0,000.00')); //COLHDG('COMM BANCARIA')
                             Ext.getCmp(prototype.id + '-txtA1757IVACB_IN').setValue(Ext.util.Format.number(( result[0].A2447IVACB), '0,000.00')); //COLHDG('IVA COMM BANCARIA')
                         }else{
                             Ext.getCmp(prototype.id + '-txtA1757COMM_IN').setValue(Ext.util.Format.number(( result[0].A2447COMM), '0,000.00')); // TOTAL COMISION
@@ -514,7 +514,7 @@ Ext.define('Ext.Praxis.controller.sales.InvoiceCommissionConsortia.DataEntryInvo
                             Ext.getCmp(prototype.id + '-txtA1757COMIV_IN').setValue('0.00');// MONTO COMM + IVA
                             Ext.getCmp(prototype.id + '-txtA1757TCASH_IN').setValue('0.00');// MONTO CASH - TOTAL COMM(A1757COMM+A1757IVA)
                             Ext.getCmp(prototype.id + '-txtA1757CAMCO_IN').setValue('0.00');// MONTO TOTAL CASH
-                            Ext.getCmp(prototype.id + '-txtA1757COMBA_IN').setValue(Ext.util.Format.number(( result[0].A2447COMBA - VL_A1757COMBA), '0,000.00')); //COLHDG('COMM BANCARIA')
+                            Ext.getCmp(prototype.id + '-txtA1757COMBA_IN').setValue(Ext.util.Format.number(( result[0].A2447CHARG - VL_A1757COMBA), '0,000.00')); //COLHDG('COMM BANCARIA')
                             Ext.getCmp(prototype.id + '-txtA1757IVACB_IN').setValue(Ext.util.Format.number(( result[0].A2447IVACB - VL_A1757IVACB), '0,000.00')); //COLHDG('IVA COMM BANCARIA')
                         }else{
                             Ext.getCmp(prototype.id + '-txtA1757COMM_IN').setValue(Ext.util.Format.number(( result[0].A2447COMM - VL_A2447COMM ), '0,000.00'));// TOTAL COMISION
