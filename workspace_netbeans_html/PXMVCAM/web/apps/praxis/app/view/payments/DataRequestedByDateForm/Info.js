@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1710,
+                            width: 1770,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1705,
+                                    width: 1765,
                                     height: 535,
                                     columnLines: true,
                                     /*features: [{
@@ -188,6 +188,14 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                     },
                                                     {
                                                         text: 'Auth', dataIndex: 'AUTHNBR', width: 60,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Curr', dataIndex: 'MFOP', width: 60,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background:" + data.COLOR;
@@ -528,7 +536,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1710,
+                            width: 1770,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -538,7 +546,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataDifference',
-                                    width: 1705,
+                                    width: 1765,
                                     height: 535,
                                     columnLines: true,
                                     /*features: [{
@@ -676,6 +684,14 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                     },
                                                     {
                                                         text: 'Auth', dataIndex: 'AUTHNBR', width: 60,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;background:" + data.COLOR;
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Curr', dataIndex: 'MFOP', width: 60,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background:" + data.COLOR;

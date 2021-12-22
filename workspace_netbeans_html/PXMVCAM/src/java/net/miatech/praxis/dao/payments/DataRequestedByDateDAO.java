@@ -139,7 +139,7 @@ public class DataRequestedByDateDAO {
                 objRtn.DATES = rs01.getString("DATES").trim();
                 objRtn.DATEN = rs01.getString("DATEN").trim();
                 objRtn.CCIA = rs01.getString("CCIA").trim();
-                objRtn.FORMA = rs01.getString("FORMA").trim();
+                objRtn.FORMA = rs01.getString("FORMA").trim();                
                 objRtn.SERIE = rs01.getString("SERIE").trim();
                 objRtn.TICKET = objRtn.CCIA + objRtn.FORMA + objRtn.SERIE;
                 objRtn.STVAL = rs01.getString("STVAL").trim();
@@ -160,6 +160,7 @@ public class DataRequestedByDateDAO {
                 objRtn.IDCON = rs01.getString("IDCON").trim();
                 objRtn.DATAPLICA = rs01.getString("DATAPLICA").trim();
                 objRtn.CRULE = rs01.getString("CRULE").trim();
+                objRtn.MFOP = rs01.getString("MFOP").trim();
                 if (hmDescCRULE.containsKey(objRtn.CRULE)) {
                     objRtn.strDescCRULE = hmDescCRULE.get(objRtn.CRULE).toString();
                 } else {
@@ -455,6 +456,7 @@ public class DataRequestedByDateDAO {
                 objRtn.DATEN = rs01.getString("DATEN").trim();
                 objRtn.CCIA = rs01.getString("CCIA").trim();
                 objRtn.FORMA = rs01.getString("FORMA").trim();
+                objRtn.MFOP = rs01.getString("MFOP").trim();
                 objRtn.SERIE = rs01.getString("SERIE").trim();
                 objRtn.TICKET = objRtn.CCIA + objRtn.FORMA + objRtn.SERIE;
                 objRtn.STVAL = rs01.getString("STVAL").trim();
