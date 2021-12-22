@@ -37,6 +37,9 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     reg99: 0,
     me: '',
     searchParams: {},
+    searchParamsStatusInteract: {},
+    searchParamsStatusDifference: {},
+    searchParamsByStatus: {},
     searchParamsExcelHis: {},
     searchParamsExcelCharge: {},
     paramsDetail: {},
@@ -194,7 +197,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 this.searchInteract();
                 break;
             case 'sd':
-                this.setFormatParameter();
+                this.setFormatParameterDifference();
                 this.searchDifference();
                 break;
         }
@@ -234,11 +237,32 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
 
         var beanString = JSON.stringify(me.bean);
-        searchParams = {
+        searchParamsStatusInteract = {
             beanString: beanString,
             bean: me.bean
         };
-        console.log(searchParams);
+        console.log(searchParamsStatusInteract);
+    },
+    setFormatParameterDifference: function() {
+        me.bean = {};
+
+        me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbFecFiltro').getValue();
+        me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateDay').getValue();
+
+        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+
+        me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTICKET').getValue()
+
+        var beanString = JSON.stringify(me.bean);
+        searchParamsStatusDifference = {
+            beanString: beanString,
+            bean: me.bean
+        };
+        console.log(searchParamsStatusDifference);
     },
     BuscarTKT_keyDownHandler: function(obj, e, eOpts) {
         switch (e.getKey()) {
@@ -336,12 +360,12 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 }, listeners: {
                     beforeload: function(obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                        obj.proxy.extraParams = searchParams;
+                        obj.proxy.extraParams = searchParamsStatusInteract;
                     },
                     load: function(obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').unmask();
 //                        console.log(obj.data);
-                        var pag = Ext.getCmp(prototype.id + '-paggin');
+                        var pag = Ext.getCmp(prototype.id + '-paggin2');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                         Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
@@ -379,7 +403,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 }, listeners: {
                     beforeload: function(obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                        obj.proxy.extraParams = searchParams;
+                        obj.proxy.extraParams = searchParamsStatusDifference;
                     },
                     load: function(obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').unmask();
@@ -454,11 +478,11 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         me.bean.IN_TKT = rowData.data.TICKET;
 
         var beanString = JSON.stringify(me.bean);
-        searchParams = {
+        searchParamsByStatus = {
             beanString: beanString,
             bean: me.bean
         };
-        console.log(searchParams);
+        console.log(searchParamsByStatus);
 
         this.onGridDetByStatus();
     },
@@ -475,16 +499,16 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                 }, listeners: {
                     beforeload: function(obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                        obj.proxy.extraParams = searchParams;
+                        obj.proxy.extraParams = searchParamsByStatus;
                     },
                     load: function(obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').unmask();
 //                        console.log(obj.data);
-                        var pag = Ext.getCmp(prototype.id + '-paggin');
-                        var pagData = pag.getPageData();
-                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+//                        var pag = Ext.getCmp(prototype.id + '-paggin');
+//                        var pagData = pag.getPageData();
+//                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
                         if (obj.data.length === 0) {
                             global.Msg({
                                 msg: 'Data not found.'
@@ -493,13 +517,13 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
                             var data = obj.data.items[0].data;
                             console.log(data);
                         }
-                        me.setWidthPie();
+                        //me.setWidthPie();
                     }
                 }
             });
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataStatusSabre').bindStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+            //Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
         }
     },
     onViewDetCard: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
