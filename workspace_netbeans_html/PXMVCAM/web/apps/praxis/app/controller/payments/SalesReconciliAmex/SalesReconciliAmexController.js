@@ -289,7 +289,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 
-                    var pag = Ext.getCmp(prototype.id + '-paggin9');
+                    var pag = Ext.getCmp(prototype.id + '-paggin10');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
@@ -332,7 +332,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    var pag = Ext.getCmp(prototype.id + '-paggin10');
+                    var pag = Ext.getCmp(prototype.id + '-paggin11');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
@@ -1239,40 +1239,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 modal: true,
                 fn: function(btn) {
                     if (btn === 'ok') {
-//                        this.exportExcel();
+                        this.exportExcel();
                     }
                 }
             });
         }
     },
     exportExcel: function() {
-
         this.setFormatParameter();
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
+            case  '-boxDetChargeback':
+                global.getFile(prototype.url + '/getXLSXChargeback?beanString=' + me.paramsDetail.beanString);
+                break;
             case  '-boxDetSubmission':
-                global.getFile(prototype.url + '/getXLSXbank?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getXLSXSubmission?beanString=' + me.paramsDetail.beanString);
                 break;
-            case  '-boxDetDay':
-                global.getFile(prototype.url + '/getXLSXDay?beanString=' + me.paramsDetail.beanString);
+            case  '-boxDetTransaction':
+                global.getFile(prototype.url + '/getXLSXTransaction?beanString=' + me.paramsDetail.beanString);
                 break;
-            case  '-boxDetMerchant':
-                global.getFile(prototype.url + '/getXLSXMerchant?beanString=' + me.paramsDetail.beanString);
+            case  '-boxDetPricing':
+                global.getFile(prototype.url + '/getXLSXPricing?beanString=' + me.paramsDetail.beanString);
                 break;
-            case  '-boxDetBankByS':
-                global.getFile(prototype.url + '/getXLSXBankByS?beanString=' + me.paramsDetail.beanString);
+            case  '-boxMainSettlement':
+                global.getFile(prototype.url + '/getXLSXMainSettlement?beanString=' + searchParams.beanString);
                 break;
-            case  '-boxDetDayByS':
-                global.getFile(prototype.url + '/getXLSXDayByS?beanString=' + me.paramsDetail.beanString);
+            case  '-boxSettlement':
+                global.getFile(prototype.url + '/getXLSXSettlement?beanString=' + searchParams.beanString);
                 break;
-            case  '-boxDetMerchantByS':
-                global.getFile(prototype.url + '/getXLSXMerchantByS?beanString=' + me.paramsDetail.beanString);
-                break;
-            case  '-boxByMerchant':
-                global.getFile(prototype.url + '/getXLSXByMerchant?beanString=' + me.paramsDetail.beanString);
+            case  '-boxDetSettlement':
+                global.getFile(prototype.url + '/getXLSXDetSettlement?beanString=' + me.paramsDetail.beanString);
                 break;
         }
     },
