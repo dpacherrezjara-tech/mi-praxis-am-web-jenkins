@@ -1355,7 +1355,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 
                 if (res.success) {
                     var msjResult = res.objResult.qty_update;
-                    global.Msg({msg: 'Se actualizarion ' + msjResult + ' tickets.' });
+                    global.Msg({msg: 'Updated ' + msjResult + ' tickets.' });
                 }else{
                     global.Msg({msg: "Error Excel Load"});
                 }

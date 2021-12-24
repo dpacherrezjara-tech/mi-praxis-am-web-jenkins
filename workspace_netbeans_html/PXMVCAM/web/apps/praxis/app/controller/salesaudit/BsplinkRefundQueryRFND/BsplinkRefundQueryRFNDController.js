@@ -476,7 +476,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BsplinkRefundQueryRFND.BsplinkRefun
     onUpdateClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         var me = this;
-        if (rec.get('A3389FLAG') === 'F' || rec.get('A3389FLAG') === 'R') {
+        if (rec.get('A3389FLAG') === 'F' || rec.get('A3389FLAG') === 'R' || rec.get('A3389FLAG') === 'Z') {
             if (rec.get('A3389FLAG') === 'F') {
                 var fechaInicio = new Date(rec.get('A3389FAUTO').substring(0, 4) + '-' + rec.get('A3389FAUTO').substring(6, 4) + '-' + rec.get('A3389FAUTO').substring(8, 6));//new Date(rec.get('A3389FAUTO'));
                 var fechaFin = new Date();
