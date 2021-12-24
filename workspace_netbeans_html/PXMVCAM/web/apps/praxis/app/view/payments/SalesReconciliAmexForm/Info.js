@@ -622,7 +622,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                         return v;
                                                                     }
                                                                 },
-                                                                handler: 'openExportManyExcels'
+                                                                handler: 'onSendClick'
                                                             }
                                                         ]
                                                     }
