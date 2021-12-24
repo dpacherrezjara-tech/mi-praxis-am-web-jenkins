@@ -32,6 +32,11 @@ public class SalesReconciliAmexLogic {
     public List<A4113Filter> loadPX570SQP04257(A4113Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04257(filter);
     }
+    
+    public List<A4113Filter> loadPX570SQP04329(A4113Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04329(filter);
+    }
+    
 
     public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04269(filter);

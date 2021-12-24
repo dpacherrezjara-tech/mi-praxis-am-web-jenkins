@@ -223,6 +223,175 @@ public class SalesReconciliAmexDAO {
 
         return lstTkts;
     }
+    
+        public List<A4113Filter> loadPX570SQP04329(A4113Filter filter) throws SQLException, Exception {
+        List<A4113Filter> lstTkts = new ArrayList<A4113Filter>(0);
+        A4113Filter beanTkt;
+        double totPNETAMOU = 0, totPGROSAMOU = 0, totPDISCAMOU = 0, totPSFEEAMOU = 0, totODBALAMOU = 0, totNETAMOUNC = 0;
+        double totPADJAMOUN = 0, totPTAXAMOU = 0;
+        double totGROSAMOUNC = 0, totDISCAMOUNC = 0;
+        double totSFEEAMOUNC = 0, totADJAMOUNC = 0;
+        double totTAXAMOUNC = 0, totODBALAMOUC = 0;
+        
+        
+        double totDIFF_PGROSAMOU = 0, totDIFF_PDISCAMOU = 0;
+        double totDIFF_PSFEEAMOU = 0, totDIFF_PADJAMOUN = 0;
+        double totDIFF_PTAXAMOU = 0, totDIFF_ODBALAMOU = 0;
+        double totDIFF_PNETAMOU = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04329(?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.DATE);
+            cstmt.setString(3, "PAYDATE");
+            cstmt.setString(4, filter.AXPAYNBR);
+            cstmt.setString(5, filter.PMERCHID);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                totPNETAMOU = rst.getDouble("PNETAMOU");
+                totPGROSAMOU = rst.getDouble("PGROSAMOU");
+                totPDISCAMOU = rst.getDouble("PDISCAMOU");
+                totPSFEEAMOU = rst.getDouble("PSFEEAMOU");
+                totPADJAMOUN = rst.getDouble("PADJAMOUN");
+                totPTAXAMOU = rst.getDouble("PTAXAMOU");
+                totODBALAMOU = rst.getDouble("ODBALAMOU");
+                totNETAMOUNC = rst.getDouble("NETAMOUNC");
+                totGROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                totDISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                totSFEEAMOUNC = rst.getDouble("SFEEAMOUNC");
+                totADJAMOUNC = rst.getDouble("ADJAMOUNC");
+                totTAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                totODBALAMOUC = rst.getDouble("ODBALAMOUC");
+                
+                //Diferencias
+                totDIFF_PGROSAMOU = totPGROSAMOU - totGROSAMOUNC;
+                totDIFF_PDISCAMOU = totPDISCAMOU - totDISCAMOUNC;
+                totDIFF_PSFEEAMOU = totPSFEEAMOU - totSFEEAMOUNC;
+                totDIFF_PADJAMOUN = totPADJAMOUN - totADJAMOUNC;
+                totDIFF_PTAXAMOU = totPTAXAMOU - totTAXAMOUNC;
+                totDIFF_ODBALAMOU = totODBALAMOU - totODBALAMOUC;
+                totDIFF_PNETAMOU = totPNETAMOU - totNETAMOUNC;
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+
+                beanTkt = new A4113Filter();
+                beanTkt.IN_DATEFROM = filter.IN_DATEFROM.trim();
+                beanTkt.IN_DATETO = filter.IN_DATETO.trim();
+                beanTkt.IN_DATE = filter.IN_DATE.trim();
+
+                beanTkt.DATE = rst.getString("DATE").trim();
+                beanTkt.PRDA = rst.getString("PRDA").trim();
+                beanTkt.PMERCHID = rst.getString("PMERCHID").trim();
+                beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
+                beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+
+                beanTkt.PNETAMOU = rst.getDouble("PNETAMOU");
+                beanTkt.PGROSAMOU = rst.getDouble("PGROSAMOU");
+                beanTkt.PDISCAMOU = rst.getDouble("PDISCAMOU");
+                beanTkt.PSFEEAMOU = rst.getDouble("PSFEEAMOU");
+                beanTkt.PADJAMOUN = rst.getDouble("PADJAMOUN");
+                beanTkt.PTAXAMOU = rst.getDouble("PTAXAMOU");
+                beanTkt.ODBALAMOU = rst.getDouble("ODBALAMOU");
+
+                beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
+                beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
+                beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                beanTkt.SFEEAMOUNC = rst.getDouble("SFEEAMOUNC");
+                beanTkt.ADJAMOUNC = rst.getDouble("ADJAMOUNC");
+                beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                beanTkt.ODBALAMOUC = rst.getDouble("ODBALAMOUC");
+                beanTkt.CERROR = rst.getString("CERROR");
+
+                beanTkt.RATECOMBA = rst.getDouble("RATECOMBA");
+                beanTkt.RATECOMBAC = rst.getDouble("RATECOMBAC");
+                beanTkt.RATEIVABA = rst.getDouble("RATEIVABA");
+                beanTkt.RATEIVABAC = rst.getDouble("RATEIVABAC");
+
+                //Diferencias
+                beanTkt.DIFF_PGROSAMOU = beanTkt.PGROSAMOU - beanTkt.GROSAMOUNC;
+                beanTkt.DIFF_PDISCAMOU = beanTkt.PDISCAMOU - beanTkt.DISCAMOUNC;
+                beanTkt.DIFF_PSFEEAMOU = beanTkt.PSFEEAMOU - beanTkt.SFEEAMOUNC;
+                beanTkt.DIFF_PADJAMOUN = beanTkt.PADJAMOUN - beanTkt.ADJAMOUNC;
+                beanTkt.DIFF_PTAXAMOU = beanTkt.PTAXAMOU - beanTkt.TAXAMOUNC;
+                beanTkt.DIFF_ODBALAMOU = beanTkt.ODBALAMOU - beanTkt.ODBALAMOUC;
+                beanTkt.DIFF_PNETAMOU = beanTkt.PNETAMOU - beanTkt.NETAMOUNC;
+                
+                //TOTALEs
+                beanTkt.totPNETAMOU = totPNETAMOU;
+                beanTkt.totPGROSAMOU = totPGROSAMOU;
+                beanTkt.totPDISCAMOU = totPDISCAMOU;
+                beanTkt.totPSFEEAMOU = totPSFEEAMOU;
+                beanTkt.totPADJAMOUN = totPADJAMOUN;
+                beanTkt.totPTAXAMOU = totPTAXAMOU;
+                beanTkt.totODBALAMOU = totODBALAMOU;
+                beanTkt.totNETAMOUNC = totNETAMOUNC;
+                beanTkt.totGROSAMOUNC = totGROSAMOUNC;
+                beanTkt.totDISCAMOUNC = totDISCAMOUNC;
+                beanTkt.totSFEEAMOUNC = totSFEEAMOUNC;
+                beanTkt.totADJAMOUNC = totADJAMOUNC;
+                beanTkt.totTAXAMOUNC = totTAXAMOUNC;
+                beanTkt.totODBALAMOUC = totODBALAMOUC;
+                
+                //Diferencia en totales
+                beanTkt.totDIFF_PGROSAMOU = totDIFF_PGROSAMOU;
+                beanTkt.totDIFF_PDISCAMOU = totDIFF_PDISCAMOU;
+                beanTkt.totDIFF_PSFEEAMOU = totDIFF_PSFEEAMOU;
+                beanTkt.totDIFF_PADJAMOUN = totDIFF_PADJAMOUN;
+                beanTkt.totDIFF_PTAXAMOU = totDIFF_PTAXAMOU;
+                beanTkt.totDIFF_ODBALAMOU = totDIFF_ODBALAMOU;
+                beanTkt.totDIFF_PNETAMOU = totDIFF_PNETAMOU;
+
+                if (beanTkt.CERROR.equals("01")) {
+                    beanTkt.desCERROR = "Difference";
+                } else if (beanTkt.CERROR.equals("00")) {
+                    beanTkt.desCERROR = "Conciliate";
+                }
+
+                lstTkts.add(beanTkt);
+            }
+            rst.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
 
     public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
 

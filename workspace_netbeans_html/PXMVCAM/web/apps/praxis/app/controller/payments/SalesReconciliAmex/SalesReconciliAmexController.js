@@ -289,7 +289,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 
-                    var pag = Ext.getCmp(prototype.id + '-paggin9');
+                    var pag = Ext.getCmp(prototype.id + '-paggin10');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
@@ -332,7 +332,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    var pag = Ext.getCmp(prototype.id + '-paggin10');
+                    var pag = Ext.getCmp(prototype.id + '-paggin11');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
@@ -624,7 +624,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetPricing: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
-        
+
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetPricing';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -1179,14 +1179,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.winDataEntry('I');
     },
     onViewPNR: function(a, b, c, d, e, rowData) {
-        
+
 //        var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('', rowData);
     },
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-                
+
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
@@ -1239,40 +1239,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 modal: true,
                 fn: function(btn) {
                     if (btn === 'ok') {
-//                        this.exportExcel();
+                        this.exportExcel();
                     }
                 }
             });
         }
     },
     exportExcel: function() {
-
         this.setFormatParameter();
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
+            case  '-boxDetChargeback':
+                global.getFile(prototype.url + '/getXLSXChargeback?beanString=' + me.paramsDetail.beanString);
+                break;
             case  '-boxDetSubmission':
-                global.getFile(prototype.url + '/getXLSXbank?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getXLSXSubmission?beanString=' + me.paramsDetail.beanString);
                 break;
-            case  '-boxDetDay':
-                global.getFile(prototype.url + '/getXLSXDay?beanString=' + me.paramsDetail.beanString);
+            case  '-boxDetTransaction':
+                global.getFile(prototype.url + '/getXLSXTransaction?beanString=' + me.paramsDetail.beanString);
                 break;
-            case  '-boxDetMerchant':
-                global.getFile(prototype.url + '/getXLSXMerchant?beanString=' + me.paramsDetail.beanString);
+            case  '-boxDetPricing':
+                global.getFile(prototype.url + '/getXLSXPricing?beanString=' + me.paramsDetail.beanString);
                 break;
-            case  '-boxDetBankByS':
-                global.getFile(prototype.url + '/getXLSXBankByS?beanString=' + me.paramsDetail.beanString);
+            case  '-boxMainSettlement':
+                global.getFile(prototype.url + '/getXLSXMainSettlement?beanString=' + searchParams.beanString);
                 break;
-            case  '-boxDetDayByS':
-                global.getFile(prototype.url + '/getXLSXDayByS?beanString=' + me.paramsDetail.beanString);
+            case  '-boxSettlement':
+                global.getFile(prototype.url + '/getXLSXSettlement?beanString=' + searchParams.beanString);
                 break;
-            case  '-boxDetMerchantByS':
-                global.getFile(prototype.url + '/getXLSXMerchantByS?beanString=' + me.paramsDetail.beanString);
-                break;
-            case  '-boxByMerchant':
-                global.getFile(prototype.url + '/getXLSXByMerchant?beanString=' + me.paramsDetail.beanString);
+            case  '-boxDetSettlement':
+                global.getFile(prototype.url + '/getXLSXDetSettlement?beanString=' + me.paramsDetail.beanString);
                 break;
         }
     },
@@ -1297,6 +1296,55 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 link.href = window.URL.createObjectURL(blob);
                 link.download = me.fileName;
                 link.click();
+            }
+        });
+    },
+    onSendClick: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Send Mail ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {                    
+                    this.sendMail(rowData.data);
+                }
+            }
+        });
+    },
+    sendMail: function(data) {
+        console.log('Send Mail');
+        /*var DATE = '20210625';
+         var AXPAYNBR = '139';
+         var PMERCHID = '9351479119';
+         var DIFF_PNETAMOU_STRING = "1,225.82";
+         var PCURRENCY = "MXN";*/
+
+        Ext.Ajax.request({
+            url: prototype.url + '/sendMail',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                DATE: data.DATE,
+                IN_DATE: data.IN_DATE,
+                AXPAYNBR: data.AXPAYNBR,
+                PMERCHID: data.PMERCHID,
+                DIFF_PNETAMOU_STRING: Ext.util.Format.number(data.DIFF_PNETAMOU, '0,000.00').replace('-',''),
+                PCURRENCY: data.PCURRENCY
+            },
+            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...', ''),
+            success: function(response, options) {
+                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...', '');
+
+                var res = Ext.JSON.decode(response.responseText);
+                global.Msg({
+                    msg: res.MESSAGE,
+                    icon: 1,
+                    fn: function() {
+                    }
+                });
             }
         });
     },
