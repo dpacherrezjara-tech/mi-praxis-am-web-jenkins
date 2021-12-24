@@ -465,7 +465,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSX");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Summary Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             String date = "";
             Workbook workbook;
@@ -951,7 +951,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXChargeback(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXChargeback");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Adjustment Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -1175,7 +1175,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXSubmission(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXSubmission");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Submission Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -1499,7 +1499,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXTransaction(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXTransaction");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Transaction Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -1738,7 +1738,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXPricing(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXPricing");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Pricing Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             String date = "";
@@ -2089,7 +2089,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXMainSettlement(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXMainSettlement");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Main Settlement Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -2314,7 +2314,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXSettlement(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXSettlement");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Settlement Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -2458,9 +2458,9 @@ public class SalesReconciliAmexController extends BaseController {
             CH2_12.setCellValue("Amount");
             CH2_13.setCellValue("Commission");
             CH2_14.setCellValue("VAT");
-            CH2_15.setCellValue("Net Amount to Receive AM");
-            CH2_16.setCellValue("Currency Settlement");
-            CH2_17.setCellValue("Reconciled Net Amount");
+            CH2_15.setCellValue("");
+            CH2_16.setCellValue("");
+            CH2_17.setCellValue("");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -2488,6 +2488,9 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 17, 17));
             ++vj;
             //============================================
 
@@ -2574,7 +2577,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXDetSettlement(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXDetSettlement");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Settlement Detail Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -2974,10 +2977,10 @@ public class SalesReconciliAmexController extends BaseController {
         String mensaje = "<p>Estimados señores de American Express<br>";
         mensaje = mensaje + "\n" + "De acuerdo al análisis efectuado en la liquidación hemos encontrado diferencias:<br>";
         mensaje = mensaje + "\n" + "<ul>";
-        mensaje = mensaje + "\n" + "<li>Fecha de liquidación: " + Data.DATE + "</li>";
-        mensaje = mensaje + "\n" + "<li>Número de AX Number: " + Data.AXPAYNBR + "</li>";
-        mensaje = mensaje + "\n" + "<li>Merchant Number: " + Data.PMERCHID + "</li>";
-        mensaje = mensaje + "\n" + "<li>Valor: " + Data.DIFF_PNETAMOU_STRING + " " + Data.PCURRENCY + "</li>";
+        mensaje = mensaje + "\n" + "<li>Fecha de liquidación : " + Data.DATE + "</li>";
+        mensaje = mensaje + "\n" + "<li>Número de AX Number : " + Data.AXPAYNBR + "</li>";
+        mensaje = mensaje + "\n" + "<li>Merchant Number : " + Data.PMERCHID + "</li>";
+        mensaje = mensaje + "\n" + "<li>Valor : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
         mensaje = mensaje + "\n" + "</ul>";
         mensaje = mensaje + "\n" + "Solicitamos nos puedan aclarar este hallazgo.<br>";
         mensaje = mensaje + "\n" + "Saludos cordiales.<br>";
@@ -2996,7 +2999,7 @@ public class SalesReconciliAmexController extends BaseController {
 
     public String createFileForEmail(A4113Filter filter) throws Exception {
         System.out.println("Report : createFileForEmail");
-        String fileNameDownload = "Settlement Report ";
+        String fileNameDownload = "Settlement Diferences Report " + Functions.getFechaActual() + " " + Functions.getHoraActual() + " ";
         try {
             String date = "";
             Workbook workbook;
