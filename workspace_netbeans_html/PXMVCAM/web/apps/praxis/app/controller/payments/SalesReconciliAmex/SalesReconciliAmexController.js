@@ -31,6 +31,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     me: '',
     searchParams: {},
     paramsDetail: {},
+    paramsDetailChargeback: {},
+    paramsDetailSubmission: {},
+    paramsDetailTransaction: {},
+    paramsDetailPricing: {},
+    paramsDetailMainSettlement: {},
+    paramsDetailSettlement: {},
+    paramsDetailDetSettlement: {},
     dataObtain: {},
     dataGrid: [],
     init: function(view) {

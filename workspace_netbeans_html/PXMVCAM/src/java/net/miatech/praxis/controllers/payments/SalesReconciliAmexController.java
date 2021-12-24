@@ -500,6 +500,11 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -889,6 +894,10 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell27.setCellValue(listaData.get(vi).DIFF_PTAXAMOU);
                 rcell28.setCellValue(listaData.get(vi).DIFF_ODBALAMOU);
                 rcell29.setCellValue(listaData.get(vi).DIFF_PNETAMOU);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell3.setCellStyle(style_red);
+                    rcell29.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -976,6 +985,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1123,6 +1135,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell11.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell12.setCellValue(listaData.get(vi).NETAMOUNC);
                 rcell13.setCellValue(listaData.get(vi).SFEEAMOUNC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell1.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1194,6 +1209,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1438,6 +1456,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell14.setCellValue(listaData.get(vi).TAXAMOUNC);
                 rcell15.setCellValue(listaData.get(vi).NETAMOUNC);
                 rcell16.setCellValue(listaData.get(vi).TRANCOUNTC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell1.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1512,6 +1533,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1672,6 +1696,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell13.setCellValue(listaData.get(vi).TGROSAMOUC);
                 rcell14.setCellValue(listaData.get(vi).FINSAMOUC);
                 rcell15.setCellValue(listaData.get(vi).SINSAMOUC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell1.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1714,6 +1741,7 @@ public class SalesReconciliAmexController extends BaseController {
         String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
+            String date = "";
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A4117Filter> listaData = this.getListPricing(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
@@ -1745,6 +1773,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1772,7 +1803,9 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH1_17 = row1.createCell(17);
             Cell CH1_18 = row1.createCell(18);
 
-            CH1_0.setCellValue("Payment");
+            date = listaData.get(0).IN_DATE.equals("PAYDATE") ? "Payment" : "Processing";
+
+            CH1_0.setCellValue(date);
             CH1_1.setCellValue("Payment");
             CH1_2.setCellValue("Status");
             CH1_3.setCellValue("Pricing");
@@ -2011,6 +2044,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell16.setCellValue(listaData.get(vi).DISCAMOUNC_IMPORT);
                 rcell17.setCellValue(listaData.get(vi).DISCRATEBA_IVA);
                 rcell18.setCellValue(listaData.get(vi).DISCAMOUNC_IVA);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell2.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -2087,6 +2123,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2309,6 +2348,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2488,6 +2530,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell15.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell16.setCellValue(listaData.get(vi).PCURRENCY);
                 rcell17.setCellValue(listaData.get(vi).NETAMOUNC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell2.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -2563,6 +2608,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2833,6 +2881,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell25.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell26.setCellValue(listaData.get(vi).IN_PCURRENCY);
                 rcell27.setCellValue(listaData.get(vi).DISCAMOSC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell3.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
