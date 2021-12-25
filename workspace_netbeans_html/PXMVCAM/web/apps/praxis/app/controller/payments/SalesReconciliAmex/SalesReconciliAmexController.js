@@ -31,6 +31,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     me: '',
     searchParams: {},
     paramsDetail: {},
+    paramsDetailChargeback: {},
+    paramsDetailSubmission: {},
+    paramsDetailTransaction: {},
+    paramsDetailPricing: {},
+    searchParamsMainSettlement: {},
+    paramsDetailSettlement: {},
+    paramsDetailDetSettlement: {},
     dataObtain: {},
     dataGrid: [],
     init: function(view) {
@@ -217,6 +224,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             beanString: beanString,
             bean: me.bean
         };
+        
+        searchParamsMainSettlement = {
+            beanString: beanString,
+            bean: me.bean
+        };
     },
     btnSearch_click: function(obj, e) {
         var selected_value = Ext.getCmp(prototype.id + '-checkSettlement').getValue();
@@ -240,7 +252,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }, listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                    obj.proxy.extraParams = searchParams;
+                    obj.proxy.extraParams = searchParamsMainSettlement;
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
@@ -272,7 +284,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_PAYDATE = rowData.data.PAYDATE;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
 
-        me.paramsDetail.beanString = JSON.stringify(this.beanSettlement);
+        me.paramsDetailSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataSettlement();
     },
     setGridDataSettlement: function() {
@@ -284,7 +296,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }, listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                    obj.proxy.extraParams = searchParams;
+                    obj.proxy.extraParams = me.paramsDetailSettlement;
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
@@ -317,7 +329,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_MERCHID = rowData.data.MERCHID;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
 
-        me.paramsDetail.beanString = JSON.stringify(this.beanSettlement);
+        me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataDetSettlement();
     },
     setGridDataDetSettlement: function() {
@@ -328,7 +340,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 url: prototype.url + '/searchDetSettlement'
             }, listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = me.paramsDetailDetSettlement;
                 },
                 load: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
@@ -433,18 +445,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.strDATE = rowData.data.DATE;
 //        console.log(this.beanSubmission);
 
-        me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);
+        //me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);                
 
 //        var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
 
         if (columnNum === 9) {
+            me.paramsDetailChargeback.beanString = JSON.stringify(this.beanSubmission);
             me.drillDown.push(me.panelActual);
             me.panelActual = '-boxDetChargeback';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
-
+            
             this.setGridDataDetChargeback();
 
         } else {
+            me.paramsDetailSubmission.beanString = JSON.stringify(this.beanSubmission);
             me.drillDown.push(me.panelActual);
             me.panelActual = '-boxDetSubmission';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -460,7 +474,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 url: prototype.url + '/searchDetSubmission'
             }, listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = me.paramsDetailSubmission;
                 },
                 load: function(obj) {
                     if (obj.data.length === 0) {
@@ -502,7 +516,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 url: prototype.url + '/searchDetChargeback'
             }, listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = me.paramsDetailChargeback;
                 },
                 load: function(obj) {
                     if (obj.data.length === 0) {
@@ -560,7 +574,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         console.log(this.beanTransaction);
 
-        me.paramsDetail.beanString = JSON.stringify(this.beanTransaction);
+        //me.paramsDetail.beanString = JSON.stringify(this.beanTransaction);
+        me.paramsDetailTransaction.beanString = JSON.stringify(this.beanTransaction);
         this.setGridDataDetTransaction();
     },
     setGridDataDetTransaction: function() {
@@ -572,7 +587,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 url: prototype.url + '/searchDetTransaction'
             }, listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = me.paramsDetailTransaction;
                 },
                 load: function(obj) {
 
@@ -643,7 +658,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         console.log(this.beanPricing);
 
-        me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
+        //me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
+        me.paramsDetailPricing.beanString = JSON.stringify(this.beanPricing);
         this.setGridDataDetPricing();
     },
     onGridDetPricingByItemt: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
@@ -666,7 +682,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         console.log(this.beanPricing);
 
-        me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
+        //me.paramsDetail.beanString = JSON.stringify(this.beanPricing);
+        me.paramsDetailPricing.beanString = JSON.stringify(this.beanPricing);
         this.setGridDataDetPricing();
     },
     setGridDataDetPricing: function() {
@@ -678,7 +695,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 url: prototype.url + '/searchDetPricing'
             }, listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = me.paramsDetail;
+                    obj.proxy.extraParams = me.paramsDetailPricing;
                 },
                 load: function(obj) {
 
@@ -1253,25 +1270,25 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
             case  '-boxDetChargeback':
-                global.getFile(prototype.url + '/getXLSXChargeback?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getXLSXChargeback?beanString=' + me.paramsDetailChargeback.beanString);
                 break;
             case  '-boxDetSubmission':
-                global.getFile(prototype.url + '/getXLSXSubmission?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getXLSXSubmission?beanString=' + me.paramsDetailSubmission.beanString);
                 break;
             case  '-boxDetTransaction':
-                global.getFile(prototype.url + '/getXLSXTransaction?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getXLSXTransaction?beanString=' + me.paramsDetailTransaction.beanString);
                 break;
             case  '-boxDetPricing':
-                global.getFile(prototype.url + '/getXLSXPricing?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getXLSXPricing?beanString=' + me.paramsDetailPricing.beanString);
                 break;
             case  '-boxMainSettlement':
-                global.getFile(prototype.url + '/getXLSXMainSettlement?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSXMainSettlement?beanString=' + searchParamsMainSettlement.beanString);
                 break;
             case  '-boxSettlement':
-                global.getFile(prototype.url + '/getXLSXSettlement?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSXSettlement?beanString=' + me.paramsDetailSettlement.beanString);
                 break;
             case  '-boxDetSettlement':
-                global.getFile(prototype.url + '/getXLSXDetSettlement?beanString=' + me.paramsDetail.beanString);
+                global.getFile(prototype.url + '/getXLSXDetSettlement?beanString=' + me.paramsDetailDetSettlement.beanString);
                 break;
         }
     },

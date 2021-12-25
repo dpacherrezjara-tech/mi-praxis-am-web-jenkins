@@ -465,7 +465,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSX");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Summary Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             String date = "";
             Workbook workbook;
@@ -500,6 +500,11 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -889,6 +894,10 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell27.setCellValue(listaData.get(vi).DIFF_PTAXAMOU);
                 rcell28.setCellValue(listaData.get(vi).DIFF_ODBALAMOU);
                 rcell29.setCellValue(listaData.get(vi).DIFF_PNETAMOU);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell3.setCellStyle(style_red);
+                    rcell29.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -942,7 +951,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXChargeback(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXChargeback");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Adjustment Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -976,6 +985,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1123,6 +1135,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell11.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell12.setCellValue(listaData.get(vi).NETAMOUNC);
                 rcell13.setCellValue(listaData.get(vi).SFEEAMOUNC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell1.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1160,7 +1175,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXSubmission(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXSubmission");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Submission Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -1194,6 +1209,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1438,6 +1456,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell14.setCellValue(listaData.get(vi).TAXAMOUNC);
                 rcell15.setCellValue(listaData.get(vi).NETAMOUNC);
                 rcell16.setCellValue(listaData.get(vi).TRANCOUNTC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell1.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1478,7 +1499,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXTransaction(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXTransaction");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Transaction Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -1512,6 +1533,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1672,6 +1696,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell13.setCellValue(listaData.get(vi).TGROSAMOUC);
                 rcell14.setCellValue(listaData.get(vi).FINSAMOUC);
                 rcell15.setCellValue(listaData.get(vi).SINSAMOUC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell1.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -1711,9 +1738,10 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXPricing(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXPricing");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Pricing Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
+            String date = "";
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A4117Filter> listaData = this.getListPricing(request, true);
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
@@ -1745,6 +1773,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -1772,7 +1803,9 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH1_17 = row1.createCell(17);
             Cell CH1_18 = row1.createCell(18);
 
-            CH1_0.setCellValue("Payment");
+            date = listaData.get(0).IN_DATE.equals("PAYDATE") ? "Payment" : "Processing";
+
+            CH1_0.setCellValue(date);
             CH1_1.setCellValue("Payment");
             CH1_2.setCellValue("Status");
             CH1_3.setCellValue("Pricing");
@@ -2011,6 +2044,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell16.setCellValue(listaData.get(vi).DISCAMOUNC_IMPORT);
                 rcell17.setCellValue(listaData.get(vi).DISCRATEBA_IVA);
                 rcell18.setCellValue(listaData.get(vi).DISCAMOUNC_IVA);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell2.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -2053,7 +2089,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXMainSettlement(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXMainSettlement");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Main Settlement Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -2087,6 +2123,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2275,7 +2314,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXSettlement(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXSettlement");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Settlement Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -2309,6 +2348,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2416,9 +2458,9 @@ public class SalesReconciliAmexController extends BaseController {
             CH2_12.setCellValue("Amount");
             CH2_13.setCellValue("Commission");
             CH2_14.setCellValue("VAT");
-            CH2_15.setCellValue("Net Amount to Receive AM");
-            CH2_16.setCellValue("Currency Settlement");
-            CH2_17.setCellValue("Reconciled Net Amount");
+            CH2_15.setCellValue("");
+            CH2_16.setCellValue("");
+            CH2_17.setCellValue("");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -2446,6 +2488,9 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 17, 17));
             ++vj;
             //============================================
 
@@ -2488,6 +2533,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell15.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell16.setCellValue(listaData.get(vi).PCURRENCY);
                 rcell17.setCellValue(listaData.get(vi).NETAMOUNC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell2.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -2529,7 +2577,7 @@ public class SalesReconciliAmexController extends BaseController {
     public @ResponseBody
     void getXLSXDetSettlement(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXDetSettlement");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Settlement Detail Report  - " + Functions.getFechaActual() + " " + Functions.getHoraActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -2563,6 +2611,9 @@ public class SalesReconciliAmexController extends BaseController {
             bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            CellStyle style_red = workbook.createCellStyle();
+            style_red.setFillForegroundColor(IndexedColors.RED.getIndex());
+            style_red.setFillPattern(CellStyle.SOLID_FOREGROUND);
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
@@ -2833,6 +2884,9 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell25.setCellValue(listaData.get(vi).NETAMOUN);
                 rcell26.setCellValue(listaData.get(vi).IN_PCURRENCY);
                 rcell27.setCellValue(listaData.get(vi).DISCAMOSC);
+                if (listaData.get(vi).CERROR.equals("01")) {
+                    rcell3.setCellStyle(style_red);
+                }
                 iter.next();
                 ++vi;
                 ++vj;
@@ -2923,10 +2977,10 @@ public class SalesReconciliAmexController extends BaseController {
         String mensaje = "<p>Estimados señores de American Express<br>";
         mensaje = mensaje + "\n" + "De acuerdo al análisis efectuado en la liquidación hemos encontrado diferencias:<br>";
         mensaje = mensaje + "\n" + "<ul>";
-        mensaje = mensaje + "\n" + "<li>Fecha de liquidación: " + Data.DATE + "</li>";
-        mensaje = mensaje + "\n" + "<li>Número de AX Number: " + Data.AXPAYNBR + "</li>";
-        mensaje = mensaje + "\n" + "<li>Merchant Number: " + Data.PMERCHID + "</li>";
-        mensaje = mensaje + "\n" + "<li>Valor: " + Data.DIFF_PNETAMOU_STRING + " " + Data.PCURRENCY + "</li>";
+        mensaje = mensaje + "\n" + "<li>Fecha de liquidación : " + Data.DATE + "</li>";
+        mensaje = mensaje + "\n" + "<li>Número de AX Number : " + Data.AXPAYNBR + "</li>";
+        mensaje = mensaje + "\n" + "<li>Merchant Number : " + Data.PMERCHID + "</li>";
+        mensaje = mensaje + "\n" + "<li>Valor : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
         mensaje = mensaje + "\n" + "</ul>";
         mensaje = mensaje + "\n" + "Solicitamos nos puedan aclarar este hallazgo.<br>";
         mensaje = mensaje + "\n" + "Saludos cordiales.<br>";
@@ -2945,7 +2999,7 @@ public class SalesReconciliAmexController extends BaseController {
 
     public String createFileForEmail(A4113Filter filter) throws Exception {
         System.out.println("Report : createFileForEmail");
-        String fileNameDownload = "Settlement Report ";
+        String fileNameDownload = "Settlement Diferences Report " + Functions.getFechaActual() + " " + Functions.getHoraActual() + " ";
         try {
             String date = "";
             Workbook workbook;
