@@ -180,13 +180,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
         rec = me.view.params.rec;
         var status = '';
         var Vl_archivo = Ext.getCmp(prototype.idDisputeGestionMyarc + '-File').getRawValue();
-        var Vl_name = Vl_archivo.split('\\')[Vl_archivo.split('\\').length - 1];
-        if (Vl_name.length > 25) {
-            global.Msg({msg: "The file name must not be longer than 25 characters", icon: 2, fn: function () {
-                }});
-            return;
+        if (Vl_archivo !== '') {
+            var Vl_name = Vl_archivo.split('\\')[Vl_archivo.split('\\').length - 1];
+            if (Vl_name.length > 25) {
+                global.Msg({msg: "The file name must not be longer than 25 characters", icon: 2, fn: function () {
+                    }});
+                return;
+            }
         }
-        return;
+
         if (Ext.getCmp(prototype.idDisputeGestionMyarc + '-ComboStatus').getValue() === '') {
             Ext.MessageBox.alert('PRAXIS', "Select Status", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
@@ -259,7 +261,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
         me.beanTMP.IN_ANIO = rec.data.A4137ANIO;
         me.beanTMP.IN_NUMBERADM = rec.data.A4137NMEMO;
         me.beanTMP.IN_CNXPA = rec.data.A4137CNXPA;
-         me.beanTMP.IN_PAIS = rec.data.A4137PAIS;
+        me.beanTMP.IN_PAIS = rec.data.A4137PAIS;
         global.Msg({
             msg: 'Insert File?',
             icon: 3,
