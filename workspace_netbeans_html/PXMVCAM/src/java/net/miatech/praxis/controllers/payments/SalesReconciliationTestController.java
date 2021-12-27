@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.praxis.classes.ExportUtil;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.logic.payments.LoadConciliationTestLogic;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.filter.A4164Filter;
 import net.miatech.praxis.payment.filter.A2370Filter;
 import net.miatech.utils.Functions;
 import org.springframework.context.annotation.Scope;
@@ -33,7 +33,7 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -55,7 +55,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaDataSales = logic.loadPX263SQP00652(filter);
+            List<A4164Filter> listaDataSales = logic.loadPX584SQP04338(filter);
 
             map.put("success", true);
             if (dw_excel) {
@@ -79,7 +79,7 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetCountry")
     public @ResponseBody
     String searchDetCountry(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -95,7 +95,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00655(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04340(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -113,7 +113,7 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetCardCode")
     public @ResponseBody
     String searchDetCardCode(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -129,7 +129,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00656(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP00656(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -147,7 +147,7 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetDay")
     public @ResponseBody
     String searchDetDay(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -163,7 +163,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00657(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP00657(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -181,7 +181,7 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetTicket")
     public @ResponseBody
     String searchDetTicket(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -197,7 +197,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00658(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP00658(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -215,14 +215,14 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchCashMonth")
     public @ResponseBody
     String searchCashMonth(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2370Filter> listaDataCash = logic.loadPX263SQP00899(filter);
+            List<A2370Filter> listaDataCash = logic.loadPX584SQP00899(filter);
 
             map.put("success", true);
             map.put("data", listaDataCash);
@@ -246,7 +246,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaDataCash = logic.loadPX263SQP00900(filter);
+            List<A4164Filter> listaDataCash = logic.loadPX584SQP00900(filter);
 
             map.put("success", true);
             map.put("data", listaDataCash);
@@ -263,14 +263,14 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchCashDay")
     public @ResponseBody
     String searchCashDay(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaDataCash = logic.loadPX263SQP00901(filter);
+            List<A4164Filter> listaDataCash = logic.loadPX584SQP00901(filter);
 
             map.put("success", true);
             map.put("data", listaDataCash);
@@ -287,8 +287,8 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetTICKET")
     public @ResponseBody
     String searchDetTICKET(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        A2290Filter filter = new A2290Filter();
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        A4164Filter filter = new A4164Filter();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -296,14 +296,14 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX263SQP01960(filter);
+            hmResultado = logic.loadPX584SQP01960(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
             } else {
-                List<A2290Filter> listaData = hmResultado.get("TKT");
-                List<A2290Filter> listaError = hmResultado.get("ERROR");
+                List<A4164Filter> listaData = hmResultado.get("TKT");
+                List<A4164Filter> listaError = hmResultado.get("ERROR");
 
                 map.put("success", true);
                 map.put("lstDetTkyByStval", listaData);
@@ -323,14 +323,14 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchBean")
     public @ResponseBody
     String searchBean(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            A2290Filter bean = logic.loadPX263SQP00659(filter);
+            A4164Filter bean = logic.loadPX584SQP00659(filter);
 
             map.put("success", true);
             map.put("beanCons", bean);
@@ -348,8 +348,8 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetCountryByStval")
     public @ResponseBody
     String searchDetCountryByStval(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        List<A2290Filter> listaError = new ArrayList<A2290Filter>();
-        A2290Filter filter = new A2290Filter();
+        List<A4164Filter> listaError = new ArrayList<A4164Filter>();
+        A4164Filter filter = new A4164Filter();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -371,14 +371,14 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00676(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04339(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
             } else {
                 if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
-                    listaError = logic.loadPX263SQP00894(filter);
+                    listaError = logic.loadPX584SQP00894(filter);
                 }
                 map.put("success", true);
                 map.put("data", listaData);
@@ -399,7 +399,7 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetCountryByStval_1")
     public @ResponseBody
     String searchDetCountryByStval_1(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -415,7 +415,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00676(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04339(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -435,8 +435,8 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetCardCodeByStval")
     public @ResponseBody
     String searchDetCardCodeByStval(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        List<A2290Filter> listaError = new ArrayList<A2290Filter>();
-        A2290Filter filter = new A2290Filter();
+        List<A4164Filter> listaError = new ArrayList<A4164Filter>();
+        A4164Filter filter = new A4164Filter();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -458,14 +458,14 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00677(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP00677(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
             } else {
                 if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
-                    listaError = logic.loadPX263SQP00894(filter);
+                    listaError = logic.loadPX584SQP00894(filter);
                 }
 
                 map.put("success", true);
@@ -488,8 +488,8 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetDayByStval")
     public @ResponseBody
     String searchDetDayByStval(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        List<A2290Filter> listaError = new ArrayList<A2290Filter>();
-        A2290Filter filter = new A2290Filter();
+        List<A4164Filter> listaError = new ArrayList<A4164Filter>();
+        A4164Filter filter = new A4164Filter();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -511,14 +511,14 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00678(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP00678(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
             } else {
                 if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
-                    listaError = logic.loadPX263SQP00894(filter);
+                    listaError = logic.loadPX584SQP00894(filter);
                 }
 
                 map.put("success", true);
@@ -541,9 +541,9 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetTktByStval")
     public @ResponseBody
     String searchDetTktByStval(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        List<A2290Filter> listaError = new ArrayList<A2290Filter>();
-        A2290Filter filter = new A2290Filter();
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        List<A4164Filter> listaError = new ArrayList<A4164Filter>();
+        A4164Filter filter = new A4164Filter();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -565,13 +565,13 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX263SQP00715(filter);
+            hmResultado = logic.loadPX584SQP00715(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
             } else {
-                List<A2290Filter> listaData = hmResultado.get("TKT");
+                List<A4164Filter> listaData = hmResultado.get("TKT");
                 listaError = hmResultado.get("ERROR");
 
                 map.put("success", true);
@@ -593,14 +593,14 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchByPNR")
     public @ResponseBody
     String searchByPNR(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP03986(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP03986(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -617,14 +617,14 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchWarnTkts")
     public @ResponseBody
     String searchWarnTkts(ModelMap map, HttpServletRequest request) {
-        A2290Filter filter = new A2290Filter();
+        A4164Filter filter = new A4164Filter();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A2290Filter> listaData = logic.loadPX263SQP00817(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP00817(filter);
 
             map.put("success", true);
             map.put("lstWarnTkt", listaData);
@@ -641,8 +641,8 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetTARJETA")
     public @ResponseBody
     String searchDetTARJETA(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        A2290Filter filter = new A2290Filter();
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        A4164Filter filter = new A4164Filter();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -665,15 +665,15 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX263SQP01828(filter);
+            hmResultado = logic.loadPX584SQP01828(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
             } else {
                 map.put("success", true);
-                List<A2290Filter> listaData = hmResultado.get("TKT");
-                List<A2290Filter> listaError = hmResultado.get("ERROR");
+                List<A4164Filter> listaData = hmResultado.get("TKT");
+                List<A4164Filter> listaError = hmResultado.get("ERROR");
                 map.put("success", true);
                 map.put("data", listaData);
                 map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -696,8 +696,8 @@ public class SalesReconciliationTestController extends BaseController {
     @RequestMapping(value = "/searchDetMERCHAT")
     public @ResponseBody
     String searchDetMERCHAT(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        A2290Filter filter = new A2290Filter();
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        A4164Filter filter = new A4164Filter();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
         boolean dw_excel = Boolean.parseBoolean(request.getParameter("dw_excel"));
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
@@ -705,14 +705,14 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX263SQP01976(filter);
+            hmResultado = logic.loadPX584SQP01976(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
 //                map.put("nameExcel", nameExcel);
             } else {
-                List<A2290Filter> listaData = hmResultado.get("TKT");
-                List<A2290Filter> listaError = hmResultado.get("ERROR");
+                List<A4164Filter> listaData = hmResultado.get("TKT");
+                List<A4164Filter> listaError = hmResultado.get("ERROR");
 
                 map.put("success", true);
                 map.put("lstDetTkyByStval", listaData);

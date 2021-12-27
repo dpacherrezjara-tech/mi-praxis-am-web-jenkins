@@ -10,7 +10,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.filter.A4164Filter;
 import net.miatech.praxis.payment.filter.A2370Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -33,10 +33,10 @@ public class LoadConciliationTestDAO {
      * *************************** PX263
      * ***************************************
      */
-    public List<A2290Filter> loadPX263SQP00652(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04338(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
         long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0, lngTotQCLAR = 0, lngTotQCHRG = 0;
@@ -52,7 +52,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00652(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04338(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -118,7 +118,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.strDescripcion = "  " + Functions.getMonthConvert(Fec);
                     beanTkt.SDATE = rst.getString("SDATE").trim();
                     beanTkt.IN_SDATE = rst.getString("SDATE").trim();
@@ -210,7 +210,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2370Filter> loadPX263SQP00899(A2290Filter filter) throws SQLException, Exception {
+    public List<A2370Filter> loadPX584SQP00899(A4164Filter filter) throws SQLException, Exception {
 
         List<A2370Filter> lstTkts = new ArrayList<A2370Filter>(0);
         A2370Filter beanTkt;
@@ -307,11 +307,11 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public HashMap<String, List<A2290Filter>> loadPX263SQP01960(A2290Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP01960(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        List<A2290Filter> lstError = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         String tipFecha = "Sales";
         long lngTotCant = 0;
         double dblTotSVFOP = 0, dblTotAVFOP = 0;
@@ -326,7 +326,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -362,7 +362,7 @@ public class LoadConciliationTestDAO {
 
                     //PRESENTACION SEGUN ESTADO
                     if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         //beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         // beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -530,7 +530,7 @@ public class LoadConciliationTestDAO {
                     } else {
                         //MATCH CON DIFERENCIAS
                         //REGISTRO CON DATOS DE LA VENTA =======================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         // beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         // beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -662,7 +662,7 @@ public class LoadConciliationTestDAO {
 
                         lstTkts.add(beanTkt);
                         //REGISTRO CON DATOS DEL ACCB ==============================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         //beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         // beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -812,7 +812,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
                     //PRESENTACION SEGUN ERROR
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     if (!rst.getString("ERROR").trim().isEmpty()) {
                         beanTkt.strDescripcion = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -849,11 +849,11 @@ public class LoadConciliationTestDAO {
         return hmResultado;
     }
 
-    public HashMap<String, List<A2290Filter>> loadPX263SQP01828(A2290Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP01828(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        List<A2290Filter> lstError = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         String tipFecha = "Sales";
         long lngTotCant = 0;
         double dblTotSVFOP = 0, dblTotAVFOP = 0;
@@ -868,7 +868,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -922,7 +922,7 @@ public class LoadConciliationTestDAO {
 
                     //PRESENTACION SEGUN ESTADO
                     if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strYearFrom = filter.strYearFrom.trim();
                         beanTkt.strMonthFrom = filter.strMonthFrom.trim();
@@ -1063,7 +1063,7 @@ public class LoadConciliationTestDAO {
                     } else {
                         //MATCH CON DIFERENCIAS
                         //REGISTRO CON DATOS DE LA VENTA =======================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strYearFrom = filter.strYearFrom.trim();
                         beanTkt.strMonthFrom = filter.strMonthFrom.trim();
@@ -1177,7 +1177,7 @@ public class LoadConciliationTestDAO {
 
                         lstTkts.add(beanTkt);
                         //REGISTRO CON DATOS DEL ACCB ==========================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strYearFrom = filter.strYearFrom.trim();
                         beanTkt.strMonthFrom = filter.strMonthFrom.trim();
@@ -1309,7 +1309,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
                     //PRESENTACION SEGUN ERROR
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     if (!rst.getString("ERROR").trim().isEmpty()) {
                         beanTkt.strDescripcion = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -1348,12 +1348,12 @@ public class LoadConciliationTestDAO {
         return hmResultado;
     }
 
-    public HashMap<String, List<A2290Filter>> loadPX263SQP01976(A2290Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP01976(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        List<A2290Filter> lstError = new ArrayList<A2290Filter>(0);
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
         String tipFecha = "Sales";
-        A2290Filter beanTkt;
+        A4164Filter beanTkt;
         long lngTotCant = 0;
         double dblTotSVFOP = 0, dblTotAVFOP = 0;
         if (filter.IN_TDOC.trim().equals("R")) {
@@ -1367,7 +1367,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1406,7 +1406,7 @@ public class LoadConciliationTestDAO {
 
                     //PRESENTACION SEGUN ESTADO
                     if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         //beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         // beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -1569,7 +1569,7 @@ public class LoadConciliationTestDAO {
                     } else {
                         //MATCH CON DIFERENCIAS
                         //REGISTRO CON DATOS DE LA VENTA =======================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         // beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         // beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -1700,7 +1700,7 @@ public class LoadConciliationTestDAO {
 
                         lstTkts.add(beanTkt);
                         //REGISTRO CON DATOS DEL ACCB ==============================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         //beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         // beanTkt.strFormatDate = filter.strFormatDate.trim();
                         // beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -1849,7 +1849,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
                     //PRESENTACION SEGUN ERROR
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     if (!rst.getString("ERROR").trim().isEmpty()) {
                         beanTkt.strDescripcion = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -1886,10 +1886,10 @@ public class LoadConciliationTestDAO {
         return hmResultado;
     }
 
-    public List<A2290Filter> loadPX263SQP00655(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04340(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
         long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0;
@@ -1897,7 +1897,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00655(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04340(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1958,7 +1958,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                     beanTkt.IN_SDATE = filter.IN_SDATE.trim();
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
@@ -2056,10 +2056,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00656(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00656(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
         long lngTotQMANUAL = 0, lngTotQWSET = 0, lngTotQTHTEF = 0;
@@ -2128,7 +2128,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                     beanTkt.IN_SDATE = filter.IN_SDATE.trim();
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
@@ -2218,10 +2218,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00657(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00657(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         //String strSCARF = "";
         long lngTotQMATCH = 0, lngTotQSALES = 0, lngTotQACCB = 0, lngTotQDIFF = 0;
         long lngTotQACEP = 0, lngTotQRECH = 0, lngTotQSOSP = 0, lngTotQPAID = 0;
@@ -2291,7 +2291,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
                     beanTkt.IN_TDOC = filter.IN_TDOC.trim();
@@ -2381,10 +2381,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00658(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00658(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         //String strSCARF = "";
         double dblTotSVFOP = 0, dblTotAVFOP = 0;
         String tipFecha = "Sales";
@@ -2456,7 +2456,7 @@ public class LoadConciliationTestDAO {
 
                     //PRESENTACION SEGUN ESTADO
                     if (!rst.getString("STVAL").trim().equals("4") || !rst.getString("STVAL").trim().equals("5")) {
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
@@ -2650,7 +2650,7 @@ public class LoadConciliationTestDAO {
                     } else {
                         //MATCH CON DIFERENCIAS
                         //REGISTRO CON DATOS DE LA VENTA =======================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
@@ -2803,7 +2803,7 @@ public class LoadConciliationTestDAO {
                         beanTkt.page.TOTROW = filter.page.TOTROW;
                         lstTkts.add(beanTkt);
                         //REGISTRO CON DATOS DEL ACCB ==============================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
                         beanTkt.IN_TDOC = filter.IN_TDOC.trim();
@@ -2985,10 +2985,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00900(A2370Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00900(A2370Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         double SVFOP = 0, SVFOPUSD = 0, SVFOPRF = 0, SVFOPUSDRF = 0;
 
         CallableStatement cstmt = null;
@@ -3039,7 +3039,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.FTE = filter.FTE;
                     beanTkt.SCOUNTRY = filter.SCOUNTRY;
                     beanTkt.IN_TICKET = filter.IN_TICKET;
@@ -3090,10 +3090,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00901(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00901(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         double SVFOPUSDRF = 0, SVFOPUSD = 0;
 
         CallableStatement cstmt = null;
@@ -3145,7 +3145,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.FTE = filter.FTE;
                     beanTkt.SCOUNTRY = filter.SCOUNTRY;
                     beanTkt.strDescCountry = filter.strDescCountry;
@@ -3196,9 +3196,9 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public A2290Filter loadPX263SQP00659(A2290Filter filter) throws SQLException, Exception {
+    public A4164Filter loadPX584SQP00659(A4164Filter filter) throws SQLException, Exception {
 
-        A2290Filter beanTkt = new A2290Filter();
+        A4164Filter beanTkt = new A4164Filter();
         String strSCARF = "";
 
         if (filter.STVAL.trim().length() > 1) {
@@ -3381,10 +3381,10 @@ public class LoadConciliationTestDAO {
         return beanTkt;
     }
 
-    public List<A2290Filter> loadPX263SQP00817(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00817(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         String tipFecha = "Sales";
         if (filter.TDOC.trim().equals("R")) {
             tipFecha = "Refund";
@@ -3427,7 +3427,7 @@ public class LoadConciliationTestDAO {
 
                 //MATCH CON DIFERENCIAS
                 //REGISTRO CON DATOS DE LA VENTA ===========================
-                beanTkt = new A2290Filter();
+                beanTkt = new A4164Filter();
                 beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                 /*if (rst.getString("TDOC").trim().equals("R")) {
                  beanTkt.strPEM = "REFUND";
@@ -3540,7 +3540,7 @@ public class LoadConciliationTestDAO {
 
                 lstTkts.add(beanTkt);
                 //REGISTRO CON DATOS DEL ACCB ==============================
-                /*beanTkt = new A2290Filter();
+                /*beanTkt = new A4164Filter();
                  if (rst.getString("AFTE").trim().equals("X")) {
                  beanTkt.strPEM = "ACCB BSP";
                  } else if (rst.getString("AFTE").trim().equals("A")) {
@@ -3654,10 +3654,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00676(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04339(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         long lngTotCant = 0;
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -3673,7 +3673,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00676(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04339(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3725,7 +3725,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                     beanTkt.IN_SDATE = filter.IN_SDATE.trim();
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
@@ -3813,10 +3813,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00894(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00894(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
@@ -3859,7 +3859,7 @@ public class LoadConciliationTestDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A2290Filter();
+                beanTkt = new A4164Filter();
                 beanTkt.strFecFiltro = filter.strFecFiltro;
                 beanTkt.IN_SDATE = filter.IN_SDATE;
                 beanTkt.IN_TDOC = filter.IN_TDOC;
@@ -3909,10 +3909,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00677(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00677(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         long lngTotCant = 0;
         double dblSVFOP = 0, dblAVFOP = 0;
         CallableStatement cstmt = null;
@@ -3983,7 +3983,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                     beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -4070,10 +4070,10 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP00678(A2290Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP00678(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         long lngTotCant = 0;
         double dblTotSVFOP = 0, dblTotAVFOP = 0;
         CallableStatement cstmt = null;
@@ -4145,7 +4145,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
 
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.strFormatDate = filter.strFormatDate.trim();
                     beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                     beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -4226,9 +4226,9 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A2290Filter> loadPX263SQP03986(A2290Filter filter) throws SQLException, Exception {
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+    public List<A4164Filter> loadPX584SQP03986(A4164Filter filter) throws SQLException, Exception {
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -4260,7 +4260,7 @@ public class LoadConciliationTestDAO {
 
             while (rst.next()) {
 
-                beanTkt = new A2290Filter();
+                beanTkt = new A4164Filter();
 
                 beanTkt.CCUST = rst.getString("CCUST").trim();
                 beanTkt.SDATE = rst.getString("SDATE").trim();
@@ -4327,11 +4327,11 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public HashMap<String, List<A2290Filter>> loadPX263SQP00715(A2290Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP00715(A4164Filter filter) throws SQLException, Exception {
 
-        List<A2290Filter> lstTkts = new ArrayList<A2290Filter>(0);
-        List<A2290Filter> lstError = new ArrayList<A2290Filter>(0);
-        A2290Filter beanTkt;
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
         String tipFecha = "Sales";
         long lngTotCant = 0;
         double dblTotSVFOP = 0, dblTotAVFOP = 0;
@@ -4346,7 +4346,7 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        HashMap<String, List<A2290Filter>> hmResultado = new HashMap<String, List<A2290Filter>>();
+        HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -4408,7 +4408,7 @@ public class LoadConciliationTestDAO {
 
                     //PRESENTACION SEGUN ESTADO
                     if (!rst.getString("STVAL").trim().equals("4") && !rst.getString("STVAL").trim().equals("5")) {
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -4589,7 +4589,7 @@ public class LoadConciliationTestDAO {
                     } else {
                         //MATCH CON DIFERENCIAS
                         //REGISTRO CON DATOS DE LA VENTA =======================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.TRNCU = rst.getString("TRNCU");
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
@@ -4736,7 +4736,7 @@ public class LoadConciliationTestDAO {
 
                         lstTkts.add(beanTkt);
                         //REGISTRO CON DATOS DEL ACCB ==============================
-                        beanTkt = new A2290Filter();
+                        beanTkt = new A4164Filter();
                         beanTkt.strFecFiltro = filter.strFecFiltro.trim();
                         beanTkt.strFormatDate = filter.strFormatDate.trim();
                         beanTkt.IN_SDATE = filter.IN_SDATE.trim();
@@ -4899,7 +4899,7 @@ public class LoadConciliationTestDAO {
 
                 while (rst.next()) {
                     //PRESENTACION SEGUN ERROR
-                    beanTkt = new A2290Filter();
+                    beanTkt = new A4164Filter();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     if (!rst.getString("ERROR").trim().isEmpty()) {
                         beanTkt.strDescripcion = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
