@@ -2985,11 +2985,10 @@ public class SalesReconciliAmexController extends BaseController {
         ProMail proMail = new ProMail();
 
         List<String> receptores = new ArrayList<>();
-        receptores.add("ctarazona@miatech.net");
         receptores.add("eneves@miatech.net");
 
         List<String> Ccpy = new ArrayList<>();
-        Ccpy.add("ggutierrez@miatech.net");
+        Ccpy.add("ctarazona@miatech.net");
 
         String asunto = "Debit Memo";
 
@@ -3532,11 +3531,10 @@ public class SalesReconciliAmexController extends BaseController {
         double a = 0;
 
         List<String> receptores = new ArrayList<>();
-        receptores.add("ctarazona@miatech.net");
         receptores.add("eneves@miatech.net");
 
         List<String> Ccpy = new ArrayList<>();
-        //Ccpy.add("ggutierrez@miatech.net");
+        Ccpy.add("ctarazona@miatech.net");
 
         String asunto = "Debit Memo";
 

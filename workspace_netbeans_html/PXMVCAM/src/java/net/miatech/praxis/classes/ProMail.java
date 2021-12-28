@@ -981,24 +981,27 @@ public class ProMail {
             message.setReplyTo(replyTo);
             //Se definen el o los destinatarios
             message.addRecipients(Message.RecipientType.TO, dest);
-            message.addRecipients(Message.RecipientType.BCC, Ccp);
+            message.addRecipients(Message.RecipientType.CC, Ccp);
             //message.addRecipients(Message.RecipientType.BCC, dest);
             //Se defina el asunto del e-mail
             message.setSubject(asunto);
 
             //Se seteo el mensaje del e-mail
-            MimeBodyPart messageBodyPart = new MimeBodyPart();                                  
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setContent(mensaje, "text/html");
 
             Multipart multipart = new MimeMultipart("related");
             multipart.addBodyPart(messageBodyPart);
-            
-            String cid = "logo";
-            MimeBodyPart imagePart = new MimeBodyPart();
-            imagePart.attachFile("C:/Dumps/CSC.jpg");
-            imagePart.setContentID("<" + cid + ">");
-            imagePart.setDisposition(MimeBodyPart.INLINE);
-            multipart.addBodyPart(imagePart);
+
+            File f_logo = new File("C:/Dumps/CSC.jpg");
+            if (f_logo.exists()) {
+                String cid = "logo";
+                MimeBodyPart imagePart = new MimeBodyPart();
+                imagePart.attachFile("C:/Dumps/CSC.jpg");
+                imagePart.setContentID("<" + cid + ">");
+                imagePart.setDisposition(MimeBodyPart.INLINE);
+                multipart.addBodyPart(imagePart);
+            }
 
             //Se adjuntan los archivos al correo
             if (adjuntos != null && adjuntos.size() > 0) {
