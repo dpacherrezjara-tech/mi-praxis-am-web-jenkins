@@ -2982,10 +2982,14 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "<li>Merchant Number : " + Data.PMERCHID + "</li>";
         mensaje = mensaje + "\n" + "<li>Valor : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
         mensaje = mensaje + "\n" + "</ul>";
-        mensaje = mensaje + "\n" + "Solicitamos nos puedan aclarar este hallazgo.<br>";
-        mensaje = mensaje + "\n" + "Saludos cordiales.<br>";
-        mensaje = mensaje + "\n" + "Román Pichardo<br>";
+        mensaje = mensaje + "\n" + "Solicitamos nos puedan aclarar este hallazgo.<br><br>";
         mensaje = mensaje + "\n" + "PD: Adjunto detalle del hallazgo.</p>";
+        mensaje = mensaje + "\n" + "Saludos cordiales.<br><br>";
+        mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";        
+        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>"; 
+        //mensaje = mensaje + "\n" + "<img src=\"https://i.postimg.cc/8zPskTrj/CSC.jpg\" ><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardo@aeromexico.com\" target=\"_blank\" >rpichardo@aeromexico.com</a></span>";        
+
 
         String correoMask = "amaclaracionescontracargos@miatech.net";
 
