@@ -69,6 +69,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             '#SalesReconciliAmexForm-btnAdd': {
                 click: this.btnAdd_click
             },
+            '#SalesReconciliAmexForm-btnEmail': {
+                click: this.btnEmail_click
+            },
             '#SalesReconciliAmexForm-btnBack': {
                 click: this.btnBack_click
             },
@@ -224,7 +227,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             beanString: beanString,
             bean: me.bean
         };
-        
+
         searchParamsMainSettlement = {
             beanString: beanString,
             bean: me.bean
@@ -454,7 +457,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             me.drillDown.push(me.panelActual);
             me.panelActual = '-boxDetChargeback';
             global.selectedChild(me.childs, prototype.id + me.panelActual);
-            
+
             this.setGridDataDetChargeback();
 
         } else {
@@ -1213,6 +1216,48 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         }).show();
     },
+    btnEmail_click: function(obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Send Mail ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.sendMailMultipleDifferences();
+                }
+            }
+        });
+    },
+    sendMailMultipleDifferences: function(obj, e) {
+        /*Ext.Ajax.request({
+            url: prototype.url + '/sendMail',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                DATE: data.DATE,
+                IN_DATE: data.IN_DATE,
+                AXPAYNBR: data.AXPAYNBR,
+                PMERCHID: data.PMERCHID,
+                DIFF_PNETAMOU_STRING: Ext.util.Format.number(data.DIFF_PNETAMOU, '0,000.00').replace('-', ''),
+                PCURRENCY: data.PCURRENCY
+            },
+            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...', ''),
+            success: function(response, options) {
+                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...', '');
+
+                var res = Ext.JSON.decode(response.responseText);
+                global.Msg({
+                    msg: res.MESSAGE,
+                    icon: 1,
+                    fn: function() {
+                    }
+                });
+            }
+        });*/
+    },
     btnBack_click: function(obj, e) {
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
@@ -1325,7 +1370,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             icon: Ext.MessageBox.QUESTION,
             modal: true,
             fn: function(btn) {
-                if (btn === 'ok') {                    
+                if (btn === 'ok') {
                     this.sendMail(rowData.data);
                 }
             }
@@ -1348,7 +1393,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 IN_DATE: data.IN_DATE,
                 AXPAYNBR: data.AXPAYNBR,
                 PMERCHID: data.PMERCHID,
-                DIFF_PNETAMOU_STRING: Ext.util.Format.number(data.DIFF_PNETAMOU, '0,000.00').replace('-',''),
+                DIFF_PNETAMOU_STRING: Ext.util.Format.number(data.DIFF_PNETAMOU, '0,000.00').replace('-', ''),
                 PCURRENCY: data.PCURRENCY
             },
             beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...', ''),

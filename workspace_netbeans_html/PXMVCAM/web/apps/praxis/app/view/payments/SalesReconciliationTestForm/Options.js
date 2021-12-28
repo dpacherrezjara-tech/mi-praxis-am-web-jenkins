@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
+Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Options', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-options',
+    alias: 'widget.'+prototype.id+'-options',
     border: false,
     layout: {
         type: 'hbox',
@@ -9,8 +9,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
     items: [
         {
             xtype: 'panel',
-            id: prototype.id + '-boxPaginacion',
-            hidden: false,
+            id: prototype.id+'-boxPaginacion',
+            hidden: true,
             width: 100,
             border: false,
             items: [
@@ -20,35 +20,43 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                     items: [
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-first',
+                            id: prototype.id+'-btn-pag-first',
                             iconCls: 'prx-icon-pagination-first',
-                            tooltip: 'First Page'
-
+                            tooltip: 'First Page',
+                            listeners: {
+                                click: 'pagFirst'
+                            }
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-previous',
+                            id: prototype.id+'-btn-pag-previous',
                             iconCls: 'prx-icon-pagination-previous',
-                            tooltip: 'Previous Page'
-
+                            tooltip: 'Previous Page',
+                            listeners: {
+                                click: 'pagPrevious'
+                            }
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-next',
+                            id: prototype.id+'-btn-pag-next',
                             iconCls: 'prx-icon-pagination-next',
-                            tooltip: 'Next Page'
-
+                            tooltip: 'Next Page',
+                            listeners: {
+                                click: 'pagNext'
+                            }
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-pag-last',
+                            id: prototype.id+'-btn-pag-last',
                             iconCls: 'prx-icon-pagination-last',
-                            tooltip: 'Last Page'
-
+                            tooltip: 'Last Page',
+                            listeners: {
+                                click: 'pagLast'
+                            }
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin',
+                            id: prototype.id+'-paggin',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -56,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin2',
+                            id: prototype.id+'-paggin2',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -64,7 +72,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin3',
+                            id: prototype.id+'-paggin3',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -72,7 +80,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin4',
+                            id: prototype.id+'-paggin4',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -80,7 +88,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin5',
+                            id: prototype.id+'-paggin5',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -88,7 +96,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin6',
+                            id: prototype.id+'-paggin6',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -96,7 +104,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin7',
+                            id: prototype.id+'-paggin7',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -104,7 +112,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin8',
+                            id: prototype.id+'-paggin8',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -112,7 +120,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin9',
+                            id: prototype.id+'-paggin9',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -120,7 +128,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin10',
+                            id: prototype.id+'-paggin10',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
@@ -128,13 +136,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                         },
                         {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin11',
+                            id: prototype.id+'-paggin11',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
                             hidden: true
-                        }
-
+                        },
                     ]
                 }
             ]
@@ -149,23 +156,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                     items: [
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnSearch',
+                            id: prototype.id+'-btnSearch',
                             iconCls: 'prx-icon-search',
-                            tooltip: 'Search'
+                            tooltip: 'Search',
+                            listeners: {
+                                click: 'btnSearch_click'
+                            }
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnFilter',
+                            id: prototype.id+'-btnFilter',
                             iconCls: 'prx-icon-filter',
-                            tooltip: 'Display filter'
-
+                            tooltip: 'Display filter',
+                            listeners: {
+                                click: 'btnFilter_click'
+                            }
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btnAdd',
-//                            iconCls: 'prx-icon-add',
-//                            tooltip: 'New'
-//                        },
                         {
                             xtype:'button',
                             id: prototype.id+'-btnDisplay',
@@ -176,40 +182,40 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                             }
                         },
                         {
-                            xtype:'button',
-                            id: prototype.id+'-btnEmail',
-                            icon: 'resources/img/botones/24x24/Forward.png',
-                            tooltip: 'Display Charts',
+                            xtype: 'button',
+                            id: prototype.id+'-btnExcel',
+                            iconCls: 'prx-icon-excel',
+                            tooltip: 'Export to Excel',
                             listeners: {
-                                click: 'btnEmail_click'
+                                click: 'imgExcel_clickHandler'
                             }
                         },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnExcel',
-                            iconCls: 'prx-icon-excel',
-                            tooltip: 'Export to Excel'
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnClear',
+                            id: prototype.id+'-btnClear',
                             iconCls: 'prx-icon-clear',
-                            tooltip: 'Clear Options'
+                            tooltip: 'Clear Options',
+                            listeners: {
+                                click: 'btnClear_click'
+                            }
                         },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id+'-btnQuery',
-//                            icon: 'resources/img/botones/query.png',
-//                            tooltip: 'Query',
-//                            listeners: {
-//                                click: 'btnQuery_click'
-//                            }
-//                        },
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnBack',
+                            id: prototype.id+'-btnQuery',
+                            icon: 'resources/img/botones/query.png',
+                            tooltip: 'Query',
+                            listeners: {
+                                click: 'btnQuery_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id+'-btnBack',
                             iconCls: 'prx-icon-back',
-                            tooltip: 'Back'
+                            tooltip: 'Back',
+                            listeners: {
+                                click: 'btnBack_click'
+                            }
                         }
                     ]
                 }
