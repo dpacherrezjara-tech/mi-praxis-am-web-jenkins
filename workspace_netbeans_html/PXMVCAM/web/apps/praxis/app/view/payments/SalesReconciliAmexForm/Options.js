@@ -176,6 +176,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                             }
                         },
                         {
+                            xtype:'button',
+                            id: prototype.id+'-btnEmail',
+                            icon: 'resources/img/botones/24x24/Forward.png',
+                            tooltip: 'Display Charts',
+                            listeners: {
+                                click: 'btnEmail_click'
+                            }
+                        },
+                        {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
