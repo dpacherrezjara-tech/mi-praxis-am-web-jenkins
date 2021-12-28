@@ -129,7 +129,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP00656(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04344(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -163,7 +163,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP00657(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04345(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -197,7 +197,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP00658(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04346(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -296,7 +296,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX584SQP01960(filter);
+            hmResultado = logic.loadPX584SQP04347(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
@@ -330,7 +330,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            A4164Filter bean = logic.loadPX584SQP00659(filter);
+            A4164Filter bean = logic.loadPX584SQP04348(filter);
 
             map.put("success", true);
             map.put("beanCons", bean);
@@ -378,7 +378,7 @@ public class SalesReconciliationTestController extends BaseController {
 //                map.put("nameExcel", nameExcel);
             } else {
                 if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
-                    listaError = logic.loadPX584SQP00894(filter);
+                    listaError = logic.loadPX584SQP04349(filter);
                 }
                 map.put("success", true);
                 map.put("data", listaData);
@@ -458,14 +458,14 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP00677(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04341(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
             } else {
                 if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
-                    listaError = logic.loadPX584SQP00894(filter);
+                    listaError = logic.loadPX584SQP04349(filter);
                 }
 
                 map.put("success", true);
@@ -511,14 +511,14 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP00678(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04342(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, listaData);
 //                map.put("nameExcel", nameExcel);
             } else {
                 if (filter.IN_STVAL.equals("4") || filter.IN_STVAL.equals("5")) {
-                    listaError = logic.loadPX584SQP00894(filter);
+                    listaError = logic.loadPX584SQP04349(filter);
                 }
 
                 map.put("success", true);
@@ -565,7 +565,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX584SQP00715(filter);
+            hmResultado = logic.loadPX584SQP04343(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
@@ -600,7 +600,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP03986(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04350(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -624,7 +624,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4164Filter> listaData = logic.loadPX584SQP00817(filter);
+            List<A4164Filter> listaData = logic.loadPX584SQP04351(filter);
 
             map.put("success", true);
             map.put("lstWarnTkt", listaData);
@@ -665,7 +665,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX584SQP01828(filter);
+            hmResultado = logic.loadPX584SQP04352(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));
@@ -705,7 +705,7 @@ public class SalesReconciliationTestController extends BaseController {
 
             LoadConciliationTestLogic logic = new LoadConciliationTestLogic();
             logic.setSession(this.serverSession.getServerSession());
-            hmResultado = logic.loadPX584SQP01976(filter);
+            hmResultado = logic.loadPX584SQP04353(filter);
 
             if (dw_excel) {
                 ExportUtil.exportFields(request, response, hmResultado.get("TKT"));

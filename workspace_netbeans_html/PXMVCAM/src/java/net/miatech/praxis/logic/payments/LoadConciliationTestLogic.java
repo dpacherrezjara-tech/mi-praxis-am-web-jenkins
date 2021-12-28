@@ -30,32 +30,32 @@ public class LoadConciliationTestLogic {
         return loadConciliationTestDAO.loadPX584SQP00899(filter);
     }
     
-    public HashMap<String, List<A4164Filter>> loadPX584SQP01960(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP01960(filter);
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04347(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04347(filter);
     }
     
-    public HashMap<String, List<A4164Filter>> loadPX584SQP01828(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP01828(filter);
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04352(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04352(filter);
     }
     
-    public HashMap<String, List<A4164Filter>> loadPX584SQP01976(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP01976(filter);
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04353(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04353(filter);
     }
     
     public List<A4164Filter> loadPX584SQP04340(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP04340(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP00656(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00656(filter);
+    public List<A4164Filter> loadPX584SQP04344(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04344(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP00657(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00657(filter);
+    public List<A4164Filter> loadPX584SQP04345(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04345(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP00658(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00658(filter);
+    public List<A4164Filter> loadPX584SQP04346(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04346(filter);
     }
     
     public List<A4164Filter> loadPX584SQP00900(A2370Filter filter) throws SQLException, Exception {
@@ -66,35 +66,35 @@ public class LoadConciliationTestLogic {
         return loadConciliationTestDAO.loadPX584SQP00901(filter);
     }
     
-    public A4164Filter loadPX584SQP00659(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00659(filter);
+    public A4164Filter loadPX584SQP04348(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04348(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP00817(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00817(filter);
+    public List<A4164Filter> loadPX584SQP04351(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04351(filter);
     }
     
     public List<A4164Filter> loadPX584SQP04339(A4164Filter filter) throws SQLException, Exception {
         return loadConciliationTestDAO.loadPX584SQP04339(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP00894(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00894(filter);
+    public List<A4164Filter> loadPX584SQP04349(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04349(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP00677(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00677(filter);
+    public List<A4164Filter> loadPX584SQP04341(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04341(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP00678(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00678(filter);
+    public List<A4164Filter> loadPX584SQP04342(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04342(filter);
     }
     
-    public List<A4164Filter> loadPX584SQP03986(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP03986(filter);
+    public List<A4164Filter> loadPX584SQP04350(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04350(filter);
     }
     
-    public HashMap<String, List<A4164Filter>> loadPX584SQP00715(A4164Filter filter) throws SQLException, Exception {
-        return loadConciliationTestDAO.loadPX584SQP00715(filter);
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04343(A4164Filter filter) throws SQLException, Exception {
+        return loadConciliationTestDAO.loadPX584SQP04343(filter);
     }
 }

@@ -307,7 +307,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public HashMap<String, List<A4164Filter>> loadPX584SQP01960(A4164Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04347(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
@@ -321,8 +321,8 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
@@ -331,7 +331,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01960(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04347(?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -849,7 +849,7 @@ public class LoadConciliationTestDAO {
         return hmResultado;
     }
 
-    public HashMap<String, List<A4164Filter>> loadPX584SQP01828(A4164Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04352(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
@@ -863,8 +863,8 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
@@ -873,7 +873,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01828(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04352(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1348,7 +1348,7 @@ public class LoadConciliationTestDAO {
         return hmResultado;
     }
 
-    public HashMap<String, List<A4164Filter>> loadPX584SQP01976(A4164Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04353(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
@@ -1362,8 +1362,8 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
@@ -1372,7 +1372,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01976(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04353(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -1978,7 +1978,7 @@ public class LoadConciliationTestDAO {
                     if (rst.getString("SCOUNTRY").trim().isEmpty()) {
                         //Venta sin ACCB
                         beanTkt.SCOUNTRY = "**";
-                        beanTkt.strDescCountry = "(Sales without ACCB)";
+                        beanTkt.strDescCountry = "(Sales without Reconciliation)";
                     } else {
                         beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                         /*if (hmPaises.containsKey(rst.getString("ACOUNTRY").trim().toUpperCase())) {
@@ -2056,7 +2056,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A4164Filter> loadPX584SQP00656(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04344(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
@@ -2067,7 +2067,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00656(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04344(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2150,7 +2150,7 @@ public class LoadConciliationTestDAO {
                     if (rst.getString("ACARCOD").trim().isEmpty()) {
                         //Venta sin ACCB
                         beanTkt.SCARCOD = "**";
-                        beanTkt.strDescCard = "(Sales without ACCB)";
+                        beanTkt.strDescCard = "(Sales without Reconciliation)";
                     } else {
                         beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
                         beanTkt.strDescCard = rst.getString("NAMECAR").trim();
@@ -2218,7 +2218,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A4164Filter> loadPX584SQP00657(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04345(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
@@ -2230,7 +2230,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00657(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04345(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2381,7 +2381,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A4164Filter> loadPX584SQP00658(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04346(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
@@ -2394,15 +2394,15 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00658(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04346(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3196,7 +3196,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public A4164Filter loadPX584SQP00659(A4164Filter filter) throws SQLException, Exception {
+    public A4164Filter loadPX584SQP04348(A4164Filter filter) throws SQLException, Exception {
 
         A4164Filter beanTkt = new A4164Filter();
         String strSCARF = "";
@@ -3204,9 +3204,9 @@ public class LoadConciliationTestDAO {
         if (filter.STVAL.trim().length() > 1) {
             if (filter.STVAL.trim().equals("Match")) {
                 filter.STVAL = "1";
-            } else if (filter.STVAL.trim().equals("Sales without ACCB") || filter.STVAL.trim().equals("Refund without ACCB")) {
+            } else if (filter.STVAL.trim().equals("Sales without Reconciliation") || filter.STVAL.trim().equals("Refund without Reconciliation")) {
                 filter.STVAL = "2";
-            } else if (filter.STVAL.trim().equals("ACCB without Sales") || filter.STVAL.trim().equals("ACCB without Refund")) {
+            } else if (filter.STVAL.trim().equals("Reconciliation without Sales") || filter.STVAL.trim().equals("Reconciliation without Refund")) {
                 filter.STVAL = "3";
             } else if (filter.STVAL.trim().equals("Match with Differences")) {
                 filter.STVAL = "4";
@@ -3222,7 +3222,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00659(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04348(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3381,7 +3381,7 @@ public class LoadConciliationTestDAO {
         return beanTkt;
     }
 
-    public List<A4164Filter> loadPX584SQP00817(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04351(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
@@ -3392,8 +3392,8 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
@@ -3405,7 +3405,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00817(?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04351(?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3668,8 +3668,8 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
@@ -3745,7 +3745,7 @@ public class LoadConciliationTestDAO {
 
                     if (rst.getString("COUNTRY").trim().isEmpty()) {
                         beanTkt.SCOUNTRY = "**";
-                        beanTkt.strDescCountry = "(Sales without ACCB)";
+                        beanTkt.strDescCountry = "(Sales without Reconciliation)";
                     } else {
                         beanTkt.SCOUNTRY = rst.getString("COUNTRY").trim();
                         /*if (hmPaises.containsKey(rst.getString("COUNTRY").trim().toUpperCase())) {
@@ -3813,7 +3813,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A4164Filter> loadPX584SQP00894(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04349(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
@@ -3830,7 +3830,7 @@ public class LoadConciliationTestDAO {
             filter.IN_SDATE = filter.SDATE.trim();
         }
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00894(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04349(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3909,7 +3909,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A4164Filter> loadPX584SQP00677(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04341(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
@@ -3924,12 +3924,12 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00677(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04341(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4006,7 +4006,7 @@ public class LoadConciliationTestDAO {
 
                     if (rst.getString("CARD").trim().isEmpty()) {
                         beanTkt.SCARCOD = "**";
-                        beanTkt.strDescCard = "(Sales without ACCB)";
+                        beanTkt.strDescCard = "(Sales without Reconciliation)";
                     } else {
                         beanTkt.SCARCOD = rst.getString("CARD").trim();
                         /*if (hmDescCard.containsKey(rst.getString("CARD").trim().toUpperCase())) {
@@ -4070,7 +4070,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A4164Filter> loadPX584SQP00678(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04342(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
@@ -4085,12 +4085,12 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00678(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04342(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -4226,7 +4226,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public List<A4164Filter> loadPX584SQP03986(A4164Filter filter) throws SQLException, Exception {
+    public List<A4164Filter> loadPX584SQP04350(A4164Filter filter) throws SQLException, Exception {
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         A4164Filter beanTkt;
 
@@ -4239,12 +4239,12 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03986(?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04350(?,?)}";
 
         Connection cnx = null;
         try {
@@ -4327,7 +4327,7 @@ public class LoadConciliationTestDAO {
         return lstTkts;
     }
 
-    public HashMap<String, List<A4164Filter>> loadPX584SQP00715(A4164Filter filter) throws SQLException, Exception {
+    public HashMap<String, List<A4164Filter>> loadPX584SQP04343(A4164Filter filter) throws SQLException, Exception {
 
         List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
         List<A4164Filter> lstError = new ArrayList<A4164Filter>(0);
@@ -4341,8 +4341,8 @@ public class LoadConciliationTestDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("1", "Match");
-        hmDescEstados.put("2", tipFecha + " without ACCB");
-        hmDescEstados.put("3", "ACCB without " + tipFecha);
+        hmDescEstados.put("2", tipFecha + " without Reconciliation");
+        hmDescEstados.put("3", "Reconciliation without " + tipFecha);
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
@@ -4351,7 +4351,7 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00715(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04343(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
