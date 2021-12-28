@@ -959,8 +959,8 @@ public class ProMail {
 
             auth = new SMTPAuthenticator("amaclaracionescontracargos@miatech.net", "Am@claraciones");
 
-            Session session = Session.getInstance(props, auth);            
-            
+            Session session = Session.getInstance(props, auth);
+
             //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
             session.setDebug(true);
             MimeMessage message = new MimeMessage(session);
@@ -987,11 +987,18 @@ public class ProMail {
             message.setSubject(asunto);
 
             //Se seteo el mensaje del e-mail
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            MimeBodyPart messageBodyPart = new MimeBodyPart();                                  
             messageBodyPart.setContent(mensaje, "text/html");
 
-            Multipart multipart = new MimeMultipart();
+            Multipart multipart = new MimeMultipart("related");
             multipart.addBodyPart(messageBodyPart);
+            
+            String cid = "logo";
+            MimeBodyPart imagePart = new MimeBodyPart();
+            imagePart.attachFile("C:/Dumps/CSC.jpg");
+            imagePart.setContentID("<" + cid + ">");
+            imagePart.setDisposition(MimeBodyPart.INLINE);
+            multipart.addBodyPart(imagePart);
 
             //Se adjuntan los archivos al correo
             if (adjuntos != null && adjuntos.size() > 0) {
