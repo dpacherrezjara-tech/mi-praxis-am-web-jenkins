@@ -1232,21 +1232,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         });
     },
     sendMailMultipleDifferences: function(obj, e) {
-        /*Ext.Ajax.request({
-            url: prototype.url + '/sendMail',
+        Ext.Ajax.request({
+            url: prototype.url + '/sendMailMultipleDifferences',
             method: 'POST',
             timeout: 60000000,
             params: {
-                DATE: data.DATE,
-                IN_DATE: data.IN_DATE,
-                AXPAYNBR: data.AXPAYNBR,
-                PMERCHID: data.PMERCHID,
-                DIFF_PNETAMOU_STRING: Ext.util.Format.number(data.DIFF_PNETAMOU, '0,000.00').replace('-', ''),
-                PCURRENCY: data.PCURRENCY
+                IN_DATEFROM: Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue(),
+                IN_DATETO: Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue(),
+                IN_DATE: Ext.getCmp(prototype.id + '-cmbDateSel').getValue()
             },
-            beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...', ''),
+            beforerequest: Ext.getCmp(prototype.id + '-panelMain').mask('Loading...', ''),
             success: function(response, options) {
-                Ext.getCmp(prototype.id + '-gridData').unmask('Loading...', '');
+                Ext.getCmp(prototype.id + '-panelMain').unmask('Loading...', '');
 
                 var res = Ext.JSON.decode(response.responseText);
                 global.Msg({
@@ -1256,7 +1253,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     }
                 });
             }
-        });*/
+        });
     },
     btnBack_click: function(obj, e) {
         if (me.drillDown.length > 0) {

@@ -959,8 +959,8 @@ public class ProMail {
 
             auth = new SMTPAuthenticator("amaclaracionescontracargos@miatech.net", "Am@claraciones");
 
-            Session session = Session.getInstance(props, auth);            
-            
+            Session session = Session.getInstance(props, auth);
+
             //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
             session.setDebug(true);
             MimeMessage message = new MimeMessage(session);
@@ -981,7 +981,7 @@ public class ProMail {
             message.setReplyTo(replyTo);
             //Se definen el o los destinatarios
             message.addRecipients(Message.RecipientType.TO, dest);
-            message.addRecipients(Message.RecipientType.BCC, Ccp);
+            message.addRecipients(Message.RecipientType.CC, Ccp);
             //message.addRecipients(Message.RecipientType.BCC, dest);
             //Se defina el asunto del e-mail
             message.setSubject(asunto);
@@ -990,8 +990,18 @@ public class ProMail {
             MimeBodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setContent(mensaje, "text/html");
 
-            Multipart multipart = new MimeMultipart();
+            Multipart multipart = new MimeMultipart("related");
             multipart.addBodyPart(messageBodyPart);
+
+            File f_logo = new File("C:/Dumps/CSC.jpg");
+            if (f_logo.exists()) {
+                String cid = "logo";
+                MimeBodyPart imagePart = new MimeBodyPart();
+                imagePart.attachFile("C:/Dumps/CSC.jpg");
+                imagePart.setContentID("<" + cid + ">");
+                imagePart.setDisposition(MimeBodyPart.INLINE);
+                multipart.addBodyPart(imagePart);
+            }
 
             //Se adjuntan los archivos al correo
             if (adjuntos != null && adjuntos.size() > 0) {
