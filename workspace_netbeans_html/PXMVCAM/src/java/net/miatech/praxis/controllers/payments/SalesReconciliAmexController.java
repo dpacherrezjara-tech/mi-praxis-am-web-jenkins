@@ -2986,6 +2986,8 @@ public class SalesReconciliAmexController extends BaseController {
 
         List<String> receptores = new ArrayList<>();
         receptores.add("eneves@miatech.net");
+        //receptores.add("rtoledo@aeromexico.com");
+        //receptores.add("rpichardor@aeromexico.com");
 
         List<String> Ccpy = new ArrayList<>();
         Ccpy.add("ctarazona@miatech.net");
@@ -3006,7 +3008,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
         mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";
         mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardo@aeromexico.com\" target=\"_blank\" >rpichardo@aeromexico.com</a></span>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
 
         String correoMask = "amaclaracionescontracargos@miatech.net";
 
@@ -3532,6 +3534,8 @@ public class SalesReconciliAmexController extends BaseController {
 
         List<String> receptores = new ArrayList<>();
         receptores.add("eneves@miatech.net");
+        //receptores.add("rtoledo@aeromexico.com");
+        //receptores.add("rpichardor@aeromexico.com");
 
         List<String> Ccpy = new ArrayList<>();
         Ccpy.add("ctarazona@miatech.net");
@@ -3563,7 +3567,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
         mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";
         mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
-        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardo@aeromexico.com\" target=\"_blank\" >rpichardo@aeromexico.com</a></span>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
         mensaje = mensaje + "\n" + "</body>";
         mensaje = mensaje + "\n" + "</html>";
 
