@@ -2997,7 +2997,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Adjunto detalle de liquidación:<br>";
         mensaje = mensaje + "\n" + "<ul>";
         mensaje = mensaje + "\n" + "<li>Fecha de liquidación : " + Data.DATE + "</li>";
-        mensaje = mensaje + "\n" + "<li>Número de AX Number : " + Data.AXPAYNBR + "</li>";
+        mensaje = mensaje + "\n" + "<li>AX Number : " + Data.AXPAYNBR + "</li>";
         mensaje = mensaje + "\n" + "<li>Merchant Number : " + Data.PMERCHID + "</li>";
         mensaje = mensaje + "\n" + "<li>Valor : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
         mensaje = mensaje + "\n" + "</ul>";
@@ -3547,7 +3547,7 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "Se efectuó la conciliación de la liquidación aplicando los acuerdos vigentes encontrando diferencias en los cobros retenidos por comisiones.<br><br>";
         mensaje = mensaje + "\n" + "Adjunto detalle de liquidación:<br>";
         mensaje = mensaje + "\n" + "<table style=\"width:100%\">";
-        mensaje = mensaje + "\n" + "<tr>    <th>Fecha de liquidación</th>    <th>Número de AX Number</th>    <th>Merchant Number</th>    <th>Moneda</th>    <th>Valor</th>    </tr>";
+        mensaje = mensaje + "\n" + "<tr>    <th>Fecha de liquidación</th>    <th>AX Number</th>    <th>Merchant Number</th>    <th>Moneda</th>    <th>Valor</th>    </tr>";
 
         for (int i = 0; i < listaData.size(); i++) {
             a = Functions.redondear(listaData.get(i).DIFF_PNETAMOU, 2);
