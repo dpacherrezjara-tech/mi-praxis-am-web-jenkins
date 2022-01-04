@@ -718,8 +718,8 @@ public class FlightConciliationDAO {
 
         try {
 
-//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
-            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG_1(?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?,?)}";
+//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG_1(?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -728,6 +728,7 @@ public class FlightConciliationDAO {
             cs.setString(2, filter.DFLIGHT);
             cs.setString(3, filter.NFLIGHT);
             cs.setString(4, filter.IN_FSABRE);
+            cs.setString(5, filter.CDEPART);
 
             cs.execute();
 
