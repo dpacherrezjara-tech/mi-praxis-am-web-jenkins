@@ -7,12 +7,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     searchParams: {},
     _path: '',
     dw_excel: false,
-    boxActual: '-boxMainData',
+    boxActual: '-boxMainDataFA',
     drillDown: [],
     // </editor-fold>
     init: function(view) {
         me = this;
-        me.panelActual = '-boxMainData';
+        me.panelActual = '-boxMainDataFA';
         me.drillDown.push(me.boxActual);
         console.log('2----------FlownAnalysisController - initt');
 
