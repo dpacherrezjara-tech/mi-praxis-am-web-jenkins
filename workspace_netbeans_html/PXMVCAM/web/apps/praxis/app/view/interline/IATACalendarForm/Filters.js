@@ -67,9 +67,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromYear_changeHandler'
                                     }
                                 },
@@ -88,9 +88,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromMonth_changeHandler'
                                     }
                                 },
@@ -111,9 +111,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     listConfig: {maxHeight: 111},
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromDay_changeHandler'
                                     }
                                 },
@@ -141,9 +141,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {
@@ -160,9 +160,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {
@@ -181,9 +181,9 @@ Ext.define('Ext.Praxis.view.interline.IATACalendarForm.Filters', {
                                     listConfig: {maxHeight: 111},
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 // </editor-fold>
