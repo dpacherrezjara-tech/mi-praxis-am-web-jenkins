@@ -88,20 +88,20 @@ public class SalesComplementAmexDAO {
 
             while (rst.next()) {
                 bean = new A4124Filter();
-                bean.COUNTRY = rst.getString("COUNTRY");                
-                bean.PRDA = rst.getString("PRDA");
-                bean.PLUSGRAID = rst.getString("PLUSGRAID");
-                bean.SCOUNTRY = rst.getString("SCOUNTRY");                
-                bean.SDATE = rst.getString("SDATE");
-                bean.SCARCOD = rst.getString("SCARCOD");
-                bean.SCARDBIN = rst.getString("SCARDBIN");                
-                bean.PNR = rst.getString("PNR");
-                bean.CURRPARTN = rst.getString("CURRPARTN");
+                bean.COUNTRY = rst.getString("COUNTRY").trim();                
+                bean.PRDA = rst.getString("PRDA").trim();
+                bean.PLUSGRAID = rst.getString("PLUSGRAID").trim();
+                bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();                
+                bean.SDATE = rst.getString("SDATE").trim();
+                bean.SCARCOD = rst.getString("SCARCOD").trim();
+                bean.SCARDBIN = rst.getString("SCARDBIN").trim();                
+                bean.PNR = rst.getString("PNR").trim();
+                bean.CURRPARTN = rst.getString("CURRPARTN").trim();
                 bean.SVFOP = rst.getDouble("SVFOP");                                
-                bean.EMDNUMBER = rst.getString("EMDNUMBER");
-                bean.ADDPAXEMD = rst.getString("ADDPAXEMD");
-                bean.ADDPAXTKT = rst.getString("ADDPAXTKT");
-                bean.FAMEX = rst.getString("FAMEX");
+                bean.EMDNUMBER = rst.getString("EMDNUMBER").trim();
+                bean.ADDPAXEMD = rst.getString("ADDPAXEMD").trim();
+                bean.ADDPAXTKT = rst.getString("ADDPAXTKT").trim();
+                bean.FAMEX = rst.getString("FAMEX").trim();
                 if (bean.FAMEX.equals("")) {
                     bean.descFAMEX = "Pending";
                 } else if (bean.FAMEX.equals("1")) {
