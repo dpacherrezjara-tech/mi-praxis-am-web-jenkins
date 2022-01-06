@@ -28,7 +28,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
             items: [
                 {
                     xtype: 'tabpanel',
-                    id: prototype.id + '-boxMainData',
+                    id: prototype.id + '-boxMainDataFA',
                     width: '100%',
                     hidden: false,
                     layout: {
