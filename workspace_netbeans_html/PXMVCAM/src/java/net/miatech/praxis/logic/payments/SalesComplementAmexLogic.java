@@ -1,0 +1,31 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.miatech.praxis.logic.payments;
+
+import java.sql.SQLException;
+import java.util.List;
+import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.dao.payments.SalesComplementAmexDAO;
+import net.miatech.praxis.payment.filter.A4124Filter;
+
+/**
+ *
+ * @author ctarazona
+ */
+public class SalesComplementAmexLogic {
+
+    private final SalesComplementAmexDAO SalesComplementAmexDAO = new SalesComplementAmexDAO();
+
+    public void setSession(IServerSession ss) {
+        SalesComplementAmexDAO.setSession(ss);
+    }
+
+    public List<A4124Filter> loadPX585SQP04354(A4124Filter filter) throws SQLException, Exception {
+        return SalesComplementAmexDAO.loadPX585SQP04354(filter);
+        
+    }
+
+}
