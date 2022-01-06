@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                 {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridData',
-                                                    width: 1250,
+                                                    width: 940,
                                                     columnLines: true,
                                                     features: [{
                                                             ftype: 'summary'
@@ -259,6 +259,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                             },
                                                             {
                                                                 text: 'Bank Settlement',
+                                                                hidden: true,
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: false,

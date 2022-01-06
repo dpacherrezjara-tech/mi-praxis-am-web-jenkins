@@ -1,0 +1,380 @@
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAmexController', {
+    extend: 'Ext.app.ViewController',
+    alias: 'controller.SalesComplementAmexController',
+    fecha: new Date(),
+    childs: '5',
+    bean: '',
+    beanDay: {},
+    beanDetTran: {},
+    beanDetCard: {},
+    beanBank: {},
+    beanTkt: {},
+    beanDet: {},
+    paginActual: '',
+    drillDown: [],
+    lstCountry: [],
+    gridActual: '',
+    panelActual: '',
+    fileName: '',
+    reg99: 0,
+    me: '',
+    searchParams: {},
+    paramsDetail: {},
+    dataObtain: {},
+    dataGrid: [],
+    init: function(view) {
+        me = this;
+        prototype.id = 'SalesComplementAmexForm';
+        prototype.url = CONTEXTPATH + '/SalesComplementAmex';
+        prototype.urlMaster = CONTEXTPATH + '/MasterController';
+        this.childs = Ext.getCmp(prototype.id + '-panelMain').items.items;
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.control({
+//            //   -------------------Eventos Genericos --------------------
+            '#SalesComplementAmexForm-xpanel': {
+                afterrender: this.xpanel_afterrender
+            },
+            '#SalesComplementAmexForm-btnSearch': {
+                click: this.btnSearch_click
+            },
+            '#SalesComplementAmexForm-btnClear': {
+                click: this.btnClear_click
+            },
+            '#SalesComplementAmexForm-btnExcel': {
+                click: this.btnExcel_click
+            },
+            '#SalesComplementAmexForm-btnPdf': {
+                click: this.btnPdf_click
+            },
+            '#SalesComplementAmexForm-btnFilter': {
+                click: this.btnFilter_click
+            },
+            '#SalesComplementAmexForm-btnAdd': {
+                click: this.btnAdd_click
+            },
+            '#SalesComplementAmexForm-btnBack': {
+                click: this.btnBack_click
+            },
+            '#SalesComplementAmexForm-btn-pag-first': {
+                click: this.pagFirst
+            },
+            '#SalesComplementAmexForm-btn-pag-previous': {
+                click: this.pagPrevious
+            },
+            '#SalesComplementAmexForm-btn-pag-next': {
+                click: this.pagNext
+            },
+            '#SalesComplementAmexForm-btn-pag-last': {
+                click: this.pagLast
+            },
+            '#SalesComplementAmexForm-cmbDateFromYear': {
+//                afterrender: this.afterRenderYear,
+                select: this.selectComboFromYear
+            },
+            '#SalesComplementAmexForm-cmbDateFromMonth': {
+//                afterrender: this.afterRenderMonth,
+                select: this.selectComboFromMonth
+            },
+            '#SalesComplementAmexForm-cmbDateToMonth': {
+//                afterrender: this.afterRenderMonth,
+                select: this.selectComboToMonth
+            }
+
+        });
+    },
+    xpanel_afterrender: function(obj, e) {
+        this.obtainData();
+    },
+    eventKey: function(e, eOpts) {
+        if (eOpts.getKey() === 13) {
+            this.btnSearch_click();
+        }
+    },
+    onUpperValue: function(field, newValue, oldValue) {
+        field.setValue(newValue.toUpperCase());
+    },
+    obtainData: function() {
+
+        var month = this.fecha.getMonth() + 1;
+
+        if (month < 10) {
+            month = '0' + month;
+        }
+
+        var storeComboDataYear = win.getStoreYear(false);
+        var storeComboDataMonth = win.getStoreMonth(true);
+
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
+
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
+
+
+        Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
+
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
+
+        me.btnSearch_click();
+    },
+    setFormatParameter: function() {
+        me.bean = {};
+
+        me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        me.bean.IN_FATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_FAMEX = Ext.getCmp(prototype.id + '-cmbFindByFAMEX').getValue();
+        me.bean.IN_DATE = "SDATE";
+
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+    },
+    btnSearch_click: function(obj, e) {
+        this.setFormatParameter();
+        this.setGridData();
+    },
+    setGridData: function() {
+        win.lblUser_toolTip("Estructura: A4124");
+        me.panelActual = '-panelGridData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/search'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+             
+                    }
+                    me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataMain').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataMain').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    imgByTDOC_clickHandler: function() {
+//        this.btnSearch_click();
+    },
+    gridData_VIEWTKT_clickHandler: function(column, e, row, column, x, rowData) {
+        var data = x.record.data;
+        var strTkt = data.strTicket;
+        var beanProMasterTicket = {};
+//        
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(4, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(8, 7);
+//        beanProMasterTicket.IN_SEQ = '00';
+
+//        console.log(beanProMasterTicket);
+
+        win.displayProMasterTicket(this, 'ViewFirstData', beanProMasterTicket);
+    },
+    validateFields: function() {
+        var msj = '';
+        var bean = searchParams.bean;
+
+        return msj;
+    },
+    btnAdd_click: function() {
+        this.winDataEntry('I');
+    },
+    onEditClick: function(grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry('U', rec);
+    },
+    winDataEntry: function(action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesComplementAmexForm.DataEntry', {
+            id: prototype.id + '-dataEntry',
+            params: {
+                action: action,
+                rec: rec,
+                lstCountry: me.lstCountry
+            }
+        }).show();
+    },
+    btnBack_click: function(obj, e) {
+        if (me.drillDown.length > 0) {
+            me.panelActual = me.drillDown.pop();
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+            me.setWidthPie();
+            this.getPaggin();
+            if (me.pagginActual !== '') {
+                var pag = Ext.getCmp(prototype.id + me.pagginActual);
+                var pagData = pag.getPageData();
+                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+            }
+        } else {
+            global.showMenu();
+        }
+    },
+    btnClear_click: function(obj, e) {
+        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
+        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
+        Ext.getCmp(prototype.id + '-txtCard1').setValue('');
+        Ext.getCmp(prototype.id + '-txtCard2').setValue('');
+        Ext.getCmp(prototype.id + '-cmbFindByCurrency').setValue('ARS');
+        Ext.getCmp(prototype.id + '-txtMerch').setValue('');
+        Ext.getCmp(prototype.id + '-txtSettlement').setValue('');
+    },
+    btnExcel_click: function(obj, e) {
+
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.exportExcel();
+                }
+            }
+        });
+    },
+    exportExcel: function() {
+        console.log(me.panelActual);
+        switch (me.panelActual) {
+            case  '-panelGridData':
+                this.setFormatParameterForExcelGridDataMain();
+                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                break;
+        }
+    },
+    btnFilter_click: function(obj) {
+        var option = Ext.getCmp(prototype.id + '-contentFilter');
+        if (option.isVisible()) {
+            option.setVisible(false);
+        } else {
+            option.setVisible(true);
+        }
+    },
+    setWidthPie: function() {
+        var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
+        Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
+        Ext.getCmp(prototype.id + '-pie').setVisible(true);
+    },
+    getPaggin: function() {
+        me.pagginActual = '';
+        switch (me.panelActual) {
+            case  '-panelGridData':
+                me.pagginActual = '-paggin';
+                break;
+        }
+    },
+    afterRenderYear: function(obj) {
+        obj.setValue(this.fecha.getFullYear());
+    },
+    afterRenderMonth: function(obj) {
+        obj.setValue('01');
+    },
+    selectComboFromYear: function(obj) {
+        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
+        comboToYear.bindStore(storeComboDataYear);
+        comboToYear.setValue(obj.getValue());
+    },
+    selectComboFromMonth: function(obj) {
+        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        comboToMonth.setValue(obj.getValue());
+    },
+    selectComboToMonth: function(obj) {
+        var comboFromYear = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var comboFromMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+        if (comboFromYear.getValue() === comboToYear.getValue()) {
+            if (obj.getValue() < comboFromMonth.getValue()) {
+                comboFromMonth.setValue(obj.getValue());
+            }
+        }
+    },
+    selectComboFromDay: function(obj) {
+        var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
+        comboToDay.setValue(obj.getValue());
+    },
+    /*     
+     * Funciones para la paginacion     
+     */
+    pagFirst: function(obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveFirst();
+    }, pagPrevious: function(obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.movePrevious();
+    },
+    pagNext: function(obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveNext();
+    },
+    pagLast: function(obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveLast();
+    },
+    getInt: function(value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = 'text-align:right';
+        return Ext.util.Format.number(value, '0,000');
+    },
+    getDouble: function(value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = 'text-align:right';
+        return Ext.util.Format.number(value, '0,000.00');
+    },
+    getText: function(value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = 'text-align:left';
+        return value;
+    },
+    getDoubleColor1: function(value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = 'text-align:right;background:#F2FAFC';
+        return Ext.util.Format.number(value, '0,000.00');
+    },
+    getDoubleColor2: function(value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = 'text-align:right;background:#DFF0ED';
+        return Ext.util.Format.number(value, '0,000.00');
+    },
+    getDoubleColor3: function(value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = 'text-align:right;background:#FCF5F2';
+        return Ext.util.Format.number(value, '0,000.00');
+    }
+
+}
+);
+
+
