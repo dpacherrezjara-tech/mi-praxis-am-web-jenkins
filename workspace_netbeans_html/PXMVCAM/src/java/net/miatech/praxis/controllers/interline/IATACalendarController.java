@@ -392,6 +392,7 @@ public class IATACalendarController extends BaseController {
         boolean oK = false;
         boolean loadDuplicate = false;
         Integer i = 0;
+        String fechInit = "";
         String strFechExist = "";
 //        Workbook workbook;
         A1851 objRtn;
@@ -434,6 +435,7 @@ public class IATACalendarController extends BaseController {
                     i++;
                     Row row = rowIterator.next();
                     
+                    /*
                     if(i == 3 && strFechDuplicat.equals("")){
                         strFechExist = df.formatCellValue(row.getCell(1)).trim();
                         
@@ -446,20 +448,23 @@ public class IATACalendarController extends BaseController {
                         }
                         
                     }
+                    */
                     
-                    if(i > 7){
+                    if(i > 3){
                         
                         System.out.println("ROW: " + i);
                         
-                        if(i == 56){
+                        if(i == 51){
                             System.out.println(" --- PRE ---");
 //                            break;
                         }
                         
-                        if( (getCellValue(row.getCell(1)).trim().equals("") || getCellValue(row.getCell(1)).trim() == null) &&
-                            (getCellValue(row.getCell(2)).trim().equals("") || getCellValue(row.getCell(2)).trim() == null) &&
+                        if( (getCellValue(row.getCell(2)).trim().equals("") || getCellValue(row.getCell(2)).trim() == null) &&
                             (getCellValue(row.getCell(3)).trim().equals("") || getCellValue(row.getCell(3)).trim() == null) &&
-                            (getCellValue(row.getCell(4)).trim().equals("") || getCellValue(row.getCell(4)).trim() == null)
+                            (getCellValue(row.getCell(4)).trim().equals("") || getCellValue(row.getCell(4)).trim() == null) &&
+                            (getCellValue(row.getCell(5)).trim().equals("") || getCellValue(row.getCell(5)).trim() == null) &&
+                            (getCellValue(row.getCell(6)).trim().equals("") || getCellValue(row.getCell(6)).trim() == null) &&
+                            (getCellValue(row.getCell(7)).trim().equals("") || getCellValue(row.getCell(7)).trim() == null  )
                                 
                         ){
                             System.out.println(" ---- FIN ----");
@@ -468,18 +473,43 @@ public class IATACalendarController extends BaseController {
                         
                         objRtn = new A1851();
                         
-                        String FINVOIC =  getCellValue(row.getCell(0)).trim();                                      // Col [A]
-                        objRtn.FINVOIC =  getNumeros(FINVOIC) + getNumberMesEnglish(FINVOIC);                       // Col [A]
                         objRtn.PERIOD   =  Functions.fillZeros(2,getCellValue(row.getCell(1)).trim());              // Col [B]
+                        
+                        if(objRtn.PERIOD.equals("01")){
+                           String FINVOIC =  getCellValue(row.getCell(0)).trim();                                   // Col [A]
+                           objRtn.FINVOIC =  getNumeros(FINVOIC) + getNumberMesEnglish(FINVOIC);                    // Col [A]
+                           fechInit = objRtn.FINVOIC;
+                        }else{
+                           objRtn.FINVOIC = fechInit;
+                        }
+                        
+                        // Detectar fecha duplicada A1851
+                        if(i == 4 && strFechDuplicat.equals("")){
+                            try {
+                                strFechExist = fechInit.substring(0,4);
+                            } catch (Exception e) {
+                                strFechExist = "";
+                            }
+                           
+
+                            loadDuplicate = logic.searchDate_A1851(strFechExist);
+                            if(loadDuplicate){
+                                System.out.println("--------------------------------------- FECHA DE CARGA DUPLICADA ----------------------------------------");
+                                objExit.isDateDuplicat = true;
+                                objExit.strDateDuplicat = strFechExist;
+                                break;
+                            }
+
+                        }
                         
                         objRtn.DOENV = formatFecha.format(row.getCell(2).getDateCellValue()).replace("-", "");      // Col [C]
                         objRtn.TIMESI = formatHora.format(row.getCell(2).getDateCellValue()).replace(":", "");      // Col [C]
                         
-                        objRtn.DCENV = formatFecha.format(row.getCell(3).getDateCellValue()).replace("-", "");      // Col [D]
-                        objRtn.TIMESO = formatHora.format(row.getCell(3).getDateCellValue()).replace(":", "");      // Col [D]
+                        objRtn.DCENV = formatFecha.format(row.getCell(4).getDateCellValue()).replace("-", "");      // Col [D]
+                        objRtn.TIMESO = formatHora.format(row.getCell(4).getDateCellValue()).replace(":", "");      // Col [D]
                         
-                        objRtn.DENVI = formatFecha.format(row.getCell(4).getDateCellValue()).replace("-", "");      // Col [E]
-                        objRtn.TIMESE = formatHora.format(row.getCell(4).getDateCellValue()).replace(":", "");      // Col [E]
+                        objRtn.DENVI = formatFecha.format(row.getCell(7).getDateCellValue()).replace("-", "");      // Col [E]
+                        objRtn.TIMESE = formatHora.format(row.getCell(7).getDateCellValue()).replace(":", "");      // Col [E]
                         
                         
                         lstRtn.add(objRtn);
@@ -488,6 +518,7 @@ public class IATACalendarController extends BaseController {
                 }
                 
                 file.close();
+                archivo.delete();
                 
 //                for (String cadDet : lstRtn) {
 //                    System.out.println(cadDet);
