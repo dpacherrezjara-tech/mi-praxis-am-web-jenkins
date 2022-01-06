@@ -37,8 +37,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
                 if (res.success) {
                     me.objPermiso = res.matrix;
                                         
-                    if(me.objPermiso.USR.trim() === 'PMAYORGA'){
-//                    if(me.objPermiso.USR.trim() === 'SAP43'){
+                    if(me.objPermiso.USR.trim() === 'PMAYORGA' || me.objPermiso.USR.trim() === 'SAP43'){
                         Ext.getCmp(prototype.id + '-boxLoad').show();
                     }
                     
@@ -299,6 +298,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
                 }else{
                     if(!res.error){
                         global.Msg({msg: ".: Successful Upload :."});
+                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }else{
                         global.Msg({msg: ".: Error Loading File :."});
                     }
