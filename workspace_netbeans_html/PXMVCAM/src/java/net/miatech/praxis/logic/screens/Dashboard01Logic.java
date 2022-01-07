@@ -101,10 +101,14 @@ public class Dashboard01Logic {
     public List<IMF053Filter> PX109SQP03560(IMF053Filter filter) throws SQLException, Exception, Exception {
         return Dashboard01DAO.PX109SQP03560(filter);
     }
-    
+
     //* ***************************Flown Analysis*******************************
     public List<A1971Filter> loadPX109SQP00556(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP00556(filter);
+    }
+
+    public List<A1971Filter> loadPX109SQP01927(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01927(filter);
     }
 
 }
