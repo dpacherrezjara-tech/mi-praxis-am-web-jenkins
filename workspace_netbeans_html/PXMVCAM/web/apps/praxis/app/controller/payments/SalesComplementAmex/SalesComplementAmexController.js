@@ -156,9 +156,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 url: prototype.url + '/search'
             }, listeners: {
                 beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).mask('Loading...');
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -191,9 +193,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 url: prototype.url + '/searchLiga'
             }, listeners: {
                 beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).mask('Loading...');
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin2');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -226,9 +230,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 url: prototype.url + '/searchTablet'
             }, listeners: {
                 beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).mask('Loading...');
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin3');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
