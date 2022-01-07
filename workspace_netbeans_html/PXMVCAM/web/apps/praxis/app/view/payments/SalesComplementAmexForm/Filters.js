@@ -142,11 +142,25 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                     labelWidth: 111,
                     labelAlign: 'right',
                     hidden: false,
-                    width: 184,
+                    width: 200,
                     typeAhead: true,
                     valueField: 'code', displayField: 'name',
                     enableKeyEvents: true,
                     triggerAction: 'all',
+                },
+                {xtype: 'tbspacer', width: 50},
+                {
+                    xtype: 'radiogroup',
+                    id: prototype.id + '-radiogroupType',
+                    width: 360,
+                    items: [
+                        {boxLabel: '<b style="color:#148D28;">Plusgrade</b>', inputValue: 'P', name: 'rbgType', checked: true},
+                        {boxLabel: '<b style="color:#148D28;">Ligas de Pago</b>', inputValue: 'L', name: 'rbgType'},
+                        {boxLabel: '<b style="color:#148D28;">Tablet</b>', inputValue: 'T', name: 'rbgType'},
+                    ],
+                    listeners: {
+                        change: 'rbChangeType'
+                    }
                 },
             ]
         }
