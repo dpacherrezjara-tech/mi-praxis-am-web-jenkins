@@ -147,6 +147,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         }
         
     },
+    viewDetFAFlight: function(){
+        
+    },    
     showGrid: function(nameGrid) {
 
         Ext.getCmp(prototype.id + meSales.boxActual).hide();

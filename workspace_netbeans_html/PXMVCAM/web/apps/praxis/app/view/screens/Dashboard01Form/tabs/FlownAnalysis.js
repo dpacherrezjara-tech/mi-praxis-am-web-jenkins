@@ -97,14 +97,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                 columns: [
                                     {
                                         text: 'Date', dataIndex: 'strFormatDate', width: 90,
-                                        /*listeners: {
-                                         click: 'GridDDTMtotalperMonth_colHandler'
-                                         },*/
+                                        listeners: {
+                                            click: 'viewDetFAFlight'
+                                        },
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            //metaData.style = "color:#057ECB;";
+                                            metaData.style = "color:#057ECB;";
                                             return value;
-                                            //value = '<b>' + value + '</b>';
-                                            //return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            value = '<b>' + value + '</b>';
+                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                         }
                                     }
                                 ]
@@ -715,7 +715,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         },
@@ -742,7 +742,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -757,7 +757,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -783,7 +783,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#9ccfbf;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
                                         }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -798,10 +798,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#9ccfbf;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPN_F, '0,000') + '<b>';
@@ -824,10 +824,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
@@ -839,10 +839,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#deedfb;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPN_J, '0,000') + '<b>';
@@ -865,10 +865,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#04C5DA;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQCPNON, '0,000') + '<b>';
@@ -880,10 +880,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#04C5DA;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPNON, '0,000') + '<b>';
@@ -906,10 +906,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totQCPNOAL, '0,000') + '<b>';
@@ -921,10 +921,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totPer1, '0,000.00') + '<b>';
@@ -936,10 +936,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totVCPNOAL, '0,000') + '<b>';
@@ -951,10 +951,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                          click: 'GridDDTMtotalperMonth_colHandler'
                                          },*/
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                            metaData.style = "text-align:right;";
+                                            metaData.style = "text-align:right;background-color:#4A9EF8;";
                                             value = Ext.util.Format.number(value, '0,000.00');
                                             return  value;
-                                        },summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                        }, summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                             var data = Ext.getCmp(prototype.id + '-gridSearchWK').getStore().getData().items[0].data;
                                             metaData.style = 'text-align:right; margin-right:3px ';
                                             return '<b>' + Ext.util.Format.number(data.totPer2, '0,000.00') + '<b>';
