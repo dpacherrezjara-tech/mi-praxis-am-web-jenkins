@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A4124Filter;
+import net.miatech.praxis.payment.filter.A4166Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -108,7 +109,6 @@ public class SalesComplementAmexDAO {
                     bean.descFAMEX = "Processed";
                 }
                 
-
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
                 bean.page.TOTPAG = filter.page.TOTPAG;
@@ -142,4 +142,213 @@ public class SalesComplementAmexDAO {
         return lst;
     }
 
+    public List<A4166Filter> loadPX585SQP04355(A4166Filter filter) throws SQLException, Exception {
+
+        List<A4166Filter> lst = new ArrayList<A4166Filter>(0);
+        A4166Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04355(?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATE);
+            cstmt.setString(3, filter.IN_DATEFROM);
+            cstmt.setString(4, filter.IN_DATETO);
+            cstmt.setString(5, filter.IN_FAMEX);
+
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new A4166Filter();
+                
+                bean.MERCHID = rst.getString("MERCHID").trim();
+                bean.SDATE = rst.getString("SDATE").trim();
+                bean.STIME = rst.getString("STIME").trim();
+                bean.SCARDN = rst.getString("SCARDN").trim();
+                bean.SAUTHOC = rst.getString("SAUTHOC").trim();
+                bean.SVFOP = rst.getDouble("SVFOP");
+                bean.NAMECARD = rst.getString("NAMECARD").trim();
+                bean.BANCOEMI = rst.getString("BANCOEMI").trim();
+                bean.PRDA = rst.getString("PRDA").trim();
+                bean.OPERATNBR = rst.getString("OPERATNBR").trim();
+                bean.TICKET1 = rst.getString("TICKET1").trim();
+                bean.TICKET2 = rst.getString("TICKET2").trim();
+                bean.TICKET3 = rst.getString("TICKET3").trim();
+                bean.TICKET4 = rst.getString("TICKET4").trim();
+                bean.TICKET5 = rst.getString("TICKET5").trim();
+                bean.TICKET6 = rst.getString("TICKET6").trim();
+                bean.TICKET7 = rst.getString("TICKET7").trim();
+                bean.TICKET8 = rst.getString("TICKET8").trim();
+                bean.TICKET9 = rst.getString("TICKET9").trim();
+                bean.TICKET10 = rst.getString("TICKET10").trim();
+
+                
+                bean.FAMEX = rst.getString("FAMEX").trim();
+                if (bean.FAMEX.equals("")) {
+                    bean.descFAMEX = "Pending";
+                } else if (bean.FAMEX.equals("1")) {
+                    bean.descFAMEX = "Processed";
+                }
+
+                bean.page.PAGNUM = filter.page.PAGNUM;
+                bean.page.PAGROW = filter.page.PAGROW;
+                bean.page.TOTPAG = filter.page.TOTPAG;
+                bean.page.TOTROW = filter.page.TOTROW;
+
+                lst.add(bean);
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
+    
+    public List<A4166Filter> loadPX585SQP04356(A4166Filter filter) throws SQLException, Exception {
+
+        List<A4166Filter> lst = new ArrayList<A4166Filter>(0);
+        A4166Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+        Connection cnx = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04356(?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATE);
+            cstmt.setString(3, filter.IN_DATEFROM);
+            cstmt.setString(4, filter.IN_DATETO);
+            cstmt.setString(5, filter.IN_FAMEX);
+
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                bean = new A4166Filter();
+                
+                bean.MERCHID = rst.getString("MERCHID").trim();
+                bean.SDATE = rst.getString("SDATE").trim();
+                bean.STIME = rst.getString("STIME").trim();
+                bean.SCARDN = rst.getString("SCARDN").trim();
+                bean.SAUTHOC = rst.getString("SAUTHOC").trim();
+                bean.SVFOP = rst.getDouble("SVFOP");
+                bean.NAMECARD = rst.getString("NAMECARD").trim();
+                bean.BANCOEMI = rst.getString("BANCOEMI").trim();
+                bean.PRDA = rst.getString("PRDA").trim();
+                bean.OPERATNBR = rst.getString("OPERATNBR").trim();
+                bean.TICKET1 = rst.getString("TICKET1").trim();
+                bean.TICKET2 = rst.getString("TICKET2").trim();
+                bean.TICKET3 = rst.getString("TICKET3").trim();
+                bean.TICKET4 = rst.getString("TICKET4").trim();
+                bean.TICKET5 = rst.getString("TICKET5").trim();
+                bean.TICKET6 = rst.getString("TICKET6").trim();
+                bean.TICKET7 = rst.getString("TICKET7").trim();
+                bean.TICKET8 = rst.getString("TICKET8").trim();
+                bean.TICKET9 = rst.getString("TICKET9").trim();
+                bean.TICKET10 = rst.getString("TICKET10").trim();
+                
+                bean.FAMEX = rst.getString("FAMEX").trim();
+                if (bean.FAMEX.equals("")) {
+                    bean.descFAMEX = "Pending";
+                } else if (bean.FAMEX.equals("1")) {
+                    bean.descFAMEX = "Processed";
+                }
+                
+
+                bean.page.PAGNUM = filter.page.PAGNUM;
+                bean.page.PAGROW = filter.page.PAGROW;
+                bean.page.TOTPAG = filter.page.TOTPAG;
+                bean.page.TOTROW = filter.page.TOTROW;
+
+                lst.add(bean);
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lst;
+    }
 }

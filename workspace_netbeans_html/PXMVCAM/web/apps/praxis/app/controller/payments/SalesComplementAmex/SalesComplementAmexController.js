@@ -142,8 +142,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         };
     },
     btnSearch_click: function(obj, e) {
-        this.setFormatParameter();
-        this.setGridData();
+        //this.setFormatParameter();
+        //this.setGridData();
+        this.rbChangeType();
     },
     setGridData: function() {
         win.lblUser_toolTip("Estructura: A4124");
@@ -169,7 +170,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-             
+
                     }
                     me.setWidthPie();
                 }
@@ -179,6 +180,95 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         Ext.getCmp(prototype.id + '-gridDataMain').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataMain').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+    },
+    setGridDataLiga: function() {
+        win.lblUser_toolTip("Estructura: A4166");
+        me.panelActual = '-panelGridDataLiga';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchLiga'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin2');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+
+                    }
+                    me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataMainLiga').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataMainLiga').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+    },
+    setGridDataTablet: function() {
+        win.lblUser_toolTip("Estructura: A4166");
+        me.panelActual = '-panelGridDataTablet';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchTablet'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin3');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+
+                    }
+                    me.setWidthPie();
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataMainTablet').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataMainTablet').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
+    },
+    rbChangeType: function() {
+
+        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
+        console.log(selectedValue);
+
+        this.setFormatParameter();
+
+        switch (selectedValue) {
+            case 'P':
+                this.setGridData();
+                break;
+            case 'L':
+                this.setGridDataLiga();
+                break;
+            case 'T':
+                this.setGridDataTablet();
+                break;
+        }
     },
     imgByTDOC_clickHandler: function() {
 //        this.btnSearch_click();
@@ -241,15 +331,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         }
     },
     btnClear_click: function(obj, e) {
-        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
-        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
-        Ext.getCmp(prototype.id + '-txtCard1').setValue('');
-        Ext.getCmp(prototype.id + '-txtCard2').setValue('');
-        Ext.getCmp(prototype.id + '-cmbFindByCurrency').setValue('ARS');
-        Ext.getCmp(prototype.id + '-txtMerch').setValue('');
-        Ext.getCmp(prototype.id + '-txtSettlement').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+//        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
+//        Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+//        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');        
     },
     btnExcel_click: function(obj, e) {
 
@@ -294,6 +379,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         switch (me.panelActual) {
             case  '-panelGridData':
                 me.pagginActual = '-paggin';
+                break;
+            case  '-panelGridDataLiga':
+                me.pagginActual = '-paggin2';
+                break;
+            case  '-panelGridDataTablet':
+                me.pagginActual = '-paggin3';
                 break;
         }
     },
