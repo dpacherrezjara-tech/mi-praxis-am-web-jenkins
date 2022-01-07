@@ -2006,4 +2006,106 @@ public class Dashboard01DAO {
         return listado;
     }
     
+    public List<A1971Filter> loadPX109SQP01927(A1971Filter filter) throws SQLException, Exception {
+
+        List<A1971Filter> listado = new ArrayList();
+        A1971Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        long QTY = 0, QTY_VAL = 0, QTY_CON = 0, QTY_PEN = 0, QCPNON = 0, QCPNOAL = 0;
+        double VCPN_VAL = 0, VCPN_CON = 0, VCPN_PEN = 0, VCPNON = 0, VCPNOAL = 0;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP01927(?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+        try {
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                QTY = rs01.getLong("QTY");
+                QTY_VAL = rs01.getLong("QTY_VAL");
+                QTY_CON = rs01.getLong("QTY_CON");
+                QTY_PEN = rs01.getLong("QTY_PEN");
+                QCPNON = rs01.getLong("QCPNON");
+                QCPNOAL = rs01.getLong("QCPNOAL");
+                //Total
+                VCPN_VAL = rs01.getDouble("VCPN_VAL");
+                VCPN_CON = rs01.getLong("VCPN_CON");
+                VCPN_PEN = rs01.getLong("VCPN_PEN");
+                VCPNON = rs01.getLong("VCPNON");
+                VCPNOAL = rs01.getLong("VCPNOAL");
+
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A1971Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.DFLIGHT = rs01.getString("DFLIGHT");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DFLIGHT);
+
+                    objRtn.QTYFlight = rs01.getLong("QTY");
+
+                    objRtn.VCPN = rs01.getDouble("VCPN_VAL");
+                    objRtn.VCPN_F = rs01.getDouble("VCPN_CON");
+                    objRtn.VCPN_J = rs01.getDouble("VCPN_PEN");
+                    objRtn.VCPNON = rs01.getDouble("VCPNON");
+                    objRtn.VCPNOAL = rs01.getDouble("VCPNOAL");
+                    objRtn.Per2 = (objRtn.VCPN > 0) ? (objRtn.VCPNOAL * 100.0) / objRtn.VCPN : 0;
+
+                    objRtn.QTYPAX = rs01.getInt("QTY_VAL");
+                    objRtn.QTYPAX_F = rs01.getInt("QTY_CON");
+                    objRtn.QTYPAX_J = rs01.getInt("QTY_PEN");
+                    objRtn.QCPNON = rs01.getInt("QCPNON");
+                    objRtn.QCPNOAL = rs01.getInt("QCPNOAL");
+                    objRtn.Per1 = (objRtn.QTYPAX > 0) ? (objRtn.QCPNOAL * 100.0) / objRtn.QTYPAX : 0;
+
+                    //Totales
+                    objRtn.totQTYFlight = QTY;
+
+                    objRtn.totVCPN = VCPN_VAL;
+                    objRtn.totVCPN_F = VCPN_CON;
+                    objRtn.totVCPN_J = VCPN_PEN;
+                    objRtn.totVCPNON = VCPNON;
+                    objRtn.totVCPNOAL = VCPNOAL;
+                    objRtn.totPer2 = (objRtn.totVCPN > 0) ? (objRtn.totVCPNOAL * 100.0) / objRtn.totVCPN : 0;
+
+                    objRtn.totQTYPAX = QTY_VAL;
+                    objRtn.totQTYPAX_F = QTY_CON;
+                    objRtn.totQTYPAX_J = QTY_PEN;
+                    objRtn.totQCPNON = QCPNON;
+                    objRtn.totQCPNOAL = QCPNOAL;
+                    objRtn.totPer1 = (objRtn.totQTYPAX > 0) ? (objRtn.totQCPNOAL * 100.0) / objRtn.totQTYPAX : 0;
+
+                    listado.add(objRtn);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return listado;
+    }
 }
