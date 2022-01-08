@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-
+                        Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">MERCHANT ID: 9353227755 - AEROMEXICO PLUSGRADE</center>');
                     }
                     me.setWidthPie();
                 }
@@ -209,7 +209,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataMainLiga').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO LIGAS</center>');
                     }
                     me.setWidthPie();
                 }
@@ -246,7 +247,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataMainTablet').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO TABLET</center>');
                     }
                     me.setWidthPie();
                 }
@@ -362,8 +364,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
-                this.setFormatParameterForExcelGridDataMain();
+                this.setFormatParameter();
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataLiga':
+                this.setFormatParameter();
+                global.getFile(prototype.url + '/getXLSXLiga?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataTablet':
+                this.setFormatParameter();
+                global.getFile(prototype.url + '/getXLSXTablet?beanString=' + searchParams.beanString);
                 break;
         }
     },
