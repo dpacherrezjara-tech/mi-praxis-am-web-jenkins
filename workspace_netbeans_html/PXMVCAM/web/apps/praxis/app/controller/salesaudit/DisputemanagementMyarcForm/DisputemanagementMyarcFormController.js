@@ -19,7 +19,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         me.setStores();
         me.setUser();
         me.setStoresFilters();
-        me.onLoadUsers();
         Ext.getCmp(prototype.idDisputemanageMyarc + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, me);
         me.oninitSearch();
 
@@ -28,12 +27,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         prototype.url02 = CONTEXTPATH + '/BwrBSPLINKRFND';
         prototype.idDisputeGestionMyarc = 'DetailDisputeGestionMyarc';
         prototype.url = CONTEXTPATH + '/DisputemanagementMyarcForm';
+        prototype.idDisputemanageMyarc = 'DisputemanagementMyarcForm';
+        prototype.idDisputeFileViewerMyarc = 'DisputeFileViewerMyarc';
         prototype.widthContenedor = 1366;
         prototype.heightContenedor = 768;
 
     },
     setUser: function () {
-         var me = this;
+        var me = this;
         Ext.Ajax.request({
             url: prototype.url02 + '/getUser/',
             timeout: 60000000,
@@ -61,6 +62,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboOrigin').setVisible(true);
         Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboArea').setVisible(true);
         Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboBase').setVisible(true);
+        Ext.getCmp(prototype.idDisputemanageMyarc + '-CmbStatus').setValue('Y');
         Ext.getCmp(prototype.idDisputemanageMyarc + '-box-filter-02').setVisible(true);
 
         Ext.getCmp(prototype.idDisputemanageMyarc + '-iata').setVisible(false);
@@ -68,6 +70,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
 
         Ext.getCmp(prototype.idDisputemanageMyarc + '-iata').setValue('');
         Ext.getCmp(prototype.idDisputemanageMyarc + '-nmemo').setValue('');
+        Ext.getCmp(prototype.idDisputemanageMyarc + '-CmbStatusMyArc').setValue('');
 
 
 
@@ -125,6 +128,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         var cmbBase = Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboBase');
 
         var CmbStatus = Ext.getCmp(prototype.idDisputemanageMyarc + '-CmbStatus');
+        var CmbStatusMyArc = Ext.getCmp(prototype.idDisputemanageMyarc + '-CmbStatusMyArc');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -168,6 +172,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
             ]
         }));
 
+        CmbStatusMyArc.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "WA", "name": "ACCEPTED DISPUTE"},
+                {"code": "DE", "name": "DISPUTED"},
+                {"code": "DE", "name": "REJECTED DISPUTE"}
+
+            ]
+        }));
+
         cmbOrigin.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
@@ -177,9 +191,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         }));
 
 
-    },
-    onLoadUsers: function () {
-        // var cmbUser = Ext.getCmp(prototype.idDisputemanageMyarc + '-txtUser');
     },
     onCmbSearchAfterRender: function (obj) {
         obj.setValue('1');
@@ -330,6 +341,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         var txtAudit = Ext.getCmp(prototype.idDisputemanageMyarc + '-Audit').getValue();
         var CmbStatus = Ext.getCmp(prototype.idDisputemanageMyarc + '-CmbStatus').getValue();
         var ComboBase = Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboBase').getValue();
+        var CmbStatusMyArc = Ext.getCmp(prototype.idDisputemanageMyarc + '-CmbStatusMyArc').getValue();
         if (cmbsearch === '') {
             Ext.MessageBox.alert('PRAXIS', "Select Search Type", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
@@ -369,7 +381,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
             me.bean.IN_NUMBERADM = txtnmemo;
             me.bean.IN_DATEFROM = '';
             me.bean.IN_DATETO = '';
-            me.bean.IN_STATUS = CmbStatus;
+            me.bean.IN_STATUS = '';
+            me.bean.IN_FLAG = '';
             me.bean.IN_IATA = '';
             me.bean.IN_BASE = '';
             me.bean.IN_ORIGEN = '';
@@ -381,6 +394,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
             me.bean.IN_ORIGEN = cmbOrigin;
             me.bean.IN_BASE = ComboBase;
             me.bean.IN_STATUS = CmbStatus;
+            me.bean.IN_FLAG = CmbStatusMyArc;
             me.bean.IN_IATA = '';
             me.bean.IN_NUMBERADM = '';
 
@@ -388,9 +402,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
             me.bean.IN_NUMBERADM = '';
             me.bean.IN_OPTION = cmbsearch;
             me.bean.IN_IATA = txtIata;
-            me.bean.IN_ORIGEN = cmbOrigin;
+            me.bean.IN_ORIGEN = '';
             me.bean.IN_BASE = ComboBase;
-            me.bean.IN_STATUS = CmbStatus;
+            me.bean.IN_STATUS = '';
+            me.bean.IN_FLAG = '';
 
             me.bean.IN_DATEFROM = '';
             me.bean.IN_DATETO = '';
@@ -400,6 +415,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
         me.bean.IN_USER = txtAudit;
         me.bean.IN_TYPE = '';
         me.bean.IN_AREA = CombArea;
+
 
         me.SearchReportDispute(me.bean, obj === true ? obj : false);
 
