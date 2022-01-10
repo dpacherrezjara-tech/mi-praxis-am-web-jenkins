@@ -156,9 +156,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 url: prototype.url + '/search'
             }, listeners: {
                 beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).mask('Loading...');
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -170,7 +172,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-
+                        Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">MERCHANT ID: 9353227755 - AEROMEXICO PLUSGRADE</center>');
                     }
                     me.setWidthPie();
                 }
@@ -191,9 +193,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 url: prototype.url + '/searchLiga'
             }, listeners: {
                 beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).mask('Loading...');
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin2');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -205,7 +209,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataMainLiga').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO LIGAS</center>');
                     }
                     me.setWidthPie();
                 }
@@ -226,9 +231,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                 url: prototype.url + '/searchTablet'
             }, listeners: {
                 beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).mask('Loading...');
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj) {
+                    Ext.getCmp(prototype.id + me.panelActual).unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin3');
                     var pagData = pag.getPageData();
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -240,7 +247,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataMainTablet').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO TABLET</center>');
                     }
                     me.setWidthPie();
                 }
@@ -356,8 +364,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         console.log(me.panelActual);
         switch (me.panelActual) {
             case  '-panelGridData':
-                this.setFormatParameterForExcelGridDataMain();
+                this.setFormatParameter();
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataLiga':
+                this.setFormatParameter();
+                global.getFile(prototype.url + '/getXLSXLiga?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataTablet':
+                this.setFormatParameter();
+                global.getFile(prototype.url + '/getXLSXTablet?beanString=' + searchParams.beanString);
                 break;
         }
     },
