@@ -32,14 +32,14 @@ public class SalesReconciliAmexLogic {
     public List<A4113Filter> loadPX570SQP04257(A4113Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04257(filter);
     }
-    
+
     public List<A4113Filter> loadPX570SQP04329(A4113Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04329(filter);
     }
-    
+
     public List<A4113Filter> loadPX570SQP04330(A4113Filter filter) throws SQLException, Exception {
-        return SalesReconciliAmexDAO.loadPX570SQP04330(filter);        
-    }    
+        return SalesReconciliAmexDAO.loadPX570SQP04330(filter);
+    }
 
     public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04269(filter);
@@ -65,13 +65,16 @@ public class SalesReconciliAmexLogic {
         return SalesReconciliAmexDAO.loadPX570SQP04328(filter);
     }
 
-    
     public List<A4116Filter> loadPX570SQP04284(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04284(filter);
     }
 
     public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadSQP00697(filter);
+    }
+
+    public List<A4116Filter> loadPX570SQP04357(A4116Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04357(filter);
     }
 
     //-----------------------------------------------------------------------------------------

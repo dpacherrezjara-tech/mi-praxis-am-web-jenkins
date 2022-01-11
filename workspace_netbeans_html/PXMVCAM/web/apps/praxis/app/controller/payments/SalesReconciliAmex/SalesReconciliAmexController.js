@@ -234,15 +234,61 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         };
     },
     btnSearch_click: function(obj, e) {
-        var selected_value = Ext.getCmp(prototype.id + '-checkSettlement').getValue();
-        this.setFormatParameter();
-        if (selected_value) {
-            //this.setGridDataSettlement();
-            this.setGridDataMainSettlement();
-        } else {
-            this.setGridData();
-        }
+        this.rbChangeType();
+    },
+    rbChangeType: function() {
 
+        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
+        console.log(selectedValue);
+
+        this.setFormatParameter();
+
+        switch (selectedValue) {
+            case 'SU':
+                this.setGridData();
+                break;
+            case 'SE':
+                this.setGridDataMainSettlement();
+                break;
+            case 'ER':
+                this.setGridDataMainErrorTransaction();
+                break;
+        }
+    },
+    setGridDataMainErrorTransaction: function() {
+        win.lblUser_toolTip("Estructura: A4116");
+        me.panelActual = '-boxMainErrorTransaction';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchErrorTransaction'
+            }, listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParamsMainSettlement;
+                },
+                load: function(obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin12');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        var data = obj.data.items[0].data;
+//                        console.log(obj);                        
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridMainErrorTransaction').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
     },
     setGridDataMainSettlement: function() {
         win.lblUser_toolTip("Estructura: A4116");
@@ -1419,7 +1465,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setWidthPie: function() {
 
         console.log(me.panelActual);
-        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement') {
+        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -1462,6 +1508,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case '-boxDetSettlement':
                 me.pagginActual = '-paggin11';
+                break;
+            case '-boxMainErrorTransaction':
+                me.pagginActual = '-paggin12';
                 break;
         }
     },

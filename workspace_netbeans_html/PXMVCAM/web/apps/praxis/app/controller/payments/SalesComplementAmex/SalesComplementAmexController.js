@@ -285,7 +285,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         var data = x.record.data;
         var strTkt = data.EMDNUMBER;
         var beanProMasterTicket = {};
-        
+
         prototypeProgram.view = 'payments-sales-complement-amex-form';
         prototypeProgram.nprog = 'PX00000585';
         prototypeProgram.title = 'Sales Complement to Amex';
@@ -438,6 +438,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     selectComboFromDay: function(obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
+    },
+    onViewPNR: function(a, b, c, d, e, rowData) {
+//        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry_PNR('', rowData);
+    },
+    winDataEntry_PNR: function(action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesComplementAmexForm.DataEntry', {
+            id: prototype.id + '-dataEntry',
+            params: {
+                action: action,
+                rec: rec,
+//                lstCountry: me.lstCountry
+            }
+        }).show();
     },
     /*     
      * Funciones para la paginacion     
