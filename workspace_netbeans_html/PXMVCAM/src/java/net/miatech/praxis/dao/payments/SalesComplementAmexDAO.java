@@ -97,6 +97,7 @@ public class SalesComplementAmexDAO {
                 bean.SCARCOD = rst.getString("SCARCOD").trim();
                 bean.SCARDBIN = rst.getString("SCARDBIN").trim();                
                 bean.PNR = rst.getString("PNR").trim();
+                bean.MERCHID = rst.getString("MERCHID").trim();
                 bean.CURRPARTN = rst.getString("CURRPARTN").trim();
                 bean.SVFOP = rst.getDouble("SVFOP");                                
                 bean.EMDNUMBER = rst.getString("EMDNUMBER").trim();
@@ -205,6 +206,7 @@ public class SalesComplementAmexDAO {
                 bean.TICKET8 = rst.getString("TICKET8").trim();
                 bean.TICKET9 = rst.getString("TICKET9").trim();
                 bean.TICKET10 = rst.getString("TICKET10").trim();
+                bean.PNR = rst.getString("PNR").trim();
 
                 
                 bean.FAMEX = rst.getString("FAMEX").trim();
@@ -310,6 +312,7 @@ public class SalesComplementAmexDAO {
                 bean.TICKET8 = rst.getString("TICKET8").trim();
                 bean.TICKET9 = rst.getString("TICKET9").trim();
                 bean.TICKET10 = rst.getString("TICKET10").trim();
+                bean.PNR = rst.getString("PNR").trim();
                 
                 bean.FAMEX = rst.getString("FAMEX").trim();
                 if (bean.FAMEX.equals("")) {

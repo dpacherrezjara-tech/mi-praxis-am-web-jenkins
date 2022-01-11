@@ -172,7 +172,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                             msg: 'Data not found.'
                         });
                     } else {
-                        Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">MERCHANT ID: 9353227755 - AEROMEXICO PLUSGRADE</center>');
+                        //Ext.getCmp(prototype.id + '-gridDataMain').setTitle('<center style="font-size:12px;">MERCHANT ID: 9353227755 - AEROMEXICO PLUSGRADE</center>');
                     }
                     me.setWidthPie();
                 }
@@ -210,7 +210,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                         });
                     } else {
                         var data = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-gridDataMainLiga').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO LIGAS</center>');
+                        //Ext.getCmp(prototype.id + '-gridDataMainLiga').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO LIGAS</center>');
                     }
                     me.setWidthPie();
                 }
@@ -248,7 +248,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
                         });
                     } else {
                         var data = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-gridDataMainTablet').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO TABLET</center>');
+                        //Ext.getCmp(prototype.id + '-gridDataMainTablet').setTitle('<center style="font-size:12px;">MERCHANT ID: ' + data.MERCHID + ' - AEROMEXICO TABLET</center>');
                     }
                     me.setWidthPie();
                 }
@@ -283,17 +283,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     },
     gridData_VIEWTKT_clickHandler: function(column, e, row, column, x, rowData) {
         var data = x.record.data;
-        var strTkt = data.strTicket;
+        var strTkt = data.EMDNUMBER;
         var beanProMasterTicket = {};
+        
+        prototypeProgram.view = 'payments-sales-complement-amex-form';
+        prototypeProgram.nprog = 'PX00000585';
+        prototypeProgram.title = 'Sales Complement to Amex';
+        prototypeProgram.modulo = '';
 //        
         beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
-        beanProMasterTicket.IN_FORMA = strTkt.substr(4, 4);
-        beanProMasterTicket.IN_SERIE = strTkt.substr(8, 7);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(3, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(7, 6);
 //        beanProMasterTicket.IN_SEQ = '00';
 
-//        console.log(beanProMasterTicket);
+        console.log(beanProMasterTicket);
 
-        win.displayProMasterTicket(this, 'ViewFirstData', beanProMasterTicket);
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
     validateFields: function() {
         var msj = '';

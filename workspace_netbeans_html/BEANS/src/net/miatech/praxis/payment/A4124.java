@@ -16,6 +16,7 @@ public class A4124 {
     public String COUNTRY = "";
     public String PLUSGRAID = "";
     public String PNR = "";
+    public String MERCHID = "";
     public String PTICKENBR = "";
     public String CARRIER = "";
     public String FLTNBR = "";
