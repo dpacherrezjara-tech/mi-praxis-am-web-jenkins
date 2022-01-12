@@ -1,13 +1,7 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
 prototype.id = 'IvaReportForm';
 prototype.url = CONTEXTPATH + '/IvaReport';
+prototype.widthContenedor = 1800;
+prototype.widthGrid = 1750;
 
 Ext.define('Ext.Praxis.view.flown.IvaReportForm.IvaReportForm', {
     extend: 'Ext.form.Panel',
@@ -47,7 +41,6 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.IvaReportForm', {
                         {
                             xtype: 'panel',
                             region: 'center',
-//                          width: 900,
                             layout: 'border',
                             items: [
                                 {
@@ -60,7 +53,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.IvaReportForm', {
                                     border: false,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1000,
+                                        width: prototype.widthContenedor,
                                         align: 'center'
                                     },
                                     items: [

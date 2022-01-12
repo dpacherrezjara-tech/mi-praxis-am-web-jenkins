@@ -21,6 +21,7 @@ import net.miatech.beans.A1952Filter;
 import net.miatech.beans.A2559Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
+import net.miatech.praxis.flown.filter.A4161Filter;
 import net.miatech.praxis.logic.flown.AccountedAmountsInvoicedLogic;
 import net.miatech.praxis.logic.flown.IvaReportLogic;
 import net.miatech.praxis.logic.flown.CatalogueFlightLogic;
@@ -68,7 +69,7 @@ public class IvaReportController extends BaseController {
     String search(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- IvaReport : Controller-------------");
         map.put("success", true);
-        List<A1955Filter> lst = this.getList(request, false);
+        List<A4161Filter> lst = this.getList(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
@@ -76,12 +77,12 @@ public class IvaReportController extends BaseController {
 
     }
 
-    public List<A1955Filter> getList(HttpServletRequest request, Boolean bExcel) {
+    public List<A4161Filter> getList(HttpServletRequest request, Boolean bExcel) {
 
         logic = new IvaReportLogic();
 
-        List<A1955Filter> lst = new ArrayList<>(0);
-        A1955Filter filter = new A1955Filter();
+        List<A4161Filter> lst = new ArrayList<>(0);
+        A4161Filter filter = new A4161Filter();
 
         filter.page.TOTROW = -1;
         filter.page.START = 0;
@@ -92,9 +93,9 @@ public class IvaReportController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             filter.IN_MODULO = request.getParameter("IN_MODULO");
-            filter.A1955STATU = request.getParameter("A1955STATU");
-            filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO");
-            filter.IN_FECHA_ACUSE = request.getParameter("IN_FECHA_ACUSE");
+            filter.IN_TICKET = request.getParameter("IN_TICKET");
+            filter.IN_ORIGEN = request.getParameter("IN_ORIGEN");
+            filter.IN_DESTINO = request.getParameter("IN_DESTINO");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
@@ -126,7 +127,7 @@ public class IvaReportController extends BaseController {
 
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A1955Filter> listaData = this.getList(request, false);
+            List<A4161Filter> listaData = this.getList(request, false);
 
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
 
@@ -205,10 +206,10 @@ public class IvaReportController extends BaseController {
                 Cell rcell5 = row.createCell(5);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
-                rcell1.setCellValue(listaData.get(vi).A1955ENVIO);
+            //    rcell1.setCellValue(listaData.get(vi).A1955ENVIO);
                 rcell2.setCellValue(listaData.get(vi).MODULE);
                 rcell3.setCellValue(listaData.get(vi).ACCION);
-                rcell4.setCellValue(listaData.get(vi).A1955FPROC);
+              //  rcell4.setCellValue(listaData.get(vi).A1955FPROC);
                 rcell5.setCellValue(listaData.get(vi).ESTADO);
 
                 iter.next();
@@ -232,104 +233,5 @@ public class IvaReportController extends BaseController {
 
     }
 
-    @RequestMapping(value = "mantenimiento")
-    public @ResponseBody
-    String mantenimiento(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        System.out.println("Accounting Master Process : Mantenimiento");
-        String msj = "";
-        String result = "";
-        A1955Filter filter = new A1955Filter();
-        A1955Filter reversa = new A1955Filter();
-        String strOption = "";
-        try {
-            logic = new IvaReportLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            strOption = request.getParameter("strOption").toString().trim();
-
-            filter.A1955MODUL = request.getParameter("A1955MODUL");
-            filter.IN_ENVIO = request.getParameter("IN_ENVIO");
-            filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO");            
-
-            if (strOption.equals("I") && filter.IN_ENVIO.equals("true")) {
-                String dato = logic.consistenciaFlown(filter);
-            }
-            
-            if(strOption.equals("D")){                
-                switch(filter.A1955MODUL){
-                    case "PFLOWN" :
-                        logic.reversaFlown(filter);
-                        break;
-                }                
-            }  
-            
-            result = logic.accountMaintance(filter, strOption);
-                        
-        } catch (Exception e) {
-            System.out.println("Excepcion : " + e.getMessage());
-            logError.error(e.getMessage());
-        }
-        HashMap m = new HashMap();
-        m.put("success", true);
-        m.put("result", result);        
-        m.put("strOption", strOption);
-
-        return new Gson().toJson(m);
-    }
-     
-    @RequestMapping(value = "/searchReversa")
-    public @ResponseBody
-    String searchReversa(ModelMap map, HttpServletRequest request) {
-        A1955Filter listaData;
-        A1955Filter filter = new A1955Filter();
-        try {
-            filter.IN_MODULO = request.getParameter("IN_MODULO").trim();
-            filter.A1955FPROC = request.getParameter("IN_FECHA_PROCESO").trim();
-            
-            logic = new IvaReportLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            listaData = logic.searchReversa(filter);
-            
-            map.put("success", true);            
-            map.put("data", listaData);
-
-        } catch (NumberFormatException | SQLException ex) {
-            map.put("success", false);
-            map.put("sesion", "Se produjo un error. " + ex.getMessage());
-        } catch (Exception ex) {
-            map.put("success", false);
-            map.put("sesion", "Se produjo un error. " + ex.getMessage());
-        }
-
-        return new Gson().toJson(map);
-    }
     
-    @RequestMapping(value = "/MaintancePendingFlown")
-    public @ResponseBody
-    String MaintancePendingFlown(ModelMap map, HttpServletRequest request) {
-        A1955Filter filter = new A1955Filter();
-        String strOption;
-        try {
-            filter.A1955MODUL = request.getParameter("A1955MODUL");
-            filter.IN_FECHA_PROCESO = request.getParameter("IN_FECHA_PROCESO");
-            strOption = request.getParameter("strOption");            
-            
-            logic = new IvaReportLogic();
-            logic.setSession(this.serverSession.getServerSession());
-            
-            String result = logic.accountMaintancePendingFlown(filter,strOption);
-            
-            map.put("success", true);
-            map.put("result", result);
-            map.put("strOption", strOption);
-
-        } catch (NumberFormatException | SQLException ex) {
-            map.put("success", false);
-            map.put("sesion", "Se produjo un error. " + ex.getMessage());
-        } catch (Exception ex) {
-            map.put("success", false);
-            map.put("sesion", "Se produjo un error. " + ex.getMessage());
-        }
-
-        return new Gson().toJson(map);
-    } 
 }

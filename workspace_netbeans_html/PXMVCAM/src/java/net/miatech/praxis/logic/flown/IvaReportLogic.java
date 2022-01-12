@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.flown.IvaReportDAO;
-import net.miatech.praxisbi.A1955Filter;
+import net.miatech.praxis.flown.filter.A4161Filter;
 
 /**
  *
@@ -24,27 +24,8 @@ public class IvaReportLogic {
 
     }
 
-    public List<A1955Filter> search(A1955Filter filter) throws SQLException, Exception {
+    public List<A4161Filter> search(A4161Filter filter) throws SQLException, Exception {
         return accountingMasterProcessDAO.search(filter);
     }
     
-    public String consistenciaFlown(A1955Filter filter) throws SQLException, Exception {
-        return accountingMasterProcessDAO.consistenciaFlown(filter);
-    } 
-    
-     public String accountMaintance(A1955Filter filter, String strOption) throws SQLException, Exception {
-        return accountingMasterProcessDAO.accountMaintance(filter, strOption);
-    }
-     
-    public String reversaFlown(A1955Filter filter) throws SQLException, Exception {
-        return accountingMasterProcessDAO.reversaFlown(filter);
-    }
-    
-    public String accountMaintancePendingFlown(A1955Filter filter, String strOption) throws SQLException, Exception {
-        return accountingMasterProcessDAO.accountMaintancePendingFlown(filter, strOption);
-    }
-    
-    public A1955Filter searchReversa(A1955Filter filter) throws SQLException, Exception {
-        return accountingMasterProcessDAO.searchReversa(filter);
-    }
 }

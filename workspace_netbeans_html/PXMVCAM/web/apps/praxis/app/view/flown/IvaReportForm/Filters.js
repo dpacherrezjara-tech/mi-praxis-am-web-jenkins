@@ -63,43 +63,76 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Filters', {
                             displayField: 'name'
 
                         },
+//                        {
+//                            xtype: 'datefield',
+//                            format: 'Y/m/d',
+//                            fieldLabel: '<b>Date From </b>',
+//                            anchor: '100%',
+//                            id: prototype.id + '-txtDateFrom',
+//                            fieldStyle: 'text-align:center',
+//                            maskRe: /[0-9/]/,
+//                            enforceMaxLength: true,
+//                            width: 180,
+//                            labelWidth: 80
+//                        },
+//                        {
+//                            xtype: 'datefield',
+//                            format: 'Y/m/d',
+//                            fieldLabel: '<b>To </b>',                           
+//                            anchor: '100%',
+//                            id: prototype.id + '-txtDateTo',
+//                            fieldStyle: 'text-align:center',
+//                            maskRe: /[0-9/]/,
+//                            enforceMaxLength: true,
+//                            width: 140,
+//                            labelWidth: 40
+//                        },
+//                        {
+//                            xtype: 'combo',
+//                            id: prototype.id + '-cboEstado',
+//                            required: true,
+//                            fieldLabel: 'Status',
+//                            width: 160,
+//                            labelWidth: 70,
+//                            labelAlign: 'right',
+//                            queryMode: 'local',
+//                            triggerAction: 'all',
+//                            valueField: 'code',
+//                            displayField: 'name'
+//
+//                        }
                         {
-                            xtype: 'datefield',
-                            format: 'Y/m/d',
-                            fieldLabel: '<b>Date From </b>',
-                            anchor: '100%',
-                            id: prototype.id + '-txtDateFrom',
-                            fieldStyle: 'text-align:center',
-                            maskRe: /[0-9/]/,
-                            enforceMaxLength: true,
-                            width: 180,
-                            labelWidth: 80
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtTicket',
+                            fieldLabel: 'Ticket',
+                            labelWidth: 50,
+                            width: 300,
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                //change: 'onchange'
+                            }
                         },
                         {
-                            xtype: 'datefield',
-                            format: 'Y/m/d',
-                            fieldLabel: '<b>To </b>',                           
-                            anchor: '100%',
-                            id: prototype.id + '-txtDateTo',
-                            fieldStyle: 'text-align:center',
-                            maskRe: /[0-9/]/,
-                            enforceMaxLength: true,
-                            width: 140,
-                            labelWidth: 40
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtOrigen',
+                            fieldLabel: 'Origen',
+                            labelWidth: 50,
+                            width: 300,
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                //change: 'onchange'
+                            }
                         },
                         {
-                            xtype: 'combo',
-                            id: prototype.id + '-cboEstado',
-                            required: true,
-                            fieldLabel: 'Status',
-                            width: 160,
-                            labelWidth: 70,
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            valueField: 'code',
-                            displayField: 'name'
-
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtDestino',
+                            fieldLabel: 'Destino',
+                            labelWidth: 50,
+                            width: 300,
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                //change: 'onchange'
+                            }
                         }
                     ]
                 }

@@ -58,46 +58,52 @@ Ext.define('Ext.Praxis.controller.flown.IvaReport.IvaReportController', {
     },
     xpanel_afterrender: function(obj, e) {
 
-        Ext.getCmp(prototype.id + '-txtDateFrom').hide();
-        Ext.getCmp(prototype.id + '-txtDateTo').hide();
+//        Ext.getCmp(prototype.id + '-txtDateFrom').hide();
+//        Ext.getCmp(prototype.id + '-txtDateTo').hide();
         this.setStoreData();
        // this.btnSearch_click();
 
     },
     setStoreData: function() {
         var cboModulo = Ext.getCmp(prototype.id + '-cboModulo');
-        var cboEstado = Ext.getCmp(prototype.id + '-cboEstado');
+//        var cboEstado = Ext.getCmp(prototype.id + '-cboEstado');
 
         cboModulo.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: true,
             fields: ['code', 'name'],
             data: [
                 ["", "(Select)"],
-                ["PFLOWN", "Flown Accounting"],
-                ["PPFLOWN", "Flown Accounting Pending"]
+                ["PFLOWN", "Iva Report"]
             ]}));
         cboModulo.setValue("");
 
-        cboEstado.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: true,
-            fields: ['code', 'name'],
-            data: [
-                ["", "All"],
-                ["C", "Completed"],
-                ["N", "New"],
-                ["P", "In Process"],
-                ["E", "In Error"]
-            ]}));
-        cboEstado.setValue("");
+//        cboEstado.bindStore(Ext.create('Ext.data.ArrayStore', {
+//            autoLoad: true,
+//            fields: ['code', 'name'],
+//            data: [
+//                ["", "All"],
+//                ["C", "Completed"],
+//                ["N", "New"],
+//                ["P", "In Process"],
+//                ["E", "In Error"]
+//            ]}
+//                ));
+//        cboEstado.setValue("");
     },
     onChangeModule: function() {
         var opt = Ext.getCmp(prototype.id + '-cboModulo').getValue();
         if (opt === '') {
-            Ext.getCmp(prototype.id + '-txtDateFrom').hide();
-            Ext.getCmp(prototype.id + '-txtDateTo').hide();
+//            Ext.getCmp(prototype.id + '-txtDateFrom').hide();
+//            Ext.getCmp(prototype.id + '-txtDateTo').hide();
+            Ext.getCmp(prototype.id + '-txtTicket').hide();
+            Ext.getCmp(prototype.id + '-txtOrigen').hide();
+            Ext.getCmp(prototype.id + '-txtDestino').hide();
         } else {
-            Ext.getCmp(prototype.id + '-txtDateFrom').show();
-            Ext.getCmp(prototype.id + '-txtDateTo').show();
+//            Ext.getCmp(prototype.id + '-txtDateFrom').show();
+//            Ext.getCmp(prototype.id + '-txtDateTo').show();
+            Ext.getCmp(prototype.id + '-txtTicket').show();
+            Ext.getCmp(prototype.id + '-txtOrigen').show();
+            Ext.getCmp(prototype.id + '-txtDestino').show();
         }
 
     },
@@ -107,21 +113,20 @@ Ext.define('Ext.Praxis.controller.flown.IvaReport.IvaReportController', {
     setParams: function() {
 
         var IN_MODULO = Ext.getCmp(prototype.id + '-cboModulo').getValue();
-        var A1955STATU = Ext.getCmp(prototype.id + '-cboEstado').getValue();
-        var IN_FINI = Ext.getCmp(prototype.id + '-txtDateFrom').getValue();
-        var IN_FFIN = Ext.getCmp(prototype.id + '-txtDateTo').getValue();
+        var IN_TICKET = Ext.getCmp(prototype.id + '-txtTicket').getValue();
+        var IN_ORIGEN = Ext.getCmp(prototype.id + '-txtOrigen').getValue();
+        var IN_DESTINO = Ext.getCmp(prototype.id + '-txtDestino').getValue();
         var IN_FECHA_PROCESO = '';
         var IN_FECHA_ACUSE = '';
-        IN_FFIN = Ext.util.Format.date(IN_FFIN, 'Ymd');
-        IN_FINI = Ext.util.Format.date(IN_FINI, 'Ymd');
+ //       IN_FFIN = Ext.util.Format.date(IN_FFIN, 'Ymd');
+ //       IN_FINI = Ext.util.Format.date(IN_FINI, 'Ymd');
 
         switch (IN_MODULO) {
             case 'PSALES':
             case 'PADJMA':
             case 'PFLOWN':
             case 'PPFLOWN':
-                IN_FECHA_PROCESO = IN_FINI;
-                IN_FECHA_ACUSE = IN_FFIN;
+
                 break;
 
         }
@@ -129,15 +134,12 @@ Ext.define('Ext.Praxis.controller.flown.IvaReport.IvaReportController', {
 
         searchParams = {
             IN_MODULO: IN_MODULO,
-            A1955STATU: A1955STATU,
-            IN_FECHA_PROCESO: IN_FECHA_PROCESO,
-            IN_FECHA_ACUSE: IN_FECHA_ACUSE
+            IN_TICKET: IN_TICKET,
+            IN_ORIGEN: IN_ORIGEN,
+            IN_DESTINO: IN_DESTINO
         };
         console.log("-------------Parametros enviados-----------");
-        console.log("IN_MODULO : " + searchParams.IN_MODULO);
-        console.log("A1955STATU : " + searchParams.A1955STATU);
-        console.log("IN_FECHA_PROCESO : " + searchParams.IN_FECHA_PROCESO);
-        console.log("IN_FECHA_ACUSE : " + searchParams.IN_FECHA_ACUSE);
+        console.log(searchParams);
         console.log("-------------------------------------------");
     },
     setGridData: function(obj, val) {
@@ -169,10 +171,13 @@ Ext.define('Ext.Praxis.controller.flown.IvaReport.IvaReportController', {
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     btnClear_click: function(obj, e) {
-        Ext.getCmp(prototype.id + '-txtDateFrom').setValue('');
-        Ext.getCmp(prototype.id + '-txtDateTo').setValue('');
+//        Ext.getCmp(prototype.id + '-txtDateFrom').setValue('');
+//        Ext.getCmp(prototype.id + '-txtDateTo').setValue('');
         Ext.getCmp(prototype.id + '-cboModulo').setValue('');
-        Ext.getCmp(prototype.id + '-cboEstado').setValue('');
+        Ext.getCmp(prototype.id + '-txtTicket').setValue('');
+        Ext.getCmp(prototype.id + '-txtOrigen').setValue('');
+        Ext.getCmp(prototype.id + '-txtDestino').setValue('');
+//        Ext.getCmp(prototype.id + '-cboEstado').setValue('');
     },
     btnExcel_click: function(obj, e) {
         Ext.Msg.show({

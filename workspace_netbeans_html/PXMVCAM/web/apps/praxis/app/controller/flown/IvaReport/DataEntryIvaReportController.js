@@ -50,8 +50,7 @@ Ext.define('Ext.Praxis.controller.flown.IvaReport.DataEntryIvaReportController',
             fields: ['code', 'name'],
             data: [
                 ["", "(Select)"],
-                ["PFLOWN", "Flown Accounting"],
-                ["PPFLOWN", "Flown Accounting Pending"]
+                ["PFLOWN", "Iva Report"]
             ]}));
         cbxModulo.setValue("");
     },

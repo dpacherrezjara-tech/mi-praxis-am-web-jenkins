@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxisbi.A1955Filter;
+import net.miatech.praxis.flown.filter.A4161Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -47,15 +47,15 @@ public class IvaReportDAO {
         session = ss;
     }
 
-    public List<A1955Filter> search(A1955Filter filter) throws SQLException, Exception {
-        List<A1955Filter> lstRtn = new ArrayList(0);
-        A1955Filter objRtn;
+    public List<A4161Filter> search(A4161Filter filter) throws SQLException, Exception {
+        List<A4161Filter> lstRtn = new ArrayList(0);
+        A4161Filter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
 
         CallableStatement cstmt01 = null, cstmt02 = null;
         ResultSet rs01 = null, rs02 = null;
 
-        String SQLCLL01 = "{CALL PRAXIS.SQP00892(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL LIBSAP50.SQP04363(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
 
@@ -75,10 +75,10 @@ public class IvaReportDAO {
 
             cstmt01.setString("IN_A1955CCUST", session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString("IN_A1955MODUL", filter.IN_MODULO);
-            cstmt01.setString("IN_FINI", filter.IN_FECHA_PROCESO);
-            cstmt01.setString("IN_FFIN", filter.IN_FECHA_ACUSE);
-            cstmt01.setString("IN_A1955STATU", filter.A1955STATU);
-
+            cstmt01.setString("IN_TICKET", filter.IN_TICKET);
+            cstmt01.setString("IN_ORIGEN", filter.IN_ORIGEN);
+            cstmt01.setString("IN_DESTINO", filter.IN_DESTINO);
+            
             cstmt01.setInt("IO_PAGNUM", PAGINIT);
             cstmt01.setInt("IO_PAGROW", totRowsPag);
             cstmt01.setInt("IO_TOTPAG", totRows);
@@ -117,27 +117,53 @@ public class IvaReportDAO {
             int pos = 0;
             while (rs01.next()) {
                 pos++;
-                objRtn = new A1955Filter();
+                objRtn = new A4161Filter();
                 objRtn.RN = rs01.getLong("RN");
-                objRtn.A1955CCUST = rs01.getString("A1955CCUST").trim();
-                objRtn.A1955ENVIO = rs01.getString("A1955ENVIO").trim();
-                objRtn.A1955MODUL = rs01.getString("A1955MODUL").trim();
-                objRtn.MODULE = rs01.getString("MODULE").trim();
-                objRtn.ACCION = rs01.getString("ACCION").trim();
-                objRtn.ESTADO = rs01.getString("ESTADO").trim();
-                objRtn.A1955FPROC = rs01.getString("A1955FPROC").trim();
-                objRtn.A1955ACTIO = rs01.getString("A1955ACTIO").trim();
-                objRtn.A1955STATU = rs01.getString("A1955STATU").trim();
-                objRtn.A1955PRIOR = rs01.getString("A1955PRIOR").trim();
-                objRtn.A1955USRIN = rs01.getString("A1955USRIN").trim();
-                objRtn.A1955FECIN = rs01.getString("A1955FECIN").trim();
-                objRtn.A1955HORIN = rs01.getString("A1955HORIN").trim();
-                objRtn.A1955USRAC = rs01.getString("A1955USRAC").trim();
-                objRtn.A1955FECAC = rs01.getString("A1955FECAC").trim();
-                objRtn.A1955HORAC = rs01.getString("A1955HORAC").trim();
-                objRtn.A1955KEY2 = rs01.getString("A1955KEY2").trim();
-                objRtn.A1955KEY4 = rs01.getString("A1955KEY4").trim();
-
+                objRtn.AIRCODE = rs01.getString("AIRCODE").trim();
+                objRtn.AIRNAME = rs01.getString("AIRNAME").trim();
+                objRtn.TICKET = rs01.getString("TICKET").trim();
+                objRtn.CUPON = rs01.getString("CUPON").trim();
+                objRtn.SEQ =  rs01.getString("SEQ").trim();
+                objRtn.DFLIGHT =  rs01.getString("DFLIGHT").trim();
+                objRtn.NFLIGHT =  rs01.getString("NFLIGHT").trim();
+                objRtn.CARR =  rs01.getString("CARR").trim();
+                objRtn.ORI =  rs01.getString("ORI").trim();
+                objRtn.DES =  rs01.getString("DES").trim();
+                objRtn.AMOUREV =  Double.parseDouble(rs01.getString("AMOUREV").trim());
+                objRtn.TCREV =  Double.parseDouble(rs01.getString("TCREV").trim());
+                objRtn.AMOULOC =  Double.parseDouble(rs01.getString("AMOULOC").trim());
+                objRtn.CTACONT =  rs01.getString("CTACONT").trim();
+                objRtn.CTA =  rs01.getString("CTA").trim();
+                objRtn.SUBCTA =  rs01.getString("SUBCTA").trim();    
+                objRtn.PERIODO =  rs01.getString("PERIODO").trim();
+                objRtn.TITULO =  rs01.getString("TITULO").trim();
+                objRtn.TIPOING =  rs01.getString("TIPOING").trim();  
+                objRtn.ITEM =  rs01.getString("ITEM").trim();
+                objRtn.CLASOD =  rs01.getString("CLASOD").trim();
+                objRtn.TIDOCOD =  rs01.getString("TIDOCOD").trim();    
+                objRtn.TITRANOD =  rs01.getString("TITRANOD").trim();
+                objRtn.VOLINVOL =  rs01.getString("VOLINVOL").trim();
+                objRtn.RUTAOD =  rs01.getString("RUTAOD").trim();           
+                objRtn.BASEGRAOD =  rs01.getString("BASEGRAOD").trim();
+                objRtn.IVAOD =  rs01.getString("IVAOD").trim();
+                objRtn.OD =  rs01.getString("OD").trim();  
+                objRtn.CNXOD =  rs01.getString("CNXOD").trim();
+                objRtn.TASAOD2 =  rs01.getString("TASAOD2").trim();
+                objRtn.BASEGRAOD2 =  rs01.getString("BASEGRAOD2").trim();    
+                objRtn.IVAOD2 =  rs01.getString("IVAOD2").trim();
+                objRtn.CURRLOCVT =  rs01.getString("CURRLOCVT").trim();
+                objRtn.RUTFCALVT =  rs01.getString("RUTFCALVT").trim(); 
+                objRtn.TARIFALOC =  Double.parseDouble(rs01.getString("TARIFALOC").trim());
+                objRtn.YQLOCVT =  Double.parseDouble(rs01.getString("YQLOCVT").trim());
+                objRtn.IVALOCVT =  Double.parseDouble(rs01.getString("IVALOCVT").trim());  
+                objRtn.IVAVTA =  Double.parseDouble(rs01.getString("IVAVTA").trim());
+                objRtn.BASEGRAVT =  rs01.getString("BASEGRAVT").trim();
+                objRtn.TASAIVAVT =  rs01.getString("TASAIVAVT").trim();    
+                objRtn.ODFCALVT =  rs01.getString("ODFCALVT").trim();
+                objRtn.RUTFCALOD =  rs01.getString("RUTFCALOD").trim();
+                objRtn.CNXIR =  rs01.getString("CNXIR").trim();      
+                objRtn.TASAOD =  rs01.getString("TASAOD").trim();                  
+                //
                 objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
@@ -162,7 +188,7 @@ public class IvaReportDAO {
         return lstRtn;
     }
     
-    public String consistenciaFlown(A1955Filter filter) throws SQLException, Exception {       
+    public String consistenciaFlown(A4161Filter filter) throws SQLException, Exception {       
         String strSQL;
         String STR_RESULT = "";       
        
@@ -188,23 +214,20 @@ public class IvaReportDAO {
         return STR_RESULT;
     }
     
-      public String accountMaintance(A1955Filter filter, String strOption) throws SQLException, Exception {
+      public String accountMaintance(A4161Filter filter, String strOption) throws SQLException, Exception {
        
         String strSQL;
         String STR_RESULT = "";        
         
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00902(?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00902(?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
-            cs.setString(3, filter.A1955MODUL);            
-            cs.setString(4, filter.IN_FECHA_PROCESO);
-            cs.setString(5, session.getUserView().getUserInfo().USR);
-            cs.setString(6, Functions.getFechaActual());
-            cs.setString(7, Functions.getHoraActual());
-            cs.setString(8, filter.A1955KEY2);
-            cs.setString(9, filter.A1955KEY4);
+            cs.setString(3, filter.IN_FECHA_PROCESO);
+            cs.setString(4, session.getUserView().getUserInfo().USR);
+            cs.setString(5, Functions.getFechaActual());
+            cs.setString(6, Functions.getHoraActual());
             cs.execute();
             
             rst = cs.getResultSet();
@@ -222,7 +245,7 @@ public class IvaReportDAO {
         return STR_RESULT;
     }
       
-    public String accountMaintancePendingFlown(A1955Filter filter, String strOption) throws SQLException, Exception  {
+    public String accountMaintancePendingFlown(A4161Filter filter, String strOption) throws SQLException, Exception  {
         String strSQL;
         String STR_RESULT = "";
         
@@ -231,7 +254,7 @@ public class IvaReportDAO {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, session.getUserView().getCustomerInfo().CCUST);
-            cs.setString(3, filter.A1955MODUL);            
+            cs.setString(3, filter.MODULE);            
             cs.setString(4, filter.IN_FECHA_PROCESO);
             cs.setString(5, session.getUserView().getUserInfo().USR);
             cs.setString(6, Functions.getFechaActual());
@@ -253,7 +276,7 @@ public class IvaReportDAO {
         return STR_RESULT;
     }
 
-    public String reversaFlown(A1955Filter filter) throws SQLException,Exception {
+    public String reversaFlown(A4161Filter filter) throws SQLException,Exception {
         String strSQL;
         String STR_RESULT = "";
 
@@ -277,45 +300,4 @@ public class IvaReportDAO {
         return STR_RESULT;
     }
     
-    public A1955Filter searchReversa(A1955Filter filter) throws SQLException,Exception
-    {
-        A1955Filter objRtn = new A1955Filter();
-        CallableStatement cstmt01 = null;
-        ResultSet rs01 = null;
-        
-        String SQLCLL01 = "{CALL PRAXIS.SQP02287(?,?,?)}";
-
-        Connection cnx = null;
-        
-        try {            
-            cnx = session.getCNXIBMDB2().getIBMDB2Connection();           
-            cstmt01 = cnx.prepareCall(SQLCLL01);
-
-            cstmt01.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString("IN_FPROC", filter.A1955FPROC);
-            cstmt01.setString("IN_TIPO", filter.IN_MODULO);
-            cstmt01.execute();
-            
-            rs01 = cstmt01.getResultSet();
-            while (rs01.next()) {                
-                objRtn.A1955FPROC = rs01.getString("A1716FPRO").trim();                
-                objRtn.A1955FECIN = rs01.getString("A1716FREGI").trim();
-                objRtn.A1955QCPNR = rs01.getInt("CANTIDAD");              
-            }        
-         }catch(Exception ex){
-             String str = ex.getMessage();
-             str = "";
-         }finally {
-            if (rs01 != null) {
-                rs01.close();
-            }
-            if (cstmt01 != null) {
-                cstmt01.close();
-            }
-            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            pasarGarbageCollector();
-        }
-         
-         return objRtn; 
-    }
 }
