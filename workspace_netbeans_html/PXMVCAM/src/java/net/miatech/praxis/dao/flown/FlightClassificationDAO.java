@@ -55,7 +55,7 @@ public class FlightClassificationDAO {
         int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
 
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX019S02A051(?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04364(?,?,?,?,?)}";
 
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
