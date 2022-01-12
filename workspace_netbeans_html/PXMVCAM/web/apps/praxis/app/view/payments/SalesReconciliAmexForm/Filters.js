@@ -150,13 +150,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
+                {xtype: 'tbspacer', width: 30},
                 {
-                    xtype: 'checkboxfield',
-                    id: prototype.id + '-checkSettlement',
-                    margin: '0 0 0 15',
-                    width: 120,
-                    boxLabel: 'Settlement',
-                    inputValue: '1'
+                    xtype: 'radiogroup',
+                    id: prototype.id + '-radiogroupType',
+                    width: 480,
+                    items: [
+                        {boxLabel: '<b style="color:#148D28;">Summary</b>', inputValue: 'SU', name: 'rbgType', checked: true},
+                        {boxLabel: '<b style="color:#148D28;">Settlement</b>', inputValue: 'SE', name: 'rbgType'},
+                        {boxLabel: '<b style="color:#148D28;">Transact. Queue Error</b>', inputValue: 'ER', name: 'rbgType'},
+                    ],
+                    listeners: {
+                        change: 'rbChangeType'
+                    }
                 },
 //                {
 //                    xtype: 'checkboxfield',
@@ -184,8 +190,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
 //                    listeners: {
 //                        keypress: 'eventKey'
 //                    }
-//                },
-                {xtype: 'tbspacer', width: 30}
+//                },                
             ]
         }
 
