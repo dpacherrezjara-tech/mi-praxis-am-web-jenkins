@@ -1,5 +1,7 @@
 
+prototype.idDisputemanageMyarc = 'DisputemanagementMyarcForm';
 prototype.idDisputeGestionMyarc = 'DetailDisputeGestionMyarc';
+prototype.idDisputeFileViewerMyarc = 'DisputeFileViewerMyarc';
 prototype.url = CONTEXTPATH + '/DisputemanagementMyarcForm';
 prototype.widthContenedor = 1366;
 prototype.heightContenedor = 768;
@@ -10,10 +12,12 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
 
     requires: [
         'Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DisputemanagementMyarcFormController',
-        'Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeGestionMyarc'
+        'Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeGestionMyarc',
+        'Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DisputeFileViewerMyarc'
     ],
-
+    
     controller: 'DisputemanagementMyarcFormController',
+    
 
     id: prototype.idDisputemanageMyarc + '-Contenedor',
 
@@ -281,6 +285,24 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.Disputemanagem
                                             valueField: 'code',
                                             width: 250,
                                             labelWidth: 50,
+                                            labelAlign: 'right',
+                                            emptyText: '',
+                                            listConfig: {
+                                                minWidth: 200
+                                            },
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.idDisputemanageMyarc + '-CmbStatusMyArc',
+                                            fieldLabel: 'Status MyArc',
+                                            queryMode: 'local',
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            width: 250,
+                                            labelWidth: 110,
                                             labelAlign: 'right',
                                             emptyText: '',
                                             listConfig: {

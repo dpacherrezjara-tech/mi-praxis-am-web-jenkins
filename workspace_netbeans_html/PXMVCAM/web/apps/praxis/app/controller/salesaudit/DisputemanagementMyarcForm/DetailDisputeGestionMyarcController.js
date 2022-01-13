@@ -306,29 +306,20 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
         metaData.style = "font-weight:bold !important; color:blue !important; cursor: pointer !important; text-decoration: underline;";
         return '<span onclick="Ext.getCmp(prototype.idDisputeGestionMyarc + \'-PrincipalContenedor\').getController().onWinFileViewerClick(' + rowIndex + ');">' + archivo + '</span>'
     },
-
-    /*onWinFileViewerClick: function (rowIndex) {
-     var grid = Ext.getCmp(prototype.idDisputeGestionMyarc + '-gridDispuRazon');
-     var store = grid.getStore();
-     var rec = store.getAt(rowIndex);
-     
-     var DisputeFileViewer = Ext.create('Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeFileViewer', {id: 'DisputeFileViewer'});
-     var controller = DisputeFileViewer.getController();
-     controller.getFilesDirectory(rec.data, Ext.getCmp(prototype.idDisputeGestionMyarc + '-nmemo').getValue(''));
-     DisputeFileViewer.show();
-     }*/
-
-
     onWinFileViewerClick: function (rowIndex) {
-
+        var me = this;
+        rec2 = me.view.params.rec;
+        //
         var grid = Ext.getCmp(prototype.idDisputeGestionMyarc + '-gridDispuRazon');
         var store = grid.getStore();
         var rec = store.getAt(rowIndex);
         rec = rec === null || rec === undefined ? {} : rec;
-        var win = new Ext.Praxis.view.salesaudit.DisputeGestionBsplink.DisputeFileViewer({
+        var win = new Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DisputeFileViewerMyarc({
             params: {
                 rec: rec,
-                nmemo: Ext.getCmp(prototype.idDisputeGestionMyarc + '-nmemo').getValue('')
+                nmemo: Ext.getCmp(prototype.idDisputeGestionMyarc + '-nmemo').getValue(),
+                preme: rec2.data.A4137PREME,
+                anio: rec2.data.A4137ANIO
             }
         });
         win.show();

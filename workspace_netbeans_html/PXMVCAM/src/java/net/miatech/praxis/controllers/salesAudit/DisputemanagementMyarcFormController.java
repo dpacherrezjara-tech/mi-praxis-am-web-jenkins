@@ -6,6 +6,10 @@
 package net.miatech.praxis.controllers.salesAudit;
 
 import com.google.gson.Gson;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
@@ -35,6 +39,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.json.JSONException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -83,6 +88,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
             filter.IN_TYPE = request.getParameter("IN_TYPE");
             filter.IN_AREA = request.getParameter("IN_AREA");
             filter.IN_ORIGEN = request.getParameter("IN_ORIGEN");
+            filter.IN_STATUS2 = request.getParameter("IN_FLAG");
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
@@ -273,6 +279,47 @@ public class DisputemanagementMyarcFormController extends BaseController {
         }
 
         return mensaje;
+    }
+    
+    @RequestMapping(value = "GetFilesDirectory")
+    public @ResponseBody
+    String GetFilesDirectory(ModelMap map, HttpServletRequest request) throws UnirestException, JSONException {
+
+        String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+
+        String path_config = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String IN_PATH = path_config + "\\IMGTMPDISPUTE\\";
+        String IN_DATE = request.getParameter("IN_DATE").trim();
+        String IN_ANIO = request.getParameter("IN_ANIO").trim();
+        String IN_PREME = request.getParameter("IN_PREME").trim();
+
+        /*
+         Se establece tiempo límite de conexión por 60 min
+         */
+        Unirest.setTimeouts(3600000, 3600000);
+
+        /*
+         Preparando parámetros para enviar por body
+         */
+        HashMap bodyData = new HashMap<>();
+        bodyData.put("IN_OPTION", "1");
+        bodyData.put("IN_PATH", IN_PATH);
+        bodyData.put("IN_DATE", IN_DATE);
+        bodyData.put("IN_ANIO", IN_ANIO);
+        bodyData.put("IN_PREME", IN_PREME);
+
+        HttpResponse<JsonNode> response = Unirest.post(urlREST + "/api/bsplink/download/disputearc/all/")
+                .header("content-type", "application/json")
+                .header("cache-control", "no-cache")
+                .body(new Gson().toJson(bodyData))
+                .asJson();
+
+        String body = response.getBody().getObject().get("data").toString();
+
+        map.put("success", true);
+        map.put("data", body);
+
+        return new Gson().toJson(map);
     }
 
     @RequestMapping(value = "/getXLSX")
