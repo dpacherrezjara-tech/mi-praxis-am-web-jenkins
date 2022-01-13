@@ -101,39 +101,100 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Filters', {
 //                            displayField: 'name'
 //
 //                        }
+//                        {
+//                            xtype: 'textfield',
+//                            id: prototype.id + '-txtTicket',
+//                            fieldLabel: 'Ticket',
+//                            labelWidth: 50,
+//                            width: 300,
+//                            listeners: {
+//                                specialkey: 'onSearchkey',
+//                                //change: 'onchange'
+//                            }
+//                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cboCia',
+                            required: true,
+                            fieldLabel: 'Cia',
+                            width: 200,
+                            labelWidth: 50,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
+                        },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtTicket',
-                            fieldLabel: 'Ticket',
-                            labelWidth: 50,
-                            width: 300,
+                            id: prototype.id + '-txtPFlight',
+                            fieldLabel: 'Flight Period',
+                            labelWidth: 90,
+                            width: 200,
                             listeners: {
                                 specialkey: 'onSearchkey',
                                 //change: 'onchange'
                             }
                         },
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtOrigen',
-                            fieldLabel: 'Origen',
-                            labelWidth: 50,
-                            width: 300,
-                            listeners: {
-                                specialkey: 'onSearchkey',
-                                //change: 'onchange'
-                            }
+                            xtype: 'combo',
+                            id: prototype.id + '-cboCarr',
+                            required: true,
+                            fieldLabel: 'Carr',
+                            width: 160,
+                            labelWidth: 70,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cboStock',
+                            required: true,
+                            fieldLabel: 'Stock',
+                            width: 160,
+                            labelWidth: 70,
+                            labelAlign: 'right',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name'
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtDestino',
-                            fieldLabel: 'Destino',
+                            id: prototype.id + '-txtPeriodo',
+                            fieldLabel: 'Periodo',
                             labelWidth: 50,
-                            width: 300,
+                            width: 200,
                             listeners: {
                                 specialkey: 'onSearchkey',
                                 //change: 'onchange'
                             }
                         }
+//                        {
+//                            xtype: 'textfield',
+//                            id: prototype.id + '-txtOrigen',
+//                            fieldLabel: 'Origen',
+//                            labelWidth: 50,
+//                            width: 300,
+//                            listeners: {
+//                                specialkey: 'onSearchkey',
+//                                //change: 'onchange'
+//                            }
+//                        },
+//                        {
+//                            xtype: 'textfield',
+//                            id: prototype.id + '-txtDestino',
+//                            fieldLabel: 'Destino',
+//                            labelWidth: 50,
+//                            width: 300,
+//                            listeners: {
+//                                specialkey: 'onSearchkey',
+//                                //change: 'onchange'
+//                            }
+//                        }
                     ]
                 }
 

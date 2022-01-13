@@ -40,9 +40,14 @@ public class A4161Filter extends A4161{
     public String MODULE = "";
     public String IN_ACC_ORIGEN = "";
     
-    public String IN_TICKET = "";
-    public String IN_ORIGEN = "";
-    public String IN_DESTINO = "";
+    public String IN_CIA = "";
+    public String IN_PFLIGHT = "";
+    public String IN_CARR = "";
+    public String IN_STOCK = "";
+    public String IN_PERIODO = "";
+            
+    
+    
     
     //Paginado
     public Pagination page = new Pagination();

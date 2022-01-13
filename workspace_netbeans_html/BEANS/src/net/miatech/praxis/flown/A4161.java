@@ -11,14 +11,17 @@ package net.miatech.praxis.flown;
  */
 public class A4161 {
     public String CCUST = "";
+    public String CIA = "";
     public String AIRCODE = "";
     public String AIRNAME = "";
     public String TICKET = "";
     public String CUPON = "";
     public String SEQ = "";
     public String DFLIGHT = "";
+    public String PFLIGHT = "";
     public String NFLIGHT = "";
     public String CARR = "";
+    public String STOCK = "";
     public String ORI = "";
     public String DES = "";
     public Double AMOUREV = 0.0;
