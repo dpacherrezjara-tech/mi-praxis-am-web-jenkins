@@ -151,8 +151,10 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.RATECOMBA = rst.getDouble("RATECOMBA");
                     beanTkt.RATECOMBAC = rst.getDouble("RATECOMBAC");
+                    beanTkt.RATECOMSM = rst.getDouble("RATECOMSM");
                     beanTkt.RATEIVABA = rst.getDouble("RATEIVABA");
                     beanTkt.RATEIVABAC = rst.getDouble("RATEIVABAC");
+                    beanTkt.RATECOMSMC = rst.getDouble("RATECOMSM");
 
                     //Diferencias
                     beanTkt.DIFF_PGROSAMOU = beanTkt.PGROSAMOU - beanTkt.GROSAMOUNC;
@@ -935,6 +937,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
+                    beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
 
                     beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
@@ -1362,6 +1365,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOUN_IVA = rst.getDouble("DISCAMOUN_IVA");
                     beanTkt.DISCRATE_IMPORT = rst.getDouble("RATECOMBA");
                     beanTkt.DISCRATE_IVA = rst.getDouble("RATEIVABA");
+                    beanTkt.RATECOMSM = rst.getDouble("RATECOMSM");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
 
                     if (beanTkt.CERROR.equals("01")) {

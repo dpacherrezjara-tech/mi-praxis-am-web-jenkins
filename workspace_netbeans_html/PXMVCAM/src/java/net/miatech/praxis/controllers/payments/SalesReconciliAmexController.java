@@ -1631,7 +1631,7 @@ public class SalesReconciliAmexController extends BaseController {
 
             CH1_0.setCellValue("Payment");
             CH1_1.setCellValue("Status");
-            CH1_2.setCellValue("Transaction");
+            CH1_2.setCellValue("Sales");
             CH1_3.setCellValue("");
             CH1_4.setCellValue("");
             CH1_5.setCellValue("");
@@ -1693,7 +1693,7 @@ public class SalesReconciliAmexController extends BaseController {
 
             CH2_0.setCellValue("Merchant ID");
             CH2_1.setCellValue("");
-            CH2_2.setCellValue("Merchant Location ID");
+            CH2_2.setCellValue("Merchant ID");
             CH2_3.setCellValue("ID Tran.");
             CH2_4.setCellValue("Invoice Refer. Number PNR");
             CH2_5.setCellValue("Seller ID");
@@ -1751,7 +1751,7 @@ public class SalesReconciliAmexController extends BaseController {
 
                 rcell0.setCellValue(listaData.get(vi).MERCHID);
                 rcell1.setCellValue(listaData.get(vi).desCERROR);
-                rcell2.setCellValue(listaData.get(vi).LMERCHID);
+                rcell2.setCellValue(listaData.get(vi).SMERCHID);
                 rcell3.setCellValue(listaData.get(vi).IDITEMT);
                 rcell4.setCellValue(listaData.get(vi).INVORNBR);
                 rcell5.setCellValue(listaData.get(vi).SELLERID);

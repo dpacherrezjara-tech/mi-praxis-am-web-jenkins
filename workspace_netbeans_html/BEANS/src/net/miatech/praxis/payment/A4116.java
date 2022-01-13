@@ -44,6 +44,7 @@ public class A4116 {
 //    public double DISCAMOUN = 0;
     public double SFEEAMOU = 0;
     public double ACCEAMOU = 0;
+    public double RATECOMSM = 0;
 //    public double TAXAMOUN = 0;
 //    public double NETAMOUN = 0;
 //    public double SDISCRATE = 0;
