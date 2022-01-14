@@ -38,8 +38,10 @@ public class A4113 {
     
     public double RATECOMBA = 0;
     public double RATECOMBAC = 0;
+    public double RATECOMSM = 0;
     public double RATEIVABA = 0;
     public double RATEIVABAC = 0;    
+    public double RATECOMSMC = 0;    
     
     public String CERROR = "";
     public String desCERROR = "";

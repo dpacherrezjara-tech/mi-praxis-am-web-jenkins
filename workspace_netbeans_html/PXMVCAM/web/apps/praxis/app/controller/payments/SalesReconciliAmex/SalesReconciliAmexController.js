@@ -1473,6 +1473,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-pie').setVisible(false);
         }
     },
+    onEditClick: function(grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntryError('U', rec);
+    },
+    winDataEntryError: function(action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
+            id: prototype.id + '-dataEntryError',
+            params: {
+                action: action,
+                rec: rec,
+            }
+        }).show();
+    },
     getPaggin: function() {
         me.pagginActual = '';
         switch (me.panelActual) {
