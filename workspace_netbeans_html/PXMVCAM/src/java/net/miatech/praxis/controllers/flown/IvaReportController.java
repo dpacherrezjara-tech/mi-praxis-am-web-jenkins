@@ -93,9 +93,11 @@ public class IvaReportController extends BaseController {
             logic.setSession(this.serverSession.getServerSession());
 
             filter.IN_MODULO = request.getParameter("IN_MODULO");
-            filter.IN_TICKET = request.getParameter("IN_TICKET");
-            filter.IN_ORIGEN = request.getParameter("IN_ORIGEN");
-            filter.IN_DESTINO = request.getParameter("IN_DESTINO");
+            filter.IN_CIA = request.getParameter("IN_CIA");
+            filter.IN_PFLIGHT = request.getParameter("IN_PFLIGHT");
+            filter.IN_CARR = request.getParameter("IN_CARR");
+            filter.IN_STOCK = request.getParameter("IN_STOCK");
+            filter.IN_PERIODO = request.getParameter("IN_PERIODO");
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());

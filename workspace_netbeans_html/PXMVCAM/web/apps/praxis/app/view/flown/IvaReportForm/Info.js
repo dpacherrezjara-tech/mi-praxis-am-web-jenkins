@@ -40,6 +40,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Info', {
                         },
                         items: [
                             {text: 'Nbr', width: 50, dataIndex: 'RN'},
+                            {text: 'CIA', width: 75, dataIndex: 'CIA'},
                             {text: 'AIRCODE', width: 75, dataIndex: 'AIRCODE'},
                             {text: 'AIRNAME', width: 100, dataIndex: 'AIRNAME'},
                             {text: 'AUDIT',
@@ -54,8 +55,10 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Info', {
                                     {text: 'CUPON', width: 75, dataIndex: 'CUPON'},
                                     {text: 'SEQ', width: 75, dataIndex: 'SEQ'},
                                     {text: 'DFLIGHT', width: 75, dataIndex: 'DFLIGHT'},
+                                    {text: 'FLIGHT_PERIOD', width: 150, dataIndex: 'PFLIGHT'},
                                     {text: 'NFLIGHT', width: 75, dataIndex: 'NFLIGHT'},
                                     {text: 'CARR', width: 75, dataIndex: 'CARR'},
+                                    {text: 'STOCK', width: 75, dataIndex: 'STOCK'},
                                     {text: 'ORI', width: 75, dataIndex: 'ORI'},
                                     {text: 'DES', width: 75, dataIndex: 'DES'},
                                     {text: 'AMOUREV', width: 75, dataIndex: 'AMOUREV'},

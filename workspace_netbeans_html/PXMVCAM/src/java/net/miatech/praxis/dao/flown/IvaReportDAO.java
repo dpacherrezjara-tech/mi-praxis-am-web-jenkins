@@ -55,7 +55,7 @@ public class IvaReportDAO {
         CallableStatement cstmt01 = null, cstmt02 = null;
         ResultSet rs01 = null, rs02 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP50.SQP04363(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP04363(?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
 
@@ -75,9 +75,11 @@ public class IvaReportDAO {
 
             cstmt01.setString("IN_A1955CCUST", session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString("IN_A1955MODUL", filter.IN_MODULO);
-            cstmt01.setString("IN_TICKET", filter.IN_TICKET);
-            cstmt01.setString("IN_ORIGEN", filter.IN_ORIGEN);
-            cstmt01.setString("IN_DESTINO", filter.IN_DESTINO);
+            cstmt01.setString("IN_CIA", filter.IN_CIA);
+            cstmt01.setString("IN_PFLIGHT", filter.IN_PFLIGHT);
+            cstmt01.setString("IN_CARR", filter.IN_CARR);
+            cstmt01.setString("IN_STOCK", filter.IN_STOCK);
+            cstmt01.setString("IN_PERIODO", filter.IN_PERIODO);
             
             cstmt01.setInt("IO_PAGNUM", PAGINIT);
             cstmt01.setInt("IO_PAGROW", totRowsPag);
@@ -119,14 +121,17 @@ public class IvaReportDAO {
                 pos++;
                 objRtn = new A4161Filter();
                 objRtn.RN = rs01.getLong("RN");
+                objRtn.CIA = rs01.getString("CIA").trim();
                 objRtn.AIRCODE = rs01.getString("AIRCODE").trim();
                 objRtn.AIRNAME = rs01.getString("AIRNAME").trim();
                 objRtn.TICKET = rs01.getString("TICKET").trim();
                 objRtn.CUPON = rs01.getString("CUPON").trim();
                 objRtn.SEQ =  rs01.getString("SEQ").trim();
                 objRtn.DFLIGHT =  rs01.getString("DFLIGHT").trim();
+                objRtn.PFLIGHT =  rs01.getString("PFLIGHT").trim();
                 objRtn.NFLIGHT =  rs01.getString("NFLIGHT").trim();
                 objRtn.CARR =  rs01.getString("CARR").trim();
+                objRtn.STOCK =  rs01.getString("STOCK").trim();
                 objRtn.ORI =  rs01.getString("ORI").trim();
                 objRtn.DES =  rs01.getString("DES").trim();
                 objRtn.AMOUREV =  Double.parseDouble(rs01.getString("AMOUREV").trim());
