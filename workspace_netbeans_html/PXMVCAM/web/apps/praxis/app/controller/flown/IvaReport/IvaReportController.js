@@ -241,9 +241,11 @@ Ext.define('Ext.Praxis.controller.flown.IvaReport.IvaReportController', {
     exportExcel: function () {
         this.setParams();
         global.getFile(prototype.url + '/getXLSX?IN_MODULO=' + searchParams.IN_MODULO
-                + '&A1955STATU=' + searchParams.A1955STATU
-                + '&IN_FECHA_PROCESO=' + searchParams.IN_FECHA_PROCESO
-                + '&IN_FECHA_ACUSE=' + searchParams.IN_FECHA_ACUSE
+                + '&IN_CIA=' + searchParams.IN_CIA
+                + '&IN_PFLIGHT=' + searchParams.IN_PFLIGHT
+                + '&IN_CARR=' + searchParams.IN_CARR
+                + '&IN_STOCK' + searchParams.IN_STOCK
+                + '&IN_PERIODO' + searchParams.IN_PERIODO
                 );
     }
     ,
