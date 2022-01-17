@@ -159,29 +159,6 @@
             <file>file:/D:/repository/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/sales/FareMasterFileLogic.java</file>
             <file>file:/D:/repository/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/sales/ConciliationARC/DataEntryConciliationARCController.js</file>
         </group>
-        <group name="PRAXIS AM HTML">
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaZoneForm/Filters.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseOdForm/DataEntry.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaZoneForm/IvaZoneForm.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseOdForm/Info.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/IvaZone/DataEntryIvaZoneController.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/flown/BaseOdDAO.java</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseSalesForm/DataEntry.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaZoneForm/Info.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/IvaZone/IvaZoneController.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/flown/BaseOdController.java</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseOdForm/Options.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/BaseOd/BaseOdController.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseOdForm/BaseOdForm.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/flown/BaseOdLogic.java</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/store/flown/BaseOd/GridData.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/BaseOd/DataEntryBaseOdController.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaZoneForm/DataEntry.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseSalesForm/BaseSalesForm.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseOdForm/Filters.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/model/flown/BaseOd/GridData.js</file>
-            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/BaseSalesForm/Info.js</file>
-        </group>
         <group name="PRAXIS AM GIT">
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/BaseOd/BaseOdController.js</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/classes/ProMail.java</file>
@@ -245,6 +222,17 @@
             <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/model/flown/IvaReport/GridData.js</file>
             <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/model/flown/Item/GridData.js</file>
             <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/logic/flown/IvaReportLogic.java</file>
+        </group>
+        <group name="PRAXIS AM HTML">
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaReportForm/Info.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/dao/flown/IvaReportDAO.java</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/src/java/net/miatech/praxis/controllers/flown/IvaReportController.java</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/IvaReport/DataEntryIvaReportController.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/IvaReport/IvaReportController.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaReportForm/IvaReportForm.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaReportForm/DataEntryReverse.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/view/flown/IvaReportForm/Filters.js</file>
+            <file>file:/C:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/PXMVCAM/web/apps/praxis/app/controller/flown/IvaReport/DataEntryReverseIvaReportController.js</file>
         </group>
     </open-files>
 </project-private>

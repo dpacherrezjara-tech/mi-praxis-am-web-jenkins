@@ -11,6 +11,7 @@ package net.miatech.praxis.flown;
  */
 public class A4161 {
     public String CCUST = "";
+
     public String CIA = "";
     public String AIRCODE = "";
     public String AIRNAME = "";
