@@ -257,12 +257,13 @@ public class CargaRecibosController extends BaseController {
                             VL_INDICE = 2;
                             break;
                         }                        
-                        A4096TIPO=  sheet.getCell(5)== null ? "" : sheet.getCell(5).toString(); 
-                        A4096ESTAD=  sheet.getCell(6)== null ? "" : sheet.getCell(6).toString(); 
+                        A4096TIPO=sheet.getCell(5)== null ? "" : sheet.getCell(5).toString(); 
+                        A4096ESTAD= sheet.getCell(6)== null ? "" : sheet.getCell(6).toString(); 
                         A4096CUENT=sheet.getCell(7)== null ? "" : sheet.getCell(7).toString(); 
                         A4096NRCLO=sheet.getCell(8)== null ? "" : sheet.getCell(8).toString(); 
                         A4096FCREC=sheet.getCell(16)== null ? "" : sheet.getCell(16).toString(); 
-                        if( A4096FCREC == ""){
+                        
+                        if( A4096FCREC == "" && A4096ESTAD == "N/I"  ){
                             ERROR_FIELDS = "S";
                             VL_INDICE = 3;
                             break;
