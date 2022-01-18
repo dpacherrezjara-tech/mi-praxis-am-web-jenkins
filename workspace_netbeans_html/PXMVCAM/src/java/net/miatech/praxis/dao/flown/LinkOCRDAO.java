@@ -137,7 +137,7 @@ public class LinkOCRDAO {
         Connection cnx = null;
         try {
             //PX09500005
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S08VALID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04358(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
