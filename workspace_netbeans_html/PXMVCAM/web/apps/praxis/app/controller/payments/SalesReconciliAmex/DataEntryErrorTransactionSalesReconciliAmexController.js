@@ -27,7 +27,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         switch (this.actionCode) {
             case 'I':
 //                console.log('dd');
-
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -46,27 +45,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     mostrarData: function() {
 //        console.log(meDE.beanResult);
 //        console.log(this.beanResult.CODEREJ);
-        this.setValue('de-txtCODE', this.beanResult.CODE);
-        this.setValue('de-txtNAMEC', this.beanResult.NAME);
-        this.setValue('de-txtCODEBANK', this.beanResult.CODEBANK);
-        this.setValue('de-txtNAMEBANK', this.beanResult.NAMEBANK);
-        this.setValue('de-txtCOUNTRY', this.beanResult.COUNTRY);
-        this.setValue('de-txtCURRENC', this.beanResult.CURRENC);
-        this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
+        this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
+        this.setValue('de-txtPRDA', this.beanResult.PRDA);
+        this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
+        this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
+        this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
+        this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
+        this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
+        this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
+        this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
+        this.setValue('de-txtIDITEMS', this.beanResult.IDITEMS);
+        this.setValue('de-txtIDITEMT', this.beanResult.IDITEMT);
+        this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
+        this.setValue('de-txtINVORNBR', this.beanResult.INVORNBR);
 
-        this.setValue('cmbFSTAT', this.beanResult.FSTAT);
-        this.setValue('cmbFNOBANK', this.beanResult.FNOBANK);
-        this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
-        this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
-        this.setValue('de-txtCLIENTE', this.beanResult.CLIENTE);
-
-
-
-        this.setValue('de-txtRATECON', Ext.util.Format.number(this.beanResult.RATECON, '0,000.00'));
-        this.setValue('de-txtRATECOP1', Ext.util.Format.number(this.beanResult.RATECOP1, '0,000.00'));
-        this.setValue('de-txtRATECOP2', Ext.util.Format.number(this.beanResult.RATECOP2, '0,000.00'));
-        this.setValue('de-txtRATEIVA', Ext.util.Format.number(this.beanResult.RATEIVA, '0,000.00'));
-        this.setValue('de-txtCODEQUIV', this.beanResult.CODEQUIV);
+        this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
+        this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
+        this.setValue('de-txtFINSAMOUC', Ext.util.Format.number(this.beanResult.FINSAMOUC, '0,000.00'));
+        this.setValue('de-txtSINSAMOUC', Ext.util.Format.number(this.beanResult.SINSAMOUC, '0,000.00'));
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -77,39 +73,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     obtainData: function() {
 //        console.log('obtainData');
-
-        var cmbFSTAT = Ext.getCmp(prototype.id + '-cmbFSTAT');
-        cmbFSTAT.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "None"],
-                ["O", "Open"],
-                ["C", "Closed"]
-            ]
-        }));
-
-        cmbFSTAT.setValue('');
-
-        var cmbFNOBANK = Ext.getCmp(prototype.id + '-cmbFNOBANK');
-        cmbFNOBANK.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['code', 'name'],
-            data: [
-                ["", "None"],
-                ["B", "Original Boomers"],
-                ["A", "Additional Boomers"],
-                ["P", "Paypal"],
-                ["U", "UATP"]
-            ]
-        }));
-
-        cmbFNOBANK.setValue('');
-
-//        Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').bindStore(
-//                Ext.create('Ext.data.Store', {data: this.lstCountry, autoLoad: true})
-//                );
-//        Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').setValue('');
 
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
@@ -166,23 +129,22 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     getData: function() {
 //        console.log('getData');
-        var beanString = JSON.stringify(meDE.bean.data);
-//        console.log(beanString);
+        var beanString = JSON.stringify(meDE.bean);
 
-        /*Ext.Ajax.request({
-            url: prototype.url + '/searchCompleteDetail',
+        Ext.Ajax.request({
+            url: prototype.url + '/searchTransactionErrorDetail',
             method: 'POST',
             timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
             params: {beanString: beanString},
             success: function(response, options) {
-                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
                 meDE.mostrarData();
 
             }
-        });*/
+        });
     },
     //</editor-fold>
 
