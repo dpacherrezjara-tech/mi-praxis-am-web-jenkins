@@ -449,7 +449,10 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                                     name: 'File',
                                     inputValue: '1',
                                     width: 40,
-                                    labelWidth: 80
+                                    labelWidth: 80,
+                                    listeners: {
+                                        change: 'onFileChange'
+                                    }
                                 }
                             ]
                         }
@@ -478,7 +481,7 @@ Ext.define('Ext.Praxis.view.salesaudit.DisputemanagementMyarcForm.DetailDisputeG
                     icon: 'resources/img/botones/16x16/1400098721_cv.png',
                     text: 'File',
                     id: prototype.idDisputeGestionMyarc + '-BtnFile',
-                    height: 30,
+                    height: 30,hidden:true,
                     scale: 'medium',
                     listeners: {
                         click: 'onClickFile'

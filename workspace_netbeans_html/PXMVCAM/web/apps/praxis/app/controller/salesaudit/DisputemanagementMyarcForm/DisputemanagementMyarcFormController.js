@@ -275,6 +275,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboOrigin').setValue('');
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboArea').setValue('');
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboBase').setValue('');
+                Ext.getCmp(prototype.idDisputemanageMyarc + '-Audit').setValue('');
                 break;
             case '5':
 
@@ -292,6 +293,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-txtFilterDateFrom').setValue('');
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-txtFilterDateTo').setValue('');
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-nmemo').setValue('');
+                Ext.getCmp(prototype.idDisputemanageMyarc + '-Audit').setValue('');
                 break;
             case '':
                 txtiata.hide();
@@ -310,6 +312,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.Disputem
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboOrigin').setValue('');
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-ComboArea').setValue('');
                 Ext.getCmp(prototype.idDisputemanageMyarc + '-nmemo').setValue('');
+                Ext.getCmp(prototype.idDisputemanageMyarc + '-Audit').setValue('');
                 break;
                 // boxFilter02.hide();
                 // boxFilter02.setBorder(false)
