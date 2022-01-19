@@ -13,6 +13,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
     ticketNumber: '',
     optionCheck: '',
     me: '',
+    gridActual: '',
     searchParams: {},
     setContext: function() {
         me = this;
@@ -220,6 +221,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
                 Ext.getCmp(prototype.id + '-gridData').show();
                 Ext.getCmp(prototype.id + '-gridData2').hide();
                 Ext.getCmp(prototype.id + '-gridData3').hide();
+                gridActual = prototype.id + '-gridData';
                 this.setGridData(obj, e);
             }
         } else {    //La consultad dependera del estado del checkbox
@@ -228,6 +230,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
              Ext.getCmp(prototype.id + '-gridData2').show();
              Ext.getCmp(prototype.id + '-gridData').hide();
              Ext.getCmp(prototype.id + '-gridData3').hide();
+             gridActual = prototype.id + '-gridData2';
              //Ext.getCmp(prototype.id + '-canceledFlight').setValue(0);
              this.setGridData2(obj, e);
              
@@ -236,6 +239,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
              Ext.getCmp(prototype.id + '-gridData3').show();
              Ext.getCmp(prototype.id + '-gridData2').hide();
              Ext.getCmp(prototype.id + '-gridData').hide();
+             gridActual = prototype.id + '-gridData3';
              //Ext.getCmp(prototype.id + '-differentCarrier').setValue(0);
              this.setGridData3(obj, e);
              
@@ -244,6 +248,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
              Ext.getCmp(prototype.id + '-gridData').show();
              Ext.getCmp(prototype.id + '-gridData2').hide();
              Ext.getCmp(prototype.id + '-gridData3').hide();
+             gridActual = prototype.id + '-gridData';
              this.setGridData(obj, e);
              }
 
@@ -418,12 +423,21 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.OwnerlessCouponControlle
         });
     },
     exportExcel: function() {
+        console.log(gridActual);
         this.setFormatParameter();
-        global.getFile(prototype.url + '/getXLSX?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&ticketNumber=' + searchParams.ticketNumber
+        if (gridActual === prototype.id + '-gridData') {
+            global.getFile(prototype.url + '/getXLSX?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&ticketNumber=' + searchParams.ticketNumber
                 + '&txtNVLO=' + searchParams.txtNVLO + '&cmbStatus=' + searchParams.cmbStatus + '&option=' + searchParams.option);
+        } else if (gridActual === prototype.id + '-gridData2') {
+            global.getFile(prototype.url + '/getXLSXCarrier?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo);
+        } else if (gridActual === prototype.id + '-gridData3') {
+            global.getFile(prototype.url + '/getXLSXCanceled?dateFrom=' + searchParams.dateFrom + '&dateTo=' + searchParams.dateTo + '&txtNVLO=' + searchParams.txtNVLO);
+        }
+        
     }
     ,
     btnFilter_click: function(obj) {
+        
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
             option.setVisible(false);
