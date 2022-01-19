@@ -2794,8 +2794,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             xtype: 'panel',
                             id: prototype.id + '-panelGridDataHeader',
                             bodyStyle: 'background-color: #E3EAEF;',
-                            border: true,
-                            height: 'auto',
+                            border: true,                            
                             width: 1525,
                             margin: '0 0 0 0 ',
                             layout: {
@@ -2806,6 +2805,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataHeader',
+                                    height: 600,
                                     width: 1525,
                                     columnLines: true,
                                     /*features: [{
