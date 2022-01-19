@@ -369,6 +369,14 @@ public class OwnerlessCouponDAO {
             filter.page.TOTROW = cstmt.getInt(8);
 
             rst = cstmt.getResultSet();
+            
+            while (rst.next()) {
+                PAXTOTAL = rst.getLong("PAXTOTAL");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
 
             while (rst.next()) {
                 beanCarr = new A1691Filter();
@@ -406,9 +414,11 @@ public class OwnerlessCouponDAO {
                 beanCarr.page.TOTPAG = filter.page.TOTPAG;
                 beanCarr.page.TOTROW = filter.page.TOTROW;
 
-                PAXTOTAL = PAXTOTAL + beanCarr.PAXTOTAL;
+                beanCarr.totPAXTOTAL = PAXTOTAL;
 
                 lstCarr.add(beanCarr);
+            }
+              rst.close();
             }
 
         } catch (Exception e) {
@@ -431,10 +441,6 @@ public class OwnerlessCouponDAO {
             }
             session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
             pasarGarbageCollector();
-        }
-
-        for (int i = 0; i < lstCarr.size(); i++) {
-            lstCarr.get(i).totPAXTOTAL = PAXTOTAL;
         }
 
         return lstCarr;

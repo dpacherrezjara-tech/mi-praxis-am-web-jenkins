@@ -194,7 +194,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Filters', {
                     id: prototype.id + '-canceledFlight',
                     margin: '0 0 0 15',
                     width: 120,
-                    boxLabel: 'Canceled Flight',
+                    boxLabel: 'Cancelled Flight',
                     inputValue: '1'
                 }
                 
