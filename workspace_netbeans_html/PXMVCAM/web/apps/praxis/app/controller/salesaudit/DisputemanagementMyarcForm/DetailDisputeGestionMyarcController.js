@@ -168,6 +168,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
     onClickCancel: function (btn) {
         this.view.close();
     },
+    onFileChange: function (obj, newValue, oldValue, eOpts) {
+        if (!newValue) {
+            Ext.getCmp(prototype.idDisputeGestionMyarc + '-BtnFile').hide();
+        } else {
+            Ext.getCmp(prototype.idDisputeGestionMyarc + '-BtnFile').show();
+        }
+    },
     onColumnAirlineRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "background:#D5F4D5 !important";
         return Ext.util.Format.number(value, '0,000.00');
@@ -240,7 +247,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.DisputemanagementMyarcForm.DetailDi
                 }
                 global.Msg({msg: res.result, icon: vp_icon, fn: function () {
                         if (vp_icon === 1) {
-                            Ext.getCmp(prototype.idDisputemanageMyarcDisputemanageMyarc + '-Contenedor').getController().imgSearch_clickHandler(false);
+                            Ext.getCmp(prototype.idDisputemanageMyarc + '-Contenedor').getController().imgSearch_clickHandler(false);
                             me.view.close();
 
                         }
