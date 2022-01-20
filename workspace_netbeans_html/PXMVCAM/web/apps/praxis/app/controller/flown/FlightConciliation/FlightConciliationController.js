@@ -299,6 +299,26 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         }
         this.searchBeanTkt(data.strTicket.replace(' ', '').replace(' ', ''), data.SEQ, data.SEQRO, row, store, boxActual, true);
     },
+    
+    viewDataEntry_A3729: function(grid, rowIndex, colIndex) {
+        
+        var rec = grid.getStore().getAt(rowIndex);
+        this.winDataEntry('U', rec);
+        
+    },
+    winDataEntry: function(action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
+            id: prototype.id + '-DataEntryA3729',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
+    
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
         Ext.getCmp(prototype.id + '-pie').hide();
