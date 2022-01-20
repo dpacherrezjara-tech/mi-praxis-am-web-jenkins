@@ -44,107 +44,107 @@ public class A4076 {
     public String A4076DESC;
     public String A4076AGEN;
 
-    public double A4076TARTK=0d;
-    public double A4076EQVTK=0d;
-    public double A4076TCMBC=0d;
-    public double A4076COMI=0d;
-    public double A4076TCMBT=0d;
-    public double A4076TAXCO=0d;
-    public double A4076NETO=0d;
-    public double A4076TARIFA=0d;
-    public double A4076TTAX=0d;
+    public double A4076TARTK = 0d;
+    public double A4076EQVTK = 0d;
+    public double A4076TCMBC = 0d;
+    public double A4076COMI = 0d;
+    public double A4076TCMBT = 0d;
+    public double A4076TAXCO = 0d;
+    public double A4076NETO = 0d;
+    public double A4076TARIFA = 0d;
+    public double A4076TTAX = 0d;
     /*campos de las otras tablas*/
     // TARJETAS
     public String A4076FP1;
     public String A4076TCARD1;
     public String A4076CARD1;
-    public double A4076MONTCARD1=0d;
+    public double A4076MONTCARD1 = 0d;
     public String A4076FP2;
     public String A4076TCARD2;
     public String A4076CARD2;
-    public double A4076MONTCARD2=0d;
+    public double A4076MONTCARD2 = 0d;
     // TAXES
     public String A4076TAX1;
     public String A4076ATO1;
-    public double A4076MONTAX1=0d;
+    public double A4076MONTAX1 = 0d;
 
     public String A4076TAX2;
     public String A4076ATO2;
-    public double A4076MONTAX2=0d;
+    public double A4076MONTAX2 = 0d;
 
     public String A4076TAX3;
     public String A4076ATO3;
-    public double A4076MONTAX3=0d;
+    public double A4076MONTAX3 = 0d;
 
     public String A4076TAX4;
     public String A4076ATO4;
-    public double A4076MONTAX4=0d;
+    public double A4076MONTAX4 = 0d;
 
     public String A4076TAX5;
     public String A4076ATO5;
-    public double A4076MONTAX5=0d;
+    public double A4076MONTAX5 = 0d;
 
     public String A4076TAX6;
     public String A4076ATO6;
-    public double A4076MONTAX6=0d;
+    public double A4076MONTAX6 = 0d;
 
     public String A4076TAX7;
     public String A4076ATO7;
-    public double A4076MONTAX7=0d;
+    public double A4076MONTAX7 = 0d;
 
     public String A4076TAX8;
     public String A4076ATO8;
-    public double A4076MONTAX8=0d;
+    public double A4076MONTAX8 = 0d;
 
     public String A4076TAX9;
     public String A4076ATO9;
-    public double A4076MONTAX9=0d;
+    public double A4076MONTAX9 = 0d;
 
     public String A4076TAX10;
     public String A4076ATO10;
-    public double A4076MONTAX10=0d;
+    public double A4076MONTAX10 = 0d;
 
     public String A4076TAX11;
     public String A4076ATO11;
-    public double A4076MONTAX11=0d;
+    public double A4076MONTAX11 = 0d;
 
     public String A4076TAX12;
     public String A4076ATO12;
-    public double A4076MONTAX12=0d;
+    public double A4076MONTAX12 = 0d;
 
     public String A4076TAX13;
     public String A4076ATO13;
-    public double A4076MONTAX13=0d;
+    public double A4076MONTAX13 = 0d;
 
     public String A4076TAX14;
     public String A4076ATO14;
-    public double A4076MONTAX14=0d;
+    public double A4076MONTAX14 = 0d;
 
     public String A4076TAX15;
     public String A4076ATO15;
-    public double A4076MONTAX15=0d;
+    public double A4076MONTAX15 = 0d;
 
     public String A4076TAX16;
     public String A4076ATO16;
-    public double A4076MONTAX16=0d;
+    public double A4076MONTAX16 = 0d;
 
     public String A4076TAX17;
     public String A4076ATO17;
-    public double A4076MONTAX17=0d;
+    public double A4076MONTAX17 = 0d;
 
     public String A4076TAX18;
     public String A4076ATO18;
-    public double A4076MONTAX18=0d;
+    public double A4076MONTAX18 = 0d;
     public long RN;
     public String A4076ESTADO;
     public int CANTOK;
     public int CANTKO;
     public int CANTPEN;
-    public double SUMAOK=0d;
-    public double SUMAKO=0d;
-    public double TOTALSUMA=0d;
-    public double TOTALCANT=0d;
-    
+    public double SUMAOK = 0d;
+    public double SUMAKO = 0d;
+    public double TOTALSUMA = 0d;
+    public double TOTALCANT = 0d;
+
     public String A4076CPN1;
     public String A4076CPN2;
     public String A4076CPN3;
@@ -154,8 +154,17 @@ public class A4076 {
     public String A4076USO2;
     public String A4076USO3;
     public String A4076USO4;
-    public double A4076NETK=0d;
+    public double A4076NETK = 0d;
     public String A4076TRNCU;
+    public String A4076GRUPO;
+
+    public String getA4076GRUPO() {
+        return A4076GRUPO;
+    }
+
+    public void setA4076GRUPO(String A4076GRUPO) {
+        this.A4076GRUPO = A4076GRUPO;
+    }
 
     public String getA4076CCUST() {
         return A4076CCUST;
@@ -1140,7 +1149,5 @@ public class A4076 {
     public void setA4076TRNCU(String A4076TRNCU) {
         this.A4076TRNCU = A4076TRNCU;
     }
-
-    
 
 }
