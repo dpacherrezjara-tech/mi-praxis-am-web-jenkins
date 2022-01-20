@@ -48,5 +48,8 @@ public class MassiveRefunduatpFormLogic {
     public String ProcesaDelete(A4076Filter filter) throws SQLException, Exception {
         return RefunduatpFormDAO.ProcesaDelete(filter);
     }
+    public List<A4076Filter> SearchDetailError(A4076Filter filter) throws SQLException, Exception {
+        return RefunduatpFormDAO.SearchDetailError(filter);
+    }
 
 }

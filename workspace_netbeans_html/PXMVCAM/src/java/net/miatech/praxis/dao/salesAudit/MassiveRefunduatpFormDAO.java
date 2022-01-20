@@ -632,4 +632,58 @@ public class MassiveRefunduatpFormDAO {
 
         return STR_RESULT;
     }
+    
+    public List<A4076Filter> SearchDetailError(A4076Filter filter) throws SQLException, Exception {
+        List<A4076Filter> lstRtn = new ArrayList<A4076Filter>(0);
+        A4076Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL LIBSAP26.SQP04244(?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_PREME);
+            cstmt01.setString(3, filter.IN_ANIO);
+            cstmt01.setString(4, filter.IN_CORR);
+            cstmt01.execute();
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new A4076Filter();
+
+                objRtn.A4076CCUST = rs01.getString("A4128CCUST");
+                objRtn.A4076FLAG = rs01.getString("A4128FLAG");
+                objRtn.A4076DESC = rs01.getString("A4128DESC");
+                objRtn.A4076REGIS = rs01.getString("A4128REGIS");
+                objRtn.A4076FREGI = rs01.getString("A4128FREGI");
+                objRtn.A4076HREGI = rs01.getString("A4128HREGI");
+                
+                lstRtn.add(objRtn);
+
+                //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
+            }
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
+    }
 }
