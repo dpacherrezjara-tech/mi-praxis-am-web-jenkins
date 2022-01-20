@@ -498,7 +498,8 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076TTAX = rs01.getDouble("A4076TTAX");
                 objRtn.A4076AGENCY = rs01.getString("AGENCY");
                 objRtn.A4076ESTADO = rs01.getString("A4076ESTADO");
-                 objRtn.A4076TRNCU = rs01.getString("A4076TRNCU");
+                objRtn.A4076TRNCU = rs01.getString("A4076TRNCU");
+                objRtn.A4076GRUPO = rs01.getString("A4076GRUPO"); 
 
                 objRtn.A4076CPN1 = rs01.getString("A4076CPN1");
                 objRtn.A4076CPN2 = rs01.getString("A4076CPN2");
