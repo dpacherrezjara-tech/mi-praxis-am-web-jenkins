@@ -1892,4 +1892,116 @@ public class SalesReconciliAmexDAO {
 
         return objRtn;
     }
+    
+    public String loadPX570SQP04360(A4116Filter filter) throws SQLException, Exception {
+
+        A4116Filter objRtn = new A4116Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04360(?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            
+            cstmt01.registerOutParameter(6, Types.VARCHAR);
+            
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.SCARDN.trim());
+            cstmt01.setString(3, filter.INVORNBR.trim());
+            cstmt01.setString(4, filter.ISREFNBR.trim());
+            cstmt01.setString(5, filter.TRANSDATE.trim());
+            cstmt01.setString(6, msj);
+            
+
+            cstmt01.execute();
+            
+            msj = cstmt01.getString(6).trim();
+            
+        } catch (Exception e) {
+            msj = e.getMessage();            
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();  
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();  
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
+    
+    public String loadPX570SQP04361(A4116Filter filter) throws SQLException, Exception {
+
+        A4116Filter objRtn = new A4116Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String msj = "";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.PRDA.trim());
+            cstmt01.setString(3, filter.MERCHID.trim());
+            cstmt01.setString(4, filter.PAYDATE.trim());
+            cstmt01.setString(5, filter.PCURRENCY.trim());
+            cstmt01.setString(6, filter.AXPAYNBR.trim());
+            cstmt01.setString(7, filter.SMERCHID.trim());
+            cstmt01.setString(8, filter.BSUMDATE.trim());
+            cstmt01.setString(9, filter.SCARDN.trim());
+            cstmt01.setString(10, filter.SAUTHOC.trim());
+            cstmt01.setString(11, filter.IDITEMS.trim());
+            cstmt01.setString(12, filter.IDITEMT.trim());
+            cstmt01.setString(13, filter.INVORNBR.trim());
+            cstmt01.setString(14, filter.ISREFNBR.trim());
+            cstmt01.setString(15, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(16, Functions.getFechaActual());
+            cstmt01.setString(17, Functions.getHoraActual());
+
+            cstmt01.execute();            
+            
+        } catch (Exception e) {
+            msj = e.getMessage();            
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();  
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    msj = e.getMessage();  
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return msj;
+    }
 }

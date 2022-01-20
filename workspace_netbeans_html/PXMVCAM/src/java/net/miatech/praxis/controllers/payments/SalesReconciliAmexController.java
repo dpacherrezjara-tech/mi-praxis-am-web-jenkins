@@ -528,7 +528,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "searchTransactionErrorDetail")
     public @ResponseBody
     String searchTransactionErrorDetail(ModelMap map, HttpServletRequest request) {
@@ -547,9 +547,83 @@ public class SalesReconciliAmexController extends BaseController {
             result = logic.loadPX570SQP04359(filter);
             map.put("result", result);
             map.put("success", true);
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
             map.put("success", false);
         }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "ValidateTransaction")
+    public @ResponseBody
+    String ValidateTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : ValidateTransaction-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4116Filter filter = new A4116Filter();
+            A4116Filter result = new A4116Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX570SQP04360(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "MaintenanceErrorTransaction")
+    public @ResponseBody
+    String MaintenanceErrorTransaction(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : MaintenanceErrorTransaction-------------");
+        String msj = "";
+        try {
+            Gson gson = new Gson();
+            A4116Filter filter = new A4116Filter();
+            A4116Filter result = new A4116Filter();
+
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX570SQP04361(filter);
+            map.put("result", result);
+
+            if (msj.equals("")) {
+                map.put("success", true);
+            } else {
+                map.put("success", false);
+            }
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+        map.put("msjOption", msj);
         return new Gson().toJson(map);
     }
 
@@ -601,7 +675,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -709,7 +783,7 @@ public class SalesReconciliAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -815,7 +889,7 @@ public class SalesReconciliAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 3 ==========
             Row row3 = sheet.createRow(vj);
@@ -884,7 +958,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH3_29.setCellValue("VAT");
             CH3_30.setCellValue("Op. Debit");
             CH3_31.setCellValue("");
-            
+
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
             CH3_2.setCellStyle(headerStyle);
@@ -1009,8 +1083,7 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell29.setCellValue(listaData.get(vi).DIFF_PTAXAMOU);
                 rcell30.setCellValue(listaData.get(vi).DIFF_ODBALAMOU);
                 rcell31.setCellValue(listaData.get(vi).DIFF_PNETAMOU);
-                
-                
+
                 if (listaData.get(vi).CERROR.equals("01")) {
                     rcell3.setCellStyle(style_red);
                     rcell29.setCellStyle(style_red);
@@ -1110,7 +1183,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1162,7 +1235,7 @@ public class SalesReconciliAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1334,7 +1407,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1398,7 +1471,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 16));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1475,7 +1548,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
 
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 3 ==========
             Row row3 = sheet.createRow(vj);
@@ -1658,7 +1731,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1720,7 +1793,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1898,7 +1971,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1974,7 +2047,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 14, 14));
 
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -2053,7 +2126,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 8, 8));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 3 ==========
             Row row3 = sheet.createRow(vj);
@@ -2248,7 +2321,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -2311,7 +2384,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 13, 13));
 
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -2473,7 +2546,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -2539,7 +2612,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 14));
 
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -2736,7 +2809,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -2831,7 +2904,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 24));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -3161,7 +3234,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -3263,7 +3336,7 @@ public class SalesReconciliAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -3363,7 +3436,7 @@ public class SalesReconciliAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 3 ==========
             Row row3 = sheet.createRow(vj);
@@ -3722,7 +3795,7 @@ public class SalesReconciliAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -3824,7 +3897,7 @@ public class SalesReconciliAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -3923,7 +3996,7 @@ public class SalesReconciliAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 3 ==========
             Row row3 = sheet.createRow(vj);

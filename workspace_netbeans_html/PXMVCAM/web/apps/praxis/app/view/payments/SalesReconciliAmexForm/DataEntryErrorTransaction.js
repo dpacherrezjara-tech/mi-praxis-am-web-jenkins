@@ -346,13 +346,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                         {xtype: 'tbspacer', width: 6},
                         {
                             xtype: 'label',
-                            text: 'Financial Information',
+                            text: 'Flight Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
                             width: 234,
                             margin: '15 2 4 8'
-                        },
+                        },                        
                         {
                             xtype: 'panel',
                             layout: 'hbox',
@@ -361,6 +361,27 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             margin: '4 2 0 20',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Transact. Date',
+                                    //fontSize: 15,
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtTRANSDATE',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    readOnly: true,
+                                    fieldStyle: 'text-align:center;',
+                                    width: 100,
+                                    
+                                    //maxLength: 5
+                                },
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
                                     text: 'PNR',
@@ -401,9 +422,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     maskRe: /[0-9]/,
                                     //maxLength: 13
                                 },
-                                {xtype: 'tbspacer', width: 270}
+                                
                             ]
                         },
+                        {xtype: 'tbspacer', width: 6},
                         {xtype: 'tbspacer', width: 6},
                     ]
                 },
