@@ -162,6 +162,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             }
         }
 
+        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtGruop').setValue(rec.get('A4076GRUPO')); 
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtfolio').setValue(rec.get('A4076PREME') + '-' + rec.get('A4076ANIO'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttkt').setValue(rec.get('A4076TICKET'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttrnc').setValue(rec.get('A4076TRNCU'));
