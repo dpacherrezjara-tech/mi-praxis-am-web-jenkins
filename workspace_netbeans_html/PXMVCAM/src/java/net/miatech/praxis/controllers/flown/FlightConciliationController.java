@@ -3440,5 +3440,43 @@ public class FlightConciliationController extends BaseController {
         return cellValue.trim();
     }
     
+    
+    @RequestMapping(value = "MaintenanceA3729")
+    public @ResponseBody
+    String MaintenanceA3729(ModelMap map, HttpServletRequest request) throws Exception {
 
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        String option;
+        String beanString;
+        Gson gson = new Gson();
+
+        A3729Filter filter = new A3729Filter();
+        String msj = "";
+
+        try {
+
+//            option = request.getParameter("option");
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            msj = logic.SQP04320(filter);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    
+    
 }

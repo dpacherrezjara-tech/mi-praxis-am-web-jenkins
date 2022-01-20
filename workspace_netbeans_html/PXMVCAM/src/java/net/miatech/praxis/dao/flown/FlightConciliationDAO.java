@@ -811,6 +811,13 @@ public class FlightConciliationDAO {
                 } else {
                     beanCons.descFSALES = "Yes";
                 }
+                
+                beanCons.USCR = rst.getString("USCR").trim();
+                beanCons.FECR = rst.getString("FECR").trim();
+                beanCons.HOCR = rst.getString("HOCR").trim();
+                beanCons.USUP = rst.getString("USUP").trim();
+                beanCons.FEUP = rst.getString("FEUP").trim();
+                beanCons.HOUP = rst.getString("HOUP").trim();
 
                 lstCons.add(beanCons);
 
@@ -1143,7 +1150,7 @@ public class FlightConciliationDAO {
         String msj = "";
         try {
             //PX09500005
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S08VALID(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04358(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -2261,4 +2268,66 @@ public class FlightConciliationDAO {
         return result;
     }
 
+    public String SQP04320(A3729Filter filter) throws SQLException, Exception {
+        //REALIZA UPDATE  DE UN REGISTRO EN LA TABLA A3729.
+        
+        
+        String strMsj = "Operation was successful.";
+        CallableStatement cstmt = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, filter.option.trim());
+            cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
+            cstmt.setString(3, filter.TICKET.trim());
+            cstmt.setString(4, filter.CUPON.trim());
+            
+            cstmt.setString(5, filter.DFLIGHT.trim());
+            cstmt.setString(6, filter.NFLIGHT.trim());
+            cstmt.setString(7, filter.TPAX.trim());
+            
+            cstmt.setString(8, filter.CDEPART.trim());
+            cstmt.setString(9, filter.CARRIVA.trim());
+            cstmt.setString(10, filter.CHAIR.trim());
+            
+            cstmt.setString(11, filter.LNAME.trim());
+            cstmt.setString(12, filter.FNAME.trim());
+            
+            cstmt.setString(13, filter.STVAL.trim());
+            cstmt.setString(14, filter.STVCR.trim());
+            cstmt.setString(15, filter.FSALES.trim());
+            cstmt.setString(16, filter.FSABRE.trim());
+            cstmt.setString(17, filter.STASABR.trim());
+            
+            cstmt.setString(18, session.getUserView().getUserInfo().USR);
+            cstmt.setString(19, Functions.getFechaActual());
+            cstmt.setString(20, Functions.getHoraActual());
+            cstmt.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            strMsj = e.getMessage();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+
+    }
+
+    
+    
 }
