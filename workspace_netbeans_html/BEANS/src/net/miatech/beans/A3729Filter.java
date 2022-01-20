@@ -36,6 +36,7 @@ public class A3729Filter extends A3729 {
     
     public int qty_update = 0;
 
+    public String option = "";
     public Pagination page = new Pagination();
     public long RN;
 

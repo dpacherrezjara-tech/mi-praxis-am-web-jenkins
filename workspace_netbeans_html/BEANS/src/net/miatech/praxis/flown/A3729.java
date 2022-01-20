@@ -13,6 +13,7 @@ public class A3729 {
     
     public String CCUST = "";
     public String CHAIR = "";
+    public String TICKET = "";
     public String CIA = "";
     public String FORMA = "";
     public String SERIE = "";
