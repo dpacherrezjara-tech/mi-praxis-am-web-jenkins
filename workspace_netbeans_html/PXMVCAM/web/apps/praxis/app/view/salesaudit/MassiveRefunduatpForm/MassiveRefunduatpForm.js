@@ -586,6 +586,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     {text: 'Neto<br>Praxis', dataIndex: 'A4076NETK', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatus'},
                                     {text: 'BPO', dataIndex: 'A4076STAT', width: 200, renderer: 'onRendererColumnStatBPO'},
+                                    {text: 'Group', dataIndex: 'A4076GRUPO', width: 90},
                                     {
                                         text: '',
                                         dataIndex: '',
