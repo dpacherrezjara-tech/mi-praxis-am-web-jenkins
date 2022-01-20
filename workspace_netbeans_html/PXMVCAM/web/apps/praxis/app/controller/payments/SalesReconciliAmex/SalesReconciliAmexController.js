@@ -1475,6 +1475,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     onEditClick: function(grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
+        console.log(rec);
         this.winDataEntryError('U', rec);
     },
     winDataEntryError: function(action, rec) {

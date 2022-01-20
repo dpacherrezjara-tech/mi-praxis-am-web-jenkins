@@ -2970,7 +2970,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     {
                                                         iconCls: 'prx-icon-edit',
                                                         tooltip: 'Edit',
-                                                        handler: 'onEditClick2'
+                                                        handler: 'onEditClick'
                                                     }
                                                 ]
                                             },
