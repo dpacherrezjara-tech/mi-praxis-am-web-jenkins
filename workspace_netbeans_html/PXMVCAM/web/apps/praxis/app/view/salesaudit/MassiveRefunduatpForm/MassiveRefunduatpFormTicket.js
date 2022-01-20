@@ -210,6 +210,14 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                     },
                     items: [
                         {
+                            xtype: 'textfield',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txtGruop',
+                            fieldLabel: 'Group',
+                            labelWidth: 40,
+                            width: 180,
+                            value: 'xxxxxx',
+                            readOnly: true
+                        },{
                             xtype: 'displayfield',
                             fieldLabel: 'Error',
                             labelStyle: 'font-weight: bold;',
