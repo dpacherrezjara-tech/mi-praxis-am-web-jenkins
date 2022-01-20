@@ -1,6 +1,7 @@
 prototype.idMassiveRefunduatpForm = 'MassiveRefunduatpForm';
 prototype.idMassiveRefunduatpFormTicket = 'MassiveRefunduatpFormTicket';
 prototype.idMassiveRefunduatpFormSubiArchivo = 'MassiveRefunduatpFormSubiArchivo';
+prototype.idMassiveRefunduatpFormErrorBPO = 'MassiveRefunduatpFormErrorBPO';
 prototype.url = CONTEXTPATH + '/MassiveRefunduatpForm';
 prototype.url01 = CONTEXTPATH + '/BwrBSPLINKRFND';
 prototype.widthWindow = 1300;
@@ -13,7 +14,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
     requires: [
         'Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormController',
         'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormSubiArchivo',
-        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormTicket'
+        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormTicket',
+        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormErrorBPO'
 
     ],
 

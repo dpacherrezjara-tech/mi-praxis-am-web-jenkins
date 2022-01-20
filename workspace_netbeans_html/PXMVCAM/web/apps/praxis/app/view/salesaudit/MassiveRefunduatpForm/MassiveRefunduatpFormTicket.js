@@ -18,7 +18,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
     title: 'TICKET DETAIL',
     header: true,
 //    bodyStyle: 'background: transparent; top:17px !important',
-    height: 600,
+    height: 640,
     width: 950,
     border: false,
     resizable: false,
@@ -196,6 +196,33 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                             width: 180,
                             value: 'xxxxxx',
                             readOnly: true
+                        }
+
+                        
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    defaults: {
+                        style: 'margin: 1px',
+                        fieldStyle: 'font-weight: bold; color: blue;'
+                    },
+                    items: [
+                        {
+                            xtype: 'displayfield',
+                            fieldLabel: 'Error',
+                            labelStyle: 'font-weight: bold;',
+                            labelWidth: 35
+                        },
+                        {
+                            xtype: 'button',
+                            icon: 'resources/img/botones/16x16/swap.png',
+                            id: prototype.idMassiveRefunduatpFormTicket + '-txterror',
+                            tooltip: 'Check Error Detail',
+                            listeners: {
+                                click: 'onSeguimietoClick'
+                            }
                         }
 
 
@@ -657,7 +684,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                 {
                     icon: 'resources/img/botones/24x24/1337982029_3floppy_unmount.png',
                     text: 'Save', id: prototype.idMassiveRefunduatpFormTicket + '-Save',
-                    height: 30,hidden: true,
+                    height: 30, hidden: true,
                     scale: 'medium',
                     listeners: {
                         click: 'onClickSave'
