@@ -168,6 +168,7 @@ public class IvaReportDAO {
                 objRtn.RUTFCALOD =  rs01.getString("RUTFCALOD").trim();
                 objRtn.CNXIR =  rs01.getString("CNXIR").trim();      
                 objRtn.TASAOD =  rs01.getString("TASAOD").trim();                  
+                objRtn.ORIDES =  rs01.getString("ORIDES").trim();                  
                 //
                 objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;

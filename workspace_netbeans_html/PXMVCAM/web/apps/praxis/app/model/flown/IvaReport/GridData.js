@@ -48,6 +48,7 @@ Ext.define('Ext.Praxis.model.flown.IvaReport.GridData', {
         {name: 'ODFCALVT', type: 'string'},
         {name: 'RUTFCALOD', type: 'string'},
         {name: 'CNXIR', type: 'string'},
-        {name: 'TASAOD', type: 'string'}
+        {name: 'TASAOD', type: 'string'},
+        {name: 'ORIDES', type: 'string'}
     ]
 });

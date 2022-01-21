@@ -221,6 +221,7 @@ public class IvaReportController extends BaseController {
             Cell CH1_45 = row.createCell(45);
             Cell CH1_46 = row.createCell(46);
             Cell CH1_47 = row.createCell(47);
+            Cell CH1_48 = row.createCell(48);
 
             CH1_00.setCellValue("RN");
             CH1_01.setCellValue("CIA");
@@ -270,6 +271,7 @@ public class IvaReportController extends BaseController {
             CH1_45.setCellValue("Ruta_Fare Calc");
             CH1_46.setCellValue("CONEXIONES IR");
             CH1_47.setCellValue("Tasa s/OD");
+            CH1_48.setCellValue("IVA-ORI-DES");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -319,6 +321,7 @@ public class IvaReportController extends BaseController {
             CH1_45.setCellStyle(headerStyle);
             CH1_46.setCellStyle(headerStyle);
             CH1_47.setCellStyle(headerStyle);
+            CH1_48.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -374,6 +377,7 @@ public class IvaReportController extends BaseController {
                 Cell rcell45 = row.createCell(45);
                 Cell rcell46 = row.createCell(46);
                 Cell rcell47 = row.createCell(47);
+                Cell rcell48 = row.createCell(48);
 
                 rcel10.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).CIA);
@@ -423,6 +427,7 @@ public class IvaReportController extends BaseController {
                 rcell45.setCellValue(listaData.get(vi).RUTFCALOD);
                 rcell46.setCellValue(listaData.get(vi).CNXIR);
                 rcell47.setCellValue(listaData.get(vi).TASAOD);
+                rcell48.setCellValue(listaData.get(vi).ORIDES);
 
                 iter.next();
                 ++vi;

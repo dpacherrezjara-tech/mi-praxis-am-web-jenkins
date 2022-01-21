@@ -59,4 +59,5 @@ public class A4161 {
     public String RUTFCALOD = "";
     public String CNXIR = "";      
     public String TASAOD = "";      
+    public String ORIDES = "";      
 }
