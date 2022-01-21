@@ -60,6 +60,9 @@ public class A4124 {
     public String ADDPAXEMD = "";
     public String FSELEC = "";
     public String FAMEX = "";
+    public String STCON = "";
+    public String FCONT = "";
+    public String IDCON = "";
     public String CERROR = "";
     public String USCR = "";
     public String FECR = "";
