@@ -11,12 +11,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.beans.SQP00697Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import org.springframework.context.annotation.Scope;
@@ -222,6 +224,33 @@ public class SalesComplementAmexController extends BaseController {
         return lst;
     }
 
+    
+    @RequestMapping(value = "/searchPNR")
+    public @ResponseBody
+    String searchPNR(ModelMap map, HttpServletRequest request) {
+
+        SQP00697Filter filter = new SQP00697Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            SalesComplementAmexLogic logic = new SalesComplementAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            List<SQP00697Filter> listaData = logic.loadSQP00697(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+        } catch (SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {

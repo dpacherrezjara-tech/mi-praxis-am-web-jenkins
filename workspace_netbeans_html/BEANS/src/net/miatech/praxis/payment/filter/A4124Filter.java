@@ -20,7 +20,9 @@ public class A4124Filter extends A4124 {
     public String IN_DATE = "";
     public String DATE = "";
     public String IN_FAMEX = "";
+    public String IN_STCON = "";
     public String descFAMEX = "";
+    public String descSTCON = "";
     
     public Pagination page = new Pagination();
 }

@@ -133,6 +133,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
         me.bean.IN_FATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         me.bean.IN_FAMEX = Ext.getCmp(prototype.id + '-cmbFindByFAMEX').getValue();
+        me.bean.IN_STCON = Ext.getCmp(prototype.id + '-cmbFindBySTCON').getValue();
         me.bean.IN_DATE = "SDATE";
 
         var beanString = JSON.stringify(me.bean);
@@ -268,13 +269,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
 
         switch (selectedValue) {
             case 'P':
+                var stcon = Ext.getCmp(prototype.id + '-cmbFindBySTCON').getValue();
+                Ext.getCmp(prototype.id + '-cmbFindBySTCON').setVisible(true);
                 this.setGridData();
+                if (stcon === '2') {
+                    Ext.getCmp(prototype.id + '-plusAccounting').setVisible(true);
+                    Ext.getCmp(prototype.id + '-plusAddPax').setVisible(false);
+                    Ext.getCmp(prototype.id + '-gridDataMain').setWidth(1340);
+                } else {
+                    Ext.getCmp(prototype.id + '-plusAccounting').setVisible(false);
+                    Ext.getCmp(prototype.id + '-plusAddPax').setVisible(true);
+                    Ext.getCmp(prototype.id + '-gridDataMain').setWidth(1700);
+                }
                 break;
             case 'L':
+                //Ext.getCmp(prototype.id + '-cmbFindBySTCON').setValue("X");
+                Ext.getCmp(prototype.id + '-cmbFindBySTCON').setVisible(false);
                 this.setGridDataLiga();
                 break;
             case 'T':
                 this.setGridDataTablet();
+                //Ext.getCmp(prototype.id + '-cmbFindBySTCON').setValue("X");
+                Ext.getCmp(prototype.id + '-cmbFindBySTCON').setVisible(false);
                 break;
         }
     },
@@ -446,7 +462,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     winDataEntry_PNR: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-
+        console.log(rec);
         Ext.create('Ext.Praxis.view.payments.SalesComplementAmexForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
