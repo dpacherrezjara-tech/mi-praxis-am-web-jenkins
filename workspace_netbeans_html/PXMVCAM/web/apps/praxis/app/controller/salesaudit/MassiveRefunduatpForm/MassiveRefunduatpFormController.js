@@ -57,17 +57,23 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             txtFilterDateTo.show();
             txtCia.hide();
             txtFrmaSerie.hide();
-
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtFrmaSerie').setValue("");
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtCia').setValue("");
         } else if (obj.getValue() === "3") {
             txtFilterDateFrom.hide();
             txtFilterDateTo.hide();
             txtCia.show();
             txtFrmaSerie.show();
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtCia').setValue("139");
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtFilterDateFrom').setValue("");
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtFilterDateTo').setValue("");
         } else {
             txtFilterDateFrom.hide();
             txtFilterDateTo.hide();
             txtCia.hide();
             txtFrmaSerie.hide();
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtFrmaSerie').setValue("");
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtCia').setValue("");
         }
     },
     onPagingBeforeChange01: function (obj, page, opts) {
@@ -81,6 +87,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         prototype.idMassiveRefunduatpForm = 'MassiveRefunduatpForm';
         prototype.idMassiveRefunduatpFormSubiArchivo = 'MassiveRefunduatpFormSubiArchivo';
         prototype.idMassiveRefunduatpFormTicket = 'MassiveRefunduatpFormTicket';
+        prototype.idMassiveRefunduatpFormErrorBPO = 'MassiveRefunduatpFormErrorBPO';
         prototype.url = CONTEXTPATH + '/MassiveRefunduatpForm';
         prototype.url01 = CONTEXTPATH + '/BwrBSPLINKRFND';
         prototype.widthWindow = 1366;
@@ -129,7 +136,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "Y", "name": "PENDING"},
-                {"code": "E", "name": "SEND BPO"},
+                {"code": "E", "name": "ERROR BPO"},
                 {"code": "F", "name": "CAPTURED BPO"},
                 {"code": "C", "name": "CANC"}
 
@@ -417,8 +424,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 value = 'PENDING';
                 break;
             case 'E':
-                color = '#81F781';
-                value = 'SEND BPO';
+                color = '#EB984E';
+                value = 'ERROR BPO';
                 break;
             case 'F':
                 color = '#F3F781';
@@ -580,7 +587,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         }
 
         if (lstNew.length > 0) {
-
+            
             global.Msg({
                 msg: 'Are you sure to Save?',
                 icon: 3,
@@ -642,7 +649,6 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         }
 
         if (lstNew.length > 0) {
-
             global.Msg({
                 msg: 'Are you sure to Save?',
                 icon: 3,

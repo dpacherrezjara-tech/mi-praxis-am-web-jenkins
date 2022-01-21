@@ -13,6 +13,8 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -310,6 +312,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(11)).equals("")) {
                                 fileA4076.A4076MONTCARD1 = Float.parseFloat(getCellValue(currentRow.getCell(11)));
+                                fileA4076.A4076MONTCARD1 = fijarNumero(fileA4076.A4076MONTCARD1);
                             } else {
                                 fileA4076.A4076MONTCARD1 = 0;
                             }
@@ -336,6 +339,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(15)).equals("")) {
                                 fileA4076.A4076MONTCARD2 = Float.parseFloat(getCellValue(currentRow.getCell(15)));
+                                fileA4076.A4076MONTCARD2 = fijarNumero(fileA4076.A4076MONTCARD2);
                             } else {
                                 fileA4076.A4076MONTCARD2 = 0;
                             }
@@ -349,6 +353,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(17)).equals("")) {
                                 fileA4076.A4076TARTK = Float.parseFloat(getCellValue(currentRow.getCell(17)));
+                                fileA4076.A4076TARTK = fijarNumero(fileA4076.A4076TARTK);
                             } else {
                                 fileA4076.A4076TARTK = 0;
                             }
@@ -372,6 +377,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(19)).equals("")) {
                                 fileA4076.A4076EQVTK = Float.parseFloat(getCellValue(currentRow.getCell(19)));
+                                fileA4076.A4076EQVTK = fijarNumero(fileA4076.A4076EQVTK);
                             } else {
                                 fileA4076.A4076EQVTK = 0;
                             }
@@ -411,6 +417,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(22)).equals("")) {
                                 fileA4076.A4076MONTAX1 = Float.parseFloat(getCellValue(currentRow.getCell(22)));
+                                fileA4076.A4076MONTAX1 = fijarNumero(fileA4076.A4076MONTAX1);
                             } else {
                                 fileA4076.A4076MONTAX1 = 0;
                             }
@@ -441,6 +448,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(25)).equals("")) {
                                 fileA4076.A4076MONTAX2 = Float.parseFloat(getCellValue(currentRow.getCell(25)));
+                                fileA4076.A4076MONTAX2 = fijarNumero(fileA4076.A4076MONTAX2);
                             } else {
                                 fileA4076.A4076MONTAX2 = 0;
                             }
@@ -472,6 +480,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(28)).equals("")) {
                                 fileA4076.A4076MONTAX3 = Float.parseFloat(getCellValue(currentRow.getCell(28)));
+                                fileA4076.A4076MONTAX3 = fijarNumero(fileA4076.A4076MONTAX3);
                             } else {
                                 fileA4076.A4076MONTAX3 = 0;
                             }
@@ -503,6 +512,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(31)).equals("")) {
                                 fileA4076.A4076MONTAX4 = Float.parseFloat(getCellValue(currentRow.getCell(31)));
+                                fileA4076.A4076MONTAX4 = fijarNumero(fileA4076.A4076MONTAX4);
                             } else {
                                 fileA4076.A4076MONTAX4 = 0;
                             }
@@ -534,6 +544,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(34)).equals("")) {
                                 fileA4076.A4076MONTAX5 = Float.parseFloat(getCellValue(currentRow.getCell(34)));
+                                fileA4076.A4076MONTAX5 = fijarNumero(fileA4076.A4076MONTAX5);
                             } else {
                                 fileA4076.A4076MONTAX5 = 0;
                             }
@@ -565,6 +576,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(37)).equals("")) {
                                 fileA4076.A4076MONTAX6 = Float.parseFloat(getCellValue(currentRow.getCell(37)));
+                                fileA4076.A4076MONTAX6 = fijarNumero(fileA4076.A4076MONTAX6);
                             } else {
                                 fileA4076.A4076MONTAX6 = 0;
                             }
@@ -596,6 +608,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(40)).equals("")) {
                                 fileA4076.A4076MONTAX7 = Float.parseFloat(getCellValue(currentRow.getCell(40)));
+                                fileA4076.A4076MONTAX7 = fijarNumero(fileA4076.A4076MONTAX7);
                             } else {
                                 fileA4076.A4076MONTAX7 = 0;
                             }
@@ -627,6 +640,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(43)).equals("")) {
                                 fileA4076.A4076MONTAX8 = Float.parseFloat(getCellValue(currentRow.getCell(43)));
+                                fileA4076.A4076MONTAX8 = fijarNumero(fileA4076.A4076MONTAX8);
                             } else {
                                 fileA4076.A4076MONTAX8 = 0;
                             }
@@ -658,6 +672,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(46)).equals("")) {
                                 fileA4076.A4076MONTAX9 = Float.parseFloat(getCellValue(currentRow.getCell(46)));
+                                fileA4076.A4076MONTAX9 = fijarNumero(fileA4076.A4076MONTAX9);
                             } else {
                                 fileA4076.A4076MONTAX9 = 0;
                             }
@@ -689,6 +704,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(49)).equals("")) {
                                 fileA4076.A4076MONTAX10 = Float.parseFloat(getCellValue(currentRow.getCell(49)));
+                                fileA4076.A4076MONTAX10 = fijarNumero(fileA4076.A4076MONTAX10);
                             } else {
                                 fileA4076.A4076MONTAX10 = 0;
                             }
@@ -719,6 +735,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(52)).equals("")) {
                                 fileA4076.A4076MONTAX11 = Float.parseFloat(getCellValue(currentRow.getCell(52)));
+                                fileA4076.A4076MONTAX11 = fijarNumero(fileA4076.A4076MONTAX11);
                             } else {
                                 fileA4076.A4076MONTAX11 = 0;
                             }
@@ -750,6 +767,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(55)).equals("")) {
                                 fileA4076.A4076MONTAX12 = Float.parseFloat(getCellValue(currentRow.getCell(55)));
+                                fileA4076.A4076MONTAX12 = fijarNumero(fileA4076.A4076MONTAX12);
                             } else {
                                 fileA4076.A4076MONTAX12 = 0;
                             }
@@ -781,6 +799,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(58)).equals("")) {
                                 fileA4076.A4076MONTAX13 = Float.parseFloat(getCellValue(currentRow.getCell(58)));
+                                fileA4076.A4076MONTAX13 = fijarNumero(fileA4076.A4076MONTAX13);
                             } else {
                                 fileA4076.A4076MONTAX13 = 0;
                             }
@@ -811,6 +830,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(61)).equals("")) {
                                 fileA4076.A4076MONTAX14 = Float.parseFloat(getCellValue(currentRow.getCell(61)));
+                                fileA4076.A4076MONTAX14 = fijarNumero(fileA4076.A4076MONTAX14);
                             } else {
                                 fileA4076.A4076MONTAX14 = 0;
                             }
@@ -842,6 +862,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(64)).equals("")) {
                                 fileA4076.A4076MONTAX15 = Float.parseFloat(getCellValue(currentRow.getCell(64)));
+                                fileA4076.A4076MONTAX15 = fijarNumero(fileA4076.A4076MONTAX15);
                             } else {
                                 fileA4076.A4076MONTAX15 = 0;
                             }
@@ -872,6 +893,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(67)).equals("")) {
                                 fileA4076.A4076MONTAX16 = Float.parseFloat(getCellValue(currentRow.getCell(67)));
+                                fileA4076.A4076MONTAX16 = fijarNumero(fileA4076.A4076MONTAX16);
                             } else {
                                 fileA4076.A4076MONTAX16 = 0;
                             }
@@ -904,6 +926,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(70)).equals("")) {
                                 fileA4076.A4076MONTAX17 = Float.parseFloat(getCellValue(currentRow.getCell(70)));
+                                fileA4076.A4076MONTAX17 = fijarNumero(fileA4076.A4076MONTAX17);
                             } else {
                                 fileA4076.A4076MONTAX17 = 0;
                             }
@@ -934,6 +957,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(73)).equals("")) {
                                 fileA4076.A4076MONTAX18 = Float.parseFloat(getCellValue(currentRow.getCell(73)));
+                                fileA4076.A4076MONTAX18 = fijarNumero(fileA4076.A4076MONTAX18);
                             } else {
                                 fileA4076.A4076MONTAX18 = 0;
                             }
@@ -948,6 +972,9 @@ public class MassiveRefunduatpFormController extends BaseController {
 
                             if (!getCellValue(currentRow.getCell(74)).equals("")) {
                                 fileA4076.A4076NETO = Float.parseFloat(getCellValue(currentRow.getCell(74)));
+                                fileA4076.A4076NETO = fijarNumero(fileA4076.A4076NETO);
+                                //BigDecimal formatNumber = new BigDecimal(fileA4076.A4076NETO);
+                                //fileA4076.A4076NETO = formatNumber.setScale(2, RoundingMode.DOWN).doubleValue();
                             } else {
                                 fileA4076.A4076NETO = 0;
                             }
@@ -958,6 +985,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(76)).equals("")) {
                                 fileA4076.A4076COMI = Float.parseFloat(getCellValue(currentRow.getCell(76)));
+                                fileA4076.A4076COMI = fijarNumero(fileA4076.A4076COMI);
                             } else {
                                 fileA4076.A4076COMI = 0;
                             }
@@ -968,6 +996,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(78)).equals("")) {
                                 fileA4076.A4076TAXCO = Float.parseFloat(getCellValue(currentRow.getCell(78)));
+                                fileA4076.A4076TAXCO = fijarNumero(fileA4076.A4076TAXCO);
                             } else {
                                 fileA4076.A4076TAXCO = 0;
                             }
@@ -1005,6 +1034,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                             }
                             if (!getCellValue(currentRow.getCell(1)).equals("")) {
                                 fileA4076.A4076NETO = Float.parseFloat(getCellValue(currentRow.getCell(1)));
+                                fileA4076.A4076NETO = fijarNumero(fileA4076.A4076NETO);
                             } else {
                                 fileA4076.A4076NETO = 0;
                             }
@@ -1228,7 +1258,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 data.A4076PREME = gsonObj.get("A4076PREME").getAsString();
                 data.A4076ANIO = gsonObj.get("A4076ANIO").getAsString();
                 data.A4076CORR = gsonObj.get("A4076CORR").getAsString();
-                data.A4076BASE = "";
+                data.A4076BASE = gsonObj.get("A4076BASE").getAsString();;
                 gridData.add(data);
 
             }
@@ -1815,5 +1845,40 @@ public class MassiveRefunduatpFormController extends BaseController {
         map.put("data", result);
         return new Gson().toJson(map);
     }
+
+    public static double fijarNumero(double numero) {
+        double resultado;
+        resultado = numero * Math.pow(10, 2);
+        resultado = Math.round(resultado);
+        resultado = resultado / Math.pow(10, 2);
+        return resultado;
+    }
+    
+    @RequestMapping(value = "SearchDetailError")
+    public @ResponseBody
+    String SearchDetailError(ModelMap map, HttpServletRequest request) {
+        List<A4076Filter> lst;
+        A4076Filter filter = new A4076Filter();
+
+        try {
+            logic = new MassiveRefunduatpFormLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_PREME = request.getParameter("IN_PREME").trim();
+            filter.IN_ANIO = request.getParameter("IN_ANIO").trim();
+            filter.IN_CORR = request.getParameter("IN_CORR").trim();
+
+            lst = logic.SearchDetailError(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+
+        map.put("success", true);
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("lst_Error", lst);
+
+        return new Gson().toJson(map);
+    }
+    
 
 }

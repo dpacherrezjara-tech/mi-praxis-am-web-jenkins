@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 vl_STAT = 'PENDING';
                 break;
             case 'E':
-                vl_STAT = 'SEND BPO';
+                vl_STAT = 'ERROR BPO';
                 break;
             case 'F':
                 vl_STAT = 'CAPTURED BPO';
@@ -162,6 +162,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             }
         }
 
+        Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtGruop').setValue(rec.get('A4076GRUPO')); 
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtfolio').setValue(rec.get('A4076PREME') + '-' + rec.get('A4076ANIO'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttkt').setValue(rec.get('A4076TICKET'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txttrnc').setValue(rec.get('A4076TRNCU'));
@@ -674,6 +675,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
     },
     onchange: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
+    },
+    onSeguimietoClick: function (grid, rowIndex, colIndex) {
+        var me = this;
+        rec = me.view.params.rec;
+        rec = rec === null || rec === undefined ? {} : rec;
+        var win = new Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormErrorBPO({
+            params: {
+                rec: rec,
+                url01: prototype.url
+            }
+        });
+        win.show();
     }
 
 });

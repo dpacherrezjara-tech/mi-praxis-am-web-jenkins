@@ -1,6 +1,7 @@
 prototype.idMassiveRefunduatpForm = 'MassiveRefunduatpForm';
 prototype.idMassiveRefunduatpFormTicket = 'MassiveRefunduatpFormTicket';
 prototype.idMassiveRefunduatpFormSubiArchivo = 'MassiveRefunduatpFormSubiArchivo';
+prototype.idMassiveRefunduatpFormErrorBPO = 'MassiveRefunduatpFormErrorBPO';
 prototype.url = CONTEXTPATH + '/MassiveRefunduatpForm';
 prototype.url01 = CONTEXTPATH + '/BwrBSPLINKRFND';
 prototype.widthWindow = 1300;
@@ -13,7 +14,8 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
     requires: [
         'Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormController',
         'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormSubiArchivo',
-        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormTicket'
+        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormTicket',
+        'Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFormErrorBPO'
 
     ],
 
@@ -584,6 +586,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     {text: 'Neto<br>Praxis', dataIndex: 'A4076NETK', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Status', dataIndex: 'A4076FLAG', width: 200, renderer: 'onRendererColumnStatus'},
                                     {text: 'BPO', dataIndex: 'A4076STAT', width: 200, renderer: 'onRendererColumnStatBPO'},
+                                    {text: 'Group', dataIndex: 'A4076GRUPO', width: 90},
                                     {
                                         text: '',
                                         dataIndex: '',
