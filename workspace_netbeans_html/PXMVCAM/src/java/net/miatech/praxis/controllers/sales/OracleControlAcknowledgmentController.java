@@ -316,7 +316,7 @@ public class OracleControlAcknowledgmentController extends BaseController {
                 start = (start != 0 ? start : 0);
                 filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             } else {
-                filter.page.PAGROW = -1;
+                filter.page.PAGROW = 0;
                 filter.page.PAGNUM = 1;
             }
 
