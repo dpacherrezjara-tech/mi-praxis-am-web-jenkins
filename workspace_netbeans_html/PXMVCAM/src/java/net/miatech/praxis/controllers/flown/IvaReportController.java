@@ -129,7 +129,7 @@ public class IvaReportController extends BaseController {
 
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A4161Filter> listaData = this.getList(request, false);
+            List<A4161Filter> listaData = this.getList(request, true);
 
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
 

@@ -244,8 +244,8 @@ Ext.define('Ext.Praxis.controller.flown.IvaReport.IvaReportController', {
                 + '&IN_CIA=' + searchParams.IN_CIA
                 + '&IN_PFLIGHT=' + searchParams.IN_PFLIGHT
                 + '&IN_CARR=' + searchParams.IN_CARR
-                + '&IN_STOCK' + searchParams.IN_STOCK
-                + '&IN_PERIODO' + searchParams.IN_PERIODO
+                + '&IN_STOCK=' + searchParams.IN_STOCK
+                + '&IN_PERIODO=' + searchParams.IN_PERIODO
                 );
     }
     ,
