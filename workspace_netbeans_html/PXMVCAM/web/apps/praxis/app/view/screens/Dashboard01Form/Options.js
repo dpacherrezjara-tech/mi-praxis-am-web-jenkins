@@ -83,7 +83,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                 }
             ]
         },
-        {xtype: 'tbspacer', width: 1230},
+        {xtype: 'tbspacer', width: 1125},
         {
             xtype: 'panel',
             id: prototype.id + '-boxPaginacion',
@@ -166,6 +166,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                         {
                             xtype: 'pagingtoolbar',
                             id: prototype.id + '-paggin5',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginGDS',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginGDStkt',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
