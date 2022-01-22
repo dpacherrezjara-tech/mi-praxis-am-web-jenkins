@@ -1167,7 +1167,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
 //                this.showGrid(me.drillDown[me.drillDown.length-1]);
             console.log(meSales.boxActual);
-            if (meSales.boxActual === '-boxMainData' || meSales.boxActual === '-BoxDDTMCountryofSale' || meSales.boxActual === '-BoxCityOfSale') {
+            if (meSales.boxActual === '-boxMainData' || meSales.boxActual === '-BoxDDTMCountryofSale' || meSales.boxActual === '-BoxCityOfSale' || meSales.boxActual === '-BoxDetGDS') {
                 this.hidePagination_clickHandler();
             } else if (meSales.boxActual === '-BoxDetGDSAgte') {
                 me.panelActual = '-BoxDetGDSAgte';

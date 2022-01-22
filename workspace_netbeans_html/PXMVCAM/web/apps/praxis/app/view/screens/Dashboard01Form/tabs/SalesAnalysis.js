@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
         {
             region: 'center',
             id: prototype.id + '-boxPrincipalSales',
-            height: 880,
+            height: 680,
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -2984,6 +2984,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                     xtype: 'panel',
                     id: prototype.id + '-boxCompare',
                     width: '100%',
+                    height: 680,
                     hidden: true,
                     layout: {
                         type: 'vbox',
@@ -3256,7 +3257,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                     id: prototype.id + '-displaySAChart42',
                                     width: 1450,
                                     border: false,
-                                    height: 400,
+                                    height: 290,
                                     background: '#E0F8F7',
                                     captions: {
                                         title: {
