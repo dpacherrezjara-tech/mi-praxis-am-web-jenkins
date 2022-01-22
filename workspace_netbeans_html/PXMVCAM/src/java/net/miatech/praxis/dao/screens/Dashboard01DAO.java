@@ -1595,6 +1595,296 @@ public class Dashboard01DAO {
         return lstRtn;
     }
 
+    // =========================Compare Per Sales
+    public HashMap loadPX109SQP01571(DashboardFilter filter) throws SQLException, Exception {
+
+        HashMap hm = new HashMap();
+        List<DashboardFilter> lstRtn1 = new ArrayList<DashboardFilter>(0);
+        List<DashboardFilter> lstRtn2 = new ArrayList<DashboardFilter>(0);
+        List<DashboardFilter> lstRtn3 = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn;
+        int CUPONS = 0;
+        double AMOUNT = 0, AVG = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01571(?,?,?,?)}";
+        session.getCNXIBMDB2().open();
+
+        try {
+
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_PAIS);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                CUPONS = rs01.getInt("CUPONS");
+                AMOUNT = rs01.getDouble("AMOUNT");
+                AVG = rs01.getDouble("AVGE");
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new DashboardFilter();
+                    objRtn.DSALES = rs01.getString("DSALES");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                    objRtn.CUPONS = rs01.getInt("CUPONS");
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.AVG = rs01.getDouble("AVGE");
+                    //Totales
+                    objRtn.TOTAL_CUPONS = CUPONS;
+                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                    objRtn.totAVG = AVG;
+
+                    lstRtn1.add(objRtn);
+                }
+
+                hm.put("lst1", lstRtn1);
+                rs01.close();
+
+                if (cstmt01.getMoreResults()) {
+                    rs01 = cstmt01.getResultSet();
+                    while (rs01.next()) {
+                        CUPONS = rs01.getInt("CUPONS");
+                        AMOUNT = rs01.getDouble("AMOUNT");
+                        AVG = rs01.getDouble("AVGE");
+                    }
+                    rs01.close();
+
+                    if (cstmt01.getMoreResults()) {
+                        rs01 = cstmt01.getResultSet();
+                        while (rs01.next()) {
+                            objRtn = new DashboardFilter();
+                            objRtn.DSALES = rs01.getString("DSALES");
+                            objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                            objRtn.CUPONS = rs01.getInt("CUPONS");
+                            objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                            objRtn.AVG = rs01.getDouble("AVGE");
+                            //Totales
+                            objRtn.TOTAL_CUPONS = CUPONS;
+                            objRtn.TOTAL_AMOUNT = AMOUNT;
+                            objRtn.totAVG = AVG;
+
+                            lstRtn2.add(objRtn);
+                        }
+
+                        hm.put("lst2", lstRtn2);
+                        rs01.close();
+
+                        if (cstmt01.getMoreResults()) {
+                            rs01 = cstmt01.getResultSet();
+                            while (rs01.next()) {
+                                CUPONS = rs01.getInt("CUPONS");
+                                AMOUNT = rs01.getDouble("AMOUNT");
+                                AVG = rs01.getDouble("AVGE");
+                            }
+                            rs01.close();
+
+                            if (cstmt01.getMoreResults()) {
+                                rs01 = cstmt01.getResultSet();
+                                while (rs01.next()) {
+                                    objRtn = new DashboardFilter();
+                                    objRtn.DSALES = rs01.getString("DSALES");
+                                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                                    objRtn.CUPONS = rs01.getInt("CUPONS");
+                                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                                    objRtn.AVG = rs01.getDouble("AVGE");
+                                    //Totales
+                                    objRtn.TOTAL_CUPONS = CUPONS;
+                                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                                    objRtn.totAVG = AVG;
+
+                                    lstRtn3.add(objRtn);
+                                }
+                                hm.put("lst3", lstRtn3);
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return hm;
+    }
+
+    public HashMap loadPX109SQP03478(DashboardFilter filter) throws SQLException, Exception {
+
+        HashMap hm = new HashMap();
+        List<DashboardFilter> lstRtn1 = new ArrayList<DashboardFilter>(0);
+        List<DashboardFilter> lstRtn2 = new ArrayList<DashboardFilter>(0);
+        List<DashboardFilter> lstRtn3 = new ArrayList<DashboardFilter>(0);
+        List<DashboardFilter> lstRtn4 = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn = null;
+        int CUPONS = 0;
+        double AMOUNT = 0, AVG = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03478_1(?,?,?,?)}";
+        session.getCNXIBMDB2().open();
+
+        try {
+
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_PAIS);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                CUPONS = rs01.getInt("CUPONS");
+                AMOUNT = rs01.getDouble("AMOUNT");
+                AVG = rs01.getDouble("AVGE");
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new DashboardFilter();
+                    objRtn.DSALES = rs01.getString("DSALES");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                    objRtn.CUPONS = rs01.getInt("CUPONS");
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.AVG = rs01.getDouble("AVGE");
+                    //Totales
+                    objRtn.TOTAL_CUPONS = CUPONS;
+                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                    objRtn.totAVG = AVG;
+
+                    lstRtn1.add(objRtn);
+                }
+
+                hm.put("lst1", lstRtn1);
+                rs01.close();
+
+                if (cstmt01.getMoreResults()) {
+                    rs01 = cstmt01.getResultSet();
+                    while (rs01.next()) {
+                        CUPONS = rs01.getInt("CUPONS");
+                        AMOUNT = rs01.getDouble("AMOUNT");
+                        AVG = rs01.getDouble("AVGE");
+                    }
+                    rs01.close();
+
+                    if (cstmt01.getMoreResults()) {
+                        rs01 = cstmt01.getResultSet();
+                        while (rs01.next()) {
+                            objRtn = new DashboardFilter();
+                            objRtn.DSALES = rs01.getString("DSALES");
+                            objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                            objRtn.CUPONS = rs01.getInt("CUPONS");
+                            objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                            objRtn.AVG = rs01.getDouble("AVGE");
+                            //Totales
+                            objRtn.TOTAL_CUPONS = CUPONS;
+                            objRtn.TOTAL_AMOUNT = AMOUNT;
+                            objRtn.totAVG = AVG;
+                            lstRtn2.add(objRtn);
+                        }
+
+                        hm.put("lst2", lstRtn2);
+                        rs01.close();
+
+                        if (cstmt01.getMoreResults()) {
+                            rs01 = cstmt01.getResultSet();
+                            while (rs01.next()) {
+                                CUPONS = rs01.getInt("CUPONS");
+                                AMOUNT = rs01.getDouble("AMOUNT");
+                                AVG = rs01.getDouble("AVGE");
+                            }
+                            rs01.close();
+
+                            if (cstmt01.getMoreResults()) {
+                                rs01 = cstmt01.getResultSet();
+                                while (rs01.next()) {
+                                    objRtn = new DashboardFilter();
+                                    objRtn.DSALES = rs01.getString("DSALES");
+                                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DSALES);
+                                    objRtn.CUPONS = rs01.getInt("CUPONS");
+                                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                                    objRtn.AVG = rs01.getDouble("AVGE");
+                                    //Totales
+                                    objRtn.TOTAL_CUPONS = CUPONS;
+                                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                                    objRtn.totAVG = AVG;
+                                    lstRtn3.add(objRtn);
+                                }
+
+                                hm.put("lst3", lstRtn3);
+                                rs01.close();
+
+                                if (cstmt01.getMoreResults()) {
+                                    rs01 = cstmt01.getResultSet();
+                                    while (rs01.next()) {
+
+                                        AVG = rs01.getDouble("AVGTOT");
+                                    }
+                                    rs01.close();
+
+                                    if (cstmt01.getMoreResults()) {
+                                        rs01 = cstmt01.getResultSet();
+                                        while (rs01.next()) {
+                                            objRtn = new DashboardFilter();
+
+                                            objRtn.AVG = rs01.getDouble("AVGTOT");
+                                            //Totales
+
+                                            objRtn.totAVG = AVG;
+                                            lstRtn4.add(objRtn);
+                                        }
+                                        hm.put("lst4", lstRtn4);
+
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return hm;
+    }
+
     /*loadPX109SQP00988*/
     public List<DashboardFilter> loadPX109SQP01518(DashboardFilter filter) throws SQLException, Exception {
 

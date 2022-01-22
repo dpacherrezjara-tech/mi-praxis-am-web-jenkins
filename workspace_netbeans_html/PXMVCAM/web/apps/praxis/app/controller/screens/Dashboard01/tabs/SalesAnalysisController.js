@@ -16,10 +16,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     beanGDSDetAg: {},
     beanGDSDetTkt: {},
     meSales: '',
+    meCompare: '',
     gridActual: '',
     panelActual: '',
     GROUPBY: '',
     gloSelOpt: '',
+    lstFinal: [],
     dw_excel: false,
     boxActual: '-boxMainData',
     drillDown: [],
@@ -28,6 +30,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     init: function (view) {
         me = this;
         mePie = this;
+        meCompare = this;
 //        prototype.id = 'Dashboard01Form';
 //        prototype.url = CONTEXTPATH + '/Dashboard01';
 //        prototype.urlMaster = CONTEXTPATH + '/MasterController';
@@ -150,6 +153,15 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             case "17"://Alliances
                 GROUPBY = 'GDS';
                 this.loadGDS();
+                break;
+            case "18"://COMPARE
+                GROUPBY = 'COMPARE';
+                this.loadCompareSale('P');
+                break;
+
+            case "19"://COMPARE DAY
+                GROUPBY = 'COMPAREDAY';
+                this.loadCompareSaleDay();
                 break;
         }
     },
@@ -870,6 +882,197 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         this.showPagination_clickHandler();
         Ext.getCmp(prototype.id + '-pagginGDStkt').bindStore(storeGridDatas);
+    },
+    loadCompareSale: function (flag) {
+        win.lblUser_toolTip("Estructura: IMF080");
+
+        console.log('loadCompareSale');
+        if (flag === 'P') {
+            this.showGrid('-boxCompare');
+        }
+
+        Ext.Ajax.request({
+            url: prototype.url + '/loadCompareSale',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {beanString: searchParams, dw_excel: false},
+            success: function (response, options) {
+                Ext.getBody().unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+
+                var lstCompare1 = res.data;
+                var lstCompare2 = res.lst2;
+                var lstCompare3 = res.lst3;
+                var year = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
+
+                Ext.getCmp(prototype.id + '-lbl1').setText(year + '');
+                Ext.getCmp(prototype.id + '-lbl2').setText(year - 1 + '');
+                Ext.getCmp(prototype.id + '-lbl3').setText(year - 2 + '');
+
+
+                var storeData = Ext.create('Ext.data.Store', {
+                    data: lstCompare1,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-GridtotalMonth_1').bindStore(storeData);
+
+
+                var storeData2 = Ext.create('Ext.data.Store', {
+                    data: lstCompare2,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-GridtotalMonth_2').bindStore(storeData2);
+
+
+                var storeData3 = Ext.create('Ext.data.Store', {
+                    data: lstCompare3,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-GridtotalMonth_3').bindStore(storeData3);
+
+
+                //  -------------------------- GRAFICOS --------------------------
+                var lstTemp = lstCompare1;
+
+                if (lstCompare1.length <= lstCompare2.length) {
+                    lstTemp = lstCompare2;
+                }
+                if (lstCompare2.length <= lstCompare3.length) {
+                    lstTemp = lstCompare3;
+                }
+
+                var item = {};
+                lstFinal = [];
+
+                for (var t = 0; t < lstTemp.length; t++) {
+                    item.month = lstTemp[t].strFormatDate.substring(5, 8);
+                    item.year1 = year + '';
+                    item.year2 = year - 1 + '';
+                    item.year3 = year - 2 + '';
+
+                    item.year1_amount = 0;
+                    item.year2_amount = 0;
+
+                    item.year1_coupon = 0;
+                    item.year2_coupon = 0;
+                    lstFinal.push(item);
+                    item = {};
+                }
+
+
+                for (var k = 0; k < lstCompare1.length; k++) {
+                    if (lstFinal[k].month === lstCompare1[k].strFormatDate.substring(5, 8)) {
+                        lstFinal[k].year1_amount = lstCompare1[k].AMOUNT;
+                        lstFinal[k].year1_coupon = lstCompare1[k].CUPONS;
+
+                    }
+                }
+
+                for (var t = 0; t < lstCompare2.length; t++) {
+                    if (lstFinal[t].month === lstCompare2[t].strFormatDate.substring(5, 8)) {
+                        lstFinal[t].year2_amount = lstCompare2[t].AMOUNT;
+                        lstFinal[t].year2_coupon = lstCompare2[t].CUPONS;
+                    }
+                }
+
+                for (var t = 0; t < lstCompare3.length; t++) {
+                    if (lstFinal[t].month === lstCompare3[t].strFormatDate.substring(5, 8)) {
+                        lstFinal[t].year3_amount = lstCompare3[t].AMOUNT;
+                        lstFinal[t].year3_coupon = lstCompare3[t].CUPONS;
+                    }
+                }
+
+                console.log('----------------- 111111 -----------------');
+                console.log(lstFinal);
+
+                var storeDataGraf = Ext.create('Ext.data.Store', {
+                    data: lstFinal,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-displaySAChart42').bindStore(storeDataGraf);
+
+            }
+        });
+    },
+    loadCompareSaleDay: function () {
+
+        win.lblUser_toolTip("Estructura: IMF125");
+
+        this.showGrid('-boxCompareday');
+        Ext.Ajax.request({
+            url: prototype.url + '/loadCompareSaleDay',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getBody().mask('Loading...'),
+            params: {beanString: searchParams, dw_excel: false},
+            success: function (response, options) {
+                Ext.getBody().unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+
+                meCompare.loadCompareSale('');
+
+                var lstCompare1 = res.data;
+                var lstCompare2 = res.lst2;
+                var lstCompare3 = res.lst3;
+                var lstCompare4 = res.lst4;
+
+                var year = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
+
+                Ext.getCmp(prototype.id + '-lbl1d').setText(year + '');
+                Ext.getCmp(prototype.id + '-lbl2d').setText(year - 1 + '');
+                Ext.getCmp(prototype.id + '-lbl3d').setText(year - 2 + '');
+                Ext.getCmp(prototype.id + '-lbl4d').setText(year + "-" + (year - 1));
+
+                // -------------------------------------------------------------------
+                var storeData = Ext.create('Ext.data.Store', {
+                    data: lstCompare1,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-GridtotalMonth_1day').bindStore(storeData);
+//                Ext.getCmp(prototype.id + '-GridtotalMonth_1day').setStore(storeData);
+
+                // -------------------------------------------------------------------
+                var storeData2 = Ext.create('Ext.data.Store', {
+                    data: lstCompare2,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-GridtotalMonth_2day').bindStore(storeData2);
+//                Ext.getCmp(prototype.id + '-GridtotalMonth_2day').setStore(storeData2);
+//                
+                // -------------------------------------------------------------------
+                var storeData3 = Ext.create('Ext.data.Store', {
+                    data: lstCompare3,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-GridtotalMonth_3day').bindStore(storeData3);
+//                Ext.getCmp(prototype.id + '-GridtotalMonth_3day').setStore(storeData3);
+
+
+                // -------------------------------------------------------------------
+                var storeData4 = Ext.create('Ext.data.Store', {
+                    data: lstCompare4,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-GridtotalMonth_4day').bindStore(storeData4);
+//                Ext.getCmp(prototype.id + '-GridtotalMonth_4day').setStore(storeData4);
+
+
+                //  -------------------------- GRAFICOS DAY--------------------------
+
+                console.log('----------------- 222222 -----------------');
+                console.log(lstFinal);
+
+                var storeDataGrafDay = Ext.create('Ext.data.Store', {
+                    data: lstFinal,
+                    autoLoad: true
+                });
+                Ext.getCmp(prototype.id + '-displaySAChart42_day').bindStore(storeDataGrafDay);
+
+            }
+        });
     },
     clickDetSales_colHandler: function (param, column, e, row, column, x, rowData) {
 //        console.log(param);

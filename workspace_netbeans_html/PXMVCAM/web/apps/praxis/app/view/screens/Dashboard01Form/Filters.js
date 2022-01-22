@@ -102,9 +102,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromYear_changeHandler'
                                     }
                                 },
@@ -124,9 +124,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromMonth_changeHandler'
                                     }
                                 },
@@ -147,9 +147,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     listConfig: {maxHeight: 111},
                                     hidden: true,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromDay_changeHandler'
                                     }
                                 },
@@ -176,9 +176,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 4},
@@ -196,9 +196,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 4},
@@ -218,9 +218,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     width: 65,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 // </editor-fold>
@@ -398,7 +398,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
+                                        focus: function (combo) {
                                             combo.expand();
                                         },
                                         change: 'cbxDateFromYear_changeHandler'
@@ -420,9 +420,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromMonth_changeHandler'
                                     }
                                 },
@@ -443,9 +443,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     listConfig: {maxHeight: 111},
                                     hidden: true,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromDay_changeHandler'
                                     }
                                 },
@@ -472,9 +472,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 4},
@@ -492,9 +492,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     valueField: 'code', displayField: 'name',
                                     width: 65,
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 {xtype: 'tbspacer', width: 4},
@@ -514,9 +514,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     width: 65,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function(combo) {
-                                            combo.expand();
-                                        }
+//                                        focus: function(combo) {
+//                                            combo.expand();
+//                                        }
                                     }
                                 },
                                 // </editor-fold>

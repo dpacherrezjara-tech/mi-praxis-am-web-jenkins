@@ -628,7 +628,7 @@ public class Dashboard01Controller extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "loadDetAlliances")
     public @ResponseBody
     String loadDetAlliances(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -666,8 +666,6 @@ public class Dashboard01Controller extends BaseController {
 
     // ******************* GDS *******************************************
     //******************** GDS *******************************************
-    
-    
     @RequestMapping(value = "loadGDS")
     public @ResponseBody
     String loadGDS(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -702,7 +700,7 @@ public class Dashboard01Controller extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "loadDetGDS")
     public @ResponseBody
     String loadDetGDS(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -737,8 +735,7 @@ public class Dashboard01Controller extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-    
+
     @RequestMapping(value = "loadDetGDSAgte")
     public @ResponseBody
     String loadDetGDSAgte(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -788,8 +785,7 @@ public class Dashboard01Controller extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-    
+
     @RequestMapping(value = "loadDetGDSTkt")
     public @ResponseBody
     String loadDetGDSTkt(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
@@ -813,7 +809,7 @@ public class Dashboard01Controller extends BaseController {
                 filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
             }
             /*paginacion*/
-            
+
             logic = new Dashboard01Logic();
             logic.setSession(this.serverSession.getServerSession());
             lstData = logic.loadPX109SQP01539(filter);
@@ -839,8 +835,117 @@ public class Dashboard01Controller extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-   
+
+    // ******************* Compare *******************************************
+    @RequestMapping(value = "loadCompareSale")
+    public @ResponseBody
+    String loadCompareSale(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Dashboard01 : loadCompareSale-------------");
+        HashMap hm = null;
+
+        map.put("success", true);
+        hm = this.getListCompareSale(request, false);
+
+        map.put("data", hm.get("lst1"));
+        map.put("lst2", hm.get("lst2"));
+        map.put("lst3", hm.get("lst3"));
+
+        return new Gson().toJson(map);
+    }
+
+    public HashMap getListCompareSale(HttpServletRequest request, Boolean bExcel) {
+
+        List<DashboardFilter> lst = new ArrayList<>(0);
+        DashboardFilter filter = new DashboardFilter();
+        Gson gson = new Gson();
+        String beanString = "";
+        HashMap hm = null;
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            hm = logic.loadPX109SQP01571(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return hm;
+    }
+
+    // ******************* Compare day *******************************************
+    @RequestMapping(value = "loadCompareSaleDay")
+    public @ResponseBody
+    String loadCompareSaleDay(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Dashboard01 : loadCompareSaleDay-------------");
+        HashMap hm = null;
+
+        map.put("success", true);
+        hm = this.getListCompareSaleDay(request, false);
+
+        map.put("data", hm.get("lst1"));
+        map.put("lst2", hm.get("lst2"));
+        map.put("lst3", hm.get("lst3"));
+        map.put("lst4", hm.get("lst4"));
+
+        return new Gson().toJson(map);
+    }
+
+    public HashMap getListCompareSaleDay(HttpServletRequest request, Boolean bExcel) {
+
+        List<DashboardFilter> lst = new ArrayList<>(0);
+        DashboardFilter filter = new DashboardFilter();
+        Gson gson = new Gson();
+        String beanString = "";
+        HashMap hm = null;
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            hm = logic.loadPX109SQP03478(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return hm;
+    }
 
     /**
      * INTERLINEA

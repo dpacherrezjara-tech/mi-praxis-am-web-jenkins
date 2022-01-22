@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
         {
             region: 'center',
             id: prototype.id + '-boxPrincipalSales',
-            height: 680,
+            height: 880,
             layout: {
                 type: 'vbox',
                 align: 'center'
@@ -2978,7 +2978,779 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                             }
                         }
                     ]
-                }
+                },
+//              ------------------------ COMPARE ------------------------------
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxCompare',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        // <editor-fold defaultstate="collapsed" desc="gridData">
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+//                                        align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-GridtotalMonth_1',
+                                    width: 403,
+                                    height: 'auto',
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: ' &nbsp ',
+                                                id: prototype.id + '-lbl1',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Sales Date', dataIndex: 'strFormatDate', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return '<b>' + value + '<b>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1').getStore().getData().items[0].data;
+                                                            console.log(data);
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Cpns', dataIndex: 'CUPONS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'USD', dataIndex: 'AMOUNT', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'AVG', dataIndex: 'AVG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-GridtotalMonth_2',
+                                    width: 402,
+//                                            height: 348,
+                                    height: 'auto',
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: ' &nbsp ',
+                                                id: prototype.id + '-lbl2',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Sales Date', dataIndex: 'strFormatDate', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return '<b>' + value + '<b>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2').getStore().getData().items[0].data;
+                                                            console.log(data);
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Cpns', dataIndex: 'CUPONS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'USD', dataIndex: 'AMOUNT', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'AVG', dataIndex: 'AVG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-GridtotalMonth_3',
+                                    width: 403,
+                                    height: 'auto',
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: ' &nbsp ',
+                                                id: prototype.id + '-lbl3',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Sales Date', dataIndex: 'strFormatDate', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return '<b>' + value + '<b>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3').getStore().getData().items[0].data;
+                                                            console.log(data);
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Cpns', dataIndex: 'CUPONS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'USD', dataIndex: 'AMOUNT', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'AVG', dataIndex: 'AVG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '5 0 0 5',
+                            border: true,
+                            layout: {
+                                type: 'vbox'
+                            },
+                            items: [
+                                {
+                                    xtype: 'cartesian',
+                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                    id: prototype.id + '-displaySAChart42',
+                                    width: 1450,
+                                    border: false,
+                                    height: 400,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Amount (USD)',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    legend: {
+                                        docked: 'bottom',
+                                        background: '#E3EAEF'
+                                    },
+                                    axes: [{
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['year1_amount', 'year2_amount', 'year3_amount'],
+                                            grid: true,
+                                            title: '',
+                                            //title: 'Millions of USD',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        }, {
+                                            type: 'category3d',
+                                            position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                            grid: true,
+                                            title: {
+                                                text: 'Years',
+                                                translationX: -30
+                                            }
+                                        }],
+                                    series: [{
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            title: ['2021', '2020', '2019'],
+//                                                title: 'year1', 'year2', 'year3',
+                                            xField: 'month',
+                                            yField: ['year1_amount', 'year2_amount', 'year3_amount'],
+                                            colors: ['#4091ba', '#ffff99', '#3dcc7e'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    if (ctx.field === 'year1_amount') {
+                                                        label = '2021';
+                                                    } else if (ctx.field === 'year2_amount') {
+                                                        label = '2020';
+                                                    } else if (ctx.field === 'year3_amount') {
+                                                        label = '2019';
+                                                    }
+                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            },
+                                            renderer: function (sprite, config, rendererData, index, a, b, c) {
+
+//                                                    setTitle
+
+//                                                    console.log(sprite);
+//                                                    console.log(config);
+//                                                    console.log(rendererData);
+//                                                    console.log(index);
+//                                                    console.log(a);
+//                                                    console.log(b);
+//                                                    console.log(c);
+                                            }
+                                        }]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxCompareday',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        // <editor-fold defaultstate="collapsed" desc="gridData">
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+//                                        align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-GridtotalMonth_1day',
+                                    width: 414,
+                                    height: 400,
+                                    columnLines: true,
+                                    bodyStyle: 'background:#E3EAEF',
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary',
+//                                                    dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: ' &nbsp ',
+                                                id: prototype.id + '-lbl1d',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Sales Date', dataIndex: 'strFormatDate', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return '<b>' + value + '<b>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1day').getStore().getData().items[0].data;
+                                                            console.log(data);
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Cpns', dataIndex: 'CUPONS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'USD', dataIndex: 'AMOUNT', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'AVG', dataIndex: 'AVG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_1day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-GridtotalMonth_2day',
+                                    width: 414,
+                                    height: 400,
+                                    bodyStyle: 'background:#E3EAEF',
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary',
+//                                                    dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: ' &nbsp ',
+                                                id: prototype.id + '-lbl2d',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Sales Date', dataIndex: 'strFormatDate', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return '<b>' + value + '<b>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2day').getStore().getData().items[0].data;
+                                                            console.log(data);
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Cpns', dataIndex: 'CUPONS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'USD', dataIndex: 'AMOUNT', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'AVG', dataIndex: 'AVG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_2day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-GridtotalMonth_3day',
+                                    width: 414,
+                                    height: 400,
+                                    bodyStyle: 'background:#E3EAEF',
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary',
+//                                                    dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: ' &nbsp ',
+                                                id: prototype.id + '-lbl3d',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Sales Date', dataIndex: 'strFormatDate', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            return '<b>' + value + '<b>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3day').getStore().getData().items[0].data;
+                                                            console.log(data);
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totISCI_LY, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Cpns', dataIndex: 'CUPONS', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3day').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'USD', dataIndex: 'AMOUNT', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'AVG', dataIndex: 'AVG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_3day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-GridtotalMonth_4day',
+                                    width: 114,
+                                    height: 400,
+                                    bodyStyle: 'background:#E3EAEF',
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary',
+//                                                    dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: ' &nbsp ',
+                                                id: prototype.id + '-lbl4d',
+                                                defaults: {
+                                                    menuDisabled: true, sortable: false, align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'AVG', dataIndex: 'AVG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background:#d5f4d5;text-align:right";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-GridtotalMonth_4day').getStore().getData().items[0].data;
+
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '5 0 0 5',
+                            hidden: true,
+                            border: true,
+                            layout: {
+                                type: 'vbox'
+                            },
+                            items: [
+                                {
+                                    xtype: 'cartesian',
+                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                    id: prototype.id + '-displaySAChart42_day',
+                                    width: 1450,
+                                    border: false,
+                                    height: 400,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Amount (USD)',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    legend: {
+                                        docked: 'bottom',
+                                        background: '#E3EAEF'
+                                    },
+                                    axes: [{
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['year1_amount', 'year2_amount', 'year3_amount'],
+                                            grid: true,
+                                            title: '',
+                                            //title: 'Millions of USD',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        }, {
+                                            type: 'category3d',
+                                            position: 'bottom',
+//                                                            fields: 'strFormatDate',
+                                            grid: true,
+                                            title: {
+                                                text: 'Years',
+                                                translationX: -30
+                                            }
+                                        }],
+                                    series: [{
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            title: ['2021', '2020', '2019'],
+                                            xField: 'month',
+                                            yField: ['year1_amount', 'year2_amount', 'year3_amount'],
+                                            colors: ['#4091ba', '#ffff99', '#3dcc7e'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    if (ctx.field === 'year1_amount') {
+                                                        label = '2021';
+                                                    } else if (ctx.field === 'year2_amount') {
+                                                        label = '2020';
+                                                    } else if (ctx.field === 'year3_amount') {
+                                                        label = '2019';
+                                                    }
+                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            }
+                                        }]
+                                }
+                            ]
+                        }
+                    ]
+                },
 //                        {
 //                            xtype: 'panel',
 //                            id: prototype.id + '-pie',
