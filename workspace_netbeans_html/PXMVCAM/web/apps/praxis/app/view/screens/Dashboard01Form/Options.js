@@ -4,12 +4,89 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
     border: false,
     layout: {
         type: 'hbox',
-        pack: 'end'
+        //pack: 'end'
     },
     items: [
         {
             xtype: 'panel',
-            id: prototype.id+'-boxPaginacion',
+            border: true,
+            width: 150,
+            items: [
+                {
+                    xtype: 'toolbar',
+                    items: [
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnSearch_2',
+                            iconCls: 'prx-icon-search',
+                            tooltip: 'Search',
+//                            listeners: {
+//                                click: 'imgSearch_clickHandler'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnFilter_2',
+                            iconCls: 'prx-icon-filter',
+                            tooltip: 'Display filter',
+//                            listeners: {
+//                                click: 'imgFilter_clickHandler'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnDisplay_2',
+                            icon: 'resources/img/botones/FalseChart.png',
+                            tooltip: 'Display Charts',
+//                            listeners: {
+//                                click: 'btnDisplay_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnExcel_2',
+                            iconCls: 'prx-icon-excel',
+                            tooltip: 'Export to Excel',
+                            listeners: {
+//                                click: 'imgExcel_clickHandler'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnClear_2',
+                            iconCls: 'prx-icon-clear',
+                            tooltip: 'Clear Options',
+//                            listeners: {
+//                                click: 'imgClear_clickHandler'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAdd_2',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New',
+                            hidden: true,
+//                            listeners: {
+//                                click: 'btnAdd_click'
+//                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnBack_2',
+                            iconCls: 'prx-icon-back',
+                            tooltip: 'Back',
+                            listeners: {
+                                click: 'imgBack_clickHandler'
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {xtype: 'tbspacer', width: 1125},
+        {
+            xtype: 'panel',
+            id: prototype.id + '-boxPaginacion',
             hidden: true,
             width: 100,
             border: false,
@@ -93,6 +170,22 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                             border: false,
                             displayInfo: false,
                             hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginGDS',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-pagginGDStkt',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
                         }
                     ]
                 }
@@ -101,6 +194,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
         {xtype: 'tbspacer', width: 20},
         {
             xtype: 'panel',
+            width: 150,
             border: true,
             items: [
                 {
@@ -125,7 +219,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
 //                            }
                         },
                         {
-                            xtype:'button',
+                            xtype: 'button',
                             id: prototype.id + '-btnDisplay',
                             icon: 'resources/img/botones/FalseChart.png',
                             tooltip: 'Display Charts',

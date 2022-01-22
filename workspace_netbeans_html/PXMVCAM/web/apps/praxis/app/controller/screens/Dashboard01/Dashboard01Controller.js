@@ -45,6 +45,27 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             '#Dashboard01Form-btnBack': {
                 click: this.btnBack_click
             },
+            '#Dashboard01Form-btnSearch_2': {
+                click: this.imgSearch_clickHandler
+            },
+            '#Dashboard01Form-btnClear_2': {
+                click: this.btnClear_click
+            },
+            '#Dashboard01Form-btnExcel_2': {
+                click: this.exportExcel
+            },
+            '#Dashboard01Form-btnFilter_2': {
+                click: this.btnFilter_click
+            },
+            '#Dashboard01Form-btnDisplay_2': {
+                click: this.btnDisplay_click
+            },
+            '#Dashboard01Form-btnAdd_2': {
+                click: this.btnAdd_click
+            },
+            '#Dashboard01Form-btnBack_2': {
+                click: this.btnBack_click
+            },
 //            '#Dashboard01Form-btn-pag-first': {
 //                click: this.pagFirst
 //            },
@@ -533,6 +554,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     // </editor-fold>,
     getPaggin: function() {
         me.pagginActual = '';
+        console.log(me.panelActual  + '<<<<<<<<<<<<<<<<<<<<<<' );
         switch (me.panelActual) {
 //            case  '-panelGridData':
 //                me.pagginActual = '-paggin';
@@ -542,6 +564,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
 //                break;
             case '-BoxDDTMDetailbyAgent':
                 me.pagginActual = '-paggin3';
+                break;
+            case '-BoxDetGDSAgte':
+                me.pagginActual = '-pagginGDS';
+                break;
+            case '-BoxDetGDSTkt':
+                me.pagginActual = '-pagginGDStkt';
                 break;
 //            case '-boxNoMatchData':
 //                me.pagginActual = '-paggin4';

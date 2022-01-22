@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import net.miatech.beans.A050Filter;
 import net.miatech.beans.A1971Filter;
+import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
@@ -59,6 +60,44 @@ public class Dashboard01Logic {
 
     public List<DashboardFilter> loadPX109SQP00988(DashboardFilter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP00988(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP00645(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00645(filter);
+    }
+
+    public List<DashboardFilter> loadVentasA1426Agente(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadVentasA1426Agente(filter);
+    }
+
+    /*GDS*/
+    public List<DashboardFilter> loadPX109SQP01504(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01504(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01505(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01505(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01538(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01538(filter);
+    }
+
+    public List<A720Filter> loadPX109SQP01539(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01539(filter);
+    }
+
+    public HashMap loadPX109SQP01571(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01571(filter);
+    }
+
+    public HashMap loadPX109SQP03478(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP03478(filter);
+    }
+
+    /*Alliance*/
+    public List<DashboardFilter> loadPX109SQP01518(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01518(filter);
     }
 
     /**

@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A050Filter;
 import net.miatech.beans.A1971Filter;
+import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.praxis.exceptions.SpringException;
@@ -564,6 +565,386 @@ public class Dashboard01Controller extends BaseController {
             throw new SpringException(e);
         }
         return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "loadCityPair")
+    public @ResponseBody
+    String loadCityPair(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        Gson gson = new Gson();
+        DashboardFilter filter;
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            lstData = logic.loadPX109SQP00645(filter);
+
+            map.put("success", true);
+            map.put("data", lstData);
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "loadSalesAgent")
+    public @ResponseBody
+    String loadSalesAgent(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        Gson gson = new Gson();
+        DashboardFilter filter;
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            lstData = logic.loadVentasA1426Agente(filter);
+
+            map.put("success", true);
+            map.put("data", lstData);
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "loadDetAlliances")
+    public @ResponseBody
+    String loadDetAlliances(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX109SQP01518(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    // ******************* GDS *******************************************
+    //******************** GDS *******************************************
+    @RequestMapping(value = "loadGDS")
+    public @ResponseBody
+    String loadGDS(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX109SQP01504(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("lstData", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "loadDetGDS")
+    public @ResponseBody
+    String loadDetGDS(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX109SQP01505(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "loadDetGDSAgte")
+    public @ResponseBody
+    String loadDetGDSAgte(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            /*paginacion*/
+            int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
+            filter.page.TOTPAG = -1;
+            filter.page.TOTROW = -1;
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            } else {
+                filter.page.PAGROW = limit;
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            }
+            /*paginacion*/
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX109SQP01538(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+                map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "loadDetGDSTkt")
+    public @ResponseBody
+    String loadDetGDSTkt(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<A720Filter> lstData;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            /*paginacion*/
+            int limit = (request.getParameter("limit") == null || Boolean.parseBoolean(request.getParameter("dw_excel"))) ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = (request.getParameter("start") == null) ? 0 : Integer.parseInt(request.getParameter("start").toString());
+            filter.page.TOTPAG = -1;
+            filter.page.TOTROW = -1;
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            } else {
+                filter.page.PAGROW = limit;
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            }
+            /*paginacion*/
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadPX109SQP01539(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+                map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    // ******************* Compare *******************************************
+    @RequestMapping(value = "loadCompareSale")
+    public @ResponseBody
+    String loadCompareSale(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Dashboard01 : loadCompareSale-------------");
+        HashMap hm = null;
+
+        map.put("success", true);
+        hm = this.getListCompareSale(request, false);
+
+        map.put("data", hm.get("lst1"));
+        map.put("lst2", hm.get("lst2"));
+        map.put("lst3", hm.get("lst3"));
+
+        return new Gson().toJson(map);
+    }
+
+    public HashMap getListCompareSale(HttpServletRequest request, Boolean bExcel) {
+
+        List<DashboardFilter> lst = new ArrayList<>(0);
+        DashboardFilter filter = new DashboardFilter();
+        Gson gson = new Gson();
+        String beanString = "";
+        HashMap hm = null;
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            hm = logic.loadPX109SQP01571(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return hm;
+    }
+
+    // ******************* Compare day *******************************************
+    @RequestMapping(value = "loadCompareSaleDay")
+    public @ResponseBody
+    String loadCompareSaleDay(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Dashboard01 : loadCompareSaleDay-------------");
+        HashMap hm = null;
+
+        map.put("success", true);
+        hm = this.getListCompareSaleDay(request, false);
+
+        map.put("data", hm.get("lst1"));
+        map.put("lst2", hm.get("lst2"));
+        map.put("lst3", hm.get("lst3"));
+        map.put("lst4", hm.get("lst4"));
+
+        return new Gson().toJson(map);
+    }
+
+    public HashMap getListCompareSaleDay(HttpServletRequest request, Boolean bExcel) {
+
+        List<DashboardFilter> lst = new ArrayList<>(0);
+        DashboardFilter filter = new DashboardFilter();
+        Gson gson = new Gson();
+        String beanString = "";
+        HashMap hm = null;
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            hm = logic.loadPX109SQP03478(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return hm;
     }
 
     /**
