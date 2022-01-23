@@ -1316,10 +1316,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     click_detFareType_colHandler: function (param, metaData, rowNum, colNum, obj2, rowData) {
         this.beanFareType = rowData.data;
         this.paramsFareType.beanString = JSON.stringify(this.beanFareType);
-
-        this.loadDetTypeFare();
+        console.log(this.beanFareType);
+        var zona = this.beanFareType.ZONA
+        var zonaDesc = this.beanFareType.strDescriptionZone
+        this.loadDetTypeFare(zona, zonaDesc);
     },
-    loadDetTypeFare: function () {
+    loadDetTypeFare: function (zona, zonaDesc) {
 
         this.showGrid('-BoxDetFare');
         win.lblUser_toolTip("Estructura: IMF097");
@@ -1340,7 +1342,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                     } else {
                         console.log(obj.data);
                         var Objtemp = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-titDetFare').setText('Fare Type : ' + Objtemp.strDescription1);
+                        if (Objtemp.strDescription1 === '') {
+                            Ext.getCmp(prototype.id + '-titDetFare').setText('ZONE : ' + zona + ' - ' + zonaDesc);
+                        } else {
+                            Ext.getCmp(prototype.id + '-titDetFare').setText('Fare Type : ' + Objtemp.strDescription1);
+                        }
+                        
                         
                         // -------------------------------------  GRAFICO -----------------------------------------------------------
                         meCompare.dataFareType_chart = Ext.clone(obj.data);
@@ -1397,7 +1404,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
     },
     onChangeTopFareType: function (obj, value, cmp, strFunc) {
-
+        console.log(meCompare.dataFareType_chart);
+        console.log(meCompare);        
         var data = meCompare.dataFareType_chart.items;
         var lstDataEdit = [];
 
