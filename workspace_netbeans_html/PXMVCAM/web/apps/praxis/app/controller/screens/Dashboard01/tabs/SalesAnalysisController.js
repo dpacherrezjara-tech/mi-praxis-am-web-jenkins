@@ -11,6 +11,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     beanCountryCity: {},
     beanAgent: {},
     paramsCountryCity: {},
+    beanFareType: {},
+    beanFareTypeZone: {},
+    paramsFareType: {},
+    paramsFareTypeZone: {},
     paramsAgent: {},
     beanGDSDet: {},
     beanGDSDetAg: {},
@@ -158,6 +162,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             case "8"://Totals By Cabin
                 GROUPBY = 'CABIN';
                 this.loadCabin();
+                break;
+            case "10"://Fare Type
+                GROUPBY = 'FARE';
+                this.loadFareType();
                 break;
             case "11"://Route type
                 GROUPBY = 'ROUT';
@@ -749,13 +757,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 titulo = 'Econnomy/Coach Class ' + titulo;
                 break;
         }
-        
+
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
             bean: me.bean
         };
-        
+
         this.loadDetailCabin(titulo);
     },
     loadDetailCabin: function (titulo) {
@@ -763,7 +771,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         me.panelActual = '-BoxDetCabin';
         this.showGrid('-BoxDetCabin');
         this.hidePagination_clickHandler();
-        
+
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/loadDetailCabin'
@@ -772,13 +780,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                     Ext.getBody().mask('Loading...');
                     obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
                 },
-                load: function (obj) {                    
+                load: function (obj) {
                     Ext.getBody().unmask('Loading...');
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
                     } else {
                         var data = obj.data.items[0].data;
-                        console.log(data);                        
+                        console.log(data);
                         Ext.getCmp(prototype.id + '-ADG_GridDetCabin').setTitle('<center style="font-size:12px;">' + titulo + '</center>');
                     }
 //                    mePie.setWidthPie();
@@ -1183,6 +1191,198 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         this.showPagination_clickHandler();
         Ext.getCmp(prototype.id + '-pagginGDStkt').bindStore(storeGridDatas);
+    },
+    /* ======================= FARE TYPE ====================================*/
+    loadFareType: function () {
+        var rbg_FareType = Ext.getCmp(prototype.id + '-radiogroupType_ft').getValue().rbgType_ft;
+        me.panelActual = '-BoxFare';
+        this.showGrid('-BoxFare');
+        switch (rbg_FareType) {
+            case 'S':
+                Ext.getCmp(prototype.id + '-BoxFareSource').show();
+                Ext.getCmp(prototype.id + '-BoxFareCabin').hide();
+                Ext.getCmp(prototype.id + '-BoxFareZona').hide();
+                this.loadFareTypeSource();
+                break;
+            case 'C':
+                Ext.getCmp(prototype.id + '-BoxFareSource').hide();
+                Ext.getCmp(prototype.id + '-BoxFareCabin').show();
+                Ext.getCmp(prototype.id + '-BoxFareZona').hide();
+                this.loadFareTypeCabin();
+                break;
+            case 'Z':
+                Ext.getCmp(prototype.id + '-BoxFareSource').hide();
+                Ext.getCmp(prototype.id + '-BoxFareCabin').hide();
+                Ext.getCmp(prototype.id + '-BoxFareZona').show();
+                this.loadFareTypeZona();
+                break;
+        }
+    },
+    rbChangeType_ft: function () {
+        this.inicio();
+    },
+    loadFareTypeSource: function () {
+        win.lblUser_toolTip("Estructura: IMF097");
+
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/loadTypeFare'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+                    Ext.getBody().unmask('Loading...');
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+
+                    }
+//                    mePie.setWidthPie();
+                }
+            }
+        });
+
+        Ext.getCmp(prototype.id + '-ADG_GridFareSource').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-ADG_GridFareSource').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-ChartFareType').bindStore(storeGridDatas);
+    },
+    loadFareTypeCabin: function () {
+        win.lblUser_toolTip("Estructura: IMF097");
+
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/loadTypeFareCabin'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+                    Ext.getBody().unmask('Loading...');
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+
+                    }
+//                    mePie.setWidthPie();
+                }
+            }
+        });
+
+        Ext.getCmp(prototype.id + '-ADG_GridFareCabin').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-ADG_GridFareCabin').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-ChartFareTypeCabin').bindStore(storeGridDatas);
+    },
+    loadFareTypeZona: function () {
+        win.lblUser_toolTip("Estructura: IMF097");
+
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/loadTypeFareZone'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+                    Ext.getBody().unmask('Loading...');
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+
+                    }
+//                    mePie.setWidthPie();
+                }
+            }
+        });
+
+        Ext.getCmp(prototype.id + '-ADG_GridFareZona').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-ADG_GridFareZona').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-ChartFareTypeZona').bindStore(storeGridDatas);
+    },
+    click_detFareType_colHandler: function (param, metaData, rowNum, colNum, obj2, rowData) {
+        this.beanFareType = rowData.data;
+        this.paramsFareType.beanString = JSON.stringify(this.beanFareType);
+
+        this.loadDetTypeFare();
+    },
+    loadDetTypeFare: function () {
+
+        this.showGrid('-BoxDetFare');
+        win.lblUser_toolTip("Estructura: IMF097");
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/loadDetTypeFare'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = meCompare.paramsFareType;
+                },
+                load: function (obj) {
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log(obj.data);
+                        var Objtemp = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-titDetFare').setText('Fare Type : ' + Objtemp.strDescription1);
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetFare').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
+    },
+    click_detFareZone_colHandler: function (param, metaData, rowNum, colNum, obj2, rowData) {
+
+        this.beanFareTypeZone = rowData.data;
+        this.paramsFareTypeZone.beanString = JSON.stringify(this.beanFareTypeZone);
+
+//        this.loadDetTypeFareZona();
+    },
+    loadDetTypeFareZona: function (data) {
+
+        this.showGrid('-BoxDetFare');
+        win.lblUser_toolTip("Estructura: IMF097");
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.interline.GridData', {
+            proxy: {
+                url: prototype.url + '/loadDetTypeFareZona'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = meCompare.paramsFareTypeZone;
+                },
+                load: function (obj) {
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log(obj.data);
+                        var Objtemp = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-titDetFare').setText('Zone : ' + Objtemp.strDescriptionZone);
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetFare').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
     },
     /* ======================= ALLIANCES ====================================*/
     click_detailAlliances_colHandler: function (column, e, row, column, x, rowData) {
