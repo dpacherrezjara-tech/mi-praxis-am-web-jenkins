@@ -2692,33 +2692,666 @@ public class Dashboard01DAO {
         return lstRtn;
     }
 
-    public void setClose(ResultSet rs, CallableStatement cstmt, Connection cnx) {
+    // ===================================== FARE TYPE ========================================================================
+    public List<DashboardFilter> loadPX109SQP01523(DashboardFilter filter) throws SQLException, Exception {
+
+        List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn;
+        int QTKTS = 0, QCPNS = 0, BSP_CPN = 0, ARC_CPN = 0, ASR_CPN = 0;
+        long QKMS = 0;
+        double AMOUNT = 0, BSP_AMT = 0, ARC_AMT = 0, ASR_AMT = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01523(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
 
         try {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DSALES);
+            cstmt01.setString(3, filter.IN_FECHA_FROM);
+            cstmt01.setString(4, filter.IN_FECHA_TO);
+            cstmt01.setString(5, filter.IN_PAIS);
+            cstmt01.setString(6, filter.ALLIC);
+            cstmt01.setString(7, filter.TYPE);
+            cstmt01.setString(8, filter.COUNTRY);//Country o CITY    
+
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTKTS = rs01.getInt("QTKTS");
+                AMOUNT = rs01.getDouble("AMOUNT");
+                QCPNS = rs01.getInt("QCPNS");
+                QKMS = rs01.getLong("QKMS");//KMS
+
+                BSP_CPN = rs01.getInt("BSP_CPN");
+                ARC_CPN = rs01.getInt("ARC_CPN");
+                ASR_CPN = rs01.getInt("ASR_CPN");
+                BSP_AMT = rs01.getDouble("BSP_AMT");
+                ARC_AMT = rs01.getDouble("ARC_AMT");
+                ASR_AMT = rs01.getDouble("ASR_AMT");
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new DashboardFilter();
+                    /*DSALES,QTKTS,QCPNS,AMOUNT*/
+                    objRtn.DSALES = filter.DSALES;
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAIS = filter.IN_PAIS;
+                    objRtn.ALLIC = filter.ALLIC;
+                    objRtn.COUNTRY = filter.COUNTRY;
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.TYPE = rs01.getString("TTARIF");
+                    objRtn.strDescription = rs01.getString("DES_TYPEFARE");
+                    //objRtn.strDescription1 = rs01.getString("TRIPTYPE");
+                    objRtn.CUPONS = rs01.getInt("QCPNS");
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.AVG = (objRtn.CUPONS > 0) ? (objRtn.AMOUNT / objRtn.CUPONS) : 0;
+                    objRtn.QCPNSF = rs01.getInt("QTKTS");
+                    objRtn.CUPONS_PERCENT = (QCPNS > 0) ? ((objRtn.CUPONS * 100.00) / QCPNS) : 0;
+                    objRtn.AMOUNT_PERCENT = (AMOUNT > 0) ? ((objRtn.AMOUNT * 100) / AMOUNT) : 0;
+                    objRtn.CUPONS_PERCENTF = (QTKTS > 0) ? ((objRtn.QCPNSF * 100.00) / QTKTS) : 0;
+
+                    objRtn.CUPONS_BSP = rs01.getInt("BSP_CPN");
+                    objRtn.CUPONS_ARC = rs01.getInt("ARC_CPN");
+                    objRtn.CUPONS_ASR = rs01.getInt("ASR_CPN");
+                    objRtn.AMOUNT_BSP = rs01.getDouble("BSP_AMT");
+                    objRtn.AMOUNT_ARC = rs01.getDouble("ARC_AMT");
+                    objRtn.AMOUNT_ASR = rs01.getDouble("ASR_AMT");
+
+                    //AVG
+                    objRtn.KM = rs01.getLong("QKMS");//KMS
+                    objRtn.AVG_PMP = (objRtn.KM > 0) ? (objRtn.AMOUNT / objRtn.KM) : 0;
+
+                    //Totales
+                    objRtn.TOTAL_CUPONSF = QTKTS;//TKT
+                    objRtn.TOTAL_CUPONS = QCPNS;
+                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                    objRtn.totCUPONS_BSP = BSP_CPN;
+                    objRtn.totCUPONS_ARC = ARC_CPN;
+                    objRtn.totCUPONS_ASR = ASR_CPN;
+                    objRtn.totAMOUNT_BSP = BSP_AMT;
+                    objRtn.totAMOUNT_ARC = ARC_AMT;
+                    objRtn.totAMOUNT_ASR = ASR_AMT;
+
+                    //kms
+                    objRtn.totKM = QKMS;
+                    objRtn.totAVG = (objRtn.TOTAL_CUPONS > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.TOTAL_CUPONS) : 0;
+                    objRtn.totAVG1 = (objRtn.totKM > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.totKM) : 0;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lstRtn.add(objRtn);
                 }
             }
-            if (cstmt != null) {
-                try {
-                    cstmt.close();
-                } catch (SQLException e) {
-                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
             }
-            if (cnx != null) {
-                session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
-            } else {
-                session.getCNXIBMDB2().close();
+            if (cstmt01 != null) {
+                cstmt01.close();
             }
             pasarGarbageCollector();
-        } catch (Exception e) {
-
+            session.getCNXIBMDB2().close();
         }
 
+        return lstRtn;
+    }
+
+    public List<DashboardFilter> loadPX109SQP01533(DashboardFilter filter) throws SQLException, Exception {
+
+        List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn;
+        int QTKTS = 0, QCPNS = 0, CUPON_F = 0, CUPON_J = 0, CUPON_Y = 0;
+        long QKMS = 0;
+        double AMOUNT = 0, AMOUNT_F = 0, AMOUNT_J = 0, AMOUNT_Y = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01533(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+
+        try {
+
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DSALES);
+            cstmt01.setString(3, filter.IN_FECHA_FROM);
+            cstmt01.setString(4, filter.IN_FECHA_TO);
+            cstmt01.setString(5, filter.IN_PAIS);
+            cstmt01.setString(6, filter.ALLIC);
+            cstmt01.setString(7, filter.TYPE);
+            cstmt01.setString(8, filter.COUNTRY);//Country o CITY    
+
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTKTS = rs01.getInt("QTKTS");
+                AMOUNT = rs01.getDouble("AMOUNT");
+                QCPNS = rs01.getInt("QCPNS");
+                QKMS = rs01.getLong("QKMS");//KMS
+
+                CUPON_F = rs01.getInt("CUPON_F");
+                CUPON_J = rs01.getInt("CUPON_J");
+                CUPON_Y = rs01.getInt("CUPON_Y");
+                AMOUNT_F = rs01.getDouble("AMOUNT_F");
+                AMOUNT_J = rs01.getDouble("AMOUNT_J");
+                AMOUNT_Y = rs01.getDouble("AMOUNT_Y");
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new DashboardFilter();
+                    /*DSALES,QTKTS,QCPNS,AMOUNT*/
+                    objRtn.DSALES = filter.DSALES;
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAIS = filter.IN_PAIS;
+                    objRtn.ALLIC = filter.ALLIC;
+                    objRtn.COUNTRY = filter.COUNTRY;
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.TYPE = rs01.getString("TTARIF");
+                    objRtn.strDescription = rs01.getString("DES_TYPEFARE");
+                    //objRtn.strDescription1 = rs01.getString("TRIPTYPE");
+                    objRtn.CUPONS = rs01.getInt("QCPNS");
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.AVG = (objRtn.CUPONS > 0) ? (objRtn.AMOUNT / objRtn.CUPONS) : 0;
+                    objRtn.QCPNSF = rs01.getInt("QTKTS");
+                    objRtn.CUPONS_PERCENT = (QCPNS > 0) ? ((objRtn.CUPONS * 100.00) / QCPNS) : 0;
+                    objRtn.AMOUNT_PERCENT = (AMOUNT > 0) ? ((objRtn.AMOUNT * 100) / AMOUNT) : 0;
+                    objRtn.CUPONS_PERCENTF = (QTKTS > 0) ? ((objRtn.QCPNSF * 100.00) / QTKTS) : 0;
+
+                    objRtn.CUPON_F = rs01.getInt("CUPON_F");
+                    objRtn.CUPON_J = rs01.getInt("CUPON_J");
+                    objRtn.CUPON_Y = rs01.getInt("CUPON_Y");
+                    objRtn.AMOUNT_F = rs01.getDouble("AMOUNT_F");
+                    objRtn.AMOUNT_J = rs01.getDouble("AMOUNT_J");
+                    objRtn.AMOUNT_Y = rs01.getDouble("AMOUNT_Y");
+
+                    //AVG
+                    objRtn.KM = rs01.getLong("QKMS");//KMS
+                    objRtn.AVG_PMP = (objRtn.KM > 0) ? (objRtn.AMOUNT / objRtn.KM) : 0;
+
+                    //Totales
+                    objRtn.TOTAL_CUPONSF = QTKTS;//TKT
+                    objRtn.TOTAL_CUPONS = QCPNS;
+                    objRtn.TOTAL_AMOUNT = AMOUNT;
+
+                    objRtn.TOTCUPON_F = CUPON_F;
+                    objRtn.TOTCUPON_J = CUPON_J;
+                    objRtn.TOTCUPON_Y = CUPON_Y;
+                    objRtn.TOTAMOUNT_F = AMOUNT_F;
+                    objRtn.TOTAMOUNT_J = AMOUNT_J;
+                    objRtn.TOTAMOUNT_Y = AMOUNT_Y;
+
+                    //kms
+                    objRtn.totKM = QKMS;
+                    objRtn.totAVG = (objRtn.TOTAL_CUPONS > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.TOTAL_CUPONS) : 0;
+                    objRtn.totAVG1 = (objRtn.totKM > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.totKM) : 0;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return lstRtn;
+    }
+
+    public List<DashboardFilter> loadPX109SQP01982(DashboardFilter filter) throws SQLException, Exception {
+
+        List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn;
+        int QTKTS = 0, QCPNS = 0, CUPON_F = 0, CUPON_J = 0, CUPON_Y = 0, QTKTS0 = 0, QCPNS0 = 0;
+        long QKMS = 0;
+        double AMOUNT = 0, AMOUNT_F = 0, AMOUNT_J = 0, AMOUNT_Y = 0, AMOUNT0 = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        HashMap resultado = new HashMap();
+        HashMap hm = new HashMap();
+        hm.put("ASI", "ASIA");
+        hm.put("CAN", "CANADA");
+        hm.put("CAR", "CARIBE");
+        hm.put("CAM", "CENTROAMERICA");
+        hm.put("USA", "ESTADOS UNIDOS");
+        hm.put("EUR", "EUROPA");
+        hm.put("FRO", "FRONTERA");
+        hm.put("LOC", "LOCAL");
+        hm.put("PLA", "PLAYA");
+        hm.put("SUD", "SUDAMERICA");
+        hm.put("OCE", "OCEANIA");
+        hm.put("AFR", "AFRICA");
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01982(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+
+        try {
+
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DSALES);
+            cstmt01.setString(3, filter.IN_FECHA_FROM);
+            cstmt01.setString(4, filter.IN_FECHA_TO);
+            cstmt01.setString(5, filter.IN_PAIS);
+            cstmt01.setString(6, filter.ALLIC);
+            cstmt01.setString(7, filter.TYPE);
+            cstmt01.setString(8, filter.COUNTRY);//Country o CITY    
+
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTKTS = rs01.getInt("QTKTS");
+                AMOUNT = rs01.getDouble("AMOUNT");
+                QCPNS = rs01.getInt("QCPNS");
+                QKMS = rs01.getLong("QKMS");//KMS
+                AMOUNT0 = rs01.getDouble("AMOUNT0");
+                QCPNS0 = rs01.getInt("QCPNS0");
+
+                CUPON_F = rs01.getInt("CUPON_F");
+                CUPON_J = rs01.getInt("CUPON_J");
+                CUPON_Y = rs01.getInt("CUPON_Y");
+                AMOUNT_F = rs01.getDouble("AMOUNT_F");
+                AMOUNT_J = rs01.getDouble("AMOUNT_J");
+                AMOUNT_Y = rs01.getDouble("AMOUNT_Y");
+            }
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new DashboardFilter();
+                    /*DSALES,QTKTS,QCPNS,AMOUNT*/
+                    objRtn.DSALES = filter.DSALES;
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAIS = filter.IN_PAIS;
+                    objRtn.ALLIC = filter.ALLIC;
+                    objRtn.COUNTRY = filter.COUNTRY;
+                    objRtn.TYPE = filter.TYPE;
+
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.ZONA = rs01.getString("ZONA");
+                    if (hm.containsKey(rs01.getString("ZONA").trim().toUpperCase())) {
+                        objRtn.strDescriptionZone = hm.get(rs01.getString("ZONA").trim()).toString();
+                    }
+                    // objRtn.strDescriptionZone = rs01.getString("DESC_ZONA").trim();
+                    //objRtn.strDescription1 = rs01.getString("TRIPTYPE");
+                    objRtn.CUPONS = rs01.getInt("QCPNS");
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.QCPNS0 = rs01.getInt("QCPNS0");
+                    objRtn.AMOUNT0 = rs01.getDouble("AMOUNT0");
+                    objRtn.AVG = (objRtn.CUPONS > 0) ? (objRtn.AMOUNT / objRtn.CUPONS) : 0;
+                    objRtn.QCPNSF = rs01.getInt("QTKTS");
+                    objRtn.CUPONS_PERCENT = (QCPNS > 0) ? ((objRtn.CUPONS * 100.00) / QCPNS) : 0;
+                    objRtn.AMOUNT_PERCENT = (AMOUNT > 0) ? ((objRtn.AMOUNT * 100) / AMOUNT) : 0;
+                    objRtn.CUPONS_PERCENTF = (QTKTS > 0) ? ((objRtn.QCPNSF * 100.00) / QTKTS) : 0;
+
+                    objRtn.CUPON_F = rs01.getInt("CUPON_F");
+                    objRtn.CUPON_J = rs01.getInt("CUPON_J");
+                    objRtn.CUPON_Y = rs01.getInt("CUPON_Y");
+                    objRtn.AMOUNT_F = rs01.getDouble("AMOUNT_F");
+                    objRtn.AMOUNT_J = rs01.getDouble("AMOUNT_J");
+                    objRtn.AMOUNT_Y = rs01.getDouble("AMOUNT_Y");
+
+                    //AVG
+                    objRtn.KM = rs01.getLong("QKMS");//KMS
+                    objRtn.AVG_PMP = (objRtn.KM > 0) ? (objRtn.AMOUNT / objRtn.KM) : 0;
+
+                    //Totales
+                    objRtn.TOTAL_CUPONSF = QTKTS;//TKT
+                    objRtn.TOTAL_CUPONS = QCPNS;
+                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                    objRtn.totQCPNS0 = QCPNS0;
+                    objRtn.totAMOUNT0 = AMOUNT0;
+
+                    objRtn.TOTCUPON_F = CUPON_F;
+                    objRtn.TOTCUPON_J = CUPON_J;
+                    objRtn.TOTCUPON_Y = CUPON_Y;
+                    objRtn.TOTAMOUNT_F = AMOUNT_F;
+                    objRtn.TOTAMOUNT_J = AMOUNT_J;
+                    objRtn.TOTAMOUNT_Y = AMOUNT_Y;
+
+                    //kms
+                    objRtn.totKM = QKMS;
+                    objRtn.totAVG = (objRtn.TOTAL_CUPONS > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.TOTAL_CUPONS) : 0;
+                    objRtn.totAVG1 = (objRtn.totKM > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.totKM) : 0;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return lstRtn;
+    }
+    
+    public List<DashboardFilter> loadPX109SQP01526(DashboardFilter filter) throws SQLException, Exception {
+
+        List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn;
+        int QTKTS = 0, QCPNS = 0;
+        long QKMS = 0;
+        double AMOUNT = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01526(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+
+        try {
+
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DSALES);
+            cstmt01.setString(3, filter.IN_FECHA_FROM);
+            cstmt01.setString(4, filter.IN_FECHA_TO);
+            cstmt01.setString(5, filter.IN_PAIS);
+            cstmt01.setString(6, filter.TYPE);
+            cstmt01.setString(7, "");
+            cstmt01.setString(8, "");//Country o CITY
+
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTKTS = rs01.getInt("QTKTS");
+                AMOUNT = rs01.getDouble("AMOUNT");
+                QCPNS = rs01.getInt("QCPNS");
+                QKMS = rs01.getLong("QKMS");//KMS
+            }
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new DashboardFilter();
+                    objRtn.DSALES = filter.DSALES;
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAIS = filter.IN_PAIS;
+                    objRtn.ALLIC = filter.ALLIC;
+                    objRtn.COUNTRY = filter.COUNTRY;
+                    objRtn.TYPE = filter.TYPE;
+                    objRtn.strDescription1 = filter.strDescription;
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.CITYO = rs01.getString("ORIGEN");
+                    objRtn.CITYD = rs01.getString("DESTINO");
+                    //objRtn.strDescription = rs01.getString("RUTAODV");
+                    //objRtn.strDescription = Functions.getStringWithSeparator(rs01.getString("RUTAODV"),"-",3);
+
+                    objRtn.CUPONS = rs01.getInt("QCPNS");
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.AVG = (objRtn.CUPONS > 0) ? (objRtn.AMOUNT / objRtn.CUPONS) : 0;
+                    objRtn.QCPNSF = rs01.getInt("QTKTS");
+                    objRtn.CUPONS_PERCENT = (QCPNS > 0) ? ((objRtn.CUPONS * 100.00) / QCPNS) : 0;
+                    objRtn.AMOUNT_PERCENT = (AMOUNT > 0) ? ((objRtn.AMOUNT * 100) / AMOUNT) : 0;
+                    objRtn.CUPONS_PERCENTF = (QTKTS > 0) ? ((objRtn.QCPNSF * 100.00) / QTKTS) : 0;
+                    //AVG
+                    objRtn.KM = rs01.getLong("QKMS");//KMS
+                    objRtn.AVG_PMP = (objRtn.KM > 0) ? (objRtn.AMOUNT / objRtn.KM) : 0;
+
+                    //Totales
+                    objRtn.TOTAL_CUPONS = QCPNS;
+                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                    objRtn.TOTAL_CUPONSF = QTKTS;
+                    //kms
+                    objRtn.totKM = QKMS;
+                    objRtn.totAVG = (objRtn.TOTAL_CUPONS > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.TOTAL_CUPONS) : 0;
+                    objRtn.totAVG1 = (objRtn.totKM > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.totKM) : 0;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return lstRtn;
+    }
+    
+    public List<DashboardFilter> loadPX109SQP01983(DashboardFilter filter) throws SQLException, Exception {
+
+        List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
+        DashboardFilter objRtn;
+        int QTKTS = 0, QCPNS = 0;
+        long QKMS = 0;
+        double AMOUNT = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01983(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+
+        try {
+
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DSALES);
+            cstmt01.setString(3, filter.IN_FECHA_FROM);
+            cstmt01.setString(4, filter.IN_FECHA_TO);
+            cstmt01.setString(5, filter.IN_PAIS);
+            cstmt01.setString(6, filter.TYPE);
+            cstmt01.setString(7, "");
+            cstmt01.setString(8, "");//Country o CITY
+            cstmt01.setString(9, filter.ZONA.trim());
+
+            cstmt01.setInt(10, filter.page.PAGNUM);
+            cstmt01.setInt(11, filter.page.PAGROW);
+            cstmt01.setInt(12, filter.page.TOTPAG);
+            cstmt01.setInt(13, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(10);
+            filter.page.PAGROW = cstmt01.getInt(11);
+            filter.page.TOTPAG = cstmt01.getInt(12);
+            filter.page.TOTROW = cstmt01.getInt(13);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTKTS = rs01.getInt("QTKTS");
+                AMOUNT = rs01.getDouble("AMOUNT");
+                QCPNS = rs01.getInt("QCPNS");
+                QKMS = rs01.getLong("QKMS");//KMS
+            }
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new DashboardFilter();
+                    objRtn.DSALES = filter.DSALES;
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_PAIS = filter.IN_PAIS;
+                    objRtn.ALLIC = filter.ALLIC;
+                    objRtn.COUNTRY = filter.COUNTRY;
+                    objRtn.TYPE = filter.TYPE;
+                    objRtn.ZONA = filter.ZONA;
+                    objRtn.strDescriptionZone = filter.strDescriptionZone.trim();
+                    objRtn.RN = rs01.getLong("RN");
+                    objRtn.CITYO = rs01.getString("ORIGEN");
+                    objRtn.CITYD = rs01.getString("DESTINO");
+                    //objRtn.strDescription = rs01.getString("RUTAODV");
+                    //objRtn.strDescription = Functions.getStringWithSeparator(rs01.getString("RUTAODV"),"-",3);
+
+                    objRtn.CUPONS = rs01.getInt("QCPNS");
+                    objRtn.AMOUNT = rs01.getDouble("AMOUNT");
+                    objRtn.AVG = (objRtn.CUPONS > 0) ? (objRtn.AMOUNT / objRtn.CUPONS) : 0;
+                    objRtn.QCPNSF = rs01.getInt("QTKTS");
+                    objRtn.CUPONS_PERCENT = (QCPNS > 0) ? ((objRtn.CUPONS * 100.00) / QCPNS) : 0;
+                    objRtn.AMOUNT_PERCENT = (AMOUNT > 0) ? ((objRtn.AMOUNT * 100) / AMOUNT) : 0;
+                    objRtn.CUPONS_PERCENTF = (QTKTS > 0) ? ((objRtn.QCPNSF * 100.00) / QTKTS) : 0;
+                    //AVG
+                    objRtn.KM = rs01.getLong("QKMS");//KMS
+                    objRtn.AVG_PMP = (objRtn.KM > 0) ? (objRtn.AMOUNT / objRtn.KM) : 0;
+
+                    //Totales
+                    objRtn.TOTAL_CUPONS = QCPNS;
+                    objRtn.TOTAL_AMOUNT = AMOUNT;
+                    objRtn.TOTAL_CUPONSF = QTKTS;
+                    //kms
+                    objRtn.totKM = QKMS;
+                    objRtn.totAVG = (objRtn.TOTAL_CUPONS > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.TOTAL_CUPONS) : 0;
+                    objRtn.totAVG1 = (objRtn.totKM > 0) ? (objRtn.TOTAL_AMOUNT / objRtn.totKM) : 0;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return lstRtn;
     }
 
     /**
@@ -3917,5 +4550,34 @@ public class Dashboard01DAO {
         }
 
         return listado;
+    }
+
+    public void setClose(ResultSet rs, CallableStatement cstmt, Connection cnx) {
+
+        try {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cnx != null) {
+                session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            } else {
+                session.getCNXIBMDB2().close();
+            }
+            pasarGarbageCollector();
+        } catch (Exception e) {
+
+        }
+
     }
 }

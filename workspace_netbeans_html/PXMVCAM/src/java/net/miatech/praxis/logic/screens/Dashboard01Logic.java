@@ -126,6 +126,28 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX109SQP01519_CHART(filter);
     }
 
+// ===================================== FARE TYPE ========================================================================
+    
+    public List<DashboardFilter> loadPX109SQP01523(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01523(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01533(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01533(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01982(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01982(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01526(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01526(filter);
+    }
+    
+    public List<DashboardFilter> loadPX109SQP01983(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01983(filter);
+    }
+
     /**
      * **********************Charts*****************************************
      */

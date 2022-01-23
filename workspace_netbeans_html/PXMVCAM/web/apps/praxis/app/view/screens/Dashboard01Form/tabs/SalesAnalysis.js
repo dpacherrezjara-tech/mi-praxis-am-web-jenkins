@@ -2800,9 +2800,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                     },
                                     interactions: ['itemhighlight'],
                                     /*legend: {
-                                        docked: 'bottom',
-                                        background: '#E3EAEF'
-                                    },*/
+                                     docked: 'bottom',
+                                     background: '#E3EAEF'
+                                     },*/
                                     axes: [
                                         {
                                             type: 'numeric3d',
@@ -2811,7 +2811,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                             grid: true,
                                             title: '',
                                             renderer: function (obj, value) {
-                                                value = value/1000;
+                                                value = value / 1000;
                                                 return ' ' + Ext.util.Format.number((value), '0') + 'k';
                                             }
                                         },
@@ -2922,7 +2922,601 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                         },
                     ]
                 },
-// )========================================================= ALLIANCES =============================================
+// ========================================================= Fare Type =============================================
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxFare',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    hidden: true,
+                    border: true,
+//                            height: 'auto',
+                    width: 1025,
+                    margin: '0 0 0 0 ',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+//                            height: 'auto',
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'hbox',
+                                align: 'left'
+                            },
+                            items: [
+                                //RADIO BUTTON DE OPCIONES
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+//                            height: 'auto',
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'hbox',
+                                align: 'left'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareSource',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-ADG_GridFareSource',
+                                            padding: '5px 0px 0px 0px',
+                                            width: 915,
+                                            //height: 338,
+                                            columnLines: true,
+                                            features: [
+                                                {
+                                                    ftype: 'summary',
+                                                    dock: 'bottom'
+                                                }
+                                            ],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Fare',
+                                                        columns: [
+                                                            {
+                                                                text: 'Type', dataIndex: 'strDescription', width: 90,
+                                                                listeners: {
+                                                                    click: 'click_detFareType_colHandler'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "font-weight:bold;text-align:left;";
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: '%', dataIndex: 'CUPONS_PERCENT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: '%', dataIndex: 'AMOUNT_PERCENT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'AVG', dataIndex: 'AVG', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'ASR',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_ASR', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_ASR', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'BSP',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_BSP', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_BSP', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'ARC',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_ARC', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_ARC', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareCabin',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-ADG_GridFareCabin',
+                                            padding: '5px 0px 0px 0px',
+                                            width: 915,
+                                            //height: 338,
+                                            columnLines: true,
+                                            features: [
+                                                {
+                                                    ftype: 'summary',
+                                                    dock: 'bottom'
+                                                }
+                                            ],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Fare',
+                                                        columns: [
+                                                            {
+                                                                text: 'Type', dataIndex: 'strDescription', width: 90,
+                                                                listeners: {
+                                                                    click: 'click_detFareType_colHandler'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "font-weight:bold;text-align:left;";
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: '%', dataIndex: 'CUPONS_PERCENT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: '%', dataIndex: 'AMOUNT_PERCENT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'AVG', dataIndex: 'AVG', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'First OAL',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_F', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_F', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Business',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_J', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_J', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Economy',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_Y', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_Y', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareZona',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-ADG_GridFareZona',
+                                            padding: '5px 0px 0px 0px',
+                                            width: 915,
+                                            //height: 338,
+                                            columnLines: true,
+                                            features: [
+                                                {
+                                                    ftype: 'summary',
+                                                    dock: 'bottom'
+                                                }
+                                            ],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {
+                                                        text: 'Zone', dataIndex: 'ZONA', width: 90,
+                                                        listeners: {
+                                                            click: 'click_detFareType_colHandler'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "font-weight:bold;text-align:left;";
+                                                            return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                        }
+                                                    },
+                                                    {text: 'Total',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: '%', dataIndex: 'CUPONS_PERCENT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: '%', dataIndex: 'AMOUNT_PERCENT', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'AVG', dataIndex: 'AVG', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'First OAL',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_F', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_F', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Business',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_J', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_J', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Economy',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_Y', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_Y', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                    ]
+                                },
+                                {xtype: 'tbspacer', width: 15},
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareChart',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'polar',
+                                            //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-ChartFareType',
+                                            width: '100%',
+                                            border: true,
+//                                                margin: '0 0 0 5',
+                                            innerPadding: 60,
+                                            height: '100%',
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Routing Type - Amount',
+                                                    //                                                            fieldStyle: 'font-size:5px',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            //                                                    legend: {
+                                            //                                                        docked: 'bottom',
+                                            //               00                                         background: '#E3EAEF'
+                                            //                                                    },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'AMOUNT_PERCENT',
+                                                    colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
+                                                    label: {
+                                                        field: 'strDescription'
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            //                                                                    if (ctx.field === 'QMATCH') {
+                                                            //                                                                        label = 'Match';
+                                                            toolTip.setHtml(record.get('strDescription') + ' , ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT_PERCENT'), '0,000.00') + '%' + '</b>');
+                                                        }
+                                                    }
+                                                }]
+
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareChartZona',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'vbox',
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'polar',
+                                            //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-ChartFareTypeZona',
+                                            width: '100%',
+                                            border: true,
+//                                                margin: '0 0 0 5',
+                                            innerPadding: 60,
+                                            height: '100%',
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Routing Type - Amount',
+                                                    //                                                            fieldStyle: 'font-size:5px',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            //                                                    legend: {
+                                            //                                                        docked: 'bottom',
+                                            //               00                                         background: '#E3EAEF'
+                                            //                                                    },
+                                            series: [
+                                                {
+                                                    type: 'pie3d',
+                                                    angleField: 'AMOUNT_PERCENT',
+                                                    colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
+                                                    label: {
+                                                        field: 'strDescription'
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            //                                                                    if (ctx.field === 'QMATCH') {
+                                                            //                                                                        label = 'Match';
+                                                            toolTip.setHtml(record.get('strDescription') + ' , ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT_PERCENT'), '0,000.00') + '%' + '</b>');
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                            ]
+                        },
+                    ]
+                },
+// ========================================================= ALLIANCES =============================================
                 {
                     xtype: 'panel',
                     id: prototype.id + '-BoxDetAlliances',
