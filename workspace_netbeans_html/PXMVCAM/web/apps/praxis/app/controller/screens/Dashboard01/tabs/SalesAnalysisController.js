@@ -25,6 +25,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     beanAllianceDetAgente: {},
     beanDetRoutingType: {},
     dataRoute_chart: [],
+    dataFareType_chart: [],
     meCompare: '',
     gridActual: '',
     panelActual: '',
@@ -1311,6 +1312,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-ADG_GridFareZona').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-ChartFareTypeZona').bindStore(storeGridDatas);
     },
+    
     click_detFareType_colHandler: function (param, metaData, rowNum, colNum, obj2, rowData) {
         this.beanFareType = rowData.data;
         this.paramsFareType.beanString = JSON.stringify(this.beanFareType);
@@ -1339,6 +1341,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                         console.log(obj.data);
                         var Objtemp = obj.data.items[0].data;
                         Ext.getCmp(prototype.id + '-titDetFare').setText('Fare Type : ' + Objtemp.strDescription1);
+                        
+                        // -------------------------------------  GRAFICO -----------------------------------------------------------
+                        meCompare.dataFareType_chart = Ext.clone(obj.data);
+                        meCompare.onChangeTopFareType('', 20, '', '');
+                        
                     }
                 }
             }
@@ -1352,7 +1359,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.beanFareTypeZone = rowData.data;
         this.paramsFareTypeZone.beanString = JSON.stringify(this.beanFareTypeZone);
 
-//        this.loadDetTypeFareZona();
+        this.loadDetTypeFareZona();
     },
     loadDetTypeFareZona: function (data) {
 
@@ -1376,6 +1383,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                         console.log(obj.data);
                         var Objtemp = obj.data.items[0].data;
                         Ext.getCmp(prototype.id + '-titDetFare').setText('Zone : ' + Objtemp.strDescriptionZone);
+                        
+                        // -------------------------------------  GRAFICO -----------------------------------------------------------
+                        meCompare.dataFareType_chart = Ext.clone(obj.data);
+                        meCompare.onChangeTopFareType('', 20, '', '');
+                        
                     }
                 }
             }
@@ -1384,6 +1396,31 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-gridDetFare').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
     },
+    onChangeTopFareType: function (obj, value, cmp, strFunc) {
+
+        var data = meCompare.dataFareType_chart.items;
+        var lstDataEdit = [];
+
+        for (var i = 0; i < data.length; i++) {
+            if (i < value) {
+                var AMOUNT = Ext.util.Format.number(data[i].data.AMOUNT, '0,000')
+                lstDataEdit.push({strDescription: data[i].data.CITYO + '-' + data[i].data.CITYD, AMOUNT: data[i].data.AMOUNT});
+            } else {
+                break;
+            }
+        }
+
+
+        console.log(lstDataEdit);
+        var storeChtSalesAnalysis36MSBC = Ext.create('Ext.data.Store', {
+            data: lstDataEdit,
+            autoLoad: true
+        });
+
+        Ext.getCmp(prototype.id + '-displaySAChart38').bindStore(storeChtSalesAnalysis36MSBC);
+
+    },
+    
     /* ======================= ALLIANCES ====================================*/
     click_detailAlliances_colHandler: function (column, e, row, column, x, rowData) {
 
@@ -1992,5 +2029,5 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         win.displayProMasterTicket(this, 'Dashboard1', beanProMasterTicket);
     }
-
+       
 });
