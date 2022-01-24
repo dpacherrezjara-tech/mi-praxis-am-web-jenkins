@@ -95,9 +95,57 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX109SQP03478(filter);
     }
 
+    /*TOTALS BY CABIN*/
+    public List<DashboardFilter> loadPX109SQP00932(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00932(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01542(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01542(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP00550(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00550(filter);
+    }
+
     /*Alliance*/
     public List<DashboardFilter> loadPX109SQP01518(DashboardFilter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01518(filter);
+    }
+
+    /*Routing Type*/
+    public List<DashboardFilter> loadPX109SQP01516(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01516(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01519(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01519(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01519_CHART(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01519_CHART(filter);
+    }
+
+// ===================================== FARE TYPE ========================================================================
+    
+    public List<DashboardFilter> loadPX109SQP01523(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01523(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01533(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01533(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01982(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01982(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP01526(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01526(filter);
+    }
+    
+    public List<DashboardFilter> loadPX109SQP01983(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01983(filter);
     }
 
     /**
