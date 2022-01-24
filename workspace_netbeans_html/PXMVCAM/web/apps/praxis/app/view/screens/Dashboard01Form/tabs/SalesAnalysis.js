@@ -1367,7 +1367,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     {
                                                         text: 'Alliances', dataIndex: 'strDescription', width: 150,
                                                         listeners: {
-                                                            click: 'detailAlliances_colHandler'
+                                                            click: 'click_detailAlliances_colHandler'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:left";
@@ -1859,7 +1859,15 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         keypress: 'BuscarPair_keyDownHandler'
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 100},
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'label',
+                                    labelWidth: 60,
+                                    text: '(Enter)',
+                                    labelAlign: 'right',
+                                    style: 'font-weight:bold;',
+                                },
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'radiogroup',
                                     id: prototype.id + '-radiogroupType_cp1',
@@ -2173,7 +2181,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-ADG_GridSalesAgent',
-                                    width: 1378,
+                                    width: 1288,
                                     height: 510,
                                     columnLines: true,
                                     margin: "5 0 0 0",
@@ -2338,6 +2346,2550 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                         }
 
                     ]
+                },
+//                      -------------------- TOTALS BY CABIN ----------------------------------------
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxCabin',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        {xtype: 'tbspacer', height: 2.5},
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'checkbox',
+                                    id: prototype.id + '-chkCabin',
+                                    boxLabel: 'City Pair',
+                                    listeners: {
+                                        change: 'chooseCAB_clickHandler'
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 20},
+                                {
+                                    xtype: 'radiogroup',
+                                    id: prototype.id + '-radiogroupType_ca',
+                                    width: 150,
+                                    border: 1,
+                                    style: {
+                                        borderColor: 'black',
+                                        borderStyle: 'solid'
+                                    },
+                                    items: [
+                                        {boxLabel: '<b style="color:#148D28;">ALL</b>', inputValue: '', name: 'rbgType_ca', checked: true},
+                                        {boxLabel: '<b style="color:#148D28;">ON</b>', inputValue: 'ON', name: 'rbgType_ca'},
+                                        {boxLabel: '<b style="color:#148D28;">OFF</b>', inputValue: 'OFF', name: 'rbgType_ca'},
+                                    ],
+                                    listeners: {
+                                        change: 'rbChangeType_ca'
+                                    }
+                                },
+                            ]
+                        },
+                        {xtype: 'tbspacer', height: 2.5},
+                        // <editor-fold defaultstate="collapsed" desc="gridData">
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-ADG_GridCabin',
+                                    width: 1040,
+                                    height: 570,
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Display by cabin',
+                                                //                                                id: prototype.id + '-adgSalDate',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Sales Date', dataIndex: 'strFormatDate', width: 100,
+                                                        id: prototype.id + '-titCabin',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Cpns', dataIndex: 'CUPONS', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'USD', dataIndex: 'AMOUNT', width: 110,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'OFF LINE',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Cpns', dataIndex: 'CUPON_F', width: 80,
+                                                                listeners: {
+                                                                    click: 'click_detailCabin_colHandler'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    metaData.style = "font-weight:bold;text-align:right;";
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_F, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'USD', dataIndex: 'AMOUNT_F', width: 110,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_F, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'B(Business)',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Cpns', dataIndex: 'CUPON_J', width: 80,
+                                                                listeners: {
+                                                                    click: 'click_detailCabin_colHandler'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    metaData.style = "font-weight:bold;text-align:right;";
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'USD', dataIndex: 'AMOUNT_J', width: 110,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Y(Economy/Coach)',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Cpns', dataIndex: 'CUPON_Y', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    metaData.style = "font-weight:bold;text-align:right;";
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                                },
+                                                                listeners: {
+                                                                    click: 'click_detailCabin_colHandler'
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'USD', dataIndex: 'AMOUNT_Y', width: 110,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'NON REVENUE',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Cpns', dataIndex: 'QCPNS0', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNS0, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'USD', dataIndex: 'AMOUNT0', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT0, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        }
+
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxDetCabin',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-ADG_GridDetCabin',
+                                    width: 720,
+                                    height: 350,
+                                    columnLines: true,
+                                    margin: "5 0 0 0",
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Class', dataIndex: 'strDescription', width: 65,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                },
+                                            },
+                                            {
+                                                text: 'Description', dataIndex: 'strDescription1', width: 150,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                },
+                                            },
+                                            {
+                                                text: 'Coupons', dataIndex: 'CUPONS', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridDetCabin').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'Perc1', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + '100%' + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'USD', dataIndex: 'AMOUNT', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridDetCabin').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'Perc2', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + '100%' + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'AVG', dataIndex: 'TARIFA', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridDetCabin').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {text: 'Revenue by',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Miles', dataIndex: 'REVXMI', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-ADG_GridDetCabin').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TOTAL_REVXMI, '0,000.000') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelChartDetCabin',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            //hidden: true,
+                            width: '100%',
+                            //height: 'auto',
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'cartesian',
+                                    id: prototype.id + '-displayDetCabinChart01',
+                                    border: false,
+                                    width: '100%',
+                                    height: 290,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Total per Coupons',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    /*legend: {
+                                     docked: 'bottom',
+                                     background: '#E3EAEF'
+                                     },*/
+                                    axes: [
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['CUPONS'],
+                                            grid: true,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                value = value / 1000;
+                                                return ' ' + Ext.util.Format.number((value), '0') + 'k';
+                                            }
+                                        },
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'right',
+                                            fields: ['TARIFA'],
+                                            grid: false,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                return ' ' + Ext.util.Format.number((value), '0');
+                                            }
+                                        }
+                                        , {
+                                            type: 'category3d',
+                                            position: 'bottom',
+                                            grid: true,
+                                            title: {
+                                                translationX: -30
+                                            }
+                                        },
+                                    ],
+                                    series: [
+                                        {
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            xField: 'strDescription',
+                                            yField: 'CUPONS',
+                                            colors: ['#99CCFF'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            label: {
+                                                field: 'CUPONS',
+//                                                            display: 'insideEnd',
+                                                display: 'outside',
+                                                calloutLine: {
+                                                    length: 10,
+                                                    width: 0,
+//                                                                color: '#FFFFFF',
+                                                },
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutVertical = false;
+                                                    //return Ext.util.Format.number(value, '0')
+                                                    return ''
+                                                }
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    toolTip.setHtml('Coupons : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                }
+                                            },
+                                            renderer: 'onColumnRender'
+                                        },
+                                        {
+                                            type: 'line',
+                                            stacked: true,
+                                            xField: 'strDescription',
+                                            yField: 'TARIFA',
+                                            style: {
+                                                fill: '#fffcad',
+                                                stroke: '#d4d396',
+                                                lineWidth: 2
+                                            },
+                                            marker: {
+                                                radius: 4,
+                                                lineWidth: 2
+                                            },
+                                            label: {
+                                                field: 'TARIFA',
+                                                display: 'over',
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutVertical = false;
+                                                    //return Ext.util.Format.number(value, '0')
+                                                    return ''
+                                                }
+                                            },
+                                            markerConfig: {
+                                                radius: 4
+                                            },
+                                            highlight: {
+                                                fill: '#fffcad',
+                                                radius: 5,
+                                                'stroke-width': 2,
+                                                stroke: '#fff'
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                style: 'background: #FFF',
+                                                height: 20,
+                                                showDelay: 0,
+                                                dismissDelay: 0,
+                                                hideDelay: 0,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    toolTip.setHtml('AVG : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0') + '</b>');
+                                                }
+                                            },
+                                            renderer: 'onColumnRender'
+                                        }
+                                    ]
+                                },
+                            ]
+                        },
+                    ]
+                },
+// ========================================================= Fare Type =============================================
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxFare',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    hidden: true,
+                    border: true,
+//                            height: 'auto',
+                    width: '100%',
+                    margin: '0 0 0 0 ',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
+                    },
+                    items: [
+                        {
+                            xtype: 'panel',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+//                            height: 'auto',
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'hbox',
+                                align: 'left'
+                            },
+                            items: [
+                                {
+                                    xtype: 'radiogroup',
+                                    id: prototype.id + '-radiogroupType_ft',
+                                    width: 300,
+                                    /*border: 1,
+                                     style: {
+                                     borderColor: 'black',
+                                     borderStyle: 'solid'
+                                     },*/
+                                    items: [
+                                        {boxLabel: '<b style="color:#148D28;">Source</b>', inputValue: 'S', name: 'rbgType_ft', checked: true},
+                                        {boxLabel: '<b style="color:#148D28;">Cabin</b>', inputValue: 'C', name: 'rbgType_ft'},
+                                        {boxLabel: '<b style="color:#148D28;">Zone</b>', inputValue: 'Z', name: 'rbgType_ft'},
+                                    ],
+                                    listeners: {
+                                        change: 'rbChangeType_ft'
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: false,
+//                            height: 'auto',
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareSource',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: false,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-ADG_GridFareSource',
+                                            padding: '5px 0px 0px 0px',
+                                            width: 985,
+                                            //height: 338,
+                                            columnLines: true,
+                                            features: [
+                                                {
+                                                    ftype: 'summary',
+                                                    dock: 'bottom'
+                                                }
+                                            ],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Fare',
+                                                        columns: [
+                                                            {
+                                                                text: 'Type', dataIndex: 'strDescription', width: 90, align: 'center',
+                                                                listeners: {
+                                                                    click: 'click_detFareType_colHandler'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "font-weight:bold;text-align:left;";
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: '%', dataIndex: 'CUPONS_PERCENT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>100%<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: '%', dataIndex: 'AMOUNT_PERCENT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>100%<b>';
+                                                                }
+                                                            },
+                                                            {text: 'AVG', dataIndex: 'AVG', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'ASR',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_ASR', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#70DB70;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totCUPONS_ASR, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_ASR', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#70DB70;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAMOUNT_ASR, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'BSP',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_BSP', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ccffff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totCUPONS_BSP, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_BSP', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ccffff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAMOUNT_BSP, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'ARC',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS_ARC', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#FFCC66;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totCUPONS_ARC, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_ARC', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#FFCC66;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareSource').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAMOUNT_ARC, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 30},
+                                        {
+                                            xtype: 'polar',
+                                            //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-ChartFareType',
+                                            width: 450,
+                                            height: 300,
+                                            border: false,
+//                                                margin: '0 0 0 5',
+                                            innerPadding: 30,
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Fare Type - Amount',
+                                                    //                                                            fieldStyle: 'font-size:5px',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            //                                                    legend: {
+                                            //                                                        docked: 'bottom',
+                                            //               00                                         background: '#E3EAEF'
+                                            //                                                    },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'AMOUNT_PERCENT',
+                                                    colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
+                                                    label: {
+                                                        field: 'strDescription'
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            //                                                                    if (ctx.field === 'QMATCH') {
+                                                            //                                                                        label = 'Match';
+                                                            toolTip.setHtml(record.get('strDescription') + ' , ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT_PERCENT'), '0,000.00') + '%' + '</b>');
+                                                        }
+                                                    }
+                                                }]
+
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareCabin',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-ADG_GridFareCabin',
+                                            padding: '5px 0px 0px 0px',
+                                            width: 985,
+                                            //height: 338,
+                                            columnLines: true,
+                                            features: [
+                                                {
+                                                    ftype: 'summary',
+                                                    dock: 'bottom'
+                                                }
+                                            ],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {text: 'Fare',
+                                                        columns: [
+                                                            {
+                                                                text: 'Type', dataIndex: 'strDescription', width: 90, align: 'center',
+                                                                listeners: {
+                                                                    click: 'click_detFareType_colHandler'
+                                                                },
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "font-weight:bold;text-align:left;";
+                                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {text: 'Total',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: '%', dataIndex: 'CUPONS_PERCENT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>100%<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: '%', dataIndex: 'AMOUNT_PERCENT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>100%<b>';
+                                                                }
+                                                            },
+                                                            {text: 'AVG', dataIndex: 'AVG', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'First OAL',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPON_F', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#70DB70;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_F, '0,000') + '<b>';
+                                                                }
+
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_F', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#70DB70;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_F, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Business',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPON_J', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ccffff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_J', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ccffff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Economy',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPON_Y', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#FFCC66;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_Y', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#FFCC66;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareCabin').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 30},
+                                        {
+                                            xtype: 'polar',
+                                            //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-ChartFareTypeCabin',
+                                            width: 450,
+                                            height: 300,
+                                            border: false,
+//                                                margin: '0 0 0 5',
+                                            innerPadding: 30,
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Fare Type - Amount',
+                                                    //                                                            fieldStyle: 'font-size:5px',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            //                                                    legend: {
+                                            //                                                        docked: 'bottom',
+                                            //               00                                         background: '#E3EAEF'
+                                            //                                                    },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'AMOUNT_PERCENT',
+                                                    colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
+                                                    label: {
+                                                        field: 'strDescription'
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            //                                                                    if (ctx.field === 'QMATCH') {
+                                                            //                                                                        label = 'Match';
+                                                            toolTip.setHtml(record.get('strDescription') + ' , ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT_PERCENT'), '0,000.00') + '%' + '</b>');
+                                                        }
+                                                    }
+                                                }]
+
+                                        }
+                                    ]
+                                },
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-BoxFareZona',
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    hidden: true,
+                                    border: true,
+                                    margin: '0 0 0 0 ',
+                                    layout: {
+                                        type: 'hbox',
+                                        //align: 'center'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-ADG_GridFareZona',
+                                            padding: '5px 0px 0px 0px',
+                                            width: 985,
+                                            //height: 338,
+                                            columnLines: true,
+                                            features: [
+                                                {
+                                                    ftype: 'summary',
+                                                    dock: 'bottom'
+                                                }
+                                            ],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {
+                                                        text: 'Zone', dataIndex: 'ZONA', width: 90,
+                                                        listeners: {
+                                                            click: 'click_detFareType_colHandler'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "font-weight:bold;text-align:center;";
+                                                            return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                        }
+                                                    },
+                                                    {text: 'Total',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPONS', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: '%', dataIndex: 'CUPONS_PERCENT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>100%<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: '%', dataIndex: 'AMOUNT_PERCENT', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>100%<b>';
+                                                                }
+                                                            },
+                                                            {text: 'AVG', dataIndex: 'AVG', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'First OAL',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPON_F', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#70DB70;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_F, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_F', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#70DB70;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_F, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Business',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPON_J', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ccffff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_J', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#ccffff;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {text: 'Economy',
+                                                        columns: [
+                                                            {text: 'Coupons', dataIndex: 'CUPON_Y', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#FFCC66;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTCUPON_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {text: 'Amount', dataIndex: 'AMOUNT_Y', width: 80, align: 'center',
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#FFCC66;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridFareZona').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 30},
+                                        {
+                                            xtype: 'polar',
+                                            //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-ChartFareTypeZona',
+                                            width: 450,
+                                            height: 350,
+                                            border: false,
+//                                                margin: '0 0 0 5',
+                                            innerPadding: 60,
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Fare Type - Amount',
+                                                    //                                                            fieldStyle: 'font-size:5px',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            //                                                    legend: {
+                                            //                                                        docked: 'bottom',
+                                            //               00                                         background: '#E3EAEF'
+                                            //                                                    },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'AMOUNT_PERCENT',
+                                                    colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
+                                                    label: {
+                                                        field: 'ZONA'
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            //                                                                    if (ctx.field === 'QMATCH') {
+                                                            //                                                                        label = 'Match';
+                                                            toolTip.setHtml(record.get('ZONA') + ' , ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT_PERCENT'), '0,000.00') + '%' + '</b>');
+                                                        }
+                                                    }
+                                                }]
+
+                                        }
+                                    ]
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxDetFare',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        // <editor-fold defaultstate="collapsed" desc="gridData">
+                        {xtype: 'label', id: prototype.id + '-titDetFare', text: '', style: "font-size:14px;font-weight:bold;width:60;padding:10px 0px 0px 10px;"},
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDetFare',
+                                    padding: '5px 0px 0px 0px',
+                                    width: 545,
+                                    height: 600,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Origin', dataIndex: 'CITYO', width: 80, align: 'center'},
+                                            {text: 'Destination', dataIndex: 'CITYD', width: 80, align: 'center'},
+                                            {
+                                                text: 'Coupons', dataIndex: 'CUPONS', width: 90, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetFare').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'CUPONS_PERCENT', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '100%';
+                                                }
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'AMOUNT', width: 100, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetFare').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'AMOUNT_PERCENT', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '100%';
+                                                }
+                                            },
+                                            {
+                                                text: 'Avg', dataIndex: 'AVG', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetFare').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 15},
+                                {
+                                    xtype: 'panel',
+                                    width: 600,
+                                    height: 600,
+                                    bodyStyle: 'background-color: #99CCFF;',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+//                                    border: 0.5,
+                                    style: {
+                                        borderColor: 'black',
+                                        borderStyle: 'solid'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displaySAChart38',
+                                            margin: '0 10 0 0 ',
+                                            flipXY: true,
+                                            width: 550,
+                                            height: 600,
+                                            insetPadding: '20 10',
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Routes',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+
+                                            },
+                                            axes: [
+                                                {
+                                                    type: 'numeric3d',
+                                                    position: 'bottom',
+                                                    majorTickSteps: 5,
+                                                    fields: ['AMOUNT'],
+                                                    title: 'Amount ',
+                                                    grid: {
+                                                        odd: {
+                                                            fillStyle: 'rgba(245, 245, 245, 1.0)'
+                                                        },
+                                                        even: {
+                                                            fillStyle: 'rgba(255, 255, 255, 1.0)'
+                                                        }
+                                                    },
+                                                    renderer: function (obj, value) {
+                                                        if (value > 1) {
+                                                            return  ' ' + Ext.util.Format.number((value / 1000000), '0') + 'M';
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'left',
+                                                    fields: 'strDescription',
+                                                    grid: true,
+                                                    label: {
+                                                        textAlign: 'left'
+                                                    },
+                                                }],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    title: ['Amount'],
+                                                    yField: ['AMOUNT'],
+                                                    xField: 'strDescription',
+                                                    //highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7
+                                                    },
+                                                    highlight: {
+                                                        strokeStyle: 'rgba(0, 0, 0, .2)',
+                                                        lineWidth: 1
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        //height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            //var label = record.get('strFormatDate') + ' ';
+                                                            var label = ' ';
+                                                            //                                            if (ctx.field === 'GROSS') {
+//                                                                label += ' Net. : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>';
+                                                            label += ' Net. : ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT'), '0,000') + '</b>';
+                                                            //                                            } else if (ctx.field === 'VALOR') {
+                                                            //                                                label += ' Invoice : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>';
+                                                            //                                            }
+                                                            toolTip.setHtml(label);
+                                                        }
+                                                    }
+                                                }]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #99CCFF;',
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            },
+                                            items: [
+                                                {xtype: 'label', text: 'Top', style: "font-size:12px;font-weight:bold;"},
+                                                {xtype: 'tbspacer', height: 5},
+                                                {
+                                                    xtype: 'slider',
+                                                    id: 'averps',
+                                                    fieldLabel: 'Top',
+                                                    width: 15,
+                                                    hideLabel: true,
+                                                    value: 20,
+                                                    height: 400,
+                                                    vertical: true,
+                                                    minValue: 5,
+                                                    maxValue: 20,
+                                                    tipText: function (thumb) {
+                                                        return Ext.String.format('First {0} Routes  ', thumb.value);
+                                                    },
+                                                    listeners: {
+                                                        change: 'onChangeTopFareType'
+                                                    }
+
+                                                }
+                                            ]
+                                        }
+
+
+                                    ]
+                                }
+
+                            ]
+                        }
+                    ]
+
+
+                },
+// ========================================================= ALLIANCES =============================================
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxDetAlliances',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    hidden: true,
+                    border: true,
+//                            height: 'auto',
+                    width: 1025,
+                    margin: '0 0 0 0 ',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
+                    },
+                    items: [
+                        {xtype: 'label', id: prototype.id + '-titDetAlliances', text: '', style: "font-size:14px;font-weight:bold;width:60;padding:10px 0px 0px 10px;"},
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-GridDetAlliances',
+                            width: '100%',
+                            height: 350,
+                            columnLines: true,
+                            features: [{
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {text: 'Carrier',
+                                        columns: [
+                                            {text: 'Code', dataIndex: 'CARRIER', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "font-weight:bold;text-align:center;";
+                                                    return  value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Description', dataIndex: 'strDescription', width: 250, align: 'center',
+                                                listeners: {
+                                                    click: 'click_detailPaisAlliances_colHandler'
+//                                                        args: ['MIN']
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "font-weight:bold;text-align:left;";
+                                                    return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: 'Coupons', dataIndex: 'CUPONS', width: 150, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.CUPONS_OFF, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: '%', dataIndex: 'Perc1', width: 75, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '100%';
+                                        }
+                                    },
+                                    {
+                                        text: 'Amount', dataIndex: 'AMOUNT', width: 150, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.AMOUNT_OFF, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: '%', dataIndex: 'Perc2', width: 75, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '100%';
+                                        }
+                                    },
+                                    {
+                                        text: 'Avg', dataIndex: 'AVG', width: 75, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totAVG, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {text: 'NON REVENUE',
+                                        columns: [
+                                            {
+                                                text: 'Cpns', dataIndex: 'QCPNS0', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-GridDetAlliances').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNS0, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'USD', dataIndex: 'AMOUNT0', width: 90, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-GridDetAlliances').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT0, '0,000') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    }
+
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxDetPaisAlliances',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    hidden: true,
+                    border: true,
+//                            height: 'auto',
+                    width: 920,
+                    margin: '0 0 0 0 ',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
+                    },
+                    items: [
+                        {xtype: 'label', id: prototype.id + '-titDetPaisAlliances', text: '', style: "font-size:14px;font-weight:bold;width:60;padding:10px 0px 0px 10px;"},
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-GridDetPaisAlliances',
+                            width: '100%',
+                            height: 350,
+                            columnLines: true,
+                            features: [{
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {
+                                        text: 'Nbr.', dataIndex: 'RN', width: 50,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        },
+                                    },
+                                    {
+                                        text: 'Country of Sale', dataIndex: 'COUNTRY_NAME', width: 250, align: 'center',
+                                        listeners: {
+                                            click: 'click_detailAgenteAlliances_colHandler'
+//                                                        args: ['MIN']
+                                        },
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "font-weight:bold;text-align:left;";
+                                            return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                        }
+                                    },
+                                    {
+                                        text: 'Coupons', dataIndex: 'CUPONS', width: 110, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetPaisAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: '%', dataIndex: 'CUPONS_PERCENT', width: 70, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '100%';
+                                        }
+                                    },
+                                    {
+                                        text: 'Amount', dataIndex: 'AMOUNT', width: 110, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetPaisAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: '%', dataIndex: 'AMOUNT_PERCENT', width: 70, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '100%';
+                                        }
+                                    },
+                                    {
+                                        text: 'Avg', dataIndex: 'TARIFA', width: 70, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetPaisAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AVG, '0,000.00') + '<b>';
+                                        }
+                                    },
+                                    {text: 'NON REVENUE',
+                                        columns: [
+                                            {
+                                                text: 'Cpns', dataIndex: 'QCPNS0', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-GridDetPaisAlliances').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNS0, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'USD', dataIndex: 'AMOUNT0', width: 90, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-GridDetPaisAlliances').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT0, '0,000') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    }
+
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxDetAgenteAlliances',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    hidden: true,
+                    border: true,
+//                            height: 'auto',
+                    width: 980,
+                    margin: '0 0 0 0 ',
+                    layout: {
+                        type: 'vbox',
+                        align: 'center'
+                    },
+                    items: [
+                        {xtype: 'label', id: prototype.id + '-titDetAgenteAlliances', text: '', style: "font-size:14px;font-weight:bold;width:60;padding:10px 0px 0px 10px;"},
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-GridDetAgenteAlliances',
+                            width: '100%',
+                            height: 350,
+                            columnLines: true,
+                            features: [{
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {
+                                        text: 'Nbr.', dataIndex: 'RN', width: 50,
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:center;";
+                                            return value;
+                                        },
+                                    },
+                                    {text: 'Agent', dataIndex: 'VENDOR', width: 75, align: 'center'},
+                                    {text: 'Agent Name', dataIndex: 'strDescription', width: 250, align: 'left'},
+                                    {
+                                        text: 'Coupons', dataIndex: 'CUPONS', width: 90, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: '%', dataIndex: 'CUPONS_PERCENT', width: 70, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '100%';
+                                        }
+                                    },
+                                    {
+                                        text: 'Amount', dataIndex: 'AMOUNT', width: 110, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: '%', dataIndex: 'AMOUNT_PERCENT', width: 70, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '100%';
+                                        }
+                                    },
+                                    {
+                                        text: 'Avg', dataIndex: 'TARIFA', width: 70, align: 'center',
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                            //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                            return value;
+                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.TOTAL_AVG, '0,000.00') + '<b>';
+                                        }
+                                    },
+                                    {text: 'NON REVENUE',
+                                        columns: [
+                                            {
+                                                text: 'Cpns', dataIndex: 'QCPNS0', width: 80, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_QCPNS0, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'USD', dataIndex: 'AMOUNT0', width: 90, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#b6d8ee;";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT0, '0,000') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    }
+
+                                ]
+                            }
+                        }
+                    ]
+                },
+//                      -------------------- Routing Type ----------------------------------------                
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxRouting',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'hbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        // <editor-fold defaultstate="collapsed" desc="gridData">
+
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-ADG_GridRouting',
+                                    padding: '5px 0px 0px 0px',
+                                    width: 525,
+                                    height: 338,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Routing',
+                                                columns: [
+                                                    {
+                                                        text: 'Type', dataIndex: 'strDescription', width: 90, align: 'center',
+                                                        listeners: {
+                                                            click: 'click_detRouting_colHandler'
+//                                                        args: ['MIN']
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "font-weight:bold;text-align:left;";
+                                                            return '<a href="#" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Trip',
+                                                columns: [
+                                                    {text: 'Type', dataIndex: 'strDescription1', width: 50, align: 'center',
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "font-weight:bold;text-align:center;";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Coupons', dataIndex: 'CUPONS', width: 90, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridRouting').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'CUPONS_PERCENT', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '100%';
+                                                }
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'AMOUNT', width: 100, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridRouting').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'AMOUNT_PERCENT', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '100%';
+                                                }
+                                            },
+                                            {
+                                                text: 'Avg', dataIndex: 'AVG', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-ADG_GridRouting').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                }
+                                            }
+
+
+
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 15},
+                                {
+                                    xtype: 'panel',
+                                    width: 500,
+                                    height: 338,
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+//                                    border: 0.5,
+                                    style: {
+                                        borderColor: 'black',
+                                        borderStyle: 'solid'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'polar',
+                                            //                                                    title: '<div style="text-align:center;color:#6E6E73;font-size:10px">Total Documents</div>',
+                                            id: prototype.id + '-ChtSalesAnalysis35_PC',
+                                            width: '100%',
+                                            border: true,
+//                                                margin: '0 0 0 5',
+                                            innerPadding: 60,
+                                            height: '100%',
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Routing Type - Amount',
+                                                    //                                                            fieldStyle: 'font-size:5px',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['rotate', 'itemhighlight'],
+                                            //                                                    legend: {
+                                            //                                                        docked: 'bottom',
+                                            //               00                                         background: '#E3EAEF'
+                                            //                                                    },
+                                            series: [{
+                                                    type: 'pie3d',
+                                                    angleField: 'AMOUNT_PERCENT',
+                                                    colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
+                                                    label: {
+                                                        field: 'strDescription'
+                                                    },
+                                                    highlight: true,
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            //                                                                    if (ctx.field === 'QMATCH') {
+                                                            //                                                                        label = 'Match';
+                                                            toolTip.setHtml(record.get('strDescription') + ' , ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT_PERCENT'), '0,000.00') + '%' + '</b>');
+                                                        }
+                                                    }
+                                                }]
+
+                                        }
+                                    ]
+                                }
+
+                            ]
+                        }
+                    ]
+
+
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-BoxDetRouting',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        // <editor-fold defaultstate="collapsed" desc="gridData">
+                        {xtype: 'label', id: prototype.id + '-titDetRouting', text: '', style: "font-size:14px;font-weight:bold;width:60;padding:10px 0px 0px 10px;"},
+                        {
+                            xtype: 'panel',
+                            layout: {
+                                type: 'hbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDetRouting',
+                                    padding: '5px 0px 0px 0px',
+                                    width: 770,
+                                    height: 600,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Origin', dataIndex: 'CITYO', width: 80, align: 'center'},
+                                            {text: 'Destination', dataIndex: 'CITYD', width: 80, align: 'center'},
+                                            {text: 'Routing', dataIndex: 'strDescription', width: 150, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Trip',
+                                                columns: [
+                                                    {text: 'Type', dataIndex: 'strDescription1', width: 65, align: 'center'}
+                                                ]
+                                            },
+                                            {
+                                                text: 'Coupons', dataIndex: 'CUPONS', width: 90, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetRouting').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'CUPONS_PERCENT', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '100%';
+                                                }
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'AMOUNT', width: 100, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetRouting').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: '%', dataIndex: 'AMOUNT_PERCENT', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '100%';
+                                                }
+                                            },
+                                            {
+                                                text: 'Avg', dataIndex: 'AVG', width: 60, align: 'center',
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                    //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    return value;
+                                                }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetRouting').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totAVG, '0,000.00') + '<b>';
+                                                }
+                                            }
+
+
+
+                                        ]
+                                    }
+                                },
+                                {xtype: 'tbspacer', width: 15},
+                                {
+                                    xtype: 'panel',
+                                    width: 600,
+                                    height: 600,
+                                    bodyStyle: 'background-color: #99CCFF;',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center'
+                                    },
+//                                    border: 0.5,
+                                    style: {
+                                        borderColor: 'black',
+                                        borderStyle: 'solid'
+                                    },
+                                    items: [
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-ChtSalesAnalysis36MSBC',
+                                            margin: '0 10 0 0 ',
+                                            flipXY: true,
+                                            width: 550,
+                                            height: 600,
+                                            insetPadding: '20 10',
+                                            background: '#99CCFF',
+                                            captions: {
+                                                title: {
+                                                    text: 'Routes',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+
+                                            },
+                                            axes: [
+                                                {
+                                                    type: 'numeric3d',
+                                                    position: 'bottom',
+                                                    majorTickSteps: 5,
+                                                    fields: ['AMOUNT'],
+                                                    title: 'Amount ',
+                                                    grid: {
+                                                        odd: {
+                                                            fillStyle: 'rgba(245, 245, 245, 1.0)'
+                                                        },
+                                                        even: {
+                                                            fillStyle: 'rgba(255, 255, 255, 1.0)'
+                                                        }
+                                                    },
+                                                    renderer: function (obj, value) {
+                                                        if (value > 1) {
+                                                            return ' ' + (value / 1000000) + 'M ';
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    }
+                                                }, {
+                                                    type: 'category3d',
+                                                    position: 'left',
+                                                    fields: 'strDescription',
+                                                    grid: true,
+                                                    label: {
+                                                        textAlign: 'left'
+                                                    },
+                                                }],
+                                            series: [{
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    title: ['Amount'],
+                                                    yField: ['AMOUNT'],
+                                                    xField: 'strDescription',
+                                                    //highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7
+                                                    },
+                                                    highlight: {
+                                                        strokeStyle: 'rgba(0, 0, 0, .2)',
+                                                        lineWidth: 1
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        //height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            //var label = record.get('strFormatDate') + ' ';
+                                                            var label = ' ';
+                                                            //                                            if (ctx.field === 'GROSS') {
+//                                                                label += ' Net. : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>';
+                                                            label += ' Net. : ' + '<b>' + Ext.util.Format.number(record.get('AMOUNT'), '0,000') + '</b>';
+                                                            //                                            } else if (ctx.field === 'VALOR') {
+                                                            //                                                label += ' Invoice : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>';
+                                                            //                                            }
+                                                            toolTip.setHtml(label);
+                                                        }
+                                                    }
+                                                }]
+                                        },
+                                        {
+                                            xtype: 'panel',
+//                                                background: '#99CCFF',
+                                            bodyStyle: 'background-color: #99CCFF;',
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            },
+                                            items: [
+                                                {xtype: 'label', text: 'Top', style: "font-size:12px;font-weight:bold;"},
+                                                {xtype: 'tbspacer', height: 5},
+                                                {
+                                                    xtype: 'slider',
+                                                    id: 'averps',
+                                                    fieldLabel: 'Top',
+                                                    width: 15,
+                                                    hideLabel: true,
+                                                    value: 20,
+                                                    height: 400,
+                                                    vertical: true,
+                                                    minValue: 5,
+                                                    maxValue: 20,
+                                                    tipText: function (thumb) {
+                                                        return Ext.String.format('First {0} Routes  ', thumb.value);
+                                                    },
+                                                    listeners: {
+                                                        change: 'onChangeTopRoute'
+                                                    }
+
+                                                }
+                                            ]
+                                        }
+
+
+                                    ]
+                                }
+
+                            ]
+                        }
+                    ]
+
+
                 },
 //                      -------------------- GDS ----------------------------------------                
                 {
