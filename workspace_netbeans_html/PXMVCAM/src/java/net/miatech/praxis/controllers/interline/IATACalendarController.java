@@ -3,9 +3,11 @@ package net.miatech.praxis.controllers.interline;
 //<editor-fold defaultstate="collapsed" desc="import">
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,8 +26,12 @@ import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import net.miatech.praxis.interline.filter.WRF016Filter;
 import net.miatech.praxis.logic.interline.LoadInterline02Logic;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
@@ -39,7 +45,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 //</editor-fold>
 /**
@@ -335,6 +344,292 @@ public class IATACalendarController extends BaseController {
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(IATACalendarController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @RequestMapping(value = "/load_A1851", method = RequestMethod.POST)
+    public @ResponseBody
+    String load_A1851(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
+        byte[] bytes = null;
+        A1851 objResult = new A1851();
+        
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String filename = excelfile.getOriginalFilename();
+
+            String strFechDuplicat = request.getParameter("strFechDuplicat");
+            
+            byte[] dataFile = excelfile.getBytes();
+            objResult = insert_A1851(dataFile, strFechDuplicat);
+            
+            if(objResult.isloadOk){
+                map.put("success", true);
+                map.put("objResult", objResult);
+            }else if(!objResult.strDateDuplicat.equals("")) {
+                map.put("success", true);
+                map.put("duplicat", true );
+                map.put("objResult", objResult);
+            }else{
+                map.put("error", true);
+                map.put("objResult", objResult);
+            }
+            
+            
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    public A1851 insert_A1851(byte[] bytes, String strFechDuplicat) {
+        
+        System.out.println("insert_A1851 : insert_A1851");
+
+        List<String> lstCadena = new ArrayList<>();
+        boolean oK = false;
+        boolean loadDuplicate = false;
+        Integer i = 0;
+        String fechInit = "";
+        String strFechExist = "";
+//        Workbook workbook;
+        A1851 objRtn;
+        List<A1851> lstRtn = new ArrayList<A1851>(0);
+        A1851 objExit = new A1851();
+        
+        try {
+            String strSesion = UUID.randomUUID().toString();
+            String strNomExcel = "Tickets_update." + strSesion + ".xls";
+            
+            String strArchivo = "C:\\Dumps\\" + strNomExcel;
+            File archivo = new File(strArchivo);
+            FileOutputStream fs = new FileOutputStream(archivo);
+            
+            fs.write(bytes);
+            fs.flush();
+            fs.close();
+         
+            DataFormatter formatter = new DataFormatter();
+            String primeraCelda="";
+            boolean escribe = false;
+        
+            FileInputStream file = new FileInputStream(archivo);
+            
+            HSSFWorkbook workbook;
+            workbook = new HSSFWorkbook(file);
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            
+            DataFormatter df = new DataFormatter();
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat formatFecha = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
+            
+            logic = new LoadInterline02Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            try {
+                while (rowIterator.hasNext() ) {
+                    i++;
+                    Row row = rowIterator.next();
+                    
+                    /*
+                    if(i == 3 && strFechDuplicat.equals("")){
+                        strFechExist = df.formatCellValue(row.getCell(1)).trim();
+                        
+                        loadDuplicate = logic.searchDate_A1851(strFechExist);
+                        if(loadDuplicate){
+                            System.out.println("--------------------------------------- FECHA DE CARGA DUPLICADA ----------------------------------------");
+                            objExit.isDateDuplicat = true;
+                            objExit.strDateDuplicat = strFechExist;
+                            break;
+                        }
+                        
+                    }
+                    */
+                    
+                    if(i > 3){
+                        
+                        System.out.println("ROW: " + i);
+                        
+                        if(i == 51){
+                            System.out.println(" --- PRE ---");
+//                            break;
+                        }
+                        
+                        if( (getCellValue(row.getCell(2)).trim().equals("") || getCellValue(row.getCell(2)).trim() == null) &&
+                            (getCellValue(row.getCell(3)).trim().equals("") || getCellValue(row.getCell(3)).trim() == null) &&
+                            (getCellValue(row.getCell(4)).trim().equals("") || getCellValue(row.getCell(4)).trim() == null) &&
+                            (getCellValue(row.getCell(5)).trim().equals("") || getCellValue(row.getCell(5)).trim() == null) &&
+                            (getCellValue(row.getCell(6)).trim().equals("") || getCellValue(row.getCell(6)).trim() == null) &&
+                            (getCellValue(row.getCell(7)).trim().equals("") || getCellValue(row.getCell(7)).trim() == null  )
+                                
+                        ){
+                            System.out.println(" ---- FIN ----");
+                            break;
+                        }
+                        
+                        objRtn = new A1851();
+                        
+                        objRtn.PERIOD   =  Functions.fillZeros(2,getCellValue(row.getCell(1)).trim());              // Col [B]
+                        
+                        if(objRtn.PERIOD.equals("01")){
+                           String FINVOIC =  getCellValue(row.getCell(0)).trim();                                   // Col [A]
+                           objRtn.FINVOIC =  getNumeros(FINVOIC) + getNumberMesEnglish(FINVOIC);                    // Col [A]
+                           fechInit = objRtn.FINVOIC;
+                        }else{
+                           objRtn.FINVOIC = fechInit;
+                        }
+                        
+                        // Detectar fecha duplicada A1851
+                        if(i == 4 && strFechDuplicat.equals("")){
+                            try {
+                                strFechExist = fechInit.substring(0,4);
+                            } catch (Exception e) {
+                                strFechExist = "";
+                            }
+                           
+
+                            loadDuplicate = logic.searchDate_A1851(strFechExist);
+                            if(loadDuplicate){
+                                System.out.println("--------------------------------------- FECHA DE CARGA DUPLICADA ----------------------------------------");
+                                objExit.isDateDuplicat = true;
+                                objExit.strDateDuplicat = strFechExist;
+                                break;
+                            }
+
+                        }
+                        
+                        objRtn.DOENV = formatFecha.format(row.getCell(2).getDateCellValue()).replace("-", "");      // Col [C]
+                        objRtn.TIMESI = formatHora.format(row.getCell(2).getDateCellValue()).replace(":", "");      // Col [C]
+                        
+                        objRtn.DCENV = formatFecha.format(row.getCell(4).getDateCellValue()).replace("-", "");      // Col [D]
+                        objRtn.TIMESO = formatHora.format(row.getCell(4).getDateCellValue()).replace(":", "");      // Col [D]
+                        
+                        objRtn.DENVI = formatFecha.format(row.getCell(7).getDateCellValue()).replace("-", "");      // Col [E]
+                        objRtn.TIMESE = formatHora.format(row.getCell(7).getDateCellValue()).replace(":", "");      // Col [E]
+                        
+                        
+                        lstRtn.add(objRtn);
+
+                    }
+                }
+                
+                file.close();
+                archivo.delete();
+                
+//                for (String cadDet : lstRtn) {
+//                    System.out.println(cadDet);
+//                }
+                if(!objExit.isDateDuplicat){
+                   objExit.isloadOk = logic.insert_A1851(lstRtn, strFechDuplicat);
+                }
+                
+            } catch (Exception e) {
+                e.getMessage();
+            }
+            
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        
+        
+        return objExit;
+    }
+    
+    public static String getNumeros(String cadena){
+        char [] cadena_div = cadena.toCharArray();
+        String n = "";
+        
+        for (int i = 0; i < cadena_div.length; i++) {
+            if(Character.isDigit(cadena_div[i])){
+                n+=cadena_div[i];
+            }
+        }
+        return n;
+        
+    }
+    
+    public static String getNumberMesEnglish(String strDate) {
+
+        if (strDate.trim().contains("January")) {
+            return "01";
+        } else if (strDate.trim().contains("February")) {
+            return "02";
+        } else if (strDate.trim().contains("March")) {
+            return "03";
+        } else if (strDate.trim().contains("April")) {
+            return "04";
+        } else if (strDate.trim().contains("May")) {
+            return "05";
+        } else if (strDate.trim().contains("June")) {
+            return "06";
+        } else if (strDate.trim().contains("July")) {
+            return "07";
+        } else if (strDate.trim().contains("August")) {
+            return "08";
+        } else if (strDate.trim().contains("September")) {
+            return "09";
+        } else if (strDate.trim().contains("October")) {
+            return "10";
+        } else if (strDate.trim().contains("November")) {
+            return "11";
+        } else if (strDate.trim().contains("December")) {
+            return "12";
+        } else {
+            return "Error";
+        }
+
+    }
+    
+    
+    public static String getCellValue(Cell cell) {
+        String cellValue = "";
+        DataFormatter formatter = new DataFormatter();
+        if (cell != null) {
+            switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_NUMERIC:
+                    if (DateUtil.isCellDateFormatted(cell)) {
+//                        cellValue = formatter.formatCellValue(cell);
+                        cellValue = new SimpleDateFormat("yyyyMMdd").format(cell.getDateCellValue()) + "";
+                    } else {
+                        double value = cell.getNumericCellValue();
+                        int intValue = (int) value;
+                        cellValue = value - intValue == 0 ? String.valueOf(intValue) : String.valueOf(value);
+//                        cellValue = String.valueOf(value);
+                    }
+                    break;
+                case Cell.CELL_TYPE_STRING:
+                    cellValue = cell.getStringCellValue();
+                    break;
+                case Cell.CELL_TYPE_BOOLEAN:
+                    cellValue = String.valueOf(cell.getBooleanCellValue());
+                    break;
+                case Cell.CELL_TYPE_FORMULA:
+                    //cellValue = String.valueOf(cell.getCellFormula());
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        cellValue = formatter.formatCellValue(cell);
+                    } else {
+                        double value = cell.getNumericCellValue();
+                        int intValue = (int) value;
+                        cellValue = value - intValue == 0 ? String
+                                .valueOf(intValue) : String.valueOf(value);
+                    }
+                    break;
+                case Cell.CELL_TYPE_BLANK:
+                    cellValue = "";
+                    break;
+                case Cell.CELL_TYPE_ERROR:
+                    cellValue = "";
+                    break;
+                default:
+                    cellValue = cell.toString().trim();
+                    break;
+            }
+        }
+        return cellValue.trim();
     }
 
 //    @RequestMapping(value = "getXLSX")

@@ -23,7 +23,11 @@ public class A1851 extends Filters{
     public String TIMESO = "";                      
     //Parametros de Envio de Soporte de Imagenes         
     public String DENVI = "";
-    public String TIMESE = "";                  
+    public String TIMESE = "";
+    
+    public boolean isDateDuplicat = false;
+    public boolean isloadOk = false;
+    public String strDateDuplicat = "";
                                                                                               
     //AUDIOTRIA
     public String USCR = "";
