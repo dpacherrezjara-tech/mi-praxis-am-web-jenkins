@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.controller.interline.IATACalendar.IATACalendarController'
                 if (res.success) {
                     me.objPermiso = res.matrix;
                                         
-                    if(me.objPermiso.USR.trim() === 'PMAYORGA' || me.objPermiso.USR.trim() === 'SAP43'){
+                    if(me.objPermiso.USR.trim() === 'PMAYORGA' || me.objPermiso.USR.trim() === 'SAP01'|| me.objPermiso.USR.trim() === 'SAP43'){
                         Ext.getCmp(prototype.id + '-boxLoad').show();
                     }
                     
