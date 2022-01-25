@@ -111,6 +111,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         console.log('1-----------------------SalesAnalysisController - afterweeeeeeeeeeee');
     },
     inicio: function () {
+        this.hidePagination_clickHandler();
+        meSales.drillDown = [];
         console.clear();
         console.log('1-----------------------SalesAnalysisController - INICIOOOOOOOOOOO');
         this.setFormatParameter();
@@ -265,34 +267,40 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 Ext.getBody().unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
-                var totals = res.lstData[0][0]; //P_SALES_PER_MONTH_TOTALS
-                var lstData = res.lstData[1]; //P_SALES_PER_MONTH_DATA
-                Ext.getCmp(prototype.id + '-lblTotalCpns').setText(Ext.util.Format.number(totals.TOTAL_CUPONS, '0,000'));
-                console.log(lstData);
-                var storeData = Ext.create('Ext.data.Store', {
-                    data: lstData,
-                    autoLoad: true
-                });
-                Ext.getCmp(prototype.id + '-gridData').bindStore(storeData);
+                if (res.lstData.length === 0) {
+                    global.Msg({
+                        msg: 'Data not found.'
+                    });
+                } else {
+                    var totals = res.lstData[0][0]; //P_SALES_PER_MONTH_TOTALS
+                    var lstData = res.lstData[1]; //P_SALES_PER_MONTH_DATA
+                    //
+                    console.log(lstData);
+                    var storeData = Ext.create('Ext.data.Store', {
+                        data: lstData,
+                        autoLoad: true
+                    });
+                    Ext.getCmp(prototype.id + '-gridData').bindStore(storeData);
 
-                Ext.getCmp(prototype.id + '-lblTotalCpns').setText(Ext.util.Format.number(totals.TOTAL_CUPONS, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAmount').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT, '0,000'));
-                Ext.getCmp(prototype.id + '-totAVG').setText(Ext.util.Format.number(totals.totAVG, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotalCpns').setText(Ext.util.Format.number(totals.TOTAL_CUPONS, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotalAmount').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT, '0,000'));
+                    Ext.getCmp(prototype.id + '-totAVG').setText(Ext.util.Format.number(totals.totAVG, '0,000.00'));
 
-                Ext.getCmp(prototype.id + '-lblTotalCpnON').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_ON, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalCpnONPerc').setText(Ext.util.Format.number(totals.CUPONS_ON_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountONPerc').setText(Ext.util.Format.number(totals.AMOUNT_ON_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAvgON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON_AVG_RATE, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotalCpnON').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_ON, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotalCpnONPerc').setText(Ext.util.Format.number(totals.CUPONS_ON_PERCENT, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotalAmountON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotalAmountONPerc').setText(Ext.util.Format.number(totals.AMOUNT_ON_PERCENT, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotalAvgON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON_AVG_RATE, '0,000.00'));
 
-                Ext.getCmp(prototype.id + '-lblTotalCpnOFF').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_OFF, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalCpnOFFPerc').setText(Ext.util.Format.number(totals.CUPONS_OFF_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountOFFPerc').setText(Ext.util.Format.number(totals.AMOUNT_OFF_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAvgOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF_AVG_RATE, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotalCpnOFF').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_OFF, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotalCpnOFFPerc').setText(Ext.util.Format.number(totals.CUPONS_OFF_PERCENT, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotalAmountOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotalAmountOFFPerc').setText(Ext.util.Format.number(totals.AMOUNT_OFF_PERCENT, '0,000.00'));
+                    Ext.getCmp(prototype.id + '-lblTotalAvgOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF_AVG_RATE, '0,000.00'));
 
-                Ext.getCmp(prototype.id + '-lblTotalQCPNSNR').setText(Ext.util.Format.number(totals.TOTAL_QCPNS0, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAMOUNTNR').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT0, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotalQCPNSNR').setText(Ext.util.Format.number(totals.TOTAL_QCPNS0, '0,000'));
+                    Ext.getCmp(prototype.id + '-lblTotalAMOUNTNR').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT0, '0,000'));
+                }
 
 
             }
@@ -946,28 +954,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     onChangeTopRoute: function (obj, value, cmp, strFunc) {
 
         var data = meCompare.dataRoute_chart.items;
-//        var newArray = [];
-//        var newArray2 = [];
-//        for (var i = 0; i < data.length; i++) {
-//            if (i < value) {
-//                newArray.push(data[i]);
-//            }
-//        }
-//        for (var i = (newArray.length - 1); i >= 0; i--) {
-//            newArray2.push(newArray[i]);
-//        }
-//
-//        var storeDataNew = Ext.create('Ext.data.Store', {
-//            data: newArray2,
-//            autoLoad: true
-//        });
-//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis36MSBC').bindStore(storeDataNew);
-
 
         var lstDataEdit = [];
+        var newArrayDesc = [];
 
-        console.log('---->');
-        console.log(data);
         for (var i = 0; i < data.length; i++) {
             if (i < value) {
                 var AMOUNT = Ext.util.Format.number(data[i].data.AMOUNT, '0,000')
@@ -978,10 +968,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         }
 
+        for (var i = (lstDataEdit.length - 1); i >= 0; i--) {
+            newArrayDesc.push(lstDataEdit[i]);
+        }
 
         console.log(lstDataEdit);
         var storeChtSalesAnalysis36MSBC = Ext.create('Ext.data.Store', {
-            data: lstDataEdit,
+            data: newArrayDesc,
             autoLoad: true
         });
 
@@ -1312,7 +1305,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-ADG_GridFareZona').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-ChartFareTypeZona').bindStore(storeGridDatas);
     },
-    
     click_detFareType_colHandler: function (param, metaData, rowNum, colNum, obj2, rowData) {
         this.beanFareType = rowData.data;
         this.paramsFareType.beanString = JSON.stringify(this.beanFareType);
@@ -1347,12 +1339,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                         } else {
                             Ext.getCmp(prototype.id + '-titDetFare').setText('Fare Type : ' + Objtemp.strDescription1);
                         }
-                        
-                        
+
+
                         // -------------------------------------  GRAFICO -----------------------------------------------------------
                         meCompare.dataFareType_chart = Ext.clone(obj.data);
                         meCompare.onChangeTopFareType('', 20, '', '');
-                        
+
                     }
                 }
             }
@@ -1390,11 +1382,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                         console.log(obj.data);
                         var Objtemp = obj.data.items[0].data;
                         Ext.getCmp(prototype.id + '-titDetFare').setText('Zone : ' + Objtemp.strDescriptionZone);
-                        
+
                         // -------------------------------------  GRAFICO -----------------------------------------------------------
                         meCompare.dataFareType_chart = Ext.clone(obj.data);
                         meCompare.onChangeTopFareType('', 20, '', '');
-                        
+
                     }
                 }
             }
@@ -1405,7 +1397,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     },
     onChangeTopFareType: function (obj, value, cmp, strFunc) {
         console.log(meCompare.dataFareType_chart);
-        console.log(meCompare);        
+        console.log(meCompare);
         var data = meCompare.dataFareType_chart.items;
         var lstDataEdit = [];
 
@@ -1428,7 +1420,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-displaySAChart38').bindStore(storeChtSalesAnalysis36MSBC);
 
     },
-    
     /* ======================= ALLIANCES ====================================*/
     click_detailAlliances_colHandler: function (column, e, row, column, x, rowData) {
 
@@ -2037,5 +2028,5 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         win.displayProMasterTicket(this, 'Dashboard1', beanProMasterTicket);
     }
-       
+
 });
