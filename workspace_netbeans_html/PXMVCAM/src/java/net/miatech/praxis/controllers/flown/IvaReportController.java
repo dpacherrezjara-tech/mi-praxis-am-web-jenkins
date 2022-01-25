@@ -412,7 +412,7 @@ public class IvaReportController extends BaseController {
                 rcell30.setCellValue(listaData.get(vi).IVAOD);
                 rcell31.setCellValue(listaData.get(vi).OD);
                 rcell32.setCellValue(listaData.get(vi).CNXOD);
-                rcell33.setCellValue(listaData.get(vi).TASAOD2);
+                rcell33.setCellValue(listaData.get(vi).TASAOD);
                 rcell34.setCellValue(listaData.get(vi).BASEGRAOD2);
                 rcell35.setCellValue(listaData.get(vi).IVAOD2);
                 rcell36.setCellValue(listaData.get(vi).CURRLOCVT);
@@ -426,7 +426,7 @@ public class IvaReportController extends BaseController {
                 rcell44.setCellValue(listaData.get(vi).ODFCALVT);
                 rcell45.setCellValue(listaData.get(vi).RUTFCALOD);
                 rcell46.setCellValue(listaData.get(vi).CNXIR);
-                rcell47.setCellValue(listaData.get(vi).TASAOD);
+                rcell47.setCellValue(listaData.get(vi).TASAOD2);
                 rcell48.setCellValue(listaData.get(vi).ORIDES);
 
                 iter.next();
