@@ -140,8 +140,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 ['10', "Fare Type"],
                 ['11', "Routing Type"],
                 ['17', "GDS"],
-                ['18', "Compare Sales"],
-                ['19', "Compare Sales Day"]
+                ['18', "Comparison by Years"],
+                ['19', "Comparison by Days"]
             ]
         }));
         cmbSelectBy.setValue("1");
