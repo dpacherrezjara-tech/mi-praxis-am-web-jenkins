@@ -22,6 +22,7 @@ public class A3729 {
     public String NPAX = "";
     public String FNAME = "";
     public String LNAME = "";
+    public String SEQ = "";
     public String DFLIGHT = "";
     public String NFLIGHT = "";
     public String CDEPART = "";
