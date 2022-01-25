@@ -3119,7 +3119,7 @@ public class Dashboard01DAO {
 
         return lstRtn;
     }
-    
+
     public List<DashboardFilter> loadPX109SQP01526(DashboardFilter filter) throws SQLException, Exception {
 
         List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
@@ -3235,7 +3235,7 @@ public class Dashboard01DAO {
 
         return lstRtn;
     }
-    
+
     public List<DashboardFilter> loadPX109SQP01983(DashboardFilter filter) throws SQLException, Exception {
 
         List<DashboardFilter> lstRtn = new ArrayList<DashboardFilter>(0);
@@ -3687,6 +3687,259 @@ public class Dashboard01DAO {
         }
 
         return lista;
+    }
+
+    public List<DashboardFilter> loadPX109SQP00541(DashboardFilter filter) throws SQLException, Exception {
+        List<DashboardFilter> lista = new ArrayList<DashboardFilter>(0);
+        DashboardFilter bean;
+        int CUPONS = 0, CUPON_F = 0, CUPON_J = 0, CUPON_Y = 0;
+        double AMOUNT = 0, AMOUNT_F = 0, AMOUNT_J = 0, AMOUNT_Y = 0;
+        int QCPNSF = 0, CUPONF_F = 0, CUPONF_J = 0, CUPONF_Y = 0;
+        double AMOUNTF = 0, AMOUNTF_F = 0, AMOUNTF_J = 0, AMOUNTF_Y = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00541(?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_FECHA_FROM);
+            cstmt.setString(3, filter.IN_FECHA_TO);
+            cstmt.setString(4, filter.IN_ONOFF);
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+
+                CUPONS = rst.getInt("CUPONS");
+                CUPON_F = rst.getInt("CPN_F");
+                CUPON_J = rst.getInt("CPN_J");
+                CUPON_Y = rst.getInt("CPN_Y");
+                AMOUNT = rst.getDouble("AMOUNT");
+                AMOUNT_F = rst.getDouble("AMT_F");
+                AMOUNT_J = rst.getDouble("AMT_J");
+                AMOUNT_Y = rst.getDouble("AMT_Y");
+                //FLOWN
+                QCPNSF = rst.getInt("QCPNSF");
+                CUPONF_F = rst.getInt("CPNF_F");
+                CUPONF_J = rst.getInt("CPNF_J");
+                CUPONF_Y = rst.getInt("CPNF_Y");
+                AMOUNTF = rst.getDouble("AMOUNTF");
+                AMOUNTF_F = rst.getDouble("AMTF_F");
+                AMOUNTF_J = rst.getDouble("AMTF_J");
+                AMOUNTF_Y = rst.getDouble("AMTF_Y");
+            }
+
+            try {
+                rst.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    bean = new DashboardFilter();
+                    bean.DSALES = rst.getString("DSALES");
+                    bean.strFormatDate = Functions.getMonthConvert6(bean.DSALES);
+                    bean.CUPONS = rst.getInt("CUPONS");
+                    bean.CUPON_F = rst.getInt("CPN_F");
+                    bean.CUPON_J = rst.getInt("CPN_J");
+                    bean.CUPON_Y = rst.getInt("CPN_Y");
+                    bean.AMOUNT = rst.getDouble("AMOUNT");
+                    bean.AMOUNT_F = rst.getDouble("AMT_F");
+                    bean.AMOUNT_J = rst.getDouble("AMT_J");
+                    bean.AMOUNT_Y = rst.getDouble("AMT_Y");
+
+                    bean.TOTAL_CUPONS = CUPONS;
+                    bean.TOTCUPON_F = CUPON_F;
+                    bean.Perc1 = (bean.TOTAL_CUPONS > 0) ? (bean.TOTCUPON_F * 100.0) / bean.TOTAL_CUPONS : 0;
+                    bean.TOTCUPON_J = CUPON_J;
+                    bean.Perc2 = (bean.TOTAL_CUPONS > 0) ? (bean.TOTCUPON_J * 100.0) / bean.TOTAL_CUPONS : 0;
+                    bean.TOTCUPON_Y = CUPON_Y;
+                    bean.Perc3 = (bean.TOTAL_CUPONS > 0) ? (bean.TOTCUPON_Y * 100.0) / bean.TOTAL_CUPONS : 0;
+
+                    bean.TOTAL_AMOUNT = AMOUNT;
+                    bean.TOTAMOUNT_F = AMOUNT_F;
+                    bean.Perc4 = (bean.TOTAL_AMOUNT > 0) ? (bean.TOTAMOUNT_F * 100.0) / bean.TOTAL_AMOUNT : 0;
+                    bean.TOTAMOUNT_J = AMOUNT_J;
+                    bean.Perc5 = (bean.TOTAL_AMOUNT > 0) ? (bean.TOTAMOUNT_J * 100.0) / bean.TOTAL_AMOUNT : 0;
+                    bean.TOTAMOUNT_Y = AMOUNT_Y;
+                    bean.Perc6 = (bean.TOTAL_AMOUNT > 0) ? (bean.TOTAMOUNT_Y * 100.0) / bean.TOTAL_AMOUNT : 0;
+
+                    //FLOWN
+                    bean.QCPNSF = rst.getInt("QCPNSF");
+                    bean.CUPONF_F = rst.getInt("CPNF_F");
+                    bean.CUPONF_J = rst.getInt("CPNF_J");
+                    bean.CUPONF_Y = rst.getInt("CPNF_Y");
+                    bean.AMOUNTF = rst.getDouble("AMOUNTF");
+                    bean.AMOUNTF_F = rst.getDouble("AMTF_F");
+                    bean.AMOUNTF_J = rst.getDouble("AMTF_J");
+                    bean.AMOUNTF_Y = rst.getDouble("AMTF_Y");
+
+                    bean.TOTAL_CUPONSF = QCPNSF;
+                    bean.TOTCUPONF_F = CUPONF_F;
+                    bean.TOTCUPONF_J = CUPONF_J;
+                    bean.TOTCUPONF_Y = CUPONF_Y;
+
+                    bean.TOTAL_AMOUNTF = AMOUNTF;
+                    bean.TOTAMOUNTF_F = AMOUNTF_F;
+                    bean.TOTAMOUNTF_J = AMOUNTF_J;
+                    bean.TOTAMOUNTF_Y = AMOUNTF_Y;
+
+                    //Porcentaje usado Cupones
+                    bean.CUPONS_PERCENT = (bean.CUPONS > 0) ? ((bean.QCPNSF * 100.0) / bean.CUPONS) : 0;
+                    bean.CUPON_F_PER = (bean.CUPON_F > 0) ? ((bean.CUPONF_F * 100.0) / bean.CUPON_F) : 0;
+                    bean.CUPON_J_PER = (bean.CUPON_J > 0) ? ((bean.CUPONF_J * 100.0) / bean.CUPON_J) : 0;
+                    bean.CUPON_Y_PER = (bean.CUPON_Y > 0) ? ((bean.CUPONF_Y * 100.0) / bean.CUPON_Y) : 0;
+
+                    bean.TOTCUPON_F_PER = (bean.TOTCUPON_F > 0) ? ((bean.TOTCUPONF_F * 100.0) / bean.TOTCUPON_F) : 0;
+                    bean.TOTCUPON_J_PER = (bean.TOTCUPON_J > 0) ? ((bean.TOTCUPONF_J * 100.0) / bean.TOTCUPON_J) : 0;
+                    bean.TOTCUPON_Y_PER = (bean.TOTCUPON_Y > 0) ? ((bean.TOTCUPONF_Y * 100.0) / bean.TOTCUPON_Y) : 0;
+                    bean.TOTAL_CUPONS_PERCENTF = (bean.TOTAL_CUPONS > 0) ? ((bean.TOTAL_CUPONSF * 100.0) / bean.TOTAL_CUPONS) : 0;
+
+                    //Porcentaje usado Amount
+                    bean.AMOUNT_PERCENT = (bean.AMOUNT > 0) ? ((bean.AMOUNTF * 100.0) / bean.AMOUNT) : 0;
+                    bean.AMOUNT_F_PER = (bean.AMOUNT_F > 0) ? ((bean.AMOUNTF_F * 100.0) / bean.AMOUNT_F) : 0;
+                    bean.AMOUNT_J_PER = (bean.AMOUNT_J > 0) ? ((bean.AMOUNTF_J * 100.0) / bean.AMOUNT_J) : 0;
+                    bean.AMOUNT_Y_PER = (bean.AMOUNT_Y > 0) ? ((bean.AMOUNTF_Y * 100.0) / bean.AMOUNT_Y) : 0;
+
+                    bean.TOTAMOUNT_F_PER = (bean.TOTAMOUNT_F > 0) ? ((bean.TOTAMOUNTF_F * 100.0) / bean.TOTAMOUNT_F) : 0;
+                    bean.TOTAMOUNT_J_PER = (bean.TOTAMOUNT_J > 0) ? ((bean.TOTAMOUNTF_J * 100.0) / bean.TOTAMOUNT_J) : 0;
+                    bean.TOTAMOUNT_Y_PER = (bean.TOTAMOUNT_Y > 0) ? ((bean.TOTAMOUNTF_Y * 100.0) / bean.TOTAMOUNT_Y) : 0;
+                    bean.TOTAL_AMOUNT_PERCENTF = (bean.TOTAL_AMOUNT > 0) ? ((bean.TOTAL_AMOUNTF * 100.0) / bean.TOTAL_AMOUNT) : 0;
+
+                    lista.add(bean);
+                }
+            }
+        } catch (Exception e) {
+            //e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lista;
+    }
+
+    public List loadVentasA1426Agente_3(DashboardFilter filter) throws SQLException, Exception {
+
+        List listado = new ArrayList();
+        double total = 0.0, total_amountF = 0;
+        int total_cupons = 0, total_cuponsF = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP01203(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+        try {
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, session.getUserView().getCustomerInfoComplete().fileA005.A005KEY1);
+            cstmt01.setString(3, filter.IN_FECHA_FROM);
+            cstmt01.setString(4, filter.IN_FECHA_TO);
+            cstmt01.setString(5, filter.IN_PAIS.trim());
+            cstmt01.setString(6, filter.CANAV.trim());
+            cstmt01.setString(7, filter.CANAVT.trim());
+            cstmt01.setString(8, filter.IN_ONOFF.trim());
+
+            cstmt01.setInt(9, filter.page.PAGNUM);
+            cstmt01.setInt(10, filter.page.PAGROW);
+            cstmt01.setInt(11, filter.page.TOTPAG);
+            cstmt01.setInt(12, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(9);
+            filter.page.PAGROW = cstmt01.getInt(10);
+            filter.page.TOTPAG = cstmt01.getInt(11);
+            filter.page.TOTROW = cstmt01.getInt(12);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                total_cuponsF = rs01.getInt("QCPNSF");
+                total_amountF = rs01.getDouble("AMOUNTF");
+                total = rs01.getDouble("AMOUNT");
+                total_cupons = rs01.getInt("CUPONS");
+            }
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+
+                    HashMap hm = new HashMap();
+
+                    hm.put("IN_FECHA_FROM", filter.IN_FECHA_FROM);
+                    hm.put("IN_FECHA_TO", filter.IN_FECHA_TO);
+                    hm.put("IN_PAIS", filter.IN_PAIS);
+                    hm.put("CANAV", filter.CANAV);
+
+                    hm.put("COUNTRY", rs01.getString("COUNTRYS"));
+                    hm.put("VENDOR", rs01.getString("VENDOR"));
+                    hm.put("CANAV", rs01.getString("CANAV"));
+                    hm.put("COUNTRY_NAME", rs01.getString("DESCRIP"));
+                    hm.put("strDescription1", rs01.getString("DESCAGT"));
+                    hm.put("strDescription2", rs01.getString("DES_CANAV"));
+
+                    hm.put("CUPONS_PERCENTF", (rs01.getInt("CUPONS") > 0) ? ((rs01.getInt("QCPNSF") * 100.0) / rs01.getInt("CUPONS")) : 0);
+                    hm.put("CUPONS", rs01.getDouble("CUPONS"));
+                    hm.put("QCPNSF", rs01.getDouble("QCPNSF"));
+                    hm.put("AMOUNT", rs01.getDouble("AMOUNT"));
+                    hm.put("AMOUNTF", rs01.getDouble("AMOUNTF"));
+
+                    hm.put("TOTAL_CUPONS", total_cupons);
+                    hm.put("TOTAL_CUPONSF", total_cuponsF);
+                    hm.put("TOTAL_AMOUNT", total);
+                    hm.put("TOTAL_AMOUNTF", total_amountF);
+
+                    hm.put("CUPONS_PERCENTF", (rs01.getDouble("CUPONS") > 0) ? ((rs01.getDouble("QCPNSF") * 100.0) / rs01.getDouble("CUPONS")) : 0);
+                    hm.put("TARIFA", (rs01.getDouble("CUPONS") > 0) ? (rs01.getDouble("AMOUNT") / rs01.getDouble("CUPONS")) : 0);
+                    hm.put("CUPONS_PERCENT", (total_cupons > 0) ? ((rs01.getDouble("CUPONS") * 100.00) / total_cupons) : 0);
+                    hm.put("AMOUNT_PERCENT", (total > 0) ? ((rs01.getDouble("AMOUNT") * 100) / total) : 0);
+                    hm.put("TOTAL_CUPONS_PERCENTF", (total_cupons > 0) ? ((total_cuponsF * 100.0) / total_cupons) : 0);
+                    hm.put("TOTAL_AVG", (total_cupons > 0) ? (total / total_cupons) : 0);
+
+                    listado.add(hm);
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            setClose(rs01, cstmt01, null);
+        }
+
+        return listado;
     }
 
     /**

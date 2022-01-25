@@ -1091,6 +1091,73 @@ public class Dashboard01Controller extends BaseController {
         return new Gson().toJson(map);
     }
 
+    @RequestMapping(value = "loadCabinChart")
+    public @ResponseBody
+    String loadCabinChart(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        Gson gson = new Gson();
+        DashboardFilter filter;
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            lstData = logic.loadPX109SQP00541(filter);
+
+            map.put("success", true);
+            map.put("data", lstData);
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
+    //******************** Chart Agent *******************************************
+    @RequestMapping(value = "loadAgentChart_3")
+    public @ResponseBody
+    String loadAgentChart_3(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<DashboardFilter> lstData;
+        DashboardFilter filter = new DashboardFilter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = new Gson().fromJson(beanString, filter.getClass());
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstData = logic.loadVentasA1426Agente_3(filter);
+
+            map.put("success", true);
+
+            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+                String nameExcel = exportFieldsCompleto(request, response, lstData);
+                map.put("nameExcel", nameExcel);
+            } else {
+                map.put("data", lstData);
+            }
+
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+
     //******************** GDS *******************************************
     @RequestMapping(value = "loadGDS")
     public @ResponseBody
