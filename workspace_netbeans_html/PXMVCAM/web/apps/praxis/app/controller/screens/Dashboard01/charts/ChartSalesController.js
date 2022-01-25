@@ -419,6 +419,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
         Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-displaySaleCabinChart01').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displaySaleCabinChart01_amount').bindStore(storeGridDatas);
         //Sale vs Used        
         Ext.getCmp(prototype.id + '-gridDataCabin_boxChart3').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataCabin_boxChart3').setStore(storeGridDatas);
@@ -432,10 +433,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
             case 'C':
                 Ext.getCmp(prototype.id + '-ChartCabin1').setVisible(true);
                 Ext.getCmp(prototype.id + '-ChartCabin1_amount').setVisible(false);
+                Ext.getCmp(prototype.id + '-displaySaleCabinChart01').setVisible(true);
+                Ext.getCmp(prototype.id + '-displaySaleCabinChart01_amount').setVisible(false);
                 break;
             case 'A':
                 Ext.getCmp(prototype.id + '-ChartCabin1').setVisible(false);
                 Ext.getCmp(prototype.id + '-ChartCabin1_amount').setVisible(true);
+                Ext.getCmp(prototype.id + '-displaySaleCabinChart01').setVisible(false);
+                Ext.getCmp(prototype.id + '-displaySaleCabinChart01_amount').setVisible(true);
                 break;
         }
     },

@@ -2804,6 +2804,169 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                         }
                                     ]
                                 },
+                                {
+                                    xtype: 'cartesian',
+                                    id: prototype.id + '-displaySaleCabinChart01_amount',
+                                    border: false,
+                                    width: 1400,
+                                    height: 350,
+                                    hidden: true,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Sales per Cabin - Amount',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    /*legend: {
+                                     docked: 'bottom',
+                                     background: '#E3EAEF'
+                                     },*/
+                                    axes: [
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['AMOUNT_F', 'AMOUNT_J', 'AMOUNT_Y'],
+                                            minimum: 0,
+                                            grid: true,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        },
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'right',
+                                            fields: 'AMOUNT',
+                                            minimum: 0,
+                                            grid: true,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        },
+                                        , {
+                                            type: 'category3d',
+                                            position: 'bottom',
+                                            grid: true,
+                                            title: {
+                                                translationX: -30
+                                            }
+                                        },
+                                    ],
+                                    series: [
+                                        {
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            xField: 'strFormatDate',
+                                            yField: ['AMOUNT_F', 'AMOUNT_J', 'AMOUNT_Y'],
+                                            title: ['Offline', 'Business', 'Economy'],
+                                            colors: ['#CC0000', '#FFBF00', '#A5DF00'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            label: {
+                                                field: ['AMOUNT_F', 'AMOUNT_J', 'AMOUNT_Y'],
+//                                                            display: 'insideEnd',
+                                                /*display: 'outside',
+                                                 calloutLine: {
+                                                 length: 10,
+                                                 width: 0,
+                                                 //                                                                color: '#FFFFFF',
+                                                 },*/
+                                                renderer: function (value, b, callout) {
+                                                    //callout.calloutVertical = false;
+                                                    //return Ext.util.Format.number(value, '0')
+                                                    return ''
+                                                }
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    if (ctx.field === 'AMOUNT_F') {
+                                                        label = 'Offline';
+                                                    } else if (ctx.field === 'AMOUNT_J') {
+                                                        label = 'Business';
+                                                    } else if (ctx.field === 'AMOUNT_Y') {
+                                                        label = 'Economy';
+                                                    }
+                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            },
+                                            //renderer: 'onColumnRender'
+                                        },
+                                        {
+                                            type: 'line',
+                                            stacked: true,
+                                            xField: 'strFormatDate',
+                                            yField: 'AMOUNT',
+                                            style: {
+                                                fill: '#1c50c9',
+                                                stroke: '#d4d396',
+                                                lineWidth: 2
+                                            },
+                                            marker: {
+                                                radius: 4,
+                                                lineWidth: 2
+                                            },
+                                            label: {
+                                                field: 'AMOUNT',
+                                                display: 'over',
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutVertical = false;
+                                                    //return Ext.util.Format.number(value, '0')
+                                                    return ''
+                                                }
+                                            },
+                                            markerConfig: {
+                                                radius: 4
+                                            },
+                                            highlight: {
+                                                fill: '#1c50c9',
+                                                radius: 5,
+                                                'stroke-width': 2,
+                                                stroke: '#fff'
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                style: 'background: #FFF',
+                                                height: 20,
+                                                showDelay: 0,
+                                                dismissDelay: 0,
+                                                hideDelay: 0,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    toolTip.setHtml('Total Amount : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            },
+                                            //renderer: 'onColumnRender'
+                                        }
+                                    ]
+                                },
                             ]
                         }
                     ]
