@@ -89,7 +89,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", ""],
+                ["", "None"],
                 ["A", "Adult"],
                 ["C", "Child"],
                 ["I", "Infant"]
@@ -125,6 +125,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
+                ["", "None"],
                 ["0", "Existe"],
                 ["1", "No existe"]
             ]
@@ -136,6 +137,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
+                ["", "None"],
                 ["0", "Not Found"], 
                 ["1", "Found"], 
                 ["2", "Found but not matching coupon"],
@@ -146,11 +148,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
 //        cmbFSABRE.setValue('0');
 
     },
-    //<editor-fold defaultstate="collapsed" desc="llenarData">
+    
     llenarData: function(beanTemp) {
 
         beanTemp.TICKET = this.getValue("txtTICKET");
+        beanTemp.TICKET_2 = this.getValue("txtTICKET_2");
         beanTemp.CUPON = this.getValue("txtCUPON");
+        beanTemp.CUPON_2 = this.getValue("txtCUPON_2");
+        
+        beanTemp.SEQ = this.bean.data.SEQ;
+        beanTemp.LNKMVLO = this.bean.data.LNKMVLO;
         
         beanTemp.DFLIGHT = this.getValue("txtDFLIGHT");
         beanTemp.NFLIGHT = this.getValue("txtNFLIGHT");
@@ -166,7 +173,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
         beanTemp.STVAL = this.getValue("cmbSTVAL");
         beanTemp.STVCR = this.getValue("cmbSTVCR");
         beanTemp.FSALES = this.getValue("cmbFSALES");
+        if(beanTemp.FSALES === null){
+            beanTemp.FSALES = '';
+        }
+        
         beanTemp.FSABRE = this.getValue("cmbFSABRE");
+        if(beanTemp.FSABRE === null){
+            beanTemp.FSABRE = '';
+        }
+        
         beanTemp.STASABR = this.getValue("txtSTASABR").trim();;
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
@@ -176,9 +191,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
         beanTemp.FEUP = this.getValue("txtFEUP").trim();
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
 
-//        console.log(beanTemp);
+        console.log(beanTemp);
 
     },
+    
     getData: function() {
         var beanString = JSON.stringify(meDE.bean.data);
 
@@ -197,7 +213,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             }
         });
     },
-    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function() {
@@ -220,33 +235,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
 //        console.log(value);
 //        console.log(opts);
     },
-    // <editor-fold defaultstate="collapsed" desc="Botones">
-    onSaveClick: function(btn) {
-        
-        /*
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Are you sure to insert ?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function(btn) {
-                if (btn === 'yes') {
-                    var beanTemp = {};
-                    this.llenarData(beanTemp);
-                    var msjResult = this.validacionInsert(beanTemp);
-                    if (msjResult === '') {
-                        beanTemp.option = 'I';
-                        this.MaintenanceA3729(beanTemp);
-                    } else {
-                        global.Msg({msg: msjResult});
-                    }
-                }
-            }
-        });
-        */
-    },
+
     onUpdateClick: function(btn) {
         Ext.Msg.show(
         {
@@ -262,38 +251,50 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                     var beanTemp = {};
                     this.llenarData(beanTemp);
                     beanTemp.option = 'U';
-                    this.MaintenanceA3729(beanTemp);
+                    this.validTktExists(beanTemp);
                 }
             }
         });
     },
-    onDeleteClick: function(btn) {
-        /*
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Are you sure to delete ?',
-            buttons: Ext.MessageBox.YESNO,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function(btn) {
-                if (btn === 'yes') {
-                    var beanTemp = {};
-                    this.llenarData(beanTemp);
-                    beanTemp.option = 'D';
-                    this.MaintenanceA3729(beanTemp);
+    
+    validTktExists: function(beanTemp) {
+//        var msjResult = '';
+        
+        var beanString = JSON.stringify(beanTemp);
+        Ext.Ajax.request({
+            url: prototype.url + '/validTktExists',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: beanString},
+            beforerequest: Ext.getCmp(prototype.id + '-DataEntryA3729').mask('Loading...'),
+            success: function(response, opts) {
+                Ext.getCmp(prototype.id + '-DataEntryA3729').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+                                
+                if (res.success) {
+                    if(res.existeTKT){
+                        global.Msg({msg: 'Ticket Already Exists'});
+                    }else{
+                        // Si no existe el ticket se inserta en A3729
+                        meDE.MaintenanceA3729(beanTemp);
+                    }
+                }else{
+                    global.Msg({msg: 'Error validate'});
                 }
             }
         });
-        */
     },
+    
+    
     onCancelClick: function(btn) {
         this.view.close();
     },
-    // </editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
+    //<editor-fold defaultstate="collapsed" desc="MaintenanceA3729">
     MaintenanceA3729: function(beanTemp) {
+        
+        console.log('ACTUALIZAR');
         
         var beanString = JSON.stringify(beanTemp);
         Ext.Ajax.request({
@@ -301,12 +302,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             method: 'POST',
             timeout: 60000000,
             params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            beforerequest: Ext.getCmp(prototype.id + '-DataEntryA3729').mask('Loading...'),
             success: function(response, opts) {
                 Ext.getCmp(prototype.id + '-DataEntryA3729').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
-
+//
                 if (res.success) {
                     global.Msg({msg: res.Mensaje});
                     Ext.getCmp(prototype.id + '-DataEntryA3729').unmask();

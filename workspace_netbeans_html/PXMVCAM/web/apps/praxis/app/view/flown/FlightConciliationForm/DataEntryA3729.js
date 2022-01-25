@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
     controller: 'DataEntryA3729Controller',
     title: 'Flight Manifest - Data Entry Form',
     header: true,
-    height: 470,
+    height: 480,
     width: 790,
     border: false,
     resizable: false,
@@ -60,7 +60,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                             enforceMaxLength: true,
                             allowBlank: false,
                             maskRe: /[0-9]/,
-                            maxLength: 14,
+                            maxLength: 13,
                             readOnly: true,
                             width: 100,
                             enableKeyEvents: true
@@ -125,6 +125,87 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                         */
                     ]
                 },
+                //<editor-fold defaultstate="collapsed" desc="Fila 2">
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    margin: '10 0 0 2',
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
+                        {
+                            xtype: 'label',
+                            text: 'New Ticket',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 110,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'CCIA(3) + FORMA(4) + SERIE(6) + CUPON (1)'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtTICKET_2',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+//                            allowBlank: false,
+                            maskRe: /[0-9]/,
+                            maxLength: 13,
+//                            readOnly: true,
+                            width: 100,
+                            enableKeyEvents: true
+                        },
+                        {xtype: 'tbspacer', width: 41},
+                        {
+                            xtype: 'label',
+                            text: 'New Coupon',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 90
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCUPON_2',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+//                            allowBlank: false,
+//                            readOnly: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 1,
+                            width: 35
+                        },
+                        /*
+                        {xtype: 'tbspacer', width: 65},
+                        {
+                            xtype: 'label',
+                            text: 'Sequence',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 90
+                        },
+                        {
+                            xtype: 'label',
+                            text: '(*)',
+                            style: 'font-weight:bold;color:red;',
+                            width: 20,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Mandatory Field'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 10},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtSEQ',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            readOnly: true,
+                            maxLength: 2,
+                            width: 50
+                        }
+                        */
+                    ]
+                },
+                //</editor-fold>
                 //</editor-fold>
                 //<editor-fold defaultstate="collapsed" desc="Flight Information">
                 {
@@ -181,6 +262,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     allowBlank: false,
+                                    readOnly: true,
                                     maskRe: /[0-9]/,
                                     maxLength: 8,
                                     width: 100,
@@ -218,6 +300,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryA3729', {
                                     fieldStyle: 'text-align:left;',
                                     valueField: 'code',
                                     displayField: 'name',
+                                    allowBlank: true,
                                     width: 80,
                                     editable: false
                                 }
