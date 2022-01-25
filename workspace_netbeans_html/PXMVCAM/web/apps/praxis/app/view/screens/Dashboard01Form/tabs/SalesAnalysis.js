@@ -3945,7 +3945,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 {xtype: 'tbspacer', height: 5},
                                                 {
                                                     xtype: 'slider',
-                                                    id: 'averps',
                                                     fieldLabel: 'Top',
                                                     width: 15,
                                                     hideLabel: true,
@@ -4803,7 +4802,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                     },
                                                     renderer: function (obj, value) {
                                                         if (value > 1) {
-                                                            return ' ' + (value / 1000000) + 'M ';
+                                                            return ' ' + Ext.util.Format.number((value / 1000000), '0,000')  + 'M ';
                                                         } else {
                                                             return '';
                                                         }
@@ -4861,7 +4860,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 {xtype: 'tbspacer', height: 5},
                                                 {
                                                     xtype: 'slider',
-                                                    id: 'averps',
                                                     fieldLabel: 'Top',
                                                     width: 15,
                                                     hideLabel: true,

@@ -127,7 +127,6 @@ public class Dashboard01Logic {
     }
 
 // ===================================== FARE TYPE ========================================================================
-    
     public List<DashboardFilter> loadPX109SQP01523(DashboardFilter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01523(filter);
     }
@@ -143,7 +142,7 @@ public class Dashboard01Logic {
     public List<DashboardFilter> loadPX109SQP01526(DashboardFilter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01526(filter);
     }
-    
+
     public List<DashboardFilter> loadPX109SQP01983(DashboardFilter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01983(filter);
     }
@@ -161,6 +160,15 @@ public class Dashboard01Logic {
 
     public List<DashboardFilter> loadPX109SQP00540(DashboardFilter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP00540(filter);
+    }
+
+    public List<DashboardFilter> loadPX109SQP00541(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00541(filter);
+    }
+
+    /*Chart Agente*/
+    public List loadVentasA1426Agente_3(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadVentasA1426Agente_3(filter);
     }
 
     /**
