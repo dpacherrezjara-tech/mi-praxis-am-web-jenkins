@@ -3084,7 +3084,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.TOTAL_CUPONS_PERCENTF, '0,000.00') + '<b>';
                                                                 }
                                                             },
@@ -3133,7 +3133,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.TOTCUPON_F_PER, '0,000.00') + '<b>';
                                                                 }
                                                             },
@@ -3182,7 +3182,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.TOTCUPON_J_PER, '0,000.00') + '<b>';
                                                                 }
                                                             },
@@ -3231,8 +3231,255 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
                                                                     return '<b>' + Ext.util.Format.number(data.TOTCUPON_Y_PER, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataCabin_boxChart3_amount',
+                                    width: 1194,
+                                    height: 345,
+                                    columnLines: true,
+                                    hidden: true,
+                                    border: false,
+                                    margin: "5 0 0 0",
+                                    bodyStyle: 'background-color: #E3EAEF;',
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Sales',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'strFormatDate', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center";
+                                                            value = '<b>' + value + '</b>';
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Total',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Sale', dataIndex: 'AMOUNT', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Flown', dataIndex: 'AMOUNTF', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNTF, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: '% Used', dataIndex: 'AMOUNT_PERCENT', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAL_AMOUNT_PERCENTF, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Offline',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Sale', dataIndex: 'AMOUNT_F', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_F, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Flown', dataIndex: 'AMOUNTF_F', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNTF_F, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: '% Used', dataIndex: 'AMOUNT_F_PER', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_F_PER, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'C(Business)',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Sale', dataIndex: 'AMOUNT_J', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Flown', dataIndex: 'AMOUNTF_J', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNTF_J, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: '% Used', dataIndex: 'AMOUNT_J_PER', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:center; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_J_PER, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Y(Economy)',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Sale', dataIndex: 'AMOUNT_Y', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Flown', dataIndex: 'AMOUNTF_Y', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    value = Ext.util.Format.number(value, '0,000');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNTF_Y, '0,000') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: '% Used', dataIndex: 'AMOUNT_Y_PER', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:center;";
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return  value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDataCabin_boxChart2').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.TOTAMOUNT_Y_PER, '0,000.00') + '<b>';
                                                                 }
                                                             },
                                                         ]
@@ -3254,6 +3501,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                             },
                             bodyStyle: 'background-color: transparent;',
                             items: [
+                                {
+                                    xtype: 'radiogroup',
+                                    id: prototype.id + '-radiogroupType_tc2',
+                                    width: 180,                                   
+                                    items: [
+                                        {boxLabel: '<b style="color:#148D28;">Coupons</b>', inputValue: 'C', name: 'rbgType_tc2', checked: true},
+                                        {boxLabel: '<b style="color:#148D28;">Amount</b>', inputValue: 'A', name: 'rbgType_tc2'},
+                                    ],
+                                    listeners: {
+                                        change: 'rbChangeType_tc'
+                                    }
+                                },
                                 {
                                     xtype: 'cartesian',
                                     id: prototype.id + '-displaySaleCabinChart02',
@@ -3349,6 +3608,111 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     } else if (ctx.field === 'CUPON_Y') {
                                                         label = 'Economy';
                                                     } else if (ctx.field === 'CUPONF_Y') {
+                                                        label = 'Flown';
+                                                    }
+                                                    toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                }
+                                            },
+                                            //renderer: 'onColumnRender'
+                                        },
+                                    ]
+                                },
+                                {
+                                    xtype: 'cartesian',
+                                    id: prototype.id + '-displaySaleCabinChart02_amount',
+                                    border: false,
+                                    width: 1194,
+                                    height: 350,
+                                    hidden: true,
+                                    background: '#E0F8F7',
+                                    captions: {
+                                        title: {
+                                            text: 'Sales per Cabin - Amount',
+                                            alignTo: 'chart'
+                                        }
+                                    },
+                                    animation: {
+                                        duration: 200
+                                    },
+                                    interactions: ['itemhighlight'],
+                                    /*legend: {
+                                     docked: 'bottom',
+                                     background: '#E3EAEF'
+                                     },*/
+                                    axes: [
+                                        {
+                                            type: 'numeric3d',
+                                            position: 'left',
+                                            fields: ['AMOUNT_F', 'AMOUNTF_F', 'AMOUNT_J', 'AMOUNTF_J', 'AMOUNT_Y', 'AMOUNTF_Y'],
+                                            minimum: 0,
+                                            grid: true,
+                                            title: '',
+                                            renderer: function (obj, value) {
+                                                if (value > 1) {
+                                                    if ((value / 1000).toString().length > 3) {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                    } else {
+                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                    }
+                                                } else {
+                                                    return '';
+                                                }
+                                            }
+                                        },
+                                        , {
+                                            type: 'category3d',
+                                            position: 'bottom',
+                                            grid: true,
+                                            title: {
+                                                translationX: -30
+                                            }
+                                        },
+                                    ],
+                                    series: [
+                                        {
+                                            type: 'bar3d',
+                                            stacked: false,
+                                            xField: 'strFormatDate',
+                                            yField: ['AMOUNT_F', 'AMOUNTF_F', 'AMOUNT_J', 'AMOUNTF_J', 'AMOUNT_Y', 'AMOUNTF_Y'],
+                                            title: ['Offline', 'Flown', 'Business', 'Flown', 'Economy', 'Flown'],
+                                            colors: ['#CC0000', '#004adf', '#FFBF00', '#004adf', '#A5DF00', '#004adf'],
+                                            highlight: true,
+                                            style: {
+                                                inGroupGapWidth: -7,
+                                                minGapWidth: 2,
+                                                maxBarWidth: 1200
+                                            },
+                                            label: {
+                                                field: ['AMOUNT_F', 'AMOUNTF_F', 'AMOUNT_J', 'AMOUNTF_J', 'AMOUNT_Y', 'AMOUNTF_Y'],
+//                                                            display: 'insideEnd',
+                                                //display: 'outside',
+                                                /*calloutLine: {
+                                                 length: 10,
+                                                 width: 0,
+                                                 //                                                                color: '#FFFFFF',
+                                                 },*/
+                                                renderer: function (value, b, callout) {
+                                                    //callout.calloutVertical = false;
+                                                    //return Ext.util.Format.number(value, '0')
+                                                    return ''
+                                                }
+                                            },
+                                            tooltip: {
+                                                trackMouse: true,
+                                                height: 28,
+                                                renderer: function (toolTip, record, ctx) {
+                                                    var label = '';
+                                                    if (ctx.field === 'AMOUNT_F') {
+                                                        label = 'Offline';
+                                                    } else if (ctx.field === 'AMOUNTF_F') {
+                                                        label = 'Flown';
+                                                    } else if (ctx.field === 'AMOUNT_J') {
+                                                        label = 'Business';
+                                                    } else if (ctx.field === 'AMOUNTF_J') {
+                                                        label = 'Flown';
+                                                    } else if (ctx.field === 'AMOUNT_Y') {
+                                                        label = 'Economy';
+                                                    } else if (ctx.field === 'AMOUNTF_Y') {
                                                         label = 'Flown';
                                                     }
                                                     toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
