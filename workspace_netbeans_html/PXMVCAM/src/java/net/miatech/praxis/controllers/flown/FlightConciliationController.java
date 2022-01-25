@@ -3456,14 +3456,21 @@ public class FlightConciliationController extends BaseController {
 
         try {
 
-//            option = request.getParameter("option");
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A3729Filter.class);
 
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             
-            msj = logic.SQP04320(filter);
+            if(filter.TICKET_2.equals("")){
+                
+                //Update normal, sin ticket
+                msj = logic.SQP04320(filter);
+            }else{
+                
+                //update con ticket
+                msj = logic.SQP04323(filter);
+            }
 
             map.put("success", true);
             map.put("Mensaje", msj);
@@ -3477,6 +3484,43 @@ public class FlightConciliationController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    @RequestMapping(value = "validTktExists")
+    public @ResponseBody
+    String validTktExists(ModelMap map, HttpServletRequest request) throws Exception {
+
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        String option;
+        String beanString;
+        Gson gson = new Gson();
+
+        A3729Filter filter = new A3729Filter();
+//        String msj = "";
+        boolean existeTKT = false;
+
+        try {
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            if(!filter.TICKET_2.equals("")){
+                existeTKT = logic.SQP04321(filter);
+            }
+            
+            map.put("success", true);
+            map.put("existeTKT", existeTKT);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
     
     
 }

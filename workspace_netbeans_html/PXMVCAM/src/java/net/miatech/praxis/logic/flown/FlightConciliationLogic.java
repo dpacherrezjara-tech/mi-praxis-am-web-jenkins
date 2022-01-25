@@ -119,4 +119,14 @@ public class FlightConciliationLogic {
         return objDAO.SQP04320(filter);
     }
     
+    public boolean SQP04321(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04321(filter);
+    }
+    
+    public String SQP04323(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04323(filter);
+    }
+    
+    
+    
 }
