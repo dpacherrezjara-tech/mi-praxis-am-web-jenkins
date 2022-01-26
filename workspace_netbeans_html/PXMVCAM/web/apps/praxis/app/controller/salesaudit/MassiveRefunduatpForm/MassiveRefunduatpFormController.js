@@ -124,11 +124,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "U", "name": "WITH USES"},
                 {"code": "T", "name": "ATO ERROR"},
                 {"code": "B", "name": "TAX ERROR"},
+                {"code": "C", "name": "TICKET DOES NOT EXIST"},
                 {"code": "H", "name": "HIGHER AMOUNT FOR SALE"},
                 {"code": "M", "name": "MODIFIED"},
-                {"code": "R", "name": "REJECT"}
-
-
+                {"code": "R", "name": "REJECT"}                
+                
             ]
         }));
 
@@ -410,6 +410,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 color = '#E5B2B2';
                 value = 'REJECT';
                 break;
+            case 'C':
+                color = '#FAC8D5';
+                value = 'TICKET DOES NOT EXIST';
+                break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
@@ -430,6 +434,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'F':
                 color = '#F3F781';
                 value = 'CAPTURED BPO';
+                break;
+             case 'C':
+                color = '#FAB9A4';
+                value = 'CANC';
                 break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
