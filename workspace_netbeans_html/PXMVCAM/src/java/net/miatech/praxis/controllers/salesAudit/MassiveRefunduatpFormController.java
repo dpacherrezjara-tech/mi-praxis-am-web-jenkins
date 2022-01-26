@@ -1540,7 +1540,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16,CH_17;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -1561,6 +1561,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             CH_14 = row.createCell(14);
             CH_15 = row.createCell(15);
             CH_16 = row.createCell(16);
+            CH_17 = row.createCell(17);
 
             CH_00.setCellValue("Base");
             CH_01.setCellValue("Type");
@@ -1579,6 +1580,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             CH_14.setCellValue("Neto");
             CH_15.setCellValue("Status");
             CH_16.setCellValue("BPO");
+            CH_17.setCellValue("Group");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -1597,6 +1599,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -1615,6 +1618,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             CH_14.setCellStyle(headerStyle);
             CH_15.setCellStyle(headerStyle);
             CH_16.setCellStyle(headerStyle);
+            CH_17.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -1639,6 +1643,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
                 CH_16 = row.createCell(16);
+                 CH_16 = row.createCell(17);
 
                 CH_00.setCellValue(listaData.get(vi).A4076BASE);
                 CH_01.setCellValue(listaData.get(vi).A4076TYPE);
@@ -1687,6 +1692,9 @@ public class MassiveRefunduatpFormController extends BaseController {
                     case "R":
                         vl_A4076FLAG = "REJECT";
                         break;
+                    case "C":
+                        vl_A4076FLAG = "TICKET DOES NOT EXIST";
+                        break;
                 }
                 CH_15.setCellValue(vl_A4076FLAG);
                 String vl_A4076STAT = "";
@@ -1695,13 +1703,17 @@ public class MassiveRefunduatpFormController extends BaseController {
                         vl_A4076STAT = "PENDING";
                         break;
                     case "E":
-                        vl_A4076STAT = "SEND BPO";
+                        vl_A4076STAT = "ERROR BPO";
                         break;
                     case "F":
                         vl_A4076STAT = "CAPTURED BPO";
                         break;
+                    case "C":
+                        vl_A4076STAT = "CANC";
+                        break;
                 }
                 CH_16.setCellValue(vl_A4076STAT);
+                CH_17.setCellValue(listaData.get(vi).A4076GRUPO);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -1720,6 +1732,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 CH_14.setCellStyle(bodyStyle);
                 CH_15.setCellStyle(bodyStyle);
                 CH_16.setCellStyle(bodyStyle);
+                CH_17.setCellStyle(bodyStyle);
 
                 // </editor-fold>
                 iter.next();
