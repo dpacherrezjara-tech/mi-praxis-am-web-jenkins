@@ -207,7 +207,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                             me.lstTotales = res.lstTotales;
                             for (var i = 0; i < me.lstTotales.length; i++) {
                                 me.lstTotales[i].totQKMS = 100;
-                                me.lstTotales[i].VENDOR = me.lstTotales[i].TYPE + ' , ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
+                                var label = me.lstTotales[i].TYPE;
+                                if (label === 'SALE') {
+                                    label = 'SALES';
+                                }
+                                me.lstTotales[i].VENDOR = label + ' , ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
                                 ;
                             }
 
