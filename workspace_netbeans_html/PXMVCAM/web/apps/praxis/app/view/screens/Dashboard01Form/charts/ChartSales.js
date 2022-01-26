@@ -541,7 +541,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
 //                                                                        label = 'Diff';
 //                                                                    }
 //                                                                    toolTip.setHtml(record.get('TOOLTIP'));
-                                                                    toolTip.setHtml(record.get('TYPE') + ' , ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '%' + '</b>');
+                                                                    label = record.get('TYPE');
+                                                                    if (label === 'SALE'){
+                                                                        label = 'SALES';
+                                                                    }
+                                                                    toolTip.setHtml(label + ' , ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '%' + '</b>');
                                                                 }
                                                             }
                                                         }]
@@ -738,7 +742,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             series: [{
                                                     type: 'bar3d',
                                                     stacked: false,
-                                                    title: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALE'],
+                                                    title: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALES'],
                                                     xField: 'mes',
                                                     yField: ['ACMS', 'ADMS', 'EXCH', 'RFND', 'SALE'],
                                                     colors: ['#ff9900', '#0066ff', '#CC0000', '#ffff99', '#339933'],
@@ -762,7 +766,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             } else if (ctx.field === 'RFND') {
                                                                 label = 'RFND';
                                                             } else if (ctx.field === 'SALE') {
-                                                                label = 'SALE';
+                                                                label = 'SALES';
                                                             }
                                                             toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                         }
@@ -3050,7 +3054,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'CUPONS', width: 90,
+                                                                text: 'Sales', dataIndex: 'CUPONS', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -3099,7 +3103,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'CUPON_F', width: 90,
+                                                                text: 'Sales', dataIndex: 'CUPON_F', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -3148,7 +3152,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'CUPON_J', width: 90,
+                                                                text: 'Sales', dataIndex: 'CUPON_J', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -3197,7 +3201,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'CUPON_Y', width: 90,
+                                                                text: 'Sales', dataIndex: 'CUPON_Y', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -3297,7 +3301,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'AMOUNT', width: 90,
+                                                                text: 'Sales', dataIndex: 'AMOUNT', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -3346,7 +3350,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'AMOUNT_F', width: 90,
+                                                                text: 'Sales', dataIndex: 'AMOUNT_F', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -3395,7 +3399,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'AMOUNT_J', width: 90,
+                                                                text: 'Sales', dataIndex: 'AMOUNT_J', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');
@@ -3444,7 +3448,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         },
                                                         columns: [
                                                             {
-                                                                text: 'Sale', dataIndex: 'AMOUNT_Y', width: 90,
+                                                                text: 'Sales', dataIndex: 'AMOUNT_Y', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     value = Ext.util.Format.number(value, '0,000');

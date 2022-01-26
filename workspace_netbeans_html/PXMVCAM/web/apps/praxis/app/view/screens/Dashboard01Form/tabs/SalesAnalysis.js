@@ -387,7 +387,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 }
                                             },
                                             {
-                                                text: 'Country of Sale', dataIndex: 'COUNTRY_NAME', width: 200, id: prototype.id + '-lbl_Country',
+                                                text: 'Country of Sales', dataIndex: 'COUNTRY_NAME', width: 200, id: prototype.id + '-lbl_Country',
                                                 listeners: {
                                                     click: 'GridDDTMDetailbyAgent_colHandler'
                                                 },
@@ -4166,7 +4166,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                         },
                                     },
                                     {
-                                        text: 'Country of Sale', dataIndex: 'COUNTRY_NAME', width: 250, align: 'center',
+                                        text: 'Country of Sales', dataIndex: 'COUNTRY_NAME', width: 250, align: 'center',
                                         listeners: {
                                             click: 'click_detailAgenteAlliances_colHandler'
 //                                                        args: ['MIN']
