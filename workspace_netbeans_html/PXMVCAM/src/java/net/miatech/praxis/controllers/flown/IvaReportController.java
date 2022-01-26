@@ -7,6 +7,7 @@ package net.miatech.praxis.controllers.flown;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1952Filter;
 import net.miatech.beans.A2559Filter;
 import net.miatech.praxis.controllers.BaseController;
+import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.flown.filter.A4161Filter;
 import net.miatech.praxis.logic.flown.AccountedAmountsInvoicedLogic;
@@ -450,4 +452,23 @@ public class IvaReportController extends BaseController {
 
     }
 
+        public Boolean zip(String fileName){
+        String path = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Boolean existe = false;
+        try {
+            File fileZip = new File( path + "\\" + fileName + ".zip");
+            
+            if (fileZip.exists())
+                fileZip.delete();
+            
+            zipFile(new File(path + "\\" + fileName + ".csv"), path + "\\" + fileName + ".zip");
+            
+            existe = true;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return existe;
+    }
+    
 }

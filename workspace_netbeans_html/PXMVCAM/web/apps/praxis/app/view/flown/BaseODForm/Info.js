@@ -69,7 +69,7 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.Info', {
                                     return value;
                                 }
                             },
-                            {text: 'Rate S / Sale', width: 100,  dataIndex: 'A051CANTI1',
+                            {text: 'Rate S / OD', width: 100,  dataIndex: 'A051CANTI1',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:right;";
                                     return value;
