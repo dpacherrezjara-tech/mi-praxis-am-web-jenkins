@@ -13,6 +13,7 @@ public class A3729 {
     
     public String CCUST = "";
     public String CHAIR = "";
+    public String TICKET = "";
     public String CIA = "";
     public String FORMA = "";
     public String SERIE = "";
@@ -21,6 +22,7 @@ public class A3729 {
     public String NPAX = "";
     public String FNAME = "";
     public String LNAME = "";
+    public String SEQ = "";
     public String DFLIGHT = "";
     public String NFLIGHT = "";
     public String CDEPART = "";

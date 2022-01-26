@@ -718,8 +718,8 @@ public class FlightConciliationDAO {
 
         try {
 
-            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?,?)}";
-//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG_1(?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?)}";
+//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -744,6 +744,7 @@ public class FlightConciliationDAO {
 //                beanCons.NPAX = rst.getString("NPAX").trim();
                 beanCons.FNAME = rst.getString("FNAME").trim();
                 beanCons.LNAME = rst.getString("LNAME").trim();
+                beanCons.SEQ = rst.getString("SEQ").trim();
                 beanCons.DFLIGHT = rst.getString("DFLIGHT").trim();
                 beanCons.strFormatDate = Functions.getMonthConvert(beanCons.DFLIGHT);
 //                beanCons.strDescripcion = Functions.getMonthConvert(beanCons.DFLIGHT);
@@ -773,11 +774,11 @@ public class FlightConciliationDAO {
                 beanCons.STASABR = rst.getString("STASABR").trim();
 
                 beanCons.FSALES = rst.getString("FSALES").trim();
-//                if(rst.getString("FSALES").trim().equals("0")){
-//                    beanCons.descFSALES = "Not found";
-//                } else if (rst.getString("FSALES").trim().equals("1")) {
-//                    beanCons.descFSALES = "Found";
-//                }
+                if(beanCons.FSALES.equals("0")){
+                    beanCons.descFSALES = "No existe";
+                } else if (beanCons.FSALES.equals("1")) {
+                    beanCons.descFSALES = "Existe";
+                }
 
                 beanCons.LNKMVLO = rst.getString("LNKMVLO").trim();
                 beanCons.STVCR = rst.getString("STVCR").trim();
@@ -806,11 +807,18 @@ public class FlightConciliationDAO {
                 }
 
                 beanCons.FA720 = rst.getString("FA720").trim();
-                if (rst.getString("FA720").trim().equals("")) {
-                    beanCons.descFSALES = "";
-                } else {
-                    beanCons.descFSALES = "Yes";
-                }
+//                if (rst.getString("FA720").trim().equals("")) {
+//                    beanCons.descFSALES = "";
+//                } else {
+//                    beanCons.descFSALES = "Yes";
+//                }
+                
+                beanCons.USCR = rst.getString("USCR").trim();
+                beanCons.FECR = rst.getString("FECR").trim();
+                beanCons.HOCR = rst.getString("HOCR").trim();
+                beanCons.USUP = rst.getString("USUP").trim();
+                beanCons.FEUP = rst.getString("FEUP").trim();
+                beanCons.HOUP = rst.getString("HOUP").trim();
 
                 lstCons.add(beanCons);
 
@@ -2117,11 +2125,11 @@ public class FlightConciliationDAO {
                 beanCons.STASABR = rst.getString("STASABR").trim();
 
                 beanCons.FSALES = rst.getString("FSALES").trim();
-//                if(rst.getString("FSALES").trim().equals("0")){
-//                    beanCons.descFSALES = "Not found";
-//                } else if (rst.getString("FSALES").trim().equals("1")) {
-//                    beanCons.descFSALES = "Found";
-//                }
+                if(rst.getString("FSALES").trim().equals("0")){
+                    beanCons.descFSALES = "No existe";
+                } else if (rst.getString("FSALES").trim().equals("1")) {
+                    beanCons.descFSALES = "Existe";
+                }
 
                 beanCons.LNKMVLO = rst.getString("LNKMVLO").trim();
                 beanCons.STVCR = rst.getString("STVCR").trim();
@@ -2150,11 +2158,11 @@ public class FlightConciliationDAO {
                 }
 
                 beanCons.FA720 = rst.getString("FA720").trim();
-                if (rst.getString("FA720").trim().equals("")) {
-                    beanCons.descFSALES = "";
-                } else {
-                    beanCons.descFSALES = "Yes";
-                }
+//                if (rst.getString("FA720").trim().equals("")) {
+//                    beanCons.descFSALES = "";
+//                } else {
+//                    beanCons.descFSALES = "Yes";
+//                }
 
                 lstCons.add(beanCons);
 
@@ -2261,4 +2269,177 @@ public class FlightConciliationDAO {
         return result;
     }
 
+    public String SQP04320(A3729Filter filter) throws SQLException, Exception {
+        //REALIZA UPDATE  DE UN REGISTRO EN LA TABLA A3729.
+        
+        String strMsj = "";
+        CallableStatement cstmt = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, filter.option.trim());
+            cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
+            cstmt.setString(3, filter.TICKET.trim());
+            cstmt.setString(4, filter.CUPON.trim());
+            
+            cstmt.setString(5, filter.DFLIGHT.trim());
+            cstmt.setString(6, filter.NFLIGHT.trim());
+            cstmt.setString(7, filter.TPAX.trim());
+            
+            cstmt.setString(8, filter.CDEPART.trim());
+            cstmt.setString(9, filter.CARRIVA.trim());
+            cstmt.setString(10, filter.CHAIR.trim());
+            
+            cstmt.setString(11, filter.LNAME.trim());
+            cstmt.setString(12, filter.FNAME.trim());
+            
+            cstmt.setString(13, filter.STVAL.trim());
+            cstmt.setString(14, filter.STVCR.trim());
+            cstmt.setString(15, filter.FSALES.trim());
+            cstmt.setString(16, filter.FSABRE.trim());
+            cstmt.setString(17, filter.STASABR.trim());
+            
+            cstmt.setString(18, filter.SEQ.trim());
+            
+            cstmt.setString(19, session.getUserView().getUserInfo().USR);
+            cstmt.setString(20, Functions.getFechaActual());
+            cstmt.setString(21, Functions.getHoraActual());
+            cstmt.execute();
+            
+            strMsj = "Upgrade was successful.";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+
+    }
+
+    public boolean SQP04321(A3729Filter filter) throws SQLException, Exception {
+        
+        //VALIDAR SI EXISTE EL NUEVO TICKET EN A3729.
+        
+        boolean existe = false;
+        CallableStatement cstmt = null;
+
+        String SQLCLL01 = "SELECT CCUST FROM PRAXIS.A3729 WHERE CCUST = ? AND TICKET = ? AND CUPON = ? LIMIT 1";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+            cstmt.setString(2, filter.TICKET_2.trim());
+            cstmt.setString(3, filter.CUPON_2.trim());
+            cstmt.execute();
+            
+            rst = cstmt.getResultSet();
+            if(rst.next()){
+                existe = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+//            strMsj = e.getMessage();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return existe;
+
+    }
+    
+    public String SQP04323(A3729Filter filter) throws SQLException, Exception {
+        //REALIZA INSERT Y LUEGO DELETE DE UN REGISTRO EN LA TABLA A3729.
+        
+        String strMsj = "";
+        CallableStatement cstmt = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04323(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, filter.option.trim());
+            cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
+            cstmt.setString(3, filter.TICKET.trim());
+            cstmt.setString(4, filter.TICKET_2.trim());
+            cstmt.setString(5, filter.CUPON.trim());
+            cstmt.setString(6, filter.CUPON_2.trim());
+            
+            cstmt.setString(7, filter.DFLIGHT.trim());
+            cstmt.setString(8, filter.NFLIGHT.trim());
+            cstmt.setString(9, filter.TPAX.trim());
+            
+            cstmt.setString(10, filter.CDEPART.trim());
+            cstmt.setString(11, filter.CARRIVA.trim());
+            cstmt.setString(12, filter.CHAIR.trim());
+            
+            cstmt.setString(13, filter.LNAME.trim());
+            cstmt.setString(14, filter.FNAME.trim());
+            
+            cstmt.setString(15, filter.STVAL.trim());
+            cstmt.setString(16, filter.STVCR.trim());
+            cstmt.setString(17, filter.FSALES.trim());
+            cstmt.setString(18, filter.FSABRE.trim());
+            cstmt.setString(19, filter.STASABR.trim());
+            
+            cstmt.setString(20, filter.SEQ.trim());
+            cstmt.setString(21, filter.LNKMVLO.trim());
+            
+            cstmt.setString(22, filter.USCR.trim());
+            cstmt.setString(23, filter.FECR.trim());
+            cstmt.setString(24, filter.HOCR.trim());
+            
+            cstmt.setString(25, session.getUserView().getUserInfo().USR);
+            cstmt.setString(26, Functions.getFechaActual());
+            cstmt.setString(27, Functions.getHoraActual());
+            cstmt.execute();
+            
+            strMsj = "Insertion was successful.";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+
+    }
+    
 }
