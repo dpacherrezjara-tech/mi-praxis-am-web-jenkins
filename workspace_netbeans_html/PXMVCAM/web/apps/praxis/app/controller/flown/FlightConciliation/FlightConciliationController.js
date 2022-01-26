@@ -841,6 +841,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(prototype.id + '-boxDetailData').unmask();
                     win.lblUser_toolTip("Estructura: A3729");
+                    
+                    console.log(obj.data.items[0].data);
 
                     if (obj.data.length > 0) {
                         var beanTemp = obj.data.items[0].data;

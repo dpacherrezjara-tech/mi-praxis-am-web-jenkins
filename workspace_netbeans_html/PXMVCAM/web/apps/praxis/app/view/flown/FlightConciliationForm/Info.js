@@ -2642,7 +2642,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                             {text: 'Flag<br>Sales-PRAXIS', dataIndex: 'descFSALES', width: 100, sortable: true},
                                         ]
                                     }
-                                },
+                                }
                             ]
                         }
                         // </editor-fold>
