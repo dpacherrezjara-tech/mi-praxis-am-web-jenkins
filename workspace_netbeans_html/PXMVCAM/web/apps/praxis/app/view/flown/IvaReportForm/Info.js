@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Info', {
                         },
                         items: [
                             {text: 'Nbr', width: 50, dataIndex: 'RN'},
-                            {text: 'CIA', width: 75, dataIndex: 'CIA'},
+                            //{text: 'CIA', width: 75, dataIndex: 'CIA'},
                             {text: 'Airline_Code', width: 100, dataIndex: 'AIRCODE'},
                             {text: 'Airline_Name', width: 100, dataIndex: 'AIRNAME'},
                             {text: 'AUDIT',
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Info', {
                                 columns: [
                                     {text: 'Ticket Number', width: 150, dataIndex: 'TICKET'},
                                     {text: 'Coupon Number', width: 150, dataIndex: 'CUPON'},
-                                    {text: 'SEQ', width: 75, dataIndex: 'SEQ'},
+                                    //{text: 'SEQ', width: 75, dataIndex: 'SEQ'},
                                     {text: 'Flown Flight Date', width: 170, dataIndex: 'DFLIGHT'},
                                     {text: 'Flown Flight Period', width: 200, dataIndex: 'PFLIGHT'},
                                     {text: 'Flown Flight Number', width: 200, dataIndex: 'NFLIGHT'},
@@ -78,7 +78,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Info', {
                             {text: 'Tipo Transacción', width: 170, dataIndex: 'TITRANOD'},
                             {text: 'VOL/INVOL', width: 100, dataIndex: 'VOLINVOL'},
                             {text: 'Ruta Boleto Completo', width: 200, dataIndex: 'RUTAOD'},
-                            {text: 'Iva Origen Destino', width: 200, dataIndex: 'ORIDES'},
+                            //{text: 'Iva Origen Destino', width: 200, dataIndex: 'ORIDES'},
                             {text: 'SEGUN OD',
                                 defaults: {
                                     menuDisabled: true,
@@ -89,7 +89,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Info', {
                                 columns: [
                                     {text: 'Base Gravable', width: 150, dataIndex: 'BASEGRAOD'},
                                     {text: 'Tasa IVA', width: 75, dataIndex: 'IVAOD'},
-                                    {text: 'OD', width: 75, dataIndex: 'OD'},
+                                    {text: 'OD', width: 200, dataIndex: 'ORIDES'},
                                     {text: 'CONEXIONES IR', width: 150, dataIndex: 'CNXOD'},
                                     {text: 'Tasa s/OD', width: 150, dataIndex: 'TASAOD'}
                                 ]
@@ -112,6 +112,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Info', {
                                     {text: 'Tasa IVA s/venta', width: 150, dataIndex: 'IVAVTA'}
                                 ]
                             },
+                            {text: 'Marca IVA', width: 75, dataIndex: 'MARCAIVA'},
                             {text: 'SEGUN OD FARE CALC',
                                 defaults: {
                                     menuDisabled: true,

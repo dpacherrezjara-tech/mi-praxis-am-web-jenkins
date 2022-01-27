@@ -7,6 +7,7 @@ package net.miatech.praxis.controllers.flown;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1952Filter;
 import net.miatech.beans.A2559Filter;
 import net.miatech.praxis.controllers.BaseController;
+import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.flown.filter.A4161Filter;
 import net.miatech.praxis.logic.flown.AccountedAmountsInvoicedLogic;
@@ -219,59 +221,55 @@ public class IvaReportController extends BaseController {
             Cell CH1_43 = row.createCell(43);
             Cell CH1_44 = row.createCell(44);
             Cell CH1_45 = row.createCell(45);
-            Cell CH1_46 = row.createCell(46);
-            Cell CH1_47 = row.createCell(47);
-            Cell CH1_48 = row.createCell(48);
+            Cell CH1_46 = row.createCell(45);
 
             CH1_00.setCellValue("RN");
-            CH1_01.setCellValue("CIA");
-            CH1_02.setCellValue("Airline_Code");
-            CH1_03.setCellValue("Airline_Name");
-            CH1_04.setCellValue("Ticket_Number");
-            CH1_05.setCellValue("Coupon_Number");
-            CH1_06.setCellValue("SEQ");
-            CH1_07.setCellValue("Flown_Flight_Date");
-            CH1_08.setCellValue("Flown_Flight_Period");
-            CH1_09.setCellValue("Flown_Flight_Number");
-            CH1_10.setCellValue("Carrier");
-            CH1_11.setCellValue("Stock");
-            CH1_12.setCellValue("ORIGEN_LEG");
-            CH1_13.setCellValue("DESTINO_LEG");
-            CH1_14.setCellValue("Amount_Revenue");
-            CH1_15.setCellValue("TCAMBIO_REV_A_MXN");
-            CH1_16.setCellValue("AMOUNT_LOC_A_MXN");
-            CH1_17.setCellValue("Cuenta_Contable_cat");
-            CH1_18.setCellValue("CUENTA");
-            CH1_19.setCellValue("SUBCUENTA");
-            CH1_20.setCellValue("Periodo Contable");
-            CH1_21.setCellValue("TITULO_CONTABLE");
-            CH1_22.setCellValue("Tipo de Ingreso");
-            CH1_23.setCellValue("Item");
-            CH1_24.setCellValue("Clasificación de Vuelo");
-            CH1_25.setCellValue("Tipo Documento");
-            CH1_26.setCellValue("Tipo Transacción");
-            CH1_27.setCellValue("VOL/INVOL");
-            CH1_28.setCellValue("Ruta Boleto Completo");
-            CH1_29.setCellValue("Base Gravable");
-            CH1_30.setCellValue("Tasa IVA");
-            CH1_31.setCellValue("OD");
-            CH1_32.setCellValue("CONEXIONES IR");
-            CH1_33.setCellValue("Tasa s/OD");
-            CH1_34.setCellValue("Base Gravable");
-            CH1_35.setCellValue("Tasa IVA");
-            CH1_36.setCellValue("LOCAL CURR");
-            CH1_37.setCellValue("Ruta_Fare Calc");
-            CH1_38.setCellValue("TARIFA BOLETO LOCAL");
-            CH1_39.setCellValue("YQ LOCAL");
-            CH1_40.setCellValue("IVA COBRADO LOCAL");
-            CH1_41.setCellValue("Tasa IVA s/venta");
-            CH1_42.setCellValue("Base Gravable");
-            CH1_43.setCellValue("Tasa IVA");
-            CH1_44.setCellValue("OD Fare Calc");
-            CH1_45.setCellValue("Ruta_Fare Calc");
-            CH1_46.setCellValue("CONEXIONES IR");
-            CH1_47.setCellValue("Tasa s/OD");
-            CH1_48.setCellValue("IVA-ORI-DES");
+            CH1_01.setCellValue("Airline Code");
+            CH1_02.setCellValue("Airline Name");
+            CH1_03.setCellValue("Ticket Number");
+            CH1_04.setCellValue("Coupon Number");
+            CH1_05.setCellValue("Flown Flight Date");
+            CH1_06.setCellValue("Flown Flight Period");
+            CH1_07.setCellValue("Flown Flight Number");
+            CH1_08.setCellValue("Carrier Code");
+            CH1_09.setCellValue("Stock");
+            CH1_10.setCellValue("Origen LEG");
+            CH1_11.setCellValue("Destino LEG");
+            CH1_12.setCellValue("Amount Revenue");
+            CH1_13.setCellValue("TCambio REV A MXN");
+            CH1_14.setCellValue("Amount LOC A MXN");
+            CH1_15.setCellValue("Cuenta Contable Cat");
+            CH1_16.setCellValue("Cuenta");
+            CH1_17.setCellValue("Subcuenta");
+            CH1_18.setCellValue("Periodo Contable");
+            CH1_19.setCellValue("Titulo Contable");
+            CH1_20.setCellValue("Tipo de Ingreso");
+            CH1_21.setCellValue("Item");
+            CH1_22.setCellValue("Clasificación de Vuelo");
+            CH1_23.setCellValue("Tipo Documento");
+            CH1_24.setCellValue("Tipo Transacción");
+            CH1_25.setCellValue("VOL/INVOL");
+            CH1_26.setCellValue("Ruta Boleto Completo");
+            CH1_27.setCellValue("Base Gravable OD");
+            CH1_28.setCellValue("Tasa IVA OD");
+            CH1_29.setCellValue("OD");
+            CH1_30.setCellValue("Conexiones IR OD");
+            CH1_31.setCellValue("Tasa s/OD");
+            CH1_32.setCellValue("Base Gravable VTA");
+            CH1_33.setCellValue("Tasa IVA VTA");
+            CH1_34.setCellValue("Moneda Local VTA");
+            CH1_35.setCellValue("Ruta_Fare Calc VTA");
+            CH1_36.setCellValue("Tarifa Boleto Local VTA");
+            CH1_37.setCellValue("YQ Local VTA");
+            CH1_38.setCellValue("IVA Cobrado Local VTA");
+            CH1_39.setCellValue("Tasa IVA s/venta VTA");
+            CH1_40.setCellValue("Marca IVA");
+            CH1_41.setCellValue("Base Gravable Fare Cal");
+            CH1_42.setCellValue("Tasa IVA Fare Cal");
+            CH1_43.setCellValue("OD Fare Calc");
+            CH1_44.setCellValue("Ruta Fare Calc");
+            CH1_45.setCellValue("Conexiones IR Fare Cal");
+            CH1_46.setCellValue("Tasa s/OD Fare Cal");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -320,8 +318,6 @@ public class IvaReportController extends BaseController {
             CH1_44.setCellStyle(headerStyle);
             CH1_45.setCellStyle(headerStyle);
             CH1_46.setCellStyle(headerStyle);
-            CH1_47.setCellStyle(headerStyle);
-            CH1_48.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -376,58 +372,54 @@ public class IvaReportController extends BaseController {
                 Cell rcell44 = row.createCell(44);
                 Cell rcell45 = row.createCell(45);
                 Cell rcell46 = row.createCell(46);
-                Cell rcell47 = row.createCell(47);
-                Cell rcell48 = row.createCell(48);
 
                 rcel10.setCellValue(listaData.get(vi).RN);
-                rcell1.setCellValue(listaData.get(vi).CIA);
-                rcell2.setCellValue(listaData.get(vi).AIRCODE);
-                rcell3.setCellValue(listaData.get(vi).AIRNAME);
-                rcell4.setCellValue(listaData.get(vi).TICKET);
-                rcell5.setCellValue(listaData.get(vi).CUPON);
-                rcell6.setCellValue(listaData.get(vi).SEQ);
-                rcell7.setCellValue(listaData.get(vi).DFLIGHT);
-                rcell8.setCellValue(listaData.get(vi).PFLIGHT);
-                rcell9.setCellValue(listaData.get(vi).NFLIGHT);
-                rcell10.setCellValue(listaData.get(vi).CARR);
-                rcell11.setCellValue(listaData.get(vi).STOCK);
-                rcell12.setCellValue(listaData.get(vi).ORI);
-                rcell13.setCellValue(listaData.get(vi).DES);
-                rcell14.setCellValue(listaData.get(vi).AMOUREV);
-                rcell15.setCellValue(listaData.get(vi).TCREV);
-                rcell16.setCellValue(listaData.get(vi).AMOULOC);
-                rcell17.setCellValue(listaData.get(vi).CTACONT);
-                rcell18.setCellValue(listaData.get(vi).CTA);
-                rcell19.setCellValue(listaData.get(vi).SUBCTA);
-                rcell20.setCellValue(listaData.get(vi).PERIODO);
-                rcell21.setCellValue(listaData.get(vi).TITULO);
-                rcell22.setCellValue(listaData.get(vi).TIPOING);
-                rcell23.setCellValue(listaData.get(vi).ITEM);
-                rcell24.setCellValue(listaData.get(vi).CLASOD);
-                rcell25.setCellValue(listaData.get(vi).TIDOCOD);
-                rcell26.setCellValue(listaData.get(vi).TITRANOD);
-                rcell27.setCellValue(listaData.get(vi).VOLINVOL);
-                rcell28.setCellValue(listaData.get(vi).RUTAOD);
-                rcell29.setCellValue(listaData.get(vi).BASEGRAOD);
-                rcell30.setCellValue(listaData.get(vi).IVAOD);
-                rcell31.setCellValue(listaData.get(vi).OD);
-                rcell32.setCellValue(listaData.get(vi).CNXOD);
-                rcell33.setCellValue(listaData.get(vi).TASAOD2);
-                rcell34.setCellValue(listaData.get(vi).BASEGRAOD2);
-                rcell35.setCellValue(listaData.get(vi).IVAOD2);
-                rcell36.setCellValue(listaData.get(vi).CURRLOCVT);
-                rcell37.setCellValue(listaData.get(vi).RUTFCALVT);
-                rcell38.setCellValue(listaData.get(vi).TARIFALOC);
-                rcell39.setCellValue(listaData.get(vi).YQLOCVT);
-                rcell40.setCellValue(listaData.get(vi).IVALOCVT);
-                rcell41.setCellValue(listaData.get(vi).IVAVTA);
-                rcell42.setCellValue(listaData.get(vi).BASEGRAVT);
-                rcell43.setCellValue(listaData.get(vi).TASAIVAVT);
-                rcell44.setCellValue(listaData.get(vi).ODFCALVT);
-                rcell45.setCellValue(listaData.get(vi).RUTFCALOD);
-                rcell46.setCellValue(listaData.get(vi).CNXIR);
-                rcell47.setCellValue(listaData.get(vi).TASAOD);
-                rcell48.setCellValue(listaData.get(vi).ORIDES);
+                rcell1.setCellValue(listaData.get(vi).AIRCODE);
+                rcell2.setCellValue(listaData.get(vi).AIRNAME);
+                rcell3.setCellValue(listaData.get(vi).TICKET);
+                rcell4.setCellValue(listaData.get(vi).CUPON);
+                rcell5.setCellValue(listaData.get(vi).DFLIGHT);
+                rcell6.setCellValue(listaData.get(vi).PFLIGHT);
+                rcell7.setCellValue(listaData.get(vi).NFLIGHT);
+                rcell8.setCellValue(listaData.get(vi).CARR);
+                rcell9.setCellValue(listaData.get(vi).STOCK);
+                rcell10.setCellValue(listaData.get(vi).ORI);
+                rcell11.setCellValue(listaData.get(vi).DES);
+                rcell12.setCellValue(listaData.get(vi).AMOUREV);
+                rcell13.setCellValue(listaData.get(vi).TCREV);
+                rcell14.setCellValue(listaData.get(vi).AMOULOC);
+                rcell15.setCellValue(listaData.get(vi).CTACONT);
+                rcell16.setCellValue(listaData.get(vi).CTA);
+                rcell17.setCellValue(listaData.get(vi).SUBCTA);
+                rcell18.setCellValue(listaData.get(vi).PERIODO);
+                rcell19.setCellValue(listaData.get(vi).TITULO);
+                rcell20.setCellValue(listaData.get(vi).TIPOING);
+                rcell21.setCellValue(listaData.get(vi).ITEM);
+                rcell22.setCellValue(listaData.get(vi).CLASOD);
+                rcell23.setCellValue(listaData.get(vi).TIDOCOD);
+                rcell24.setCellValue(listaData.get(vi).TITRANOD);
+                rcell25.setCellValue(listaData.get(vi).VOLINVOL);
+                rcell26.setCellValue(listaData.get(vi).RUTAOD);
+                rcell27.setCellValue(listaData.get(vi).BASEGRAOD);
+                rcell28.setCellValue(listaData.get(vi).IVAOD);
+                rcell29.setCellValue(listaData.get(vi).OD);
+                rcell30.setCellValue(listaData.get(vi).CNXOD);
+                rcell31.setCellValue(listaData.get(vi).TASAOD);
+                rcell32.setCellValue(listaData.get(vi).BASEGRAOD2);
+                rcell33.setCellValue(listaData.get(vi).IVAOD2);
+                rcell34.setCellValue(listaData.get(vi).CURRLOCVT);
+                rcell35.setCellValue(listaData.get(vi).RUTFCALVT);
+                rcell36.setCellValue(listaData.get(vi).TARIFALOC);
+                rcell37.setCellValue(listaData.get(vi).YQLOCVT);
+                rcell38.setCellValue(listaData.get(vi).IVALOCVT);
+                rcell39.setCellValue(listaData.get(vi).IVAVTA);
+                rcell40.setCellValue(listaData.get(vi).MARCAIVA);
+                rcell41.setCellValue(listaData.get(vi).BASEGRAVT);
+                rcell42.setCellValue(listaData.get(vi).TASAIVAVT);
+                rcell43.setCellValue(listaData.get(vi).ODFCALVT);
+                rcell44.setCellValue(listaData.get(vi).RUTFCALOD);
+                rcell45.setCellValue(listaData.get(vi).CNXIR);
+                rcell46.setCellValue(listaData.get(vi).TASAOD2);
 
                 iter.next();
                 ++vi;
@@ -450,4 +442,23 @@ public class IvaReportController extends BaseController {
 
     }
 
+        public Boolean zip(String fileName){
+        String path = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Boolean existe = false;
+        try {
+            File fileZip = new File( path + "\\" + fileName + ".zip");
+            
+            if (fileZip.exists())
+                fileZip.delete();
+            
+            zipFile(new File(path + "\\" + fileName + ".csv"), path + "\\" + fileName + ".zip");
+            
+            existe = true;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return existe;
+    }
+    
 }

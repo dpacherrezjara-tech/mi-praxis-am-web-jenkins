@@ -169,13 +169,17 @@ public class BaseOdController extends BaseController {
             Cell CH1_00 = row.createCell(0);
             CH1_00.setCellValue("Nbr");
             Cell CH1_01 = row.createCell(1);
-            CH1_01.setCellValue("Type");
+            CH1_01.setCellValue("Code");
             Cell CH1_02 = row.createCell(2);
-            CH1_02.setCellValue("Code");
+            CH1_02.setCellValue("Taxable Base");
             Cell CH1_03 = row.createCell(3);
-            CH1_03.setCellValue("Description (1)");
+            CH1_03.setCellValue("VAT Rate");
             Cell CH1_04 = row.createCell(4);
-            CH1_04.setCellValue("Amount");
+            CH1_04.setCellValue("Rate s/OD");
+            Cell CH1_05 = row.createCell(5);
+            CH1_05.setCellValue("From");
+            Cell CH1_06 = row.createCell(6);
+            CH1_06.setCellValue("To");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -188,6 +192,8 @@ public class BaseOdController extends BaseController {
             CH1_02.setCellStyle(headerStyle);
             CH1_03.setCellStyle(headerStyle);
             CH1_04.setCellStyle(headerStyle);
+            CH1_05.setCellStyle(headerStyle);
+            CH1_06.setCellStyle(headerStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(4, true);
@@ -204,23 +210,32 @@ public class BaseOdController extends BaseController {
                 Cell cell52 = row.createCell(2);
                 Cell cell53 = row.createCell(3);
                 Cell cell54 = row.createCell(4);
+                Cell cell55 = row.createCell(5);
+                Cell cell56 = row.createCell(6);
 
                 cell50.setCellValue(listaData.get(vi).NO);
-                cell51.setCellValue(listaData.get(vi).A051KEY1);
-                cell52.setCellValue(listaData.get(vi).A051KEY2);
-                cell53.setCellValue(listaData.get(vi).A051DESCR1);
+                cell51.setCellValue(listaData.get(vi).A051KEY2);
+                cell52.setCellValue(listaData.get(vi).A051DESCR1);
+                cell53.setCellValue(listaData.get(vi).A051DESCR2);
                 cell54.setCellValue(listaData.get(vi).A051CANTI1);
+                cell55.setCellValue(listaData.get(vi).A051FECHA1);
+                cell56.setCellValue(listaData.get(vi).A051FECHA2);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
                 cell52.setCellStyle(bodyStyle);
                 cell53.setCellStyle(bodyStyle);
                 cell54.setCellStyle(bodyStyle);
+                cell55.setCellStyle(bodyStyle);
+                cell56.setCellStyle(bodyStyle);
 
                 sheet.autoSizeColumn(0, true);
                 sheet.autoSizeColumn(1, true);
                 sheet.autoSizeColumn(2, true);
                 sheet.autoSizeColumn(3, true);
+                sheet.autoSizeColumn(4, true);
+                sheet.autoSizeColumn(5, true);
+                sheet.autoSizeColumn(6, true);
                 // </editor-fold>
                 
                 iter.next();

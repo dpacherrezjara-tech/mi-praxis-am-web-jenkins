@@ -60,4 +60,5 @@ public class A4161 {
     public String CNXIR = "";      
     public String TASAOD = "";      
     public String ORIDES = "";      
+    public String MARCAIVA = "";      
 }

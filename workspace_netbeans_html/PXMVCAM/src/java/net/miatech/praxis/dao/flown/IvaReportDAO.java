@@ -166,9 +166,10 @@ public class IvaReportDAO {
                 objRtn.TASAIVAVT =  rs01.getString("TASAIVAVT").trim();    
                 objRtn.ODFCALVT =  rs01.getString("ODFCALVT").trim();
                 objRtn.RUTFCALOD =  rs01.getString("RUTFCALOD").trim();
-                objRtn.CNXIR =  rs01.getString("CNXIR").trim();      
-                objRtn.TASAOD =  rs01.getString("TASAOD").trim();                  
-                objRtn.ORIDES =  rs01.getString("ORIDES").trim();                  
+                objRtn.CNXIR =  rs01.getString("CNXIR").trim();
+                objRtn.TASAOD =  rs01.getString("TASAOD").trim();
+                objRtn.ORIDES =  rs01.getString("ORIDES").trim();
+                objRtn.MARCAIVA =  rs01.getString("MARCAIVA").trim();
                 //
                 objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
                 objRtn.page.PAGROW = filter.page.PAGROW;

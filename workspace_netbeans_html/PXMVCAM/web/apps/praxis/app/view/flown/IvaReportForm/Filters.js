@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Filters', {
                             xtype: 'combo',
                             id: prototype.id + '-cboCarr',
                             required: true,
-                            fieldLabel: 'Carr',
+                            fieldLabel: 'Carrier',
                             width: 160,
                             labelWidth: 70,
                             labelAlign: 'right',
@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Filters', {
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtPeriodo',
-                            fieldLabel: 'Periodo',
+                            fieldLabel: 'Period',
                             labelWidth: 50,
                             width: 200,
                             listeners: {

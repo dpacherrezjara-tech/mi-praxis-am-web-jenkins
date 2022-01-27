@@ -92,12 +92,12 @@ Ext.define('Ext.Praxis.view.flown.IvaReportForm.Options', {
                             iconCls: 'prx-icon-clear',
                             tooltip: 'Clear Options'
                         },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnAdd',
-                            iconCls: 'prx-icon-add',
-                            tooltip: 'New'
-                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btnAdd',
+//                            iconCls: 'prx-icon-add',
+//                            tooltip: 'New'
+//                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnBack',

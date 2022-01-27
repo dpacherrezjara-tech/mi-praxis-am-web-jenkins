@@ -169,13 +169,11 @@ public class IvaZoneController extends BaseController {
             Cell CH1_00 = row.createCell(0);
             CH1_00.setCellValue("Nbr");
             Cell CH1_01 = row.createCell(1);
-            CH1_01.setCellValue("Type");
+            CH1_01.setCellValue("Code");
             Cell CH1_02 = row.createCell(2);
-            CH1_02.setCellValue("Code");
+            CH1_02.setCellValue("Sub Account Description");
             Cell CH1_03 = row.createCell(3);
-            CH1_03.setCellValue("Description (1)");
-            Cell CH1_04 = row.createCell(4);
-            CH1_04.setCellValue("Amount");
+            CH1_03.setCellValue("OD");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -187,7 +185,6 @@ public class IvaZoneController extends BaseController {
             CH1_01.setCellStyle(headerStyle);
             CH1_02.setCellStyle(headerStyle);
             CH1_03.setCellStyle(headerStyle);
-            CH1_04.setCellStyle(headerStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(4, true);
@@ -203,19 +200,17 @@ public class IvaZoneController extends BaseController {
                 Cell cell51 = row.createCell(1);
                 Cell cell52 = row.createCell(2);
                 Cell cell53 = row.createCell(3);
-                Cell cell54 = row.createCell(4);
 
                 cell50.setCellValue(listaData.get(vi).NO);
-                cell51.setCellValue(listaData.get(vi).A051KEY1);
-                cell52.setCellValue(listaData.get(vi).A051KEY2);
-                cell53.setCellValue(listaData.get(vi).A051DESCR1);
-                cell54.setCellValue(listaData.get(vi).A051CANTI1);
+                cell51.setCellValue(listaData.get(vi).A051KEY2);
+                cell52.setCellValue(listaData.get(vi).A051DESCR1);
+                cell53.setCellValue(listaData.get(vi).A051COMENT);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
                 cell52.setCellStyle(bodyStyle);
                 cell53.setCellStyle(bodyStyle);
-                cell54.setCellStyle(bodyStyle);
+
 
                 sheet.autoSizeColumn(0, true);
                 sheet.autoSizeColumn(1, true);
