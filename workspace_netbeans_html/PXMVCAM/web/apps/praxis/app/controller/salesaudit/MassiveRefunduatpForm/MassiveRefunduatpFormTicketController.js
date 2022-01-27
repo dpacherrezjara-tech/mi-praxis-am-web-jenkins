@@ -97,6 +97,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'F':
                 vl_STAT = 'CAPTURED BPO';
                 break;
+            case 'C':
+                vl_STAT = 'CANC';
+                break;
         }
 
         switch (String(rec.get('A4076FLAG'))) {
@@ -130,8 +133,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'R':
                 vl_FLAG = 'REJECT';
                 break;
+             case 'C':
+                vl_FLAG = 'TICKET DOES NOT EXIST';
+                break;
         }
-        if (String(rec.get('A4076STAT')) === 'F') {
+        if (String(rec.get('A4076STAT')) === 'F' || String(rec.get('A4076STAT')) === 'C') {
             grid03.show();
             grid04.show();
             //
@@ -214,7 +220,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 var res = Ext.JSON.decode(response.responseText);
                 //
 
-                if (String(rec.get('A4076STAT')) === 'F') {
+                if (String(rec.get('A4076STAT')) === 'F' || String(rec.get('A4076STAT')) === 'C') {
                     Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridPAYMENT').getStore().removeAll();
                     Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-gridListTaxes').getStore().removeAll();
                     //
