@@ -162,8 +162,8 @@ public class IvaReportDAO {
                 objRtn.YQLOCVT =  Double.parseDouble(rs01.getString("YQLOCVT").trim());
                 objRtn.IVALOCVT =  Double.parseDouble(rs01.getString("IVALOCVT").trim());  
                 objRtn.IVAVTA =  Double.parseDouble(rs01.getString("IVAVTA").trim());
-                objRtn.BASEGRAVT =  rs01.getString("BASEGRAVT").trim();
-                objRtn.TASAIVAVT =  rs01.getString("TASAIVAVT").trim();    
+                objRtn.BASEGRAVT =  rs01.getString("BASEGRAVT") == null ? "" : rs01.getString("BASEGRAVT").trim();
+                objRtn.TASAIVAVT =  rs01.getString("TASAIVAVT") == null ? "" : rs01.getString("TASAIVAVT").trim(); 
                 objRtn.ODFCALVT =  rs01.getString("ODFCALVT").trim();
                 objRtn.RUTFCALOD =  rs01.getString("RUTFCALOD").trim();
                 objRtn.CNXIR =  rs01.getString("CNXIR").trim();
