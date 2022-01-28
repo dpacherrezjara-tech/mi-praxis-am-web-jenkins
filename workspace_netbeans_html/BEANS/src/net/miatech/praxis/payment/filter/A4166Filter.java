@@ -17,6 +17,7 @@ public class A4166Filter extends A4166 {
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
     public String IN_DATE = "";
+    public String IN_STCON = "";
     public String strFecFiltro = "";
     public String strYearFrom = "";
     public String strYearTo = "";
@@ -25,7 +26,9 @@ public class A4166Filter extends A4166 {
     public String strDayFrom = "";
     public String strDayTo = "";
     public String descFAMEX = "";
+    public String descSTCON = "";
     public String IN_FAMEX = "";
+    public String PASSED_DAYS = "";
     
 
     public Pagination page = new Pagination();

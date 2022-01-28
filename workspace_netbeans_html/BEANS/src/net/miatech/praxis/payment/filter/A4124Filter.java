@@ -23,6 +23,7 @@ public class A4124Filter extends A4124 {
     public String IN_STCON = "";
     public String descFAMEX = "";
     public String descSTCON = "";
+    public String PASSED_DAYS = "";    
     
     public Pagination page = new Pagination();
 }
