@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1700,
+                                    width: 1760,
                                     //height: 600,
                                     columnLines: true,
                                     features: [{
@@ -82,6 +82,25 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Date', dataIndex: 'PRDA', width: 90
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Passed',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Days', dataIndex: 'PASSED_DAYS', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value > 15) {
+                                                                metaData.style = "color:#de2828";
+                                                            }                                                            
+                                                            return value;
+                                                        },
                                                     }
                                                 ]
                                             },
@@ -322,7 +341,39 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'descFAMEX', width: 90
+                                                text: 'Passed',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Days', dataIndex: 'PASSED_DAYS', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value > 15) {
+                                                                metaData.style = "color:#de2828";
+                                                            }                                                            
+                                                            return value;
+                                                        },
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Ligas',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
+                                                    },
+                                                    {
+                                                        text: 'VS Sale', dataIndex: 'descSTCON', width: 80
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Sale',
@@ -399,6 +450,24 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     metaData.style = "text-align:center;";
                                                     return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
+                                            },
+                                            {
+                                                text: 'Accounting',
+                                                id: prototype.id + '-LigaAccounting',
+                                                hidden: true,
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'FCONT', width: 100
+                                                    },
+                                                    {
+                                                        text: 'ID', dataIndex: 'IDCON', width: 100
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Tickets',
@@ -505,7 +574,39 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Status', dataIndex: 'descFAMEX', width: 90
+                                                text: 'Passed',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Days', dataIndex: 'PASSED_DAYS', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value > 15) {
+                                                                metaData.style = "color:#de2828";
+                                                            }                                                            
+                                                            return value;
+                                                        },
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Tablet',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
+                                                    },
+                                                    {
+                                                        text: 'VS Sale', dataIndex: 'descSTCON', width: 80
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Sale',
@@ -582,6 +683,24 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     metaData.style = "text-align:center;";
                                                     return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
+                                            },
+                                            {
+                                                text: 'Accounting',
+                                                id: prototype.id + '-TabletAccounting',
+                                                hidden: true,
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'FCONT', width: 100
+                                                    },
+                                                    {
+                                                        text: 'ID', dataIndex: 'IDCON', width: 100
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Tickets',

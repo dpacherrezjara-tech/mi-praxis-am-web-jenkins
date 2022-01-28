@@ -263,34 +263,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
     rbChangeType: function() {
 
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
+        var stcon = Ext.getCmp(prototype.id + '-cmbFindBySTCON').getValue();
         console.log(selectedValue);
 
         this.setFormatParameter();
 
         switch (selectedValue) {
-            case 'P':
-                var stcon = Ext.getCmp(prototype.id + '-cmbFindBySTCON').getValue();
-                Ext.getCmp(prototype.id + '-cmbFindBySTCON').setVisible(true);
+            case 'P':                
                 this.setGridData();
                 if (stcon === '2') {
                     Ext.getCmp(prototype.id + '-plusAccounting').setVisible(true);
                     Ext.getCmp(prototype.id + '-plusAddPax').setVisible(false);
-                    Ext.getCmp(prototype.id + '-gridDataMain').setWidth(1340);
+                    Ext.getCmp(prototype.id + '-gridDataMain').setWidth(1400);
                 } else {
                     Ext.getCmp(prototype.id + '-plusAccounting').setVisible(false);
                     Ext.getCmp(prototype.id + '-plusAddPax').setVisible(true);
-                    Ext.getCmp(prototype.id + '-gridDataMain').setWidth(1700);
+                    Ext.getCmp(prototype.id + '-gridDataMain').setWidth(1760);
                 }
                 break;
             case 'L':
-                //Ext.getCmp(prototype.id + '-cmbFindBySTCON').setValue("X");
-                Ext.getCmp(prototype.id + '-cmbFindBySTCON').setVisible(false);
                 this.setGridDataLiga();
+                if (stcon === '2') {
+                    Ext.getCmp(prototype.id + '-LigaAccounting').setVisible(true);
+                } else {
+                    Ext.getCmp(prototype.id + '-LigaAccounting').setVisible(false);
+                }
                 break;
             case 'T':
                 this.setGridDataTablet();
-                //Ext.getCmp(prototype.id + '-cmbFindBySTCON').setValue("X");
-                Ext.getCmp(prototype.id + '-cmbFindBySTCON').setVisible(false);
+                if (stcon === '2') {
+                    Ext.getCmp(prototype.id + '-TabletAccounting').setVisible(true);
+                } else {
+                    Ext.getCmp(prototype.id + '-TabletAccounting').setVisible(false);
+                }
                 break;
         }
     },

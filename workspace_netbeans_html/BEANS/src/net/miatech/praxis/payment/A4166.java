@@ -45,6 +45,10 @@ public class A4166 {
     public String FSELEC = "";
     public String FAMEX = "";
     public String CERROR = "";
+    public String STCON = "";
+    public String FCONT = "";
+    public String IDCON = "";      
+    
     public String USCR = "";
     public String FECR = "";
     public String HOCR = "";

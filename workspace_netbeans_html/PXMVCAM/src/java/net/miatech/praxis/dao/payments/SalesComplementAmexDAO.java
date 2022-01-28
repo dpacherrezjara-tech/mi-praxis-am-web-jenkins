@@ -123,6 +123,7 @@ public class SalesComplementAmexDAO {
 
                 bean.FCONT = rst.getString("FCONT").trim();
                 bean.IDCON = rst.getString("IDCON").trim();
+                bean.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -166,34 +167,34 @@ public class SalesComplementAmexDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04355(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04355(?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE);
             cstmt.setString(3, filter.IN_DATEFROM);
             cstmt.setString(4, filter.IN_DATETO);
             cstmt.setString(5, filter.IN_FAMEX);
-
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setString(6, filter.IN_STCON);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
 
             rst = cstmt.getResultSet();
 
@@ -228,6 +229,19 @@ public class SalesComplementAmexDAO {
                 } else if (bean.FAMEX.equals("1")) {
                     bean.descFAMEX = "Processed";
                 }
+
+                bean.STCON = rst.getString("STCON").trim();
+                if (bean.STCON.equals("")) {
+                    bean.descSTCON = "Pending";
+                } else if (bean.STCON.equals("1")) {
+                    bean.descSTCON = "Found";
+                } else if (bean.STCON.equals("2")) {
+                    bean.descSTCON = "Accounted";
+                }
+
+                bean.FCONT = rst.getString("FCONT").trim();
+                bean.IDCON = rst.getString("IDCON").trim();
+                bean.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
@@ -271,34 +285,34 @@ public class SalesComplementAmexDAO {
         ResultSet rst = null;
         Connection cnx = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04356(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04356(?,?,?,?,?,?,?,?,?,?)}";
 
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE);
             cstmt.setString(3, filter.IN_DATEFROM);
             cstmt.setString(4, filter.IN_DATETO);
             cstmt.setString(5, filter.IN_FAMEX);
-
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setString(6, filter.IN_STCON);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
 
             rst = cstmt.getResultSet();
 
@@ -333,6 +347,19 @@ public class SalesComplementAmexDAO {
                 } else if (bean.FAMEX.equals("1")) {
                     bean.descFAMEX = "Processed";
                 }
+
+                bean.STCON = rst.getString("STCON").trim();
+                if (bean.STCON.equals("")) {
+                    bean.descSTCON = "Pending";
+                } else if (bean.STCON.equals("1")) {
+                    bean.descSTCON = "Found";
+                } else if (bean.STCON.equals("2")) {
+                    bean.descSTCON = "Accounted";
+                }
+
+                bean.FCONT = rst.getString("FCONT").trim();
+                bean.IDCON = rst.getString("IDCON").trim();
+                bean.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
