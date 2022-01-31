@@ -200,28 +200,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.DataEntryTick
         win.setValue("2-txtTRNCU", this.bean.TRNCU.trim());
         //ACCB ===================================
         if(this.bean.AFTE.trim() === 'X'){
-            win.setText('2-lblACCBTitulo', 'ACCB BSP Information');
+            win.setText('2-lblACCBTitulo', 'Settlement BSP Information');
             Ext.create('Ext.tip.ToolTip', {
                 target: prototype.id+'-2-lblAFTE',
-                html: "ACCB BSP Type"
+                html: "Settlement BSP Type"
             });
 	}else if(this.bean.AFTE.trim() === 'A'){
-            win.setText('2-lblACCBTitulo', 'ACCB ARC Information');
+            win.setText('2-lblACCBTitulo', 'Settlement ARC Information');
             Ext.create('Ext.tip.ToolTip', {
                 target: prototype.id+'-2-lblAFTE',
-                html: "ACCB ARC Type"
+                html: "Settlement ARC Type"
             });
 	}else if(this.bean.AFTE.trim() === 'B' || this.bean.AFTE.trim() === 'N' || this.bean.AFTE.trim() === 'L'){
-            win.setText('2-lblACCBTitulo', 'ACCB ASR Information');
+            win.setText('2-lblACCBTitulo', 'Settlement ASR Information');
             Ext.create('Ext.tip.ToolTip', {
                 target: prototype.id+'-2-lblAFTE',
-                html: "ACCB ASR Type"
+                html: "Settlement ASR Type"
             });
 	}else{
-            win.setText('2-lblACCBTitulo', 'ACCB Information');
+            win.setText('2-lblACCBTitulo', 'Settlement Information');
             Ext.create('Ext.tip.ToolTip', {
                 target: prototype.id+'-2-lblAFTE',
-                html: "ACCB Type"
+                html: "Settlement Type"
             });
 	}
         win.setText('2-lblAFTE', this.bean.strDescAFTE.trim());
