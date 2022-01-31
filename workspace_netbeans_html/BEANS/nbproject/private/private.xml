@@ -23,10 +23,6 @@
             <file>file:/D:/LZAMBRANO/Backup/workspace_netbeans/BEANS/src/net/miatech/praxis/interline/SFI010.java</file>
             <file>file:/D:/LZAMBRANO/Backup/workspace_netbeans/BEANS/src/net/miatech/dao/UserDAO.java</file>
         </group>
-        <group name="PRAXIS AM HTML">
-            <file>file:/D:/LZAMBRANO/Backup/workspace_netbeans/BEANS/src/net/miatech/utils/Functions.java</file>
-            <file>file:/D:/LZAMBRANO/Backup/workspace_netbeans/BEANS/src/net/miatech/praxis/persistence/daoimpl/UserDaoImpl.java</file>
-        </group>
         <group name="Git-Praxis-HTML">
             <file>file:/D:/zperez/repositories/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/beans/A4014Filter.java</file>
             <file>file:/D:/zperez/repositories/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/praxis/A4014.java</file>
@@ -41,5 +37,6 @@
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/praxis/A1692.java</file>
             <file>file:/D:/RepositorioGit/java/mi-praxis-am-web/workspace_netbeans_html/BEANS/src/net/miatech/praxis/eecta/SQP04110Filter.java</file>
         </group>
+        <group name="PRAXIS AM HTML"/>
     </open-files>
 </project-private>
