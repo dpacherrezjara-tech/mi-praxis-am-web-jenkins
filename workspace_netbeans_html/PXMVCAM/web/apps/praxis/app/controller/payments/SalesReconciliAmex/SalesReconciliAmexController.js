@@ -498,7 +498,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
 //        var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
 
-        if (columnNum === 9) {
+        if (columnNum === 10) {
             me.paramsDetailChargeback.beanString = JSON.stringify(this.beanSubmission);
             me.drillDown.push(me.panelActual);
             me.panelActual = '-boxDetChargeback';

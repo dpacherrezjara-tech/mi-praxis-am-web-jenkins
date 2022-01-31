@@ -105,12 +105,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {text: 'AX Number', dataIndex: 'AXPAYNBR', width: 80},
                                             {text: 'Status', dataIndex: 'desCERROR', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.CERROR === '00') {
+                                                    if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                    } else if (record.data.CERROR === '01') {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     } else {
-                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     }
                                                     return value;
                                                 }
@@ -727,12 +725,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     },
                                                     {text: 'Status', dataIndex: 'desCERROR', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.CERROR === '00') {
+                                                            if (record.data.CERROR === '') {
                                                                 metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                            } else if (record.data.CERROR === '01') {
-                                                                metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                             } else {
-                                                                metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                                metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                             }
                                                             return value;
                                                         }
@@ -1067,12 +1063,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {text: 'Status', dataIndex: 'desCERROR', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.CERROR === '00') {
+                                                    if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                    } else if (record.data.CERROR === '01') {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     } else {
-                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     }
                                                     return value;
                                                 }
@@ -1316,12 +1310,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {text: 'Status', dataIndex: 'desCERROR', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.CERROR === '00') {
+                                                    if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                    } else if (record.data.CERROR === '01') {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     } else {
-                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     }
                                                     return value;
                                                 }
@@ -1654,12 +1646,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {text: 'Status', dataIndex: 'desCERROR', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.CERROR === '00') {
+                                                    if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                    } else if (record.data.CERROR === '01') {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     } else {
-                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     }
                                                     return value;
                                                 }
@@ -2166,12 +2156,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {text: 'Status', dataIndex: 'desCERROR', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.CERROR === '00') {
+                                                    if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                    } else if (record.data.CERROR === '01') {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     } else {
-                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     }
                                                     return value;
                                                 }
@@ -2459,12 +2447,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {text: 'Status', dataIndex: 'desCERROR', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.CERROR === '00') {
+                                                    if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                    } else if (record.data.CERROR === '01') {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     } else {
-                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
                                                     }
                                                     return value;
                                                 }
