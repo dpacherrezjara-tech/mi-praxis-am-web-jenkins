@@ -226,7 +226,7 @@ public class IvaReportController extends BaseController {
             Cell CH1_43 = row.createCell(43);
             Cell CH1_44 = row.createCell(44);
             Cell CH1_45 = row.createCell(45);
-            Cell CH1_46 = row.createCell(45);
+            Cell CH1_46 = row.createCell(46);
 
             CH1_00.setCellValue("RN");
             CH1_01.setCellValue("Airline Code");
@@ -410,8 +410,8 @@ public class IvaReportController extends BaseController {
                 rcell29.setCellValue(listaData.get(vi).OD);
                 rcell30.setCellValue(listaData.get(vi).CNXOD);
                 rcell31.setCellValue(listaData.get(vi).TASAOD);
-                rcell32.setCellValue(listaData.get(vi).BASEGRAOD2);
-                rcell33.setCellValue(listaData.get(vi).IVAOD2);
+                rcell32.setCellValue(listaData.get(vi).BASEGRAVT);
+                rcell33.setCellValue(listaData.get(vi).TASAIVAVT);
                 rcell34.setCellValue(listaData.get(vi).CURRLOCVT);
                 rcell35.setCellValue(listaData.get(vi).RUTFCALVT);
                 rcell36.setCellValue(listaData.get(vi).TARIFALOC);
@@ -419,8 +419,8 @@ public class IvaReportController extends BaseController {
                 rcell38.setCellValue(listaData.get(vi).IVALOCVT);
                 rcell39.setCellValue(listaData.get(vi).IVAVTA);
                 rcell40.setCellValue(listaData.get(vi).MARCAIVA);
-                rcell41.setCellValue(listaData.get(vi).BASEGRAVT);
-                rcell42.setCellValue(listaData.get(vi).TASAIVAVT);
+                rcell41.setCellValue(listaData.get(vi).BASEGRAOD2);
+                rcell42.setCellValue(listaData.get(vi).IVAOD2);
                 rcell43.setCellValue(listaData.get(vi).ODFCALVT);
                 rcell44.setCellValue(listaData.get(vi).RUTFCALOD);
                 rcell45.setCellValue(listaData.get(vi).CNXIR);
