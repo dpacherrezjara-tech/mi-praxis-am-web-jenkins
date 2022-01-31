@@ -242,7 +242,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'label',
-                            text: 'ACCB Type:',
+                            text: 'Settlement Type:',
                             padding: '3 0',
                             width: 94
                         },
