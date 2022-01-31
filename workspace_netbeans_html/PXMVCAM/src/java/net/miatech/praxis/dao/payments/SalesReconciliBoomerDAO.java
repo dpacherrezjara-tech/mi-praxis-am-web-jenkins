@@ -339,6 +339,18 @@ public class SalesReconciliBoomerDAO {
                 beanTOTAL.QTYMATDIF = rst.getInt("QTYMATDIF");
                 beanTOTAL.QTYSETSAL = rst.getInt("QTYSETSAL");
 
+                if (beanTOTAL.QTYMATDIF > 0 || beanTOTAL.QTYSETSAL > 0) {
+                    beanTOTAL.STVALC = "2";
+                } else {
+                    beanTOTAL.STVALC = "1";
+                }
+
+                if (hmDescEstados.containsKey(beanTOTAL.STVALC.trim())) {
+                    beanTOTAL.descSTVALC = hmDescEstados.get(beanTOTAL.STVALC.trim()).toString();
+                } else {
+                    beanTOTAL.descSTVALC = beanTOTAL.STVALC.trim();
+                }
+
                 //beanTOTAL.ACCNBR = rst.getString("ACCNBR");
                 lstTotals.add(beanTOTAL);
             }
@@ -391,6 +403,18 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.ACCNBR = rst.getString("ACCNBR");
 
                     beanTkt.TITLE_DATE = filter.TITLE_DATE;
+
+                    if (beanTkt.QTYMATDIF > 0 || beanTkt.QTYSETSAL > 0) {
+                        beanTkt.STVALC = "2";
+                    } else {
+                        beanTkt.STVALC = "1";
+                    }
+
+                    if (hmDescEstados.containsKey(beanTkt.STVALC.trim())) {
+                        beanTkt.descSTVALC = hmDescEstados.get(beanTkt.STVALC.trim()).toString();
+                    } else {
+                        beanTkt.descSTVALC = beanTkt.STVALC.trim();
+                    }
 
                     /*beanTkt.SVFOP_SG = SVFOP_SG;
                      beanTkt.AMTCOM_SG = AMTCOM_SG;

@@ -3211,13 +3211,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Status', dataIndex: 'descSTVAL', width: 70, //flex: 1
+                                                        text: 'Status', dataIndex: 'descSTVALC', width: 70, //flex: 1
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.STVAL === '') {
+                                                            if (record.data.STVALC === '') {
                                                                 metaData.style = "text-align:left;background-color:#F7BD56;";
-                                                            } else if (record.data.STVAL === '1') {
+                                                            } else if (record.data.STVALC === '1') {
                                                                 metaData.style = "text-align:left;background-color:#C6E5B1;";
-                                                            } else if (record.data.STVAL === '2') {
+                                                            } else if (record.data.STVALC === '2') {
                                                                 metaData.style = "text-align:left;background-color:#FF6F6F;";
                                                             }
                                                             return value;
@@ -3438,13 +3438,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Status', dataIndex: 'descSTVAL', width: 70, //flex: 1
+                                                        text: 'Status', dataIndex: 'descSTVALC', width: 70, //flex: 1
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.STVAL === '') {
+                                                            if (record.data.STVALC === '') {
                                                                 metaData.style = "text-align:left;background-color:#F7BD56;";
-                                                            } else if (record.data.STVAL === '1') {
+                                                            } else if (record.data.STVALC === '1') {
                                                                 metaData.style = "text-align:left;background-color:#C6E5B1;";
-                                                            } else if (record.data.STVAL === '2') {
+                                                            } else if (record.data.STVALC === '2') {
                                                                 metaData.style = "text-align:left;background-color:#FF6F6F;";
                                                             }
                                                             return value;
