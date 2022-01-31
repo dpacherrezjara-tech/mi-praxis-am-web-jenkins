@@ -2538,7 +2538,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridFlightManifest',
-                                    width: 1324,
+                                    width: 1369,
                                     height: 550,
                                     features: [{
                                             ftype: 'summary'
@@ -2640,6 +2640,20 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 ]
                                             },
                                             {text: 'Flag<br>Sales-PRAXIS', dataIndex: 'descFSALES', width: 100, sortable: true},
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 45,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'viewDataEntry_A3729'
+                                                    }
+                                                ]
+                                            }
                                         ]
                                     }
                                 }
