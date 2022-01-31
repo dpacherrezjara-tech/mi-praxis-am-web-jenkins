@@ -7,21 +7,25 @@ package net.miatech.praxis.controllers.flown;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import static java.lang.System.console;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1952Filter;
 import net.miatech.beans.A2559Filter;
 import net.miatech.praxis.controllers.BaseController;
-import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.flown.filter.A4161Filter;
 import net.miatech.praxis.logic.flown.AccountedAmountsInvoicedLogic;
@@ -29,6 +33,7 @@ import net.miatech.praxis.logic.flown.IvaReportLogic;
 import net.miatech.praxis.logic.flown.CatalogueFlightLogic;
 import net.miatech.praxisbi.A1955Filter;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -126,9 +131,9 @@ public class IvaReportController extends BaseController {
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Iva Report : getXLSX");
-        String fileNameDownload = String.format("Iva Report - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Iva Report - " + Functions.getFechaActual() , UUID.randomUUID().toString().toLowerCase());
         try {
-
+            String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A4161Filter> listaData = this.getList(request, true);
@@ -221,7 +226,7 @@ public class IvaReportController extends BaseController {
             Cell CH1_43 = row.createCell(43);
             Cell CH1_44 = row.createCell(44);
             Cell CH1_45 = row.createCell(45);
-            Cell CH1_46 = row.createCell(45);
+            Cell CH1_46 = row.createCell(46);
 
             CH1_00.setCellValue("RN");
             CH1_01.setCellValue("Airline Code");
@@ -405,8 +410,8 @@ public class IvaReportController extends BaseController {
                 rcell29.setCellValue(listaData.get(vi).OD);
                 rcell30.setCellValue(listaData.get(vi).CNXOD);
                 rcell31.setCellValue(listaData.get(vi).TASAOD);
-                rcell32.setCellValue(listaData.get(vi).BASEGRAOD2);
-                rcell33.setCellValue(listaData.get(vi).IVAOD2);
+                rcell32.setCellValue(listaData.get(vi).BASEGRAVT);
+                rcell33.setCellValue(listaData.get(vi).TASAIVAVT);
                 rcell34.setCellValue(listaData.get(vi).CURRLOCVT);
                 rcell35.setCellValue(listaData.get(vi).RUTFCALVT);
                 rcell36.setCellValue(listaData.get(vi).TARIFALOC);
@@ -414,8 +419,8 @@ public class IvaReportController extends BaseController {
                 rcell38.setCellValue(listaData.get(vi).IVALOCVT);
                 rcell39.setCellValue(listaData.get(vi).IVAVTA);
                 rcell40.setCellValue(listaData.get(vi).MARCAIVA);
-                rcell41.setCellValue(listaData.get(vi).BASEGRAVT);
-                rcell42.setCellValue(listaData.get(vi).TASAIVAVT);
+                rcell41.setCellValue(listaData.get(vi).BASEGRAOD2);
+                rcell42.setCellValue(listaData.get(vi).IVAOD2);
                 rcell43.setCellValue(listaData.get(vi).ODFCALVT);
                 rcell44.setCellValue(listaData.get(vi).RUTFCALOD);
                 rcell45.setCellValue(listaData.get(vi).CNXIR);
@@ -430,35 +435,16 @@ public class IvaReportController extends BaseController {
              * fileNameDownload = Nombre de descarga
              */
             response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + ".xlsx\"");
 
             FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
             workbook.write(response.getOutputStream());
             fos.close();
-
+            
         } catch (IOException e) {
             throw new SpringException(e);
         }
 
     }
 
-        public Boolean zip(String fileName){
-        String path = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD").toString();
-        Boolean existe = false;
-        try {
-            File fileZip = new File( path + "\\" + fileName + ".zip");
-            
-            if (fileZip.exists())
-                fileZip.delete();
-            
-            zipFile(new File(path + "\\" + fileName + ".csv"), path + "\\" + fileName + ".zip");
-            
-            existe = true;
-
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
-        }
-        return existe;
-    }
-    
 }
