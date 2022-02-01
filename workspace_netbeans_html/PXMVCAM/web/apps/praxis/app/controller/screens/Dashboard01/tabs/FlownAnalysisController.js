@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     meIataCtr: '',
     bean: {},
     searchParams: {},
+    beanFAFlight: {},
     _path: '',
     dw_excel: false,
     boxActual: '-boxMainDataFA',
@@ -120,6 +121,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             }
         });
         Ext.getCmp(prototype.id + '-gridSearchWK').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-displayChart01').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridSearchWK').setStore(storeGridDatas);
     },
     btnSwap_FA_click: function() {
@@ -147,7 +149,22 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         }
         
     },
-    viewDetFAFlight: function(){
+    viewDetFAFlight: function(param,column, e, row, column, x, rowData) {
+        
+        console.log(param);
+        console.log(column);
+        console.log(e);
+        console.log(row);
+        console.log(column);
+        console.log(x);
+        console.log(rowData);
+        
+        
+        this.beanFAFlight = {};
+        this.beanFAFlight.beanString = JSON.stringify(x.record.data);
+//
+        console.log(this.beanFAFlight);
+//        this.searchFlownFlight(this.beanFAFlight);
         
     },    
     showGrid: function(nameGrid) {
