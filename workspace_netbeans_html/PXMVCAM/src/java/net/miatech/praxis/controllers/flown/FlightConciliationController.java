@@ -3297,11 +3297,11 @@ public class FlightConciliationController extends BaseController {
                         obj.desPAX = getCellValue(row.getCell(5)).trim();
                         
                         if (obj.desPAX.equals("Adult")) {
-                            obj.TPAX = "A";
+                            obj.TPAX = "AD";
                         } else if (obj.desPAX.equals("Children")) {
-                            obj.TPAX = "C";
+                            obj.TPAX = "CH";
                         } else if (obj.desPAX.equals("Infant")) {
-                            obj.TPAX = "I";
+                            obj.TPAX = "INF";
                         }
                         
                         
@@ -3462,13 +3462,13 @@ public class FlightConciliationController extends BaseController {
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             
-            if(filter.TICKET_2.equals("")){
+            if(!filter.TICKET.equals("") && filter.TICKET_2.equals("")){
                 
-                //Update normal, sin ticket
+                //Update normal, sin ticket 2
                 msj = logic.SQP04320(filter);
             }else{
                 
-                //update con ticket
+                //update con ticket 2
                 msj = logic.SQP04323(filter);
             }
 

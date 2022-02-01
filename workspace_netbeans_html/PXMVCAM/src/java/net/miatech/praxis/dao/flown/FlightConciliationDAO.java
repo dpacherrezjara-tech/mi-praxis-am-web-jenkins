@@ -2094,6 +2094,7 @@ public class FlightConciliationDAO {
                 beanCons.strTicket = rst.getString("TICKET").trim();
 //                beanCons.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
 //                beanCons.NPAX = rst.getString("NPAX").trim();
+                beanCons.SEQ = rst.getString("SEQ").trim();
                 beanCons.FNAME = rst.getString("FNAME").trim();
                 beanCons.LNAME = rst.getString("LNAME").trim();
                 beanCons.DFLIGHT = rst.getString("DFLIGHT").trim();

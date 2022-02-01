@@ -34,7 +34,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                 break;
             case 'U':
                 this.mostrarData(this.bean.data);
-//                this.DeshabilitarCampoClave();
+//                if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
+//                    this.DeshabilitarCampoClave();
+//                }
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -91,7 +93,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
             data: [
                 ["", "None"],
                 ["A", "Adult"],
-                ["C", "Child"],
+                ["C", "Children"],
                 ["I", "Infant"]
             ]
         }));
@@ -250,7 +252,13 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                 if (btn === 'yes') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
-                    beanTemp.option = 'U';
+                    
+//                    if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
+//                        beanTemp.option = '';
+//                    }else{
+                        beanTemp.option = 'U';
+//                    }
+                    
                     this.validTktExists(beanTemp);
                 }
             }
@@ -258,32 +266,38 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
     },
     
     validTktExists: function(beanTemp) {
-//        var msjResult = '';
         
+        console.log(beanTemp);
         var beanString = JSON.stringify(beanTemp);
-        Ext.Ajax.request({
-            url: prototype.url + '/validTktExists',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-DataEntryA3729').mask('Loading...'),
-            success: function(response, opts) {
-                Ext.getCmp(prototype.id + '-DataEntryA3729').unmask('Loading...');
-                var res = Ext.JSON.decode(response.responseText);
-                console.log(res);
-                                
-                if (res.success) {
-                    if(res.existeTKT){
-                        global.Msg({msg: 'Ticket Already Exists'});
+        
+//        if(beanTemp.option === 'U'){
+            Ext.Ajax.request({
+                url: prototype.url + '/validTktExists',
+                method: 'POST',
+                timeout: 60000000,
+                params: {beanString: beanString},
+                beforerequest: Ext.getCmp(prototype.id + '-DataEntryA3729').mask('Loading...'),
+                success: function(response, opts) {
+                    Ext.getCmp(prototype.id + '-DataEntryA3729').unmask('Loading...');
+                    var res = Ext.JSON.decode(response.responseText);
+                    console.log(res);
+
+                    if (res.success) {
+                        if(res.existeTKT){
+                            global.Msg({msg: 'Ticket Already Exists'});
+                        }else{
+                            // Si no existe el ticket se inserta en A3729
+                            meDE.MaintenanceA3729(beanTemp);
+                        }
                     }else{
-                        // Si no existe el ticket se inserta en A3729
-                        meDE.MaintenanceA3729(beanTemp);
+                        global.Msg({msg: 'Error validate'});
                     }
-                }else{
-                    global.Msg({msg: 'Error validate'});
                 }
-            }
-        });
+            });
+//        }else{
+//            console.log('Sin validar ticket existe');
+//            meDE.MaintenanceA3729(beanTemp);
+//        }
     },
     
     
@@ -312,7 +326,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                     global.Msg({msg: res.Mensaje});
                     Ext.getCmp(prototype.id + '-DataEntryA3729').unmask();
                     Ext.getCmp(prototype.id + '-DataEntryA3729').close();
-//                    Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    
+                    if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
+                        Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    }
 
                 } else
                     global.Msg({msg: ''});
@@ -330,7 +347,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
     },
     DeshabilitarCampoClave: function() {
 
-        Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtTICKET').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-txtCUPON').setReadOnly(false);
+        Ext.getCmp(prototype.id + '-txtCHAIR').setReadOnly(false);
+        
+        Ext.getCmp(prototype.id + '-txtTICKET_2').setReadOnly(true);
+        Ext.getCmp(prototype.id + '-txtCUPON_2').setReadOnly(true);
     },
     Habilitarlbl: function() {
         Ext.getCmp(prototype.id + '-lblDescripcion').show();

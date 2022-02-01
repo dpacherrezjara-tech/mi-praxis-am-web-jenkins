@@ -301,7 +301,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     
     viewDataEntry_A3729: function(grid, rowIndex, colIndex) {
-        
+                
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('U', rec);
         
@@ -841,10 +841,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(prototype.id + '-boxDetailData').unmask();
                     win.lblUser_toolTip("Estructura: A3729");
-                    
-                    console.log(obj.data.items[0].data);
 
                     if (obj.data.length > 0) {
+                        console.log(obj.data.items[0].data);
                         var beanTemp = obj.data.items[0].data;
                         console.log(beanTemp);
                         if (!me.peek().includes('boxDetailFlightManifest'))
