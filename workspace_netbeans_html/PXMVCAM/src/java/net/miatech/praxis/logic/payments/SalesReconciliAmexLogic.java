@@ -57,6 +57,10 @@ public class SalesReconciliAmexLogic {
         return SalesReconciliAmexDAO.loadPX570SQP04279(filter);
     }
 
+    public List<A4118Filter> loadPX570SQP04376(A4118Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04376(filter);
+    }
+
     public List<A4116Filter> loadPX570SQP04275(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04275(filter);
     }
@@ -80,11 +84,11 @@ public class SalesReconciliAmexLogic {
     public A4116Filter loadPX570SQP04359(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04359(filter);
     }
-    
+
     public String loadPX570SQP04360(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04360(filter);
     }
-    
+
     public String loadPX570SQP04361(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04361(filter);
     }

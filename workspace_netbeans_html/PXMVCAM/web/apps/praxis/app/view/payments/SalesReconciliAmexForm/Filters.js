@@ -154,10 +154,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                 {
                     xtype: 'radiogroup',
                     id: prototype.id + '-radiogroupType',
-                    width: 480,
+                    width: 640,
                     items: [
                         {boxLabel: '<b style="color:#148D28;">Summary</b>', inputValue: 'SU', name: 'rbgType', checked: true},
                         {boxLabel: '<b style="color:#148D28;">Settlement</b>', inputValue: 'SE', name: 'rbgType'},
+                        {boxLabel: '<b style="color:#148D28;">Adjustment Queue</b>', inputValue: 'AD', name: 'rbgType'},
                         {boxLabel: '<b style="color:#148D28;">Transact. Queue Error</b>', inputValue: 'ER', name: 'rbgType'},
                     ],
                     listeners: {
