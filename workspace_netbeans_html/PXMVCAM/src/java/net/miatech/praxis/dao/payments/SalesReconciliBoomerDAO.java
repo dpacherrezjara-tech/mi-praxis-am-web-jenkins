@@ -201,6 +201,7 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.AMTSET = rst.getDouble("AMTSET");
 
                 beanTkt.SVFOPC = rst.getDouble("SVFOPC");
+                beanTkt.SVFOPB = rst.getDouble("SVFOPB");
                 beanTkt.AMTCOMC = rst.getDouble("AMTCOMC");
                 beanTkt.AMTIVAC = rst.getDouble("AMTIVAC");
                 beanTkt.AMTSETC = rst.getDouble("AMTSETC");
@@ -211,6 +212,18 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.QTYSETSAL = rst.getInt("QTYSETSAL");
 
                 beanTkt.ACCNBR = rst.getString("ACCNBR");
+                
+                if (beanTkt.QTYMATDIF > 0 || beanTkt.QTYSETSAL > 0) {
+                    beanTkt.STVALC = "2";
+                } else {
+                    beanTkt.STVALC = "1";
+                }
+
+                if (hmDescEstados.containsKey(beanTkt.STVALC.trim())) {
+                    beanTkt.descSTVALC = hmDescEstados.get(beanTkt.STVALC.trim()).toString();
+                } else {
+                    beanTkt.descSTVALC = beanTkt.STVALC.trim();
+                }
 
                 lstTkts.add(beanTkt);
             }
@@ -330,6 +343,7 @@ public class SalesReconciliBoomerDAO {
                 beanTOTAL.AMTSET = rst.getDouble("AMTSET");
 
                 beanTOTAL.SVFOPC = rst.getDouble("SVFOPC");
+                beanTOTAL.SVFOPB = rst.getDouble("SVFOPB");
                 beanTOTAL.AMTCOMC = rst.getDouble("AMTCOMC");
                 beanTOTAL.AMTIVAC = rst.getDouble("AMTIVAC");
                 beanTOTAL.AMTSETC = rst.getDouble("AMTSETC");
@@ -391,6 +405,7 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.AMTSET = rst.getDouble("AMTSET");
 
                     beanTkt.SVFOPC = rst.getDouble("SVFOPC");
+                    beanTkt.SVFOPB = rst.getDouble("SVFOPB");
                     beanTkt.AMTCOMC = rst.getDouble("AMTCOMC");
                     beanTkt.AMTIVAC = rst.getDouble("AMTIVAC");
                     beanTkt.AMTSETC = rst.getDouble("AMTSETC");

@@ -2962,20 +2962,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Status', dataIndex: 'descSTVAL', width: 70, //flex: 1
+                                                        text: 'Status', dataIndex: 'descSTVALC', width: 70, //flex: 1
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.STVAL === '') {
                                                                 metaData.style = "text-align:left;background-color:#F7BD56;";
-                                                            } else if (record.data.STVAL === '1') {
+                                                            } else if (record.data.STVALC === '1') {
                                                                 metaData.style = "text-align:left;background-color:#C6E5B1;";
-                                                            } else if (record.data.STVAL === '2') {
+                                                            } else if (record.data.STVALC === '2') {
                                                                 metaData.style = "text-align:left;background-color:#FF6F6F;";
                                                             }
                                                             return value;
                                                         }
                                                     },
                                                     {
-                                                        text: 'Amount', dataIndex: 'SVFOPC', width: 90, //flex: 1
+                                                        text: 'Amount', dataIndex: 'SVFOPB', width: 90, //flex: 1
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3224,7 +3224,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Amount', dataIndex: 'SVFOPC', width: 90, //flex: 1
+                                                        text: 'Amount', dataIndex: 'SVFOPB', width: 90, //flex: 1
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
@@ -3397,7 +3397,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Amount', dataIndex: 'SVFOPC', width: 90, //flex: 1
+                                                        text: 'Amount', dataIndex: 'SVFOPB', width: 90, //flex: 1
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
