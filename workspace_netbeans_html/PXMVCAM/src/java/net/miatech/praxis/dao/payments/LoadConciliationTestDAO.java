@@ -681,17 +681,17 @@ public class LoadConciliationTestDAO {
                         //beanTkt.IN_CERROR = filter.IN_CERROR.trim();
                         //beanTkt.strMoneda = filter.strMoneda.trim();
                         if (rst.getString("AFTE").trim().equals("X")) {
-                            beanTkt.strPEM = "ACCB BSP";
+                            beanTkt.strPEM = "Settlement BSP";
                         } else if (rst.getString("AFTE").trim().equals("A")) {
-                            beanTkt.strPEM = "ACCB ARC";
+                            beanTkt.strPEM = "Settlement ARC";
                         } else if (rst.getString("AFTE").trim().equals("B")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("N")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("L")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else {
-                            beanTkt.strPEM = "ACCB";
+                            beanTkt.strPEM = "Settlement";
                         }
                         beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                         beanTkt.CCIA = rst.getString("CCIA").trim();
@@ -1189,17 +1189,17 @@ public class LoadConciliationTestDAO {
                         beanTkt.IN_AUTHNBR = filter.IN_AUTHNBR.trim();
                         beanTkt.IN_ADYEN = filter.IN_ADYEN.trim();
                         if (rst.getString("AFTE").trim().equals("X")) {
-                            beanTkt.strPEM = "ACCB BSP";
+                            beanTkt.strPEM = "Settlement BSP";
                         } else if (rst.getString("AFTE").trim().equals("A")) {
-                            beanTkt.strPEM = "ACCB ARC";
+                            beanTkt.strPEM = "Settlement ARC";
                         } else if (rst.getString("AFTE").trim().equals("B")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("N")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("L")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else {
-                            beanTkt.strPEM = "ACCB";
+                            beanTkt.strPEM = "Settlement";
                         }
                         beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                         beanTkt.CCIA = rst.getString("CCIA").trim();
@@ -1721,17 +1721,17 @@ public class LoadConciliationTestDAO {
                         //beanTkt.IN_CERROR = filter.IN_CERROR.trim();
                         //beanTkt.strMoneda = filter.strMoneda.trim();
                         if (rst.getString("AFTE").trim().equals("X")) {
-                            beanTkt.strPEM = "ACCB BSP";
+                            beanTkt.strPEM = "Settlement BSP";
                         } else if (rst.getString("AFTE").trim().equals("A")) {
-                            beanTkt.strPEM = "ACCB ARC";
+                            beanTkt.strPEM = "Settlement ARC";
                         } else if (rst.getString("AFTE").trim().equals("B")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("N")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("L")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else {
-                            beanTkt.strPEM = "ACCB";
+                            beanTkt.strPEM = "Settlement";
                         }
                         beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                         beanTkt.CCIA = rst.getString("CCIA").trim();
@@ -2822,11 +2822,11 @@ public class LoadConciliationTestDAO {
                         beanTkt.strDescCountry = filter.strDescCountry.trim();
                         beanTkt.strDescCard = filter.strDescCard.trim();
                         if (rst.getString("AFTE").trim().equals("X")) {
-                            beanTkt.strPEM = "ACCB BSP";
+                            beanTkt.strPEM = "Settlement BSP";
                         } else if (rst.getString("AFTE").trim().equals("A")) {
-                            beanTkt.strPEM = "ACCB ARC";
+                            beanTkt.strPEM = "Settlement ARC";
                         } else {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         }
                         beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                         beanTkt.CCIA = rst.getString("CCIA").trim();
@@ -3287,15 +3287,15 @@ public class LoadConciliationTestDAO {
                 //ACCB
                 beanTkt.AFTE = rst.getString("AFTE").trim();
                 if (rst.getString("AFTE").trim().equals("B")) {
-                    beanTkt.strDescAFTE = "ACCB Billed";
+                    beanTkt.strDescAFTE = "Settlement Billed";
                 } else if (rst.getString("AFTE").trim().equals("N")) {
-                    beanTkt.strDescAFTE = "ACCB Not Billed";
+                    beanTkt.strDescAFTE = "Settlement Not Billed";
                 } else if (rst.getString("AFTE").trim().equals("L")) {
-                    beanTkt.strDescAFTE = "ACCB Local";
+                    beanTkt.strDescAFTE = "Settlement Local";
                 } else if (rst.getString("AFTE").trim().equals("X")) {
-                    beanTkt.strDescAFTE = "ACCB BSP";
+                    beanTkt.strDescAFTE = "Settlement BSP";
                 } else if (rst.getString("AFTE").trim().equals("A")) {
-                    beanTkt.strDescAFTE = "ACCB ARC";
+                    beanTkt.strDescAFTE = "Settlement ARC";
                 } else if (rst.getString("AFTE").trim().equals("")) {
                     beanTkt.strDescAFTE = "(Empty)";
                 }
@@ -3506,15 +3506,15 @@ public class LoadConciliationTestDAO {
                 // DATOS DEL ACCB ==============================================
                 beanTkt.AFTE = rst.getString("AFTE").trim();
                 if (rst.getString("AFTE").trim().equals("B")) {
-                    beanTkt.strDescAFTE = "ACCB Billed";
+                    beanTkt.strDescAFTE = "Settlement Billed";
                 } else if (rst.getString("AFTE").trim().equals("N")) {
-                    beanTkt.strDescAFTE = "ACCB Not Billed";
+                    beanTkt.strDescAFTE = "Settlement Not Billed";
                 } else if (rst.getString("AFTE").trim().equals("L")) {
-                    beanTkt.strDescAFTE = "ACCB Local";
+                    beanTkt.strDescAFTE = "Settlement Local";
                 } else if (rst.getString("AFTE").trim().equals("X")) {
-                    beanTkt.strDescAFTE = "ACCB BSP";
+                    beanTkt.strDescAFTE = "Settlement BSP";
                 } else if (rst.getString("AFTE").trim().equals("A")) {
-                    beanTkt.strDescAFTE = "ACCB ARC";
+                    beanTkt.strDescAFTE = "Settlement ARC";
                 }
                 beanTkt.ADATEL = rst.getString("ADATEL").trim();
                 beanTkt.AFLOAD = rst.getString("AFLOAD").trim();
@@ -4757,17 +4757,17 @@ public class LoadConciliationTestDAO {
                         beanTkt.IN_CERROR = filter.IN_CERROR.trim();
                         beanTkt.strMoneda = filter.strMoneda.trim();
                         if (rst.getString("AFTE").trim().equals("X")) {
-                            beanTkt.strPEM = "ACCB BSP";
+                            beanTkt.strPEM = "Settlement BSP";
                         } else if (rst.getString("AFTE").trim().equals("A")) {
-                            beanTkt.strPEM = "ACCB ARC";
+                            beanTkt.strPEM = "Settlement ARC";
                         } else if (rst.getString("AFTE").trim().equals("B")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("N")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else if (rst.getString("AFTE").trim().equals("L")) {
-                            beanTkt.strPEM = "ACCB ASR";
+                            beanTkt.strPEM = "Settlement ASR";
                         } else {
-                            beanTkt.strPEM = "ACCB";
+                            beanTkt.strPEM = "Settlement";
                         }
                         beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                         beanTkt.CCIA = rst.getString("CCIA").trim();

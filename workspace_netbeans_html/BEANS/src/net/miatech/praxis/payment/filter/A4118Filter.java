@@ -27,6 +27,7 @@ public class A4118Filter extends A4118 {
     public String IN_PCURRENCY = "";
     public String IN_MERCHID = "";
     public String DES_MERCHANT = "";
+    public String descSTCON = "";
 
     //Totales
     public double totSGROSAMOS = 0;

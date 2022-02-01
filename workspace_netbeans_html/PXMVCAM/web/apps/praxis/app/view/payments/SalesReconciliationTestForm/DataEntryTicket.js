@@ -166,8 +166,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                 data: [
                                     [null, "&nbsp;"],
                                     ["1", "Match"],
-                                    ["2", "Sales without ACCB"],
-                                    ["3", "ACCB without Sales"],
+                                    ["2", "Sales without Settlement"],
+                                    ["3", "Settlement without Sales"],
                                     ["4", "Match with Differences"],
                                     ["5", "Match Manual"]
                                 ]
@@ -641,7 +641,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     xtype: 'label',
                                     id: prototype.id+'-2-lblACCBTitulo',
                                     padding: '0px 120px 0px 0px',
-                                    html: '<strong style="color:#121E31; text-decoration: underline; ">ACCB Information</strong>'
+                                    html: '<strong style="color:#121E31; text-decoration: underline; ">Settlement Information</strong>'
                                 }
                             ]
                         },
@@ -661,7 +661,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     padding: '4 0',
                                     autoEl: {
                                         tag: 'label',
-                                        'data-qtip': 'ACCB Type'
+                                        'data-qtip': 'Settlement Type'
                                     }
                                 },
                                 {

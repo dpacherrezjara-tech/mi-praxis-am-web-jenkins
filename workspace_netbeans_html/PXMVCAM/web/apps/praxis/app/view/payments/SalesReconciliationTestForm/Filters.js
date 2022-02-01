@@ -242,7 +242,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'label',
-                            text: 'ACCB Type:',
+                            text: 'Settlement Type:',
                             padding: '3 0',
                             width: 94
                         },
@@ -252,7 +252,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
-                                    ["", "All"], ["B", "Billed"], ["N", "Not Billed"], ["L", "Local"], ["X", "BSP Billed"]
+                                    ["", "All"], ["AX", "AMEX"]//, ["N", "Not Billed"], ["L", "Local"], ["X", "BSP Billed"]
                                 ]
                             }),
                             queryMode: 'local',

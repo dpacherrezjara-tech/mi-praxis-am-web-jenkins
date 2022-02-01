@@ -47,6 +47,9 @@ public class A4118 {
     public double TRANCOUNT = 0;
     public int TRACKID = 0;
     public String INSTANBR = "";
+    public String STCON = "";
+    public String FCONT = "";
+    public String IDCON = "";
     
     public double SDGROSSA = 0;
     public double SCGROSSA = 0;

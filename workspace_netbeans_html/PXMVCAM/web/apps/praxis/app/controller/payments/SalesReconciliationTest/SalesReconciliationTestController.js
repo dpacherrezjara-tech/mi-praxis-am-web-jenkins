@@ -1128,7 +1128,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                             for (var l = 0; l < gridDetTicketAC.length; l++) {
                                 obj = gridDetTicketAC[l];
                                 if (obj.IN_STVAL === "4") {
-                                    if (obj.strPEM === "ACCB") {
+                                    if (obj.strPEM === "Settlement") {
                                         break;
                                     }
                                 } else {
@@ -1283,7 +1283,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                         for (var l = 0; l < gridDetTktSAC.length; l++) {
                             obj = gridDetTktSAC[l];
                             if (obj.IN_STVAL === "4") {
-                                if (obj.strPEM === "ACCB") {
+                                if (obj.strPEM === "Settlement") {
                                     break;
                                 }
                             } else {
@@ -1676,7 +1676,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                         for (var l = 0; l < gridDetTktSAC.length; l++) {
                             obj = gridDetTktSAC[l];
                             if (obj.IN_STVAL === "4") {
-                                if (obj.strPEM === "ACCB") {
+                                if (obj.strPEM === "Settlement") {
                                     break;
                                 }
                             } else {
@@ -1769,7 +1769,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                             for (var l = 0; l < gridDetTktSAC.length; l++) {
                                 obj = gridDetTktSAC[l];
                                 if (obj.IN_STVAL === "4") {
-                                    if (obj.strPEM === "ACCB") {
+                                    if (obj.strPEM === "Settlement") {
                                         break;
                                     }
                                 } else {

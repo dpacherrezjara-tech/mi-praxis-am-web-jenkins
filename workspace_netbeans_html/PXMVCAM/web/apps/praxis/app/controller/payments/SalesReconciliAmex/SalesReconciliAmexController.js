@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     paramsDetailDetSettlement: {},
     dataObtain: {},
     dataGrid: [],
-    init: function(view) {
+    init: function (view) {
         me = this;
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
@@ -104,18 +104,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             },
         });
     },
-    xpanel_afterrender: function(obj, e) {
+    xpanel_afterrender: function (obj, e) {
         this.obtainData();
     },
-    eventKey: function(e, eOpts) {
+    eventKey: function (e, eOpts) {
         if (eOpts.getKey() === 13) {
             this.btnSearch_click();
         }
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    obtainData: function() {
+    obtainData: function () {
 
         var month = this.fecha.getMonth() + 1;
 
@@ -203,7 +203,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 //            }
 //        });
     },
-    checkEvent: function(obj, e) {
+    checkEvent: function (obj, e) {
         //true : check ; false : uncheck
         console.log('checkEvent')
         if (obj.getValue()) {
@@ -214,7 +214,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }
         this.btnSearch_click();
     },
-    setFormatParameter: function() {
+    setFormatParameter: function () {
         me.bean = {};
 
         me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
@@ -233,10 +233,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             bean: me.bean
         };
     },
-    btnSearch_click: function(obj, e) {
+    btnSearch_click: function (obj, e) {
         this.rbChangeType();
     },
-    rbChangeType: function() {
+    rbChangeType: function () {
 
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
         console.log(selectedValue);
@@ -250,12 +250,55 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             case 'SE':
                 this.setGridDataMainSettlement();
                 break;
+            case 'AD':
+                this.setGridDataMainAdjustment();
+                break;
             case 'ER':
                 this.setGridDataMainErrorTransaction();
                 break;
         }
     },
-    setGridDataMainErrorTransaction: function() {
+    setGridDataMainAdjustment: function () {
+        win.lblUser_toolTip("Estructura: A4118");
+        me.panelActual = '-boxMainAdjustment';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchMainAdjustment'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = searchParamsMainSettlement;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin13');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    } else {
+                        var data = obj.data.items[0].data;
+                        console.log(data);
+                        if (data.IN_DATE === "PAYDATE") {
+                            Ext.getCmp(prototype.id + '-htDateMainAdjustment').setText('Payment');
+                        } else {
+                            Ext.getCmp(prototype.id + '-htDateMainAdjustment').setText('Processing');                            
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridMainAdjustment').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin13').bindStore(storeGridDatas);
+    },
+    setGridDataMainErrorTransaction: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.panelActual = '-boxMainErrorTransaction';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -264,11 +307,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             proxy: {
                 url: prototype.url + '/searchErrorTransaction'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                     obj.proxy.extraParams = searchParamsMainSettlement;
                 },
-                load: function(obj) {
+                load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 
                     var pag = Ext.getCmp(prototype.id + '-paggin12');
@@ -290,7 +333,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-gridMainErrorTransaction').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
     },
-    setGridDataMainSettlement: function() {
+    setGridDataMainSettlement: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.panelActual = '-boxMainSettlement';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -299,11 +342,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             proxy: {
                 url: prototype.url + '/searchMainSettlement'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                     obj.proxy.extraParams = searchParamsMainSettlement;
                 },
-                load: function(obj) {
+                load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 
                     var pag = Ext.getCmp(prototype.id + '-paggin9');
@@ -325,7 +368,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-gridMainSettlement').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
     },
-    onGridSettlement: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridSettlement: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxSettlement';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -336,18 +379,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetailSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataSettlement();
     },
-    setGridDataSettlement: function() {
+    setGridDataSettlement: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchSettlement'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                     obj.proxy.extraParams = me.paramsDetailSettlement;
                 },
-                load: function(obj) {
+                load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 
                     var pag = Ext.getCmp(prototype.id + '-paggin10');
@@ -369,7 +412,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-gridSettlement').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin10').bindStore(storeGridDatas);
     },
-    onGridDetSettMerchant: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetSettMerchant: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetSettlement';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -381,17 +424,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataDetSettlement();
     },
-    setGridDataDetSettlement: function() {
+    setGridDataDetSettlement: function () {
         win.lblUser_toolTip("Estructura: A4116/A4117/A4118");
         me.setWidthPie();
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetSettlement'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = me.paramsDetailDetSettlement;
                 },
-                load: function(obj) {
+                load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin11');
                     var pagData = pag.getPageData();
@@ -418,7 +461,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-gridDetSettlement').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
     },
-    viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         var strTkt = rowData.data.ISREFNBR;
 
@@ -437,7 +480,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
-    setGridData: function() {
+    setGridData: function () {
         win.lblUser_toolTip("Estructura: A4113");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -446,11 +489,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             proxy: {
                 url: prototype.url + '/search'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                     obj.proxy.extraParams = searchParams;
                 },
-                load: function(obj) {
+                load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
 
 //                        var pag = Ext.getCmp(prototype.id + '-paggin');
@@ -481,7 +524,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 //            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
-    onGridDetSubmission: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetSubmission: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
         this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
@@ -498,7 +541,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
 //        var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
 
-        if (columnNum === 9) {
+        if (columnNum === 10) {
             me.paramsDetailChargeback.beanString = JSON.stringify(this.beanSubmission);
             me.drillDown.push(me.panelActual);
             me.panelActual = '-boxDetChargeback';
@@ -515,17 +558,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             this.setGridDataDetSubmission();
         }
     },
-    setGridDataDetSubmission: function() {
+    setGridDataDetSubmission: function () {
         win.lblUser_toolTip("Estructura: A4115");
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetSubmission'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = me.paramsDetailSubmission;
                 },
-                load: function(obj) {
+                load: function (obj) {
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
@@ -555,7 +598,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
-    setGridDataDetChargeback: function() {
+    setGridDataDetChargeback: function () {
 
         console.log('setGridDataDetChargeback');
         win.lblUser_toolTip("Estructura: A4118");
@@ -564,10 +607,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             proxy: {
                 url: prototype.url + '/searchDetChargeback'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = me.paramsDetailChargeback;
                 },
-                load: function(obj) {
+                load: function (obj) {
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
@@ -597,7 +640,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
-    onGridDetTransaction: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetTransaction: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetTransaction';
@@ -627,7 +670,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetailTransaction.beanString = JSON.stringify(this.beanTransaction);
         this.setGridDataDetTransaction();
     },
-    setGridDataDetTransaction: function() {
+    setGridDataDetTransaction: function () {
         win.lblUser_toolTip("Estructura: A4116");
 
         me.setWidthPie();
@@ -635,10 +678,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             proxy: {
                 url: prototype.url + '/searchDetTransaction'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = me.paramsDetailTransaction;
                 },
-                load: function(obj) {
+                load: function (obj) {
 
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -687,7 +730,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
 
     },
-    onGridDetPricing: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetPricing: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetPricing';
@@ -711,7 +754,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetailPricing.beanString = JSON.stringify(this.beanPricing);
         this.setGridDataDetPricing();
     },
-    onGridDetPricingByItemt: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetPricingByItemt: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetPricing';
@@ -735,7 +778,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetailPricing.beanString = JSON.stringify(this.beanPricing);
         this.setGridDataDetPricing();
     },
-    setGridDataDetPricing: function() {
+    setGridDataDetPricing: function () {
         win.lblUser_toolTip("Estructura: A4117");
 
         me.setWidthPie();
@@ -743,10 +786,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             proxy: {
                 url: prototype.url + '/searchDetPricing'
             }, listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
                     obj.proxy.extraParams = me.paramsDetailPricing;
                 },
-                load: function(obj) {
+                load: function (obj) {
 
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -794,7 +837,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
-    onGridDetDay: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetDay: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetDay';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -811,7 +854,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetail.beanString = JSON.stringify(this.beanDay);
         this.setGridDataDetDay();
     },
-    setGridDataDetDay: function() {
+    setGridDataDetDay: function () {
         win.lblUser_toolTip("Estructura: A2292");
         me.setWidthPie();
         this.setFormatParameter();
@@ -824,10 +867,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 proxy: {
                     url: prototype.url + '/searchDetDay'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         obj.proxy.extraParams = me.paramsDetail;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         var pag = Ext.getCmp(prototype.id + '-paggin3');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -867,7 +910,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
         }
     },
-    onGridDetMerchant: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetMerchant: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetMerchant';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -884,7 +927,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetail.beanString = JSON.stringify(this.beanMerchant);
         this.setGridDataDetMerchant();
     },
-    setGridDataDetMerchant: function() {
+    setGridDataDetMerchant: function () {
         win.lblUser_toolTip("Estructura: A2292");
         me.setWidthPie();
         this.setFormatParameter();
@@ -897,10 +940,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 proxy: {
                     url: prototype.url + '/searchDetMerchant'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         obj.proxy.extraParams = me.paramsDetail;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         var pag = Ext.getCmp(prototype.id + '-paggin4');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -927,7 +970,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-paggin4').bindStore(storeGridDatas);
         }
     },
-    onGridDetBankS: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onGridDetBankS: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         console.log(columnNum);
         var cant = 0;
@@ -972,7 +1015,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             });
         }
     },
-    setGridDataDetBankS: function() {
+    setGridDataDetBankS: function () {
         win.lblUser_toolTip("Estructura: A2292");
         me.setWidthPie();
         var msj = this.validateFields();
@@ -984,10 +1027,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 proxy: {
                     url: prototype.url + '/searchDetBankByStval'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         obj.proxy.extraParams = me.paramsDetail;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         var pag = Ext.getCmp(prototype.id + '-paggin5');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -1014,7 +1057,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
         }
     },
-    OnGridDetDayByS: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    OnGridDetDayByS: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetDayByS';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -1034,7 +1077,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetail.beanString = JSON.stringify(this.beanDayByS);
         this.setGridDataDetDayBys();
     },
-    setGridDataDetDayBys: function() {
+    setGridDataDetDayBys: function () {
         win.lblUser_toolTip("Estructura: A2292");
         me.setWidthPie();
         this.setFormatParameter();
@@ -1047,11 +1090,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 proxy: {
                     url: prototype.url + '/searchDetDayByStval'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                         obj.proxy.extraParams = me.paramsDetail;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').unmask();
                         var pag = Ext.getCmp(prototype.id + '-paggin6');
                         var pagData = pag.getPageData();
@@ -1079,7 +1122,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
         }
     },
-    OnGridDetMerchantByS: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    OnGridDetMerchantByS: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetMerchantByS';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -1098,7 +1141,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.paramsDetail.beanString = JSON.stringify(this.beanMerchantByS);
         this.setGridDataDetMerchantBys();
     },
-    setGridDataDetMerchantBys: function() {
+    setGridDataDetMerchantBys: function () {
         win.lblUser_toolTip("Estructura: A2292");
         me.setWidthPie();
         this.setFormatParameter();
@@ -1111,11 +1154,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 proxy: {
                     url: prototype.url + '/searchDetMerchantByStval'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
                         obj.proxy.extraParams = me.paramsDetail;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         Ext.getCmp(prototype.id + '-contentInfo').unmask();
 //                        console.log(obj.data);
                         var pag = Ext.getCmp(prototype.id + '-paggin7');
@@ -1147,7 +1190,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-paggin7').bindStore(storeGridDatas);
         }
     },
-    OnGridByMerchant: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    OnGridByMerchant: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         var QTY = 0;
         switch (columnNum) {
@@ -1189,7 +1232,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             });
         }
     },
-    setGridByMerchant: function() {
+    setGridByMerchant: function () {
         win.lblUser_toolTip("Estructura: A2291");
         me.setWidthPie();
         this.setFormatParameter();
@@ -1202,10 +1245,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 proxy: {
                     url: prototype.url + '/searchByMerchant'
                 }, listeners: {
-                    beforeload: function(obj) {
+                    beforeload: function (obj) {
                         obj.proxy.extraParams = me.paramsDetail;
                     },
-                    load: function(obj) {
+                    load: function (obj) {
                         var pag = Ext.getCmp(prototype.id + '-paggin8');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -1232,24 +1275,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-paggin8').bindStore(storeGridDatas);
         }
     },
-    imgByTDOC_clickHandler: function() {
+    imgByTDOC_clickHandler: function () {
 //        this.btnSearch_click();
     },
-    validateFields: function() {
+    validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
 
         return msj;
     },
-    btnAdd_click: function() {
+    btnAdd_click: function () {
         this.winDataEntry('I');
     },
-    onViewPNR: function(a, b, c, d, e, rowData) {
+    onViewPNR: function (a, b, c, d, e, rowData) {
 
 //        var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('', rowData);
     },
-    winDataEntry: function(action, rec) {
+    winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
 
@@ -1262,7 +1305,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         }).show();
     },
-    btnEmail_click: function(obj, e) {
+    btnEmail_click: function (obj, e) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Send Mail ?',
@@ -1270,14 +1313,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'ok') {
                     this.sendMailMultipleDifferences();
                 }
             }
         });
     },
-    sendMailMultipleDifferences: function(obj, e) {
+    sendMailMultipleDifferences: function (obj, e) {
         Ext.Ajax.request({
             url: prototype.url + '/sendMailMultipleDifferences',
             method: 'POST',
@@ -1288,20 +1331,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 IN_DATE: Ext.getCmp(prototype.id + '-cmbDateSel').getValue()
             },
             beforerequest: Ext.getCmp(prototype.id + '-panelMain').mask('Loading...', ''),
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getCmp(prototype.id + '-panelMain').unmask('Loading...', '');
 
                 var res = Ext.JSON.decode(response.responseText);
                 global.Msg({
                     msg: res.MESSAGE,
                     icon: 1,
-                    fn: function() {
+                    fn: function () {
                     }
                 });
             }
         });
     },
-    btnBack_click: function(obj, e) {
+    btnBack_click: function (obj, e) {
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);
@@ -1319,7 +1362,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             global.showMenu();
         }
     },
-    btnClear_click: function(obj, e) {
+    btnClear_click: function (obj, e) {
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
@@ -1327,7 +1370,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-txtMerchant').setValue('');
         Ext.getCmp(prototype.id + '-cmbTTRAN').setValue('');
     },
-    btnExcel_click: function(obj, e) {
+    btnExcel_click: function (obj, e) {
 
         this.setFormatParameter();
         var msj = this.validateFields();
@@ -1342,7 +1385,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'ok') {
                         this.exportExcel();
                     }
@@ -1350,7 +1393,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             });
         }
     },
-    exportExcel: function() {
+    exportExcel: function () {
         this.setFormatParameter();
         console.log(me.panelActual);
         switch (me.panelActual) {
@@ -1378,9 +1421,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             case  '-boxDetSettlement':
                 global.getFile(prototype.url + '/getXLSXDetSettlement?beanString=' + me.paramsDetailDetSettlement.beanString);
                 break;
+            case  '-boxMainAdjustment':
+                global.getFile(prototype.url + '/getXLSXMainAdjustment?beanString=' + searchParams.beanString);
+                break;
         }
     },
-    onDownloadFile: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.paramsDetail.beanString = JSON.stringify(rowData.data);
         me.fileName = rowData.data.A2536NAMEF;
         Ext.Ajax.request({
@@ -1389,7 +1435,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...'),
             params: me.paramsDetail,
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridData').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 
@@ -1404,7 +1450,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         });
     },
-    onSendClick: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+    onSendClick: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Send Mail ?',
@@ -1412,14 +1458,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'ok') {
                     this.sendMail(rowData.data);
                 }
             }
         });
     },
-    sendMail: function(data) {
+    sendMail: function (data) {
         console.log('Send Mail');
         /*var DATE = '20210625';
          var AXPAYNBR = '139';
@@ -1440,20 +1486,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 PCURRENCY: data.PCURRENCY
             },
             beforerequest: Ext.getCmp(prototype.id + '-gridData').mask('Loading...', ''),
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridData').unmask('Loading...', '');
 
                 var res = Ext.JSON.decode(response.responseText);
                 global.Msg({
                     msg: res.MESSAGE,
                     icon: 1,
-                    fn: function() {
+                    fn: function () {
                     }
                 });
             }
         });
     },
-    btnFilter_click: function(obj) {
+    btnFilter_click: function (obj) {
 
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible()) {
@@ -1462,10 +1508,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             option.setVisible(true);
         }
     },
-    setWidthPie: function() {
+    setWidthPie: function () {
 
         console.log(me.panelActual);
-        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction') {
+        if (me.panelActual === '-boxDetTransaction' || me.panelActual === '-boxDetPricing' || me.panelActual === '-boxMainSettlement' || me.panelActual === '-boxSettlement' || me.panelActual === '-boxDetSettlement' || me.panelActual === '-boxMainErrorTransaction' || me.panelActual === '-boxMainAdjustment') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -1473,12 +1519,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-pie').setVisible(false);
         }
     },
-    onEditClick: function(grid, rowIndex, colIndex) {
+    onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         console.log(rec);
         this.winDataEntryError('U', rec);
     },
-    winDataEntryError: function(action, rec) {
+    winDataEntryError: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
 
@@ -1490,7 +1536,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         }).show();
     },
-    getPaggin: function() {
+    getPaggin: function () {
         me.pagginActual = '';
         switch (me.panelActual) {
             case  '-boxDetTransaction':
@@ -1529,25 +1575,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             case '-boxMainErrorTransaction':
                 me.pagginActual = '-paggin12';
                 break;
+            case '-boxMainAdjustment':
+                me.pagginActual = '-paggin13';
+                break;
         }
     },
-    afterRenderYear: function(obj) {
+    afterRenderYear: function (obj) {
         obj.setValue(this.fecha.getFullYear());
     },
-    afterRenderMonth: function(obj) {
+    afterRenderMonth: function (obj) {
         obj.setValue('01');
     },
-    selectComboFromYear: function(obj) {
+    selectComboFromYear: function (obj) {
         var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
         var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
         comboToYear.bindStore(storeComboDataYear);
         comboToYear.setValue(obj.getValue());
     },
-    selectComboFromMonth: function(obj) {
+    selectComboFromMonth: function (obj) {
         var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
         comboToMonth.setValue(obj.getValue());
     },
-    selectComboToMonth: function(obj) {
+    selectComboToMonth: function (obj) {
         var comboFromYear = Ext.getCmp(prototype.id + '-cmbDateFromYear');
         var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
         var comboFromMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
@@ -1557,53 +1606,53 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         }
     },
-    selectComboFromDay: function(obj) {
+    selectComboFromDay: function (obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
     },
     /*     
      * Funciones para la paginacion     
      */
-    pagFirst: function(obj, e) {
+    pagFirst: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveFirst();
-    }, pagPrevious: function(obj, e) {
+    }, pagPrevious: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.movePrevious();
     },
-    pagNext: function(obj, e) {
+    pagNext: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveNext();
     },
-    pagLast: function(obj, e) {
+    pagLast: function (obj, e) {
         this.getPaggin();
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
-    getInt: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getInt: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000');
     },
-    getDouble: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDouble: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getText: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getText: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:left';
         return value;
     },
-    getDoubleColor1: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor1: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#F2FAFC';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor2: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor2: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#DFF0ED';
         return Ext.util.Format.number(value, '0,000.00');
     },
-    getDoubleColor3: function(value, metaData, record, rowIndex, colIndex, store, view) {
+    getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
     }
