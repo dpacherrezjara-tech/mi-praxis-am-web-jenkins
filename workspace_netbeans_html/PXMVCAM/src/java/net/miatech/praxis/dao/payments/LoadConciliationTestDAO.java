@@ -320,6 +320,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -862,6 +863,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -1361,6 +1363,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -2080,20 +2083,20 @@ public class LoadConciliationTestDAO {
             cstmt.registerOutParameter(19, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.strFecFiltro.trim());
-            cstmt.setString(3, filter.IN_SDATE.trim());
-            cstmt.setString(4, filter.IN_TDOC.trim());
-            cstmt.setString(5, filter.SCOUNTRY.trim());
-            cstmt.setString(6, filter.IN_PAYMENT.trim());
-            cstmt.setString(7, filter.IN_CARDC.trim());
-            cstmt.setString(8, filter.IN_TICKET.trim());
-            cstmt.setString(9, filter.IN_FTE.trim());
-            cstmt.setString(10, filter.IN_AFTE.trim());
-            cstmt.setString(11, filter.IN_CARDN.trim());
-            cstmt.setString(12, filter.IN_STVAL.trim());
-            cstmt.setString(13, filter.IN_MERCHN.trim());
-            cstmt.setString(14, filter.IN_AUTHNBR.trim());
-            cstmt.setString(15, filter.IN_ADYEN.trim());
+            cstmt.setString(2, filter.strFecFiltro.trim()); //ADATE
+            cstmt.setString(3, filter.IN_SDATE.trim()); //202101
+            cstmt.setString(4, filter.IN_TDOC.trim()); //S
+            cstmt.setString(5, filter.SCOUNTRY.trim()); //MX
+            cstmt.setString(6, filter.IN_PAYMENT.trim()); //CC
+            cstmt.setString(7, filter.IN_CARDC.trim()); //
+            cstmt.setString(8, filter.IN_TICKET.trim()); //
+            cstmt.setString(9, filter.IN_FTE.trim()); //
+            cstmt.setString(10, filter.IN_AFTE.trim()); //
+            cstmt.setString(11, filter.IN_CARDN.trim()); //
+            cstmt.setString(12, filter.IN_STVAL.trim()); //
+            cstmt.setString(13, filter.IN_MERCHN.trim()); //
+            cstmt.setString(14, filter.IN_AUTHNBR.trim()); //
+            cstmt.setString(15, filter.IN_ADYEN.trim()); //
 
             cstmt.setInt(16, filter.page.PAGNUM);
             cstmt.setInt(17, filter.page.PAGROW);
@@ -2393,6 +2396,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -3391,6 +3395,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -3667,6 +3672,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -3923,6 +3929,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -4084,6 +4091,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -4238,6 +4246,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);
@@ -4340,6 +4349,7 @@ public class LoadConciliationTestDAO {
         }
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", tipFecha + " without Reconciliation");
         hmDescEstados.put("3", "Reconciliation without " + tipFecha);

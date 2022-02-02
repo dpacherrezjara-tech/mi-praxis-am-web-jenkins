@@ -1265,13 +1265,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                 },
                                                                 columns: [
                                                                     {
-                                                                        text: 'Code', dataIndex: 'SCARCOD', width: 80,
+                                                                        text: 'Code', dataIndex: 'SCARCOD', width: 60,
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return value;
                                                                         }
                                                                     },
                                                                     {
-                                                                        text: 'Number', dataIndex: 'SCARDN', width: 100,
+                                                                        text: 'Number', dataIndex: 'SCARDN', width: 120,
                                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return value;
                                                                         }
