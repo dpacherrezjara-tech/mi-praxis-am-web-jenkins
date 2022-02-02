@@ -820,5 +820,31 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
+    
+    onViewExchange: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        if (Ext.getCmp(prototype.id + '-ViewExchange') === undefined) {
+            Ext.create('Ext.Praxis.view.payments.DataRequestedByDateForm.ViewExchange', {
+                id: prototype.id + '-ViewExchange',
+                scrollable: true,
+                params: {
+//                    objA3096: {},
+//                    lstTaxesOrig: ''
+                },
+//                listeners: {
+//                    afterrender: function(obj, e) {
+//                    },
+//                    beforeclose: function(panel, e) {
+//                        if (!me.objA3096.changeTaxes) {
+//                            me.objA3096.lstTaxes = Ext.clone(me.oldlstTaxes);
+//                        }
+//                    }
+//                }
+            }).show();
+        }
+
+    },
+    
+    
 }
 );

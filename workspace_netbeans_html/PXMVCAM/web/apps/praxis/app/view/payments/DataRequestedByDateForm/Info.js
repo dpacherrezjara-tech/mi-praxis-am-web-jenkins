@@ -336,6 +336,26 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Flag',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Exchange', dataIndex: 'FSELECX', width: 60,
+                                                            listeners: {
+                                                            click: 'onViewExchange'
+                                                        },
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#b2e1ff;";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
                                                 text: 'Accounting',
                                                 defaults: {
                                                     menuDisabled: true,
