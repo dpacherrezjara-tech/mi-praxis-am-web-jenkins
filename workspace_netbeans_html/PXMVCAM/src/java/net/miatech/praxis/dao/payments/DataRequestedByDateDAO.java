@@ -199,6 +199,13 @@ public class DataRequestedByDateDAO {
                 } else {
                     objRtn.COLOR = "#e6ecf5";
                 }
+                
+                objRtn.FSELECX = rs01.getString("FSELECX").trim();
+                if (objRtn.FSELECX.equals("1")) {
+                    objRtn.FSELECX = "Y";
+                } else {
+                    objRtn.FSELECX = "";
+                }
 
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
