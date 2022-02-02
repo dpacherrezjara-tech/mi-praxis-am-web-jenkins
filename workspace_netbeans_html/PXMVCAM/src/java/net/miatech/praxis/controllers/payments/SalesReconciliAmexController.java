@@ -3215,7 +3215,7 @@ public class SalesReconciliAmexController extends BaseController {
         Ccpy.add("ctarazona@miatech.net");
 
         String asunto = "Debit Memo";
-
+        /*
         String mensaje = "<p>Estimados señores de American Express<br><br>";
         mensaje = mensaje + "\n" + "Se efectuó la conciliación de la liquidación aplicando los acuerdos vigentes encontrando diferencias en los cobros retenidos por comisiones.<br><br>";
         mensaje = mensaje + "\n" + "Adjunto detalle de liquidación:<br>";
@@ -3226,6 +3226,23 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "<li>Valor : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
         mensaje = mensaje + "\n" + "</ul>";
         mensaje = mensaje + "\n" + "Solicitamos nos puedan aclarar este hallazgo.<br><br>";
+        mensaje = mensaje + "\n" + "Saludos cordiales.<br><br>";
+        mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";
+        mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
+         */
+        String mensaje = "Estimados señores de American Express<br><br>";
+        mensaje = mensaje + "\n" + "Derivado de los procesos internos de conciliación,<br>";
+        mensaje = mensaje + "\n" + "Hemos detectado  diferencias en el cobro de:<br>";
+        mensaje = mensaje + "\n" + "<ul>";
+        mensaje = mensaje + "\n" + "<li>Fecha de liquidación : " + Data.DATE + "</li>";
+        mensaje = mensaje + "\n" + "<li>AX Number : " + Data.AXPAYNBR + "</li>";
+        mensaje = mensaje + "\n" + "<li>Merchant Number : " + Data.PMERCHID + "</li>";
+        mensaje = mensaje + "\n" + "<li>Valor : " + Data.PCURRENCY + " " + Data.DIFF_PNETAMOU_STRING + "</li>";
+        mensaje = mensaje + "\n" + "</ul>";
+        mensaje = mensaje + "\n" + "Según el detalle anexo.<br>";
+        mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br></p>";
         mensaje = mensaje + "\n" + "Saludos cordiales.<br><br>";
         mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
         mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";
@@ -3766,7 +3783,7 @@ public class SalesReconciliAmexController extends BaseController {
 
         List<A4113Filter> listaData = this.getListForFileMultipleDifferences(Data);
 
-        String mensaje = "<html>";
+        /*String mensaje = "<html>";
         mensaje = mensaje + "\n" + "<style> table, th, td {  border:1px solid black; } td { text-align: center;} </style>";
         mensaje = mensaje + "\n" + "<body>";
         mensaje = mensaje + "\n" + "<p>Estimados señores de American Express<br><br>";
@@ -3785,6 +3802,33 @@ public class SalesReconciliAmexController extends BaseController {
         mensaje = mensaje + "\n" + "</table>";
 
         mensaje = mensaje + "\n" + "Solicitamos nos puedan aclarar este hallazgo.<br><br>";
+        mensaje = mensaje + "\n" + "Saludos cordiales.<br><br>";
+        mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";
+        mensaje = mensaje + "\n" + "<img src=\"cid:logo\" /><br>";
+        mensaje = mensaje + "\n" + "<span style=\"color:#212121;font-size:9pt;font-family:Segoe UI,sans-serif;\">Email: <a href=\"mailto:rpichardor@aeromexico.com\" target=\"_blank\" >rpichardor@aeromexico.com</a></span>";
+        mensaje = mensaje + "\n" + "</body>";
+        mensaje = mensaje + "\n" + "</html>";*/
+        String mensaje = "<html>";
+        mensaje = mensaje + "\n" + "<style> table, th, td {  border:1px solid black; } td { text-align: center;} </style>";
+        mensaje = mensaje + "\n" + "<body>";
+        mensaje = mensaje + "\n" + "Estimados señores de American Express<br><br>";
+        mensaje = mensaje + "\n" + "Derivado de los procesos internos de conciliación,<br><br>";
+        mensaje = mensaje + "\n" + "Hemos detectado  diferencias en el cobro de:<br>";
+        mensaje = mensaje + "\n" + "<table style=\"width:100%\">";
+        mensaje = mensaje + "\n" + "<tr>    <th>Fecha de liquidación</th>    <th>AX Number</th>    <th>Merchant Number</th>    <th>Moneda</th>    <th>Valor</th>    </tr>";
+
+        for (int i = 0; i < listaData.size(); i++) {
+            a = Functions.redondear(listaData.get(i).DIFF_PNETAMOU, 2);
+            String diferencia = formatea.format(a);
+            diferencia = diferencia.replace("-", "");
+            mensaje = mensaje + "\n" + "<tr>    <td>" + listaData.get(i).DATE + "</td>    <td>" + listaData.get(i).AXPAYNBR + "</td>    <td>" + listaData.get(i).PMERCHID + "</td>    <td>" + listaData.get(i).PCURRENCY + "</td>    <td>" + diferencia + "</td>    </tr>";
+        }
+
+        mensaje = mensaje + "\n" + "</table>";
+
+        mensaje = mensaje + "\n" + "Según el detalle anexo.<br>";
+        mensaje = mensaje + "\n" + "Agradecemos su atención y quedamos atentos a la aclaración de este hallazgo.<br><br>";
         mensaje = mensaje + "\n" + "Saludos cordiales.<br><br>";
         mensaje = mensaje + "\n" + "<b style=\"color:#0C343D;font-size:11.5pt;font-family:Verdana,sans-serif;\">Román Pichardo</b><br><br>";
         mensaje = mensaje + "\n" + "<span style=\"color:#616161;font-size:10.5pt;font-family:Open Sans,sans-serif;\">Gerente de Orden al Cobro</span><br>";

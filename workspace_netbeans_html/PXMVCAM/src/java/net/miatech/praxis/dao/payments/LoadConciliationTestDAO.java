@@ -3322,7 +3322,7 @@ public class LoadConciliationTestDAO {
                 beanTkt.AIDATE = rst.getString("AIDATE").trim();
                 beanTkt.APNR = rst.getString("APNR").trim();
                 beanTkt.APNRSP = rst.getString("APNRSP").trim();
-                beanTkt.MERCHN = rst.getString("MERCHN").trim();
+                beanTkt.MERCHN = rst.getString("MERCHNC").trim(); //MERCHN
                 if (rst.getString("NMERCHANT") != null && !rst.getString("NMERCHANT").trim().equals("-")) {
                     beanTkt.strDescMerchn = rst.getString("NMERCHANT").trim();
                 }
@@ -4496,25 +4496,26 @@ public class LoadConciliationTestDAO {
                              } else if (rst.getString("AFTE").trim().equals("L")) {
                              beanTkt.strSORIG = "Local";
                              }*/
+                            //CAMBIO DE A -> S POR MATCH AUTOMATICO
                             beanTkt.SDATEL = rst.getString("ADATEL").trim();
                             beanTkt.SFLOAD = rst.getString("AFLOAD").trim();
                             beanTkt.SCOUNTRY = rst.getString("ACOUNTRY").trim();
                             beanTkt.strDescCountry = rst.getString("NAMEA").trim();
-                            beanTkt.SAGENT = rst.getString("AAGENT").trim();
+                            beanTkt.SAGENT = rst.getString("SAGENT").trim();
                             beanTkt.SDATE = rst.getString("ADATE").trim();
                             beanTkt.SPAYMENT = rst.getString("APAYMENT").trim();
                             beanTkt.SCARCOD = rst.getString("ACARCOD").trim();
                             beanTkt.STCNTR = rst.getString("ATCNTR").trim();
                             beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
-                            beanTkt.SVFOP = rst.getDouble("AVFOP");
+                            beanTkt.SVFOP = rst.getDouble("SVFOP");
                             beanTkt.SCARDN = rst.getString("ACARDN").trim();
                             beanTkt.strSCARDN = rst.getString("ACARDN").trim();
                             beanTkt.strDescCard = rst.getString("NAMECARA").trim();
                             //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("ADATEXP").trim(), "MMyy", "yyyyMM");
                             beanTkt.SAUTHOC = rst.getString("AAUTHOC").trim();
-                            beanTkt.SINVN = rst.getString("AINVN").trim();
+                            beanTkt.SINVN = rst.getString("SINVN").trim();
                             beanTkt.SIDATE = rst.getString("AIDATE").trim();
-                            beanTkt.SPNR = rst.getString("APNR").trim();
+                            beanTkt.SPNR = rst.getString("SPNR").trim();
                             beanTkt.SPNRSP = rst.getString("APNRSP").trim();
                         }
                         if (beanTkt.SFLOAD.trim().equals("M")) {

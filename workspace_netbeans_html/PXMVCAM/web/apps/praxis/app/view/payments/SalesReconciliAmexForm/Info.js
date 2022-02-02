@@ -636,13 +636,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             {
                                                                 icon: 'resources/img/botones/24x24/dollar.png',
                                                                 getClass: function (v, meta, rec) {
-                                                                    if (rec.data.DIFF_PNETAMOU > -1) {
+                                                                    /*if (rec.data.DIFF_PNETAMOU > -1) {
                                                                         metaData.css = 'x-hide-display';
                                                                         return v;
                                                                     } else {
                                                                         meta.tdAttr = 'data-qtip="Debit Memo"';
                                                                         return v;
-                                                                    }
+                                                                    }*/
+                                                                    meta.tdAttr = 'data-qtip="Debit Memo"';
+                                                                    return v;
                                                                 },
                                                                 handler: 'onSendClick'
                                                             }
