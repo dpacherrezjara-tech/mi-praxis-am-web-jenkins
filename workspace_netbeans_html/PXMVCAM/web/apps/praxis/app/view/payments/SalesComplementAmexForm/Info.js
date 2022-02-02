@@ -116,12 +116,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
                                                     },
                                                     {
-                                                        text: 'VS Sale', dataIndex: 'descSTCON', width: 80
+                                                        text: 'VS Sales', dataIndex: 'descSTCON', width: 80
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: 'Sale',
+                                                text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -371,12 +371,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
                                                     },
                                                     {
-                                                        text: 'VS Sale', dataIndex: 'descSTCON', width: 80
+                                                        text: 'VS Sales', dataIndex: 'descSTCON', width: 80
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: 'Sale',
+                                                text: 'Sales',
                                                 id: prototype.id + '-adgTitFechaTablet',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -604,12 +604,12 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
                                                     },
                                                     {
-                                                        text: 'VS Sale', dataIndex: 'descSTCON', width: 80
+                                                        text: 'VS Sales', dataIndex: 'descSTCON', width: 80
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: 'Sale',
+                                                text: 'Sales',
                                                 id: prototype.id + '-adgTitFechaLiga',
                                                 defaults: {
                                                     menuDisabled: true,
