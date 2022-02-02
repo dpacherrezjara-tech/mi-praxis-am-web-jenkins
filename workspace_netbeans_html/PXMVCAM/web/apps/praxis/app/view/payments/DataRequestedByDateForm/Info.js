@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1800,
+                width: 1850,
                 height: 'auto',
                 align: 'center'
             },
@@ -40,7 +40,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
 //                            height: 'auto',
-                            width: 1770,
+                            width: 1850,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataMain',
-                                    width: 1765,
+                                    width: 1880,
                                     height: 535,
                                     columnLines: true,
                                     /*features: [{
@@ -72,14 +72,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {
-                                                        text: 'Date', dataIndex: 'DATE', width: 85,
-                                                        /*renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                         metaData.style = "color:#057ECB;";
-                                                         value = '<b>' + value + '</b>';
-                                                         return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                         }*/
-                                                    }
+                                                    { text: 'Date', dataIndex: 'DATE', width: 85}
                                                 ]
                                             },
                                             {
@@ -179,7 +172,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Number', dataIndex: 'CARDNBR', width: 115,
+                                                        text: 'Number', dataIndex: 'CARDNBR', width: 145,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;background:" + data.COLOR;
@@ -344,14 +337,16 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Exchange', dataIndex: 'FSELECX', width: 60,
+                                                        text: 'Exchange', dataIndex: 'FSELECX', width: 70,
                                                             listeners: {
                                                             click: 'onViewExchange'
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#b2e1ff;";
-                                                            return value;
+                                                            value = '<b>' + value + '<b>';
+                                                            return '<a href="#payments-data-requested-by-date-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
+                                                        
                                                     }
                                                 ]
                                             },
@@ -381,9 +376,9 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 columns: [
                                                     {
                                                         text: 'Policy', dataIndex: 'strDescCRULE', width: 80
-                                                    },
+                                                    }
                                                 ]
-                                            },
+                                            }
                                         ]
                                     }
                                 }
@@ -607,7 +602,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Date', dataIndex: 'SALEDATE', width: 85,
+                                                        text: 'Date', dataIndex: 'SALEDATE', width: 70,
                                                     }
                                                 ]
                                             },

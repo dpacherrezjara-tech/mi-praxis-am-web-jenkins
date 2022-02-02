@@ -610,6 +610,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     },
     onViewPNR: function(a, b, c, d, e, rowData) {
 //      var rec = grid.getStore().getAt(rowIndex);
+        console.log();
         this.winDataEntry('', rowData);
     },
     winDataEntry: function(action, rec) {
@@ -822,28 +823,19 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     },
     
     onViewExchange: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
-
-        if (Ext.getCmp(prototype.id + '-ViewExchange') === undefined) {
-            Ext.create('Ext.Praxis.view.payments.DataRequestedByDateForm.ViewExchange', {
-                id: prototype.id + '-ViewExchange',
-                scrollable: true,
+        
+        if(rowData.data.FSELECX === 'Y'){
+        
+            Ext.create('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntryExchange', {
+                id: prototype.id + '-dataEntryExchange',
                 params: {
-//                    objA3096: {},
-//                    lstTaxesOrig: ''
-                },
-//                listeners: {
-//                    afterrender: function(obj, e) {
-//                    },
-//                    beforeclose: function(panel, e) {
-//                        if (!me.objA3096.changeTaxes) {
-//                            me.objA3096.lstTaxes = Ext.clone(me.oldlstTaxes);
-//                        }
-//                    }
-//                }
+                    action: 'V',
+                    rec: rowData,
+                }
             }).show();
         }
 
-    },
+    }
     
     
 }
