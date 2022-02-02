@@ -3322,7 +3322,7 @@ public class LoadConciliationTestDAO {
                 beanTkt.AIDATE = rst.getString("AIDATE").trim();
                 beanTkt.APNR = rst.getString("APNR").trim();
                 beanTkt.APNRSP = rst.getString("APNRSP").trim();
-                beanTkt.MERCHN = rst.getString("MERCHN").trim();
+                beanTkt.MERCHN = rst.getString("MERCHNC").trim(); //MERCHN
                 if (rst.getString("NMERCHANT") != null && !rst.getString("NMERCHANT").trim().equals("-")) {
                     beanTkt.strDescMerchn = rst.getString("NMERCHANT").trim();
                 }
