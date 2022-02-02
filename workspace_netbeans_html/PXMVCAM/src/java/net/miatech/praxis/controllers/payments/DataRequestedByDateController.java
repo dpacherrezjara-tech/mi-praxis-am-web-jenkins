@@ -832,5 +832,36 @@ public class DataRequestedByDateController extends BaseController {
             throw new SpringException(e);
         }
     }
+    
+    
+    @RequestMapping(value = "searchBean")
+    public @ResponseBody
+    String searchBean(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- DataRequestedByBank : searchBean-------------");
+        map.put("success", true);
+
+        A2331Filter result = new A2331Filter();
+        A2331Filter filter = new A2331Filter();
+        List<A2331Filter> lst = new ArrayList<>(0);
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new DataRequestedByDateLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A2331Filter.class);
+            lst = logic.SQP04382 (filter);
+            map.put("data", lst);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+
+        return new Gson().toJson(map);
+    }
+    
+    
 
 }

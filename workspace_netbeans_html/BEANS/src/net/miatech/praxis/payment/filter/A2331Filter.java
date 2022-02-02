@@ -90,6 +90,7 @@ public class A2331Filter extends A2331 {
     public String COMMENT = "";
     public String DATE = "";
     public String TICKET = "";
+    public String TICKETX = "";
 
     public long lngQLINK = 0;
     public long lngQCARD = 0;

@@ -79,6 +79,8 @@ public class A2331 {
     public String FCONT = "";
     public String IDCON = "";
     public String DATAPLICA = "";
+    
+    public String FSELECX = "";
 
     //CAMPOS A2335
     public double OPEAMOUNT = 0;
@@ -94,6 +96,11 @@ public class A2331 {
     public String FORMAEX = "";
     public String SERIEEX = "";
     public String TKTEXCH = "";
+    
+    public String STUSOSX = "";
+    public String INDCPNX = "";
+    public String INDCPNSX = "";
+    public String INDCPNSLX = "";
 
     //Datos Auditoria        
     public String USCR = "";

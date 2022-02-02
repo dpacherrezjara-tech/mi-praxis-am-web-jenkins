@@ -610,6 +610,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
     },
     onViewPNR: function(a, b, c, d, e, rowData) {
 //      var rec = grid.getStore().getAt(rowIndex);
+        console.log();
         this.winDataEntry('', rowData);
     },
     winDataEntry: function(action, rec) {
@@ -820,5 +821,22 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByDate.DataRequestedByDa
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
+    
+    onViewExchange: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
+        
+        if(rowData.data.FSELECX === 'Y'){
+        
+            Ext.create('Ext.Praxis.view.payments.DataRequestedByDateForm.DataEntryExchange', {
+                id: prototype.id + '-dataEntryExchange',
+                params: {
+                    action: 'V',
+                    rec: rowData,
+                }
+            }).show();
+        }
+
+    }
+    
+    
 }
 );
