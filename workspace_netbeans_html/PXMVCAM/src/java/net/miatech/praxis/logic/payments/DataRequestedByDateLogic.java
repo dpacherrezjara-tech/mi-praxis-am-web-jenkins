@@ -42,4 +42,10 @@ public class DataRequestedByDateLogic {
     public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
         return DataRequestedByDateDAO.loadSQP00697(filter);
     }
+    
+    public List<A2331Filter> SQP04382(A2331Filter filter) throws SQLException, Exception {
+        return DataRequestedByDateDAO.SQP04382(filter);
+    }
+    
+    
 }

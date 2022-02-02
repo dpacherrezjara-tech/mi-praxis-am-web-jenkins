@@ -634,4 +634,196 @@ public class DataRequestedByDateDAO {
         }
         return lstRtn;
     }
+    
+    public List<A2331Filter> SQP04382(A2331Filter filter) throws SQLException, Exception {
+
+        List<A2331Filter> list = new ArrayList<A2331Filter>();
+        A2331Filter objRtn;
+        HashMap hmDescSTVAL = new HashMap();
+        hmDescSTVAL.put("", "");
+        hmDescSTVAL.put("1", "Stand By");
+        hmDescSTVAL.put("2", "Sent to Office");
+        hmDescSTVAL.put("3", "Linked");
+        hmDescSTVAL.put("4", "Sent to Bank");
+        hmDescSTVAL.put("5", "Chargeback");
+        hmDescSTVAL.put("6", "Reverse Chargeback");
+
+        HashMap hmDescCRULE = new HashMap();
+        hmDescCRULE.put("", "");
+        hmDescCRULE.put("01", "Total");
+        hmDescCRULE.put("02", "Parcial");
+        hmDescCRULE.put("03", "Ya usado");
+
+        CallableStatement cstmt = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+
+        int contador = 0;
+        String MERCHANT = "", SCARCOD = "", CARDNBR = "", AUTHNBR = "", PNR = "";
+        boolean color = true;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04382(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.SENTDATE.trim());
+            cstmt.setString(3, filter.FOLIO.trim());
+            cstmt.setString(4, filter.SCOUNTRY.trim());
+            cstmt.setString(5, filter.MERCHN.trim());
+            cstmt.setString(6, filter.CARDNBR.trim());
+            cstmt.setString(7, filter.AUTHNBR.trim());
+            cstmt.setString(8, filter.NUMREFER.trim());
+            cstmt.setString(9, filter.CCIA.trim());
+            cstmt.setString(10, filter.FORMA.trim());
+            cstmt.setString(11, filter.SERIE.trim());
+            cstmt.setString(12, filter.SQCRFILE.trim());
+            cstmt.execute();
+
+            rs01 = cstmt.getResultSet();
+
+            while (rs01.next()) {
+                objRtn = new A2331Filter();
+                
+                objRtn.CCIAEX = rs01.getString("CCIAEX").trim();
+                objRtn.FORMAEX = rs01.getString("FORMAEX").trim();
+                objRtn.SERIEEX = rs01.getString("SERIEEX").trim();
+                objRtn.TICKETX = objRtn.CCIAEX + objRtn.FORMAEX + objRtn.SERIEEX;
+                
+                objRtn.STUSOSX = rs01.getString("STUSOSX").trim();
+                objRtn.INDCPNX = rs01.getString("INDCPNX").trim();
+                objRtn.INDCPNSX = rs01.getString("INDCPNSX").trim();
+                objRtn.INDCPNSLX = rs01.getString("INDCPNSLX").trim();
+                
+                if(objRtn.CCIAEX.equals("") && objRtn.FORMAEX.equals("") && objRtn.SERIEEX.equals("")){
+                    System.out.println("NEXT");
+                    continue;
+                }
+
+                if (contador == 0) {
+                    MERCHANT = rs01.getString("MERCHN").trim();
+                    SCARCOD = rs01.getString("SCARCOD").trim();
+                    CARDNBR = rs01.getString("CARDNBR").trim();
+                    AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    PNR = rs01.getString("PNR").trim();
+                }
+
+                objRtn.IN_DATE = filter.IN_DATE;
+                objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+
+                objRtn.DATE = rs01.getString(filter.IN_DATE.trim()).trim();
+                objRtn.SENTDATE = rs01.getString("SENTDATE").trim();
+                objRtn.AGENTE = rs01.getString("AGENTE").trim();
+                objRtn.IATADATE = rs01.getString("IATADATE").trim();
+                objRtn.LINKDATE = rs01.getString("LINKDATE").trim();
+                objRtn.LINKHORA = rs01.getString("LINKHORA").trim();
+                objRtn.DATES = rs01.getString("DATES").trim();
+                objRtn.DATEN = rs01.getString("DATEN").trim();
+                objRtn.CCIA = rs01.getString("CCIA").trim();
+                objRtn.FORMA = rs01.getString("FORMA").trim();                
+                objRtn.SERIE = rs01.getString("SERIE").trim();
+                objRtn.TICKET = objRtn.CCIA + objRtn.FORMA + objRtn.SERIE;
+                objRtn.STVAL = rs01.getString("STVAL").trim();
+                objRtn.strDescStatus = hmDescSTVAL.get(objRtn.STVAL).toString();
+                //								
+
+                objRtn.INDCPN = rs01.getString("INDCPN").trim();
+                objRtn.STUSO = rs01.getString("STUSO").trim();
+                objRtn.INDCPNS = rs01.getString("INDCPNS").trim();
+                objRtn.DATSABF = rs01.getString("DATSABF").trim();
+                objRtn.INDCPNSL = rs01.getString("INDCPNSL").trim();
+                objRtn.STUSOS = rs01.getString("STUSOS").trim();
+                objRtn.DATSABL = rs01.getString("DATSABL").trim();
+                objRtn.FSELEC = rs01.getString("FSELEC").trim();
+                objRtn.FECSELEC = rs01.getString("FECSELEC").trim();
+                objRtn.FVCTO = rs01.getString("FVCTO").trim();
+                objRtn.FCONT = rs01.getString("FCONT").trim();
+                objRtn.IDCON = rs01.getString("IDCON").trim();
+                objRtn.DATAPLICA = rs01.getString("DATAPLICA").trim();
+                objRtn.CRULE = rs01.getString("CRULE").trim();
+                objRtn.MFOP = rs01.getString("MFOP").trim();
+                if (hmDescCRULE.containsKey(objRtn.CRULE)) {
+                    objRtn.strDescCRULE = hmDescCRULE.get(objRtn.CRULE).toString();
+                } else {
+                    objRtn.strDescCRULE = objRtn.CRULE;
+                }
+
+                objRtn.MERCHN = rs01.getString("MERCHN").trim();
+                objRtn.SCARCOD = rs01.getString("SCARCOD").trim();
+                objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
+                objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
+
+                if (contador == 0) {
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                } else if (MERCHANT.equals(rs01.getString("MERCHN").trim())
+                        & SCARCOD.equals(rs01.getString("SCARCOD").trim())
+                        & CARDNBR.equals(rs01.getString("CARDNBR").trim())
+                        & AUTHNBR.equals(rs01.getString("AUTHNBR").trim())
+                        & PNR.equals(rs01.getString("PNR").trim())) {
+                    objRtn.AUTAMOUNT = 0;
+                } else {
+                    objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
+                    MERCHANT = rs01.getString("MERCHN").trim();
+                    SCARCOD = rs01.getString("SCARCOD").trim();
+                    CARDNBR = rs01.getString("CARDNBR").trim();
+                    AUTHNBR = rs01.getString("AUTHNBR").trim();
+                    PNR = rs01.getString("PNR").trim();
+
+                    color = !color;
+                }
+
+                objRtn.SALEDATE = rs01.getString("SALEDATE").trim();
+                objRtn.PNR = rs01.getString("PNR").trim();
+
+                if (color) {
+                    objRtn.COLOR = "#91b9fa";
+                } else {
+                    objRtn.COLOR = "#e6ecf5";
+                }
+                
+                objRtn.FSELECX = rs01.getString("FSELECX").trim();
+                if (objRtn.FSELECX.equals("1")) {
+                    objRtn.FSELECX = "Y";
+                } else {
+                    objRtn.FSELECX = "";
+                }
+
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
+                objRtn.page.PAGROW = filter.page.PAGROW;
+                objRtn.page.TOTPAG = filter.page.TOTPAG;
+                objRtn.page.TOTROW = filter.page.TOTROW;
+
+                list.add(objRtn);
+                contador++;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return list;
+    }
+    
+    
+    
 }
