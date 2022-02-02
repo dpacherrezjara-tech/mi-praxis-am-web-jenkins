@@ -96,6 +96,11 @@ public class A2331 {
     public String FORMAEX = "";
     public String SERIEEX = "";
     public String TKTEXCH = "";
+    
+    public String STUSOSX = "";
+    public String INDCPNX = "";
+    public String INDCPNSX = "";
+    public String INDCPNSLX = "";
 
     //Datos Auditoria        
     public String USCR = "";
