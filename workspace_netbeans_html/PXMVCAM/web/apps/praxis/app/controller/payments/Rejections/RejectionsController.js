@@ -102,6 +102,18 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.RejectionsController', {
 
     },
     obtainData: function() {
+        
+        var cmbSADJUST = Ext.getCmp(prototype.id + '-cmbSADJUST');
+        cmbSADJUST.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["T", "Transaction"],
+            ]
+        }));
+        cmbSADJUST.setValue("");
+        
         this.dataObtain.COUNTRY = 2;
         this.dataObtain.BANK = 1;
         Ext.Ajax.request({
@@ -132,6 +144,7 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.RejectionsController', {
         me.bean.CODEREJ = Ext.getCmp(prototype.id + '-cmbCode').getValue();
         me.bean.COUNTRY = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
         me.bean.CODEBANK = Ext.getCmp(prototype.id + '-cmbBank').getValue();
+        me.bean.SADJUST = Ext.getCmp(prototype.id + '-cmbSADJUST').getValue();
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             bean: me.bean,
