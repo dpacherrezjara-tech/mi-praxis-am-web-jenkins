@@ -94,7 +94,6 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.Filters', {
                                             ["PADM", "ADM Accounting"],
                                             ["PFOB", "FOB Accounting"],
                                             ["PCONSORTIA", "CONSORTIA Accounting"],
-                                            ["PADJMA", "Manual Adjustment"],
                                             ["PCADUCOS", "Caducos"],
                                             ["PPSALES", "Sales Accounting Pending"]
                                         ]
