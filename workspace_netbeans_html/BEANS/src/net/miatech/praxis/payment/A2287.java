@@ -17,6 +17,8 @@ public class A2287 {
     public String COUNTRY = "";
     public String CODEBANK = "";
     public String NAMEBANK = "";
+    public String SADJUST = "";
+    
     //Variables del Sistema
     public String USCR = "";
     public String FECR = "";
