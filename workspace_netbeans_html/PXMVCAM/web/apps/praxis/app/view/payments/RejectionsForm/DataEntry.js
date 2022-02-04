@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.DataEntry', {
     controller: 'DataEntryRejectionController',
     title: 'Rejection - Data Entry Form',
     header: true,
-    height: 320,
+    height: 345,
     width: 780,
     resizable: false,
     layout: 'fit',
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.DataEntry', {
                                     width: 234,
                                     height: 20
                                 },
-                                {xtype: 'tbspacer', width: 395}
+                                {xtype: 'tbspacer', width: 391}
                             ]
                         },
                         // </editor-fold>
@@ -258,7 +258,42 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.DataEntry', {
                                     fieldStyle: 'text-align:center;',
                                     width: 280
                                 },
-                                {xtype: 'tbspacer', width: 35}
+                                {xtype: 'tbspacer', width: 40}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '0 2 4 50',
+                            bodyStyle: 'background:#E5ECEF;',
+                            
+                            items: [
+                                { xtype: 'tbspacer', width: 7 },
+                                {
+                                    xtype: 'label',
+                                    text: 'Flag Adjust.',
+                                    fontSize: 11,
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 94
+                                },
+                                { xtype: 'tbspacer', width: 20 },
+                                {
+                                    xtype: 'textfield',
+                                    id:prototype.id+'-de-txtSADJUST',
+                                    fieldStyle: 'text-align:center;',
+                                    enforceMaxLength: true,
+                                    maxLength: 1,
+                                    maskRe: /[a-zA-Z]/,
+                                    width: 45,
+                                    enableKeyEvents: true,
+                                    listeners:{
+                                        change: 'onUpperValue',
+                                    }
+                                },
+                                { xtype: 'tbspacer', width: 470 }
                             ]
                         }
                     ]

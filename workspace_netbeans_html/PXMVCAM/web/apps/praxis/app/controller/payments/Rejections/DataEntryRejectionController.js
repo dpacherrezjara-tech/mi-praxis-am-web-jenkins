@@ -16,10 +16,8 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
         this.p = this.view.params;
         this.actionCode = this.p.action;
         this.bean = this.p.rec;
-//        console.log(this.p);
     },
     afterRender: function() {
-//        console.log('afterRender');
         switch (this.actionCode) {
             case 'I':
                 this.HabilitarCampoClave();
@@ -32,9 +30,7 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
             case 'U':
-
                 this.getData();
-
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').show();
@@ -43,28 +39,25 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
         }
     },
     mostrarData: function() {
-//        console.log(meDE.beanResult);
-//        console.log(this.beanResult.CODEREJ);
+
         this.setValue('de-txtCODEREJ', this.beanResult.CODEREJ);
         this.setValue('de-txtFTE', this.beanResult.FTE);
         this.setValue('de-txtDESCREJ', this.beanResult.DESCREJ);
         this.setValue('de-txtCOUNTRY', this.beanResult.COUNTRY);
         this.setValue('de-txtCODEBANK', this.beanResult.CODEBANK);
         this.setValue('de-txtNAMEBANK', this.beanResult.NAMEBANK);
+        this.setValue('de-txtSADJUST', this.beanResult.SADJUST);
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
-//        console.log(this.beanResult.USUP);
 
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
     },
     getData: function() {
-//        console.log('getData');
+        
         var beanString = JSON.stringify(meDE.bean.data);
-//        console.log(beanString);
-
         Ext.Ajax.request({
             url: prototype.url + '/searchBean',
             method: 'POST',
@@ -80,7 +73,6 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
             }
         });
     },
-    //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function(beanTemp) {
         beanTemp.CODEREJ = this.getValue("de-txtCODEREJ");
         beanTemp.FTE = this.getValue("de-txtFTE");
@@ -93,10 +85,9 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
         beanTemp.COUNTRY = this.getValue("de-txtCOUNTRY");
         beanTemp.CODEBANK = this.getValue("de-txtCODEBANK");
         beanTemp.NAMEBANK = this.getValue("de-txtNAMEBANK");
+        beanTemp.SADJUST = this.getValue("de-txtSADJUST");
     },
-    //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function() {
         this.setValue('txtCODSOUR', '');
         this.setValue('txtDESSOU', '');
@@ -111,7 +102,6 @@ Ext.define('Ext.Praxis.controller.payments.Rejections.DataEntryRejectionControll
         this.setValue('txtFEUP', '');
         this.setValue('txtHOUP', '');
     },
-    //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Botones">
     onSaveClick: function(btn) {

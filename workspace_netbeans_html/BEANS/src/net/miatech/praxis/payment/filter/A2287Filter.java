@@ -13,6 +13,8 @@ public class A2287Filter extends A2287 {
      public String IN_CODE = "";
      public String IN_NAME = "";
      public String IN_FTE = "";
+     public String desSADJUST = "";
+     
      public long RN = 0;
      public Pagination page = new Pagination();
 }

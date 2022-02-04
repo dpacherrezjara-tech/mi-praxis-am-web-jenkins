@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 980,
+                width: 1055,
                 height: 700,
                 align: 'center'
             },
@@ -46,7 +46,7 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.Info', {
                             border:true,
 //                            margin: '1',
                              height: 550,
-                             width: 935,  
+                             width: 1045,  
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -57,7 +57,7 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id+'-gridDataAirport',
                                     height: 510,
-                                    width: 935,
+                                    width: 1045,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -115,8 +115,17 @@ Ext.define('Ext.Praxis.view.payments.RejectionsForm.Info', {
                                                         }
                                                     }
                                                 ]
-                                            }
-                                            ,
+                                            },
+                                            {text: 'Flag',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Adjusment', dataIndex: 'desSADJUST', width: 110, align: 'center'}
+                                                ]
+                                            },
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',

@@ -311,6 +311,7 @@ public class RejectionsController extends BaseController {
             filter.CODEBANK = request.getParameter("CODEBANK").trim();
             filter.NAMEBANK = request.getParameter("NAMEBANK").trim();
             filter.FTE = request.getParameter("FTE").trim();
+            filter.SADJUST = request.getParameter("SADJUST").trim();
                    
             logic = new RejectionstLogic();
             logic.setSession(this.serverSession.getServerSession());
