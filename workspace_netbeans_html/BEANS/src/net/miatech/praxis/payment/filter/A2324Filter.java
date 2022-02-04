@@ -26,6 +26,7 @@ public class A2324Filter extends A2324 {
     public String IN_STVAL = "";
     public String IN_DATSET = "";
     public String IN_WEEKMO = "";
+    public long AMTSET = 0;
     public double tot_SVFOP = 0.0;
 
     // Qty

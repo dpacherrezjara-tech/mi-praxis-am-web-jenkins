@@ -1153,6 +1153,7 @@ public class SalesReconciliBoomerDAO {
         List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
         A2324Filter beanTkt;
         long totSVFOP = 0;
+        long SVFOP_ACUMULADO = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1183,10 +1184,13 @@ public class SalesReconciliBoomerDAO {
                     beanTkt = new A2324Filter();
                     beanTkt.IN_DATSET = filter.IN_DATSET.trim();
                     beanTkt.IN_WEEKMO = filter.IN_WEEKMO.trim();
+                    beanTkt.AMTSET = filter.AMTSET;
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("DATSET").trim());
 
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY");
                     beanTkt.SVFOP = rst.getLong("SVFOP");
+                    SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTkt.SVFOP;
+                    beanTkt.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
                     beanTkt.SPNR = rst.getString("SPNR");
 
                     beanTkt.totSVFOP = totSVFOP;

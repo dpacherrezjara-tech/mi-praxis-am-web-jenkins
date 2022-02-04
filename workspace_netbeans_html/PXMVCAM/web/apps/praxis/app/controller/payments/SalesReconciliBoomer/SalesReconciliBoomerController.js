@@ -792,6 +792,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
         this.beanDetDay.IN_DATSET = rowData.data.DATSET;
         this.beanDetDay.IN_WEEKMO = rowData.data.WEEKMO;
         this.beanDetDay.TITLE_DATE = rowData.data.strFormatDate;
+        this.beanDetDay.AMTSET = rowData.data.AMTSET;
 
         me.paramsDetailDay.beanString = JSON.stringify(this.beanDetDay);
 
@@ -820,9 +821,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.SalesReconciliBo
                             data = gridDetHeader[0];
                             console.log(layout);
                             if (layout === 'first') {
-                                Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + '</center>');
+                                Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + ' Amount to be Settled: ' + Ext.util.Format.number(data.AMTSET, '0,000.00') + '</center>');
                             } else if (layout === 'second') {
-                                Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + '</center>');
+                                Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').setTitle('<center style="font-size:12px;">' + ' Settlement Date : ' + data.strFormatDate + ' - Period: ' + data.IN_WEEKMO + ' Amount to be Settled: ' + Ext.util.Format.number(data.AMTSET, '0,000.00') + '</center>');
                             }
 
                         } else {
