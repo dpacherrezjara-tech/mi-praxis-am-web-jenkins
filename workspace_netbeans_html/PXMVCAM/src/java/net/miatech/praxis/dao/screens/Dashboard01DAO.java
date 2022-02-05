@@ -4804,6 +4804,138 @@ public class Dashboard01DAO {
 
         return listado;
     }
+    
+    public List<A1971Filter> loadPX246SQP01130(A1971Filter filter) throws SQLException, Exception {
+
+        List<A1971Filter> lstRtn = new ArrayList<A1971Filter>(0);
+        A1971Filter objRtn;
+        long QTYPAX = 0, QTYPAXJ = 0, QTYPAXY = 0, QTYVNR = 0;
+        long QTYNRE = 0, QTYFLI = 0, QBNPAX = 0;
+        double VCPN = 0, VCPNJ = 0, VCPNY = 0, AMTBN = 0, VCPNRE = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP01130(?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+        try {
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DFLIGHT);
+            cstmt01.setString(3, filter.DFLIGHT);
+            cstmt01.setString(4, filter.FLAG_VNR);
+            cstmt01.setString(5, filter.IN_NFLIGHT);
+            cstmt01.setString(6, filter.IN_CPAIR);
+            cstmt01.setInt(7, filter.page.PAGNUM);
+            cstmt01.setInt(8, filter.page.PAGROW);
+            cstmt01.setInt(9, filter.page.TOTPAG);
+            cstmt01.setInt(10, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+
+                QTYFLI = rs01.getLong("QFLIGHT");
+                QTYPAX = rs01.getLong("QTYPAX");
+                VCPN = rs01.getDouble("VCPN");
+                QTYPAXJ = rs01.getLong("J_PAX");
+                VCPNJ = rs01.getDouble("J_VCPN");
+                QTYPAXY = rs01.getLong("Y_PAX");
+                VCPNY = rs01.getDouble("Y_VCPN");
+                QTYVNR = rs01.getLong("QTYVNR");
+                QTYNRE = rs01.getLong("QTYNRE");
+                VCPNRE = rs01.getDouble("VCPNRE");
+                QBNPAX = rs01.getLong("QPAXBN");
+                AMTBN = rs01.getDouble("VCPBN");
+            }
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A1971Filter();
+                    objRtn.FLAG_VNR = filter.FLAG_VNR;
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_NFLIGHT = filter.IN_NFLIGHT;
+                    objRtn.IN_CPAIR = filter.IN_CPAIR;
+                    objRtn.DFLIGHT = rs01.getString("DFLIGHT");
+                    objRtn.strFormatDate = Functions.getMonthConvert6(objRtn.DFLIGHT);
+                    objRtn.NFLIGHT = rs01.getString("NFLIGHT");
+                    objRtn.CDEPART = rs01.getString("CDEPART");
+                    objRtn.CARRIVA = rs01.getString("CARRIVA");
+                    objRtn.strDescripcion = rs01.getString("DESCRIP");
+                    //objRtn.KMS = rs01.getInt("KMS");
+                    objRtn.KMS_1 = rs01.getInt("KMS1");
+                    objRtn.strDescripcion4 = rs01.getString("MDACP");
+                    objRtn.VCPN_F = rs01.getDouble("F_VCPN");
+                    objRtn.QTYPAX_F = rs01.getInt("F_PAX");
+                    objRtn.AVG_F = (objRtn.QTYPAX_F > 0) ? objRtn.VCPN_F / objRtn.QTYPAX_F : 0;
+                    objRtn.VCPN_J = rs01.getDouble("J_VCPN");
+                    objRtn.QTYPAX_J = rs01.getInt("J_PAX");
+                    objRtn.AVG_J = (objRtn.QTYPAX_J > 0) ? objRtn.VCPN_J / objRtn.QTYPAX_J : 0;
+                    objRtn.VCPN_Y = rs01.getDouble("Y_VCPN");
+                    objRtn.QTYPAX_Y = rs01.getInt("Y_PAX");
+                    objRtn.AVG_Y = (objRtn.QTYPAX_Y > 0) ? objRtn.VCPN_Y / objRtn.QTYPAX_Y : 0;
+                    objRtn.AMTBN = rs01.getDouble("VCPBN");
+                    objRtn.QBNPAX = rs01.getLong("QPAXBN");
+                    //Total
+                    objRtn.VCPN = rs01.getDouble("VCPN");
+                    objRtn.QTYPAX = rs01.getLong("QTYPAX");
+                    objRtn.QTYFlight = rs01.getLong("QFLIGHT");
+                    objRtn.QTYVNR = rs01.getInt("QTYVNR");
+                    objRtn.QTYNRE = rs01.getInt("QTYNRE");
+                    objRtn.VCPNRE = rs01.getDouble("VCPNRE");
+
+                    //Totales
+                    objRtn.totQTYFlight = QTYFLI;
+                    objRtn.totQTYPAX = QTYPAX;
+                    objRtn.totQTYPAX_J = QTYPAXJ;
+                    objRtn.totQTYPAX_Y = QTYPAXY;
+                    objRtn.totQTYVNR = QTYVNR;
+                    objRtn.totQTYNRE = QTYNRE;
+                    objRtn.totVCPN = VCPN;
+                    objRtn.totVCPN_J = VCPNJ;
+                    objRtn.totVCPN_Y = VCPNY;
+                    objRtn.totAMTBN = AMTBN;
+                    objRtn.totQBNPAX = QBNPAX;
+                    objRtn.totVCPNRE = VCPNRE;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+                    lstRtn.add(objRtn);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return lstRtn;
+    }
 
     public void setClose(ResultSet rs, CallableStatement cstmt, Connection cnx) {
 
