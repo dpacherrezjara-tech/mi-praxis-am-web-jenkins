@@ -16,7 +16,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
         {
             xtype: 'panel',
             width: '100%',
-            hidden: false,
+            id: prototype.id + '-filterMain',
+            hidden: true,
             layout: {
                 type: 'hbox',
                 align: 'center',
@@ -47,7 +48,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                     listeners: {
                         click: 'btnSwap_FA_click'
                     }
-                },
+                }
             ]
         },
         {
@@ -1043,6 +1044,364 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                 
                 */
                 
+            ]
+        },
+        
+        // -------------------------------------
+        {
+            xtype: 'panel',
+            id: prototype.id + '-boxFlownAnalysis',
+            width: '100%',
+            hidden: true,
+            layout: {
+                type: 'vbox',
+                align: 'center',
+                pack: 'center'
+            },
+            defaults: {
+                bodyStyle: 'background: transparent;',
+                border: false,
+                align: 'center',
+                margin: "0 15 0 0"  // (top, right, bottom, left)
+            },
+            items: [
+                {
+                    xtype: 'grid',
+                    id: prototype.id + '-gridFlownAnalysis',
+                    width: 1290,
+                    height: 553,
+                    columnLines: true,
+                    hidden: false,
+                    margin: "5 0 0 0",
+                    features: [{
+                            ftype: 'summary',
+                            dock: 'bottom'
+                        }],
+                    columns: {
+                        defaults: {
+                            menuDisabled: true,
+                            sortable: false,
+                            align: 'center'
+                        },
+                        items: [
+                            {
+                                text: 'Flight',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Number', dataIndex: 'NFLIGHT', width: 60,
+                                        listeners: {
+                                            click: 'viewDetail',
+                                            args: ['FLIGHT']
+                                        },
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "color:#057ECB;";
+                                            value = '<b>' + value + '</b>';
+                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                text: 'Qty',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Flight', dataIndex: 'QTYFlight', width: 60,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right";
+                                            value = '<b>' + value + '</b>';
+                                            return value;
+                                        },
+                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totQTYFlight, '0,000') + '<b>';
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                text: 'Route',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {text: 'Flight', dataIndex: 'CDEPART', width: 70},
+                                    {text: 'Flight', dataIndex: 'CDEPART', width: 70}
+                                ]
+                            },
+                            {
+                                text: 'Total',
+                                //                                                id: prototype.id + '-adgSalDate',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Pax', dataIndex: 'QTYPAX', width: 90,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#fcf9ec;";
+                                            value = Ext.util.Format.number(value, '0,000');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: 'USD', dataIndex: 'VCPN', width: 100,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#fcf9ec;";
+                                            value = Ext.util.Format.number(value, '0,000');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                text: 'Cabin',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Business',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#e8f9e8";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'USD', dataIndex: 'VCPN_J', width: 65,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#e8f9e8";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totVCPN_J, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Avg', dataIndex: 'AVG_J', width: 65,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#e8f9e8";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '';
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: 'Economy',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#deedfb";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totQTYPAX_Y, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'USD', dataIndex: 'VCPN_Y', width: 95,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#deedfb";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totVCPN_Y, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Avg', dataIndex: 'AVG_Y', width: 75,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#deedfb";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '';
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                text: 'Exceptions',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Not',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Reported', dataIndex: 'QTYVNR', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totQTYVNR, '0,000') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: 'Not Revenue',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Pax', dataIndex: 'QTYNRE', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totQTYNRE, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'USD', dataIndex: 'VCPNRE', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#d5f4d5;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totVCPNRE, '0,000') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                text: 'BN Not Flown',
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                columns: [
+                                    {
+                                        text: 'Pax', dataIndex: 'QBNPAX', width: 70,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#fcf9ec;";
+                                            value = Ext.util.Format.number(value, '0,000');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totQBNPAX, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: 'USD', dataIndex: 'AMTBN', width: 70,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;background-color:#fcf9ec;";
+                                            value = Ext.util.Format.number(value, '0,000.00');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
+
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totAMTBN, '0,000.00') + '<b>';
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
             ]
         },
         {

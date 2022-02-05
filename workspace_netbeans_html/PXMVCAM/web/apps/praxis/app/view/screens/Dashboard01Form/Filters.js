@@ -398,9 +398,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Filters', {
                                     typeAhead: true,
                                     listConfig: {maxHeight: 111},
                                     listeners: {
-                                        focus: function (combo) {
-                                            combo.expand();
-                                        },
+//                                        focus: function (combo) {
+//                                            combo.expand();
+//                                        },
                                         change: 'cbxDateFromYear_changeHandler'
                                     }
                                 },

@@ -6,6 +6,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     bean: {},
     searchParams: {},
     beanFAFlight: {},
+    paramsFAFlight: {},
+    meFlown: '',
     _path: '',
     dw_excel: false,
     boxActual: '-boxMainDataFA',
@@ -13,10 +15,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     drillDown: [],
     // </editor-fold>
     init: function(view) {
+        meFlown = this;
         meFA = this;
-        //meFA.panelActual = '-boxMainDataFA';
-        meFA.drillDown.push(meFA.boxActual);
-        console.log('2----------FlownAnalysisController - initt');
+        
+        meFlown.panelActual = '-boxMainDataFA';
+        meFlown.drillDown.push(meFlown.boxActual);
 
     },
     afterRender: function() {
@@ -25,14 +28,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
 
     },
     inicio: function() {
+        
+        Ext.getCmp(prototype.id + '-filterMain').hide();
         this.setFormatParameter();
         var chkWP = Ext.getCmp(prototype.id + '-chkWP_FA').getValue();
         if (chkWP) {
+            Ext.getCmp(prototype.id + '-filterMain').show();
             this.searchWK();
             Ext.getCmp(prototype.id + '-btnSwap_FA').setVisible(false);
             Ext.getCmp(prototype.id + '-panelGridSearchWK').setVisible(true);
             Ext.getCmp(prototype.id + '-boxMainDataFA').setVisible(false);
         } else {
+            Ext.getCmp(prototype.id + '-filterMain').show();
             this.loadFAMonth();
             Ext.getCmp(prototype.id + '-btnSwap_FA').setVisible(true);
             Ext.getCmp(prototype.id + '-panelGridSearchWK').setVisible(false);
@@ -42,7 +49,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     btnSearch_click: function(bean) {
         console.log(' 2--------FlownAnalysisController - btnSearch_click');
-
+        
+        Ext.getCmp(prototype.id + '-filterMain').hide();
+        
         this.bean = bean;
         console.log(this.bean);
 
@@ -91,8 +100,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         Ext.getCmp(prototype.id + '-gridFAmonth2').setStore(storeGridDatas);
     },
     searchWK: function() {
-        //meFA.panelActual = '-panelGridSearchWK';
-        //global.selectedChild(meFA.childs, prototype.id + meFA.panelActual);
+        
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchWK'
@@ -134,6 +142,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         }
     },
     chkWP_FA_click: function() {
+        
         this.setFormatParameter;
         var chkWP = Ext.getCmp(prototype.id + '-chkWP_FA').getValue();
         if (chkWP) {
@@ -149,35 +158,111 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         }
         
     },
-    viewDetFAFlight: function(param,column, e, row, column, x, rowData) {
+    viewDetFAFlight: function(param,column, e, row, column, x, rowData) {   
         
-        console.log(param);
-        console.log(column);
-        console.log(e);
-        console.log(row);
-        console.log(column);
-        console.log(x);
-        console.log(rowData);
+        this.beanFAFlight = x.record.data;
         
-        
-        this.beanFAFlight = {};
-        this.beanFAFlight.beanString = JSON.stringify(x.record.data);
+        this.beanFAFlight.FLAG_VNR = param;
+        meFA.paramsFAFlight.beanString = JSON.stringify(this.beanFAFlight);
 //
         console.log(this.beanFAFlight);
-//        this.searchFlownFlight(this.beanFAFlight);
+        this.searchFlownFlight();
         
-    },    
+    },
+    searchFlownFlight: function () {
+        win.lblUser_toolTip("Estructura: A1971");
+        this.showGrid('-boxFlownAnalysis');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchFlownFlight'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = meFA.paramsFAFlight;
+                },
+                load: function (obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                        var data = obj.data.items[0].data;
+                        console.log(obj.data);
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridFlownAnalysis').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridFlownAnalysis').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
+        
+    },
+    
+    
     showGrid: function(nameGrid) {
 
-        Ext.getCmp(prototype.id + meSales.boxActual).hide();
+        Ext.getCmp(prototype.id + meFlown.boxActual).hide();
 
-        meSales.boxActual = nameGrid;
-        meSales.drillDown.push(meSales.boxActual);
+        meFlown.boxActual = nameGrid;
+        
+        if(meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK'){
+            Ext.getCmp(prototype.id + '-filterMain').show();
+        }else{
+            Ext.getCmp(prototype.id + '-filterMain').hide();
+        }
+        meFlown.drillDown.push(meFlown.boxActual);
 
-        Ext.getCmp(prototype.id + meSales.boxActual).show();
+        Ext.getCmp(prototype.id + meFlown.boxActual).show();
 
-        console.log('showGrid == ' + meSales.drillDown);
 
+    },
+    
+    imgBack_clickHandler: function () {
+
+        if (meFlown.drillDown.length > 1) {
+            Ext.getCmp(prototype.id + meFlown.boxActual).hide();
+            meFlown.drillDown.pop();
+            meFlown.boxActual = meFlown.drillDown[meFlown.drillDown.length - 1];
+            Ext.getCmp(prototype.id + meFlown.boxActual).show();
+
+            console.log(meFlown.boxActual);
+            
+            if(meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK'){
+                Ext.getCmp(prototype.id + '-filterMain').show();
+            }else{
+                Ext.getCmp(prototype.id + '-filterMain').hide();
+            }
+            
+//            if (meFlown.boxActual === '-boxMainData' || meFlown.boxActual === '-BoxDDTMCountryofSale' || meFlown.boxActual === '-BoxCityOfSale' || meFlown.boxActual === '-BoxDetGDS' || meFlown.boxActual === '-BoxDetPaisAlliances') {
+//                this.hidePagination_clickHandler();
+//            } else if (meFlown.boxActual === '-BoxDetGDSAgte') {
+//                me.panelActual = '-BoxDetGDSAgte';
+//                var pag = Ext.getCmp(prototype.id + '-pagginGDS');
+//                var pagData = pag.getPageData();
+//
+//                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+//            } else if (meFlown.boxActual === '-BoxCabin') {
+//                me.panelActual = '-BoxCabin';
+//                var pag = Ext.getCmp(prototype.id + '-pagginCabin');
+//                var pagData = pag.getPageData();
+//                this.showPagination_clickHandler();
+//                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+//            }
+        }
+//        console.log('imgBack_clickHandler == ' + me.drillDown);
 
     },
 });
