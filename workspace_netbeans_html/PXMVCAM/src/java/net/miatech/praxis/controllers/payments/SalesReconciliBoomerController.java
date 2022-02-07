@@ -861,6 +861,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Cell CH1_16 = row1.createCell(16);
             Cell CH1_17 = row1.createCell(17);
             Cell CH1_18 = row1.createCell(18);
+            Cell CH1_19 = row1.createCell(19);
 
             CH1_0.setCellValue("Control");
             CH1_1.setCellValue("Operative");
@@ -876,11 +877,12 @@ public class SalesReconciliBoomerController extends BaseController {
             CH1_11.setCellValue("Currency");
             CH1_12.setCellValue("Client");
             CH1_13.setCellValue("Amount to");
-            CH1_14.setCellValue("Exchange");
-            CH1_15.setCellValue("Type");
-            CH1_16.setCellValue("Date");
-            CH1_17.setCellValue("Description");
-            CH1_18.setCellValue("Reference");
+            CH1_14.setCellValue("Amount to");
+            CH1_15.setCellValue("Exchange");
+            CH1_16.setCellValue("Type");
+            CH1_17.setCellValue("Date");
+            CH1_18.setCellValue("Description");
+            CH1_19.setCellValue("Reference");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -901,6 +903,7 @@ public class SalesReconciliBoomerController extends BaseController {
             CH1_16.setCellStyle(headerStyle);
             CH1_17.setCellStyle(headerStyle);
             CH1_18.setCellStyle(headerStyle);
+            CH1_19.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -928,6 +931,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Cell CH2_16 = row2.createCell(16);
             Cell CH2_17 = row2.createCell(17);
             Cell CH2_18 = row2.createCell(18);
+            Cell CH2_19 = row2.createCell(19);
 
             CH2_0.setCellValue("Number");
             CH2_1.setCellValue("Unit");
@@ -943,11 +947,12 @@ public class SalesReconciliBoomerController extends BaseController {
             CH2_11.setCellValue("");
             CH2_12.setCellValue("Number");
             CH2_13.setCellValue("Apply");
-            CH2_14.setCellValue("Rate");
-            CH2_15.setCellValue("Value");
-            CH2_16.setCellValue("");
+            CH2_14.setCellValue("Aggreate");
+            CH2_15.setCellValue("Rate");
+            CH2_16.setCellValue("Value");
             CH2_17.setCellValue("");
             CH2_18.setCellValue("");
+            CH2_19.setCellValue("");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -968,6 +973,7 @@ public class SalesReconciliBoomerController extends BaseController {
             CH2_16.setCellStyle(headerStyle);
             CH2_17.setCellStyle(headerStyle);
             CH2_18.setCellStyle(headerStyle);
+            CH2_19.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
@@ -976,9 +982,9 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 18, 18));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 19, 19));
             ++vj;
             //============================================
 
@@ -1003,6 +1009,7 @@ public class SalesReconciliBoomerController extends BaseController {
                 Cell rcell16 = row1.createCell(16);
                 Cell rcell17 = row1.createCell(17);
                 Cell rcell18 = row1.createCell(18);
+                Cell rcell19 = row1.createCell(19);
 
                 rcell0.setCellValue(contador++);
                 rcell1.setCellValue("02_AEROVIAS");
@@ -1018,11 +1025,12 @@ public class SalesReconciliBoomerController extends BaseController {
                 rcell11.setCellValue("MXN");
                 rcell12.setCellValue("2103");
                 rcell13.setCellValue(listaData.get(vi).SVFOP);
-                rcell14.setCellValue("");
+                rcell14.setCellValue(listaData.get(vi).SVFOP_ACUMULADO);
                 rcell15.setCellValue("");
                 rcell16.setCellValue("");
                 rcell17.setCellValue("");
                 rcell18.setCellValue("");
+                rcell19.setCellValue("");
 
                 rcell0.setCellStyle(style_yellow_detail);
                 rcell2.setCellStyle(style_pink_detail);
@@ -1032,8 +1040,8 @@ public class SalesReconciliBoomerController extends BaseController {
                 rcell9.setCellStyle(style_pink_detail);
                 rcell12.setCellStyle(style_pink_detail);
                 rcell13.setCellStyle(style_pink_detail);
-                rcell17.setCellStyle(style_pink_detail);
                 rcell18.setCellStyle(style_pink_detail);
+                rcell19.setCellStyle(style_pink_detail);
 
                 iter.next();
                 ++vi;
@@ -1059,6 +1067,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.autoSizeColumn(16, true);
             sheet.autoSizeColumn(17, true);
             sheet.autoSizeColumn(18, true);
+            sheet.autoSizeColumn(19, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");

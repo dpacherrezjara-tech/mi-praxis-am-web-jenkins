@@ -212,7 +212,7 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.QTYSETSAL = rst.getInt("QTYSETSAL");
 
                 beanTkt.ACCNBR = rst.getString("ACCNBR");
-                
+
                 if (beanTkt.QTYMATDIF > 0 || beanTkt.QTYSETSAL > 0) {
                     beanTkt.STVALC = "2";
                 } else {
@@ -1154,6 +1154,7 @@ public class SalesReconciliBoomerDAO {
         A2324Filter beanTkt;
         long totSVFOP = 0;
         long SVFOP_ACUMULADO = 0;
+        Boolean acumulado = false;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1190,7 +1191,16 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY");
                     beanTkt.SVFOP = rst.getLong("SVFOP");
                     SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTkt.SVFOP;
+
+                    if (filter.AMTSET == SVFOP_ACUMULADO || acumulado) {                        
+                        if (acumulado) {
+                            beanTkt.FACUMULADO = 1;                            
+                        } 
+                        acumulado = true;
+                    }
+
                     beanTkt.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
+
                     beanTkt.SPNR = rst.getString("SPNR");
 
                     beanTkt.totSVFOP = totSVFOP;
