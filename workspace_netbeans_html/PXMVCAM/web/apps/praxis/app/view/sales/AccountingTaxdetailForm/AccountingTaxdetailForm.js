@@ -292,7 +292,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingTaxdetailForm.AccountingTaxdetailFor
                                         padding: '5px 1px 5px 1px'
                                     },
                                     items: [
-                                        {
+                                        /*{
                                             xtype: 'combo',
                                             id: prototype.idAccountingTaxdetail + '-cmbContrytax',
                                             fieldStyle: 'text-align: left;',
@@ -342,11 +342,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingTaxdetailForm.AccountingTaxdetailFor
                                             triggerAction: 'all',
                                             valueField: 'code',
                                             displayField: 'name'
-                                        },
-                                        {
+                                        },*/
+                                        /*{
                                             xtype: 'textfield',
                                             id: prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY',
-                                            required: true, hidden: true,
+                                            required: true,
                                             readOnly: false,
                                             fieldLabel: 'Country',
                                             width: 130,
@@ -359,7 +359,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingTaxdetailForm.AccountingTaxdetailFor
                                             listeners: {
                                                 change: 'onchange'
                                             }
-                                        },
+                                        },*/
                                         {
                                             xtype: 'textfield',
                                             id: prototype.idAccountingTaxdetail + '-txtFilterCHANNEL',

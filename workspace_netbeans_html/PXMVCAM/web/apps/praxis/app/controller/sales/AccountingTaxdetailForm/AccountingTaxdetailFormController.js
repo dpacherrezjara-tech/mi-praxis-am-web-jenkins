@@ -60,9 +60,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
     },
     setStoresFilters: function () {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
-        var cmbContrytax = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax');
-        var cmbSALES = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES');
-        var cmbBANK = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK');
+        //var cmbContrytax = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax');
+        //var cmbSALES = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES');
+        //var cmbBANK = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -75,15 +75,15 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
         }));
         cmbSearch.setValue("2");
 
-        cmbContrytax.bindStore(Ext.create('Ext.data.Store', {
+        /*cmbContrytax.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "1", "name": "BY SOURCE"},
                 {"code": "2", "name": "BY COUNTRY"}
             ]
         }));
-        cmbContrytax.setValue("1");
+        cmbContrytax.setValue("1");*/
 
-        cmbSALES.bindStore(Ext.create('Ext.data.Store', {
+        /*cmbSALES.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "ARC", "name": "ARC"},
@@ -92,8 +92,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
                 {"code": "MAN", "name": "MAN"}
             ]
         }));
-        cmbSALES.setValue("");
-        cmbBANK.bindStore(Ext.create('Ext.data.Store', {
+        cmbSALES.setValue("");*/
+        /*cmbBANK.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "04", "name": "IAP"},
@@ -101,7 +101,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
                 {"code": "05", "name": "ELW"}
 
             ]
-        }));
+        }));*/
 
 
     },
@@ -161,8 +161,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
         }
     },
     onCmbSourceChange: function (obj, records, eOpts) {
-        var cmbBANK = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK');
-        var txtFilterCOUNTRY = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY');
+        var cmbBANK = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK');
+        var txtFilterCOUNTRY = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY');
         var txtFilterCHANNEL = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCHANNEL');
         var txtFilterIATA = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterIATA');
         var txtFilterCurrency = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCurrency');
@@ -170,23 +170,19 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
             cmbBANK.show();
             txtFilterCurrency.show();
 
-            txtFilterCOUNTRY.hide();
             txtFilterCHANNEL.hide();
             txtFilterIATA.hide();
 
-            Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').setValue('');
             Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCHANNEL').setValue('');
             Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterIATA').setValue('');
 
         } else if (obj.getValue() === "BSP" || obj.getValue() === "MAN") {
             txtFilterCurrency.show();
-            txtFilterCOUNTRY.show();
 
             cmbBANK.hide();
             txtFilterCHANNEL.hide();
             txtFilterIATA.hide();
 
-            Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').setValue('');
             Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCHANNEL').setValue('');
             Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterIATA').setValue('');
 
@@ -196,10 +192,6 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
             txtFilterCurrency.show();
 
             cmbBANK.hide();
-            txtFilterCOUNTRY.hide();
-
-            Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').setValue('');
-            Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').setValue('');
 
         }
     },
@@ -211,10 +203,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
         var txtFilterCONTABLE = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCONTABLE').getValue();
         var txtFilterGRUPO = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterGRUPO').getValue();
         var txtFilterTax = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterTax').getValue();
-        var cmbContrytax = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax').getValue();
-        var cmbSALES = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES').getValue();
-        var cmbBANK = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').getValue();
-        var txtFilterCOUNTRY = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').getValue();
+        var cmbContrytax = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax').getValue();
+        var cmbSALES = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES').getValue();
+        var cmbBANK = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').getValue();
+        var txtFilterCOUNTRY = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').getValue();
         var txtFilterCHANNEL = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCHANNEL').getValue();
         var txtFilterIATA = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterIATA').getValue();
         var txtFilterCurrency = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCurrency').getValue();
@@ -313,10 +305,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingTaxdetailForm.AccountingTaxdet
         var txtFilterCONTABLE = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCONTABLE').getValue();
         var txtFilterGRUPO = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterGRUPO').getValue();
         var txtFilterTax = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterTax').getValue();
-        var cmbContrytax = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax').getValue();
-        var cmbSALES = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES').getValue();
-        var cmbBANK = Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').getValue();
-        var txtFilterCOUNTRY = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').getValue();
+        var cmbContrytax = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbContrytax').getValue();
+        var cmbSALES = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbSALES').getValue();
+        var cmbBANK = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-cmbBANK').getValue();
+        var txtFilterCOUNTRY = '';//Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCOUNTRY').getValue();
         var txtFilterCHANNEL = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCHANNEL').getValue();
         var txtFilterIATA = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterIATA').getValue();
         var txtFilterCurrency = Ext.getCmp(prototype.idAccountingTaxdetail + '-txtFilterCurrency').getValue();
