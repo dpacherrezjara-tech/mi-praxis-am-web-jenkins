@@ -212,7 +212,7 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.QTYSETSAL = rst.getInt("QTYSETSAL");
 
                 beanTkt.ACCNBR = rst.getString("ACCNBR");
-                
+
                 if (beanTkt.QTYMATDIF > 0 || beanTkt.QTYSETSAL > 0) {
                     beanTkt.STVALC = "2";
                 } else {
@@ -1154,6 +1154,9 @@ public class SalesReconciliBoomerDAO {
         A2324Filter beanTkt;
         long totSVFOP = 0;
         long SVFOP_ACUMULADO = 0;
+        long SVFOP_ACUMULADO_ANTERIOR = 0;
+        Boolean acumulado = false;
+        Boolean finalizar = false;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1173,7 +1176,8 @@ public class SalesReconciliBoomerDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                totSVFOP = rst.getLong("SVFOP");
+                //totSVFOP = rst.getLong("SVFOP");
+                totSVFOP = filter.AMTSET;
             }
             rst.close();
 
@@ -1190,12 +1194,32 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY");
                     beanTkt.SVFOP = rst.getLong("SVFOP");
                     SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTkt.SVFOP;
+
+                    if (filter.AMTSET == SVFOP_ACUMULADO || acumulado) {                        
+                        if (acumulado) {
+                            beanTkt.FACUMULADO = 1;                            
+                        } 
+                        acumulado = true;
+                    }
+
                     beanTkt.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
+
                     beanTkt.SPNR = rst.getString("SPNR");
 
                     beanTkt.totSVFOP = totSVFOP;
+                    
+                    if (SVFOP_ACUMULADO > filter.AMTSET) {
+                        beanTkt.SVFOP = filter.AMTSET - SVFOP_ACUMULADO_ANTERIOR;
+                        beanTkt.SVFOP_ACUMULADO = filter.AMTSET;
+                        finalizar = true;
+                    }
 
                     lstTkts.add(beanTkt);
+                    SVFOP_ACUMULADO_ANTERIOR = SVFOP_ACUMULADO;
+                    
+                    if (finalizar) {
+                        break;
+                    }
                 }
                 rst.close();
             }
