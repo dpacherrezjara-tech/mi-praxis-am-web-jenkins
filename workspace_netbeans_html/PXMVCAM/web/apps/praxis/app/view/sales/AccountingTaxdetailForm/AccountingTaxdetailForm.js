@@ -543,7 +543,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingTaxdetailForm.AccountingTaxdetailFor
                                     width: 80
                                 },
                                 {
-                                    id: prototype.idAccountingTaxdetail + '-lblRowsTotalADM',
+                                    id: prototype.idAccountingTaxdetail + '-lblRowsTotalADM',hidden:true,
                                     text: '0',
                                     width: 50
                                 }
