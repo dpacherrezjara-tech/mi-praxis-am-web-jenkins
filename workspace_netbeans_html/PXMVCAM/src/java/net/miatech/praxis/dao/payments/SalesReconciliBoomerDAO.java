@@ -1152,11 +1152,15 @@ public class SalesReconciliBoomerDAO {
 
         List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
         A2324Filter beanTkt;
+        A2324Filter beanTktComplement;
         long totSVFOP = 0;
+        long SVFOP = 0;
         long SVFOP_ACUMULADO = 0;
         long SVFOP_ACUMULADO_ANTERIOR = 0;
         Boolean acumulado = false;
         Boolean finalizar = false;
+        Boolean recorrido = true;
+        Boolean complemento = false;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1176,8 +1180,8 @@ public class SalesReconciliBoomerDAO {
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
-                //totSVFOP = rst.getLong("SVFOP");
-                totSVFOP = filter.AMTSET;
+                totSVFOP = rst.getLong("SVFOP");
+                //totSVFOP = filter.AMTSET;
             }
             rst.close();
 
@@ -1189,16 +1193,17 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.IN_DATSET = filter.IN_DATSET.trim();
                     beanTkt.IN_WEEKMO = filter.IN_WEEKMO.trim();
                     beanTkt.AMTSET = filter.AMTSET;
+                    beanTkt.totSVFOP_COMPLEMENTO = totSVFOP - filter.AMTSET;
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("DATSET").trim());
-
+                    
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY");
                     beanTkt.SVFOP = rst.getLong("SVFOP");
                     SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTkt.SVFOP;
 
-                    if (filter.AMTSET == SVFOP_ACUMULADO || acumulado) {                        
+                    if (filter.AMTSET == SVFOP_ACUMULADO || acumulado) {
                         if (acumulado) {
-                            beanTkt.FACUMULADO = 1;                            
-                        } 
+                            beanTkt.FACUMULADO = 1;
+                        }
                         acumulado = true;
                     }
 
@@ -1207,19 +1212,44 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SPNR = rst.getString("SPNR");
 
                     beanTkt.totSVFOP = totSVFOP;
-                    
-                    if (SVFOP_ACUMULADO > filter.AMTSET) {
+
+                    if (SVFOP_ACUMULADO > filter.AMTSET && recorrido) {
+                        SVFOP = beanTkt.SVFOP;
                         beanTkt.SVFOP = filter.AMTSET - SVFOP_ACUMULADO_ANTERIOR;
                         beanTkt.SVFOP_ACUMULADO = filter.AMTSET;
                         finalizar = true;
+                        recorrido = false;
+                    }
+
+                    if (complemento) {
+                        beanTkt.FCOMPLEMENTO = "1";
                     }
 
                     lstTkts.add(beanTkt);
                     SVFOP_ACUMULADO_ANTERIOR = SVFOP_ACUMULADO;
-                    
+
                     if (finalizar) {
-                        break;
+                        beanTktComplement = new A2324Filter();
+
+                        beanTktComplement.IN_DATSET = filter.IN_DATSET.trim();
+                        beanTktComplement.IN_WEEKMO = filter.IN_WEEKMO.trim();
+                        beanTktComplement.AMTSET = filter.AMTSET;
+                        beanTktComplement.strFormatDate = Functions.getMonthConvert(rst.getString("DATSET").trim());
+                        beanTktComplement.SCURRENCY = rst.getString("SCURRENCY");
+                        beanTktComplement.SPNR = rst.getString("SPNR");
+                        beanTktComplement.totSVFOP = totSVFOP;
+                        beanTktComplement.totSVFOP_COMPLEMENTO = totSVFOP - filter.AMTSET;
+                        
+                        beanTktComplement.SVFOP = Math.abs(SVFOP - beanTkt.SVFOP);                        
+                        //SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTktComplement.SVFOP;
+                        beanTktComplement.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
+
+                        beanTktComplement.FCOMPLEMENTO = "1";
+                        lstTkts.add(beanTktComplement);
+                        finalizar = false;
+                        complemento = true;
                     }
+
                 }
                 rst.close();
             }

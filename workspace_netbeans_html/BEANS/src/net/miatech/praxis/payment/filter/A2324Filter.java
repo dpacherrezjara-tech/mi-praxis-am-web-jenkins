@@ -46,6 +46,7 @@ public class A2324Filter extends A2324 {
 
     public String strFormatDate = "";
     public long totSVFOP = 0;
+    public long totSVFOP_COMPLEMENTO = 0;
     public long totSVFOPS = 0;
     public long difSVFOP = 0;
     public long totdifSVFOP = 0;
@@ -107,6 +108,7 @@ public class A2324Filter extends A2324 {
     public String SPNRB = "";
     public String option = "";
     public String estadoTitulo = "";
+    public String FCOMPLEMENTO = "";
     
     //BOOMER UPDATE
     public String NEW_SDATE = "";
