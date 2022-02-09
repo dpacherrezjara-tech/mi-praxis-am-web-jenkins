@@ -119,7 +119,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 if (e.value.length === 3) win.focus('1-txtTicketForSer');
                 break;
             case prototype.id+'-1-txtNREF_P1':
-                if (e.value.length === 3) win.focus('1-txtNREF_P2');
+                if (e.value.length === 6) win.focus('1-txtNREF_P2');
                 break;
         }
     },
