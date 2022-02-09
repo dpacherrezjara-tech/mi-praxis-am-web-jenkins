@@ -43,7 +43,7 @@ public class DisputemanagementMyarcFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04294(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04294(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -177,7 +177,7 @@ public class DisputemanagementMyarcFormDAO {
         ResultSet rs02 = null;
         ResultSet rs03 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04295(?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04295(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -275,7 +275,7 @@ public class DisputemanagementMyarcFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP04296(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP04296(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
@@ -321,7 +321,7 @@ public class DisputemanagementMyarcFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP04297(?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP04297(?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);

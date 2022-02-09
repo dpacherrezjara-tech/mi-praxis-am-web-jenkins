@@ -36,7 +36,7 @@ public class RobotdisputeMyarcFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04293(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04293(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
