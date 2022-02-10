@@ -302,12 +302,32 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     result = "Type Card 1 required";
                                     break;
                                 }
-                            }
+                                if (!fileA4076.A4076TCARD1.equals("CA") && !fileA4076.A4076TCARD1.equals("VI") && !fileA4076.A4076TCARD1.equals("AX") && !fileA4076.A4076TCARD1.equals("TP") && !fileA4076.A4076TCARD1.equals("DC") && !fileA4076.A4076TCARD1.equals("DC") && !fileA4076.A4076TCARD1.equals("JC")  && !fileA4076.A4076TCARD1.equals("DS") && !fileA4076.A4076TCARD1.equals("PP") && !fileA4076.A4076TCARD1.equals("IK") && !fileA4076.A4076TCARD1.equals("BA")) {
+                                    result = "Card type does not exist " + fileA4076.A4076TCARD1;
+                                    break;
+                                }
+                            } 
                             fileA4076.A4076CARD1 = getCellValue(currentRow.getCell(10));
                             if (!fileA4076.A4076CARD1.equals("")) {
-                                if (fileA4076.A4076CARD1.length() != 15) {
-                                    result = "THE CARD NUMBER1 MUST BE 15 CHARACTERES  " + fileA4076.A4076CARD1;
-                                    break;
+
+                                if (fileA4076.A4076TCARD1.equals("DC")) {
+                                    if (fileA4076.A4076CARD1.length() != 14) {
+                                        result = "THE CARD NUMBER1 MUST BE 14 CHARACTERES  " + fileA4076.A4076CARD1;
+                                        break;
+                                    }
+                                }
+
+                                if (fileA4076.A4076TCARD1.equals("AX") || fileA4076.A4076TCARD1.equals("TP") || fileA4076.A4076TCARD1.equals("PP")) {
+                                    if (fileA4076.A4076CARD1.length() != 15) {
+                                        result = "THE CARD NUMBER1 MUST BE 15 CHARACTERES  " + fileA4076.A4076CARD1;
+                                        break;
+                                    }
+                                }
+                                if (fileA4076.A4076TCARD1.equals("BA") || fileA4076.A4076TCARD1.equals("IK") || fileA4076.A4076TCARD1.equals("DS") || fileA4076.A4076TCARD1.equals("CA") || fileA4076.A4076TCARD1.equals("VI") || fileA4076.A4076TCARD1.equals("JC")) {
+                                    if (fileA4076.A4076CARD1.length() != 16) {
+                                        result = "THE CARD NUMBER1 MUST BE 16 CHARACTERES  " + fileA4076.A4076CARD1;
+                                        break;
+                                    }
                                 }
                             }
                             if (!getCellValue(currentRow.getCell(11)).equals("")) {
@@ -329,12 +349,30 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     result = "Type Card 2 required";
                                     break;
                                 }
+                                if (!fileA4076.A4076TCARD2.equals("CA") && !fileA4076.A4076TCARD2.equals("VI") && !fileA4076.A4076TCARD2.equals("AX") && !fileA4076.A4076TCARD2.equals("TP") && !fileA4076.A4076TCARD2.equals("DC") && !fileA4076.A4076TCARD2.equals("DC") && !fileA4076.A4076TCARD2.equals("JC") && !fileA4076.A4076TCARD2.equals("DS") && !fileA4076.A4076TCARD2.equals("PP") && !fileA4076.A4076TCARD2.equals("IK") && !fileA4076.A4076TCARD2.equals("BA")) {
+                                    result = "Card type does not exist " + fileA4076.A4076TCARD2;
+                                    break;
+                                }
                             }
                             fileA4076.A4076CARD2 = getCellValue(currentRow.getCell(14));
                             if (!fileA4076.A4076CARD2.equals("")) {
-                                if (fileA4076.A4076CARD2.length() != 15) {
-                                    result = "THE CARD NUMBER2 MUST BE 15 CHARACTERES  " + fileA4076.A4076CARD2;
-                                    break;
+                                if (fileA4076.A4076TCARD2.equals("DC")) {
+                                    if (fileA4076.A4076TCARD2.length() != 14) {
+                                        result = "THE CARD NUMBER1 MUST BE 14 CHARACTERES  " + fileA4076.A4076TCARD2;
+                                        break;
+                                    }
+                                }
+                                if (fileA4076.A4076TCARD2.equals("AX") || fileA4076.A4076TCARD2.equals("TP") || fileA4076.A4076TCARD2.equals("PP")) {
+                                    if (fileA4076.A4076TCARD2.length() != 15) {
+                                        result = "THE CARD NUMBER1 MUST BE 15 CHARACTERES  " + fileA4076.A4076TCARD2;
+                                        break;
+                                    }
+                                }
+                                if (fileA4076.A4076TCARD2.equals("BA") || fileA4076.A4076TCARD2.equals("IK") || fileA4076.A4076TCARD2.equals("DS") || fileA4076.A4076TCARD2.equals("CA") || fileA4076.A4076TCARD2.equals("VI") || fileA4076.A4076TCARD2.equals("JC")) {
+                                    if (fileA4076.A4076TCARD2.length() != 16) {
+                                        result = "THE CARD NUMBER1 MUST BE 16 CHARACTERES  " + fileA4076.A4076TCARD2;
+                                        break;
+                                    }
                                 }
                             }
                             if (!getCellValue(currentRow.getCell(15)).equals("")) {
@@ -1540,7 +1578,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16,CH_17;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -1643,7 +1681,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
                 CH_16 = row.createCell(16);
-                 CH_16 = row.createCell(17);
+                CH_16 = row.createCell(17);
 
                 CH_00.setCellValue(listaData.get(vi).A4076BASE);
                 CH_01.setCellValue(listaData.get(vi).A4076TYPE);
@@ -1866,7 +1904,7 @@ public class MassiveRefunduatpFormController extends BaseController {
         resultado = resultado / Math.pow(10, 2);
         return resultado;
     }
-    
+
     @RequestMapping(value = "SearchDetailError")
     public @ResponseBody
     String SearchDetailError(ModelMap map, HttpServletRequest request) {
@@ -1892,6 +1930,5 @@ public class MassiveRefunduatpFormController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
 
 }
