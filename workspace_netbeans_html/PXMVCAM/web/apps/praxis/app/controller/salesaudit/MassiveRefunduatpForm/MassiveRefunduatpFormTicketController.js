@@ -145,7 +145,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             grid02.hide();
             btnSave.hide();
         } else {
-            if (String(rec.get('A4076FLAG')) === 'E' || String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R') {
+            if (String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R') {
                 grid03.show();
                 grid04.show();
                 //
