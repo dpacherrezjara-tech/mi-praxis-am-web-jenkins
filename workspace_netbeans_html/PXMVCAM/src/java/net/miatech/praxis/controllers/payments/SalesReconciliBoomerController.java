@@ -340,7 +340,7 @@ public class SalesReconciliBoomerController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
-    }    
+    }
 
     @RequestMapping(value = "searchDataByRefNbr")
     public @ResponseBody
@@ -610,7 +610,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -653,7 +653,7 @@ public class SalesReconciliBoomerController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -758,7 +758,7 @@ public class SalesReconciliBoomerController extends BaseController {
     void getXLSXDetHeaderByPeriod2nd(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSXDetHeaderByPeriod2nd");
         String fileNameDownload = String.format("Report  - Layout 2 " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-        int contador = 0;
+        int contador = 1;
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -838,7 +838,19 @@ public class SalesReconciliBoomerController extends BaseController {
             style_yellow_detail.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             style_yellow_detail.setBorderTop(CellStyle.BORDER_THIN);
             style_yellow_detail.setTopBorderColor(IndexedColors.BLACK.getIndex());
-             // ====== CREANDO TITULOS ======================================
+            
+            CellStyle style_green = workbook.createCellStyle();
+            style_green.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+            style_green.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            style_green.setBorderRight(CellStyle.BORDER_THIN);
+            style_green.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            style_green.setBorderBottom(CellStyle.BORDER_THIN);
+            style_green.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            style_green.setBorderLeft(CellStyle.BORDER_THIN);
+            style_green.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            style_green.setBorderTop(CellStyle.BORDER_THIN);
+            style_green.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -908,7 +920,7 @@ public class SalesReconciliBoomerController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1013,7 +1025,7 @@ public class SalesReconciliBoomerController extends BaseController {
 
                 rcell0.setCellValue(contador++);
                 rcell1.setCellValue("02_AEROVIAS");
-                rcell2.setCellValue("*207183-85901307297");
+                rcell2.setCellValue("*212477-85900389722");
                 rcell3.setCellValue(listaData.get(vi).totSVFOP);
                 rcell4.setCellValue("MXN");
                 rcell5.setCellValue("R");
@@ -1039,9 +1051,18 @@ public class SalesReconciliBoomerController extends BaseController {
                 rcell8.setCellStyle(style_pink_detail);
                 rcell9.setCellStyle(style_pink_detail);
                 rcell12.setCellStyle(style_pink_detail);
-                rcell13.setCellStyle(style_pink_detail);
+                rcell13.setCellStyle(style_green);
+                rcell14.setCellStyle(style_green);
                 rcell18.setCellStyle(style_pink_detail);
                 rcell19.setCellStyle(style_pink_detail);
+
+                if (listaData.get(vi).FCOMPLEMENTO.equals("1")) {
+                    rcell2.setCellValue("*123456");
+                    rcell3.setCellValue(listaData.get(vi).totSVFOP_COMPLEMENTO);
+                    rcell5.setCellValue("NC");
+                    rcell13.setCellStyle(style_pink_detail);
+                    rcell14.setCellStyle(style_pink_detail);
+                }
 
                 iter.next();
                 ++vi;
@@ -1123,7 +1144,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1197,7 +1218,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 18));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1386,7 +1407,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1448,7 +1469,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 15));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1623,7 +1644,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1654,7 +1675,7 @@ public class SalesReconciliBoomerController extends BaseController {
             CH1_7.setCellValue("");
             CH1_8.setCellValue("");
             CH1_9.setCellValue("");
-            CH1_10.setCellValue("");            
+            CH1_10.setCellValue("");
             CH1_11.setCellValue("Diff.");
             CH1_12.setCellValue("PNR");
             CH1_13.setCellValue("Credit Card");
@@ -1687,7 +1708,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1714,12 +1735,12 @@ public class SalesReconciliBoomerController extends BaseController {
             CH2_3.setCellValue("Number");
             CH2_4.setCellValue("");
             CH2_5.setCellValue("Settlement");
-            
+
             CH2_6.setCellValue("Commission");
             CH2_7.setCellValue("VAT");
             CH2_8.setCellValue("Total Discount");
             CH2_9.setCellValue("Net Amount");
-            
+
             CH2_10.setCellValue("Sale");
             CH2_11.setCellValue("");
             CH2_12.setCellValue("");
@@ -1774,12 +1795,12 @@ public class SalesReconciliBoomerController extends BaseController {
                 rcell3.setCellValue(listaData.get(vi).REFNBR);
                 rcell4.setCellValue(listaData.get(vi).SCURRENCY);
                 rcell5.setCellValue(listaData.get(vi).SVFOPS);
-                
+
                 rcell6.setCellValue(listaData.get(vi).TOTCOMISI);
                 rcell7.setCellValue(listaData.get(vi).IVA);
                 rcell8.setCellValue(listaData.get(vi).TOT_DESC);
                 rcell9.setCellValue(listaData.get(vi).NET);
-                
+
                 rcell10.setCellValue(listaData.get(vi).SVFOP);
                 rcell11.setCellValue(listaData.get(vi).difSVFOP);
                 rcell12.setCellValue(listaData.get(vi).SPNR);
@@ -1862,7 +1883,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -1893,7 +1914,7 @@ public class SalesReconciliBoomerController extends BaseController {
             CH1_7.setCellValue("");
             CH1_8.setCellValue("");
             CH1_9.setCellValue("");
-            CH1_10.setCellValue("");            
+            CH1_10.setCellValue("");
             CH1_11.setCellValue("Diff.");
             CH1_12.setCellValue("PNR");
             CH1_13.setCellValue("Credit Card");
@@ -1926,7 +1947,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 12, 12));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -1953,12 +1974,12 @@ public class SalesReconciliBoomerController extends BaseController {
             CH2_3.setCellValue("Number");
             CH2_4.setCellValue("");
             CH2_5.setCellValue("Settlement");
-            
+
             CH2_6.setCellValue("Commission");
             CH2_7.setCellValue("VAT");
             CH2_8.setCellValue("Total Discount");
             CH2_9.setCellValue("Net Amount");
-            
+
             CH2_10.setCellValue("Sale");
             CH2_11.setCellValue("");
             CH2_12.setCellValue("");
@@ -2013,12 +2034,12 @@ public class SalesReconciliBoomerController extends BaseController {
                 rcell3.setCellValue(listaData.get(vi).REFNBR);
                 rcell4.setCellValue(listaData.get(vi).SCURRENCY);
                 rcell5.setCellValue(listaData.get(vi).SVFOPS);
-                
+
                 rcell6.setCellValue(listaData.get(vi).TOTCOMISI);
                 rcell7.setCellValue(listaData.get(vi).IVA);
                 rcell8.setCellValue(listaData.get(vi).TOT_DESC);
                 rcell9.setCellValue(listaData.get(vi).NET);
-                
+
                 rcell10.setCellValue(listaData.get(vi).SVFOP);
                 rcell11.setCellValue(listaData.get(vi).difSVFOP);
                 rcell12.setCellValue(listaData.get(vi).SPNR);
@@ -2101,7 +2122,7 @@ public class SalesReconciliBoomerController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -2153,7 +2174,7 @@ public class SalesReconciliBoomerController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);

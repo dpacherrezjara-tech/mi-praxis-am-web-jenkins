@@ -3622,64 +3622,131 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                         items: [
                                             {text: 'Account', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
-                                                    return "*8221";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                        return "*123456"
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                        return "*8221"
+                                                    }
+                                                    ;
                                                 }
                                             },
                                             {text: 'Client <br> Number', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "2103";
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'SPNR', width: 70},
+                                            {text: 'PNR', dataIndex: 'SPNR', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'Document <br> Type', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "F";
                                                 }
                                             },
-                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 70},
+                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return value;
+                                                }
+                                            },
                                             {
                                                 text: 'Amount', dataIndex: 'SVFOP', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:right;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:right;";
+                                                    }
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                     //                                                    return '<a href="#payments-boomer-reconciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                     return value;
                                                 }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                        metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {text: 'Exchange <br> Rate', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
                                             {text: 'Value <br> Type', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
                                             {text: 'Date', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
                                             {text: 'Description', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
                                             {text: 'Reference', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
@@ -3715,7 +3782,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Number', dataIndex: '', width: 60, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+
                                                             return "";
                                                         }
                                                     },
@@ -3732,7 +3805,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Unit', dataIndex: '', width: 90, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
                                                             return "02_AEROVIAS";
                                                         }
                                                     },
@@ -3740,8 +3818,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             },
                                             {text: 'Origin Transaction', width: 130,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
                                                     metaData.style = "text-align:center";
-                                                    return "*207183-85901307297";
+
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                        return "*123456";
+                                                    } else {
+                                                        return "*212477-85900389722";
+                                                    }
+
                                                 }
                                             },
                                             {
@@ -3755,7 +3841,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Available', dataIndex: 'totSVFOP', width: 90, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            metaData.style = "text-align:center";
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                                value = data.totSVFOP_COMPLEMENTO;
+                                                            } else {
+                                                                value = data.totSVFOP;
+                                                            }
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             return value;
                                                         }
@@ -3773,7 +3866,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Currency', dataIndex: '', width: 70, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
                                                             value = "MXN";
                                                             return value;
                                                         }
@@ -3782,19 +3880,36 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             },
                                             {text: 'Type', width: 50,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
                                                     metaData.style = "text-align:center";
-                                                    return "R";
+
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                        return "NC";
+                                                    } else {
+                                                        return "R";
+                                                    }
                                                 }
                                             },
                                             {text: 'Status', width: 50,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "N/A";
                                                 }
                                             },
                                             {text: 'Account', width: 60,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "*8221";
                                                 }
                                             },
@@ -3809,13 +3924,28 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Number', dataIndex: '', width: 60, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
                                                             return "2103";
                                                         }
                                                     },
                                                 ]
                                             },
-                                            {text: 'Destination<br>Transaction', dataIndex: 'SPNR', width: 100},
+                                            {text: 'Destination<br>Transaction', dataIndex: 'SPNR', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return value;
+                                                }
+                                            },
                                             {
                                                 text: 'Document',
                                                 defaults: {
@@ -3827,7 +3957,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Type', dataIndex: '', width: 70, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
                                                             return "F";
                                                         }
                                                     },
@@ -3836,7 +3971,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {
                                                 text: 'Currency', dataIndex: '', width: 70, //flex: 1
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "MXN";
                                                 }
                                             },
@@ -3851,7 +3991,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Number', dataIndex: '', width: 60, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
                                                             return "2103";
                                                         }
                                                     },
@@ -3868,7 +4013,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Apply', dataIndex: 'SVFOP', width: 80, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:right;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:right;";
+                                                            }
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             return value;
                                                         }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -3890,7 +4040,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Aggregate', dataIndex: 'SVFOP_ACUMULADO', width: 80, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:right;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:right;";
+                                                            }
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                             return value;
                                                         },
@@ -3908,7 +4063,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Rate', dataIndex: '', width: 70, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
                                                             return "";
                                                         }
                                                     },
@@ -3925,7 +4085,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     {
                                                         text: 'Value', dataIndex: '', width: 60, //flex: 1
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
                                                             return "";
                                                         }
                                                     },
@@ -3933,19 +4098,34 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             },
                                             {text: 'Date', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
                                             {text: 'Description', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
                                             {text: 'Reference', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center";
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
                                                     return "";
                                                 }
                                             },
