@@ -5,8 +5,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     meIataCtr: '',
     bean: {},
     searchParams: {},
-    beanFAFlight: {},
+    beanDetail: {},
+    beanDetail: {},
     paramsFAFlight: {},
+    paramsDetail: {},
     meFlown: '',
     _path: '',
     dw_excel: false,
@@ -30,6 +32,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     inicio: function() {
         
         Ext.getCmp(prototype.id + '-filterMain').hide();
+//        Ext.getCmp(prototype.id + '-panelFlownRadios').hide();
         this.setFormatParameter();
         var chkWP = Ext.getCmp(prototype.id + '-chkWP_FA').getValue();
         if (chkWP) {
@@ -160,16 +163,19 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     viewDetFAFlight: function(param,column, e, row, column, x, rowData) {   
         
-        this.beanFAFlight = x.record.data;
+        this.beanDetail = x.record.data;
         
-        this.beanFAFlight.FLAG_VNR = param;
-        meFA.paramsFAFlight.beanString = JSON.stringify(this.beanFAFlight);
-//
-        console.log(this.beanFAFlight);
+        this.beanDetail.FLAG_VNR = param;
+        meFA.paramsFAFlight.beanString = JSON.stringify(this.beanDetail);
+
+        console.log(this.beanDetail);
         this.searchFlownFlight();
         
     },
     searchFlownFlight: function () {
+        
+        Ext.getCmp(prototype.id + '-panelRadio').show();
+        
         win.lblUser_toolTip("Estructura: A1971");
         this.showGrid('-boxFlownAnalysis');
 
@@ -207,6 +213,160 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         
     },
     
+    ChangueFlown_clickHandler: function (a,value ,c,d,e,f) {
+        
+        console.log(Ext.getCmp(prototype.id + '-panelRadio').show());
+        
+        switch (value.rbgpDetail) {
+            case 'Z':
+                                
+                this.beanDetail.ZONA = '';
+		this.beanDetail.NPLANE = '';
+		this.beanDetail.CDEPART = '';
+		this.beanDetail.CARRIVA = '';
+                                
+                this.searchByZone(this.beanDetail);
+                break;
+            case 'C':
+                this.beanDetail.ZONA = '';
+		this.beanDetail.NPLANE = '';
+		this.beanDetail.CDEPART = '';
+		this.beanDetail.CARRIVA = '';
+                
+                this.searchByCityPair(this.beanDetail);
+                break;
+            case 'P':
+                this.beanDetail.ZONA = '';
+		this.beanDetail.NPLANE = '';
+		this.beanDetail.CDEPART = '';
+		this.beanDetail.CARRIVA = '';
+                
+                this.searchByNPlane(this.beanDetail);
+                break;
+            case 'MXN':
+                this.beanDetail.ZONA = '';
+		this.beanDetail.NPLANE = '';
+		this.beanDetail.CDEPART = '';
+		this.beanDetail.CARRIVA = '';
+                
+                this.searchFlownFlight(this.beanDetail);
+                break; 
+        }
+        
+        meFA.paramsDetail.beanString = JSON.stringify(this.beanDetail);
+        
+    },
+    searchByZone: function (byBean) {
+        win.lblUser_toolTip("Estructura: A1971");
+        this.showGrid('-boxByZone');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByZone'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = meFA.paramsDetail;
+                },
+                load: function (obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                        var data = obj.data.items[0].data;
+                        console.log(obj.data);
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataByZone').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByZone').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
+        
+    },
+    searchByCityPair: function (byBean) {
+        win.lblUser_toolTip("Estructura: A1971");
+        this.showGrid('-boxByCityPair');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByCityPair'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = meFA.paramsDetail;
+                },
+                load: function (obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                        var data = obj.data.items[0].data;
+                        console.log(obj.data);
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataByCityPair').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByCityPair').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
+        
+    },
+    searchByNPlane: function (byBean) {
+        win.lblUser_toolTip("Estructura: A1971");
+        this.showGrid('-boxByNPlane');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByNPlane'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = meFA.paramsDetail;
+                },
+                load: function (obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
+//                    var pagData = pag.getPageData();
+//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+//                        var data = obj.data.items[0].data;
+                        console.log(obj.data);
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
+        
+    },
     
     showGrid: function(nameGrid) {
 

@@ -79,7 +79,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                                 type: 'vbox',
                                 align: 'center'
                             },
-                            margin: '10 10 10 10',
+                            margin: '10 0 10 0',
                             defaults: {
                                 labelAlign: 'left'
                             },
