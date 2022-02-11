@@ -3297,11 +3297,11 @@ public class FlightConciliationController extends BaseController {
                         obj.desPAX = getCellValue(row.getCell(5)).trim();
                         
                         if (obj.desPAX.equals("Adult")) {
-                            obj.TPAX = "A";
+                            obj.TPAX = "AD";
                         } else if (obj.desPAX.equals("Children")) {
-                            obj.TPAX = "C";
+                            obj.TPAX = "CH";
                         } else if (obj.desPAX.equals("Infant")) {
-                            obj.TPAX = "I";
+                            obj.TPAX = "INF";
                         }
                         
                         
@@ -3440,5 +3440,87 @@ public class FlightConciliationController extends BaseController {
         return cellValue.trim();
     }
     
+    
+    @RequestMapping(value = "MaintenanceA3729")
+    public @ResponseBody
+    String MaintenanceA3729(ModelMap map, HttpServletRequest request) throws Exception {
 
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        String option;
+        String beanString;
+        Gson gson = new Gson();
+
+        A3729Filter filter = new A3729Filter();
+        String msj = "";
+
+        try {
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            if(!filter.TICKET.equals("") && filter.TICKET_2.equals("")){
+                
+                //Update normal, sin ticket 2
+                msj = logic.SQP04320(filter);
+            }else{
+                
+                //update con ticket 2
+                msj = logic.SQP04323(filter);
+            }
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "validTktExists")
+    public @ResponseBody
+    String validTktExists(ModelMap map, HttpServletRequest request) throws Exception {
+
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        
+        String option;
+        String beanString;
+        Gson gson = new Gson();
+
+        A3729Filter filter = new A3729Filter();
+//        String msj = "";
+        boolean existeTKT = false;
+
+        try {
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            if(!filter.TICKET_2.equals("")){
+                existeTKT = logic.SQP04321(filter);
+            }
+            
+            map.put("success", true);
+            map.put("existeTKT", existeTKT);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
 }
