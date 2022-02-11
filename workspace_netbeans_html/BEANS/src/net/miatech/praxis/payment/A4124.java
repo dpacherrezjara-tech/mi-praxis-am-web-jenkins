@@ -43,6 +43,11 @@ public class A4124 {
     public double FXRATE = 0;
     public double SVFOP = 0;
     public String SCARCOD = "";
+    public String NEWTKTNBR = "";
+    public String OLDTKTNBR = "";
+    public String TRVLASTNA = "";
+    public String TRVFIRSNA = "";
+    public String PAYTOKEN = "";
     public String SCARDBIN = "";
     public String ADDPAXTKT = "";
     public String PAYTRANID = "";
