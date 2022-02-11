@@ -24,6 +24,13 @@ public class A4124Filter extends A4124 {
     public String descFAMEX = "";
     public String descSTCON = "";
     public String PASSED_DAYS = "";    
+    public String INVORNBR = "";    
+    public String ISREFNBR = "";    
+    
+    public String IN_PRDA = "";    
+    public String IN_MERCHID = "";    
+    public String IN_ISREFNBR = "";    
+    public String IN_INVORNBR = "";    
     
     public Pagination page = new Pagination();
 }
