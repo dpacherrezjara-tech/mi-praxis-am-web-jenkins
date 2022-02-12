@@ -333,6 +333,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         });
         global.clear();
         Ext.getCmp(prototype.id + '-gridMainErrorTransaction').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridMainErrorTransaction').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
     },
     setGridDataMainSettlement: function () {
