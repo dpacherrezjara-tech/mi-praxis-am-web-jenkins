@@ -63,6 +63,16 @@ public class A4116 {
     public double RATESFEE = 0;
     public double RATEACCE = 0;
     public double IVACOM12 = 0;
+    public double DISCRATE = 0;
+    public double DISCRATEI = 0;
+    public double DISCAMOUNI = 0;
+    public double RATESFEEC = 0;
+    public double SFEEAMOUC = 0;
+    public double ACCEAMOUC = 0;
+    public double DISCRATEC = 0;
+    public double DISCAMOUNC = 0;
+    public double DISCRATEIC = 0;
+    public double DISCAMOUIC = 0;
     
     public String CERROR = "";
     public String desCERROR = "";

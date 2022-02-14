@@ -718,6 +718,14 @@ public class SalesReconciliAmexDAO {
         double lngTotQTYTRA = 0, lngTotQTYDOC = 0;
         double TGROSAMOUN_TOTAL = 0;
         double TGROSAMOUNC_TOTAL = 0;
+        double DISCAMOUN_TOTAL = 0;
+        double DISCAMOUNI_TOTAL = 0;
+        double SFEEAMOUC_TOTAL = 0;
+        double SFEEAMOU_TOTAL = 0;
+        double ACCEAMOUC_TOTAL = 0;
+        double ACCEAMOU_TOTAL = 0;
+        double DISCAMOUNC_TOTAL = 0;
+        double DISCAMOUIC_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -759,6 +767,14 @@ public class SalesReconciliAmexDAO {
             while (rst.next()) {
                 TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN_TOTAL");
                 TGROSAMOUNC_TOTAL = rst.getDouble("TGROSAMOUNC_TOTAL");
+                DISCAMOUN_TOTAL = rst.getDouble("DISCAMOUN_TOTAL");
+                DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
+                SFEEAMOUC_TOTAL = rst.getDouble("SFEEAMOUC_TOTAL");
+                SFEEAMOU_TOTAL = rst.getDouble("SFEEAMOU_TOTAL");
+                ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
+                ACCEAMOU_TOTAL = rst.getDouble("ACCEAMOU_TOTAL");
+                DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
+                DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
             }
             rst.close();
 
@@ -805,16 +821,40 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
                     beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
+                    beanTkt.DISCAMOUN_TOTAL = DISCAMOUN_TOTAL;
+                    beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
+                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
+                    beanTkt.SFEEAMOU_TOTAL = SFEEAMOU_TOTAL;
+                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
+                    beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
+                    beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
 
                     beanTkt.TRANSDATE = rst.getString("TRANSDATE");
                     beanTkt.TRANSID = rst.getString("TRANSID");
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC");
                     beanTkt.INSTANBR = rst.getString("INSTANBR");
+                    beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
 
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
                     beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
                     beanTkt.FINSAMOUC = rst.getDouble("FINSAMOUC");
                     beanTkt.SINSAMOUC = rst.getDouble("SINSAMOUC");
+
+                    beanTkt.RATESFEE = rst.getDouble("RATESFEE");
+                    beanTkt.DISCRATE = rst.getDouble("DISCRATE");
+                    beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    beanTkt.DISCAMOUNI = rst.getDouble("DISCAMOUNI");
+                    beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
+                    beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
+                    beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
+                    beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
+                    beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
+                    beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                    beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
 
                     beanTkt.CERROR = rst.getString("CERROR").trim();
 
@@ -1268,15 +1308,15 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
-                    
+
                     beanTkt.STCON = rst.getString("STCON").trim();
-                    
+
                     if (beanTkt.STCON.equals("2")) {
                         beanTkt.descSTCON = "Accounted";
                     } else {
                         beanTkt.descSTCON = "";
                     }
-                    
+
                     beanTkt.FCONT = rst.getString("FCONT").trim();
                     beanTkt.IDCON = rst.getString("IDCON").trim();
 
@@ -1748,12 +1788,12 @@ public class SalesReconciliAmexDAO {
 
         return lstTkts;
     }
-    
+
     public List<A4116Filter> loadPX570SQP04377(A4116Filter filter) throws SQLException, Exception {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
-        
+
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
         double totDISCAMOUN_IMPORT = 0;
@@ -1988,7 +2028,16 @@ public class SalesReconciliAmexDAO {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
-        double totTGROSAMOUN = 0;
+        double TGROSAMOUN_TOTAL = 0;
+        double TGROSAMOUNC_TOTAL = 0;
+        double DISCAMOUN_TOTAL = 0;
+        double DISCAMOUNI_TOTAL = 0;
+        double SFEEAMOUC_TOTAL = 0;
+        double SFEEAMOU_TOTAL = 0;
+        double ACCEAMOUC_TOTAL = 0;
+        double ACCEAMOU_TOTAL = 0;
+        double DISCAMOUNC_TOTAL = 0;
+        double DISCAMOUIC_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -2025,7 +2074,16 @@ public class SalesReconciliAmexDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                TGROSAMOUN_TOTAL = rst.getDouble("TGROSAMOUN");
+                TGROSAMOUNC_TOTAL = rst.getDouble("TGROSAMOUNC_TOTAL");
+                DISCAMOUN_TOTAL = rst.getDouble("DISCAMOUN_TOTAL");
+                DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
+                SFEEAMOUC_TOTAL = rst.getDouble("SFEEAMOUC_TOTAL");
+                SFEEAMOU_TOTAL = rst.getDouble("SFEEAMOU_TOTAL");
+                ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
+                ACCEAMOU_TOTAL = rst.getDouble("ACCEAMOU_TOTAL");
+                DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
+                DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
             }
             rst.close();
 
@@ -2080,6 +2138,32 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
                     beanTkt.FINSAMOUC = rst.getDouble("FINSAMOUC");
                     beanTkt.SINSAMOUC = rst.getDouble("SINSAMOUC");
+
+                    beanTkt.RATESFEE = rst.getDouble("RATESFEE");
+                    beanTkt.DISCRATE = rst.getDouble("DISCRATE");
+                    beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    beanTkt.DISCAMOUNI = rst.getDouble("DISCAMOUNI");
+                    beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
+                    beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
+                    beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
+                    beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
+                    beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
+                    beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
+                    beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                    beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
+
+                    beanTkt.DISCAMOUN_TOTAL = DISCAMOUN_TOTAL;
+                    beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
+                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
+                    beanTkt.SFEEAMOU_TOTAL = SFEEAMOU_TOTAL;
+                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
+                    beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
+                    beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
+                    beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
+                    beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
 
                     beanTkt.CERROR = rst.getString("CERROR").trim();
 
