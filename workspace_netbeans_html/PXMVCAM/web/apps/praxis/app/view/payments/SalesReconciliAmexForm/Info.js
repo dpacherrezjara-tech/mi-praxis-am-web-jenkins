@@ -2821,7 +2821,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                     metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.TGROSAMOUN_TOTAL, '0,000.00') + '<b>';
+                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
                                                 }
                                             },
                                             {
@@ -2850,7 +2850,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.SFEEAMOU_TOTAL, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -2863,7 +2863,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.ACCEAMOU_TOTAL, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totACCEAMOU, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -2920,7 +2920,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.DISCAMOUN_TOTAL, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -2969,7 +2969,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.TGROSAMOUNC_TOTAL, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.TGROSAMOUC_TOTAL, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
@@ -3074,7 +3074,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 text: 'Discount<br>Rate VAT.', dataIndex: 'DISCRATEIC', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                                    if (data.DISCRATEI !== data.DISCRATEIC) {
+                                                                    if (Math.abs(data.DISCRATEI) !== Math.abs(data.DISCRATEIC)) {
                                                                         metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
                                                                     } else {
                                                                         metaData.style = "text-align:right;background-color:#B2FAC6;";
@@ -3087,7 +3087,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 text: 'Discount<br>Amount VAT', dataIndex: 'DISCAMOUIC', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                                    if (data.DISCAMOUNI !== data.DISCAMOUIC) {
+                                                                    console.log(data.DISCAMOUNI)
+                                                                    console.log(data.DISCAMOUIC)
+                                                                    if (Ext.util.Format.number(data.DISCAMOUNI, '0,000.00') !== Ext.util.Format.number(data.DISCAMOUIC, '0,000.00')) {
                                                                         metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
                                                                     } else {
                                                                         metaData.style = "text-align:right;background-color:#B2FAC6;";
