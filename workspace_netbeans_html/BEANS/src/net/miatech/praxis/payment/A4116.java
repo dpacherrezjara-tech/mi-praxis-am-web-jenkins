@@ -69,6 +69,7 @@ public class A4116 {
     public double RATESFEEC = 0;
     public double SFEEAMOUC = 0;
     public double ACCEAMOUC = 0;
+    public double VATCOMMSIC = 0;
     public double DISCRATEC = 0;
     public double DISCAMOUNC = 0;
     public double DISCRATEIC = 0;

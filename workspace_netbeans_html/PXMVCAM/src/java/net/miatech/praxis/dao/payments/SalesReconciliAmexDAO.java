@@ -1643,6 +1643,13 @@ public class SalesReconciliAmexDAO {
         double totTAXAMOUN_CB = 0;
         double totNETAMOUN = 0;
         double totDISCAMOSC = 0;
+        double ACCEAMOUC_TOTAL = 0;
+        double DISCAMOUNI_TOTAL = 0;
+        double TGROSAMOUC_TOTAL = 0;
+        double SFEEAMOUC_TOTAL = 0;
+        double DISCAMOUNC_TOTAL = 0;
+        double DISCAMOUIC_TOTAL = 0;
+        double VATCOMMSIC_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1690,6 +1697,14 @@ public class SalesReconciliAmexDAO {
                 totTAXAMOUN_CB = rst.getDouble("totTAXAMOUN_CB");
                 totNETAMOUN = totTGROSAMOUN - totDISCAMOUN_IMPORT - totDISCAMOUN_IVA - totSFEEAMOU - totACCEAMOU - totGROSAMOUN_CB - totDISCAMOUN - totTAXAMOUN_CB - totTAXAMOUN_AD;
                 totDISCAMOSC = rst.getDouble("totDISCAMOSC");
+
+                ACCEAMOUC_TOTAL = rst.getDouble("ACCEAMOUC_TOTAL");
+                DISCAMOUNI_TOTAL = rst.getDouble("DISCAMOUNI_TOTAL");
+                TGROSAMOUC_TOTAL = rst.getDouble("TGROSAMOUC_TOTAL");
+                SFEEAMOUC_TOTAL = rst.getDouble("SFEEAMOUC_TOTAL");
+                DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
+                DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
+                VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
             }
             rst.close();
 
@@ -1730,6 +1745,21 @@ public class SalesReconciliAmexDAO {
                     beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
+                    
+                    
+                    beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
+                    beanTkt.DISCRATE = rst.getDouble("DISCRATE");
+                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    beanTkt.DISCAMOUNI = rst.getDouble("DISCAMOUNI");
+                    beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
+                    beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
+                    beanTkt.VATCOMMSIC = rst.getDouble("VATCOMMSIC");
+                    
+                    beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
+                    beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
+                    beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                    beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
 
                     if (beanTkt.CERROR.equals("")) {
                         beanTkt.desCERROR = "Conciliate";
@@ -1754,6 +1784,14 @@ public class SalesReconciliAmexDAO {
                     beanTkt.totNETAMOUN = totNETAMOUN;
                     beanTkt.totDISCAMOSC = totDISCAMOSC;
                     beanTkt.totGROSAMOUN_CB = totGROSAMOUN_CB;
+
+                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
+                    beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
+                    beanTkt.TGROSAMOUC_TOTAL = TGROSAMOUC_TOTAL;
+                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
+                    beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
+                    beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
