@@ -474,6 +474,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlementTktsDetail.INVORNBR = rowData.data.INVORNBR;
         this.beanSettlementTktsDetail.ISREFNBR = rowData.data.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = rowData.data.IN_PCURRENCY;
+        this.beanSettlementTktsDetail.IN_TGROSAMOUN = rowData.data.TGROSAMOUN;
 
         me.paramsDetailDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         this.setGridDataDetTktSettlement();
@@ -506,7 +507,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                         console.log(obj);
                         var data = obj.data.items[0].data;
                         console.log(data);
-                        Ext.getCmp(prototype.id + '-gridDetailTktSettlement').setTitle('<center style="font-size:12px;">' + 'TICKET: ' + data.IN_ISREFNBR + ' Total Amount: ' + Ext.util.Format.number(data.GROSAMOUN, '0,000.00') + ' ' + data.IN_PCURRENCY +  '</center>');
+                        Ext.getCmp(prototype.id + '-gridDetailTktSettlement').setTitle('<center style="font-size:12px;">' + 'TICKET: ' + data.IN_ISREFNBR + ' - Currency: '  + ' ' + data.IN_PCURRENCY +  '</center>');
                     }
                 }
             }
