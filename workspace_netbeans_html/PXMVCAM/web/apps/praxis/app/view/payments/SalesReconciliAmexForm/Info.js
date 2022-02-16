@@ -2712,7 +2712,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             {text: 'Installment<br>Plan', dataIndex: 'NBRINSTA', width: 90},
                                             {text: 'Installment<br>Number', dataIndex: 'INSTANBR', width: 90},
                                             {
-                                                text: 'Total <br> Amount', dataIndex: 'GROSAMOUN', width: 100,
+                                                text: 'Total <br> Amount', dataIndex: 'GROSAMOUN', width: 100, hidden: true,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -2723,7 +2723,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                             },
                                             {
-                                                text: 'Amount <br> w/o Discount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                text: 'Amount <br> w/o Discount', dataIndex: 'TGROSAMOUN', width: 100, hidden: true,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -2988,10 +2988,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUC', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                            if (data.TGROSAMOUN !== data.TGROSAMOUC) {
-                                                                metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                            if (data.TGROSAMOUN >= data.TGROSAMOUC - 0.5 && data.TGROSAMOUN <= data.TGROSAMOUC + 0.5) {
+                                                                metaData.style = "text-align:right;background-color:#B2FAC6";
                                                             } else {
-                                                                metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
                                                             }
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
@@ -3027,10 +3027,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 text: 'Total<br>Comm.', dataIndex: 'SFEEAMOUC', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                                    if (data.ACCEAMOUC !== data.SFEEAMOUC) {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    if (data.ACCEAMOUC >= data.SFEEAMOUC - 0.5 && data.ACCEAMOUC <= data.SFEEAMOUC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6";
                                                                     } else {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
                                                                     }
                                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                                     return value;
@@ -3045,10 +3045,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 text: 'VAT COMM<br>1 2', dataIndex: 'VATCOMMSIC', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                                    if (data.IVACOM12 !== data.VATCOMMSIC) {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    if (data.IVACOM12 >= data.VATCOMMSIC - 0.5 && data.IVACOM12 <= data.VATCOMMSIC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6";
                                                                     } else {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
                                                                     }
                                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                                     return value;
@@ -3086,10 +3086,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 text: 'Discount<br>Amount Comm.', dataIndex: 'DISCAMOUNC', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                                    if (data.DISCAMOUN !== data.DISCAMOUNC) {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    if (data.DISCAMOUN >= data.DISCAMOUNC - 0.5 && data.DISCAMOUN <= data.DISCAMOUNC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6";
                                                                     } else {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
                                                                     }
                                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                                     return value;
@@ -3117,12 +3117,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                                 text: 'Discount<br>Amount VAT', dataIndex: 'DISCAMOUIC', width: 90,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[rowIndex].data;
-                                                                    console.log(data.DISCAMOUNI)
-                                                                    console.log(data.DISCAMOUIC)
-                                                                    if (Ext.util.Format.number(data.DISCAMOUNI, '0,000.00') !== Ext.util.Format.number(data.DISCAMOUIC, '0,000.00')) {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    if (data.DISCAMOUNI >= data.DISCAMOUIC - 0.5 && data.DISCAMOUNI <= data.DISCAMOUIC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6";
                                                                     } else {
-                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
                                                                     }
                                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                                     return value;
@@ -3365,7 +3363,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             /*{text: 'Installment <br> Plan', dataIndex: 'NBRINSTA', width: 90},
                                              {text: 'Installment<br>Number', dataIndex: 'INSTANBR', width: 90},*/
                                             {
-                                                text: 'Total <br> Amount', dataIndex: 'GROSAMOUN', width: 100,
+                                                text: 'Total <br> Amount', dataIndex: 'GROSAMOUN', width: 100, hidden: true,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
@@ -3376,12 +3374,32 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                             },
                                             {
-                                                text: 'Amount <br> w/o Discount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                text: 'Amount<br>Total Transact.', dataIndex: 'TGROSAMOUC', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    if (rowIndex > 0) {
+                                                        return ''
+                                                    } else {
+                                                        return value;
+                                                    }
+                                                },
+                                                /*summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                 var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                 metaData.style = 'text-align:right; margin-right:3px ';
+                                                 return '<b>' + Ext.util.Format.number(data.TGROSAMOUC_TOTAL, '0,000.00') + '<b>';
+                                                 }*/
+                                            },
+                                            {
+                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                listeners: {
+//                                                    click: 'onGridDetBankS'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
@@ -3392,7 +3410,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Commission',
+                                                text: 'MSI',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -3400,108 +3418,303 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Rate', dataIndex: 'DISCRATE_IMPORT', width: 70,
+                                                        text: 'Rate<br>Comm.', dataIndex: 'RATESFEE', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#FCF6DC";
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
                                                             value = Ext.util.Format.number(value, '0,000.00 %');
                                                             return value;
-                                                        }
+                                                        },
                                                     },
                                                     {
-                                                        text: 'Amount', dataIndex: 'DISCAMOUN_IMPORT', width: 90,
+                                                        text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#FCF6DC";
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN_IMPORT, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                     {
-                                                        text: 'VAT', dataIndex: 'DISCAMOUN_IVA', width: 90,
+                                                        text: 'Accel.<br>Amount', dataIndex: 'ACCEAMOU', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#f5edc9";
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
                                                             metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN_IVA, '0,000.00') + '<b>';
+                                                            return '<b>' + Ext.util.Format.number(data.totACCEAMOU, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Total<br>Comm.', dataIndex: 'ACCEAMOUC', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.ACCEAMOUC_TOTAL, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'VAT COMM<br>1 2', dataIndex: 'IVACOM12', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px';
+                                                            return '<b>' + Ext.util.Format.number(data.totIVACOM12, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
                                             },
                                             {
-                                                text: '% Commission<br>MSI_1', dataIndex: 'RATESFEE', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
+                                                text: 'Commission Base',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
                                                 },
+                                                columns: [
+                                                    {
+                                                        text: 'Discount<br>Rate', dataIndex: 'DISCRATE', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Discount<br>Amount', dataIndex: 'DISCAMOUN', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totDISCAMOUN, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Discount<br>Rate VAT', dataIndex: 'DISCRATEI', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                            value = Ext.util.Format.number(value, '0,000.00 %');
+                                                            return value;
+                                                        },
+                                                    },
+                                                    {
+                                                        text: 'Discount<br>Amount VAT', dataIndex: 'DISCAMOUNI', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.DISCAMOUNI_TOTAL, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             {
-                                                text: 'Serv. Fee', dataIndex: 'SFEEAMOU', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
+                                                text: 'Result Conciliation Transaction',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
                                                 },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totSFEEAMOU, '0,000.00') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: '% Commission<br>MSI_2', dataIndex: 'RATEACCE', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00 %');
-                                                    return value;
-                                                },
-                                            },
-                                            {
-                                                text: 'Acceleration <br> Amount', dataIndex: 'ACCEAMOU', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totACCEAMOU, '0,000.00') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'VAT COM<br>1+2', dataIndex: 'TAXAMOUN_AD', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totTAXAMOUN_AD, '0,000.00') + '<b>';
-                                                }
-                                            },
-                                            {
-                                                text: 'IVA COM<br>1 2', dataIndex: 'IVACOM12', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totIVACOM12, '0,000.00') + '<b>';
-                                                }
+                                                columns: [
+                                                    {
+                                                        text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUC', width: 100, hidden: true,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                            if (data.TGROSAMOUN >= data.TGROSAMOUC - 0.5 && data.TGROSAMOUN <= data.TGROSAMOUC + 0.5) {
+                                                                metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            } else {
+                                                                metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                            }
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.TGROSAMOUC_TOTAL, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'MSI',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Rate<br>Comm.', dataIndex: 'RATESFEEC', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                                    if (data.RATESFEE !== data.RATESFEEC) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    } else {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                    }
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Total<br>Comm.', dataIndex: 'SFEEAMOUC', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                                    if (data.ACCEAMOUC >= data.SFEEAMOUC - 0.5 && data.ACCEAMOUC <= data.SFEEAMOUC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                    } else {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    }
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.SFEEAMOUC_TOTAL, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'VAT COMM<br>1 2', dataIndex: 'VATCOMMSIC', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                                    if (data.IVACOM12 >= data.VATCOMMSIC - 0.5 && data.IVACOM12 <= data.VATCOMMSIC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                    } else {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    }
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.VATCOMMSIC_TOTAL, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'Commission Base',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: false,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Discount<br>Rate Comm.', dataIndex: 'DISCRATEC', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                                    if (data.DISCRATE !== data.DISCRATEC) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    } else {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                    }
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Discount<br>Amount Comm.', dataIndex: 'DISCAMOUNC', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                                    if (data.DISCAMOUN >= data.DISCAMOUNC - 0.5 && data.DISCAMOUN <= data.DISCAMOUNC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                    } else {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    }
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.DISCAMOUNC_TOTAL, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Discount<br>Rate VAT.', dataIndex: 'DISCRATEIC', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                                    if (data.DISCRATEI !== data.DISCRATEIC) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    } else {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                                    }
+                                                                    value = Ext.util.Format.number(value, '0,000.00 %');
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Discount<br>Amount VAT', dataIndex: 'DISCAMOUIC', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                                    if (data.DISCAMOUNI >= data.DISCAMOUIC - 0.5 && data.DISCAMOUNI <= data.DISCAMOUIC + 0.5) {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6";
+                                                                    } else {
+                                                                        metaData.style = "text-align:right;background-color:#B2FAC6;color:#ff0000";
+                                                                    }
+                                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                                    return value;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[0].data;
+                                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                                    return '<b>' + Ext.util.Format.number(data.DISCAMOUIC_TOTAL, '0,000.00') + '<b>';
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        text: 'First Inst. <br> Amou.Conc', dataIndex: 'FINSAMOUC', width: 100, hidden: true,
+                                                        listeners: {
+                                                            //                                                    click: 'onGridDetBankS'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+//                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Subseq.Ins. <br> Amou.Conc', dataIndex: 'SINSAMOUC', width: 100, hidden: true,
+                                                        listeners: {
+                                                            //                                                    click: 'onGridDetBankS'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDetailTktSettlement').getStore().getData().items[rowIndex].data;
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+//                                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Chargeback',
