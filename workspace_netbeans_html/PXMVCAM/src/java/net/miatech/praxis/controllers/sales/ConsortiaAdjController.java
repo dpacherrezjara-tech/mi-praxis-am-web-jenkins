@@ -53,8 +53,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @Scope("request")
-@RequestMapping("/ConsortiaADJ")
-public class ConsortiaADJController extends BaseController {
+@RequestMapping("/ConsortiaAdj")
+public class ConsortiaAdjController extends BaseController {
 
     private ConsortiaAdjLogic logic;
     private A1955Filter filter;

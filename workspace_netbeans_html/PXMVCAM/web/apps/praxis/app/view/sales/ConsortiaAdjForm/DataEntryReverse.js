@@ -1,11 +1,11 @@
-Ext.define('Ext.Praxis.view.sales.ConsortiaADJForm.DataEntryReverse',{
+Ext.define('Ext.Praxis.view.sales.ConsortiaAdjForm.DataEntryReverse',{
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryReverseConsortiaADJForm',
+    alias: 'widget.DataEntryReverseConsortiaAdjForm',
 
-    controller: 'DataEntryReverseConsortiaADJController',
+    controller: 'DataEntryReverseConsortiaAdjController',
 
     requires:[
-        'Ext.Praxis.controller.sales.ConsortiaADJ.DataEntryReverseConsortiaADJController'
+        'Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryReverseConsortiaAdjController'
     ],
 
     title:'Reverse Detail - Data Entry Form ',

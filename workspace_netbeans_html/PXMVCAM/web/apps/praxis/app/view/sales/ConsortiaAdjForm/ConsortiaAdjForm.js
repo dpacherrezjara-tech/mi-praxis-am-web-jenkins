@@ -1,20 +1,20 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
-prototype.id = 'ConsortiaADJForm';
-prototype.url = CONTEXTPATH+'/ConsortiaADJ';
+prototype.id = 'ConsortiaAdjForm';
+prototype.url = CONTEXTPATH+'/ConsortiaAdj';
 prototype.widthContenedor = 1300;//910
 prototype.widthGrid = 863;
 // </editor-fold>
 
-Ext.define('Ext.Praxis.view.sales.ConsortiaADJForm.ConsortiaADJForm', {
+Ext.define('Ext.Praxis.view.sales.ConsortiaAdjForm.ConsortiaAdjForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.ConsortiaADJForm',
+    alias: 'widget.ConsortiaAdjForm',
     requires: [
-        'Ext.Praxis.controller.sales.ConsortiaADJ.ConsortiaADJController',
-        'Ext.Praxis.view.sales.ConsortiaADJForm.Options',
-        'Ext.Praxis.view.sales.ConsortiaADJForm.Filters',
-        'Ext.Praxis.view.sales.ConsortiaADJForm.Info'
+        'Ext.Praxis.controller.sales.ConsortiaAdj.ConsortiaAdjController',
+        'Ext.Praxis.view.sales.ConsortiaAdjForm.Options',
+        'Ext.Praxis.view.sales.ConsortiaAdjForm.Filters',
+        'Ext.Praxis.view.sales.ConsortiaAdjForm.Info'
     ],
-    controller: 'ConsortiaADJController',
+    controller: 'ConsortiaAdjController',
     layout: {
         type: 'fit'
     },

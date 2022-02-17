@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.sales.ConsortiaADJ.ConsortiaADJController', {
+Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.ConsortiaAdjController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.ConsortiaADJController',
+    alias: 'controller.ConsortiaAdjController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},    
@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaADJ.ConsortiaADJController', {
     // </editor-fold>
     init: function(view) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
-        prototype.id = 'ConsortiaADJForm';
-        prototype.url = CONTEXTPATH+'/ConsortiaADJ';
+        prototype.id = 'ConsortiaAdjForm';
+        prototype.url = CONTEXTPATH+'/ConsortiaAdj';
         prototype.widthContenedor = 1300;
         prototype.widthGrid = 863;
         // </editor-fold>
@@ -80,8 +80,8 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaADJ.ConsortiaADJController', {
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.sales.ConsortiaADJForm.DataEntry', {
-            id: 'DataEntryConsortiaADJForm',
+        Ext.create('Ext.Praxis.view.sales.ConsortiaAdjForm.DataEntry', {
+            id: 'DataEntryConsortiaAdjForm',
             params: {
                 action: action,
                 rec: rec
@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaADJ.ConsortiaADJController', {
     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.ConsortiaADJ.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.ConsortiaAdj.GridData', {
             proxy: {
                 url: prototype.url+'/search'
             },
