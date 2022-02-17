@@ -1,11 +1,11 @@
-Ext.define('Ext.Praxis.view.sales.ConsortiaADJForm.DataEntry',{
+Ext.define('Ext.Praxis.view.sales.ConsortiaAdjForm.DataEntry',{
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntryConsortiaADJForm',
+    alias: 'widget.DataEntryConsortiaAdjForm',
 
-    controller: 'DataEntryConsortiaADJController',
+    controller: 'DataEntryConsortiaAdjController',
 
     requires:[
-        'Ext.Praxis.controller.sales.ConsortiaADJ.DataEntryConsortiaADJController'
+        'Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjController'
     ],
 
     title:'Accounting Master Process- Data Entry Form',
