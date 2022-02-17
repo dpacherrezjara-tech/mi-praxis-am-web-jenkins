@@ -64,6 +64,7 @@ public class A4116Filter extends A4116 {
     public String strDATE = "";
     public String IN_AXPAYNBR = "";
     public String IN_PCURRENCY = "";
+    public String IN_descSTVAL = "";
     public double IN_TGROSAMOUN = 0;
     public String IN_ISREFNBR = "";
     public String IN_MERCHID = "";

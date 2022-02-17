@@ -1934,6 +1934,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.IN_ISREFNBR = filter.ISREFNBR.trim();
                     beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
                     beanTkt.IN_TGROSAMOUN = filter.IN_TGROSAMOUN;
+                    beanTkt.IN_descSTVAL = filter.IN_descSTVAL;
 
                     beanTkt.RN = rst.getString("RN").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
