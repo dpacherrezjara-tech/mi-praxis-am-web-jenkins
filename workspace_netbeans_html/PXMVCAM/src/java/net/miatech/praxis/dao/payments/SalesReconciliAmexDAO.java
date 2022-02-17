@@ -1629,6 +1629,13 @@ public class SalesReconciliAmexDAO {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
+        
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("1", "Match");
+        hmDescEstados.put("2", "Sales Without Settlement");
+        hmDescEstados.put("3", "Settlement Without Sales");
+        hmDescEstados.put("4", "Match with Differences");
 
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
@@ -1745,7 +1752,12 @@ public class SalesReconciliAmexDAO {
                     beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.CERROR = rst.getString("CERROR").trim();
-                    
+                    beanTkt.STVAL = rst.getString("STVAL").trim();
+                    if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
+                        beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                    } else {
+                        beanTkt.descSTVAL = rst.getString("STVAL").trim();
+                    }                    
                     
                     beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
@@ -1922,6 +1934,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.IN_ISREFNBR = filter.ISREFNBR.trim();
                     beanTkt.IN_PCURRENCY = filter.IN_PCURRENCY.trim();
                     beanTkt.IN_TGROSAMOUN = filter.IN_TGROSAMOUN;
+                    beanTkt.IN_descSTVAL = filter.IN_descSTVAL;
 
                     beanTkt.RN = rst.getString("RN").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
