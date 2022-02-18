@@ -17,6 +17,7 @@ import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.screens.Dashboard01DAO;
+import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
 
 /**
@@ -205,24 +206,30 @@ public class Dashboard01Logic {
     public List<A1971Filter> loadPX109SQP01927(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01927(filter);
     }
-    
+
     public List<A1971Filter> loadPX246SQP01130(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP01130(filter);
     }
-    
+
     public List<A1971Filter> loadPX246SQP00335(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP00335(filter);
     }
-    
+
     public List<A1971Filter> loadPX246SQP00334(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP00334(filter);
     }
-    
+
     public List<A1971Filter> loadPX246SQP00333(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP00333(filter);
     }
-    
-    
-    
+
+    //* ***************************Expired*******************************
+    public List<IMF117Filter> loadPX109SQP02666(IMF117Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP02666(filter);
+    }
+
+    public List<IMF117Filter> loadPX109SQP02667(IMF117Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP02667(filter);
+    }
 
 }

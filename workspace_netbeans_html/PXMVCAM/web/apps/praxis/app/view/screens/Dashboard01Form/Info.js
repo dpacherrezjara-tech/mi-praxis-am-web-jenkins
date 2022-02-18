@@ -6,6 +6,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis',
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.ByIATA',
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline',
+          'Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrExpired',
           'Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrEMD'
     ],
     layout: 'border',
@@ -113,7 +114,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                         {
                             xtype: 'panel',
                             bodyStyle: 'background: transparent',
-                            id: prototype.id + '-tabScrExchange',
+                            id: prototype.id + '-ScrExpired_tab',
                             title: 'Expired Analysis',
                             layout: {
                                 type: 'vbox',
@@ -125,7 +126,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Info', {
                             },
                             items: [
                                 {
-//                                    xtype:prototype.id + '-FlownAnalysis'
+                                    id: prototype.id+ '-ScrExpired_screen',
+                                    xtype:prototype.id + '-ScrExpired'
                                 }
                             ]
                         },

@@ -23,6 +23,7 @@ import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1007;
+import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -5348,7 +5349,214 @@ public class Dashboard01DAO {
     }
 
     
+    /**
+     * Expired
+     */
     
+    public List<IMF117Filter> loadPX109SQP02666(IMF117Filter filter) throws SQLException, Exception {
+
+        List<IMF117Filter> lstRtn = new ArrayList<IMF117Filter>(0);
+        IMF117Filter objRtn;
+        double VALOR = 0, VCOMIS = 0, VALORYQ = 0, VALORTAX = 0;
+        long QCPNS = 0, QCPNST = 0;
+        String flag = "";
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP02666_1(?,?,?,?)}";
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_FROM);
+            cstmt01.setString(3, filter.IN_FECHA_TO);
+            cstmt01.setString(4, filter.IN_COUNTRY);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                VALOR = rs01.getDouble("VALOR");
+                VCOMIS = rs01.getDouble("VCOMIS");
+                VALORYQ = rs01.getDouble("VALORYQ");
+                VALORTAX = rs01.getDouble("VALORTAX");
+                QCPNS = rs01.getLong("QCPNS");
+                QCPNST = rs01.getLong("QCPNST");
+            }
+
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new IMF117Filter();
+                    objRtn.DCONT = rs01.getString("DCONT");
+                    objRtn.IN_TYPEDOC = objRtn.DCONT;
+                    objRtn.strFormatDate = Functions.getMonthConvert7(objRtn.DCONT);
+                    // objRtn.COUNTRYS = rs01.getString("COUNTRYS");
+                    objRtn.CURRENC = rs01.getString("CURRENC");
+                    objRtn.VALOR = rs01.getDouble("VALOR");
+                    objRtn.VCOMIS = rs01.getDouble("VCOMIS");
+                    objRtn.VALORYQ = rs01.getDouble("VALORYQ");
+                    objRtn.VALORTAX = rs01.getDouble("VALORTAX");
+                    objRtn.QCPNS = rs01.getLong("QCPNS");
+                    objRtn.QCPNST = rs01.getLong("QCPNST");
+
+                    objRtn.totVALOR = VALOR;
+                    objRtn.totVCOMIS = VCOMIS;
+                    objRtn.totVALORYQ = VALORYQ;
+                    objRtn.totVALORTAX = VALORTAX;
+                    objRtn.totQCPNS = QCPNS;
+                    objRtn.totQCPNST = QCPNST;
+                    
+                    if(rs01.getLong("QCPNS") == 0){
+                        objRtn.perVALOR = 0;
+                    } else {
+                        objRtn.perVALOR = rs01.getDouble("VALOR") / rs01.getLong("QCPNS");
+                    }
+                    
+                    if(rs01.getLong("QCPNST") == 0){
+                        objRtn.perVALORYQ = 0;
+                    } else {
+                        objRtn.perVALORYQ = rs01.getDouble("VALORTAX") / rs01.getLong("QCPNST");
+                    }
+                                                            
+                    if (objRtn.totQCPNS == 0){
+                        objRtn.totPerVALOR = 0;
+                    } else {
+                        objRtn.totPerVALOR = objRtn.totVALOR / objRtn.totQCPNS;
+                    }
+                    
+                    if (objRtn.totQCPNST == 0){
+                        objRtn.totPerVALORYQ = 0;
+                    } else {
+                        objRtn.totPerVALORYQ = objRtn.totVALORTAX / objRtn.totQCPNST;
+                    }
+
+                    lstRtn.add(objRtn);
+                }
+            }
+        } finally {
+            setClose(rs01, cstmt01, null);
+        }
+
+        return lstRtn;
+    }
+
+    public List<IMF117Filter> loadPX109SQP02667(IMF117Filter filter) throws SQLException, Exception {
+
+        List<IMF117Filter> lstRtn = new ArrayList<IMF117Filter>(0);
+        IMF117Filter objRtn;
+        double VALOR = 0, VCOMIS = 0, VALORYQ = 0, VALORTAX = 0;
+        long QCPNS = 0, QCPNST = 0;
+        String flag = "";
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        Connection cnx = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP02667(?,?,?,?,?,?,?)}";
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.registerOutParameter(4, Types.INTEGER);
+            cstmt01.registerOutParameter(5, Types.INTEGER);
+            cstmt01.registerOutParameter(6, Types.INTEGER);
+            cstmt01.registerOutParameter(7, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_TYPEDOC.substring(0, 4)); //IN_DATE
+            cstmt01.setString(3, filter.IN_COUNTRY);
+
+            cstmt01.setInt(4, 1);
+            cstmt01.setInt(5, -1);
+            cstmt01.setInt(6, filter.page.TOTPAG);
+            cstmt01.setInt(7, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(4);
+            filter.page.PAGROW = cstmt01.getInt(5);
+            filter.page.TOTPAG = cstmt01.getInt(6);
+            filter.page.TOTROW = cstmt01.getInt(7);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                VALOR = rs01.getDouble("VALOR");
+                VCOMIS = rs01.getDouble("VCOMIS");
+                VALORYQ = rs01.getDouble("VALORYQ");
+                VALORTAX = rs01.getDouble("VALORTAX");
+                QCPNS = rs01.getLong("QCPNS");
+                QCPNST = rs01.getLong("QCPNST");
+            }
+
+            rs01.close();
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new IMF117Filter();
+                    objRtn.IN_FECHA_FROM = filter.IN_FECHA_FROM;
+                    objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                    objRtn.IN_COUNTRY = filter.IN_COUNTRY;
+                    objRtn.IN_TYPEDOC = filter.IN_TYPEDOC;
+                    objRtn.DCONT = rs01.getString("DCONT");
+                    objRtn.strFormatDate = filter.strFormatDate;;
+                    objRtn.COUNTRYS = rs01.getString("COUNTRYS");
+                    objRtn.strDescripcion = rs01.getString("DES_COUNTRY");
+                    objRtn.CURRENC = rs01.getString("CURRENC");
+                    objRtn.VALOR = rs01.getDouble("VALOR");
+                    objRtn.VCOMIS = rs01.getDouble("VCOMIS");
+                    objRtn.VALORYQ = rs01.getDouble("VALORYQ");
+                    objRtn.VALORTAX = rs01.getDouble("VALORTAX");
+                    objRtn.QCPNS = rs01.getLong("QCPNS");
+                    objRtn.QCPNST = rs01.getLong("QCPNST");
+
+                    objRtn.totVALOR = VALOR;
+                    objRtn.totVCOMIS = VCOMIS;
+                    objRtn.totVALORYQ = VALORYQ;
+                    objRtn.totVALORTAX = VALORTAX;
+                    objRtn.totQCPNS = QCPNS;
+                    objRtn.totQCPNST = QCPNST;
+                    
+                    if(rs01.getLong("QCPNS") == 0){
+                        objRtn.perVALOR = 0;
+                    } else {
+                        objRtn.perVALOR = rs01.getDouble("VALOR") / rs01.getLong("QCPNS");
+                    }
+                    
+                    if(rs01.getLong("QCPNST") == 0){
+                        objRtn.perVALORYQ = 0;
+                    } else {
+                        objRtn.perVALORYQ = rs01.getDouble("VALORTAX") / rs01.getLong("QCPNST");
+                    }
+                                                            
+                    if (objRtn.totQCPNS == 0){
+                        objRtn.totPerVALOR = 0;
+                    } else {
+                        objRtn.totPerVALOR = objRtn.totVALOR / objRtn.totQCPNS;
+                    }
+                    
+                    if (objRtn.totQCPNST == 0){
+                        objRtn.totPerVALORYQ = 0;
+                    } else {
+                        objRtn.totPerVALORYQ = objRtn.totVALORTAX / objRtn.totQCPNST;
+                    }
+                                        
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+
+                    lstRtn.add(objRtn);
+                }
+            }
+        } finally {
+            setClose(rs01, cstmt01, null);
+        }
+
+        return lstRtn;
+    }
     
     public void setClose(ResultSet rs, CallableStatement cstmt, Connection cnx) {
 

@@ -39,6 +39,7 @@ import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.praxis.exceptions.SpringException;
+import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
 import net.miatech.utils.ExportSchema;
 import org.apache.poi.ss.usermodel.Cell;
@@ -368,7 +369,7 @@ public class Dashboard01Controller extends BaseController {
         }
         return lst;
     }
-    
+
     @RequestMapping(value = "searchFlownFlight")
     public @ResponseBody
     String searchFlownFlight(ModelMap map, HttpServletRequest request) {
@@ -2274,15 +2275,11 @@ public class Dashboard01Controller extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
-    
-    
+
     // =========================================================================
     // ========================== FLOWN ========================================
     // =========================================================================
-    
     // ******************* By Zone ****************************************
-    
     @RequestMapping(value = "searchByZone")
     public @ResponseBody
     String searchByZone(ModelMap map, HttpServletRequest request) {
@@ -2334,9 +2331,7 @@ public class Dashboard01Controller extends BaseController {
         }
         return lst;
     }
-    
-    
-    
+
     // ******************* By City Pair ****************************************
     @RequestMapping(value = "searchByCityPair")
     public @ResponseBody
@@ -2389,9 +2384,7 @@ public class Dashboard01Controller extends BaseController {
         }
         return lst;
     }
-    
-    
-    
+
     // ******************* By Aircraft *****************************************
     @RequestMapping(value = "searchByNPlane")
     public @ResponseBody
@@ -2444,5 +2437,111 @@ public class Dashboard01Controller extends BaseController {
         }
         return lst;
     }
-    
+
+    // =========================================================================
+    // ========================== EXPIRED ======================================
+    // =========================================================================
+    @RequestMapping(value = "searchExpired")
+    public @ResponseBody
+    String searchExpired(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchExpired-------------");
+
+        map.put("success", true);
+        List<IMF117Filter> lst = this.getListExpired(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<IMF117Filter> getListExpired(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF117Filter> lst = new ArrayList<>(0);
+        IMF117Filter filter = new IMF117Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF117Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX109SQP02666(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchExpiredDetail")
+    public @ResponseBody
+    String searchExpiredDetail(ModelMap map, HttpServletRequest request) {
+
+        System.out.println("-------------- Dashboard01 : searchExpiredDetail-------------");
+
+        map.put("success", true);
+        List<IMF117Filter> lst = this.getListExpiredDetail(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+
+    }
+
+    public List<IMF117Filter> getListExpiredDetail(HttpServletRequest request, Boolean bExcel) {
+
+        List<IMF117Filter> lst = new ArrayList<>(0);
+        IMF117Filter filter = new IMF117Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, IMF117Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX109SQP02667(filter);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
 }
