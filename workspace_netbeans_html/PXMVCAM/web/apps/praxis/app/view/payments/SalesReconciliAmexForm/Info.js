@@ -289,7 +289,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Result Conciliation Summary vs Submission',
+                                                text: 'Result Reconciliation Summary vs Submission',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -884,7 +884,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Result Conciliation Submission vs Transaction/Pricing',
+                                                text: 'Result Reconciliation Submission vs Transaction/Pricing',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1313,7 +1313,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Result Conciliation Transaction',
+                                                text: 'Result Reconciliation Transaction',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1708,7 +1708,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Result Conciliation Pricing',
+                                                text: 'Result Reconciliation Pricing',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -1997,7 +1997,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Result <br> Conciliation <br> Summary',
+                                                text: 'Result<br>Reconciliation<br>Summary',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -2663,7 +2663,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Conciliation<br>Settlement', dataIndex: 'desCERROR', width: 80,
+                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'desCERROR', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.CERROR === '') {
                                                                 metaData.style = "text-align:center;background-color:#C6E5B1;";
@@ -2995,7 +2995,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Result Conciliation Transaction',
+                                                text: 'Result Reconciliation Transaction',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -3550,7 +3550,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Result Conciliation Transaction',
+                                                text: 'Result Reconciliation Transaction',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -4128,7 +4128,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Result Conciliation Transaction',
+                                                text: 'Result Reconciliation Transaction',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -5042,7 +5042,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 }
                                             },
                                             {
-                                                text: 'Result <br> Conciliation <br> Summary',
+                                                text: 'Result <br> Reconciliation<br>Summary',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,

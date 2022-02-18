@@ -828,7 +828,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_12.setCellValue("");
             CH1_13.setCellValue("");
             CH1_14.setCellValue("");
-            CH1_15.setCellValue("Result Conciliation Summary vs Submission");
+            CH1_15.setCellValue("Result Reconciliation Summary vs Submission");
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
             CH1_18.setCellValue("");
@@ -1313,7 +1313,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_9.setCellValue("");
             CH1_10.setCellValue("");
             CH1_11.setCellValue("NET");
-            CH1_12.setCellValue("Result Conciliation Summary");
+            CH1_12.setCellValue("Result Reconciliation Summary");
             CH1_13.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
@@ -1540,7 +1540,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_9.setCellValue("");
             CH1_10.setCellValue("");
             CH1_11.setCellValue("");
-            CH1_12.setCellValue("Result Conciliation Submission vs Transaction/Pricing");
+            CH1_12.setCellValue("Result Reconciliation Submission vs Transaction/Pricing");
             CH1_13.setCellValue("");
             CH1_14.setCellValue("");
             CH1_15.setCellValue("");
@@ -1864,7 +1864,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_10.setCellValue("");
             CH1_11.setCellValue("");
             CH1_12.setCellValue("Transaction Amount");
-            CH1_13.setCellValue("Result conciliation Transaction");
+            CH1_13.setCellValue("Result Reconciliation Transaction");
             CH1_14.setCellValue("");
             CH1_15.setCellValue("");
 
@@ -2111,7 +2111,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_12.setCellValue("");
             CH1_13.setCellValue("");
             CH1_14.setCellValue("Transaction Amount");
-            CH1_15.setCellValue("Result Conciliation Pricing");
+            CH1_15.setCellValue("Result Reconciliation Pricing");
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
             CH1_18.setCellValue("");
@@ -3401,7 +3401,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_11.setCellValue("");
             CH1_12.setCellValue("");
             CH1_13.setCellValue("");
-            CH1_14.setCellValue("Result Conciliation Summary vs Submission");
+            CH1_14.setCellValue("Result Reconciliation Summary vs Submission");
             CH1_15.setCellValue("");
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
@@ -3989,7 +3989,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_11.setCellValue("");
             CH1_12.setCellValue("");
             CH1_13.setCellValue("");
-            CH1_14.setCellValue("Result Conciliation Summary vs Submission");
+            CH1_14.setCellValue("Result Reconciliation Summary vs Submission");
             CH1_15.setCellValue("");
             CH1_16.setCellValue("");
             CH1_17.setCellValue("");
