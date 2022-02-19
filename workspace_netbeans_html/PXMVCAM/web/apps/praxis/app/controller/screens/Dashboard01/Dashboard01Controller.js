@@ -105,6 +105,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateToYear_INT').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromYear_EMD').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToYear_EMD').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateFromYear_EXP').bindStore(storeComboDataYear);
+        Ext.getCmp(prototype.id + '-cmbDateToYear_EXP').bindStore(storeComboDataYear);
 
         var storeComboDataMonth = win.getStoreMonth(true);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
@@ -115,6 +117,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-cmbDateToMonth_INT').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth_EMD').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToMonth_EMD').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth_EXP').bindStore(storeComboDataMonth);
+        Ext.getCmp(prototype.id + '-cmbDateToMonth_EXP').bindStore(storeComboDataMonth);
 
         var storeComboDataDay = win.getStoreDays(true);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
@@ -240,6 +244,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 Ext.getCmp(prototype.id + '-cmbFAPais').bindStore(storeData3);
                 Ext.getCmp(prototype.id + '-cmbFAPais').setValue('');
 
+                Ext.getCmp(prototype.id + '-cmbCountry_EXP').bindStore(storeData3);
+                Ext.getCmp(prototype.id + '-cmbCountry_EXP').setValue('');
 
                 Ext.getCmp(prototype.id + '-cmbAirline_INT').bindStore(storeDataAirline);
                 Ext.getCmp(prototype.id + '-cmbAirline_INT').setValue('');
@@ -280,6 +286,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         this.setValue('cmbDateToMonth_EMD', '');
         this.setValue('cmbDateFromDay_EMD', '');
         this.setValue('cmbDateToDay_EMD', '');
+        
+        //EXPIRED
+        this.setValue('cmbDateFromYear_EXP', new Date().getFullYear());
+        this.setValue('cmbDateToYear_EXP', new Date().getFullYear());
+        this.setValue('cmbDateFromMonth_EXP', '');
+        this.setValue('cmbDateToMonth_EXP', '');
 
 //        this.btnSearch_click();
     },
@@ -299,6 +311,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case  prototype.id + '-ScrEMD_tab':
                 this.setValue('cmbDateToYear_EMD', this.getValue("cmbDateFromYear_EMD"));
                 break
+            case  prototype.id + '-ScrExpired_tab':
+                this.setValue('cmbDateToYear_EXP', this.getValue("cmbDateFromYear_EXP"));
+                break
         }
 
     },
@@ -316,6 +331,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 break
             case  prototype.id + '-ScrEMD_tab':
                 this.setValue('cmbDateToMonth_EMD', this.getValue("cmbDateFromMonth_EMD"));
+                break
+            case  prototype.id + '-ScrExpired_filter':
+                this.setValue('cmbDateToMonth_EXP', this.getValue("cmbDateFromMonth_EXP"));
                 break
         }
 
@@ -373,6 +391,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
                 Ext.getCmp(prototype.id + '-ScrEMD_filter').show();
                 controller.inicio();
                 break;
+            case  prototype.id + '-ScrExpired_tab':
+                Ext.getCmp(prototype.id + '-ScrExpired_filter').show();
+                controller.inicio();
+                break;
         }
 
     },
@@ -381,6 +403,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         Ext.getCmp(prototype.id + '-FlownAnalysis_filter').hide();
         Ext.getCmp(prototype.id + '-ScrInterline_filter').hide();
         Ext.getCmp(prototype.id + '-ScrEMD_filter').hide();
+        Ext.getCmp(prototype.id + '-ScrExpired_filter').hide();
     },
     imgSearch_clickHandler: function (obj, e) {
         this.changeTab_clickHandler(Ext.getCmp(prototype.id + '-tabMain').activeTab.id);
@@ -447,6 +470,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         } else if (tab_id === prototype.id + '-FlownAnalysis_tab') {
 
             component = Ext.getCmp(prototype.id + '-FlownAnalysis_screen');
+        } else if (tab_id === prototype.id + '-ScrExpired_tab') {
+
+            component = Ext.getCmp(prototype.id + '-ScrExpired_screen');
         }
 
         var controller = component.getController();
