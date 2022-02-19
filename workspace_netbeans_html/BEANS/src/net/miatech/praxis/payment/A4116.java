@@ -27,6 +27,10 @@ public class A4116 {
     public String SCURRENCY = "";
     public String IDITEMS = "";
     public String IDITEMT = "";
+    public String CCIA = "";
+    public String FORMA = "";
+    public String SERIE = "";
+    public String SEQ = "";
     
     public String LMERCHID = "";
     public String INVORNBR = "";
@@ -40,6 +44,7 @@ public class A4116 {
         
     public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;
+    public double SVFOPS = 0;
     public int NBRINSTA = 0;
     public int QTYTKT = 0;
 //    public double DISCAMOUN = 0;
