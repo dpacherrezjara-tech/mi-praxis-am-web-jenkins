@@ -26,7 +26,18 @@ public class SQP00802Filter {
     public String VP_A2447FFACT ="";
     public String VP_A2447STATU ="0";
     public String VP_A2447SEQ ="00";
-    public String VP_A2447INDAP =""; // C/S    
+    public String VP_A2447INDAP =""; // C/S
+    public String VP_A2447COD ="";
+    public double VP_A2447COMBA =0;
+    public double VP_A2447IVACB =0;
+    public String VP_A2447COD2 ="";
+    public double VP_A2447COMB2 =0;
+    public double VP_A2447IVAC2 =0;
+    public String VP_A2447NFAC1 = "";
+    public String VP_A2447FFAC1 = "";
+    public String VP_A2447NFAC2 = "";
+    public String VP_A2447FFAC2 = "";
+    
     // out Message SQL
     public DBException dbException = new DBException();
 }

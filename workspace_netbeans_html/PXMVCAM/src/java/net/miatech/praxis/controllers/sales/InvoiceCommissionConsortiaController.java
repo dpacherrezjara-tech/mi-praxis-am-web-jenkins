@@ -190,7 +190,16 @@ public class InvoiceCommissionConsortiaController extends BaseController {
             filter.VP_A2447STATU = request.getParameter("VP_A2447STATU");
             filter.VP_A2447SEQ = request.getParameter("VP_A2447SEQ");
             filter.VP_A2447INDAP = request.getParameter("VP_A2447INDAP");
-
+            filter.VP_A2447COD = request.getParameter("VP_A2447COD");
+            filter.VP_A2447COMBA = Double.parseDouble(request.getParameter("VP_A2447COMBA"));
+            filter.VP_A2447IVACB = Double.parseDouble(request.getParameter("VP_A2447IVACB"));
+            /*filter.VP_A2447COD2 = request.getParameter("VP_A2447COD2");
+            filter.VP_A2447COMB2 = Double.parseDouble(request.getParameter("VP_A2447COMB2"));
+            filter.VP_A2447IVAC2 = Double.parseDouble(request.getParameter("VP_A2447IVAC2"));
+            filter.VP_A2447NFAC1 = request.getParameter("VP_A2447NFAC1");
+            filter.VP_A2447FFAC1 = request.getParameter("VP_A2447FFAC1");
+            filter.VP_A2447NFAC2 = request.getParameter("VP_A2447NFAC2");
+            filter.VP_A2447FFAC2 = request.getParameter("VP_A2447FFAC2");*/
             objRtn = logic.setPX112S02A1757(filter);
 
         } catch (Exception e) {
@@ -429,18 +438,20 @@ public class InvoiceCommissionConsortiaController extends BaseController {
                 //Iterator<Cell> cellIterator = currentRow.iterator();
                 if (cont > 1) {
                     if (sheet.getCell(0) != null) {
-                        //IATA CODE|INVOICE NUMBER|INVOICE DATE|BATCH NUMBER|INVOICE APLICATION|COMMISSION|IVA|STATUS
+                        // Antes----> IATA CODE|INVOICE NUMBER|INVOICE DATE|BATCH NUMBER|INVOICE APLICATION|COMMISSION|IVA|STATUS
+                        // Ahora----> CONCEPTO|IATA CODE|INVOICE NUMBER|INVOICE DATE|BATCH NUMBER|INVOICE APLICATION|COMMISSION|IVA|STATUS
                         param.VP_ACTION     = filter.VP_ACTION;
                         param.VP_A2447CCUST = filter.VP_A2447CCUST;
-                        param.VP_A2447LOTE  = sheet.getCell(3)== null ? "" : sheet.getCell(3).toString();
-                        param.VP_A2447IATA  = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString();
-                        param.VP_A2447COMM  = sheet.getCell(5)== null ? 0 : Double.parseDouble(sheet.getCell(5).toString());//tiene que ser igual a A2444TCOM
-                        param.VP_A2447IVA   = sheet.getCell(6)== null ? 0 : Double.parseDouble(sheet.getCell(6).toString());//tiene que ser igual a A2444TIVA
-                        param.VP_A2447NFACT = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString();
-                        param.VP_A2447FFACT = sheet.getCell(2)== null ? "" : sheet.getCell(2).toString();//no menor a la fecha actual
-                        param.VP_A2447STATU = sheet.getCell(7)== null ? "" : sheet.getCell(7).toString();
+                        param.VP_A2447COD  = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString();
+                        param.VP_A2447LOTE  = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString();
+                        param.VP_A2447IATA  = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString();
+                        param.VP_A2447COMM  = sheet.getCell(6)== null ? 0 : Double.parseDouble(sheet.getCell(6).toString());//tiene que ser igual a A2444TCOM
+                        param.VP_A2447IVA   = sheet.getCell(7)== null ? 0 : Double.parseDouble(sheet.getCell(7).toString());//tiene que ser igual a A2444TIVA
+                        param.VP_A2447NFACT = sheet.getCell(2)== null ? "" : sheet.getCell(2).toString();
+                        param.VP_A2447FFACT = sheet.getCell(3)== null ? "" : sheet.getCell(3).toString();//no menor a la fecha actual
+                        param.VP_A2447STATU = sheet.getCell(8)== null ? "" : sheet.getCell(8).toString();
                         param.VP_A2447SEQ   = cont.toString();
-                        param.VP_A2447INDAP = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString();
+                        param.VP_A2447INDAP = sheet.getCell(5)== null ? "" : sheet.getCell(5).toString();
                         lstData.add(param);
                     }
                 }
