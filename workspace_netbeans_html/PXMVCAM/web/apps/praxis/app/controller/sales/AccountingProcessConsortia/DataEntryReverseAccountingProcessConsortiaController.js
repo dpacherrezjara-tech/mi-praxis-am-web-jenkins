@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryReverseConsortiaAdjController',{
+Ext.define('Ext.Praxis.controller.sales.AccountingProcessConsortia.DataEntryReverseAccountingProcessConsortiaController',{
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryReverseConsortiaAdjController',
+    alias: 'controller.DataEntryReverseAccountingProcessConsortiaController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     msjAlert: '',
     beanParam: '',
@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryReverseConsortiaAd
             method: 'POST',
             timeout: 60000000,
             params: this.beanParam,
-            beforerequest: Ext.getCmp('DataEntryReverseConsortiaAdjForm').mask('Loading...'),
+            beforerequest: Ext.getCmp('DataEntryReverseAccountingProcessConsortiaForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -69,8 +69,8 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryReverseConsortiaAd
                         icon: icon,
                         fn: function() {
                             if (msg==='RECORD REMOVED') {
-                                Ext.getCmp('DataEntryReverseConsortiaAdjForm').close();
-                                Ext.getCmp('DataEntryConsortiaAdjForm').close();
+                                Ext.getCmp('DataEntryReverseAccountingProcessConsortiaForm').close();
+                                Ext.getCmp('DataEntryAccountingProcessConsortiaForm').close();
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
@@ -80,11 +80,11 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryReverseConsortiaAd
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp('DataEntryReverseConsortiaAdjForm').unmask();
+                Ext.getCmp('DataEntryReverseAccountingProcessConsortiaForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryReverseConsortiaAdjForm').unmask();
+                Ext.getCmp('DataEntryReverseAccountingProcessConsortiaForm').unmask();
             }
         });
     }

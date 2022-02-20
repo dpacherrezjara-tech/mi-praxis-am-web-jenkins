@@ -1,4 +1,4 @@
-    Ext.define('Ext.Praxis.model.sales.ConsortiaAdj.GridData', {
+    Ext.define('Ext.Praxis.model.sales.AccountingProcessConsortia.GridData', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'RN', type: 'string'},

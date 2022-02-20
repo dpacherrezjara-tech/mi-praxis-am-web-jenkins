@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.sales.ConsortiaAdjForm.Filters', {
+Ext.define('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
     border: false,
