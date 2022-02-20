@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.ConsortiaAdjController', {
+Ext.define('Ext.Praxis.controller.sales.AccountingProcessConsortia.AccountingProcessConsortiaController', {
     extend: 'Ext.app.ViewController',
-    alias: 'controller.ConsortiaAdjController',
+    alias: 'controller.AccountingProcessConsortiaController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},    
@@ -8,8 +8,8 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.ConsortiaAdjController', {
     // </editor-fold>
     init: function(view) {
         // <editor-fold defaultstate="collapsed" desc="prototype">
-        prototype.id = 'ConsortiaAdjForm';
-        prototype.url = CONTEXTPATH+'/ConsortiaAdj';
+        prototype.id = 'AccountingProcessConsortiaForm';
+        prototype.url = CONTEXTPATH+'/AccountingProcessConsortia';
         prototype.widthContenedor = 1300;
         prototype.widthGrid = 863;
         // </editor-fold>
@@ -80,8 +80,8 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.ConsortiaAdjController', {
     winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        Ext.create('Ext.Praxis.view.sales.ConsortiaAdjForm.DataEntry', {
-            id: 'DataEntryConsortiaAdjForm',
+        Ext.create('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.DataEntry', {
+            id: 'DataEntryAccountingProcessConsortiaForm',
             params: {
                 action: action,
                 rec: rec
@@ -195,7 +195,7 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.ConsortiaAdjController', {
     
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.ConsortiaAdj.GridData', {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.AccountingProcessConsortia.GridData', {
             proxy: {
                 url: prototype.url+'/search'
             },

@@ -1,20 +1,20 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
-prototype.id = 'ConsortiaAdjForm';
-prototype.url = CONTEXTPATH+'/ConsortiaAdj';
+prototype.id = 'AccountingProcessConsortiaForm';
+prototype.url = CONTEXTPATH+'/AccountingProcessConsortia';
 prototype.widthContenedor = 1300;//910
 prototype.widthGrid = 863;
 // </editor-fold>
 
-Ext.define('Ext.Praxis.view.sales.ConsortiaAdjForm.ConsortiaAdjForm', {
+Ext.define('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.AccountingProcessConsortiaForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.ConsortiaAdjForm',
+    alias: 'widget.AccountingProcessConsortiaForm',
     requires: [
-        'Ext.Praxis.controller.sales.ConsortiaAdj.ConsortiaAdjController',
-        'Ext.Praxis.view.sales.ConsortiaAdjForm.Options',
-        'Ext.Praxis.view.sales.ConsortiaAdjForm.Filters',
-        'Ext.Praxis.view.sales.ConsortiaAdjForm.Info'
+        'Ext.Praxis.controller.sales.AccountingProcessConsortia.AccountingProcessConsortiaController',
+        'Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Options',
+        'Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Filters',
+        'Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Info'
     ],
-    controller: 'ConsortiaAdjController',
+    controller: 'AccountingProcessConsortiaController',
     layout: {
         type: 'fit'
     },
