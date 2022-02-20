@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.store.sales.ConsortiaAdj.GridData', {
+Ext.define('Ext.Praxis.store.sales.AccountingProcessConsortia.GridData', {
     extend: 'Ext.data.Store',
-    model: 'Ext.Praxis.model.sales.ConsortiaAdj.GridData',
+    model: 'Ext.Praxis.model.sales.AccountingProcessConsortia.GridData',
     autoLoad:true,
     pageSize: 20,
     proxy: {

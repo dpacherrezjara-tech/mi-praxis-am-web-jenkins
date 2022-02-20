@@ -1,6 +1,6 @@
-Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjController',{
+Ext.define('Ext.Praxis.controller.sales.AccountingProcessConsortia.DataEntryAccountingProcessConsortiaController',{
     extend: 'Ext.app.ViewController',
-    alias: 'controller.DataEntryConsortiaAdjController',
+    alias: 'controller.DataEntryAccountingProcessConsortiaController',
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     msjAlert: '',
     beanOption: '',
@@ -244,7 +244,7 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
             timeout: 60000000,
             params: this.beanOption,
             
-            beforerequest: Ext.getCmp('DataEntryConsortiaAdjForm').mask('Loading...'),
+            beforerequest: Ext.getCmp('DataEntryAccountingProcessConsortiaForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -276,7 +276,7 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
                         icon: icon,
                         fn: function() {
                             if (msg==='RECORD INSERTED') {
-                                Ext.getCmp('DataEntryConsortiaAdjForm').close(),
+                                Ext.getCmp('DataEntryAccountingProcessConsortiaForm').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
@@ -286,11 +286,11 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp('DataEntryConsortiaAdjForm').unmask();
+                Ext.getCmp('DataEntryAccountingProcessConsortiaForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryConsortiaAdjForm').unmask();
+                Ext.getCmp('DataEntryAccountingProcessConsortiaForm').unmask();
             }
         });
     },
@@ -301,7 +301,7 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
             method: 'POST',
             timeout: 60000000,
             params: this.beanOption,
-            beforerequest: Ext.getCmp('DataEntryConsortiaAdjForm').mask('Loading...'),
+            beforerequest: Ext.getCmp('DataEntryAccountingProcessConsortiaForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -315,7 +315,7 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
                         icon: icon,
                         fn: function() {
                             if (msg==='RECORD INSERTED') {
-                                Ext.getCmp('DataEntryConsortiaAdjForm').close(),
+                                Ext.getCmp('DataEntryAccountingProcessConsortiaForm').close(),
                                 Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                             }
                         }
@@ -325,11 +325,11 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp('DataEntryConsortiaAdjForm').unmask();
+                Ext.getCmp('DataEntryAccountingProcessConsortiaForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp('DataEntryConsortiaAdjForm').unmask();
+                Ext.getCmp('DataEntryAccountingProcessConsortiaForm').unmask();
             }
         });
     },
@@ -382,12 +382,12 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
             method: 'POST',
             timeout: 60000000,
             params: dataentryParams,
-            //beforerequest: Ext.getCmp('DataEntryConsortiaAdjForm').mask('Loading...'),
+            //beforerequest: Ext.getCmp('DataEntryAccountingProcessConsortiaForm').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {                    
-                    Ext.create('Ext.Praxis.view.sales.ConsortiaAdjForm.DataEntryReverse', {
-                        id: 'DataEntryReverseConsortiaAdjForm',
+                    Ext.create('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.DataEntryReverse', {
+                        id: 'DataEntryReverseAccountingProcessConsortiaForm',
                         params: {
                             rec: res.data,
                             obj: objDT.data
@@ -398,11 +398,11 @@ Ext.define('Ext.Praxis.controller.sales.ConsortiaAdj.DataEntryConsortiaAdjContro
                         msg: res.sesion
                     });
                 }
-                //Ext.getCmp('DataEntryConsortiaAdjForm').unmask();
+                //Ext.getCmp('DataEntryAccountingProcessConsortiaForm').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                //Ext.getCmp('DataEntryConsortiaAdjForm').unmask();
+                //Ext.getCmp('DataEntryAccountingProcessConsortiaForm').unmask();
             }
         });
     }

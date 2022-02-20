@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.sales.ConsortiaAdjForm.Info', {
+Ext.define('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Info', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-info',
     layout: 'border',
