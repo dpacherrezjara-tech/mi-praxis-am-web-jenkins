@@ -57,7 +57,7 @@ public class MassiveRefunduatpFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04180(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04180(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -148,7 +148,7 @@ public class MassiveRefunduatpFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04177(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04177(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         //SQP01904
         Connection cnx = null;
         ResultSet rst = null;
@@ -299,7 +299,7 @@ public class MassiveRefunduatpFormDAO {
         ResultSet rs02 = null;
         ResultSet rs03 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04191(?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04191(?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -396,7 +396,7 @@ public class MassiveRefunduatpFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP04192(?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP04192(?,?,?,?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
             for (A4076Filter obj : filter) {
 
@@ -438,7 +438,7 @@ public class MassiveRefunduatpFormDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04193(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04193(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -549,7 +549,7 @@ public class MassiveRefunduatpFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP04194(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP04194(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
@@ -604,7 +604,7 @@ public class MassiveRefunduatpFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL LIBSAP26.SQP04241(?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP04241(?,?,?,?,?,?)}";
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
@@ -641,7 +641,7 @@ public class MassiveRefunduatpFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL LIBSAP26.SQP04244(?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04244(?,?,?,?)}";
 
         Connection cnx = null;
         try {
