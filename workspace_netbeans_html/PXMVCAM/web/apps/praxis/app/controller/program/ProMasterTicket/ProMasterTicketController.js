@@ -1365,7 +1365,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         if(me01.filterTKT.lstResultSet02.length > 0){
                           for(var i2 = 0; i2 < me01.filterTKT.lstResultSet02.length; i2++){
                                 paramsResultSet02 = me01.filterTKT.lstResultSet02[i2];
-                                if(paramsResultSet02.fileA730.A730SEQ720.trim()!=='' && paramsResultSet02.fileA730.A730SEQ720.trim()!=='XX')
+                                if(paramsResultSet02.fileA730.A730TYPCP1.trim()!=='' && paramsResultSet02.fileA730.A730TYPCP1.trim()!=='XX')
                                 {
                                     bolA730CUPON1 = false;
                                     bolA730CUPON2 = false;
@@ -2025,7 +2025,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                          if(me01.filterTKT.lstResultSet02.length > 0){
                            for(var i2 = 0; i2 < me01.filterTKT.lstResultSet02.length; i2++){
                                  paramsResultSet02 = me01.filterTKT.lstResultSet02[i2];
-                                 if(paramsResultSet02.fileA730.A730SEQ720.trim()==='' || paramsResultSet02.fileA730.A730SEQ720.trim()==='XX')
+                                 if(paramsResultSet02.fileA730.A730TYPCP1.trim()==='' || paramsResultSet02.fileA730.A730TYPCP1.trim()==='XX')
                                  {
                                      bolA730CUPON1 = false;
                                      bolA730CUPON2 = false;

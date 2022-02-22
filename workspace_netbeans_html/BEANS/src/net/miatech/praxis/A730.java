@@ -157,6 +157,7 @@ public class A730 {
 
     public String A730TIPEXC = "";
     public String A730SEQ720 = "";
+    public String A730TYPCP1 = "";
     public String A730CUPON1 = "";
     public String A730CUPON2 = "";
     public String A730CUPON3 = "";
