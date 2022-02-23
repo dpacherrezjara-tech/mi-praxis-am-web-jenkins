@@ -369,6 +369,7 @@ public class ProMasterTicketDAO {
                         objRtn02.fileA730.A730SER720 = rs02.getString("A730SER720");
                         objRtn02.fileA730.A730SEQUEN = rs02.getString("A730SEQUEN");
                         objRtn02.fileA730.A730SEQ720 = rs02.getString("A730SEQ720");
+                        objRtn02.fileA730.A730TYPCP1 = rs02.getString("A730TYPCP1");
 
                         //<editor-fold defaultstate="collapsed" desc="{...} A730 Coupon 1">
                         objRtn02.fileA730.A730CONEX1 = rs02.getString("A730CONEX1");
