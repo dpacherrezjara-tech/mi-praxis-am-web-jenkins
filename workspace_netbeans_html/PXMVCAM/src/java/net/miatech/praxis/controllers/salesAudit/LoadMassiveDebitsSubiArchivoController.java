@@ -504,16 +504,6 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                                     result = "THE Transaction MUST BE 4 CHARACTERES" + fileA2552.A2552TRNCU;
                                     break;
                                 }
-                                fileA2552.A2552CODTAX1 = getCellValue(currentRow.getCell(8));
-                                if (fileA2552.A2552CODTAX1.length() == 0) {
-                                    result = "You must select the status of the debit to update" + fileA2552.A2552CODTAX1;
-                                    break;
-                                }
-                                if (fileA2552.A2552CODTAX1.length() != 2) {
-                                    result = "The status debit MUST BE 2 CHARACTERES" + fileA2552.A2552CODTAX1;
-                                    break;
-                                }
-                                
                             } else {
                                 fileA2552.A2552TRNCO = getCellValue(currentRow.getCell(1));
                                 if (fileA2552.A2552TRNCO.equals("")) {
@@ -674,9 +664,6 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             if (!fileA2552.A2552BASE.equals("MP")) {
                                 fileA2552.A2552PAX = "";
                             }
-                            if (!fileA2552.A2552BASE.equals("CA")) {
-                                 fileA2552.A2552CODTAX1 = "";
-                            }
 
                             fileA2552.A2552TPAX = "";
                             fileA2552.A2552UBICA = "";
@@ -684,7 +671,8 @@ public class LoadMassiveDebitsSubiArchivoController extends BaseController {
                             fileA2552.A2552TTARJ = "";
                             fileA2552.A2552NREF = "";
 
-                            fileA2552.A2552TAX = 0;                           
+                            fileA2552.A2552TAX = 0;
+                            fileA2552.A2552CODTAX1 = "";
                             fileA2552.A2552TAX1 = 0;
                             fileA2552.A2552CODTAX2 = "";
                             fileA2552.A2552TAX2 = 0;
