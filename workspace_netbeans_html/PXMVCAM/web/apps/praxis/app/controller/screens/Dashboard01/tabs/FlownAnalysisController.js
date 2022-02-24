@@ -146,6 +146,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     chkWP_FA_click: function() {
         
+        Ext.getCmp(prototype.id + '-chkWP_FA').getValue();
+        Ext.getCmp(prototype.id + '-chkWP_FA').getValue();
+        
         this.setFormatParameter;
         var chkWP = Ext.getCmp(prototype.id + '-chkWP_FA').getValue();
         if (chkWP) {
@@ -198,8 +201,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                             msg: 'Data not found.'
                         });
                     } else {
-//                        var data = obj.data.items[0].data;
-                        console.log(obj.data);
+                        var data = obj.data.items[0].data;
+                        
+                        Ext.getCmp(prototype.id + '-gridFlownAnalysis').setTitle('<center style="font-size:12px;">' + ' Total by Month : ' + data.strFormatDate + '</center>');
+                        
                     }
 //                    meFA.setWidthPie();
                 }
