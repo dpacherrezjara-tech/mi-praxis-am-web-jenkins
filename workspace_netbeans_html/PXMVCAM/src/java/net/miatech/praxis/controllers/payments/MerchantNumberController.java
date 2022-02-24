@@ -166,15 +166,17 @@ public class MerchantNumberController extends BaseController {
             Cell CH1_8 = row1.createCell(8);
             Cell CH1_9 = row1.createCell(9);
             Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
 
             CH1_0.setCellValue("Nbr.");
             CH1_1.setCellValue("Merchant Nbr.");
             CH1_2.setCellValue("Merchant Name");
-            CH1_3.setCellValue("Canal");
-            CH1_4.setCellValue("Social");
-            CH1_5.setCellValue("IATA");
-            CH1_7.setCellValue("Commission Policy Information");
-            CH1_9.setCellValue("Chargedback Policy Information");
+            CH1_3.setCellValue("Unidad Operativa");
+            CH1_4.setCellValue("Canal");
+            CH1_5.setCellValue("Social");
+            CH1_6.setCellValue("IATA");
+            CH1_8.setCellValue("Commission Policy Information");
+            CH1_10.setCellValue("Chargedback Policy Information");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -187,16 +189,17 @@ public class MerchantNumberController extends BaseController {
             CH1_8.setCellStyle(headerStyle);
             CH1_9.setCellStyle(headerStyle);
             CH1_10.setCellStyle(headerStyle);
-
+            CH1_11.setCellStyle(headerStyle);
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 11));
             ++vj;
             //============================================
 
@@ -213,15 +216,16 @@ public class MerchantNumberController extends BaseController {
             Cell CH2_8 = row2.createCell(8);
             Cell CH2_9 = row2.createCell(9);
             Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
 
             
-            CH2_4.setCellValue("Reason");
-            CH2_5.setCellValue("Code");
-            CH2_6.setCellValue("Name");
-            CH2_7.setCellValue("Client Code");
-            CH2_8.setCellValue("Client Address");
-            CH2_9.setCellValue("Client Code");
-            CH2_10.setCellValue("Client Address");
+            CH2_5.setCellValue("Reason");
+            CH2_6.setCellValue("Code");
+            CH2_7.setCellValue("Name");
+            CH2_8.setCellValue("Client Code");
+            CH2_9.setCellValue("Client Address");
+            CH2_10.setCellValue("Client Code");
+            CH2_11.setCellValue("Client Address");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -234,6 +238,7 @@ public class MerchantNumberController extends BaseController {
             CH2_8.setCellStyle(headerStyle);
             CH2_9.setCellStyle(headerStyle);
             CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -253,18 +258,20 @@ public class MerchantNumberController extends BaseController {
                 Cell rcell8 = row1.createCell(8);
                 Cell rcell9 = row1.createCell(9);
                 Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).MERCHN);
                 rcell2.setCellValue(listaData.get(vi).DESCR);
-                rcell3.setCellValue(listaData.get(vi).CANAL);
-                rcell4.setCellValue(listaData.get(vi).RSOCIAL);
-                rcell5.setCellValue(listaData.get(vi).CIATA);
-                rcell6.setCellValue(listaData.get(vi).strDescrip);
-                rcell7.setCellValue(listaData.get(vi).CODCLIT1);
-                rcell8.setCellValue(listaData.get(vi).DIRCLIT1);
-                rcell9.setCellValue(listaData.get(vi).CODCLIT2);
-                rcell10.setCellValue(listaData.get(vi).DIRCLIT2);
+                rcell3.setCellValue(listaData.get(vi).strDescripUNIOPE);
+                rcell4.setCellValue(listaData.get(vi).CANAL);
+                rcell5.setCellValue(listaData.get(vi).RSOCIAL);
+                rcell6.setCellValue(listaData.get(vi).CIATA);
+                rcell7.setCellValue(listaData.get(vi).strDescrip);
+                rcell8.setCellValue(listaData.get(vi).CODCLIT1);
+                rcell9.setCellValue(listaData.get(vi).DIRCLIT1);
+                rcell10.setCellValue(listaData.get(vi).CODCLIT2);
+                rcell11.setCellValue(listaData.get(vi).DIRCLIT2);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -281,6 +288,7 @@ public class MerchantNumberController extends BaseController {
             sheet.autoSizeColumn(8, true);
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -502,7 +510,7 @@ public class MerchantNumberController extends BaseController {
     public @ResponseBody
     String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- MerchantNumber : searchCompleteDetail-------------");
-
+        
         Gson gson = new Gson();
         A2354Filter filter = new A2354Filter();
         A2354Filter result = new A2354Filter();

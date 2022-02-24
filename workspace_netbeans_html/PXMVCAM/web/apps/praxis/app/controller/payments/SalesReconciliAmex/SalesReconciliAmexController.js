@@ -250,8 +250,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         };
     },
     btnSearch_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
-        this.rbChangeType();
+        if (me.panelActual === '-boxDetSettlement' && (Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '') ) {
+            this.setFilterParameterDetSettMerchant();
+        } else {
+            Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
+            this.rbChangeType();
+        }
     },
     rbChangeType: function () {
 
@@ -1440,9 +1444,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
             Ext.getCmp(prototype.id + '-cmbSTVAL').setValue("");
             Ext.getCmp(prototype.id + '-txtPNR').setValue("");
-            
+
         }
-        
+
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);
