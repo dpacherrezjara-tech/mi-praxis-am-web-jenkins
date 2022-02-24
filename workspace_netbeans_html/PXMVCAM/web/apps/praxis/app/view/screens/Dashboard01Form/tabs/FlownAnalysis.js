@@ -1117,7 +1117,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                             xtype: 'grid',
                             id: prototype.id + '-gridFlownAnalysis',
                             width: 1290,
-                            height: 553,
+                            height: 580,
                             columnLines: true,
                             hidden: false,
                             margin: "5 0 0 0",

@@ -187,9 +187,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 url: prototype.url + '/searchFlownFlight'
             }, listeners: {
                 beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxFlownAnalysis').mask('Loading...');
                     obj.proxy.extraParams = meFA.paramsFAFlight;
                 },
                 load: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxFlownAnalysis').unmask();
 //                    var pag = Ext.getCmp(prototype.id + '-paggin6');
 //                    var pagData = pag.getPageData();
 //                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
