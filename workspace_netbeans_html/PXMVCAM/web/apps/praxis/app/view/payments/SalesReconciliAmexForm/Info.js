@@ -2663,7 +2663,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'desCERROR', width: 80,
+                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'desCERROR', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.CERROR === '') {
                                                                 metaData.style = "text-align:center;background-color:#C6E5B1;";
@@ -2673,7 +2673,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'STVAL', width: 80,
+                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;";
