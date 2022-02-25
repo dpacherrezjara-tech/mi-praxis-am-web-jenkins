@@ -6,7 +6,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     bean: {},
     searchParams: {},
     beanDetail: {},
-    beanDetail: {},
     paramsFAFlight: {},
     paramsDetail: {},
     meFlown: '',
@@ -31,8 +30,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     inicio: function() {
         
+        console.log(' ----- Inicio Flow -------');
+        
+        meFlown.drillDown = [];        
         Ext.getCmp(prototype.id + '-filterMain').hide();
-//        Ext.getCmp(prototype.id + '-panelFlownRadios').hide();
+        Ext.getCmp(prototype.id + '-panelRadio').hide();
+        Ext.getCmp(prototype.id + '-boxFlownAnalysis').hide();
         this.setFormatParameter();
         var chkWP = Ext.getCmp(prototype.id + '-chkWP_FA').getValue();
         if (chkWP) {
@@ -48,7 +51,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             Ext.getCmp(prototype.id + '-panelGridSearchWK').setVisible(false);
             Ext.getCmp(prototype.id + '-boxMainDataFA').setVisible(true);
         }
-        console.log("Leer filter y realizar busqueda");
     },
     btnSearch_click: function(bean) {
         console.log(' 2--------FlownAnalysisController - btnSearch_click');
@@ -70,17 +72,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         console.log(meFA.bean)
     },
     loadFAMonth: function() {
+        this.showGrid('-boxMainDataFA');
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/loadFAMonth'
             },
             listeners: {
                 beforeload: function(obj) {
-                    Ext.getCmp(prototype.id + '-boxMainDataFA').mask('Loading...');
+//                    Ext.getCmp(prototype.id + '-boxMainDataFA').mask('Loading...');
                     obj.proxy.extraParams = {beanString: meFA.searchParams};
                 },
                 load: function(obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-boxMainDataFA').unmask();
+//                    Ext.getCmp(prototype.id + '-boxMainDataFA').unmask();
                     win.lblUser_toolTip("Estructura: A1972");
 
                     var res = Ext.JSON.decode(response._response.responseText);
@@ -177,6 +180,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     searchFlownFlight: function () {
         
+        me.panelActual = '-boxFlownAnalysis';
         Ext.getCmp(prototype.id + '-panelRadio').show();
         
         win.lblUser_toolTip("Estructura: A1971");
@@ -192,11 +196,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 },
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-boxFlownAnalysis').unmask();
-//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
-//                    var pagData = pag.getPageData();
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    var pag = Ext.getCmp(prototype.id + '-paggin_searchFlownFlight');
+                    var pagData = pag.getPageData();
+                    console.log(pagData);
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
                     
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -216,14 +221,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         global.clear();
         Ext.getCmp(prototype.id + '-gridFlownAnalysis').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridFlownAnalysis').setStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-paggin_searchFlownFlight').bindStore(storeGridDatas);
         
     },
     
     ChangueFlown_clickHandler: function (a,value ,c,d,e,f) {
-        
-        console.log(Ext.getCmp(prototype.id + '-panelRadio').show());
-        
+                
         switch (value.rbgpDetail) {
             case 'Z':
                                 
@@ -265,6 +269,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     searchByZone: function (byBean) {
         win.lblUser_toolTip("Estructura: A1971");
+        this.hidePagination_clickHandler();
         this.showGrid('-boxByZone');
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -272,22 +277,19 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 url: prototype.url + '/searchByZone'
             }, listeners: {
                 beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxByZone').mask('Loading...');
                     obj.proxy.extraParams = meFA.paramsDetail;
                 },
                 load: function (obj) {
-//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
-//                    var pagData = pag.getPageData();
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    Ext.getCmp(prototype.id + '-boxByZone').unmask();
                     
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
                         });
                     } else {
-//                        var data = obj.data.items[0].data;
-                        console.log(obj.data);
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataByZone').setTitle('<center style="font-size:12px;">' + ' Total by Month : ' + data.strFormatDate + '</center>');
                     }
 //                    meFA.setWidthPie();
                 }
@@ -297,10 +299,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataByZone').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByZone').setStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
         
     },
     searchByCityPair: function (byBean) {
+        
+        me.panelActual = '-boxByCityPair';
         win.lblUser_toolTip("Estructura: A1971");
         this.showGrid('-boxByCityPair');
 
@@ -309,22 +312,25 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 url: prototype.url + '/searchByCityPair'
             }, listeners: {
                 beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxByCityPair').mask('Loading...');
                     obj.proxy.extraParams = meFA.paramsDetail;
                 },
                 load: function (obj) {
-//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
-//                    var pagData = pag.getPageData();
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    Ext.getCmp(prototype.id + '-boxByCityPair').unmask();
+                    
+                    var pag = Ext.getCmp(prototype.id + '-paggin_searchByCityPair');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
                     
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
                         });
                     } else {
-//                        var data = obj.data.items[0].data;
-                        console.log(obj.data);
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataByCityPair').setTitle('<center style="font-size:12px;">' + ' Total by Month : ' + data.strFormatDate + '</center>');
                     }
 //                    meFA.setWidthPie();
                 }
@@ -334,11 +340,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataByCityPair').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDataByCityPair').setStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-paggin6').bindStore(storeGridDatas);
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-paggin_searchByCityPair').bindStore(storeGridDatas);
         
     },
     searchByNPlane: function (byBean) {
         win.lblUser_toolTip("Estructura: A1971");
+        this.hidePagination_clickHandler();
         this.showGrid('-boxByNPlane');
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -346,22 +354,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 url: prototype.url + '/searchByNPlane'
             }, listeners: {
                 beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxByNPlane').mask('Loading...');
                     obj.proxy.extraParams = meFA.paramsDetail;
                 },
                 load: function (obj) {
-//                    var pag = Ext.getCmp(prototype.id + '-paggin6');
-//                    var pagData = pag.getPageData();
-//                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                    
+                  Ext.getCmp(prototype.id + '-boxByNPlane').unmask();
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
                         });
                     } else {
-//                        var data = obj.data.items[0].data;
-                        console.log(obj.data);
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridDataByNPlane_OC').setTitle('<center style="font-size:12px;">' + ' Total by Month : ' + data.strFormatDate + '</center>');
                     }
 //                    meFA.setWidthPie();
                 }
@@ -376,9 +380,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     
     showGrid: function(nameGrid) {
-
+        
+//        console.log(nameGrid);
+//        console.log(meFlown.boxActual);
+        
         Ext.getCmp(prototype.id + meFlown.boxActual).hide();
-
         meFlown.boxActual = nameGrid;
         
         if(meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK'){
@@ -386,22 +392,28 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         }else{
             Ext.getCmp(prototype.id + '-filterMain').hide();
         }
-        meFlown.drillDown.push(meFlown.boxActual);
-
+        
+//        console.log(nameGrid);
+//        console.log(meFlown.boxActual);
+        if(!meFlown.drillDown.includes(meFlown.boxActual)){
+            if(nameGrid !== '-boxByZone' && nameGrid !== '-boxByCityPair' && nameGrid !== '-boxByNPlane'){
+                meFlown.drillDown.push(meFlown.boxActual);
+            }
+        }
+        
         Ext.getCmp(prototype.id + meFlown.boxActual).show();
-
+        console.log(meFlown.drillDown);
 
     },
     
     imgBack_clickHandler: function () {
-
+        
+        console.log(meFlown.drillDown);
         if (meFlown.drillDown.length > 1) {
             Ext.getCmp(prototype.id + meFlown.boxActual).hide();
             meFlown.drillDown.pop();
             meFlown.boxActual = meFlown.drillDown[meFlown.drillDown.length - 1];
             Ext.getCmp(prototype.id + meFlown.boxActual).show();
-
-            console.log(meFlown.boxActual);
             
             if(meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK'){
                 Ext.getCmp(prototype.id + '-filterMain').show();
@@ -409,7 +421,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                 Ext.getCmp(prototype.id + '-filterMain').hide();
             }
             
-//            if (meFlown.boxActual === '-boxMainData' || meFlown.boxActual === '-BoxDDTMCountryofSale' || meFlown.boxActual === '-BoxCityOfSale' || meFlown.boxActual === '-BoxDetGDS' || meFlown.boxActual === '-BoxDetPaisAlliances') {
+            if (meFlown.boxActual === '-boxMainDataFA') {
+                Ext.getCmp(prototype.id + '-panelRadio').hide();
+                this.hidePagination_clickHandler();
+            } 
+            
+//            if (meFlown.boxActual === '-boxFlownAnalysis') {
 //                this.hidePagination_clickHandler();
 //            } else if (meFlown.boxActual === '-BoxDetGDSAgte') {
 //                me.panelActual = '-BoxDetGDSAgte';
@@ -432,4 +449,46 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
 //        console.log('imgBack_clickHandler == ' + me.drillDown);
 
     },
+    
+    showPagination_clickHandler: function () {
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        Ext.getCmp(prototype.id + '-lblPagination').show();
+    },
+    hidePagination_clickHandler: function () {
+        Ext.getCmp(prototype.id + '-boxPaginacion').hide();
+        Ext.getCmp(prototype.id + '-lblPagination').hide();
+    },
+    
+    onUpperValue: function(field, newValue, oldValue) {
+        field.setValue(newValue.toUpperCase());
+    },
+    
+    onTextKeypress: function(obj, e, eOpts) {
+        if (e.getKey() === e.ENTER) {
+            this.buscarFlown();
+        }
+    },
+    buscarFlown: function(obj, e, eOpts) {
+        
+        var nFlight = Ext.getCmp(prototype.id + '-txtNFLIGHT').getValue();
+        var cPair = Ext.getCmp(prototype.id + '-txtCPAIR').getValue();
+        
+        if(nFlight !== "" && nFlight.length !== 4){
+            global.Msg({msg: 'Flight Number must be 4 digits.'});    
+        }else if(cPair !== "" && cPair.length !== 3 && cPair.length !== 6){
+            global.Msg({msg: 'Invalid City Pair'});    
+        }else{
+            
+//            this.beanDetail = {};
+            
+            this.beanDetail.IN_NFLIGHT = nFlight;
+            this.beanDetail.IN_CPAIR = cPair;     
+            
+            meFA.paramsFAFlight.beanString = JSON.stringify(this.beanDetail);
+
+            console.log(this.beanDetail);
+            this.searchFlownFlight();
+
+        }
+    }
 });

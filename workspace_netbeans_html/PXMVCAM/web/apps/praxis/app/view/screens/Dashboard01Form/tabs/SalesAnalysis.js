@@ -2181,8 +2181,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-ADG_GridSalesAgent',
-                                    width: 1288,
-                                    height: 510,
+                                    width: 1262,
+//                                    height: 532,
+                                    height: 'auto',
                                     columnLines: true,
                                     margin: "5 0 0 0",
                                     features: [{

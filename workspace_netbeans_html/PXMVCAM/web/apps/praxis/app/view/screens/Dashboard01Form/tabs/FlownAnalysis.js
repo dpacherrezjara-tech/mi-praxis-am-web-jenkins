@@ -1075,6 +1075,50 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                         align: 'right'
                     },
                     items: [
+//                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'label',
+                            html: 'Flight Nbr:',
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '8px 7px 8px 0px'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtNFLIGHT',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 4,
+                            width: 50,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'onTextKeypress'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'label',
+                            html: 'City Pair:',
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '8px 7px 8px 0px'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCPAIR',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            maxLength: 6,
+                            width: 50,
+                            enableKeyEvents: true,
+                            listeners: {
+                                change: 'onUpperValue',
+                                keypress: 'onTextKeypress'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 120},
                         {
                             xtype: 'radiogroup',
                             id: prototype.id + '-radioFlownAnalysis',
