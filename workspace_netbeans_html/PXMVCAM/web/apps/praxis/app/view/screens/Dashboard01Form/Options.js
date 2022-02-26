@@ -83,11 +83,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                 }
             ]
         },
-        {xtype: 'tbspacer', width: 1125},
+        {xtype: 'tbspacer', width: 1230},
         {
             xtype: 'panel',
             id: prototype.id + '-boxPaginacion',
-            hidden: true,
+            hidden: false,
             width: 100,
             border: false,
             items: [
@@ -206,6 +206,30 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Options', {
                         {
                             xtype: 'pagingtoolbar',
                             id: prototype.id + '-pagginRoutingType',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_loadSalesAgent',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchFlownFlight',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin_searchByCityPair',
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
