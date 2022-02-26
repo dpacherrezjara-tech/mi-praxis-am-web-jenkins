@@ -361,6 +361,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         me.bean = {};
         console.clear();
         console.log(name_tab);
+        
+        this.hidePagination_clickHandler();
 
         me.hideFilters();
         me.screen_actual = name_tab;
@@ -582,15 +584,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
         me.pagginActual = '';
         console.log(me.panelActual + ' <<<<<<<<<<<<<<<<<<<<<<');
         switch (me.panelActual) {
-//            case  '-panelGridData':
-//                me.pagginActual = '-paggin';
-//                break;
-//            case '-BoxDDTMCountryofSale':
-//                me.pagginActual = '-paggin2';
-//                break;
-            case '-BoxDDTMDetailbyAgent':
-                me.pagginActual = '-paggin3';
-                break;
             case '-BoxDetGDSAgte':
                 me.pagginActual = '-pagginGDS';
                 break;
@@ -606,15 +599,15 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case '-BoxDetRouting':
                 me.pagginActual = '-pagginRoutingType';
                 break;
-//            case '-boxNoMatchData':
-//                me.pagginActual = '-paggin4';
-//                break;
-//            case '-boxUsosData':
-//                me.pagginActual = '-paggin5';
-//                break;
-//            case '-boxDetAvisos':
-//                me.pagginActual = '-paggin6';
-//                break;
+            case '-BoxDDTMDetailbyAgent':
+                me.pagginActual = '-paggin_loadSalesAgent';
+                break;
+            case '-boxFlownAnalysis':
+                me.pagginActual = '-paggin_searchFlownFlight';
+                break;
+            case '-boxByCityPair':
+                me.pagginActual = '-paggin_searchByCityPair';
+                break;
         }
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">

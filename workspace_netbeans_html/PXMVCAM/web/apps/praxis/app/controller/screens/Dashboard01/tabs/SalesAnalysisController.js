@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         console.log('1-----------------------SalesAnalysisController - afterweeeeeeeeeeee');
     },
     inicio: function () {
-        this.hidePagination_clickHandler();
+//        this.hidePagination_clickHandler();
         meSales.drillDown = [];
         console.clear();
         console.log('1-----------------------SalesAnalysisController - INICIOOOOOOOOOOO');
@@ -813,34 +813,43 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     loadSalesAgent: function () {
         win.lblUser_toolTip("Estructura: IMF084");
 
+        me.panelActual = '-BoxDDTMDetailbyAgent';
         this.showGrid('-BoxSalesAgent');
-
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/loadSalesAgent'
             }, listeners: {
                 beforeload: function (obj) {
-                    Ext.getBody().mask('Loading...');
+//                    Ext.getBody().mask('Loading...');
                     obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
                 },
                 load: function (obj) {
-                    Ext.getBody().unmask('Loading...');
+//                    Ext.getBody().unmask('Loading...');
+                    
+                    var pag = Ext.getCmp(prototype.id + '-paggin_loadSalesAgent');
+                    var pagData = pag.getPageData();
+//                    console.log(pagData);
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
                     } else {
-                        var data = obj.data.items[0].data;
-                        console.log(data);
+                        
+//                        console.log(obj.data);
+//                        var data = obj.data.items[0].data;
 
                     }
 //                    mePie.setWidthPie();
                 }
             }
         });
-
+        
         Ext.getCmp(prototype.id + '-ADG_GridSalesAgent').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-ADG_GridSalesAgent').setStore(storeGridDatas);
-
-//        me.dw_excel = false;
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-paggin_loadSalesAgent').bindStore(storeGridDatas);
 
     },
     rbChangeType_sa: function () {
@@ -1960,53 +1969,53 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         win.displayProMasterTicket(this, 'ABValues', beanProMasterTicket);
     },
     setWidthPie: function () {
-        console.log(me.panelActual);
-        var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
+        console.log(meSales.boxActual);
+        var ancho = Ext.getCmp(prototype.id + meSales.boxActual).getWidth();
         Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
         Ext.getCmp(prototype.id + '-pie').setVisible(true);
     },
-//    getPaggin: function () {
-//        me.pagginActual = '';
-//        switch (me.panelActual) {
-////            case  '-panelGridData':
-////                me.pagginActual = '-paggin';
-////                break;
-////            case '-BoxDDTMCountryofSale':
-////                me.pagginActual = '-paggin2';
-////                break;
+    getPaggin: function () {
+        meSales.pagginActual = '';
+        switch (me.boxActual) {
+            case  '-BoxSalesAgent':
+                meSales.pagginActual = '-paggin';
+                break;
+//            case '-BoxDDTMCountryofSale':
+//                me.pagginActual = '-paggin2';
+//                break;
 //            case '-BoxDDTMDetailbyAgent':
 //                me.pagginActual = '-paggin3';
 //                break;
-////            case '-boxNoMatchData':
-////                me.pagginActual = '-paggin4';
-////                break;
-////            case '-boxUsosData':
-////                me.pagginActual = '-paggin5';
-////                break;
-////            case '-boxDetAvisos':
-////                me.pagginActual = '-paggin6';
-////                break;
-//        }
-//    },
-//    pagFirst: function (obj, e) {
-//        this.getPaggin();
-//        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-//        pag.moveFirst();
-//    }, pagPrevious: function (obj, e) {
-//        this.getPaggin();
-//        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-//        pag.movePrevious();
-//    },
-//    pagNext: function (obj, e) {
-//        this.getPaggin();
-//        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-//        pag.moveNext();
-//    },
-//    pagLast: function (obj, e) {
-//        this.getPaggin();
-//        var pag = Ext.getCmp(prototype.id + me.pagginActual);
-//        pag.moveLast();
-//    },
+//            case '-boxNoMatchData':
+//                me.pagginActual = '-paggin4';
+//                break;
+//            case '-boxUsosData':
+//                me.pagginActual = '-paggin5';
+//                break;
+//            case '-boxDetAvisos':
+//                me.pagginActual = '-paggin6';
+//                break;
+        }
+    },
+    pagFirst: function (obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + meSales.pagginActual);
+        pag.moveFirst();
+    }, pagPrevious: function (obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + meSales.pagginActual);
+        pag.movePrevious();
+    },
+    pagNext: function (obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + meSales.pagginActual);
+        pag.moveNext();
+    },
+    pagLast: function (obj, e) {
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + meSales.pagginActual);
+        pag.moveLast();
+    },
 
     viewMasterTkt: function () {
 

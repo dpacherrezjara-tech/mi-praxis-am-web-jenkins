@@ -51,11 +51,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ScrExpiredController'
             },
             listeners: {
                 beforeload: function (obj) {
-                    Ext.getCmp(prototype.id + '-boxMainData_expired').mask('Loading...');
+//                    Ext.getCmp(prototype.id + '-boxMainData_expired').mask('Loading...');
                     obj.proxy.extraParams = {beanString: meExpired.searchParams};
                 },
                 load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-boxMainData_expired').unmask();
+//                    Ext.getCmp(prototype.id + '-boxMainData_expired').unmask();
                     win.lblUser_toolTip("Estructura: IMF117");
 
                     var res = Ext.JSON.decode(response._response.responseText);
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ScrExpiredController'
         });
         Ext.getCmp(prototype.id + '-gridData_expired').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridData_expired').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-displayExpiredChart').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayExpiredChartxxxx').bindStore(storeGridDatas);
     },
     GridExpiredDetail_colHandler: function (column, e, row, column, x, rowData) {
         this.beanExpiredDetail = {};

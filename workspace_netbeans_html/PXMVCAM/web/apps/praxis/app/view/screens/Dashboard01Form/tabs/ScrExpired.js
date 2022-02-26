@@ -16,7 +16,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrExpired', {
         {
             xtype: 'panel',
             id: prototype.id + '-boxMainData_expired',
-            width: '100%',
+            width: 1500,
+            height: 631,
             hidden: false,
             layout: {
                 type: 'vbox',
@@ -42,6 +43,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrExpired', {
                             id: prototype.id + '-gridData_expired',
                             width: 874,
                             height: 370,
+//                            height: 'auto',
                             columnLines: true,
                             margin: "5 0 0 0",
                             features: [{
@@ -253,7 +255,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrExpired', {
                     xtype: 'panel',
                     bodyStyle: 'background-color: #E3EAEF;',
                     padding: '5 0 0 5',
-                    hidden: true,
+                    hidden: false,
                     border: true,
                     layout: {
                         type: 'vbox'
@@ -262,10 +264,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrExpired', {
                         {
                             xtype: 'cartesian',
                             // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
-                            id: prototype.id + '-displayExpiredChart',
-                            width: 1000,
+                            id: prototype.id + '-displayExpiredChartxxxx',
+                            width: 1300,
                             border: false,
-                            height: 250,
+                            height: 260,
                             background: '#E0F8F7',
                             captions: {
                                 title: {
@@ -336,8 +338,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrExpired', {
                                             toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                         }
                                     },
-                                    renderer: function (sprite, config, rendererData, index, a, b, c) {
-                                    }
+//                                    renderer: function (sprite, config, rendererData, index, a, b, c) {
+//                                    }
                                 }]
                         }
                     ]
