@@ -18,6 +18,7 @@ public class A4166Filter extends A4166 {
     public String IN_DATETO = "";
     public String IN_DATE = "";
     public String IN_STCON = "";
+    public String IN_PNR = "";
     public String strFecFiltro = "";
     public String strYearFrom = "";
     public String strYearTo = "";

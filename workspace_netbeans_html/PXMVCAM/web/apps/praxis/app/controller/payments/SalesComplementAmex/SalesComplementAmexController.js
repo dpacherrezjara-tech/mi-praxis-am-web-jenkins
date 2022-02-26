@@ -134,6 +134,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
         me.bean.IN_FATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         me.bean.IN_FAMEX = Ext.getCmp(prototype.id + '-cmbFindByFAMEX').getValue();
         me.bean.IN_STCON = Ext.getCmp(prototype.id + '-cmbFindBySTCON').getValue();
+        me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
+        me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_DATE = "SDATE";
 
         var beanString = JSON.stringify(me.bean);
@@ -141,6 +143,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesComplementAmex.SalesComplementAm
             beanString: beanString,
             bean: me.bean
         };
+    },
+    txtField_keyDownHandler: function (e, eOpts) {
+        switch (eOpts.getKey()) {
+            case 13:
+                this.btnSearch_click();
+        }
     },
     btnSearch_click: function(obj, e) {
         //this.setFormatParameter();
