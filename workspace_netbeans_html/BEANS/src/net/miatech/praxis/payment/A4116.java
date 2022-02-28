@@ -34,6 +34,7 @@ public class A4116 {
     
     public String LMERCHID = "";
     public String INVORNBR = "";
+    public String SPNR = "";
     public String SELLERID = "";
     public String SCARDN = "";
     public String ISREFNBR = "";
