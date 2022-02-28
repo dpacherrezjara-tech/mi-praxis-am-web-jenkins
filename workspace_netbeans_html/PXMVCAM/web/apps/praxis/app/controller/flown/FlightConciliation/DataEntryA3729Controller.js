@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                 ["0", "Not Found"], 
                 ["1", "Found"], 
                 ["2", "Found but not matching coupon"],
-                ["4", "Employees"],
+                ["4", "No Revenue(Employes/Oth)"],
                 ["5", "Manual"]
             ]
         }));

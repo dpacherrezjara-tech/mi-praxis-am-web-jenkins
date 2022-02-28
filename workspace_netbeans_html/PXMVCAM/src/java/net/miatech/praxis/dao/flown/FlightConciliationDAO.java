@@ -766,7 +766,7 @@ public class FlightConciliationDAO {
                 } else if (rst.getString("FSABRE").trim().equals("2")) {
                     beanCons.descFSABRE = "Found but not matching coupon";
                 } else if (rst.getString("FSABRE").trim().equals("4")) {
-                    beanCons.descFSABRE = "Employee";
+                    beanCons.descFSABRE = "No Revenue(Employes/Oth)";
                 } else if (rst.getString("FSABRE").trim().equals("5")) {
                     beanCons.descFSABRE = "Manual";
                 }
@@ -2118,7 +2118,7 @@ public class FlightConciliationDAO {
                 } else if (rst.getString("FSABRE").trim().equals("2")) {
                     beanCons.descFSABRE = "Found but not matching coupon";
                 } else if (rst.getString("FSABRE").trim().equals("4")) {
-                    beanCons.descFSABRE = "Employee";
+                    beanCons.descFSABRE = "No Revenue(Employes/Oth)";
                 } else if (rst.getString("FSABRE").trim().equals("5")) {
                     beanCons.descFSABRE = "Manual";
                 }

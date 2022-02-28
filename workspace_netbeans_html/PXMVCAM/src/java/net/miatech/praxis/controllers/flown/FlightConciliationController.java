@@ -3346,7 +3346,7 @@ public class FlightConciliationController extends BaseController {
                             obj.FSABRE = "1";
                         } else if (obj.descFSABRE.trim().equals("Found but not matching coupon")) {
                             obj.FSABRE = "2";
-                        } else if (obj.descFSABRE.trim().equals("Employee")) {
+                        } else if (obj.descFSABRE.trim().equals("No Revenue(Employes/Oth)")) {
                             obj.FSABRE = "4";
                         } else if (obj.descFSABRE.trim().equals("Manual")) {
                             obj.FSABRE = "5";

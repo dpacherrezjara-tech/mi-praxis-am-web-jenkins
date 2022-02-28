@@ -421,7 +421,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 fields: ['code', 'name'],
                                 data: [
                                     ["", "All"], ["0", "Not Found"], ["1", "Found"],
-                                    ["2", "Found but not matching coupon"],["4","Employees"],["5", "Manual"]
+                                    ["2", "Found but not matching coupon"],["4","No Revenue(Employes/Oth)"],["5", "Manual"]
                                 ]
                             }),
                             queryMode: 'local',
