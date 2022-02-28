@@ -250,7 +250,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         };
     },
     btnSearch_click: function (obj, e) {
-        if (me.panelActual === '-boxDetSettlement' && (Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '') ) {
+        if (me.panelActual === '-boxDetSettlement' && (Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '')) {
             this.setFilterParameterDetSettMerchant();
         } else {
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
@@ -508,7 +508,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         this.beanSettlementTktsDetail.PRDA = rowData.data.PRDA;
         this.beanSettlementTktsDetail.MERCHID = rowData.data.MERCHID;
-        this.beanSettlementTktsDetail.INVORNBR = rowData.data.INVORNBR;
+        this.beanSettlementTktsDetail.SPNR = rowData.data.SPNR;
         this.beanSettlementTktsDetail.ISREFNBR = rowData.data.ISREFNBR;
         this.beanSettlementTktsDetail.IN_PCURRENCY = rowData.data.IN_PCURRENCY;
         this.beanSettlementTktsDetail.IN_TGROSAMOUN = rowData.data.TGROSAMOUN;
@@ -1382,9 +1382,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     btnAdd_click: function () {
         this.winDataEntry('I');
     },
+    onViewPNRbySPNR: function (a, b, c, d, e, rowData) {
+
+//        var rec = grid.getStore().getAt(rowIndex);
+        rowData.data.PNR = rowData.data.SPNR;
+        this.winDataEntry('', rowData);
+    },
     onViewPNR: function (a, b, c, d, e, rowData) {
 
 //        var rec = grid.getStore().getAt(rowIndex);
+        rowData.data.PNR = rowData.data.INVORNBR;
         this.winDataEntry('', rowData);
     },
     winDataEntry: function (action, rec) {

@@ -23,7 +23,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySalesReco
     },
     afterRender: function() {
                 
-        Ext.getCmp(prototype.id + '-1-txtPNR').setValue(this.bean.INVORNBR);
+        Ext.getCmp(prototype.id + '-1-txtPNR').setValue(this.bean.PNR);
         this.execSearch();
 //        this.obtainData();
 //        switch (this.actionCode) {

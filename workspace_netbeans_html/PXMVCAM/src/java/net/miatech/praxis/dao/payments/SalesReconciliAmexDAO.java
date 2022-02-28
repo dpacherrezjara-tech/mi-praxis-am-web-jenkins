@@ -1737,6 +1737,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
                     beanTkt.QTYTKT = rst.getInt("QTYTKT");
                     beanTkt.INVORNBR = rst.getString("INVORNBR");
+                    beanTkt.SPNR = rst.getString("SPNR");
                     beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
@@ -1885,7 +1886,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.PRDA);
             cstmt.setString(3, filter.MERCHID);
-            cstmt.setString(4, filter.INVORNBR);
+            cstmt.setString(4, filter.SPNR);
             cstmt.setString(5, filter.ISREFNBR);
             cstmt.setInt(6, filter.page.PAGNUM);
             cstmt.setInt(7, filter.page.PAGROW);
@@ -1948,7 +1949,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
                     beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
                     //beanTkt.QTYTKT = rst.getInt("QTYTKT");
-                    beanTkt.INVORNBR = rst.getString("INVORNBR");
+                    beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
+                    beanTkt.SPNR = rst.getString("SPNR").trim();
                     beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
