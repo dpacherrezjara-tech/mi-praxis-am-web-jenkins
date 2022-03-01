@@ -660,6 +660,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 },
                 load: function (obj) {
                     Ext.getBody().unmask('Loading...');
+                    
+                    var pag = Ext.getCmp(prototype.id + '-paggin_loadCityPair');
+                    var pagData = pag.getPageData();
+                    
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
                     } else {
@@ -674,6 +682,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         Ext.getCmp(prototype.id + '-ADG_GridDDCPCityPair').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-ADG_GridDDCPCityPair').setStore(storeGridDatas);
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-paggin_loadCityPair').bindStore(storeGridDatas);
 
 //        me.dw_excel = false;
 
@@ -820,11 +830,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 url: prototype.url + '/loadSalesAgent'
             }, listeners: {
                 beforeload: function (obj) {
-//                    Ext.getBody().mask('Loading...');
+                    Ext.getBody().mask('Loading...');
                     obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
                 },
                 load: function (obj) {
-//                    Ext.getBody().unmask('Loading...');
+                    Ext.getBody().unmask('Loading...');
                     
                     var pag = Ext.getCmp(prototype.id + '-paggin_loadSalesAgent');
                     var pagData = pag.getPageData();

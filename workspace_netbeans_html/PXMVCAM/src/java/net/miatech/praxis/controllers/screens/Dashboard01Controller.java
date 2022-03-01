@@ -1090,16 +1090,34 @@ public class Dashboard01Controller extends BaseController {
         DashboardFilter filter;
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            String beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, DashboardFilter.class);
-
+            
             logic = new Dashboard01Logic();
             logic.setSession(this.serverSession.getServerSession());
+            
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, DashboardFilter.class);
+           
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+//            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+//            } else {
+//                filter.page.PAGROW = -1;
+//                filter.page.PAGNUM = 1;
+//            }
 
             lstData = logic.loadPX109SQP00645(filter);
 
             map.put("success", true);
             map.put("data", lstData);
+            map.put("total", lstData.size() > 0 ? lstData.get(0).page.TOTROW : 0);
 
         } catch (SQLException e) {
             map.put("success", false);
