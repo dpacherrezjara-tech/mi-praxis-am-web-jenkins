@@ -150,6 +150,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Options', {
                             displayInfo: false,
                             hidden: true
                         },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin14',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
+                        {
+                            xtype: 'pagingtoolbar',
+                            id: prototype.id + '-paggin15',
+                            pageSize: 10,
+                            border: false,
+                            displayInfo: false,
+                            hidden: true
+                        },
 
                     ]
                 }

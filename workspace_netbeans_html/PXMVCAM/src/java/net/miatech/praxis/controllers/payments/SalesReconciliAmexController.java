@@ -98,6 +98,22 @@ public class SalesReconciliAmexController extends BaseController {
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A4113Filter.class);
 
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
             lst = logic.loadPX570SQP04257(filter);
         } catch (Exception e) {
             throw new SpringException(e);
@@ -162,6 +178,22 @@ public class SalesReconciliAmexController extends BaseController {
 
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A4115Filter.class);
+
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
 
             lst = logic.loadPX570SQP04269(filter);
         } catch (Exception e) {
