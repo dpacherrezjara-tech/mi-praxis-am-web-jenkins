@@ -611,6 +611,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case '-BoxCityPair':
                 me.pagginActual = '-paggin_loadCityPair';
                 break;
+            case '-boxDetailData':
+                me.pagginActual = '-paggin_searchDetail';
+                break;
         }      
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
