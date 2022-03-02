@@ -5348,6 +5348,144 @@ public class Dashboard01DAO {
         return lstRtn;
     }
 
+    public List<A1971Filter> loadPX246SQP00329(A1971Filter filter) throws SQLException, Exception {
+
+        List<A1971Filter> lstRtn = new ArrayList<A1971Filter>(0);
+        A1971Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        long QTYPAX = 0, QBNPAX = 0, QTYPAXJ = 0, QTYPAXY = 0;
+        double VCPN = 0, AMTBN = 0, VCPNJ = 0, VCPNY = 0;
+
+        String SQLCLL01 = "{CALL PRAXIS.SQP00329_2(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        session.getCNXIBMDB2().open();
+        try {
+            cstmt01 = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.registerOutParameter(12, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DFLIGHT);
+            if (filter.NFLIGHT.trim().isEmpty() && !filter.IN_NFLIGHT.trim().isEmpty()) {
+                cstmt01.setString(3, filter.IN_NFLIGHT);
+            } else {
+                cstmt01.setString(3, filter.NFLIGHT);
+            }
+            cstmt01.setString(4, filter.CARRIER);
+            if (filter.CDEPART.trim().isEmpty() && filter.CARRIVA.trim().isEmpty()
+                    && !filter.IN_CPAIR.trim().isEmpty()) {
+                filter.IN_CPAIR = Functions.fillString(filter.IN_CPAIR, 6);
+                cstmt01.setString(5, filter.IN_CPAIR.substring(0, 3));
+                cstmt01.setString(6, filter.IN_CPAIR.substring(3, 6));
+            } else {
+                cstmt01.setString(5, filter.CDEPART);
+                cstmt01.setString(6, filter.CARRIVA);
+            }
+            cstmt01.setString(7, filter.ZONA);
+            cstmt01.setString(8, filter.NPLANE);
+            cstmt01.setString(9, filter.FLAG_VNR);
+            cstmt01.setInt(10, filter.page.PAGNUM);
+            cstmt01.setInt(11, filter.page.PAGROW);
+            cstmt01.setInt(12, filter.page.TOTPAG);
+            cstmt01.setInt(13, filter.page.TOTROW);
+
+            cstmt01.execute();
+
+            filter.page.PAGNUM = cstmt01.getInt(10);
+            filter.page.PAGROW = cstmt01.getInt(11);
+            filter.page.TOTPAG = cstmt01.getInt(12);
+            filter.page.TOTROW = cstmt01.getInt(13);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                QTYPAX = rs01.getLong("QTYPAX");
+                VCPN = rs01.getDouble("VCPN");
+                QBNPAX = rs01.getLong("QPAXBN");
+                AMTBN = rs01.getDouble("VCPBN");
+                QTYPAXJ = rs01.getLong("J_PAX");
+                VCPNJ = rs01.getDouble("J_VCPN");
+                QTYPAXY = rs01.getLong("Y_PAX");
+                VCPNY = rs01.getDouble("Y_VCPN");
+            }
+            rs01.close();
+
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                while (rs01.next()) {
+                    objRtn = new A1971Filter();
+                    objRtn.FLAG_VNR = filter.FLAG_VNR;
+                    objRtn.NPLANE = filter.NPLANE;
+                    objRtn.ZONA = filter.ZONA;
+                    objRtn.IN_NFLIGHT = filter.IN_NFLIGHT;
+                    objRtn.IN_CPAIR = filter.IN_CPAIR;
+                    objRtn.strZona = filter.strZona;
+                    objRtn.DFLIGHT = rs01.getString("DFLIGHT");
+                    objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DFLIGHT);
+                    objRtn.NFLIGHT = rs01.getString("NFLIGHT");
+                    objRtn.CARRIER = rs01.getString("CARRIER");
+                    objRtn.CDEPART = rs01.getString("CDEPART");
+                    objRtn.CARRIVA = rs01.getString("CARRIVA");
+                    objRtn.strDescripcion1 = rs01.getString("DES_CO");
+                    objRtn.strDescripcion2 = rs01.getString("DES_CD");
+                    objRtn.strDescripcion4 = rs01.getString("MDACP");
+                    objRtn.VCPN = rs01.getDouble("VCPN");
+                    objRtn.KMS = rs01.getInt("KMS");
+                    objRtn.QTYPAX = rs01.getInt("QTYPAX");
+                    objRtn.VCPN_F = rs01.getDouble("F_VCPN");
+                    objRtn.QTYPAX_F = rs01.getInt("F_PAX");
+                    objRtn.AVG_F = (objRtn.QTYPAX_F > 0) ? objRtn.VCPN_F / objRtn.QTYPAX_F : 0;
+                    objRtn.VCPN_J = rs01.getDouble("J_VCPN");
+                    objRtn.QTYPAX_J = rs01.getInt("J_PAX");
+                    objRtn.AVG_J = (objRtn.QTYPAX_J > 0) ? objRtn.VCPN_J / objRtn.QTYPAX_J : 0;
+                    objRtn.VCPN_Y = rs01.getDouble("Y_VCPN");
+                    objRtn.QTYPAX_Y = rs01.getInt("Y_PAX");
+                    objRtn.AVG_Y = (objRtn.QTYPAX_Y > 0) ? objRtn.VCPN_Y / objRtn.QTYPAX_Y : 0;
+                    objRtn.VCPN = rs01.getDouble("VCPN");
+                    objRtn.QTYPAX = rs01.getLong("QTYPAX");
+                    objRtn.AMTBN = rs01.getDouble("VCPBN");
+                    objRtn.QBNPAX = rs01.getLong("QPAXBN");
+                    //Total
+                    objRtn.totQTYPAX = QTYPAX;
+                    objRtn.totVCPN = VCPN;
+                    objRtn.totAMTBN = AMTBN;
+                    objRtn.totQBNPAX = QBNPAX;
+                    objRtn.totQTYPAX_J = QTYPAXJ;
+                    objRtn.totVCPN_J = VCPNJ;
+                    objRtn.totQTYPAX_Y = QTYPAXY;
+                    objRtn.totVCPN_Y = VCPNY;
+
+                    objRtn.page.PAGNUM = filter.page.PAGNUM;
+                    objRtn.page.PAGROW = filter.page.PAGROW;
+                    objRtn.page.TOTPAG = filter.page.TOTPAG;
+                    objRtn.page.TOTROW = filter.page.TOTROW;
+                    lstRtn.add(objRtn);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                rs01.close();
+            }
+            if (cstmt01 != null) {
+                cstmt01.close();
+            }
+            pasarGarbageCollector();
+            session.getCNXIBMDB2().close();
+        }
+
+        return lstRtn;
+    }
+
+    
+    
+    
+    
+    
     
     /**
      * Expired
