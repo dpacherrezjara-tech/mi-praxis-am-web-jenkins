@@ -1814,7 +1814,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
 //                      -------------------- CITY PAIR ----------------------------------------
                 {
                     xtype: 'panel',
-                    id: prototype.id + '-BoxCityPair',
+                        id: prototype.id + '-BoxCityPair',
                     width: '100%',
                     hidden: true,
                     layout: {
@@ -1919,8 +1919,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-ADG_GridDDCPCityPair',
-                                    width: 1378,
-                                    height: 510,
+                                    width: 1333,
+                                    height: 531,
                                     columnLines: true,
                                     margin: "5 0 0 0",
                                     features: [{
@@ -1986,7 +1986,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 text: '%', dataIndex: 'CUPONS_AVG', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -2012,7 +2012,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 text: '%', dataIndex: 'AMOUNT_AVG_RATE', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
@@ -2025,7 +2025,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.SalesAnalysis', {
                                                 text: 'Avg USD', dataIndex: 'TARIFA', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {

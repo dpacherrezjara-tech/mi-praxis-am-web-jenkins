@@ -582,7 +582,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     // </editor-fold>,
     getPaggin: function () {
         me.pagginActual = '';
-        console.log(me.panelActual + ' <<<<<<<<<<<<<<<<<<<<<<');
+        console.log(me.panelActual);
         switch (me.panelActual) {
             case '-BoxDetGDSAgte':
                 me.pagginActual = '-pagginGDS';
@@ -608,7 +608,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case '-boxByCityPair':
                 me.pagginActual = '-paggin_searchByCityPair';
                 break;
-        }
+            case '-BoxCityPair':
+                me.pagginActual = '-paggin_loadCityPair';
+                break;
+            case '-boxDetailData':
+                me.pagginActual = '-paggin_searchDetail';
+                break;
+        }      
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function (obj, e) {
@@ -625,6 +631,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
     },
     pagNext: function (obj, e) {
         this.getPaggin();
+        console.log(me.pagginActual);
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveNext();
 //        Ext.getCmp(prototype.id + '-paggin').moveNext();

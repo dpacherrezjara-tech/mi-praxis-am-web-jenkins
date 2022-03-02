@@ -6,7 +6,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     bean: {},
     searchParams: {},
     beanDetail: {},
+    beanDetalle: {},
     paramsFAFlight: {},
+    paramsDetail2: {},
     paramsDetail: {},
     meFlown: '',
     _path: '',
@@ -79,11 +81,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             },
             listeners: {
                 beforeload: function(obj) {
-//                    Ext.getCmp(prototype.id + '-boxMainDataFA').mask('Loading...');
+                    Ext.getCmp(prototype.id + '-boxMainDataFA').mask('Loading...');
                     obj.proxy.extraParams = {beanString: meFA.searchParams};
                 },
                 load: function(obj, obj2, success, response, obj5) {
-//                    Ext.getCmp(prototype.id + '-boxMainDataFA').unmask();
+                    Ext.getCmp(prototype.id + '-boxMainDataFA').unmask();
                     win.lblUser_toolTip("Estructura: A1972");
 
                     var res = Ext.JSON.decode(response._response.responseText);
@@ -223,6 +225,81 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         Ext.getCmp(prototype.id + '-gridFlownAnalysis').setStore(storeGridDatas);
         this.showPagination_clickHandler();
         Ext.getCmp(prototype.id + '-paggin_searchFlownFlight').bindStore(storeGridDatas);
+        
+    },
+    
+    
+    viewDetail: function(param,column, e, row, column, x, rowData) {   
+        
+        this.beanDetalle = x.record.data;
+        
+        var DETALLE = param;
+        meFA.paramsDetail2.beanString = JSON.stringify(this.beanDetalle);
+
+        console.log(this.beanDetalle);
+        this.searchDetail();
+        
+    },
+    searchDetail: function () {
+        
+        me.panelActual = '-boxDetailData';
+        Ext.getCmp(prototype.id + '-panelRadio').show();
+        
+        win.lblUser_toolTip("Estructura: A1971");
+        this.showGrid('-boxDetailData');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetail'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxDetailData').mask('Loading...');
+                    obj.proxy.extraParams = meFA.paramsDetail2;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxDetailData').unmask();
+                    var pag = Ext.getCmp(prototype.id + '-paggin_searchDetail');
+                    var pagData = pag.getPageData();
+                    console.log(pagData);
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        
+//                        console.log(obj.data);
+                        var data = obj.data.items[0].data;
+                        var titulo = ' Total by Month : ' + data.DFLIGHT.substring(0, 4) + '  ' + win.getAbreviaturaMes(data.DFLIGHT.substring(4,6))
+                        
+                        if(data.NPLANE !== ''){
+                            titulo += '\tAircraft : ' + data.NPLANE;
+			}else if(data.ZONA !== ''){
+                            titulo += '\tZone : ' + data.strZona;
+			}
+			if(data.NFLIGHT !== ''){
+                            titulo += '\tFlight : ' + data.NFLIGHT;
+			}
+			if(data.CDEPART !== '' && data.CARRIVA !== ''){
+                            titulo += '\tRoute : ' + data.CDEPART + ' ' + data.CARRIVA;
+			}
+                        
+                        Ext.getCmp(prototype.id + '-gridDetailData').setTitle('<center style="font-size:12px;">' + titulo + '</center>');
+                        
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetailData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetailData').setStore(storeGridDatas);
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-paggin_searchDetail').bindStore(storeGridDatas);
         
     },
     
