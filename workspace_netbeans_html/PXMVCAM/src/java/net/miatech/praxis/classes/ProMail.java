@@ -74,7 +74,7 @@ public class ProMail {
                 props.put("mail.smtp.host", "216.32.180.74");
                 props.put("mail.smtp.port", "25");
             */
-            props.put("mail.smtp.host","m.outlook.com" );
+            props.put("mail.smtp.host","smtp.office365.com" );
             props.put("mail.smtp.port", "587");
             
             props.put("mail.smtp.starttls.enable","true");
@@ -93,7 +93,7 @@ public class ProMail {
 //            //props.setProperty("mail.smtp.user", emisor);
 //            props.setProperty("mail.smtp.user", usuario);
 //            props.setProperty("mail.smtp.auth", "true");            
-//            Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net", serverSession.getProperty("APP_SERVER_MAIL_PASSWORD"));
+//            Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net", "Notific@ciones");
             
             Session session = Session.getInstance(props, auth);
             //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
@@ -270,7 +270,7 @@ public class ProMail {
     public boolean enviaFOB(String emisor, String asunto, List<String> receptores, List<String> Ccpy, String mensaje, List<String> adjuntos) {
         boolean envioExitoso = true;
 
-        ServerSession serverSession = new ServerSession();
+        //ServerSession serverSession = new ServerSession();
 
         try {
             Properties props = System.getProperties();
@@ -278,8 +278,8 @@ public class ProMail {
             String usuario = "amcontrolventasfranquicias@aeromexico.com"; //Correo con el que saldra el email enviado ("from")
 
             //Se define el servidor de correos
-            props.put("mail.smtp.host", serverSession.getProperty("APP_SERVER_MAIL_HOST"));
-            props.put("mail.smtp.port", serverSession.getProperty("APP_SERVER_MAIL_PORT"));  
+            props.put("mail.smtp.host","smtp.office365.com" );
+            props.put("mail.smtp.port", "587");
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable","true");
             props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
@@ -360,20 +360,20 @@ public class ProMail {
     public boolean enviaCONS(String emisor, String asunto, List<String> receptores, List<String> Ccpy, String mensaje, List<String> adjuntos) {
         boolean envioExitoso = true;
 
-        ServerSession serverSession = new ServerSession();
+        //ServerSession serverSession = new ServerSession();
 
         try {
             //TEMPORAL
             //emisor = "rmayta@miatech.net"; 
             Properties props = System.getProperties();
             //Se define el servidor de correos
-            props.put("mail.smtp.host", serverSession.getProperty("APP_SERVER_MAIL_HOST"));
-            props.put("mail.smtp.port", serverSession.getProperty("APP_SERVER_MAIL_PORT"));
+            props.put("mail.smtp.host","smtp.office365.com" );
+            props.put("mail.smtp.port", "587");
             props.put("mail.smtp.starttls.enable", "true");
             props.setProperty("mail.smtp.user", emisor);
             props.setProperty("mail.smtp.auth", "true");
             props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
-            Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net", serverSession.getProperty("APP_SERVER_MAIL_PASSWORD"));
+            Authenticator auth = new SMTPAuthenticator("notificaciones@miatech.net", "Notific@ciones");
             //Authenticator auth = new SMTPAuthenticator(emisor, "rmDataCOM1"); // Tener Clave del quien Envia
             Session session = Session.getInstance(props, auth);
             //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
@@ -449,7 +449,7 @@ public class ProMail {
     public boolean enviaCONS_HTML(String emisor, String asunto, List<String> receptores, List<String> Ccpy, String mensaje, List<String> adjuntos,IServerSession ss) {
         boolean envioExitoso = true;
 
-        ServerSession serverSession = new ServerSession();
+        //ServerSession serverSession = new ServerSession();
         //IServerSession serverSession = ss;
         try {
             Properties props = System.getProperties();
@@ -458,8 +458,8 @@ public class ProMail {
             
             //Se define el servidor de correos de Aeromexico
             
-            props.put("mail.smtp.host", serverSession.getProperty("APP_SERVER_MAIL_HOST"));
-            props.put("mail.smtp.port", serverSession.getProperty("APP_SERVER_MAIL_PORT"));  
+            props.put("mail.smtp.host","smtp.office365.com" );
+            props.put("mail.smtp.port", "587");
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable","true");
             props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
@@ -658,7 +658,7 @@ public class ProMail {
             /*props.put("mail.smtp.host", serverSession.getProperty("APP_SERVER_MAIL_HOST"));
             props.put("mail.smtp.port", serverSession.getProperty("APP_SERVER_MAIL_PORT"));
             props.put("mail.smtp.starttls.enable","true");*/
-            props.put("mail.smtp.host","m.outlook.com" );
+            props.put("mail.smtp.host","smtp.office365.com" );
             props.put("mail.smtp.port", "587");
             props.put("mail.smtp.starttls.enable","true");
             
