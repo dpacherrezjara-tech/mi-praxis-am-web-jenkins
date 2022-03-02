@@ -2164,6 +2164,13 @@ public class FlightConciliationDAO {
 //                } else {
 //                    beanCons.descFSALES = "Yes";
 //                }
+                
+                beanCons.USCR = rst.getString("USCR").trim();
+                beanCons.FECR = rst.getString("FECR").trim();
+                beanCons.HOCR = rst.getString("HOCR").trim();
+                beanCons.USUP = rst.getString("USUP").trim();
+                beanCons.FEUP = rst.getString("FEUP").trim();
+                beanCons.HOUP = rst.getString("HOUP").trim();
 
                 lstCons.add(beanCons);
 
