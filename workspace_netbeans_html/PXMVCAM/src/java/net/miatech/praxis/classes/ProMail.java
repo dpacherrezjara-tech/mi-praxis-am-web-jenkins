@@ -276,7 +276,7 @@ public class ProMail {
             Properties props = System.getProperties();
 
             String usuario = "amcontrolventasfranquicias@aeromexico.com"; //Correo con el que saldra el email enviado ("from")
-
+            emisor = usuario;
             //Se define el servidor de correos
             props.put("mail.smtp.host","smtp.office365.com" );
             props.put("mail.smtp.port", "587");
@@ -455,7 +455,7 @@ public class ProMail {
             Properties props = System.getProperties();
   
             String usuario = "amcontrolventasfranquicias@aeromexico.com"; //Correo con el que saldra el email enviado ("from")
-            
+            emisor = usuario;
             //Se define el servidor de correos de Aeromexico
             
             props.put("mail.smtp.host","smtp.office365.com" );
