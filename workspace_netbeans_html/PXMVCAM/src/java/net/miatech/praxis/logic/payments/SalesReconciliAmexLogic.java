@@ -30,6 +30,10 @@ public class SalesReconciliAmexLogic {
         SalesReconciliAmexDAO.setSession(ss);
     }
 
+    public List<A4113Filter> loadPX570SQP04378(A4113Filter filter) throws SQLException, Exception {
+        return SalesReconciliAmexDAO.loadPX570SQP04378(filter);
+    }
+
     public List<A4113Filter> loadPX570SQP04257(A4113Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04257(filter);
     }
@@ -73,7 +77,7 @@ public class SalesReconciliAmexLogic {
     public List<A4116Filter> loadPX570SQP04284(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04284(filter);
     }
-    
+
     public List<A4116Filter> loadPX570SQP04377(A4116Filter filter) throws SQLException, Exception {
         return SalesReconciliAmexDAO.loadPX570SQP04377(filter);
     }

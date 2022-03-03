@@ -17,6 +17,7 @@ public class A4113Filter extends A4113 {
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
     public String IN_DATE = "";
+    public String IN_PCURRENCY = "";
     public String DATE = "";
 
     public String IN_SDATE = "";
