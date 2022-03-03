@@ -7,14 +7,22 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     searchParams: {},
     beanDetail: {},
     beanDetalle: {},
+    beanDetailCpn: {},
+    beanDetailCabin: {},
     paramsFAFlight: {},
     paramsDetail2: {},
+    paramsDetailCpn: {},
+    paramsDetailCabin: {},
     paramsDetail: {},
     meFlown: '',
     _path: '',
     dw_excel: false,
     boxActual: '-boxMainDataFA',
     meFA: '',
+    DETALLE: '',
+    BACK: '',
+    BACKCABIN: '',
+    strTipoCabin: '',
     drillDown: [],
     // </editor-fold>
     init: function(view) {
@@ -23,6 +31,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         
         meFlown.panelActual = '-boxMainDataFA';
         meFlown.drillDown.push(meFlown.boxActual);
+        
+        prototypeProgram.view = 'screens-dashboard-01-form';
+        prototypeProgram.nprog = 'PX00000109';
+        prototypeProgram.title = 'Dashboard 1';
+        prototypeProgram.modulo = '';
 
     },
     afterRender: function() {
@@ -200,7 +213,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                     Ext.getCmp(prototype.id + '-boxFlownAnalysis').unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin_searchFlownFlight');
                     var pagData = pag.getPageData();
-                    console.log(pagData);
+                    
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
@@ -233,7 +246,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         
         this.beanDetalle = x.record.data;
         
-        var DETALLE = param;
+        meFA.DETALLE = param;
         meFA.paramsDetail2.beanString = JSON.stringify(this.beanDetalle);
 
         console.log(this.beanDetalle);
@@ -260,7 +273,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                     Ext.getCmp(prototype.id + '-boxDetailData').unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin_searchDetail');
                     var pagData = pag.getPageData();
-                    console.log(pagData);
+                    
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
@@ -300,6 +313,173 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         Ext.getCmp(prototype.id + '-gridDetailData').setStore(storeGridDatas);
         this.showPagination_clickHandler();
         Ext.getCmp(prototype.id + '-paggin_searchDetail').bindStore(storeGridDatas);
+        
+    },
+    
+    
+    viewDetailByCupon: function(param,column, e, row, column, x, rowData) {   
+        
+        this.beanDetailCpn = x.record.data;
+        
+        meFA.BACK = param;
+        meFA.paramsDetailCpn.beanString = JSON.stringify(this.beanDetailCpn);
+
+        console.log(this.beanDetailCpn);
+        this.searchDetByCoupon();
+        
+    },
+    searchDetByCoupon: function () {
+        
+        me.panelActual = '-boxCoupon';
+        Ext.getCmp(prototype.id + '-panelRadio').show();
+        
+        win.lblUser_toolTip("Estructura: A1692");
+        this.showGrid('-boxCoupon');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetByCoupon'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxCoupon').mask('Loading...');
+                    obj.proxy.extraParams = meFA.paramsDetailCpn;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxCoupon').unmask();
+                    var pag = Ext.getCmp(prototype.id + '-paggin_searchDetByCoupon');
+                    var pagData = pag.getPageData();
+                    console.log(pagData);
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        
+//                        console.log(obj.data);
+                        var data = obj.data.items[0].data;
+                        var NPLANE = '';
+                        
+                        if(data.strDescripcion !== ''){
+                            NPLANE = '\t Aircraft :' + data.strDescripcion;
+			}
+                        
+                        var titulo = 'Flight Date : ' + data.strFormatDate + '\t Flight Number : ' + data.NFLIGHT  
+                                        + '\t Orig : ' + data.CDEPART + '\t Dest : ' + data.CARRIVA + NPLANE +  '\t' + meFA.strTipoCabin;
+                        
+                        Ext.getCmp(prototype.id + '-gridCoupon').setTitle('<center style="font-size:12px;">' + titulo + '</center>');
+                        
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridCoupon').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridCoupon').setStore(storeGridDatas);
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-paggin_searchDetByCoupon').bindStore(storeGridDatas);
+        
+    },
+    
+    
+    
+    // ----------------------------------------------------------------------
+    viewDetailByCabin: function(Cabin, detail, column, e, row, column, x, rowData) {   
+        
+        this.beanDetailCabin = x.record.data;
+        
+        meFA.BACKCABIN = detail;
+        
+        if(Cabin === 'J'){
+            meFA.meFAstrTipoCabin = 'Cabin : Business';
+	}else if(Cabin === 'Y'){
+            meFA.strTipoCabin = 'Cabin : Economy';
+	}else if(Cabin === 'F'){
+            meFA.strTipoCabin = 'Cabin : First';
+	}else if(Cabin === 'NR'){
+            meFA.strTipoCabin = '* Not Revenue *';
+	}else{
+            meFA.strTipoCabin = '';
+	}
+	
+	if(Cabin !== 'F'){
+            
+            this.beanDetailCabin.IN_CABI = Cabin;
+            meFA.paramsDetailCabin.beanString = JSON.stringify(this.beanDetailCabin);
+
+//            console.log(this.beanDetailCabin);
+            this.searchByCabin();
+		
+	}else{
+            global.Msg({msg: 'Data not found.'});
+	}
+        
+    },
+    searchByCabin: function () {
+        
+        me.panelActual = '-boxDetailByCabin';
+        Ext.getCmp(prototype.id + '-panelRadio').show();
+        
+        win.lblUser_toolTip("Estructura: A1971");
+        this.showGrid('-boxDetailByCabin');
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByCabin'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxDetailByCabin').mask('Loading...');
+                    obj.proxy.extraParams = meFA.paramsDetailCabin;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxDetailByCabin').unmask();
+                    var pag = Ext.getCmp(prototype.id + '-paggin_searchByCabin');
+                    var pagData = pag.getPageData();
+                    
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        
+//                        console.log(obj.data);
+                        var data = obj.data.items[0].data;
+                        var lblCityPair = '';
+			
+			if (data.ZONA !== ''){
+                            lblCityPair = '\t Zone : ' + data.strZona;
+			}
+			if (data.NFLIGHT !== ''){
+                            lblCityPair = '\t Flight Number : ' + data.NFLIGHT;
+			}
+			if (data.CDEPART !== ''){
+                            lblCityPair = lblCityPair + '\t Orig : ' + data.CDEPART + '\t Dest : ' + data.CARRIVA;
+			}
+                        
+                        var titulo = 'Flight Date : ' + data.strFormatDate2 + lblCityPair + '\t ' + meFA.strTipoCabin;
+                        
+                        Ext.getCmp(prototype.id + '-gridDetailByCabin').setTitle('<center style="font-size:12px;">' + titulo + '</center>');
+                        
+                    }
+//                    meFA.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDetailByCabin').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetailByCabin').setStore(storeGridDatas);
+        this.showPagination_clickHandler();
+        Ext.getCmp(prototype.id + '-paggin_searchByCabin').bindStore(storeGridDatas);
         
     },
     
@@ -457,10 +637,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     
     showGrid: function(nameGrid) {
-        
-//        console.log(nameGrid);
-//        console.log(meFlown.boxActual);
-        
+                
         Ext.getCmp(prototype.id + meFlown.boxActual).hide();
         meFlown.boxActual = nameGrid;
         
@@ -470,8 +647,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             Ext.getCmp(prototype.id + '-filterMain').hide();
         }
         
-//        console.log(nameGrid);
-//        console.log(meFlown.boxActual);
         if(!meFlown.drillDown.includes(meFlown.boxActual)){
             if(nameGrid !== '-boxByZone' && nameGrid !== '-boxByCityPair' && nameGrid !== '-boxByNPlane'){
                 meFlown.drillDown.push(meFlown.boxActual);
@@ -479,7 +654,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         }
         
         Ext.getCmp(prototype.id + meFlown.boxActual).show();
-        console.log(meFlown.drillDown);
 
     },
     
@@ -501,27 +675,36 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             if (meFlown.boxActual === '-boxMainDataFA') {
                 Ext.getCmp(prototype.id + '-panelRadio').hide();
                 this.hidePagination_clickHandler();
-            } 
-            
-//            if (meFlown.boxActual === '-boxFlownAnalysis') {
-//                this.hidePagination_clickHandler();
-//            } else if (meFlown.boxActual === '-BoxDetGDSAgte') {
-//                me.panelActual = '-BoxDetGDSAgte';
-//                var pag = Ext.getCmp(prototype.id + '-pagginGDS');
-//                var pagData = pag.getPageData();
-//
-//                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-//            } else if (meFlown.boxActual === '-BoxCabin') {
-//                me.panelActual = '-BoxCabin';
-//                var pag = Ext.getCmp(prototype.id + '-pagginCabin');
-//                var pagData = pag.getPageData();
-//                this.showPagination_clickHandler();
-//                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-//                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-//                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-//            }
+                
+            } else if (meFlown.boxActual === '-boxFlownAnalysis') {
+                me.panelActual = '-boxFlownAnalysis';
+                
+                var pag = Ext.getCmp(prototype.id + '-paggin_searchFlownFlight');
+                var pagData = pag.getPageData();
+                
+                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                
+            } else if (meFlown.boxActual === '-boxDetailData') {
+                me.panelActual = '-boxDetailData';
+                
+                var pag = Ext.getCmp(prototype.id + '-paggin_searchDetail');
+                var pagData = pag.getPageData();
+                
+                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+            } else if (meFlown.boxActual === '-boxDetailByCabin') {
+                me.panelActual = '-boxDetailByCabin';
+                
+                var pag = Ext.getCmp(prototype.id + '-paggin_searchByCabin');
+                var pagData = pag.getPageData();
+
+                Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+            }
         }
 //        console.log('imgBack_clickHandler == ' + me.drillDown);
 
@@ -567,5 +750,23 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             this.searchFlownFlight();
 
         }
-    }
+    },
+    displayMasterTkt_clickHandler: function (column, e, row, column, x, rowData) {
+        var data = x.record.data;
+        var strTkt = data.strTicket.trim();
+        var beanProMasterTicket = {};
+        
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(4, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(8, 6);
+//        beanProMasterTicket.IN_SEQ = '00';
+
+//        console.log(beanProMasterTicket);
+        
+        win.displayProMasterTicket(this, 'Dashboard1', beanProMasterTicket);
+    },
+    
+    
+    
+    
 });
