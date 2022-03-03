@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.miatech.beans.A050Filter;
+import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A1971Filter;
 import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
@@ -226,6 +227,22 @@ public class Dashboard01Logic {
     public List<A1971Filter> loadPX246SQP00329(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP00329(filter);
     }
+    
+    public List<A1692Filter> loadPX246SQP00330(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX246SQP00330(filter);
+    }
+    
+    public List<A1971Filter> loadPX246SQP00331(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX246SQP00331(filter);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 
     //* ***************************Expired*******************************
     public List<IMF117Filter> loadPX109SQP02666(IMF117Filter filter) throws SQLException, Exception {
