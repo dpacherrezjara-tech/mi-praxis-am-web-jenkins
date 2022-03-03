@@ -593,13 +593,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             var data = record.data;
                                                             metaData.style = "text-align:center;";
                                                             metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
 
-                                                            if (data.AXPAYNBR.trim() === '') {
-                                                                return value;
-                                                            } else {
-                                                                value = '<b>' + value + '</b>';
-                                                                return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                            }
                                                         }
                                                     }
                                                 ]
@@ -710,7 +706,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             {
                                                                 text: 'Adjustment', dataIndex: 'PADJAMOUN', width: 85,
                                                                 listeners: {
-                                                                    click: 'onGridDetSubmission'
+                                                                    click: 'onGridDetAdjustment'
                                                                 },
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#B2DAFA";

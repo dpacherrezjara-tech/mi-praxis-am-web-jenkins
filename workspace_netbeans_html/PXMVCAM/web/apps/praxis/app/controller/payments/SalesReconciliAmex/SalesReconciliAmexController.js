@@ -510,7 +510,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     } else {
                         console.log(obj);
                         var data = obj.data.items[0].data;
-                        console.log(data);                        
+                        console.log(data);
                         if (data.IN_DATE === "PAYDATE") {
                             Ext.getCmp(prototype.id + '-detSettDate').setText('Payment');
                             Ext.getCmp(prototype.id + '-gridDetSettlement').setTitle('<center style="font-size:12px;">' + 'PAYMENT DATE: ' + data.DATE + ' - ' + ' MERCHANT: ' + data.IN_MERCHID + ' - ' + ' CURRENCY: ' + data.IN_PCURRENCY + '</center>');
@@ -575,9 +575,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                         console.log(data);
                         Ext.getCmp(prototype.id + '-gridDetailTktSettlement').setTitle('<center style="font-size:12px;">' + 'TICKET: ' + data.IN_ISREFNBR + ' - Currency: ' + ' ' + data.IN_PCURRENCY + ' - ' + data.IN_descSTVAL + '</center>');
                         if (data.IN_DATE === "PAYDATE") {
-                            Ext.getCmp(prototype.id + '-detSettTktDate').setText('Payment');                            
+                            Ext.getCmp(prototype.id + '-detSettTktDate').setText('Payment');
                         } else {
-                            Ext.getCmp(prototype.id + '-detSettTktDate').setText('Processing');                            
+                            Ext.getCmp(prototype.id + '-detSettTktDate').setText('Processing');
                         }
                     }
                 }
@@ -691,7 +691,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                         var data = obj.data.items[0].data;
 //                        console.log(obj);
 
-                        if (data.IN_DATE === "PAYDATE") {                            
+                        if (data.IN_DATE === "PAYDATE") {
                             Ext.getCmp(prototype.id + '-htDate').setText('Payment');
                             //Ext.getCmp(prototype.id + '-gridData').setTitle('<center style="font-size:12px;">Payment Date: ' + data.DATE + '</center>');
                         } else {
@@ -709,11 +709,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
     },
     onGridDetSubmission: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        
-        if (rowData.data.AXPAYNBR.trim() === ''){
+
+        if (rowData.data.AXPAYNBR.trim() === '') {
+            this.onGridDetAdjustment(obj, metaData, rowNum, columnNum, obj2, rowData);
             return;
         }
-
+        
         this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
         this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
         this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
@@ -723,28 +724,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
 
         this.beanSubmission.strDATE = rowData.data.DATE;
-//        console.log(this.beanSubmission);
 
-        //me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);                
+        me.paramsDetailSubmission.beanString = JSON.stringify(this.beanSubmission);
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxDetSubmission';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
 
-//        var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
-
-        if (columnNum === 10) {
-            me.paramsDetailChargeback.beanString = JSON.stringify(this.beanSubmission);
-            me.drillDown.push(me.panelActual);
-            me.panelActual = '-boxDetChargeback';
-            global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-            this.setGridDataDetChargeback();
-
-        } else {
-            me.paramsDetailSubmission.beanString = JSON.stringify(this.beanSubmission);
-            me.drillDown.push(me.panelActual);
-            me.panelActual = '-boxDetSubmission';
-            global.selectedChild(me.childs, prototype.id + me.panelActual);
-
-            this.setGridDataDetSubmission();
-        }
+        this.setGridDataDetSubmission();
     },
     setGridDataDetSubmission: function () {
         win.lblUser_toolTip("Estructura: A4115");
@@ -791,6 +777,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-gridDetSubmission').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin15').bindStore(storeGridDatas);
 
+    },
+    onGridDetAdjustment: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
+        this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
+        this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
+
+        this.beanSubmission.IN_MERCHID = rowData.data.PMERCHID;
+        this.beanSubmission.IN_AXPAYNBR = rowData.data.AXPAYNBR;
+        this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
+
+        this.beanSubmission.strDATE = rowData.data.DATE;
+        //console.log(this.beanSubmission);
+        //me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);                
+        //var chkChargeBack = Ext.getCmp(prototype.id + '-chkChargeback').getValue();
+
+        me.paramsDetailChargeback.beanString = JSON.stringify(this.beanSubmission);
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxDetChargeback';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.setGridDataDetChargeback();
     },
     setGridDataDetChargeback: function () {
 
@@ -1823,7 +1831,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         }
     },
-    selectComboFromDay: function (obj) {        
+    selectComboFromDay: function (obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
     },
