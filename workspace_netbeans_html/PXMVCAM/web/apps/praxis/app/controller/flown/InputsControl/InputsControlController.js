@@ -10,6 +10,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     fecha: new Date(),
     dateFrom: '',
     dateTo: '',
+    bean: '',
     searchParams: {},
     params: {},
     me: '',
@@ -112,12 +113,10 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
         comboToYear.bindStore(storeComboDataYear);
         comboToYear.setValue(obj.getValue());
-    }
-    ,
+    },
     selectComboYear: function(obj) {
         //this.btnSearch_click();
-    }
-    ,
+    },
     selectComboFromMonth: function(obj) {
 
         var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
@@ -134,8 +133,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                 comboFromMonth.setValue(obj.getValue());
             }
         }
-    }
-    ,
+    },
     selectComboFromDay: function(obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
         comboToDay.setValue(obj.getValue());
@@ -184,6 +182,28 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
 
             ]}));
         cmbSource.setValue('SSIM');
+        
+        this.setFormatParameterNew();
+        Ext.Ajax.request({
+            url: prototype.url + '/obtainDataCombo',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(me.bean)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    console.log(res);
+                    var lstProgramas = res.lstProgramas;
+                    
+                    
+                } else {
+                    global.Msg({msg: res.sesion});
+                }
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
 
     },
     changeCmbView: function(obj) {
@@ -203,8 +223,9 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     },
     changeCmbSource: function(obj) {
         this.btnSearch_click();
-    }
-    ,
+    },
+    /*
+    
     btnSearch_click: function(obj, e) {
         console.log("Boton Search");
         var view = Ext.getCmp(prototype.id + '-cmbView').getValue();
@@ -253,6 +274,141 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         global.clear();
 
     },
+    
+    */
+    
+    setFormatParameterNew: function() {
+                
+        me.bean.IN_FUENTE = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+        me.bean.IN_TIPOFECHA = 1;
+        
+        me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
+
+        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
+                Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
+        
+        
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            bean: me.bean,
+            beanString: beanString
+        };
+        
+    },
+    btnSearch_click: function(obj, e) {
+        
+        this.setFormatParameterNew();
+        
+        var chkLOG = Ext.getCmp(prototype.id + '-chkLOG').getValue();
+        var cmbView = Ext.getCmp(prototype.id + '-cmbView').getValue();
+        var cmbSource = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+        var cmbPrograma = Ext.getCmp(prototype.id + '-cmbPrograma').getValue();
+        
+        if(chkLOG){
+            me.bean.MENSA = cmbPrograma;
+            this.searchLOGSA1910(me.bean);
+        }else{
+            me.bean.MENSA = '';
+            if(cmbView === 'D'){
+                if(cmbSource ===' OCR'){
+//                    this.searchA1686_OCR(me.bean);
+                }else{
+                    this.searchA1686(me.bean);
+                }
+            }else{
+                Ext.getCmp(prototype.id + '-contentFilter3').show();
+                Ext.getCmp(prototype.id + '-contentFilter').hide();
+                this.setCalendar();
+            }
+        }
+        
+
+        global.clear();
+
+    },
+    searchA1686: function(obj, val) {
+        this.hideAllGrid();
+        Ext.getCmp(prototype.id + '-gridDataMainA1686').show();
+
+        var storeMainA1686 = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
+            proxy: {
+                url: prototype.url + '/searchA1686'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var foot = Ext.getCmp(prototype.id + '-pie');
+//                    pag.hide();
+//                    foot.hide();
+
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    }else{
+                        
+                        console.log(obj.data);
+                        
+                        var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                        console.log(fuente);
+                        
+                        if(fuente === 'ODS'){
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Duplicate');
+                        }else{
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Error');
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataMainA1686').bindStore(storeMainA1686);
+
+    },
+    
+    searchLOGSA1910: function(obj, val) {
+        this.hideAllGrid();
+        Ext.getCmp(prototype.id + '-gridDataMainA1686').show();
+
+        var storeMainA1686 = Ext.create('Ext.Praxis.store.flown.InputControl.GridDataMainA1686', {
+            proxy: {
+                url: prototype.url + '/searchLOGSA1910'
+            }, listeners: {
+                beforeload: function(obj) {
+                    obj.proxy.extraParams = searchParams;
+                },
+                load: function(obj) {
+//                    var pag = Ext.getCmp(prototype.id + '-paggin');
+//                    var foot = Ext.getCmp(prototype.id + '-pie');
+//                    pag.hide();
+//                    foot.hide();
+
+                    if (obj.data.length === 0) {
+                        global.Msg({msg: 'Data not found.'});
+                    }else{
+                        
+                        console.log(obj.data);
+                        
+                        var fuente = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                        console.log(fuente);
+                        
+                        if(fuente === 'ODS'){
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Duplicate');
+                        }else{
+                            Ext.getCmp(prototype.id + '-errorMain').setText('Error');
+                        }
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridDataMainA1686').bindStore(storeMainA1686);
+
+    },
+    
     setFormatParameter: function() {
 
         var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
@@ -285,12 +441,6 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             view: view.getValue(),
             source: source.getValue()
         };
-
-        console.log("DateFrom : " + this.dateFrom);
-        console.log("DateTo : " + this.dateTo);
-        console.log("View : " + view.getValue());
-        console.log("Source : " + source.getValue());
-
 
     },
     setGridDataMainA1686: function(obj, val) {
@@ -1441,5 +1591,15 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         var pag = Ext.getCmp(prototype.id + '-paggin');
         var pagData = pag.getPageData();
         pag.moveLast();
-    }
+    },
+    
+    ChangechkLOG: function(checkboxfield, newValue, oldValue, eOpts) {
+        
+        console.log(checkboxfield);
+        console.log(newValue);
+        console.log(oldValue);
+        
+    },
+    
+    
 });

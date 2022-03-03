@@ -136,8 +136,36 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.Filters', {
                     labelWidth: 0,
                     width: 70,
                     anchor: '100%'
-                }               
-
+                },
+                {xtype: 'tbspacer', width: 300},
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-chkLOG',
+                    labelStyle: 'font-weight:bold;',
+                    margin: '0 20 0 53',
+                    width: 80,
+                    boxLabel: '<b>Logs</b>',
+                    inputValue: '1',
+                    listeners:{
+                        change: 'ChangechkLOG'
+                    }
+                },
+                {xtype: 'tbspacer', width: 20},
+                {
+                    xtype: 'combo',
+                    fieldLabel: '',
+                    id: prototype.id+'-cmbPrograma',
+                    fieldStyle: 'text-align: left;',
+                    queryMode: 'local',
+                    triggerAction: 'all',
+                    valueField: 'FUENTE',
+                    displayField: 'FUENTE',
+                    emptyText: 'All',
+                    width: 90,
+                    labelWidth: 80,
+//                    hidden: false,
+                    hiddenLabel: false
+                }
             ]
         }
        
