@@ -1066,6 +1066,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
             },
             items: [
                 {xtype: 'tbspacer', height: 2.5},
+                // -------------------------- PRIMERO --------------------------
                 {
                     xtype: 'panel',
                     id: prototype.id + '-panelRadio',
@@ -1140,6 +1141,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                         },
                     ]
                 },
+                // -------------------------- SEGUNDO --------------------------
                 {
                     xtype: 'panel',
                     id: prototype.id + '-boxFlownAnalysis',
@@ -1248,8 +1250,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                     args: ['','FLIGHT']
                                                 },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#fcf9ec;";
-                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    metaData.style = "text-align:right;background-color:#fcf9ec;color:#057ECB;";
+                                                    value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
                                                     return  value;
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
@@ -2604,7 +2606,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 text: 'Number', dataIndex: 'NFLIGHT', width: 60,
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 //                                                    metaData.style = "color:#057ECB;";
-                                                    value = '<b>' + value + '</b>';
+//                                                    value = '<b>' + value + '</b>';
                                                     return value;
                                                 }
                                             }
@@ -2812,6 +2814,290 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         }
                                                     }
                                                 ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxCoupon',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-gridCoupon',
+                            width: 1000,
+                            height: 580,
+                            columnLines: true,
+                            hidden: false,
+                            margin: "5 0 0 0",
+                            features: [{
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {
+                                        text: 'Ticket', dataIndex: 'strTicket', width: 130,
+                                        listeners: {
+                                            click: 'displayMasterTkt_clickHandler'
+                                        },
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "color:#057ECB;";
+                                            value = '<b>' + value + '</b>';
+                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                        }
+                                    },
+                                    {
+                                        text: 'Sales',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Date', dataIndex: 'strFormatFVTA', width: 100},
+                                            {
+                                                text: 'Country', dataIndex: 'PSVVTA', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:center;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescPSVVTA+'"';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Agent', dataIndex: 'AGTIA', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:center;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescAgente+'"';
+                                                    return  value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Fare',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Basis', dataIndex: 'FBASE', width: 110,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = "text-align:left;";
+                                                        return  value;
+                                                    }
+                                                }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: 'Flight',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {text: 'Date', dataIndex: 'strFormatDate', width: 100},
+                                            {text: 'Zone', dataIndex: 'ZONA', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:center;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.strZona + '"';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Orig', dataIndex: 'CDEPART', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:center;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescCDEPART + '"';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Dest', dataIndex: 'CARRIVA', width: 70,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:center;";
+                                                    metaData.tdAttr = 'data-qtip="' + data.strDescCARRIVA + '"';
+                                                    return  value;
+                                                }
+                                            },
+                                            {text: 'Carrier', dataIndex: 'CARR', width: 60},
+                                            {text: 'Cabin', dataIndex: 'CABI', width: 60},
+                                        ]
+                                    },
+                                    {
+                                        text: 'Revenue',
+                                        id: prototype.id + '-hd_MXN',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'USD', dataIndex: 'VCPN', width: 80,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000');
+                                                    return  value;
+                                                },
+                                                summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridCoupon').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.difVakues, '0,000') + '<b>';
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxDetailByCabin',
+                    width: '100%',
+                    hidden: true,
+                    layout: {
+                        type: 'vbox',
+                        align: 'center',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        bodyStyle: 'background: transparent;',
+                        border: false,
+                        align: 'center',
+                        margin: "0 15 0 0"  // (top, right, bottom, left)
+                    },
+                    items: [
+                        {
+                            xtype: 'grid',
+                            id: prototype.id + '-gridDetailByCabin',
+                            width: 690,
+                            height: 590,
+                            columnLines: true,
+                            hidden: false,
+                            margin: "5 0 0 0",
+                            features: [{
+                                    ftype: 'summary',
+                                    dock: 'bottom'
+                                }],
+                            columns: {
+                                defaults: {
+                                    menuDisabled: true,
+                                    sortable: false,
+                                    align: 'center'
+                                },
+                                items: [
+                                    {
+                                        text: 'Flight',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Date', dataIndex: 'strFormatDate', width: 110,
+                                                listeners: {
+                                                    click: 'viewDetailByCupon',
+                                                    args: ['CABIN']
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "color:#057ECB;";
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        text: 'Fare',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Basis', dataIndex: 'FBASE', width: 150,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {text: 'RBD', dataIndex: 'CLAS', width: 70},
+                                    {
+                                        text: 'Pax', dataIndex: 'QTYPAX', width: 80,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;";
+                                            value = Ext.util.Format.number(value, '0,000');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridDetailByCabin').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totQTYPAX, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {text: 'Currency', dataIndex: 'strDescripcion4', width: 90},
+                                    {
+                                        text: 'Value', dataIndex: 'VCPN', width: 90,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "text-align:right;";
+                                            value = Ext.util.Format.number(value, '0,000');
+                                            return  value;
+                                        },
+                                        summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
+                                            var data = Ext.getCmp(prototype.id + '-gridDetailByCabin').getStore().getData().items[0].data;
+                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                            return '<b>' + Ext.util.Format.number(data.totVCPN, '0,000') + '<b>';
+                                        }
+                                    },
+                                    {
+                                        text: 'Average',
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        columns: [
+                                            {
+                                                text: 'Fare', dataIndex: 'AVG', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return  value;
+                                                }
                                             }
                                         ]
                                     }

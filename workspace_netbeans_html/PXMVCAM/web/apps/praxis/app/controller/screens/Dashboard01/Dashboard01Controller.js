@@ -614,6 +614,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.Dashboard01Controller', {
             case '-boxDetailData':
                 me.pagginActual = '-paggin_searchDetail';
                 break;
+            case '-boxCoupon':
+                me.pagginActual = '-paggin_searchDetByCoupon';
+                break;
+            case '-boxDetailByCabin':
+                me.pagginActual = '-paggin_searchByCabin';
+                break;
         }      
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
