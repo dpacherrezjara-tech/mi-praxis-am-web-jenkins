@@ -136,6 +136,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
              case 'C':
                 vl_FLAG = 'TICKET DOES NOT EXIST';
                 break;
+            case 'I':
+                vl_FLAG = 'INVALID CURRENCY';
+                break;
         }
         if (String(rec.get('A4076STAT')) === 'F' || String(rec.get('A4076STAT')) === 'C') {
             grid03.show();
@@ -145,7 +148,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             grid02.hide();
             btnSave.hide();
         } else {
-            if (String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R') {
+            if (String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R' || String(rec.get('A4076FLAG')) === 'I') {
                 grid03.show();
                 grid04.show();
                 //
