@@ -839,6 +839,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         global.clear();
         Ext.getCmp(prototype.id + '-gridDetChargeback').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDetChargeback').setStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
 
     },
