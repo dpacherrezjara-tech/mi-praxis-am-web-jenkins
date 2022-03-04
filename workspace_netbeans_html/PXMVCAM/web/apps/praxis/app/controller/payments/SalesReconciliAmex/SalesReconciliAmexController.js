@@ -541,6 +541,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlementTktsDetail.IN_PCURRENCY = rowData.data.IN_PCURRENCY;
         this.beanSettlementTktsDetail.IN_TGROSAMOUN = rowData.data.TGROSAMOUN;
         this.beanSettlementTktsDetail.IN_descSTVAL = rowData.data.descSTVAL;
+        this.beanSettlementTktsDetail.IN_TRANSDATE = rowData.data.TRANSDATE;
+        this.beanSettlementTktsDetail.IN_AXPRODAT = rowData.data.AXPRODAT;
 
         me.paramsDetailDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         this.setGridDataDetTktSettlement();
