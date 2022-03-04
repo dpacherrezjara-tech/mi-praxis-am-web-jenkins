@@ -93,7 +93,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
         this.setStoreData();
         Ext.getCmp(prototype.id + '-pie').hide();
         Ext.getCmp(prototype.id + '-contentFilter3').hide();
-        this.btnSearch_click();
+//        this.btnSearch_click();
 
     },
     // ---------- Eventos de consistencia de los combos---------------
@@ -183,7 +183,36 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             ]}));
         cmbSource.setValue('SSIM');
         
-        this.setFormatParameterNew();
+        var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+        var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var monthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+        var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
+        var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
+
+
+        if (dayFrom.getValue() === null || dayFrom.getValue() === '') {
+            dayFrom.setValue('');
+            dayTo.setValue('');
+        } else {
+            if (dayTo.getValue() === null || dayTo.getValue() === '') {
+                dayTo.setValue(31);
+            }
+        }
+        
+        me.bean = {}
+        me.bean.IN_FECHA_FROM = yearFrom.getValue() + monthFrom.getValue() + dayFrom.getValue();
+        me.bean.IN_FECHA_TO = yearTo.getValue() + monthTo.getValue() + dayTo.getValue();
+        
+        console.log(me.bean);
+//        var beanString = JSON.stringify(me.bean);
+//        searchParams = {
+//            bean: me.bean,
+//            beanString: beanString
+//        };
+//        
+//        console.log(searchParams);
+        var programas = new Array()
         Ext.Ajax.request({
             url: prototype.url + '/obtainDataCombo',
             method: 'POST',
@@ -192,9 +221,22 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                    console.log(res);
-                    var lstProgramas = res.lstProgramas;
                     
+                    var lstProgramas = res.lstProgramas;
+                    programas.push({FUENTE: 'All'});
+                    
+                    lstProgramas.forEach(function callback(currentValue, index, array) {
+                        programas.push({FUENTE : currentValue.FUENTE});
+                    });
+                    
+                    var storeData = Ext.create('Ext.data.Store', {
+                        data: programas,
+                        autoLoad: true,
+                        fields: ['code', 'name']
+                    });
+
+                    Ext.getCmp(prototype.id + '-cmbPrograma').bindStore(storeData);
+                    Ext.getCmp(prototype.id + '-cmbPrograma').setValue('All');
                     
                 } else {
                     global.Msg({msg: res.sesion});
@@ -278,24 +320,40 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
     */
     
     setFormatParameterNew: function() {
-                
+        
+        me.bean = {}
+        
+        var yearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+        var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var monthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+        var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        var dayFrom = Ext.getCmp(prototype.id + '-cmbDateFromDay');
+        var dayTo = Ext.getCmp(prototype.id + '-cmbDateToDay');
+
+
+        if (dayFrom.getValue() === null || dayFrom.getValue() === '') {
+            dayFrom.setValue('');
+            dayTo.setValue('');
+        } else {
+            if (dayTo.getValue() === null || dayTo.getValue() === '') {
+                dayTo.setValue(31);
+            }
+        }
+        
+        me.bean.IN_FECHA_FROM = yearFrom.getValue() + monthFrom.getValue() + dayFrom.getValue();
+        me.bean.IN_FECHA_TO = yearTo.getValue() + monthTo.getValue() + dayTo.getValue();
+        
         me.bean.IN_FUENTE = Ext.getCmp(prototype.id + '-cmbSource').getValue();
         me.bean.IN_TIPOFECHA = 1;
         
-        me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
-
-        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
-                Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        
-        
-        var beanString = JSON.stringify(me.bean);
-        searchParams = {
-            bean: me.bean,
-            beanString: beanString
-        };
+//        console.log(me.bean);
+//        var beanString = JSON.stringify(me.bean);
+//        searchParams = {
+//            bean: me.bean,
+//            beanString: beanString
+//        };
+//        
+        console.log(searchParams);
         
     },
     btnSearch_click: function(obj, e) {
