@@ -161,7 +161,9 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
         }
         if (me.tipo === 'T') {
             if (IN_FUENTE === 'BSP' || IN_FUENTE === 'ARC') {
-                //this.setGridData(obj, e);
+                global.Msg({
+                    msg: 'Opción no implementada para fuente de venta ' + IN_FUENTE
+                });
             } else if (IN_FUENTE === 'ASR') {
                 this.setGridDataASRTRX(obj, e);
             }
@@ -469,8 +471,31 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
 //        Ext.getCmp(prototype.id + '-txtPais').setValue('');
     },
     btnExcel_click: function (obj, e) {
+        var me = this;
+        var IN_TFILTER = Ext.getCmp(prototype.id + '-cbxSearchBy').getValue();
+        var IN_FPRDA1 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFPRDA_FROM').getValue(), 'Ymd');
+        var IN_FPRDA2 = Ext.util.Format.date(Ext.getCmp(prototype.id + '-txtFPRDA_TO').getValue(), 'Ymd');
+        var IN_BANK = Ext.getCmp(prototype.id + '-cmbBank').getValue().trim();
+        var IN_FUENTE = Ext.getCmp(prototype.id + '-cmbSource').getValue().trim();
+        var IN_PAIS = Ext.getCmp(prototype.id + '-txtPais').getValue().trim();
+        var IN_IATA = me.getIATA00(); //json
+        var IN_MDA = '';
+        var IN_IDFIL = '';
+        var IN_STATUS = ''; // Ext.getCmp(prototype.id + '-cmbStatus').getValue().trim(); NO_USADO
 
-        this.setFormatParameter();
+        me.searchParams = {
+            IN_TFILTER: IN_TFILTER,
+            IN_FPRDA1: IN_FPRDA1,
+            IN_FPRDA2: IN_FPRDA2,
+            IN_BANK: IN_BANK,
+            IN_FUENTE: IN_FUENTE,
+            IN_PAIS: IN_PAIS,
+            IN_IATA: IN_IATA,
+            IN_MDA: IN_MDA,
+            IN_IDFIL: IN_IDFIL, //-- para detalle de cada linea        
+            IN_STATUS: IN_STATUS
+        };
+        
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({
@@ -479,7 +504,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
         } else {
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
-                msg: 'Download Excel ?',
+                msg: 'Download detail ?',
                 buttons: Ext.MessageBox.OKCANCEL,
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
@@ -494,12 +519,20 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
     },
     exportExcel: function () {
         var me = this;
-        this.setFormatParameter();
-        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + me.searchParams.IN_TFILTER
-                + '&IN_FPRDA_FROM=' + me.searchParams.IN_FPRDA_FROM
-                + '&IN_FPRDA_TO=' + me.searchParams.IN_FPRDA_TO
-                + '&IN_BANK=' + me.searchParams.IN_BANK
-                );
+        //this.setFormatParameter();
+        
+        global.getFile(prototype.url + '/getXLSX?beanString='+encodeURI(JSON.stringify(me.searchParams)));
+//        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + me.searchParams.IN_TFILTER
+//                + '&IN_FPRDA1=' + me.searchParams.IN_FPRDA1
+//                + '&IN_FPRDA2=' + me.searchParams.IN_FPRDA2
+//                + '&IN_BANK=' + me.searchParams.IN_BANK
+//                + '&IN_FUENTE=' + me.searchParams.IN_FUENTE
+//                + '&IN_PAIS=' + me.searchParams.IN_PAIS
+//                + '&IN_IATA=' + encodeURI(JSON.stringify(me.searchParams.IN_IATA)) 
+//                + '&IN_MDA=' + me.searchParams.IN_MDA
+//                + '&IN_IDFIL=' + me.searchParams.IN_IDFIL
+//                + '&IN_STATUS=' + me.searchParams.IN_STATUS
+//                );
     },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
