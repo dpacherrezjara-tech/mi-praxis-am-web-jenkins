@@ -127,6 +127,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "C", "name": "TICKET DOES NOT EXIST"},
                 {"code": "H", "name": "HIGHER AMOUNT FOR SALE"},
                 {"code": "M", "name": "MODIFIED"},
+                {"code": "I", "name": "INVALID CURRENCY"},
                 {"code": "R", "name": "REJECT"}                
                 
             ]
@@ -413,6 +414,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'C':
                 color = '#FAC8D5';
                 value = 'TICKET DOES NOT EXIST';
+                break;
+            case 'I':
+                color = '#D99B25';
+                value = 'INVALID CURRENCY';
                 break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
