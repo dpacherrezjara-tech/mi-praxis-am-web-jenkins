@@ -23,6 +23,9 @@ public class A4116Filter extends A4116 {
     public String IN_STVAL = "";
     public String IN_TRANSDATE = "";
     public String IN_AXPRODAT = "";
+    public String IN_FREGLA = "";
+    public String IN_SCARDN = "";
+    public String IN_SAUTHOC = "";
     
     public double DISCAMOUN_IMPORT = 0;
     public double DISCAMOUN_IVA = 0;

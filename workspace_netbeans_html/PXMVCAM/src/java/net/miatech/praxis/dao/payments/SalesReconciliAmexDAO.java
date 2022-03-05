@@ -1963,6 +1963,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
                     beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
+                    beanTkt.FREGLA = rst.getString("FREGLA").trim();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
                     beanTkt.STVAL = rst.getString("STVAL").trim();
                     if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
@@ -2080,17 +2081,17 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04377(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04377(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(9, Types.INTEGER);
-            cstmt.registerOutParameter(10, Types.INTEGER);
-            cstmt.registerOutParameter(11, Types.INTEGER);
             cstmt.registerOutParameter(12, Types.INTEGER);
+            cstmt.registerOutParameter(13, Types.INTEGER);
+            cstmt.registerOutParameter(14, Types.INTEGER);
+            cstmt.registerOutParameter(15, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.DATE);
@@ -2100,17 +2101,20 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(6, filter.ISREFNBR);
             cstmt.setString(7, filter.IN_TRANSDATE);
             cstmt.setString(8, filter.IN_AXPRODAT);
-            cstmt.setInt(9, filter.page.PAGNUM);
-            cstmt.setInt(10, filter.page.PAGROW);
-            cstmt.setInt(11, filter.page.TOTPAG);
-            cstmt.setInt(12, filter.page.TOTROW);
+            cstmt.setString(9, filter.IN_FREGLA);
+            cstmt.setString(10, filter.IN_SCARDN);
+            cstmt.setString(11, filter.IN_SAUTHOC);
+            cstmt.setInt(12, filter.page.PAGNUM);
+            cstmt.setInt(13, filter.page.PAGROW);
+            cstmt.setInt(14, filter.page.TOTPAG);
+            cstmt.setInt(15, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(9);
-            filter.page.PAGROW = cstmt.getInt(10);
-            filter.page.TOTPAG = cstmt.getInt(11);
-            filter.page.TOTROW = cstmt.getInt(12);
+            filter.page.PAGNUM = cstmt.getInt(12);
+            filter.page.PAGROW = cstmt.getInt(13);
+            filter.page.TOTPAG = cstmt.getInt(14);
+            filter.page.TOTROW = cstmt.getInt(15);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
