@@ -137,7 +137,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.Filters', {
                     width: 70,
                     anchor: '100%'
                 },
-                {xtype: 'tbspacer', width: 330},
+                {xtype: 'tbspacer', width: 413},
                 {
                     xtype: 'checkboxfield',
                     id: prototype.id + '-chkLOG',
@@ -145,6 +145,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.Filters', {
                     margin: '0 20 0 53',
                     width: 80,
                     boxLabel: '<b>Logs</b>',
+                    hidden: true,
                     inputValue: '1',
                     listeners:{
                         change: 'ChangechkLOG'
@@ -163,8 +164,11 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.Filters', {
                     emptyText: 'All',
                     width: 90,
                     labelWidth: 80,
-//                    hidden: false,
-                    hiddenLabel: false
+                    hidden: true,
+                    hiddenLabel: false,
+                    listeners:{
+                        change: 'btnSearch_click'
+                    }
                 }
             ]
         }
