@@ -3205,8 +3205,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-//                                                            value = '<br>' + value + '<br>';
-                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    if (value === 0) {
+                                                        return value;
+                                                    } else {
+                                                        return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    }                                                         
                                                 }
                                             },
                                             {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 100,

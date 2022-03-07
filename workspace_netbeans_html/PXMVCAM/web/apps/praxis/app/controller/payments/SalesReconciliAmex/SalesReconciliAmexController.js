@@ -529,6 +529,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
     },
     onTktsDetail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        if (rowData.data.QTYTKT === 0){
+            return
+        }
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetailTktSettlement';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
