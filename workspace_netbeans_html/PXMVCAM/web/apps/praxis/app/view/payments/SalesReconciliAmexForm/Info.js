@@ -3774,6 +3774,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return '<b>' + Ext.util.Format.number(data.totDISCAMOSC, '0,000.00') + '<b>';
                                                 }
                                             },
+                                            {
+                                                text: 'Rule', dataIndex: 'descFREGLA', width: 85,
+                                            }
                                         ]
                                     }
                                 }
