@@ -94,12 +94,13 @@ public class InputsControlController extends BaseController {
 
     @RequestMapping(value = "searchA1686")
     public @ResponseBody
-    String searchA1686(ModelMap map, HttpServletRequest request) {
+    String searchA1686(ModelMap map, HttpServletRequest request) throws Exception {
         System.out.println("-------------- InputsControl : searchA1686-------------");
         map.put("success", true);
         List<A1686Filter> lst = this.getListA1686(request, false);
         System.out.println("Total : " + lst.size());
         map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("User", this.serverSession.getServerSession().getUserView().getUserInfo().USR);
         map.put("data", lst);
         return new Gson().toJson(map);
 
