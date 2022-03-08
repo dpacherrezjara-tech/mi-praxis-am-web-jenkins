@@ -127,6 +127,7 @@ public class CouponsEstimatedValueDAO {
                     objRtn.FORMA = rs01.getString("FORMA").trim();
                     objRtn.SERIE = rs01.getString("SERIE").trim();
                     objRtn.CUPON = rs01.getString("CUPON").trim();
+                    objRtn.SEQ = rs01.getString("SEQ").trim();
                     objRtn.strTicket = rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim() + " " + rs01.getString("CUPON").trim();
                     objRtn.CDEPART = rs01.getString("CDEPART").trim();
                     objRtn.CARRIVA = rs01.getString("CARRIVA").trim();
