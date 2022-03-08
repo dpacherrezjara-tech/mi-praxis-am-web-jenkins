@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 		|| this.actionCode === 'IntConciliation' || this.actionCode === 'DuplicACCB' || this.actionCode === 'WorkProgAudit' || this.actionCode === 'VIEW_ERROR_MSN'
 		|| this.actionCode === 'VIEW_INFO_SALE_RFND' || this.actionCode === 'VIEW_TRANSACTION_CARD' || this.actionCode === 'VIEW_TRANSACTION_RFND' 
 		|| this.actionCode === 'RequestedBank' || this.actionCode === 'LinkBank' || this.actionCode === 'ViewValuesOUT' || this.actionCode === 'ViewControlFigures' || this.actionCode === 'ViewFlightConciliation' 
-                || this.actionCode === 'ViewDuplicateACCB' || this.actionCode === 'PassengerInvoicesIP' || this.actionCode === 'InterlineVsSalesController' || this.actionCode === 'Dashboard1') {
+                || this.actionCode === 'ViewDuplicateACCB' || this.actionCode === 'PassengerInvoicesIP' || this.actionCode === 'InterlineVsSalesController' || this.actionCode === 'Dashboard1' || this.actionCode === 'PendingAccountingCoupons' ) {
             win.setValue('cbxSelectBy', 'TKT');
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketCia', this.bean.IN_CIA);

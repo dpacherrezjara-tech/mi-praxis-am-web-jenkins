@@ -23,6 +23,11 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
         me.panelActual = '-panelGridData';
 //        global.selectedChild(me.childs, prototype.id + me.panelActual);
 
+        prototypeProgram.view = 'flown-coupons-estimated-value-form';
+        prototypeProgram.nprog = 'PX00000098';
+        prototypeProgram.title = 'Pending Accounting Coupons';
+        prototypeProgram.modulo = '';
+
         this.control({
             // -------------------Eventos Genericos --------------------
             '#CouponsEstimatedValueForm-xpanel': {
@@ -369,6 +374,19 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
         var pag = Ext.getCmp(prototype.id + me.pagginActual);
         pag.moveLast();
     },
+    displayMasterTkt_clickHandler: function (column, e, row, column, x, rowData) {
+        var data = x.record.data;
+        var strTkt = data.strTicket.trim();
+        var beanProMasterTicket = {};
+        
+        beanProMasterTicket.IN_CIA = strTkt.substr(0, 3);
+        beanProMasterTicket.IN_FORMA = strTkt.substr(4, 4);
+        beanProMasterTicket.IN_SERIE = strTkt.substr(8, 6);
+//        beanProMasterTicket.IN_SEQ = '00';
 
+        console.log(beanProMasterTicket);
+        
+        win.displayProMasterTicket(this, 'PendingAccountingCoupons', beanProMasterTicket);
+    },
     
 });
