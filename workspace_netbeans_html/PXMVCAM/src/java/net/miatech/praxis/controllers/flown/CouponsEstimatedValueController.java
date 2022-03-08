@@ -195,23 +195,25 @@ public class CouponsEstimatedValueController extends BaseController {
             Cell CH1_14 = row.createCell(14);
             Cell CH1_15 = row.createCell(15);
             Cell CH1_16 = row.createCell(16);
+            Cell CH1_17 = row.createCell(17);
 
             CH1_00.setCellValue("Tickets");
-            CH1_01.setCellValue("Status");
-            CH1_02.setCellValue("Flight");
-            CH1_03.setCellValue("VCR Date");
-            CH1_04.setCellValue("Flight");
-            CH1_05.setCellValue("City");
-            CH1_06.setCellValue("Leg");
-            CH1_07.setCellValue("Zone");
-            CH1_08.setCellValue("Carrier");
-            CH1_09.setCellValue("Fare");
-            CH1_10.setCellValue("Class");
-            CH1_11.setCellValue("Sales Value");
-            CH1_13.setCellValue("Estimated Value");
-            CH1_14.setCellValue("Exch.");
-            CH1_15.setCellValue("Estimated Value");
-            CH1_16.setCellValue("Create");
+            CH1_01.setCellValue("Tickets");
+            CH1_02.setCellValue("Status");
+            CH1_03.setCellValue("Flight");
+            CH1_04.setCellValue("VCR Date");
+            CH1_05.setCellValue("Flight");
+            CH1_06.setCellValue("City");
+            CH1_07.setCellValue("Leg");
+            CH1_08.setCellValue("Zone");
+            CH1_09.setCellValue("Carrier");
+            CH1_10.setCellValue("Fare");
+            CH1_11.setCellValue("Class");
+            CH1_12.setCellValue("Sales Value");
+            CH1_14.setCellValue("Estimated Value");
+            CH1_15.setCellValue("Exch.");
+            CH1_16.setCellValue("Estimated Value");
+            CH1_17.setCellValue("Create");
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -230,6 +232,7 @@ public class CouponsEstimatedValueController extends BaseController {
             CH1_14.setCellStyle(headerStyle);
             CH1_15.setCellStyle(headerStyle);
             CH1_16.setCellStyle(headerStyle);
+            CH1_17.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
@@ -243,11 +246,12 @@ public class CouponsEstimatedValueController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 11, 12));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
 
             //*******************
             ++vj;
@@ -269,18 +273,19 @@ public class CouponsEstimatedValueController extends BaseController {
             Cell CH2_14 = row2.createCell(14);
             Cell CH2_15 = row2.createCell(15);
             Cell CH2_16 = row2.createCell(16);
+            Cell CH2_17 = row2.createCell(17);
 
-            CH2_02.setCellValue("Date");
-            CH2_04.setCellValue("Number");
-            CH2_05.setCellValue("Pair");
-            CH2_06.setCellValue("Sec.");
-            CH2_09.setCellValue("Basis");
-            CH2_11.setCellValue("Flag");
-            CH2_12.setCellValue("USD");
+            CH2_03.setCellValue("Date");
+            CH2_05.setCellValue("Number");
+            CH2_06.setCellValue("Pair");
+            CH2_07.setCellValue("Sec.");
+            CH2_10.setCellValue("Basis");
+            CH2_12.setCellValue("Flag");
             CH2_13.setCellValue("USD");
-            CH2_14.setCellValue("Rate");
-            CH2_15.setCellValue("MXN");
-            CH2_16.setCellValue("Date");
+            CH2_14.setCellValue("USD");
+            CH2_15.setCellValue("Rate");
+            CH2_16.setCellValue("MXN");
+            CH2_17.setCellValue("Date");
 
             CH2_00.setCellStyle(headerStyle);
             CH2_01.setCellStyle(headerStyle);
@@ -299,6 +304,7 @@ public class CouponsEstimatedValueController extends BaseController {
             CH2_14.setCellStyle(headerStyle);
             CH2_15.setCellStyle(headerStyle);
             CH2_16.setCellStyle(headerStyle);
+            CH2_17.setCellStyle(headerStyle);
 
             //          ========================================================
             ++vj;
@@ -322,24 +328,26 @@ public class CouponsEstimatedValueController extends BaseController {
                 Cell rcel24 = row.createCell(14);
                 Cell rcel25 = row.createCell(15);
                 Cell rcel26 = row.createCell(16);
+                Cell rcel27 = row.createCell(17);
 
                 rcell0.setCellValue(listaData.get(vi).strTicket);
-                rcell1.setCellValue(listaData.get(vi).strDescSTVAL);
-                rcell2.setCellValue(listaData.get(vi).strFormatDate2);
-                rcell3.setCellValue(listaData.get(vi).strFormatDate);
-                rcell4.setCellValue(listaData.get(vi).NFLIGHT);
-                rcell5.setCellValue(listaData.get(vi).strDescripcion);
-                rcell6.setCellValue(listaData.get(vi).LEGSEQ);
-                rcell7.setCellValue(listaData.get(vi).ZONA);
-                rcell8.setCellValue(listaData.get(vi).CARR);
-                rcell9.setCellValue(listaData.get(vi).FBASE);
-                rcel20.setCellValue(listaData.get(vi).CLAS);
-                rcel21.setCellValue(listaData.get(vi).strFVAL);
-                rcel22.setCellValue(listaData.get(vi).VCPN);
-                rcel23.setCellValue(listaData.get(vi).VCPMX);
-                rcel24.setCellValue(listaData.get(vi).TCMUS);
-                rcel25.setCellValue(listaData.get(vi).VCPUS);
-                rcel26.setCellValue(listaData.get(vi).strFormatFVTA);
+                rcell1.setCellValue(listaData.get(vi).SEQ);
+                rcell2.setCellValue(listaData.get(vi).strDescSTVAL);
+                rcell3.setCellValue(listaData.get(vi).strFormatDate2);
+                rcell4.setCellValue(listaData.get(vi).strFormatDate);
+                rcell5.setCellValue(listaData.get(vi).NFLIGHT);
+                rcell6.setCellValue(listaData.get(vi).strDescripcion);
+                rcell7.setCellValue(listaData.get(vi).LEGSEQ);
+                rcell8.setCellValue(listaData.get(vi).ZONA);
+                rcell9.setCellValue(listaData.get(vi).CARR);
+                rcel20.setCellValue(listaData.get(vi).FBASE);
+                rcel21.setCellValue(listaData.get(vi).CLAS);
+                rcel22.setCellValue(listaData.get(vi).strFVAL);
+                rcel23.setCellValue(listaData.get(vi).VCPN);
+                rcel24.setCellValue(listaData.get(vi).VCPMX);
+                rcel25.setCellValue(listaData.get(vi).TCMUS);
+                rcel26.setCellValue(listaData.get(vi).VCPUS);
+                rcel27.setCellValue(listaData.get(vi).strFormatFVTA);
 
                 iter.next();
                 ++vi;
@@ -362,6 +370,7 @@ public class CouponsEstimatedValueController extends BaseController {
             sheet.autoSizeColumn(14, true);
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(17, true);
 
             /**
              * fileNameDownload = Nombre de descarga

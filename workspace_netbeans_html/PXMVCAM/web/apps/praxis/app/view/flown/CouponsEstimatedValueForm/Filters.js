@@ -380,8 +380,9 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Filters', {
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtSEQ',
-                            required: true,
+//                            required: true,
                             readOnly: false,
+                            hidden: true,
                             fieldLabel: 'Seq',
                             width: 70,
                             labelWidth: 30,
