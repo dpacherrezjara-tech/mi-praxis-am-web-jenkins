@@ -173,7 +173,8 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
             data: [
                 ["e", "All"],
                 ["1", "YES"],
-                ["N", "NO"]
+                ["N", "NO"],
+                ["D", "Duplicate"]
 
             ]}));
         cmbFvalAC.setValue("e");
@@ -187,6 +188,7 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
 
         me.bean = {};
         me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTKT').getValue();
+        me.bean.IN_SEQ = Ext.getCmp(prototype.id + '-txtSEQ').getValue();
         me.bean.IN_CARR = Ext.getCmp(prototype.id + '-cmbCARR').getValue();
         me.bean.IN_ZONA = Ext.getCmp(prototype.id + '-cmbZONAC').getValue();
         me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTOCKAC').getValue();
@@ -265,11 +267,13 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
         var yearTo = Ext.getCmp(prototype.id + '-cmbDateToYear');
         var monthTo = Ext.getCmp(prototype.id + '-cmbDateToMonth');
         var txtTKT = Ext.getCmp(prototype.id + '-txtTKT');
+        var txtSEQ = Ext.getCmp(prototype.id + '-txtSEQ');
         yearFrom.setValue(this.fecha.getFullYear());
         monthFrom.setValue("");
         yearTo.setValue("");
         monthTo.setValue("");
         txtTKT.setValue("");
+        txtSEQ.setValue("");
     },
     btnExcel_click: function(obj, e) {
         Ext.Msg.show({
