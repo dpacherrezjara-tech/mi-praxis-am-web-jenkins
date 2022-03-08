@@ -1844,6 +1844,12 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
+        
+        HashMap<String, String> hmDescReglas = new HashMap<String, String>();
+        hmDescReglas.put("", "");
+        hmDescReglas.put("1", "Tkt");
+        hmDescReglas.put("2", "PNR");
+        hmDescReglas.put("3", "CCard");
 
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
@@ -1970,6 +1976,13 @@ public class SalesReconciliAmexDAO {
                         beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                     } else {
                         beanTkt.descSTVAL = rst.getString("STVAL").trim();
+                    }
+                    
+                    beanTkt.FREGLA = rst.getString("FREGLA").trim();
+                    if (hmDescReglas.containsKey(rst.getString("FREGLA").trim())) {
+                        beanTkt.descFREGLA = hmDescReglas.get(rst.getString("FREGLA").trim()).toString();
+                    } else {
+                        beanTkt.descFREGLA = rst.getString("FREGLA").trim();
                     }
 
                     beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
