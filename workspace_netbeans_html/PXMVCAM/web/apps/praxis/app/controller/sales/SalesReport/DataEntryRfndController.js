@@ -60,6 +60,13 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
         meDET.locCurr = p.locCurr;//Ext.getCmp(prototype.idGr + '-de-lblCurrency').getValue();
         Ext.getCmp(prototype.idRfnd + '-det-gridDetCpn').getStore().removeAll();
         Ext.getCmp(prototype.idRfnd + '-det-gridEMD').getStore().removeAll();
+        if(Ext.getCmp(prototype.idGr + '-de-lblSource').getValue()!=='MAN' ||
+           modo==='R' || Ext.String.trim(Ext.getCmp(prototype.idGr + '-de-lblStatus').getValue())==='CLOSED'){
+            Ext.getCmp(prototype.idRfnd + '-det-gridDetCpn-delete').hide();
+            Ext.getCmp(prototype.idRfnd + '-det-panelGridEMD-delete').hide();
+            Ext.getCmp(prototype.idRfnd + '-btnADD').hide();
+            Ext.getCmp(prototype.idRfnd + '-btnADDEmd').hide();
+        }
         if(modo==='I'){
             Ext.getCmp(prototype.idRfnd + '-det-lblCia').setValue("139");
             Ext.getCmp(prototype.idRfnd + '-det-lblCia').setReadOnly(false);
