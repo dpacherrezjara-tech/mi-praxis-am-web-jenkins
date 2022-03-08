@@ -16,6 +16,7 @@ public class A1851 extends Filters{
     public String FINVOIC = "";
     public String PERIOD = "";
     public String STVAL = "";
+    public String desSTVAL = "";
     //Parametros de Envio de informacion   
     public String DOENV = "";
     public String TIMESI = "";         

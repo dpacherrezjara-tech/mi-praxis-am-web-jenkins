@@ -1214,7 +1214,11 @@ public class LoadInterline02DAO {
                 objRtn.TIMESE = rs01.getString("TIMESE");
                 objRtn.strDescripcion2 = Functions.ConvertedTime(objRtn.TIMESE);
                 objRtn.STVAL = rs01.getString("STVAL");
-
+                if(objRtn.STVAL.equals("0")){
+                    objRtn.desSTVAL = "Closed";
+                }else if(objRtn.STVAL.equals("1")){
+                    objRtn.desSTVAL = "Processed";
+                }
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
                 objRtn.HOCR = rs01.getString("HOCR");
@@ -3559,7 +3563,7 @@ public class LoadInterline02DAO {
             }
             
             if( (strFechDuplicat.equals("") && deleteOk == false) || (!strFechDuplicat.equals("") && deleteOk == true) ){
-                String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04317(?,?,?,?,?,?,?,?,?,?,?,?)}";
+                String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04317(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
                 cnx = session.getCNXIBMDB2().getIBMDB2Connection();
                 cstmt = cnx.prepareCall(SQLCLL01);
@@ -3570,7 +3574,7 @@ public class LoadInterline02DAO {
                     cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
                     cstmt.setString(2, item.FINVOIC);
                     cstmt.setString(3, item.PERIOD);
-
+                    
                     cstmt.setString(4, item.DOENV);
                     cstmt.setString(5, item.TIMESI);
 
@@ -3579,10 +3583,10 @@ public class LoadInterline02DAO {
 
                     cstmt.setString(8, item.DENVI);
                     cstmt.setString(9, item.TIMESE);
-
-                    cstmt.setString(10, session.getUserView().getUserInfo().USR);
-                    cstmt.setString(11, Functions.getFechaActual());
-                    cstmt.setString(12, Functions.getHoraActual());
+                    cstmt.setString(10,"1");
+                    cstmt.setString(11, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(12, Functions.getFechaActual());
+                    cstmt.setString(13, Functions.getHoraActual());
                     cstmt.execute();
                 }
 
