@@ -376,6 +376,24 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Filters', {
                             listeners:{
                                 keypress: 'eventKey'
                             }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtSEQ',
+                            required: true,
+                            readOnly: false,
+                            fieldLabel: 'Seq',
+                            width: 70,
+                            labelWidth: 30,
+                            enforceMaxLength: true,
+                            maxLength: 2,
+                            maskRe: /[0-9]/,
+                            fieldStyle: 'text-align: center;',
+                            labelAlign: 'left',
+                            enableKeyEvents: true,
+//                            listeners:{
+//                                keypress: 'eventKey'
+//                            }
                         }
 //                        {
 //                            xtype: 'button',
