@@ -84,7 +84,7 @@ public class ProMail {
             
             Authenticator auth = new SMTPAuthenticator(usuario, "Am@claraciones"); // Tener Clave del quien Envia
             
-//            Authenticator auth = new SMTPAuthenticator(usuario, "Aeromexico01"); // Tener Clave del quien Envia                
+//            Authenticator auth = new SMTPAuthenticator(usuario, "Notific@tions"); // Tener Clave del quien Envia                
             
             //Se define el servidor de correos
 //            props.put("mail.smtp.host", serverSession.getProperty("APP_SERVER_MAIL_HOST"));
@@ -188,7 +188,7 @@ public class ProMail {
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable","true");
             props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
-            Authenticator auth = new SMTPAuthenticator(usuario, "Aeromexico01"); // Tener Clave del quien Envia                            
+            Authenticator auth = new SMTPAuthenticator(usuario, "Notific@tions"); // Tener Clave del quien Envia                            
 //            props.put("mail.smtp.host", serverSession.getPropertySession().get("APP_SERVER_MAIL_HOST").toString());
 //            props.put("mail.smtp.port", serverSession.getPropertySession().get("APP_SERVER_MAIL_PORT").toString());
 //            props.put("mail.smtp.starttls.enable", "true");            
@@ -275,7 +275,7 @@ public class ProMail {
         try {
             Properties props = System.getProperties();
 
-            String usuario = "amcontrolventasfranquicias@aeromexico.com"; //Correo con el que saldra el email enviado ("from")
+            String usuario = "notifications@miatech.net"; //Correo con el que saldra el email enviado ("from")
             emisor = usuario;
             //Se define el servidor de correos
             props.put("mail.smtp.host","smtp.office365.com" );
@@ -283,7 +283,7 @@ public class ProMail {
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable","true");
             props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
-            Authenticator auth = new SMTPAuthenticator(usuario, "Aeromexico01"); // Tener Clave del quien Envia
+            Authenticator auth = new SMTPAuthenticator(usuario, "Notific@tions"); // Tener Clave del quien Envia
             
             //Authenticator auth = new SMTPAuthenticator(emisor, "rmDataCOM1"); // Tener Clave del quien Envia
             Session session = Session.getInstance(props, auth);
@@ -454,7 +454,7 @@ public class ProMail {
         try {
             Properties props = System.getProperties();
   
-            String usuario = "amcontrolventasfranquicias@aeromexico.com"; //Correo con el que saldra el email enviado ("from")
+            String usuario = "notifications@miatech.net"; //Correo con el que saldra el email enviado ("from")
             emisor = usuario;
             //Se define el servidor de correos de Aeromexico
             
@@ -463,7 +463,7 @@ public class ProMail {
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable","true");
             props.setProperty("mail.smtp.ssl.protocols", "TLSv1.1 TLSv1.2");
-            Authenticator auth = new SMTPAuthenticator(usuario, "Aeromexico01"); // Tener Clave del quien Envia
+            Authenticator auth = new SMTPAuthenticator(usuario, "Notific@tions"); // Tener Clave del quien Envia
             //Authenticator auth = new SMTPAuthenticator(emisor, "rmDataCOM1"); // Tener Clave del quien Envia
             Session session = Session.getInstance(props, auth);
             //Se obtiene sesi&amp;oacute;n desde el servidor de correos               
