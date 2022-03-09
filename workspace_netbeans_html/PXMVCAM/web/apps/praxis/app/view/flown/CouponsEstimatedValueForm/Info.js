@@ -48,7 +48,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                             padding: '20 0 0 0',
                             id: prototype.id + '-gridData',
                             height: 540,
-                            width: 1261,
+                            width: 1291,
                             columnLines: true,
                             resizable: false,
                             columns: {
@@ -59,8 +59,18 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'Tickets', width: 110, dataIndex: 'strTicket'},
-                                    {text: 'Status', width: 90, dataIndex: 'strDescSTVAL'},
+                                    {text: 'Tickets', width: 110, dataIndex: 'strTicket',
+                                        listeners: {
+                                            click: 'displayMasterTkt_clickHandler'
+                                        },
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                            metaData.style = "color:#057ECB;";
+                                            value = '<b>' + value + '</b>';
+                                            return '<a href="#flown-coupons-estimated-value-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                        }
+                                    },
+                                    {text: 'Seq', width: 55, dataIndex: 'SEQ'},
+                                    {text: 'Status', width: 85, dataIndex: 'strDescSTVAL'},
                                     {text: 'Flight ',
                                         defaults: {
                                             menuDisabled: true,
@@ -143,7 +153,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             align: 'center'
                                         },
                                         columns: [
-                                            {text: 'USD', width: 91, dataIndex: 'VCPMX',
+                                            {text: 'USD', width: 81, dataIndex: 'VCPMX',
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:right;';
                                                     return  Ext.util.Format.number(value, '0,000.00');
@@ -173,7 +183,7 @@ Ext.define('Ext.Praxis.view.flown.CouponsEstimatedValueForm.Info', {
                                             align: 'center'
                                         },
                                         columns: [
-                                            {text: 'MXN', width: 92, dataIndex: 'VCPUS',
+                                            {text: 'MXN', width: 82, dataIndex: 'VCPUS',
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = 'text-align:right;';
                                                     return  Ext.util.Format.number(value, '0,000.00');
