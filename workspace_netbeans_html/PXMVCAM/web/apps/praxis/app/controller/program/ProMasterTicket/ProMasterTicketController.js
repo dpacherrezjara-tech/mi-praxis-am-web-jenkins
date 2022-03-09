@@ -1889,7 +1889,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         AL: paramsResultSet13.fileA1200.CARR,
                                         FLIGHT : '',
                                         DATE : paramsResultSet13.fileA1200.DFLIGHT,
-                                        STAT : paramsResultSet13.fileA1200.STVAL,
+                                        STAT : 'INTL',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet13.fileA1200.GROSS, '0,000.00'),
                                         CRCY : paramsResultSet13.fileA1200.CURRENC,
                                         FARE : paramsResultSet13.fileA1200.FBASIS
@@ -2536,7 +2536,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                                         AL: paramsResultSet13.fileA1200.CARR,
                                         FLIGHT : '',
                                         DATE : paramsResultSet13.fileA1200.DFLIGHT,
-                                        STAT : paramsResultSet13.fileA1200.STVAL,
+                                        STAT : 'INTL',
                                         AMOUNT : Ext.util.Format.number(paramsResultSet13.fileA1200.GROSS, '0,000.00'),
                                         CRCY : paramsResultSet13.fileA1200.CURRENC,
                                         FARE : paramsResultSet13.fileA1200.FBASIS
