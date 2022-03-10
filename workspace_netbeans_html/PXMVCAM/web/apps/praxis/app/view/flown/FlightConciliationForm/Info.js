@@ -2669,94 +2669,11 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                     id: prototype.id + '-boxNewFlightManifest',
                     hidden: true,
                     defaults: {
-//                                bodyStyle: 'background: transparent;',
                         border: true,
                         height: '100%',
                         align: 'center'
                     },
                     items: [
-                        /*{
-                            xtype: 'panel',
-                            id: prototype.id + '-titulo',
-                            hidden: false,
-                            layout: {
-                                type: 'hbox',
-                                pack: 'center'
-                            },
-                            border: true,
-                            height: 25,
-                            bodyStyle: 'background-color: E3EAEF;',
-                            defaults: {
-                                border: false
-                            },
-                            items: [
-                                {
-                                    xtype: 'panel',
-                                    width: 1324,
-                                    id: prototype.id + '-setTitulo',
-                                    height: '100%',
-                                    layout: {
-                                        type: 'hbox',
-                                        pack: 'center'
-                                    },
-                                    defaults: {
-                                        xtype: 'label',
-                                        margin: '3px 0px 0px 5px'
-                                    },
-                                    items: [
-                                        {
-                                            html: '<b> Quantity:</b>',
-                                            width: 60
-                                        },
-                                        {
-                                            id: prototype.id + '-txtQty',
-                                            text: '0',
-                                            width: 40
-                                        },
-                                        {
-                                            html: '<b>Flight Date:</b>',
-                                            width: 75
-                                        },
-                                        {
-                                            id: prototype.id + '-FlightDate',
-//                                                    text: '1',
-                                            width: 80
-                                        },
-                                        {
-                                            html: '<b>Flight Number:</b>',
-                                            width: 95
-                                        },
-                                        {
-                                            id: prototype.id + '-FlightNumber',
-                                            text: '0',
-                                            width: 45
-                                        },
-                                        {
-                                            html: '<b>Download File:</b>',
-                                            width: 100
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id + '-imgInfo1',
-                                            region: 'south',
-                                            width: 20,
-                                            height: 20,
-                                            hidden: false,
-                                            icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                            tooltip: 'File Flight Manifest',
-                                            listeners: {
-                                                click: 'openExport'
-                                            },
-                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                metaData.style = "text-align:left;";
-                                                value = '<b>' + value + '</b>';
-                                                return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        },*/
                         // <editor-fold defaultstate="collapsed" desc="gridFlightManifest">
                         {xtype: 'panel',
                             hidden: false,
@@ -2765,7 +2682,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridNewFlightManifest',
-                                    width: 1369,
+                                    width: 1324,
                                     height: 550,
                                     features: [{
                                             ftype: 'summary'
@@ -2871,6 +2788,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
                                                 width: 45,
+                                                hidden: true,
                                                 text: 'Edit',
                                                 align: 'center',
                                                 items: [
