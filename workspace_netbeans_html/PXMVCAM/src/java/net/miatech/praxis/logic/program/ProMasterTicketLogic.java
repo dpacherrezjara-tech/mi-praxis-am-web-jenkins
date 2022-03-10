@@ -33,6 +33,11 @@ public class ProMasterTicketLogic {
     }
     
     @Deprecated
+    public List<PX040S01A720Filter> SQP04422(PX040S01A720Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04422(filter);
+    }
+    
+    @Deprecated
     public List<PX040S01A1716Filter> loadPX040S01A1716(PX040S01A1716Filter filter) throws SQLException, Exception {
         return objDAO.loadPX040S01A1716(filter);
     }

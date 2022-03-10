@@ -25,6 +25,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     beanAccounting: {},
     gloA720TKVOID: '',
     filterTKT: {},
+    filterTKTSeq: {},
     URL_VIEWTICKET : '',
     gridDataMemoAC: [],
     gridDataTktRealUsesAC: [],
@@ -800,8 +801,15 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     imgSearch_clickHandler: function (obj, e) {
         this.limpiarData();
         this.bean = {};
-        this.execSearch();
-        //this.controlLight();
+        if (win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length === 10) {
+            this.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
+            this.bean.IN_FORMA  = win.getValue('txtFilterTicketFormSer').trim().substr(0, 4);
+            this.bean.IN_SERIE = win.getValue('txtFilterTicketFormSer').trim().substr(4, 6);
+            this.loadTicketSeq(this.bean);
+        }else {    
+            this.execSearch();
+            this.controlLight();
+        }
     },
     imgExportText_clickHandler: function (obj, e) {        
         this.loadSabre();
@@ -3150,6 +3158,42 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     
                     }
                     Ext.getCmp(prototype.id+'-gridDataAccounting').el.setStyle({height: '100%'});
+                } else global.Msg({ msg: "Bad Request" });
+            },
+            failure: function(response, opts) {
+                Ext.getBody().unmask();
+                console.log('server-side failure with status code '+response.status);
+            }
+        });
+    },
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="loadTicketSeq">
+    loadTicketSeq: function (bean) {
+        var me01 = this;
+        console.log('loadTicketSeq');
+        console.log(prototype.url+'/loadTicketSeq');
+        prototype.url = URL_VIEWTICKET;
+        Ext.Ajax.request({
+            url: prototype.url+'/loadTicketSeq',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(bean)},
+            beforerequest: Ext.getBody().mask('Loading...'),
+            success: function(response, options){
+                Ext.getBody().unmask();
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    //win.setValue('txtFilterTicketSeq', '');
+                    console.log(res.filterTKTSeq);
+                    me01.filterTKTSeq = res.filterTKTSeq;
+                        if(me01.filterTKTSeq.length > 1){
+                            this.execSearch();
+                            this.controlLight();
+                        }
+                        else
+                        {
+                            
+                        }
                 } else global.Msg({ msg: "Bad Request" });
             },
             failure: function(response, opts) {
