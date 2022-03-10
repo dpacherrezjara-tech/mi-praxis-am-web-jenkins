@@ -529,7 +529,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
     },
     onTktsDetail: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
-        if (rowData.data.QTYTKT === 0){
+        if (rowData.data.QTYTKT === 0) {
             return
         }
         me.drillDown.push(me.panelActual);
@@ -722,7 +722,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             this.onGridDetAdjustment(obj, metaData, rowNum, columnNum, obj2, rowData);
             return;
         }
-        
+
         this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
         this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
         this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
@@ -1622,8 +1622,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.setFormatParameter();
         console.log(me.panelActual);
         switch (me.panelActual) {
+            case  '-boxMainSummary':
+                global.getFile(prototype.url + '/getXLSXMainSummary?beanString=' + searchParams.beanString);
+                break;
             case  '-panelGridData':
-                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
+                global.getFile(prototype.url + '/getXLSX?beanString=' + me.paramsDetailSummary.beanString);
                 break;
             case  '-boxDetChargeback':
                 global.getFile(prototype.url + '/getXLSXChargeback?beanString=' + me.paramsDetailChargeback.beanString);
