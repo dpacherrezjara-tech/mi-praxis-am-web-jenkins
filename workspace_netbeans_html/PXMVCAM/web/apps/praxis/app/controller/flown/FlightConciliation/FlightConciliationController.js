@@ -20,6 +20,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     _pathDetTkt: '',
     _pathDetFlight: '',
     _pathDetFlightMain: '',
+    _pathDetFlightNew: '',
     me: '',
     NPROG: 'PX00000095',
     init: function (view) {
@@ -473,7 +474,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         } else if (Ext.getCmp(prototype.id + '-boxFlightManifest').isVisible()) {
             console.log("")
             this.exportExcel(_pathDetFlightMain);
+        } else if (Ext.getCmp(prototype.id + '-boxNewFlightManifest').isVisible()) {
+            console.log("")
+            this.exportExcel(_pathDetFlightNew);
         }
+        
     },
     btnClear_click: function (obj, e) {
         this.initDate();
@@ -958,7 +963,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
         Ext.getCmp(prototype.id + '-gridNewFlightManifest').bindStore(storeGridDatas);
-        //_pathDetFlightMain = prototype.url + '/getXLSX_Flight_New_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
+        _pathDetFlightNew = prototype.url + '/getXLSX_Flight_New_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
     cmbFSabre_changeHandler: function () {
