@@ -198,7 +198,7 @@ public class CouponsEstimatedValueController extends BaseController {
             Cell CH1_17 = row.createCell(17);
 
             CH1_00.setCellValue("Tickets");
-            CH1_01.setCellValue("Tickets");
+            CH1_01.setCellValue("Seq");
             CH1_02.setCellValue("Status");
             CH1_03.setCellValue("Flight");
             CH1_04.setCellValue("VCR Date");
@@ -237,15 +237,15 @@ public class CouponsEstimatedValueController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
