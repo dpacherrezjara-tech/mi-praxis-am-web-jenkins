@@ -485,7 +485,14 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
             Ext.getCmp(prototype.idRfnd + '-det-lblCpn2_1').setValue(file.A713CUPON2.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblCpn3_1').setValue(file.A713CUPON3.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblCpn4_1').setValue(file.A713CUPON4.trim());
-
+            
+            var status = meDET.modo==='R'?'CLOSED':Ext.String.trim(Ext.getCmp(prototype.idGr + '-de-lblStatus').getValue());
+            if(file.A713ORIG.trim()!=='MAN' || status==='CLOSED'){
+                Ext.getCmp(prototype.idRfnd + '-det-gridDetCpn-delete').hide();
+                Ext.getCmp(prototype.idRfnd + '-det-panelGridEMD-delete').hide();
+                Ext.getCmp(prototype.idRfnd + '-btnADD').hide();
+                Ext.getCmp(prototype.idRfnd + '-btnADDEmd').hide();
+            }
             meDET.llenarGrillaRFND(lstRFNDGrilla);
 
             var IN_TIPOCAP = meDET.modo==='R'?'A':Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);

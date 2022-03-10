@@ -1172,6 +1172,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                                                     {text: 'Usage', width: 48, dataIndex: 'USED'},
                                                                                     {
                                                                                         xtype: 'actioncolumn',
+                                                                                        id: prototype.idRfnd + '-det-gridDetCpn-delete',
                                                                                         width: 40,
                                                                                         menuDisabled: true,
                                                                                         sortable: false,
@@ -2667,7 +2668,9 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                                                             {text: 'Curr Tax', width: 60, dataIndex: 'TAXCURR'}*/
                                                                                             {
                                                                                                 xtype: 'actioncolumn',
-                                                                                                width: 40, id: 'dltemd',
+                                                                                                width: 40,
+                                                                                                //id: 'dltemd',
+                                                                                                id:prototype.idRfnd+'-det-panelGridEMD-delete',
                                                                                                 menuDisabled: true,
                                                                                                 sortable: false,
                                                                                                 items: [
