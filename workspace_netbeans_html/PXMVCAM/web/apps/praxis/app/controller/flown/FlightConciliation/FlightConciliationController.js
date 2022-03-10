@@ -738,7 +738,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         });
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         _path = prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean));
-    }, //</editor-fold>
+    }, //</editor-fold> 
     //<editor-fold defaultstate="collapsed" desc="searchDetail">
     searchDetail: function(bean, strTipo) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {

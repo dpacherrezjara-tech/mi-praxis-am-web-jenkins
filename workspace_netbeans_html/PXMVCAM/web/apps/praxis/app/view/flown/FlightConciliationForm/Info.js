@@ -1367,7 +1367,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                align: 'center'
 //                            },
 //                            items: [
-//                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
+                                //                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
 //                                {
 //                                    xtype: 'grid',
 //                                    id: prototype.id + '-gridDetailLeg',
@@ -2659,8 +2659,234 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 }
                             ]
                         }
+                        
                         // </editor-fold>
 
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-boxNewFlightManifest',
+                    hidden: true,
+                    defaults: {
+//                                bodyStyle: 'background: transparent;',
+                        border: true,
+                        height: '100%',
+                        align: 'center'
+                    },
+                    items: [
+                        /*{
+                            xtype: 'panel',
+                            id: prototype.id + '-titulo',
+                            hidden: false,
+                            layout: {
+                                type: 'hbox',
+                                pack: 'center'
+                            },
+                            border: true,
+                            height: 25,
+                            bodyStyle: 'background-color: E3EAEF;',
+                            defaults: {
+                                border: false
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    width: 1324,
+                                    id: prototype.id + '-setTitulo',
+                                    height: '100%',
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    defaults: {
+                                        xtype: 'label',
+                                        margin: '3px 0px 0px 5px'
+                                    },
+                                    items: [
+                                        {
+                                            html: '<b> Quantity:</b>',
+                                            width: 60
+                                        },
+                                        {
+                                            id: prototype.id + '-txtQty',
+                                            text: '0',
+                                            width: 40
+                                        },
+                                        {
+                                            html: '<b>Flight Date:</b>',
+                                            width: 75
+                                        },
+                                        {
+                                            id: prototype.id + '-FlightDate',
+//                                                    text: '1',
+                                            width: 80
+                                        },
+                                        {
+                                            html: '<b>Flight Number:</b>',
+                                            width: 95
+                                        },
+                                        {
+                                            id: prototype.id + '-FlightNumber',
+                                            text: '0',
+                                            width: 45
+                                        },
+                                        {
+                                            html: '<b>Download File:</b>',
+                                            width: 100
+                                        },
+                                        {
+                                            xtype: 'button',
+                                            id: prototype.id + '-imgInfo1',
+                                            region: 'south',
+                                            width: 20,
+                                            height: 20,
+                                            hidden: false,
+                                            icon: 'resources/img/botones/16x16/1384382451_window_new.png',
+                                            tooltip: 'File Flight Manifest',
+                                            listeners: {
+                                                click: 'openExport'
+                                            },
+                                            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                metaData.style = "text-align:left;";
+                                                value = '<b>' + value + '</b>';
+                                                return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },*/
+                        // <editor-fold defaultstate="collapsed" desc="gridFlightManifest">
+                        {xtype: 'panel',
+                            hidden: false,
+                            layout: 'fit',
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridNewFlightManifest',
+                                    width: 1369,
+                                    height: 550,
+                                    features: [{
+                                            ftype: 'summary'
+                                        }],
+                                    columnLines: true,
+                                    scrollable: {
+                                        direction: 'vertical',
+                                    },
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Nbr', width: 40, dataIndex: 'RN', sortable: true, },
+                                            {text: 'Flight',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Date', width: 100, dataIndex: 'DFLIGHT'},
+                                                    {text: 'Number', width: 80, dataIndex: 'NFLIGHT'}
+                                                ]
+                                            },
+                                            {
+                                                text: 'Last Name', dataIndex: 'LNAME', width: 120, sortable: true,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'First Name', dataIndex: 'FNAME', width: 120, sortable: true,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Pax <br> Type', dataIndex: 'desPAX', width: 70, sortable: true,
+//                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+//                                                            metaData.style = "text-align:center;background:#FFF9E0;";
+//                                                            return value;
+//                                                        }
+                                            },
+                                            {
+                                                text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;background:#FFF9E0;";
+                                                    return value;
+                                                },
+//                                                        sorter: function (v1, v2) {
+//                                                            console.log('sorter');
+//                                                            v1 = v1.get('CHAIR');
+//                                                            v2 = v2.get('CHAIR');
+//                                                            return v1 > v2 ? 1 : ( v1 < v2 ? -1 : 0 );
+//                                                        }
+                                            },
+                                            {
+                                                text: 'Ticket', dataIndex: 'strTicket', width: 130, sortable: true,
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;background:#d5f4d5;";
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#flown-flight-conciliation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Status', dataIndex: 'desSTVAL', width: 110, sortable: true},
+                                            {text: 'Orig', dataIndex: 'CDEPART', width: 70, sortable: true},
+                                            {text: 'Dest', dataIndex: 'CARRIVA', width: 70, sortable: true},
+                                            {text: 'VCR vs',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Manifest', dataIndex: 'desSTVCR', width: 70, sortable: true},
+                                                ]
+                                            },
+                                            {
+                                                text: 'Process Sabre',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Scan', dataIndex: 'descFSABRE', width: 80, sortable: true},
+                                                    {text: 'Status', dataIndex: 'STASABR', width: 80, sortable: true},
+                                                ]
+                                            },
+                                            {text: 'Flag<br>Sales-PRAXIS', dataIndex: 'descFSALES', width: 100, sortable: true},
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 45,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'viewDataEntry_A3729'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                        // </editor-fold>
                     ]
                 },
                 // <editor-fold defaultstate="collapsed" desc="pie">

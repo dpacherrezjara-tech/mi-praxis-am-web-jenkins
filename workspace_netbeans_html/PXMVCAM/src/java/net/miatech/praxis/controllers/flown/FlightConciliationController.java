@@ -32,6 +32,7 @@ import net.miatech.beans.A1691Filter;
 import net.miatech.beans.A1691Filter2;
 import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A3729Filter;
+import net.miatech.beans.A4190Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1248;
 import net.miatech.praxis.A2149;
@@ -279,6 +280,35 @@ public class FlightConciliationController extends BaseController {
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A3729Filter> listaData = logic.loadPX095SQP04286(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/searchNewFlightManifest")
+    public @ResponseBody
+    String searchNewFlightManifest(ModelMap map, HttpServletRequest request) {
+        A4190Filter filter = new A4190Filter();
+        Gson gson = new Gson();
+        String beanString;
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4190Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4190Filter> listaData = logic.loadPX095SQP04410(filter);
 
             map.put("success", true);
             map.put("data", listaData);

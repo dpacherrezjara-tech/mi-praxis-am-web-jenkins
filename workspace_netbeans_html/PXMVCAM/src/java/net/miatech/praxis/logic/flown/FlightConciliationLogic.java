@@ -8,6 +8,7 @@ import net.miatech.beans.A1691Filter;
 import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A1691Filter2;
 import net.miatech.beans.A3729Filter;
+import net.miatech.beans.A4190Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.A2149;
 import net.miatech.praxis.dao.flown.FlightConciliationDAO;
@@ -54,6 +55,10 @@ public class FlightConciliationLogic {
     
     public List<A3729Filter> loadPX095SQP04286(A3729Filter filter) throws SQLException, Exception {
         return objDAO.loadPX095SQP04286(filter);
+    }
+    
+    public List<A4190Filter> loadPX095SQP04410(A4190Filter filter) throws SQLException, Exception {
+        return objDAO.loadPX095SQP04410(filter);
     }
     
     public List<A1692Filter> loadPX095S05A1692(A1691Filter2 filter, String strTipo, HashMap<String, String> hmPaises) throws SQLException, Exception {

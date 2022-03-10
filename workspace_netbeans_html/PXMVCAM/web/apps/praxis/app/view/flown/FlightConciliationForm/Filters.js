@@ -441,7 +441,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 750 },
+                        { xtype: 'tbspacer', width: 550 },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkNewManifest',
+                            boxLabel: '<b>New Flight Manifest</b>',
+                            checked: false,
+                            width: 200,
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
+                        },
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',
