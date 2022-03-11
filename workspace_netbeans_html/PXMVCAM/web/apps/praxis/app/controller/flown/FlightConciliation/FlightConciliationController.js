@@ -20,7 +20,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     _pathDetTkt: '',
     _pathDetFlight: '',
     _pathDetFlightMain: '',
-    _pathDetFlightNew: '',
     me: '',
     NPROG: 'PX00000095',
     init: function (view) {
@@ -176,10 +175,19 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         var cant = 0;
         cant = this.bean.QCPNFI;
 
+        var chkNewManifest = this.getValue("chkNewManifest");
+
         if (cant > 0) {
             var IN_FSABRE = this.getValue("cmbFSabre");
             this.objFLIGHTMANIF = x.record.data;
             this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
+            
+            if (chkNewManifest) {
+                this.objFLIGHTMANIF.IN_TABLE = 'LIBSAP12.A4190';
+            } else {
+                this.objFLIGHTMANIF.IN_TABLE = 'PRAXIS.A3729';
+            }
+            
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -321,9 +329,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function (obj, e) {
         Ext.getCmp(prototype.id + '-pie').hide();
-
-        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupFlightConciliation').getValue().rbgTypeFlightConciliation;
-        console.log(selectedValue);
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
+        var chkManifest = this.getValue("chkManifest");
 
         if (this.getValue("txtTKT") !== '') {
             this.cargarTicket();
@@ -340,33 +347,22 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             this.bean.CARRI = this.getValue("cmbCarrier");
             this.bean.NFLIGHT = this.getValue("txtFlight");
 
-            switch (selectedValue) {
-                case 'FC':
-                    Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
-                    Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
-                    Ext.getCmp(prototype.id + '-boxPrincipal').show();
-                    Ext.getCmp(prototype.id + '-boxFlightManifest').hide();
-                    Ext.getCmp(prototype.id + '-boxNewFlightManifest').hide();
-                    Ext.getCmp(prototype.id + '-BoxSecundario').hide();
-                    this.search(this.bean);
-                    break;
-                case 'FM':
-                    Ext.getCmp(prototype.id + '-boxPrincipal').hide();
-                    Ext.getCmp(prototype.id + '-boxFlightManifest').show();
-                    Ext.getCmp(prototype.id + '-boxNewFlightManifest').hide();
-                    Ext.getCmp(prototype.id + '-BoxSecundario').hide();
-                    this.bean.IN_FSABRE = this.getValue("cmbFSabre");
-                    this.searchFlightManifest(this.bean);
-                    break;
-                case 'NF':
-                    Ext.getCmp(prototype.id + '-boxPrincipal').hide();
-                    Ext.getCmp(prototype.id + '-BoxSecundario').hide();
-                    Ext.getCmp(prototype.id + '-boxFlightManifest').hide();
-                    Ext.getCmp(prototype.id + '-boxNewFlightManifest').show();                    
-                    this.bean.IN_FSABRE = this.getValue("cmbFSabre");
-                    this.searchNewFlightManifest(this.bean);
-                    break;
+            if (chkManifest) {
+                Ext.getCmp(prototype.id + '-boxPrincipal').hide();
+                Ext.getCmp(prototype.id + '-boxFlightManifest').show();
+                Ext.getCmp(prototype.id + '-BoxSecundario').hide();
+                this.bean.IN_FSABRE = this.getValue("cmbFSabre");
+                this.searchFlightManifest(this.bean);
+            } else {
+                Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
+                Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
+                Ext.getCmp(prototype.id + '-boxPrincipal').show();
+                Ext.getCmp(prototype.id + '-boxFlightManifest').hide();
+                Ext.getCmp(prototype.id + '-BoxSecundario').hide();
+                this.search(this.bean);
             }
+
         }
     },
     btnFilter_click: function (obj) {
@@ -474,11 +470,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         } else if (Ext.getCmp(prototype.id + '-boxFlightManifest').isVisible()) {
             console.log("")
             this.exportExcel(_pathDetFlightMain);
-        } else if (Ext.getCmp(prototype.id + '-boxNewFlightManifest').isVisible()) {
-            console.log("")
-            this.exportExcel(_pathDetFlightNew);
         }
-        
     },
     btnClear_click: function (obj, e) {
         this.initDate();
@@ -558,6 +550,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     btnBack_click: function () {
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
             if (this.peek() === prototype.id + '-boxMainData') {
                 global.showMenu();
@@ -755,7 +748,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         });
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         _path = prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean));
-    }, //</editor-fold> 
+    }, //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetail">
     searchDetail: function (bean, strTipo) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
@@ -846,6 +839,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     searchDetailFlightManifest: function (objFLIGHTMANIF) {
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(true);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetailFlightManifest'
@@ -927,47 +921,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         _pathDetFlightMain = prototype.url + '/getXLSX_Flight_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
-    searchNewFlightManifest: function (objFLIGHTMANIF) {
-        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
-        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
-        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
-            proxy: {
-                url: prototype.url + '/searchNewFlightManifest'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    Ext.getCmp(prototype.id + '-boxNewFlightManifest').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(objFLIGHTMANIF)};
-                },
-                load: function (obj, obj2, success, obj4, obj5) {
-                    Ext.getCmp(prototype.id + '-boxNewFlightManifest').unmask();
-                    win.lblUser_toolTip("Estructura: A4190");
-
-                    if (obj.data.length > 0) {
-                        var beanTemp = obj.data.items[0].data;
-                        console.log(beanTemp);
-//
-//                        Ext.getCmp(prototype.id + '-setTitulo').setTitle('<center style="font-size:12px;">Flight Date : ' +
-//                                beanTemp.strFormatDate + ' - Flight Number : ' + beanTemp.NFLIGHT +
-//                         '</center>'
-//                                );
-//                        Ext.getCmp(prototype.id + '-FlightDate').setText(beanTemp.strFormatDate);
-//                        Ext.getCmp(prototype.id + '-FlightNumber').setText(beanTemp.NFLIGHT);
-//                        Ext.getCmp(prototype.id + '-txtQty').setText(obj.data.length);
-//                          this.g_nflight = beanTemp.NFLIGHT;
-                    } else {
-                        global.Msg({msg: 'Data not found'});
-                    }
-                    global.clear();
-                }
-            }
-        });
-        Ext.getCmp(prototype.id + '-gridNewFlightManifest').bindStore(storeGridDatas);
-        _pathDetFlightNew = prototype.url + '/getXLSX_Flight_New_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
-//        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
-    },
     cmbFSabre_changeHandler: function () {
         var chkManifest = this.getValue("chkManifest");
+        var chkNewManifest = this.getValue("chkNewManifest");
+
+        if (chkNewManifest) {
+            this.objFLIGHTMANIF.IN_TABLE = 'LIBSAP12.A4190';
+        } else {
+            this.objFLIGHTMANIF.IN_TABLE = 'PRAXIS.A3729';
+        }
 
         objA3729 = {};
         var IN_FSABRE = this.getValue("cmbFSabre");

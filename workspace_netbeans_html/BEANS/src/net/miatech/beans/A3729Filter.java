@@ -31,6 +31,7 @@ public class A3729Filter extends A3729 {
     public String descFSALES = "";
 
     public String IN_FSABRE = "";
+    public String IN_TABLE = "";
     public String nameTxt = "";
     public String FA720 = "";
     public String TICKET_2 = "";

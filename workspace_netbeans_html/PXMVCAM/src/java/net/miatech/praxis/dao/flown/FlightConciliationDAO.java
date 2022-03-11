@@ -719,7 +719,7 @@ public class FlightConciliationDAO {
 
         try {
 
-            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?,?)}";
 //            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -730,6 +730,7 @@ public class FlightConciliationDAO {
             cs.setString(3, filter.NFLIGHT);
             cs.setString(4, filter.IN_FSABRE);
             cs.setString(5, filter.CDEPART);
+            cs.setString(6, filter.IN_TABLE);
 
             cs.execute();
 
