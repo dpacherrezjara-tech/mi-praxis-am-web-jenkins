@@ -15,6 +15,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
     exch: '',
     locCurr: '',
     revCurr: 'USD',
+    fare: 0,
     cant: 0,
     validador: 0,
     paramsDET: {},
@@ -472,6 +473,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
             Ext.getCmp(prototype.idRfnd + '-det-lblAuthorityNumber').setValue(file.TICKETAUTH.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblFARE2Cur').setValue(file.A713MDAFA.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').setValue(Ext.util.Format.number(file.A713FARE, '0,000.00'));
+            meDET.fare = file.A713FARE;
             Ext.getCmp(prototype.idRfnd + '-det-lblVoucherReason').setValue(file.A713VRIC.trim());
             Ext.getCmp(prototype.idRfnd + '-det-lblFFOP').setValue(file.A713FLAGTN.trim());
             if (file.A713TDOC.substr(0, 3) === 'EMD') {
@@ -553,7 +555,10 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
 
                     //Ext.getCmp(prototype.id01 + '-txtFAREAero').getValue().replace(new RegExp(',', 'g'), '');
                     //Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').setValue(Ext.util.Format.number(file.A713FARE, '0,000.00'));
-                    if ((file2.FOP - (parseFloat(Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').getValue().replace(new RegExp(',', 'g'), '')) + file2.TAX)) !== 0) {
+                    //alert("Suma New 100:" + ((meDET.fare*100 + file2.TAX*100)/100));
+                    //alert("Calculo:" + file2.FOP - (parseFloat(Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').getValue().replace(new RegExp(',', 'g'), '')) + file2.TAX)));
+                    //if ((file2.FOP - (parseFloat(Ext.getCmp(prototype.idRfnd + '-det-lblFARE2').getValue().replace(new RegExp(',', 'g'), '')) + file2.TAX)) !== 0) {
+                    if ((file2.FOP - ((meDET.fare * 100 + file2.TAX * 100) / 100)) !== 0) {
                         Ext.getCmp(prototype.idRfnd + '-det-lblUnbalance').show();
                     } else {
                         Ext.getCmp(prototype.idRfnd + '-det-lblUnbalance').hide();
