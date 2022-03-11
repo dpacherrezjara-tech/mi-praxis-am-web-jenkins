@@ -23,6 +23,7 @@ import net.miatech.beans.A1691Filter;
 import net.miatech.beans.A1692Filter;
 import net.miatech.beans.A1691Filter2;
 import net.miatech.beans.A3729Filter;
+import net.miatech.beans.A4190Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.A2149;
 import net.miatech.praxis.exceptions.SpringException;
@@ -718,7 +719,7 @@ public class FlightConciliationDAO {
 
         try {
 
-            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?,?)}";
 //            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -729,6 +730,7 @@ public class FlightConciliationDAO {
             cs.setString(3, filter.NFLIGHT);
             cs.setString(4, filter.IN_FSABRE);
             cs.setString(5, filter.CDEPART);
+            cs.setString(6, filter.IN_TABLE);
 
             cs.execute();
 
@@ -2088,6 +2090,157 @@ public class FlightConciliationDAO {
             while (rst.next()) {
 
                 beanCons = new A3729Filter();
+
+                beanCons.RN = rst.getLong("RN");
+                beanCons.CHAIR = rst.getString("CHAIR").trim();
+                beanCons.strTicket = rst.getString("TICKET").trim();
+//                beanCons.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
+//                beanCons.NPAX = rst.getString("NPAX").trim();
+                beanCons.SEQ = rst.getString("SEQ").trim();
+                beanCons.FNAME = rst.getString("FNAME").trim();
+                beanCons.LNAME = rst.getString("LNAME").trim();
+                beanCons.DFLIGHT = rst.getString("DFLIGHT").trim();
+                beanCons.strFormatDate = Functions.getMonthConvert(beanCons.DFLIGHT);
+//                beanCons.strDescripcion = Functions.getMonthConvert(beanCons.DFLIGHT);
+                beanCons.NFLIGHT = rst.getString("NFLIGHT").trim();
+                beanCons.CDEPART = rst.getString("CDEPART").trim();
+                beanCons.CARRIVA = rst.getString("CARRIVA").trim();
+                beanCons.STVAL = rst.getString("STVAL");
+                if (rst.getString("STVAL").trim().equals("1")) {
+                    beanCons.desSTVAL = "No conciliado";
+                } else if (rst.getString("STVAL").trim().equals("0")) {
+                    beanCons.desSTVAL = "Conciliado";
+                }
+
+                beanCons.FSABRE = rst.getString("FSABRE").trim();
+                if (rst.getString("FSABRE").trim().equals("0")) {
+                    beanCons.descFSABRE = "Not Found";
+                } else if (rst.getString("FSABRE").trim().equals("1")) {
+                    beanCons.descFSABRE = "Found";
+                } else if (rst.getString("FSABRE").trim().equals("2")) {
+                    beanCons.descFSABRE = "Found but not matching coupon";
+                } else if (rst.getString("FSABRE").trim().equals("4")) {
+                    beanCons.descFSABRE = "No Revenue(Employes/Oth)";
+                } else if (rst.getString("FSABRE").trim().equals("5")) {
+                    beanCons.descFSABRE = "Manual";
+                }
+
+                beanCons.STASABR = rst.getString("STASABR").trim();
+
+                beanCons.FSALES = rst.getString("FSALES").trim();
+                if(rst.getString("FSALES").trim().equals("0")){
+                    beanCons.descFSALES = "No existe";
+                } else if (rst.getString("FSALES").trim().equals("1")) {
+                    beanCons.descFSALES = "Existe";
+                }
+
+                beanCons.LNKMVLO = rst.getString("LNKMVLO").trim();
+                beanCons.STVCR = rst.getString("STVCR").trim();
+
+                if (rst.getString("STVCR").trim().equals("Y")) {
+                    beanCons.desSTVCR = "Yes";
+                } else if (rst.getString("STVCR").trim().equals("")) {
+                    beanCons.desSTVCR = "";
+                }
+
+                beanCons.TPAX = rst.getString("TPAX").trim();
+                beanCons.TPAX_V = rst.getString("TPAX_V").trim();
+
+                if (!beanCons.TPAX_V.equals("")) {
+                    beanCons.TPAX = beanCons.TPAX_V;
+                }
+
+                if (beanCons.TPAX.equals("A")) {
+                    beanCons.desPAX = "Adult";
+                } else if (beanCons.TPAX.equals("C")) {
+                    beanCons.desPAX = "Children";
+                } else if (beanCons.TPAX.equals("I")) {
+                    beanCons.desPAX = "Infant";
+                } else if (beanCons.TPAX.equals("INF")) {
+                    beanCons.desPAX = "Infant";
+                }
+
+                beanCons.FA720 = rst.getString("FA720").trim();
+//                if (rst.getString("FA720").trim().equals("")) {
+//                    beanCons.descFSALES = "";
+//                } else {
+//                    beanCons.descFSALES = "Yes";
+//                }
+                
+                beanCons.USCR = rst.getString("USCR").trim();
+                beanCons.FECR = rst.getString("FECR").trim();
+                beanCons.HOCR = rst.getString("HOCR").trim();
+                beanCons.USUP = rst.getString("USUP").trim();
+                beanCons.FEUP = rst.getString("FEUP").trim();
+                beanCons.HOUP = rst.getString("HOUP").trim();
+
+                lstCons.add(beanCons);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstCons;
+    }
+    
+    public List<A4190Filter> loadPX095SQP04410(A4190Filter filter) throws SQLException, Exception {
+        List<A4190Filter> lstCons = new ArrayList<>(0);
+        A4190Filter beanCons;
+        String strFecha = "", NFLIGHT = filter.NFLIGHT.trim(); //YYYYMM
+        int QPEND = 0, QPRO = 0, QCLO = 0, QSSIM = 0, QODS = 0, QVCR = 0, QPHY = 0, QtyCANCEL = 0;
+        int QSVOPRO = 0, QSVOPEND = 0, QSVVPRO = 0, QSVVPEND = 0, QFFLOW = 0;
+
+        if (!NFLIGHT.equals("") && NFLIGHT.length() < 4) {
+            NFLIGHT = Functions.fillZeros(4, NFLIGHT);
+        }
+
+        // <editor-fold defaultstate="collapsed" desc=" 'DATE' ">
+        filter.yearFrom = Functions.fillZeros(4, filter.yearFrom).replace("00", "");//YYYY
+        filter.monthFrom = Functions.fillZeros(2, filter.monthFrom).replace("00", "");
+        filter.dayFrom = Functions.fillZeros(2, filter.dayFrom).replace("00", "");
+        filter.yearTo = Functions.fillZeros(4, filter.yearTo).replace("00", "");//YYYY
+        filter.monthTo = Functions.fillZeros(2, filter.monthTo).replace("00", "");
+        filter.dayTo = Functions.fillZeros(2, filter.dayTo).replace("00", "");
+        //</editor-fold>
+
+        try {
+
+//            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04410(?,?,?,?,?)}";
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cs = cnx.prepareCall(strSQL);
+
+            cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cs.setString(2, filter.yearFrom + filter.monthFrom + filter.dayFrom);
+            cs.setString(3, filter.yearTo + filter.monthTo + filter.dayTo);
+            cs.setString(4, filter.IN_FSABRE);
+            cs.setString(5, filter.NFLIGHT);
+
+            cs.execute();
+
+            rst = cs.getResultSet();
+            while (rst.next()) {
+
+                beanCons = new A4190Filter();
 
                 beanCons.RN = rst.getLong("RN");
                 beanCons.CHAIR = rst.getString("CHAIR").trim();

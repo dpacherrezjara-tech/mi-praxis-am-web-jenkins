@@ -5,13 +5,13 @@
  */
 package net.miatech.beans;
 
-import net.miatech.praxis.flown.A3729;
+import net.miatech.praxis.flown.A4190;
 
 /**
  *
  * @author ggutierrez
  */
-public class A3729Filter extends A3729 {
+public class A4190Filter extends A4190 {
 
     public String yearFrom = "";
     public String monthFrom = "";
@@ -31,7 +31,6 @@ public class A3729Filter extends A3729 {
     public String descFSALES = "";
 
     public String IN_FSABRE = "";
-    public String IN_TABLE = "";
     public String nameTxt = "";
     public String FA720 = "";
     public String TICKET_2 = "";
