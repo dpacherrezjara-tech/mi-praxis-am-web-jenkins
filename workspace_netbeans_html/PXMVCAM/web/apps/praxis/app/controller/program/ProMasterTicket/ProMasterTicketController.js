@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     dataEntryADM: Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryADM', {id: 'DataEntryADMProMasterTicketForm'} ),             
     ACT_VIEW_BY_TKT: 'ACT_VIEW_BY_TKT',
     ACT_VIEW_BY_TKT_ADM: 'ACT_VIEW_BY_TKT_ADM',
+    SELECT_BY_TKT_1: 'TKT',
     SELECT_BY_TKT_2: 'TKT2',
     SELECT_BY_PAX: 'PAX',
     SELECT_BY_PNR: 'PNR',
@@ -90,8 +91,40 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
         } else {
             this.imgBrowser_clickHandler();
         }
-        this.imgSearch_clickHandler();
+        console.log(this.bean);
+        //this.imgSearch_clickHandler();
         global.clear();
+        //this.controlLight();
+    },
+    startDisplayFromBrowser: function() {
+        console.log('PERMC');
+        console.log(userAccess);
+        console.log(optionSelect);
+        $.each(userAccess, function(x, y) {
+            if (y.NPROG === optionSelect.nprog) {                
+                PERMC = y.PERMC;
+                console.log('Access:'+PERMC);
+            }
+        });
+        
+        if (this.params.actionCode !== undefined && this.params.bean !== undefined) {
+            this.actionCode = this.params.actionCode;
+            this.bean = this.params.bean;
+        }
+        if(this.actionCode==='WorkProgAudit'){
+            Ext.getCmp(prototype.id+'-btnADM').show();
+	}else{
+            Ext.getCmp(prototype.id+'-btnADM').hide();
+	}
+        if (this.actionCode === 'VIEWTICKET_FOR_BWRMASTERTICKET' ) {
+            win.setValue('cbxSelectBy', 'TKT');
+            this.cbxSelectBy_closeHandler();
+            win.setValue('txtFilterTicketCia', this.bean.IN_CIA);
+            win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
+            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+        }
+        global.clear();
+        this.loadTicket(this.bean);
         //this.controlLight();
     },
     cbxSelectBy_closeHandler: function(field, eOpts) {
@@ -102,7 +135,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                 this.limpiarData();
                 Ext.getCmp(prototype.id+'-boxFilterByTKT').show();
                 Ext.getCmp(prototype.id+'-boxFilterByPAX').hide();
-                
+                this.actionCode2 = this.SELECT_BY_TKT_2;
                 win.focus('txtFilterTicketFormSer');
                 break;
             case 'PAX':
@@ -817,11 +850,19 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     imgBrowser_clickHandler: function () {
         prototype.url = URL_VIEWTICKET;
         console.log('this.dataEntry');
+        console.log(this.actionCode2);
         console.log(this.dataEntry);
         console.log(prototype.id);
         var controller = this.dataEntry.getController();
         controller.ticketNumber = "";
-        controller.actionCode = this.actionCode2;
+        
+        if (win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length === 10) {
+            controller.ticketNumber = win.getValue('txtFilterTicketCia').trim()+win.getValue('txtFilterTicketFormSer').trim()
+        }else {    
+            controller.ticketNumber = "";
+        }
+        
+        controller.actionCode = win.getValue('cbxSelectBy');
         controller.startDisplay();
         this.dataEntry.show();
         
@@ -990,6 +1031,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     loadTicket: function (bean) {
         var me01 = this;
         console.log('loadTicket');
+        console.log(bean);
         console.log(prototype.url+'/loadTicket');
         prototype.url = URL_VIEWTICKET;
         Ext.Ajax.request({
@@ -1008,8 +1050,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         var controller = me01.dataEntry.getController();
                         controller.ticketNumber = win.getValue('txtFilterTicketCia').trim()+win.getValue('txtFilterTicketFormSer').trim();
                         controller.actionCode = me01.SELECT_BY_TKT_2;
-                        controller.startDisplay();
-                        me01.dataEntry.show();
+                        //controller.startDisplay();
+                        //me01.dataEntry.show();
                     } else {
                         me01.beanResultSet01 = {};
                         me01.beanResultSet01.fileA720 = {};
@@ -3186,13 +3228,22 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     //win.setValue('txtFilterTicketSeq', '');
                     console.log(res.filterTKTSeq);
                     me01.filterTKTSeq = res.filterTKTSeq;
-                        if(me01.filterTKTSeq.length > 1){
-                            this.execSearch();
-                            this.controlLight();
+                        if(me01.filterTKTSeq.length == 1){
+                            //this.execSearch();
+                            console.log(me01.filterTKTSeq[0]);
+                            me01.bean.IN_CIA = me01.filterTKTSeq[0].IN_CIA;
+                            me01.bean.IN_FORMA  = me01.filterTKTSeq[0].IN_FORMA;
+                            me01.bean.IN_SERIE = me01.filterTKTSeq[0].IN_SERIE;
+                            me01.bean.IN_SEQ = me01.filterTKTSeq[0].IN_SEQ;
+                            console.log(me01.bean);
+                            me01.loadTicket(me01.bean);
+                            Ext.getCmp(prototype.id+'-lblCupon').hide();
+                            me01.controlLight();
                         }
                         else
                         {
-                            
+                            //global.Msg({ msg: "It's rolling" });
+                            me01.imgBrowser_clickHandler();
                         }
                 } else global.Msg({ msg: "Bad Request" });
             },

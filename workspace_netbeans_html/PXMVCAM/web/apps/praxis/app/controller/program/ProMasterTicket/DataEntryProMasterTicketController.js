@@ -16,8 +16,14 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
     },
     startDisplay: function () {
         win.visible('1-boxSearchFilter', true);
+        console.log('Entró a SELECT_BY_TKT_2');
+        console.log(this.ticketNumber);
+        console.log(this.actionCode);
         switch (this.actionCode) {
+            case me.SELECT_BY_TKT_1:
             case me.SELECT_BY_TKT_2:
+                console.log('Entró a -->> SELECT_BY_TKT_2');
+                console.log(this.ticketNumber);
                 win.setValue('1-cbxSearchBy', "1");
                 this.cbxSearchBy_changeHandler();
                 if (this.ticketNumber.length === 13) {
@@ -356,7 +362,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
             me.params.actionCode = 'VIEWTICKET_FOR_BWRMASTERTICKET';
         }
         me.params.bean = this.beanProMasterTicket;
-        me.startDisplay();
+        me.startDisplayFromBrowser();
 	me.dataEntry.hide(); //Ext.getCmp('DataEntryProMasterTicketForm').hide();
     },
     onCancelClick: function(btn){
