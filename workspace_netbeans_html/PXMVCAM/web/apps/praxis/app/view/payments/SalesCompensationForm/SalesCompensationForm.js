@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.SalesCompensationForm
                                         {
                                             xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter',
-                                            hidden: true
+                                            hidden: false
                                         }
                                         ,
                                         {

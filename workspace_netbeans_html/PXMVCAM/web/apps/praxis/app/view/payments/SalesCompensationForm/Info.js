@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 560,
+                            height: 580,
                             width: 1164,
                             layout: {
                                 type: 'vbox',
@@ -52,11 +52,15 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                             items: [
                                 {
                                     xtype: 'grid',
-                                    id: prototype.id + '-gridDataAirport',
-                                    height: 520,
-                                    width: 1164,
+                                    id: prototype.id + '-gridData',
+                                    height: 550,
+                                    width: 1150,
                                     hidden: false,
                                     columnLines: true,
+                                    features : {
+                                      dock: 'bottom',
+                                      ftype: 'summary',
+                                    },
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -64,8 +68,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Nbr', dataIndex: 'RN', width: 40},
-                                            {text: 'Bank',
+                                            {text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -73,13 +76,21 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Ctry', dataIndex: 'COUNTRY', width: 50},
-                                                    {text: 'Code', dataIndex: 'CODEBANK', width: 50},
-                                                    {text: 'Nrc. Code', dataIndex: 'CODBANKN', width: 70},
-                                                    {text: 'Name', dataIndex: 'NAMEBANK', width: 220, align: 'left'}
+                                                    {text: 'Date', dataIndex: 'BSUMDATE', width: 100},
                                                 ]
                                             },
-                                            {text: 'Document',
+                                            {text: 'PNR', dataIndex: 'SPNR', width: 80},
+                                            {text: 'Ticket', dataIndex: 'ISREFNBR', width: 120,
+                                                listeners: {
+                                                    click: 'viewTicket'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;";
+                                                    return '<a href="#payments-sales-compensation-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Credit Card',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
@@ -87,90 +98,52 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Number', dataIndex: 'DOCNUM', width: 70,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = 'text-align:center;';
-                                                            return  Ext.util.Format.number(value, '0,000');
+                                                    {text: 'Number', dataIndex: 'SCARDN', width: 125},
+                                                    {text: 'Auth.', dataIndex: 'SAUTHOC', width: 60},
+                                                ]
+                                            },
+                                            {text: 'Cur.', dataIndex: 'PCURRENCY', width: 60},
+                                            {text: 'Transaction',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'TRANSDATE', width: 100},
+                                                    {text: 'Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridData').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
                                                         }
                                                     },
                                                 ]
                                             },
-                                            {text: 'Curr.', dataIndex: 'CURRENC', width: 50},
-                                            {text: 'Commision Rate',
+                                            {text: 'Payment',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: true,
-                                                    align: 'center'
+                                                    align: 'center',
+                                                    border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Normal', dataIndex: 'RATECON', width: 80, align: 'right',
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = 'text-align:right;';
-                                                            return  Ext.util.Format.number(value, '0,000.00');
-                                                        }
-                                                    },
-                                                    {text: 'Promotional 1', dataIndex: 'RATECOP1', width: 110, align: 'right',
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = 'text-align:right;';
-                                                            return  Ext.util.Format.number(value, '0,000.00');
-                                                        }
-                                                    },
-                                                    {text: 'Promotional 2', dataIndex: 'RATECOP2', width: 110, align: 'right',
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = 'text-align:right;';
-                                                            return  Ext.util.Format.number(value, '0,000.00');
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                            ,
-                                            {
-                                                text: 'Rate',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: true,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'IVA', dataIndex: 'RATEIVA', width: 50, align: 'right',
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = 'text-align:right;';
-                                                            return  Ext.util.Format.number(value, '0,000.00');
-                                                        }
-                                                    }
+                                                    {text: 'Date', dataIndex: 'PAYDATE', width: 100},
+                                                    {text: 'Merchant', dataIndex: 'MERCHID', width: 100},
                                                 ]
                                             },
-                                            {text: 'Cliente', dataIndex: 'CLIENTE', width: 60},
-                                            {text: 'Status', dataIndex: 'FSTAT', width: 50},
-                                            {
-                                                text: 'Bank',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: true,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Status', dataIndex: 'FINSUMO', width: 100}
-                                                ]
-                                            },
-                                            {
-                                                sortable: false,
-                                                xtype: 'actioncolumn',
-                                                width: 40,
-                                                text: 'Edit',
-                                                align: 'center',
-                                                items: [
-                                                    {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Edit',
-                                                        handler: 'onEditClick'
-                                                    }
-                                                ]
-                                            }
+                                            {text: 'Status', dataIndex: 'descSTVAL', width: 100},
+                                            {text: 'Reason', dataIndex: 'desCERROR', width: 100},
                                         ]
                                     }
                                 },
-                                {xtype: 'tbspacer', width: 7, height: 10},
+                                {xtype: 'tbspacer', width: 7, height: 5},
                                 {
                                     xtype: 'panel',
                                     id: prototype.id + '-pie',
