@@ -116,7 +116,7 @@ public class ProMasterTicketController extends BaseController {
             logic = new ProMasterTicketLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
-            if (filter.IN_CIA.equals("139") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
+            if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
                 filterTKT = logic.SQP04422(filter);
             }
             map.put("success", true);

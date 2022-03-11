@@ -755,8 +755,12 @@ public class ProMasterTicketDAO {
         
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null, rs03 = null, rs04 = null, rs05 = null, rs06 = null, rs07 = null, rs08 = null, rs09 = null, rs10 = null, rs11 = null, rs12 = null, rs13 = null, rs14 = null, rs15 = null;
+        String SQLQRY01 = "SELECT";
+
         //<editor-fold defaultstate="collapsed" desc="{...} SQL Sentences">
-        String SQLQRY01 = "SELECT"
+        if(filter.IN_CIA.equals("139"))
+        {
+            SQLQRY01 = "SELECT"
                 + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
                 + " FROM PRAXIS.A720 WHERE"
                 + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?"
@@ -764,13 +768,19 @@ public class ProMasterTicketDAO {
                 + " SELECT  A720CIA,A720FORMA,A720SERIE, A720SEQ "
                 + " FROM PRAXIS.A720HST WHERE"
                 + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
-
-        
+        }
+        else
+        {
+            SQLQRY01 = "SELECT"
+                + "   A720CIA,A720FORMA,A720SERIE, A720SEQ "
+                + " FROM PRAXIS.A3200 WHERE"
+                + "   A720AIRLIN=? AND A720CIA=? AND A720FORMA=? AND A720SERIE=?";
+        }
         //</editor-fold>
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
-            if(filter.IN_SEQ.isEmpty()){
+            if(filter.IN_CIA.equals("139")){
                 pstmt01 = cnx.prepareStatement(SQLQRY01);
                 pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
                 pstmt01.setString(2, filter.IN_CIA);
@@ -789,6 +799,23 @@ public class ProMasterTicketDAO {
                     pX040S01A720Filter.IN_SEQ = rstst01.getString("A720SEQ");
                     lstPX040S01A720Filter.add(pX040S01A720Filter);
                 }                
+            }
+            else
+            {
+                pstmt01 = cnx.prepareStatement(SQLQRY01);
+                pstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                pstmt01.setString(2, filter.IN_CIA);
+                pstmt01.setString(3, filter.IN_FORMA);
+                pstmt01.setString(4, filter.IN_SERIE);
+                rstst01 = pstmt01.executeQuery();
+                while(rstst01.next()){
+                    pX040S01A720Filter = new PX040S01A720Filter();
+                    pX040S01A720Filter.IN_CIA = rstst01.getString("A720CIA");
+                    pX040S01A720Filter.IN_FORMA = rstst01.getString("A720FORMA");
+                    pX040S01A720Filter.IN_SERIE = rstst01.getString("A720SERIE");
+                    pX040S01A720Filter.IN_SEQ = rstst01.getString("A720SEQ");
+                    lstPX040S01A720Filter.add(pX040S01A720Filter);
+                }
             }
             
         } finally {

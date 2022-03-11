@@ -71,11 +71,17 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
             win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
         } else if (this.actionCode===this.ACT_VIEW_BY_TKT_ADM) {
             win.setValue('cbxSelectBy', 'ADM');
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
             win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
         } else if (this.actionCode === 'ViewDashboard' || this.actionCode === 'ViewConciliation' || this.actionCode === 'BankConciliation' || this.actionCode === 'BoomerConciliation'  || this.actionCode === 'Unmatched' 
 		|| this.actionCode === 'VIEWTICKET_FOR_BWRMASTERTICKET' || this.actionCode === 'ViewBalance' || this.actionCode === 'ABValues' || this.actionCode === 'ViewRedempPLM' || this.actionCode === 'ViewDOT' 
 		|| this.actionCode === 'ViewDBNew' || this.actionCode === 'ANTI_FRAUD_REFUND' || this.actionCode === 'DETERMINATE_OF_COMMISSION' || this.actionCode ==='ViewProMatchTkt'
@@ -87,7 +93,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketCia', this.bean.IN_CIA);
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
+            if(this.bean.IN_SEQ==="") this.bean.IN_SEQ = "00";
             win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.loadTicket(this.bean);
         } else {
             this.imgBrowser_clickHandler();
         }
@@ -116,15 +124,31 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
 	}else{
             Ext.getCmp(prototype.id+'-btnADM').hide();
 	}
-        if (this.actionCode === 'VIEWTICKET_FOR_BWRMASTERTICKET' ) {
+        if (this.actionCode===this.ACT_VIEW_BY_TKT) {
+            win.setValue('cbxSelectBy', 'TKT');
+            this.cbxSelectBy_closeHandler();
+            win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
+            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
+        } else if (this.actionCode===this.ACT_VIEW_BY_TKT_ADM) {
+            win.setValue('cbxSelectBy', 'ADM');
+            this.cbxSelectBy_closeHandler();
+            win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
+            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
+        } else if (this.actionCode === 'VIEWTICKET_FOR_BWRMASTERTICKET' ) {
             win.setValue('cbxSelectBy', 'TKT');
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketCia', this.bean.IN_CIA);
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
             win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.loadTicket(this.bean);
         }
         global.clear();
-        this.loadTicket(this.bean);
         //this.controlLight();
     },
     cbxSelectBy_closeHandler: function(field, eOpts) {
@@ -833,16 +857,20 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     // <editor-fold defaultstate="collapsed" desc="Options">
     imgSearch_clickHandler: function (obj, e) {
         this.limpiarData();
-        this.bean = {};
+        //this.bean = {};
         if (win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length === 10) {
             this.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
             this.bean.IN_FORMA  = win.getValue('txtFilterTicketFormSer').trim().substr(0, 4);
             this.bean.IN_SERIE = win.getValue('txtFilterTicketFormSer').trim().substr(4, 6);
             this.loadTicketSeq(this.bean);
-        }else {    
-            this.execSearch();
-            this.controlLight();
         }
+        else if(this.bean.IN_FORMA !== null && this.bean.IN_FORMA.length === 4 && this.bean.IN_SERIE !== null && this.bean.IN_SERIE.length === 6) {
+            this.loadTicketSeq(this.bean);
+        }
+        else {    
+            this.execSearch();
+        }
+        this.controlLight();
     },
     imgExportText_clickHandler: function (obj, e) {        
         this.loadSabre();
