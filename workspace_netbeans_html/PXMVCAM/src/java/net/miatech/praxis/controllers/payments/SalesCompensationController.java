@@ -112,7 +112,8 @@ public class SalesCompensationController extends BaseController {
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Report : getXLSX");
-        String fileNameDownload = String.format("Report Sales Compensation  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String hora = Functions.getHoraActual();
+        String fileNameDownload = String.format("Report  - Sales Compensation " + Functions.getFechaActual() + " " + hora + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -165,19 +166,31 @@ public class SalesCompensationController extends BaseController {
             Cell CH1_9 = row1.createCell(9);
             Cell CH1_10 = row1.createCell(10);
             Cell CH1_11 = row1.createCell(11);
+            Cell CH1_12 = row1.createCell(12);
+            Cell CH1_13 = row1.createCell(13);
+            Cell CH1_14 = row1.createCell(14);
+            Cell CH1_15 = row1.createCell(15);
+            Cell CH1_16 = row1.createCell(16);
+            Cell CH1_17 = row1.createCell(17);
 
-            CH1_0.setCellValue("Sales");
-            CH1_1.setCellValue("PNR");
-            CH1_2.setCellValue("Ticket");
-            CH1_3.setCellValue("Credit Card");
+            CH1_0.setCellValue("Sales Compensation " + Functions.getFechaActual() + " - " + hora);
+            CH1_1.setCellValue("");
+            CH1_2.setCellValue("");
+            CH1_3.setCellValue("");
             CH1_4.setCellValue("");
-            CH1_5.setCellValue("Cur.");
-            CH1_6.setCellValue("Transaction");
+            CH1_5.setCellValue("");
+            CH1_6.setCellValue("");
             CH1_7.setCellValue("");
-            CH1_8.setCellValue("Payment");
+            CH1_8.setCellValue("");
             CH1_9.setCellValue("");
-            CH1_10.setCellValue("Status");
-            CH1_11.setCellValue("Reason");
+            CH1_10.setCellValue("");
+            CH1_11.setCellValue("");
+            CH1_12.setCellValue("");
+            CH1_13.setCellValue("");
+            CH1_14.setCellValue("");
+            CH1_15.setCellValue("");
+            CH1_16.setCellValue("");
+            CH1_17.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -191,9 +204,15 @@ public class SalesCompensationController extends BaseController {
             CH1_9.setCellStyle(headerStyle);
             CH1_10.setCellStyle(headerStyle);
             CH1_11.setCellStyle(headerStyle);
+            CH1_12.setCellStyle(headerStyle);
+            CH1_13.setCellStyle(headerStyle);
+            CH1_14.setCellStyle(headerStyle);
+            CH1_15.setCellStyle(headerStyle);
+            CH1_16.setCellStyle(headerStyle);
+            CH1_17.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            //sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 17));
             ++vj;
             //============================================
 
@@ -211,19 +230,31 @@ public class SalesCompensationController extends BaseController {
             Cell CH2_9 = row2.createCell(9);
             Cell CH2_10 = row2.createCell(10);
             Cell CH2_11 = row2.createCell(11);
+            Cell CH2_12 = row2.createCell(12);
+            Cell CH2_13 = row2.createCell(13);
+            Cell CH2_14 = row2.createCell(14);
+            Cell CH2_15 = row2.createCell(15);
+            Cell CH2_16 = row2.createCell(16);
+            Cell CH2_17 = row2.createCell(17);
 
-            CH2_0.setCellValue("Date");
-            CH2_1.setCellValue("");
-            CH2_2.setCellValue("");
-            CH2_3.setCellValue("Number");
-            CH2_4.setCellValue("Auth.");
+            CH2_0.setCellValue("Sales");
+            CH2_1.setCellValue("Ticket");
+            CH2_2.setCellValue("Credit Card");
+            CH2_3.setCellValue("");
+            CH2_4.setCellValue("Transaction");
             CH2_5.setCellValue("");
-            CH2_6.setCellValue("Date");
-            CH2_7.setCellValue("amount");
-            CH2_8.setCellValue("Date");
-            CH2_9.setCellValue("Merchant");
+            CH2_6.setCellValue("");
+            CH2_7.setCellValue("Payment");
+            CH2_8.setCellValue("");
+            CH2_9.setCellValue("Sales");
             CH2_10.setCellValue("");
             CH2_11.setCellValue("");
+            CH2_12.setCellValue("");
+            CH2_13.setCellValue("");
+            CH2_14.setCellValue("");
+            CH2_15.setCellValue("");
+            CH2_16.setCellValue("Status");
+            CH2_17.setCellValue("Reason");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -237,16 +268,162 @@ public class SalesCompensationController extends BaseController {
             CH2_9.setCellStyle(headerStyle);
             CH2_10.setCellStyle(headerStyle);
             CH2_11.setCellStyle(headerStyle);
+            CH2_12.setCellStyle(headerStyle);
+            CH2_13.setCellStyle(headerStyle);
+            CH2_14.setCellStyle(headerStyle);
+            CH2_15.setCellStyle(headerStyle);
+            CH2_16.setCellStyle(headerStyle);
+            CH2_17.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 3));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 4, 6));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 7, 8));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 15));
+            
+            sheet.addMergedRegion(new CellRangeAddress(1, 3, 1, 1));
+            sheet.addMergedRegion(new CellRangeAddress(1, 3, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(1, 3, 17, 17));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 3 ==========
+            Row row3 = sheet.createRow(vj);
+            Cell CH3_0 = row3.createCell(0);
+            Cell CH3_1 = row3.createCell(1);
+            Cell CH3_2 = row3.createCell(2);
+            Cell CH3_3 = row3.createCell(3);
+            Cell CH3_4 = row3.createCell(4);
+            Cell CH3_5 = row3.createCell(5);
+            Cell CH3_6 = row3.createCell(6);
+            Cell CH3_7 = row3.createCell(7);
+            Cell CH3_8 = row3.createCell(8);
+            Cell CH3_9 = row3.createCell(9);
+            Cell CH3_10 = row3.createCell(10);
+            Cell CH3_11 = row3.createCell(11);
+            Cell CH3_12 = row3.createCell(12);
+            Cell CH3_13 = row3.createCell(13);
+            Cell CH3_14 = row3.createCell(14);
+            Cell CH3_15 = row3.createCell(15);
+            Cell CH3_16 = row3.createCell(16);
+            Cell CH3_17 = row3.createCell(17);
+
+            CH3_0.setCellValue("Date");
+            CH3_1.setCellValue("");
+            CH3_2.setCellValue("Number");
+            CH3_3.setCellValue("Auth");
+            CH3_4.setCellValue("Date");
+            CH3_5.setCellValue("Cur.");
+            CH3_6.setCellValue("Amount");
+            CH3_7.setCellValue("Date");
+            CH3_8.setCellValue("Merchant");
+            CH3_9.setCellValue("PNR");
+            CH3_10.setCellValue("Agent");
+            CH3_11.setCellValue("Counter");
+            CH3_12.setCellValue("Orig");
+            CH3_13.setCellValue("Dest");
+            CH3_14.setCellValue("Flight");
+            CH3_15.setCellValue("");
+            CH3_16.setCellValue("");
+            CH3_17.setCellValue("");
+
+            CH3_0.setCellStyle(headerStyle);
+            CH3_1.setCellStyle(headerStyle);
+            CH3_2.setCellStyle(headerStyle);
+            CH3_3.setCellStyle(headerStyle);
+            CH3_4.setCellStyle(headerStyle);
+            CH3_5.setCellStyle(headerStyle);
+            CH3_6.setCellStyle(headerStyle);
+            CH3_7.setCellStyle(headerStyle);
+            CH3_8.setCellStyle(headerStyle);
+            CH3_9.setCellStyle(headerStyle);
+            CH3_10.setCellStyle(headerStyle);
+            CH3_11.setCellStyle(headerStyle);
+            CH3_12.setCellStyle(headerStyle);
+            CH3_13.setCellStyle(headerStyle);
+            CH3_14.setCellStyle(headerStyle);
+            CH3_15.setCellStyle(headerStyle);
+            CH3_16.setCellStyle(headerStyle);
+            CH3_17.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 15));
+            ++vj;
+            //============================================
+
+            // ======  Nivel 4 ==========
+            Row row4 = sheet.createRow(vj);
+            Cell CH4_0 = row4.createCell(0);
+            Cell CH4_1 = row4.createCell(1);
+            Cell CH4_2 = row4.createCell(2);
+            Cell CH4_3 = row4.createCell(3);
+            Cell CH4_4 = row4.createCell(4);
+            Cell CH4_5 = row4.createCell(5);
+            Cell CH4_6 = row4.createCell(6);
+            Cell CH4_7 = row4.createCell(7);
+            Cell CH4_8 = row4.createCell(8);
+            Cell CH4_9 = row4.createCell(9);
+            Cell CH4_10 = row4.createCell(10);
+            Cell CH4_11 = row4.createCell(11);
+            Cell CH4_12 = row4.createCell(12);
+            Cell CH4_13 = row4.createCell(13);
+            Cell CH4_14 = row4.createCell(14);
+            Cell CH4_15 = row4.createCell(15);
+            Cell CH4_16 = row4.createCell(16);
+            Cell CH4_17 = row4.createCell(17);
+
+            CH4_0.setCellValue("");
+            CH4_1.setCellValue("");
+            CH4_2.setCellValue("");
+            CH4_3.setCellValue("");
+            CH4_4.setCellValue("");
+            CH4_5.setCellValue("");
+            CH4_6.setCellValue("");
+            CH4_7.setCellValue("");
+            CH4_8.setCellValue("");
+            CH4_9.setCellValue("");
+            CH4_10.setCellValue("");
+            CH4_11.setCellValue("");
+            CH4_12.setCellValue("");
+            CH4_13.setCellValue("");
+            CH4_14.setCellValue("Number");
+            CH4_15.setCellValue("Date");
+            CH4_16.setCellValue("");
+            CH4_17.setCellValue("");
+
+            CH4_0.setCellStyle(headerStyle);
+            CH4_1.setCellStyle(headerStyle);
+            CH4_2.setCellStyle(headerStyle);
+            CH4_3.setCellStyle(headerStyle);
+            CH4_4.setCellStyle(headerStyle);
+            CH4_5.setCellStyle(headerStyle);
+            CH4_6.setCellStyle(headerStyle);
+            CH4_7.setCellStyle(headerStyle);
+            CH4_8.setCellStyle(headerStyle);
+            CH4_9.setCellStyle(headerStyle);
+            CH4_10.setCellStyle(headerStyle);
+            CH4_11.setCellStyle(headerStyle);
+            CH4_12.setCellStyle(headerStyle);
+            CH4_13.setCellStyle(headerStyle);
+            CH4_14.setCellStyle(headerStyle);
+            CH4_15.setCellStyle(headerStyle);
+            CH4_16.setCellStyle(headerStyle);
+            CH4_17.setCellStyle(headerStyle);
+
+            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 0, 0));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 2, 2));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 3, 3));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 4, 4));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 5, 5));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 6, 6));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 11, 11));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 12, 12));
+            sheet.addMergedRegion(new CellRangeAddress(2, 3, 13, 13));
             ++vj;
             //============================================
 
@@ -264,19 +441,31 @@ public class SalesCompensationController extends BaseController {
                 Cell rcell9 = row1.createCell(9);
                 Cell rcell10 = row1.createCell(10);
                 Cell rcell11 = row1.createCell(11);
+                Cell rcell12 = row1.createCell(12);
+                Cell rcell13 = row1.createCell(13);
+                Cell rcell14 = row1.createCell(14);
+                Cell rcell15 = row1.createCell(15);
+                Cell rcell16 = row1.createCell(16);
+                Cell rcell17 = row1.createCell(17);
 
                 rcell0.setCellValue(listaData.get(vi).BSUMDATE);
-                rcell1.setCellValue(listaData.get(vi).SPNR);
-                rcell2.setCellValue(listaData.get(vi).ISREFNBR);
-                rcell3.setCellValue(listaData.get(vi).SCARDN);
-                rcell4.setCellValue(listaData.get(vi).SAUTHOC);
+                rcell1.setCellValue(listaData.get(vi).ISREFNBR);
+                rcell2.setCellValue(listaData.get(vi).SCARDN);
+                rcell3.setCellValue(listaData.get(vi).SAUTHOC);
+                rcell4.setCellValue(listaData.get(vi).TRANSDATE);
                 rcell5.setCellValue(listaData.get(vi).PCURRENCY);
-                rcell6.setCellValue(listaData.get(vi).TRANSDATE);
-                rcell7.setCellValue(listaData.get(vi).TGROSAMOUN);
-                rcell8.setCellValue(listaData.get(vi).PAYDATE);
-                rcell9.setCellValue(listaData.get(vi).MERCHID);
-                rcell10.setCellValue(listaData.get(vi).descSTVAL);
-                rcell11.setCellValue(listaData.get(vi).desCERROR);
+                rcell6.setCellValue(listaData.get(vi).TGROSAMOUN);
+                rcell7.setCellValue(listaData.get(vi).PAYDATE);
+                rcell8.setCellValue(listaData.get(vi).MERCHID);
+                rcell9.setCellValue(listaData.get(vi).SPNR);
+                rcell10.setCellValue(listaData.get(vi).A720AGENTE);
+                rcell11.setCellValue(listaData.get(vi).A720FRESV);
+                rcell12.setCellValue(listaData.get(vi).A720RUTA0);
+                rcell13.setCellValue(listaData.get(vi).A720RUTA1);
+                rcell14.setCellValue(listaData.get(vi).A720NVLO1);
+                rcell15.setCellValue(listaData.get(vi).A720FVLO1);
+                rcell16.setCellValue(listaData.get(vi).descSTVAL);
+                rcell17.setCellValue(listaData.get(vi).desCERROR);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -294,6 +483,12 @@ public class SalesCompensationController extends BaseController {
             sheet.autoSizeColumn(9, true);
             sheet.autoSizeColumn(10, true);
             sheet.autoSizeColumn(11, true);
+            sheet.autoSizeColumn(12, true);
+            sheet.autoSizeColumn(13, true);
+            sheet.autoSizeColumn(14, true);
+            sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(17, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");

@@ -79,6 +79,14 @@ public class A4116Filter extends A4116 {
     public String IN_IDITEMS = "";
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
+
+    //CAMPOS A720
+    public String A720AGENTE = "";
+    public String A720FRESV = "";
+    public String A720RUTA0 = "";
+    public String A720RUTA1 = "";
+    public String A720NVLO1 = "";
+    public String A720FVLO1 = "";
     
     public Pagination page = new Pagination();
     

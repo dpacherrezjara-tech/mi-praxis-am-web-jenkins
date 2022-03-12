@@ -109,10 +109,17 @@ public class SalesCompensationDAO {
                     bean.MERCHID = rst.getString("MERCHID").trim();
                     bean.TRANSDATE = rst.getString("TRANSDATE").trim();
                     bean.STVAL = rst.getString("STVAL").trim();
-                    bean.descSTVAL = "Match Manual";
+                    bean.descSTVAL = "Forced Match";
                     bean.CERROR = rst.getString("CERROR").trim();
                     bean.desCERROR = "Compensation";
                     bean.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
+                    
+                    bean.A720AGENTE = rst.getString("A720AGENTE").trim();
+                    bean.A720FRESV = rst.getString("A720FRESV").trim();
+                    bean.A720RUTA0 = rst.getString("A720RUTA0").trim();
+                    bean.A720RUTA1 = rst.getString("A720RUTA1").trim();
+                    bean.A720NVLO1 = rst.getString("A720NVLO1").trim();
+                    bean.A720FVLO1 = rst.getString("A720FVLO1").trim();
 
                     bean.totTGROSAMOUN = totTGROSAMOUN;
                     
