@@ -2436,7 +2436,7 @@ public class FlightConciliationDAO {
         String strMsj = "";
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2470,6 +2470,7 @@ public class FlightConciliationDAO {
             cstmt.setString(19, session.getUserView().getUserInfo().USR);
             cstmt.setString(20, Functions.getFechaActual());
             cstmt.setString(21, Functions.getHoraActual());
+            cstmt.setString(22, filter.IN_TABLE.trim());
             cstmt.execute();
             
             strMsj = "Upgrade was successful.";
@@ -2540,7 +2541,7 @@ public class FlightConciliationDAO {
         
         String strMsj = "";
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04323(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04323(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2581,6 +2582,7 @@ public class FlightConciliationDAO {
             cstmt.setString(25, session.getUserView().getUserInfo().USR);
             cstmt.setString(26, Functions.getFechaActual());
             cstmt.setString(27, Functions.getHoraActual());
+            cstmt.setString(28, filter.IN_TABLE.trim());
             cstmt.execute();
             
             strMsj = "Insertion was successful.";
