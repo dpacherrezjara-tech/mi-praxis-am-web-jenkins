@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1200,
+                width: 1700,
                 height: 700,
                 align: 'center'
             },
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                             padding: '1',
                             border: true,
                             height: 580,
-                            width: 1164,
+                            width: 1604,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,12 +54,12 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridData',
                                     height: 550,
-                                    width: 1150,
+                                    width: 1604,
                                     hidden: false,
                                     columnLines: true,
-                                    features : {
-                                      dock: 'bottom',
-                                      ftype: 'summary',
+                                    features: {
+                                        dock: 'bottom',
+                                        ftype: 'summary',
                                     },
                                     columns: {
                                         defaults: {
@@ -79,7 +79,6 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                     {text: 'Date', dataIndex: 'BSUMDATE', width: 100},
                                                 ]
                                             },
-                                            {text: 'PNR', dataIndex: 'SPNR', width: 80},
                                             {text: 'Ticket', dataIndex: 'ISREFNBR', width: 120,
                                                 listeners: {
                                                     click: 'viewTicket'
@@ -102,7 +101,6 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                     {text: 'Auth.', dataIndex: 'SAUTHOC', width: 60},
                                                 ]
                                             },
-                                            {text: 'Cur.', dataIndex: 'PCURRENCY', width: 60},
                                             {text: 'Transaction',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -112,8 +110,9 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Date', dataIndex: 'TRANSDATE', width: 100},
+                                                    {text: 'Cur.', dataIndex: 'PCURRENCY', width: 60},
                                                     {text: 'Amount', dataIndex: 'TGROSAMOUN', width: 100,
-                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             value = Ext.util.Format.number(value, '0,000.00');
                                                             return value;
@@ -136,6 +135,68 @@ Ext.define('Ext.Praxis.view.payments.SalesCompensationForm.Info', {
                                                 columns: [
                                                     {text: 'Date', dataIndex: 'PAYDATE', width: 100},
                                                     {text: 'Merchant', dataIndex: 'MERCHID', width: 100},
+                                                ]
+                                            },
+                                            {text: 'Sales',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'PNR', dataIndex: 'SPNR', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AFDBF3;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Agent', dataIndex: 'A720AGENTE', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AFDBF3;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Counter', dataIndex: 'A720FRESV', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AFDBF3;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Orig', dataIndex: 'A720RUTA0', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AFDBF3;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Dest', dataIndex: 'A720RUTA1', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#AFDBF3;";
+                                                            return  value;
+                                                        }
+                                                    },
+                                                    {text: 'Flight',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center',
+                                                            border: true
+                                                        },
+                                                        columns: [
+                                                            {text: 'Number', dataIndex: 'A720NVLO1', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "background-color:#AFDBF3;";
+                                                                    return  value;
+                                                                }
+                                                            },
+                                                            {text: 'Date', dataIndex: 'A720FVLO1', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "background-color:#AFDBF3;";
+                                                                    return  value;
+                                                                }
+                                                            },
+                                                        ]
+                                                    },
                                                 ]
                                             },
                                             {text: 'Status', dataIndex: 'descSTVAL', width: 100},
