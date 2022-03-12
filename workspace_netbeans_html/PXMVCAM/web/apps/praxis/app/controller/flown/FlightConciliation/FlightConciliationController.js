@@ -183,9 +183,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
             
             if (chkNewManifest) {
-                this.objFLIGHTMANIF.IN_TABLE = 'LIBSAP12.A4190';
+                this.objFLIGHTMANIF.IN_TABLE = 'A4190';
             } else {
-                this.objFLIGHTMANIF.IN_TABLE = 'PRAXIS.A3729';
+                this.objFLIGHTMANIF.IN_TABLE = 'A3729';
             }
             
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
@@ -926,9 +926,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         var chkNewManifest = this.getValue("chkNewManifest");
 
         if (chkNewManifest) {
-            this.objFLIGHTMANIF.IN_TABLE = 'LIBSAP12.A4190';
+            this.objFLIGHTMANIF.IN_TABLE = 'A4190';
         } else {
-            this.objFLIGHTMANIF.IN_TABLE = 'PRAXIS.A3729';
+            this.objFLIGHTMANIF.IN_TABLE = 'A3729';
         }
 
         objA3729 = {};

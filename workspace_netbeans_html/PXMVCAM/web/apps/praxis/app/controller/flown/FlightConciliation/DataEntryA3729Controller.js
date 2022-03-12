@@ -313,9 +313,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
         console.log('ACTUALIZAR');
         var chkNewManifest = this.getValue("chkNewManifest")
         if (chkNewManifest) {
-            beanTemp.IN_TABLE = 'LIBSAP12.A4190';
+            beanTemp.IN_TABLE = 'A4190';
         } else {
-            beanTemp.IN_TABLE = 'PRAXIS.A3729';
+            beanTemp.IN_TABLE = 'A3729';
         }
         var beanString = JSON.stringify(beanTemp);
         Ext.Ajax.request({
