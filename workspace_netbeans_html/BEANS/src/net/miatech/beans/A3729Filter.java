@@ -38,8 +38,8 @@ public class A3729Filter extends A3729 {
     public String CUPON_2 = "";
     
     public int qty_update = 0;
+    public String SPNR = "";
     public String option = "";
     public Pagination page = new Pagination();
-    public long RN;
-
+    public long RN = 0;
 }
