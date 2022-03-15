@@ -184,8 +184,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     },
     viewDetFAFlight: function(param,column, e, row, column, x, rowData) {   
         
-        this.beanDetail = x.record.data;
+        Ext.getCmp(prototype.id + '-radioFlownAnalysis').setValue({'rbgpDetail' : 'MXN'});
         
+        this.beanDetail = x.record.data;
         this.beanDetail.FLAG_VNR = param;
         meFA.paramsFAFlight.beanString = JSON.stringify(this.beanDetail);
 
@@ -260,6 +261,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         
         win.lblUser_toolTip("Estructura: A1971");
         this.showGrid('-boxDetailData');
+        
+        console.log(meFlown.drillDown);
 
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -396,7 +399,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
         meFA.BACKCABIN = detail;
         
         if(Cabin === 'J'){
-            meFA.meFAstrTipoCabin = 'Cabin : Business';
+            meFA.strTipoCabin = 'Cabin : Business';
 	}else if(Cabin === 'Y'){
             meFA.strTipoCabin = 'Cabin : Economy';
 	}else if(Cabin === 'F'){
@@ -406,6 +409,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
 	}else{
             meFA.strTipoCabin = '';
 	}
+        
+        console.log(meFA.strTipoCabin);
 	
 	if(Cabin !== 'F'){
             
@@ -450,6 +455,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
                             msg: 'Data not found.'
                         });
                     } else {
+                        console.log(me.strTipoCabin);
+                        console.log(meFA.strTipoCabin);
                         
 //                        console.log(obj.data);
                         var data = obj.data.items[0].data;
@@ -647,11 +654,20 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
             Ext.getCmp(prototype.id + '-filterMain').hide();
         }
         
+        console.log(meFA.DETALLE);
+        
         if(!meFlown.drillDown.includes(meFlown.boxActual)){
             if(nameGrid !== '-boxByZone' && nameGrid !== '-boxByCityPair' && nameGrid !== '-boxByNPlane'){
                 meFlown.drillDown.push(meFlown.boxActual);
+            }else{
+                if(meFlown.boxActual === '-boxByZone' && meFA.DETALLE === ''){
+                    meFlown.drillDown.push(meFlown.boxActual);
+                } else if(meFlown.boxActual === '-boxByCityPair'){
+                    meFlown.drillDown.push(meFlown.boxActual);
+                }
             }
         }
+        console.log(meFlown.drillDown);
         
         Ext.getCmp(prototype.id + meFlown.boxActual).show();
 
@@ -660,11 +676,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.FlownAnalysisControll
     imgBack_clickHandler: function () {
         
         console.log(meFlown.drillDown);
+        console.log(meFlown.boxActual);
         if (meFlown.drillDown.length > 1) {
-            Ext.getCmp(prototype.id + meFlown.boxActual).hide();
-            meFlown.drillDown.pop();
-            meFlown.boxActual = meFlown.drillDown[meFlown.drillDown.length - 1];
-            Ext.getCmp(prototype.id + meFlown.boxActual).show();
+            
+            
+            if(meFlown.boxActual === '-boxByZone' || meFlown.boxActual === '-boxByCityPair'){
+                console.log('waaaaaaaaaaa');
+            }else{
+                Ext.getCmp(prototype.id + meFlown.boxActual).hide();
+                meFlown.drillDown.pop();
+                meFlown.boxActual = meFlown.drillDown[meFlown.drillDown.length - 1];
+                Ext.getCmp(prototype.id + meFlown.boxActual).show();
+            }
             
             if(meFlown.boxActual === '-boxMainDataFA' || meFlown.boxActual === '-panelGridSearchWK'){
                 Ext.getCmp(prototype.id + '-filterMain').show();

@@ -236,7 +236,9 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX246SQP00331(filter);
     }
     
-    
+    public List<A1971Filter> loadPX246SQP00342(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX246SQP00342(filter);
+    }
     
     
     
