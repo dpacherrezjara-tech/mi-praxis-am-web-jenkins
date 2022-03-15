@@ -445,7 +445,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id + '-chkNewManifest',
-                            boxLabel: '<b>New Flight Manifest</b>',
+                            boxLabel: '<b>New Flight Manifest CDD</b>',
                             hidden: true,
                             checked: false,
                             width: 200,

@@ -1227,7 +1227,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridDetailFlightManifest',
-                                            width: 1369,
+                                            width: 1439,
                                             height: 550,
                                             features: [{
                                                     ftype: 'summary'
@@ -1279,6 +1279,19 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'Seat', dataIndex: 'CHAIR', width: 70, sortable: true,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background:#FFF9E0;";
+                                                            return value;
+                                                        },
+//                                                        sorter: function (v1, v2) {
+//                                                            console.log('sorter');
+//                                                            v1 = v1.get('CHAIR');
+//                                                            v2 = v2.get('CHAIR');
+//                                                            return v1 > v2 ? 1 : ( v1 < v2 ? -1 : 0 );
+//                                                        }
+                                                    },
+                                                    {
+                                                        text: 'PNR', dataIndex: 'SPNR', width: 70, sortable: true,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#FFF9E0;";
                                                             return value;
