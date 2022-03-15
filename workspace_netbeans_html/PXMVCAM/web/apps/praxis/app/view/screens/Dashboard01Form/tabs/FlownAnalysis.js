@@ -1252,7 +1252,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#fcf9ec;color:#057ECB;";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
-                                                    return  value;
+                                                    return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                 },
                                                 summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                     var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
@@ -1298,9 +1298,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                             args: ['J','FLIGHT']
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#e8f9e8";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return  value;
+                                                            metaData.style = "text-align:right;background-color:#e8f9e8;color:#057ECB;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
@@ -1353,9 +1353,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                             args: ['Y','FLIGHT']
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#deedfb";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return  value;
+                                                            metaData.style = "text-align:right;background-color:#deedfb;color:#057ECB;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
@@ -1557,10 +1557,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                         },
                                         columns: [
                                             {text: 'Cod', dataIndex: 'ZONA', width: 60,
-        //                                        listeners: {
-        //                                            click: 'viewDetail',
-        //                                            args: ['FLIGHT']
-        //                                        },
+                                                listeners: {
+                                                    click: 'viewDetail',
+                                                    args: ['ZONE']
+                                                },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;";
                                                     value = '<b>' + value + '</b>';
@@ -1600,7 +1600,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                     },
                                     {
                                         text: 'Total',
-                                        //                                                id: prototype.id + '-adgSalDate',
                                         defaults: {
                                             menuDisabled: true,
                                             sortable: false,
@@ -1610,8 +1609,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                             {
                                                 text: 'Pax', dataIndex: 'QTYPAX', width: 90,
                                                 listeners: {
-        //                                            click: 'viewDetail',
-        //                                            args: ['FLIGHT']
+                                                    click: 'viewDetailByCabin',
+                                                    args: ['','ZONE']
                                                 },
                                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "color:#057ECB;text-align:right;background-color:#fcf9ec;";
@@ -1657,6 +1656,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX_J', width: 65,
+                                                        listeners: {
+                                                            click: 'viewDetailByCabin',
+                                                            args: ['J','ZONE']
+                                                        },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#e8f9e8;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
@@ -1664,7 +1667,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridFlownAnalysis').getStore().getData().items[0].data;
-
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
                                                         }
@@ -1708,6 +1710,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                 columns: [
                                                     {
                                                         text: 'Pax', dataIndex: 'QTYPAX_Y', width: 95,
+                                                        listeners: {
+                                                            click: 'viewDetailByCabin',
+                                                            args: ['Y','ZONE']
+                                                        },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;text-align:right;background-color:#deedfb;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
@@ -2684,13 +2690,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                             args: ['J','DETAIL']
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#e8f9e8";
-                                                            value = Ext.util.Format.number(value, '0,000');
-                                                            return  value;
+                                                            metaData.style = "text-align:right;background-color:#e8f9e8;color:#057ECB;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
-
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_J, '0,000') + '<b>';
                                                         }
@@ -2739,13 +2744,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.FlownAnalysis', {
                                                             args: ['Y','DETAIL']
                                                         },
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#deedfb";
+                                                            metaData.style = "text-align:right;background-color:#deedfb;color:#057ECB;";
                                                             value = Ext.util.Format.number(value, '0,000');
-                                                            return  value;
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return '<a href="#screens-dashboard-01-form" style="color:#057ECB;text-decoration:none;">' + value + '</a>';
                                                         },
                                                         summaryRenderer: function(value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridDetailData').getStore().getData().items[0].data;
-
                                                             metaData.style = 'text-align:right; margin-right:3px ';
                                                             return '<b>' + Ext.util.Format.number(data.totQTYPAX_Y, '0,000') + '<b>';
                                                         }
