@@ -302,11 +302,11 @@ public class MassiveRefunduatpFormController extends BaseController {
                                     result = "Type Card 1 required";
                                     break;
                                 }
-                                if (!fileA4076.A4076TCARD1.equals("CA") && !fileA4076.A4076TCARD1.equals("VI") && !fileA4076.A4076TCARD1.equals("AX") && !fileA4076.A4076TCARD1.equals("TP") && !fileA4076.A4076TCARD1.equals("DC") && !fileA4076.A4076TCARD1.equals("DC") && !fileA4076.A4076TCARD1.equals("JC")  && !fileA4076.A4076TCARD1.equals("DS") && !fileA4076.A4076TCARD1.equals("PP") && !fileA4076.A4076TCARD1.equals("IK") && !fileA4076.A4076TCARD1.equals("BA")) {
+                                if (!fileA4076.A4076TCARD1.equals("CA") && !fileA4076.A4076TCARD1.equals("VI") && !fileA4076.A4076TCARD1.equals("AX") && !fileA4076.A4076TCARD1.equals("TP") && !fileA4076.A4076TCARD1.equals("DC") && !fileA4076.A4076TCARD1.equals("DC") && !fileA4076.A4076TCARD1.equals("JC") && !fileA4076.A4076TCARD1.equals("DS") && !fileA4076.A4076TCARD1.equals("PP") && !fileA4076.A4076TCARD1.equals("IK") && !fileA4076.A4076TCARD1.equals("BA")) {
                                     result = "Card type does not exist " + fileA4076.A4076TCARD1;
                                     break;
                                 }
-                            } 
+                            }
                             fileA4076.A4076CARD1 = getCellValue(currentRow.getCell(10));
                             if (!fileA4076.A4076CARD1.equals("")) {
 
@@ -357,22 +357,22 @@ public class MassiveRefunduatpFormController extends BaseController {
                             fileA4076.A4076CARD2 = getCellValue(currentRow.getCell(14));
                             if (!fileA4076.A4076CARD2.equals("")) {
                                 if (fileA4076.A4076TCARD2.equals("DC")) {
-                                    if (fileA4076.A4076TCARD2.length() != 14) {
-                                        result = "THE CARD NUMBER1 MUST BE 14 CHARACTERES  " + fileA4076.A4076TCARD2;
+                                    if (fileA4076.A4076CARD2.length() != 14) {
+                                        result = "THE CARD NUMBER1 MUST BE 14 CHARACTERES  " + fileA4076.A4076CARD2;
                                         break;
                                     }
                                 }
                                 if (fileA4076.A4076TCARD2.equals("AX") || fileA4076.A4076TCARD2.equals("TP") || fileA4076.A4076TCARD2.equals("PP")) {
-                                    if (fileA4076.A4076TCARD2.length() != 15) {
-                                        result = "THE CARD NUMBER1 MUST BE 15 CHARACTERES  " + fileA4076.A4076TCARD2;
+                                    if (fileA4076.A4076CARD2.length() != 15) {
+                                        result = "THE CARD NUMBER1 MUST BE 15 CHARACTERES  " + fileA4076.A4076CARD2;
                                         break;
                                     }
                                 }
                                 if (fileA4076.A4076TCARD2.equals("BA") || fileA4076.A4076TCARD2.equals("IK") || fileA4076.A4076TCARD2.equals("DS") || fileA4076.A4076TCARD2.equals("CA") || fileA4076.A4076TCARD2.equals("VI") || fileA4076.A4076TCARD2.equals("JC")) {
-                                    if (fileA4076.A4076TCARD2.length() != 16) {
-                                        result = "THE CARD NUMBER1 MUST BE 16 CHARACTERES  " + fileA4076.A4076TCARD2;
+                                    if (fileA4076.A4076CARD2.length() != 16) {
+                                        result = "THE CARD NUMBER1 MUST BE 16 CHARACTERES  " + fileA4076.A4076CARD2;
                                         break;
-                                    }
+                                    } 
                                 }
                             }
                             if (!getCellValue(currentRow.getCell(15)).equals("")) {
@@ -1578,7 +1578,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             Iterator iter = listaData.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18;
             //<editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
 
@@ -1600,6 +1600,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             CH_15 = row.createCell(15);
             CH_16 = row.createCell(16);
             CH_17 = row.createCell(17);
+            CH_18 = row.createCell(18);
 
             CH_00.setCellValue("Base");
             CH_01.setCellValue("Type");
@@ -1619,6 +1620,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             CH_15.setCellValue("Status");
             CH_16.setCellValue("BPO");
             CH_17.setCellValue("Group");
+            CH_18.setCellValue("IATA RFND");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -1638,6 +1640,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 18, 18));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -1657,6 +1660,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             CH_15.setCellStyle(headerStyle);
             CH_16.setCellStyle(headerStyle);
             CH_17.setCellStyle(headerStyle);
+            CH_18.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -1681,7 +1685,8 @@ public class MassiveRefunduatpFormController extends BaseController {
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
                 CH_16 = row.createCell(16);
-                CH_16 = row.createCell(17);
+                CH_17 = row.createCell(17);
+                CH_18 = row.createCell(18);
 
                 CH_00.setCellValue(listaData.get(vi).A4076BASE);
                 CH_01.setCellValue(listaData.get(vi).A4076TYPE);
@@ -1752,6 +1757,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 }
                 CH_16.setCellValue(vl_A4076STAT);
                 CH_17.setCellValue(listaData.get(vi).A4076GRUPO);
+                CH_18.setCellValue(listaData.get(vi).A4076AGEN);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -1771,6 +1777,7 @@ public class MassiveRefunduatpFormController extends BaseController {
                 CH_15.setCellStyle(bodyStyle);
                 CH_16.setCellStyle(bodyStyle);
                 CH_17.setCellStyle(bodyStyle);
+                CH_18.setCellStyle(bodyStyle);
 
                 // </editor-fold>
                 iter.next();
@@ -1794,6 +1801,7 @@ public class MassiveRefunduatpFormController extends BaseController {
             sheet.autoSizeColumn(14, true);
             sheet.autoSizeColumn(15, true);
             sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(18, true);
 
             String fileNameDownload = String.format("Masivos RFND - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");

@@ -7,6 +7,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
      */
     bean: {},
     bean2: {},
+    bean3: {},
     init: function (view) {
         var me = this;
 
@@ -104,6 +105,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         var cmbStatus = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-CmbStatus');
         var CmbStatusBPO = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-CmbStatusBPO');
         var CmbType = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-CmbType');
+        var cmbOptionTKT = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-cmbOptionTKT');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -128,8 +130,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "H", "name": "HIGHER AMOUNT FOR SALE"},
                 {"code": "M", "name": "MODIFIED"},
                 {"code": "I", "name": "INVALID CURRENCY"},
-                {"code": "R", "name": "REJECT"}                
-                
+                {"code": "G", "name": "INVALID IATA"},
+                {"code": "R", "name": "REJECT"}
+
             ]
         }));
 
@@ -154,11 +157,19 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
 
             ]
         }));
-
+        cmbOptionTKT.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "1", "name": "TICKET"},
+                {"code": "2", "name": "IATA RFND"}
+            ]
+        }));
 
     },
     onCmbStatusAfterRender: function (obj) {
         obj.setValue('');
+    },
+    onCmbStatusAfterRender2: function (obj) {
+        obj.setValue('1');
     },
     onRendererColumnAttr: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';
@@ -372,7 +383,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         var color = '#FFFFFF';
         switch (String(record.get('A4076FLAG'))) {
             case 'Y':
-                color = '#CCFF00';
+                color = '#f8ffb8';
                 value = 'PENDING';
                 break;
             case 'A':
@@ -388,7 +399,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 value = 'WITH USES';
                 break;
             case 'D':
-                color = '#B791EF';
+                color = '#ffb8ec';
                 value = 'DUPLICATE TICKET';
                 break;
             case 'T':
@@ -419,6 +430,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 color = '#D99B25';
                 value = 'INVALID CURRENCY';
                 break;
+            case 'G':
+                color = '#e4fff9';
+                value = 'INVALID IATA';
+                break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
@@ -440,7 +455,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 color = '#F3F781';
                 value = 'CAPTURED BPO';
                 break;
-             case 'C':
+            case 'C':
                 color = '#FAB9A4';
                 value = 'CANC';
                 break;
@@ -600,7 +615,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         }
 
         if (lstNew.length > 0) {
-            
+
             global.Msg({
                 msg: 'Are you sure to Save?',
                 icon: 3,
@@ -703,6 +718,90 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         } else {
             Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one record');
             return;
+        }
+    },
+    onClickBtnFilter: function () {
+        var option = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-panelFilter1');
+        if (option.isVisible()) {
+            option.setVisible(false);
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-tbspacer2').show();
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-tbspacer1').hide();
+        } else {
+            option.setVisible(true);
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-tbspacer1').show();
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-tbspacer2').hide();
+        }
+    },
+    onClickBtnSearch: function () {
+        var me = this;
+        var txtTKT = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtTKT').getValue();
+        var txtIata = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtIata').getValue();
+        if (txtTKT !== '') {
+            if (txtTKT.length !== 13) {
+                Ext.MessageBox.alert('PRAXIS', 'The ticket has to be 13 characters', function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtTKT').focus();", 100);
+                });
+                return;
+            }
+        }
+        if (txtIata !== '') {
+            if (txtIata.length !== 8) {
+                Ext.MessageBox.alert('PRAXIS', 'The IATA has to be 8 characters', function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtIata').focus();", 100);
+                });
+                return;
+            }
+        }//data.TICKET !== undefined
+        if (me.bean2.IN_PREME !== undefined) {
+
+            me.bean3.IN_PREME = me.bean2.IN_PREME;
+            me.bean3.IN_DATEFROM = me.bean2.IN_DATEFROM;
+            me.bean3.IN_USER = me.bean2.IN_USER;
+            me.bean3.IN_TICKET = txtTKT;
+            me.bean3.IN_IATA = txtIata;
+
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-grid').getStore().removeAll();
+            Ext.getCmp(prototype.idMassiveRefunduatpForm + '-grid').getStore().loadPage(1, {
+                params: {
+                    beanString: JSON.stringify(me.bean3)
+
+                }, callback: function (records, operation, success) {
+                    if (records.length !== 0) {
+                        Ext.getCmp(prototype.idMassiveRefunduatpForm + '-lbl-total2').setText(records.length);
+                    } else {
+                        Ext.getCmp(prototype.idMassiveRefunduatpForm + '-lbl-total2').setText('0');
+                        global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                            }});
+
+                    }
+
+                }
+            });
+        } else {
+            global.Msg({msg: "You must first select the header.", icon: 2, fn: function () {
+                }});
+        }
+
+
+    },
+    onChangeComboTkt: function (obj, val) {
+        switch (val) {
+            case '1':
+                Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtTKT').show();
+                Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtIata').hide();
+                Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtIata').setValue("");
+                setTimeout("Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtTKT').focus();", 100);
+                //this.onFocus(prototype.idMassiveRefunduatpForm + '-de-txtTKT');
+                break;
+            case '2':
+                Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtIata').show();
+                Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtTKT').hide();
+                Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtTKT').setValue("");
+                setTimeout("Ext.getCmp(prototype.idMassiveRefunduatpForm + '-de-txtIata').focus();", 100);
+                //this.onFocus(prototype.idMassiveRefunduatpForm + '-de-txtIata');
+                break;
         }
     }
 });
