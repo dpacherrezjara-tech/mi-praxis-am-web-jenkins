@@ -848,8 +848,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                         console.log(beanTemp);
                         if (!me.peek().includes('boxDetailFlightManifest'))
                             me.selectedChild('boxDetailFlightManifest');
-                        else
-                            me.selectedChild('boxDetailFlightManifest');
 //
 //                        Ext.getCmp(prototype.id + '-setTitulo').setTitle('<center style="font-size:12px;">Flight Date : ' +
 //                                beanTemp.strFormatDate + ' - Flight Number : ' + beanTemp.NFLIGHT +

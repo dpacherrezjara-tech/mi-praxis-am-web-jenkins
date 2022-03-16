@@ -176,7 +176,7 @@ public class FlightConciliationDAO {
                 if (rst.getString("FSTAOD").trim().equals("1")) {
                     QODS += rst.getLong("QREC");
                 }
-                if (rst.getString("STVAL").trim().equals("5") && rst.getString("FSTAOD").equals("3")) {
+                if (rst.getString("STVAL").trim().equals("5") || rst.getString("FSTAOD").equals("3")) {
                     QtyCANCEL += rst.getLong("QtyCANCEL");
                 }
                 //Status VCR
@@ -376,7 +376,7 @@ public class FlightConciliationDAO {
 
         try {
             //PX09500002
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S02A1691(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04427(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
