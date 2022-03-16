@@ -67,7 +67,7 @@ public class CouponsEstimatedValueDAO {
         //filter.dayTo = Functions.fillZeros(2, filter.dayTo).replace("00", "");
         //</editor-fold>
         //String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX098SQP0007(?,?,?,?,?,?,?,?,?,?,?,?)}";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03069_1(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04428(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         double rate = 0, rate_RE = 0;
         Connection cnx = null;
 

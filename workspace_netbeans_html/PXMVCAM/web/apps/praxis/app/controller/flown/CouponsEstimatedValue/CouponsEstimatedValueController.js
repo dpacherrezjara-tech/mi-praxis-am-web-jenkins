@@ -110,7 +110,7 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
             data: [
                 ["1", "VCR Date"],
                 ["2", "Flight Date"],
-                ["3", "Created Date"]
+                //["3", "Created Date"]
 
             ]}));
         cmbFecha.setValue("1");
