@@ -1137,7 +1137,7 @@ public class SalesReportDAO {
                 objRtn.A720STAT = rs01.getString("A720STAT");
 
                 objRtn.ERRORDESC = rs01.getString("ERRORDESC").trim();
-
+                objRtn.A720TKVOID = rs01.getString("A720TKVOID");
                 objRtn.A720IDFIL = rs01.getString("A720IDFIL");
                 objRtn.A720VRIC = rs01.getString("A720VRIC");
                 objRtn.A720FLAGTN = rs01.getString("A720FLAGTN");
