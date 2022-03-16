@@ -377,7 +377,7 @@ public class FlightConciliationDAO {
 
         try {
             //PX09500002
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S02A1691(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04427(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
