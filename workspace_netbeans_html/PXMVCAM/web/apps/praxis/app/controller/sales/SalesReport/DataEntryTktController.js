@@ -231,6 +231,21 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 Ext.getCmp(prototype.idSale + '-det-lblTotalOVERCOM').setValue(Ext.util.Format.number(fileGrilla.A720TTSCRV, '0,000.00'));
             }
             
+            Ext.getCmp(prototype.idSale + '-panelDetalles').hide();
+            if (file.A720TKVOID === 'V'){
+                Ext.getCmp(prototype.idSale + '-panelDetalles').show();
+                /*var img = new Ext.XTemplate('<img src="{src}">');
+                var images = [
+                   {src:'resources/img/icon/void.png'}
+                   //{src:'https://s3.amazonaws.com/quizzpot/images/202-materialdesign_introduction.png'},
+                   //{src:'https://s3.amazonaws.com/quizzpot/images/184-grunt.png'}
+                ];
+                //var newImage = images[Math.floor(Math.random()*3)];
+                var newImage = images[0]; width="500" height="110"
+                img.overwrite(Ext.getCmp(prototype.idSale + '-panelDetalles').body,newImage);*/
+                Ext.getCmp(prototype.idSale + '-panelDetalles').body.update('<img src="resources/img/icon/void.png"  />');
+            }
+            
             var IN_TIPOCAP = Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);
             var IN_ERROR = Ext.getCmp(prototype.idSale + '-det-lblError').text;
             paramsProrrate = {
