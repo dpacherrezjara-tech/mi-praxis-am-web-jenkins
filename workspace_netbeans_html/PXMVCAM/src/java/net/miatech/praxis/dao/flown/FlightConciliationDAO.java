@@ -440,6 +440,7 @@ public class FlightConciliationDAO {
 
                     beanCons.strDescripcion = strDesc;
                     beanCons.CARRI = rst.getString("CARRI").trim();
+                    beanCons.DESCRIP = rst.getString("DESCRIP").trim();
                     beanCons.FCLOFO = rst.getString("FCLOFO");
                     if (rst.getString("FCLOFO").trim().equals("1")) {
                         beanCons.strFCLOFO = "AUTOMATIC";
