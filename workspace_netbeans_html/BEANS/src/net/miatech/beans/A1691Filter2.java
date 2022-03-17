@@ -9,6 +9,7 @@ public class A1691Filter2 {
     public String strTitulo = "";
     public String NFLIGHT = "";
     public String CARRI = "";
+    public String DESCRIP = "";
     public String strDescFFLOW = "";
     public String CDEPART = "";
     public String CARRIVA = "";
