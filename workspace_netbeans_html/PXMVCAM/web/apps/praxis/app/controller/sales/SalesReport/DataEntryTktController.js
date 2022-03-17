@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.idSale + '-dataEntryTktController',
@@ -16,6 +15,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
     revCurr: 'USD',
     locCurr: '',
     cant: 0,
+    callmodo: '',
     paramsDET: {},
     paramsProrrate: {},
     /**
@@ -32,10 +32,10 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
      * Se ejecuta luego de haber cargado todos los componentes
      */
 
-
     afterRender: function () { // global.AccessControlMaganer();
         var params = this.view.params;
         var mode = params.mode;
+        meDET.callmodo = mode;
         if(mode==='POPUP')
         {
             console.log('call:getDataInputsPopUp');
@@ -46,8 +46,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
             console.log('call:getDataInputs');
             prototype.id='SalesReportForm';
             this.getDataInputs();
-        }
-        
+        }   
     },
     getDataInputs: function () {
         var p = this.view.params;
@@ -246,7 +245,16 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 Ext.getCmp(prototype.idSale + '-panelDetalles').body.update('<img src="resources/img/icon/void.png"  />');
             }
             
-            var IN_TIPOCAP = Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);
+            var IN_TIPOCAP = '';
+            var IN_STATUS = '';
+            if(meDET.callmodo==='POPUP'){
+                IN_TIPOCAP = 'A';
+                IN_STATUS = 'CLOSED';
+            }else{
+                IN_TIPOCAP = Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);
+                IN_STATUS = Ext.String.trim(Ext.getCmp(prototype.idGr + '-de-lblStatus').getValue());
+            }
+            
             var IN_ERROR = Ext.getCmp(prototype.idSale + '-det-lblError').text;
             paramsProrrate = {
                 IN_TIPOCAP: IN_TIPOCAP,
@@ -261,7 +269,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 IN_EDITABLE: false,
                 IN_TCAMB: meDET.exch,
                 IN_REVENUE: meDET.revCurr,
-                IN_STATUS: Ext.String.trim(Ext.getCmp(prototype.idGr + '-de-lblStatus').getValue()),
+                IN_STATUS: IN_STATUS,
                 IN_ERROR: IN_ERROR,
                 IN_TDOC: Ext.String.trim(Ext.getCmp(prototype.idSale + '-det-lblDocType').getValue()),
                 IN_ISSUEDATE: file.A720FECVTA,
