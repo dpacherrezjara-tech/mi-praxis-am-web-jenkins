@@ -106,6 +106,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             global.Msg({msg: 'Ticket number must contain 13 digits.'});
         }
     },
+    onChangeChkObs: function () {
+        if (me.stack[me.stack.length - 1 ] === 'FlightConciliationForm-boxDetailData') {
+            if (this.getValue('chkObs')) {
+                this.bean.IN_OBS = 'Y'
+            } else {
+                this.bean.IN_OBS = ''
+            }
+            this.searchDetail(this.bean, this.gloTipo);
+        }
+    },
     // <editor-fold defaultstate="collapsed" desc="onViewClick">
     onViewDetailClick: function (column, e, row, column, x, rowData) {
         this.bean = x.record.data;
@@ -158,6 +168,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         // </editor-fold>
         if (cant > 0) {
             this.gloTipo = strTipo;
+            if (this.getValue('chkObs')) {
+                this.bean.IN_OBS = 'Y'
+            } else {
+                this.bean.IN_OBS = ''
+            }
             this.searchDetail(this.bean, strTipo);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -806,7 +821,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 'CARRI=' + bean.CARRI + '&' +
                 'FFLOW=' + bean.FFLOW + '&' +
                 'DFLIGHT=' + bean.DFLIGHT + '&' +
-                'NFLIGHT=' + bean.NFLIGHT;
+                'NFLIGHT=' + bean.NFLIGHT + '&' +
+                'IN_OBS=' + bean.IN_OBS;
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchTKT">
@@ -859,7 +875,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                         console.log(obj.data.items[0].data);
                         var beanTemp = obj.data.items[0].data;
                         console.log(beanTemp);
-                        if (!me.peek().includes('boxDetailFlightManifest')) {                            
+                        if (!me.peek().includes('boxDetailFlightManifest')) {
                             me.selectedChild('boxDetailFlightManifest');
                         }
 //

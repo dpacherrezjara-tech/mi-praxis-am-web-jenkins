@@ -43,6 +43,7 @@ public class A1691Filter2 {
     public String strFormatDate3 = "";
     public int QCPNFI = 0;
     public int QCPNFRE = 0;
+    public String IN_OBS = "";
     public String yearFrom = "";
     public String monthFrom = "";
     public String dayFrom = "";
