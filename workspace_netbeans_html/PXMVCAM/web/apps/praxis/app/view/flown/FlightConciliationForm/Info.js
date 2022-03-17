@@ -1305,7 +1305,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     },
                                                     {
                                                         text: 'PNR', dataIndex: 'SPNR', width: 70, sortable: true,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#FFF9E0;";
                                                             return value;
                                                         },
@@ -1393,7 +1393,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
 //                                align: 'center'
 //                            },
 //                            items: [
-                                //                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
+                        //                                // <editor-fold defaultstate="collapsed" desc="gridDetailLeg">
 //                                {
 //                                    xtype: 'grid',
 //                                    id: prototype.id + '-gridDetailLeg',
@@ -2685,7 +2685,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 }
                             ]
                         }
-                        
+
                         // </editor-fold>
 
                     ]

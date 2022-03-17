@@ -181,13 +181,13 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             var IN_FSABRE = this.getValue("cmbFSabre");
             this.objFLIGHTMANIF = x.record.data;
             this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
-            
+
             if (chkNewManifest) {
                 this.objFLIGHTMANIF.IN_TABLE = 'A4190';
             } else {
                 this.objFLIGHTMANIF.IN_TABLE = 'A3729';
             }
-            
+
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -714,9 +714,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             },
             listeners: {
                 beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-boxConsultas').mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
                 },
                 load: function (obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-boxConsultas').unmask();
                     win.lblUser_toolTip("Estructura: A1691");
                     if (!me.peek().includes('boxMainData'))
                         me.selectedChild('boxMainData', '');
@@ -857,8 +859,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                         console.log(obj.data.items[0].data);
                         var beanTemp = obj.data.items[0].data;
                         console.log(beanTemp);
-                        if (!me.peek().includes('boxDetailFlightManifest'))
+                        if (!me.peek().includes('boxDetailFlightManifest')) {                            
                             me.selectedChild('boxDetailFlightManifest');
+                        }
 //
 //                        Ext.getCmp(prototype.id + '-setTitulo').setTitle('<center style="font-size:12px;">Flight Date : ' +
 //                                beanTemp.strFormatDate + ' - Flight Number : ' + beanTemp.NFLIGHT +
