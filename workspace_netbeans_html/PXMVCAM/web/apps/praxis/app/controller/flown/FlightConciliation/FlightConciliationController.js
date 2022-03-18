@@ -107,7 +107,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         }
     },
     // <editor-fold defaultstate="collapsed" desc="onViewClick">
-    onViewDetailClick: function(column, e, row, column, x, rowData) {
+    onViewDetailClick: function (column, e, row, column, x, rowData) {
         this.bean = x.record.data;
         var strTipo = Ext.getCmp(prototype.id + '-gridData').headerCt.getGridColumns()[column].dataIndex.replace('lng', '');
         var cant = 0;
@@ -158,6 +158,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         // </editor-fold>
         if (cant > 0) {
             this.gloTipo = strTipo;
+            if (this.getValue('chkObs')) {
+                this.bean.IN_OBS = 'Y'
+            } else {
+                this.bean.IN_OBS = ''
+            }
             this.searchDetail(this.bean, strTipo);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -739,6 +744,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         _path = prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean));
     }, //</editor-fold>
+    onChangeChkObs: function () {
+        if (me.stack[me.stack.length - 1 ] === 'FlightConciliationForm-boxDetailData') {
+            if (this.getValue('chkObs')) {
+                this.bean.IN_OBS = 'Y'
+            } else {
+                this.bean.IN_OBS = ''
+            }
+            this.searchDetail(this.bean, this.gloTipo);
+        }
+    },
     //<editor-fold defaultstate="collapsed" desc="searchDetail">
     searchDetail: function(bean, strTipo) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
@@ -794,7 +809,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 'CARRI=' + bean.CARRI + '&' +
                 'FFLOW=' + bean.FFLOW + '&' +
                 'DFLIGHT=' + bean.DFLIGHT + '&' +
-                'NFLIGHT=' + bean.NFLIGHT;
+                'NFLIGHT=' + bean.NFLIGHT + '&' + 
+                'IN_OBS=' + bean.IN_OBS;;
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchTKT">

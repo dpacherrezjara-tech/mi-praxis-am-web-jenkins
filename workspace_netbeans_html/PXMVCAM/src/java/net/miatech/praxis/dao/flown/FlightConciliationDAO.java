@@ -340,7 +340,7 @@ public class FlightConciliationDAO {
         return lstRtn;
     }
 
-    public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo, HashMap<String, String> hmAeropuertos) throws SQLException, Exception {
+public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo, HashMap<String, String> hmAeropuertos) throws SQLException, Exception {
         List<A1691Filter2> lstCons = new ArrayList<>(0);
         A1691Filter2 beanCons;
         String strDesc = "";
@@ -376,15 +376,15 @@ public class FlightConciliationDAO {
 
         try {
             //PX09500002
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04427(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04427(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
-            cs.registerOutParameter(9, Types.INTEGER);
             cs.registerOutParameter(10, Types.INTEGER);
             cs.registerOutParameter(11, Types.INTEGER);
             cs.registerOutParameter(12, Types.INTEGER);
+            cs.registerOutParameter(13, Types.INTEGER);
 
             cs.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cs.setString(2, filter.yearFrom + filter.monthFrom + filter.dayFrom);
@@ -394,16 +394,17 @@ public class FlightConciliationDAO {
             cs.setString(6, filter.DFLIGHT.substring(0, 6));
             cs.setString(7, strTipo);
             cs.setString(8, filter.NFLIGHT);
-            cs.setInt(9, filter.page.PAGNUM);
-            cs.setInt(10, filter.page.PAGROW);
-            cs.setInt(11, filter.page.TOTPAG);
-            cs.setInt(12, filter.page.TOTROW);
+            cs.setString(9, filter.IN_OBS);
+            cs.setInt(10, filter.page.PAGNUM);
+            cs.setInt(11, filter.page.PAGROW);
+            cs.setInt(12, filter.page.TOTPAG);
+            cs.setInt(13, filter.page.TOTROW);
             cs.execute();
 
-            filter.page.PAGNUM = cs.getInt(9);
-            filter.page.PAGROW = cs.getInt(10);
-            filter.page.TOTPAG = cs.getInt(11);
-            filter.page.TOTROW = cs.getInt(12);
+            filter.page.PAGNUM = cs.getInt(10);
+            filter.page.PAGROW = cs.getInt(11);
+            filter.page.TOTPAG = cs.getInt(12);
+            filter.page.TOTROW = cs.getInt(13);
 
             rst = cs.getResultSet();
             while (rst.next()) {
