@@ -299,6 +299,17 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             }
                         },
                         {xtype: 'tbspacer', width: 15},
+                         {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkObs',
+                            boxLabel: '<b>Obs.</b>',
+                            checked: false,
+                            width: 80,
+                            listeners: {
+                                change: 'onChangeChkObs'
+                            }
+                        },                        
+                        {xtype: 'tbspacer', width: 15},
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id + '-chkObs',

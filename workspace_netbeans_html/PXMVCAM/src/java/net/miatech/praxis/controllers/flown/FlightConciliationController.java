@@ -1454,7 +1454,7 @@ public class FlightConciliationController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "getXLSXDetail")
+@RequestMapping(value = "getXLSXDetail")
     public @ResponseBody
     void getXLSXDetail(HttpServletRequest request, HttpServletResponse response) {
         String fileNameDownload = String.format("Flight Conciliation Detail - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
