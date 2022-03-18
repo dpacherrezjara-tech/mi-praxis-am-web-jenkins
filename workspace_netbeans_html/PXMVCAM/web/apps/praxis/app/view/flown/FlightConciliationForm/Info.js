@@ -897,6 +897,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 // </editor-fold>
                             ]
                         },
+                        //
                         {
                             region: 'center',
                             id: prototype.id + '-boxDetailNFLGITHData',
