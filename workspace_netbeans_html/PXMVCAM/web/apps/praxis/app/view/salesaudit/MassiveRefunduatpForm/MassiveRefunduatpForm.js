@@ -323,7 +323,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.idMassiveRefunduatpForm + '-CmbStatusBPO', 
+                                            id: prototype.idMassiveRefunduatpForm + '-CmbStatusBPO',
                                             fieldLabel: 'BPO',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -398,7 +398,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     {text: 'System <br> date', dataIndex: 'A4076FREGI', width: 100, sortable: true, align: 'center'},
                                     {text: 'Auditor', dataIndex: 'A4076REGIS', width: 100},
                                     //{text: 'Base', dataIndex: 'A4076BASE', width: 100, renderer: 'onRendererColumnBase'},
-                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100,renderer: 'onRendererColumnTYPE'},
+                                    {text: 'Type', dataIndex: 'A4076TYPE', width: 100, renderer: 'onRendererColumnTYPE'},
                                     {text: 'Ticket Qty',
                                         columns: [
                                             {
@@ -522,9 +522,89 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                         {
                             xtype: 'toolbar',
                             items: [
-
-                                {xtype: 'tbspacer', width: 1200},
                                 {
+                                    xtype: 'panel',
+                                    id: prototype.idMassiveRefunduatpForm + '-panelFilter1',
+                                    hidden: true,
+                                    width: 500, border: false,
+                                    layout: 'column',
+                                    items: [
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.idMassiveRefunduatpForm + '-de-cmbOptionTKT',
+                                            margin: '5 0 5 0',
+                                            fieldLabel: 'Search By',
+                                            width: 180,
+                                            labelWidth: 70,
+                                            labelAlign: 'left',
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            listeners: {
+                                                afterrender: 'onCmbStatusAfterRender2',
+                                                change: 'onChangeComboTkt'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            margin: '5 0 5 5',
+                                            id: prototype.idMassiveRefunduatpForm + '-de-txtTKT',
+                                            //hidden: true,
+                                            fieldLabel: '',
+                                            width: 110,
+                                            labelWidth: 10,
+                                            enableKeyEvents: true,
+                                            labelAlign: 'left',
+                                            //padding: '1px 5px 0px 10',
+                                            enforceMaxLength: true,
+                                            maxLength: 13,
+                                            maskRe: /[0-9]/,
+                                            listeners: {
+                                                keypress: 'onTextKeypress'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            margin: '5 0 5 5',
+                                            id: prototype.idMassiveRefunduatpForm + '-de-txtIata',
+                                            hidden: true,
+                                            fieldLabel: '',
+                                            width: 80,
+                                            labelWidth: 10,
+                                            enableKeyEvents: true,
+                                            labelAlign: 'left',
+                                            //padding: '1px 5px 0px 10',
+                                            enforceMaxLength: true,
+                                            maxLength: 8,
+                                            maskRe: /[0-9]/,
+                                            listeners: {
+                                                keypress: 'onTextKeypress'
+                                            }
+                                        }
+                                    ]
+                                },
+                                {xtype: 'tbspacer', hidden: true, id: prototype.idMassiveRefunduatpForm + '-tbspacer1', width: 600},
+                                {xtype: 'tbspacer', id: prototype.idMassiveRefunduatpForm + '-tbspacer2', width: 1100},
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnSearch1',
+                                    iconCls: 'prx-icon-search',
+                                    tooltip: 'Search',
+                                    listeners: {
+                                        click: 'onClickBtnSearch'
+                                    }
+
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.idMassiveRefunduatpForm + '-btnFilter1',
+                                    iconCls: 'prx-icon-filter',
+                                    tooltip: 'Display filter',
+                                    listeners: {
+                                        click: 'onClickBtnFilter'
+                                    }
+                                }, {
                                     xtype: 'button',
                                     id: prototype.idMassiveRefunduatpForm + '-Save_List',
                                     icon: 'resources/img/icon/16x16/task-save.png',
@@ -577,6 +657,7 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     {text: 'Country', dataIndex: 'A4076PAIS', width: 60},
                                     {text: 'IATA', dataIndex: 'A4076IATA', width: 65},
                                     {text: 'Agency', dataIndex: 'A4076AGENCY', width: 275, align: 'left', renderer: 'onRendererColumnAttr'},
+                                    {text: 'IATA <br> RFND', dataIndex: 'A4076AGEN', width: 65},
                                     {text: 'Cur.', dataIndex: 'A4076MDA', width: 40},
                                     {text: 'Transc.', dataIndex: 'A4076TRNCO', width: 80},
                                     {text: 'Tdoc', dataIndex: 'A4076TDOC', width: 80},
