@@ -2,7 +2,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
     border: false,
-    margin :'2 0 2 0 ',
+    margin: '2 0 2 0 ',
     layout: 'column',
     items: [
         {
@@ -12,7 +12,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
             layout: 'vbox',
             defaults: {
                 anchor: '100%',
-                width:prototype.widthContenedor,
+                width: prototype.widthContenedor,
                 bodyStyle: 'background-color: #E3EAF9;'
             },
             items: [
@@ -338,36 +338,36 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             border: false,
                             bodyStyle: 'background-color: #E3EAF9;',
                             items: [{
-                                xtype: 'filefield',
-                                id: prototype.id + '-file',
-                                name: 'excelfile',
+                                    xtype: 'filefield',
+                                    id: prototype.id + '-file',
+                                    name: 'excelfile',
 //                                fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Update Excel</strong>',
-                                allowBlank: true,
-                                accept: '.xlsx, .xls',
-                                labelWidth: 85,
-                                width: 160,
-                                buttonText: 'Select excel...',
-                                regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
-                                regexText: 'Only XLS and XLSX formats are accepted',
-                                buttonConfig: {
-                                    text : '<strong>Select file</strong>',
-                                    width: 80
-                                },
-                                listeners:{
-                                    //change: 'onUploadChange'
-                                }
-                            }]
+                                    allowBlank: true,
+                                    accept: '.xlsx, .xls',
+                                    labelWidth: 85,
+                                    width: 160,
+                                    buttonText: 'Select excel...',
+                                    regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
+                                    regexText: 'Only XLS and XLSX formats are accepted',
+                                    buttonConfig: {
+                                        text: '<strong>Select file</strong>',
+                                        width: 80
+                                    },
+                                    listeners: {
+                                        //change: 'onUploadChange'
+                                    }
+                                }]
                         },
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'button',
-                            id:prototype.id+'-btn-upload',
+                            id: prototype.id + '-btn-upload',
                             margin: '2 0 0 0',
                             width: 60,
                             html: '<strong style="color:white;">UPDATE</strong>',
                             style: 'background:#24678D;color:white;font-weight:bold;',
                             border: false,
-                            listeners:{
+                            listeners: {
                                 click: 'onFileLoad'
                             }
                         }
@@ -381,8 +381,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                         padding: '5px 1px 5px 1px',
                         anchor: '100%'
                     },
-                    items:[
-                        { xtype: 'tbspacer', width: 7 },
+                    items: [
+                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'label',
                             html: 'Ticket:',
@@ -392,19 +392,19 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtTKT',     
+                            id: prototype.id + '-txtTKT',
                             fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
-                            maskRe: /[0-9]/,      
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
 //                            maxLength: 13,
                             width: 156,
                             enableKeyEvents: true,
-                            listeners:{
+                            listeners: {
                                 change: 'onValidarChange',
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             html: 'Rolling:',
@@ -414,19 +414,19 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                         },
                         {
                             xtype: 'textfield',
-                            id: prototype.id + '-txtROLL',     
+                            id: prototype.id + '-txtROLL',
                             fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,     
-                            maskRe: /[0-9]/,      
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
 //                            maxLength: 2,
                             width: 40,
                             enableKeyEvents: true,
-                            listeners:{
+                            listeners: {
 //                                change: 'onValidarChange',
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 10 },
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'label',
                             id: prototype.id + '-labelFSabre',
@@ -443,7 +443,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 fields: ['code', 'name'],
                                 data: [
                                     ["", "All"], ["0", "Not Found"], ["1", "Found"],
-                                    ["2", "Found but not matching coupon"],["4","No Revenue(Employes/Oth)"],["5", "Manual"]
+                                    ["2", "Found but not matching coupon"], ["4", "No Revenue(Employes/Oth)"], ["5", "Manual"]
                                 ]
                             }),
                             queryMode: 'local',
@@ -463,7 +463,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 10 }, 
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id + '-chkNewManifest',
@@ -475,7 +475,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
-                        { xtype: 'tbspacer', width: 540 },                        
+                        {xtype: 'tbspacer', width: 540},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',
@@ -502,7 +502,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'changeControl'
                             }
                         },
-                        { xtype: 'tbspacer', width: 3 },
+                        {xtype: 'tbspacer', width: 3},
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnRefresh',
@@ -512,7 +512,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 click: 'actualizar'
                             }
                         },
-                        { xtype: 'tbspacer', width: 3 },
+                        {xtype: 'tbspacer', width: 3},
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtNENV',
@@ -520,7 +520,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             editable: false,
                             width: 30
                         },
-                        { xtype: 'tbspacer', width: 5 },
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtDPRDA',

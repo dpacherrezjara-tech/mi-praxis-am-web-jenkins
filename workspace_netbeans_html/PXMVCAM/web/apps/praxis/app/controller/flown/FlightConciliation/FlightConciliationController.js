@@ -1423,12 +1423,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     post_to_url: function(path, params, method, id) {
         path = encodeURI(path);
         method = method || "post";
-
         var form = document.createElement("form");
         form.setAttribute("method", method);
         form.setAttribute("action", path);
         form.setAttribute("id", id);
-
         document.body.appendChild(form);
         form.submit();
     },
