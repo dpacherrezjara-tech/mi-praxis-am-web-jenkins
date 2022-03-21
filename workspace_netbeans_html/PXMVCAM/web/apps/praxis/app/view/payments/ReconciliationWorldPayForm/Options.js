@@ -84,7 +84,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
-                            tooltip: 'New'
+                            tooltip: 'New',
+                            hidden: true
                         },
 //                        {
 //                            xtype:'button',

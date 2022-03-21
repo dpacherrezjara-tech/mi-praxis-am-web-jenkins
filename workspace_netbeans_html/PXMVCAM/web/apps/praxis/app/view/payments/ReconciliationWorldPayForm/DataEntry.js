@@ -2,9 +2,9 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.DataEntry',{
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryReconciliationWorldPayForm',
     requires:[
-        'Ext.Praxis.controller.payments.BanksCatalog.DataEntryBanksCatalogController'
+        'Ext.Praxis.controller.payments.ReconciliationWorldPay.DataEntryReconciliationWorldPayController'
     ],
-    controller: 'DataEntryBanksCatalogController',
+    controller: 'DataEntryReconciliationWorldPayController',
     title:'Bank - Data Entry Form',
     header:true,
     height:365,
