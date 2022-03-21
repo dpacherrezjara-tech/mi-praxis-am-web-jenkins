@@ -47,7 +47,7 @@ public class ReconciliationWorldPayDAO {
         session = ss;
     }
 
-  public List<A4040Filter> loadPX589SQP04411(A4040Filter filter) throws SQLException, Exception {
+    public List<A4040Filter> loadPX589SQP04411(A4040Filter filter) throws SQLException, Exception {
 
         List<A4040Filter> lstData = new ArrayList<A4040Filter>(0);
         A4040Filter bean;
@@ -86,15 +86,25 @@ public class ReconciliationWorldPayDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                bean = new A4040Filter();
-                bean.RN = rst.getLong("RN");
-
-                bean.page.PAGNUM = filter.page.PAGNUM;
-                bean.page.PAGROW = filter.page.PAGROW;
-                bean.page.TOTPAG = filter.page.TOTPAG;
-                bean.page.TOTROW = filter.page.TOTROW;
-                lstData.add(bean);
+                //Capturar totales
             }
+            
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    bean = new A4040Filter();
+                    bean.RN = rst.getLong("RN");
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+                    lstData.add(bean);
+                }
+            }
+
             rst.close();
 
         } catch (Exception e) {
