@@ -93,9 +93,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketCia', this.bean.IN_CIA);
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
-            if(this.bean.IN_SEQ==="") this.bean.IN_SEQ = "00";
-            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
-            this.loadTicket(this.bean);
+            //if(this.bean.IN_SEQ==="") this.bean.IN_SEQ = "00";
+            if(this.bean.IN_SEQ!=="") win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            
+            //this.loadTicket(this.bean);
+            this.loadTicketSeq(this.bean);
         } else {
             this.imgBrowser_clickHandler();
         }

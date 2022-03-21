@@ -282,7 +282,14 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                     win.lblUser_toolTip("Estructura: A720");
                     
                     if (res.success) {
-                        if (obj.data.length > 0) {
+                        if (obj.data.length === 0) {
+                            console.log(obj.data);
+                            Ext.getCmp(prototype.id+'-1-gridData').getStore().removeAll();
+                                Ext.getCmp(prototype.id+'-1-pie').hide();
+                                Ext.getCmp(prototype.id+'-1-lblPagActual').setText('0');
+                                global.Msg({msg: win.STR_NO_DATA});
+                        }
+                         else if (obj.data.length > 0) {
 //                            var pagData = Ext.getCmp(prototype.id+'-1-paggin').getPageData();
 //                            var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
 //
