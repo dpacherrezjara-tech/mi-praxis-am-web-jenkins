@@ -351,6 +351,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
+            case  '-panelGridHeaderDetail':
+                global.getFile(prototype.url + '/getXLSXHeaderDetail?beanString=' + searchParams.beanString);
+                break;    
             default:
                 global.Msg(
                         {msg: 'Under Construction'
