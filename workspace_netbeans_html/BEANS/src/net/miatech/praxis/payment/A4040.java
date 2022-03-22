@@ -15,14 +15,14 @@ public String SCOUNTRY = "";
 public String RECNBR = "";
 public String PARTEID = "";
 
-public int TOTTRAAMOU = 0;                    
-public int TOTSETAMOU = 0;     
-public int TOTPENAMOU = 0;      
-public int TOTREJAMOU = 0;   
-public int TOTTRAAMOC = 0;                    
-public int TOTSETAMOC = 0;     
-public int TOTPENAMOC = 0;      
-public int TOTREJAMOC = 0; 
+public double TOTTRAAMOU = 0;                    
+public double TOTSETAMOU = 0;     
+public double TOTPENAMOU = 0;      
+public double TOTREJAMOU = 0;   
+public double TOTTRAAMOC = 0;                    
+public double TOTSETAMOC = 0;     
+public double TOTPENAMOC = 0;      
+public double TOTREJAMOC = 0; 
   
 
 }

@@ -21,10 +21,10 @@ public class A4040Filter extends A4040 {
     public long RN = 0;
     
     public String SCURRENCY = "";
-    public int DIF_TOTTRAAMO = 0;
-    public int DIF_TOTSETAMO = 0;
-    public int DIF_TOTPENAMO = 0;
-    public int DIF_TOTREJAMO = 0;
+    public double DIF_TOTTRAAMO = 0;
+    public double DIF_TOTSETAMO = 0;
+    public double DIF_TOTPENAMO = 0;
+    public double DIF_TOTREJAMO = 0;
 
     public Pagination page = new Pagination();
     

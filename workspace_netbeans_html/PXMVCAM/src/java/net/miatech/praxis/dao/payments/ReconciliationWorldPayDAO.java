@@ -88,7 +88,7 @@ public class ReconciliationWorldPayDAO {
             while (rst.next()) {
                 //Capturar totales
             }
-            
+
             rst.close();
 
             if (cstmt.getMoreResults()) {
@@ -98,24 +98,126 @@ public class ReconciliationWorldPayDAO {
                     bean.RN = rst.getLong("RN");
                     bean.PRDA = rst.getString("PRDA").trim();
                     bean.SCURRENCY = rst.getString("SCURRENCY").trim();
-                  //  bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    //  bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     //bean.RECNBR = rst.getString("RECNBR").trim();
-                   // bean.PARTEID = rst.getString("PARTEID").trim();
-                    
-                    bean.TOTTRAAMOU = rst.getInt("TOTTRAAMOU");
-                    bean.TOTSETAMOU = rst.getInt("TOTSETAMOU");
-                    bean.TOTPENAMOU = rst.getInt("TOTPENAMOU");
-                    bean.TOTREJAMOU = rst.getInt("TOTREJAMOU");
-                    bean.TOTTRAAMOC = rst.getInt("TOTTRAAMOC");
-                    bean.TOTSETAMOC = rst.getInt("TOTSETAMOC");
-                    bean.TOTPENAMOC = rst.getInt("TOTPENAMOC");
-                    bean.TOTREJAMOC = rst.getInt("TOTREJAMOC");
-                    
+                    // bean.PARTEID = rst.getString("PARTEID").trim();
+
+                    bean.TOTTRAAMOU = rst.getDouble("TOTTRAAMOU");
+                    bean.TOTSETAMOU = rst.getDouble("TOTSETAMOU");
+                    bean.TOTPENAMOU = rst.getDouble("TOTPENAMOU");
+                    bean.TOTREJAMOU = rst.getDouble("TOTREJAMOU");
+                    bean.TOTTRAAMOC = rst.getDouble("TOTTRAAMOC");
+                    bean.TOTSETAMOC = rst.getDouble("TOTSETAMOC");
+                    bean.TOTPENAMOC = rst.getDouble("TOTPENAMOC");
+                    bean.TOTREJAMOC = rst.getDouble("TOTREJAMOC");
+
                     bean.DIF_TOTTRAAMO = bean.TOTTRAAMOU - bean.TOTTRAAMOC;
                     bean.DIF_TOTSETAMO = bean.TOTSETAMOU - bean.TOTSETAMOC;
                     bean.DIF_TOTPENAMO = bean.TOTPENAMOU - bean.TOTPENAMOC;
                     bean.DIF_TOTREJAMO = bean.TOTREJAMOU - bean.TOTREJAMOC;
-                    
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+                    lstData.add(bean);
+                }
+            }
+
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstData;
+    }
+
+    public List<A4040Filter> loadPX589SQP04412(A4040Filter filter) throws SQLException, Exception {
+
+        List<A4040Filter> lstData = new ArrayList<A4040Filter>(0);
+        A4040Filter bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04412(?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.DATE.trim());
+            cstmt.setString(3, filter.IN_DATE.trim());
+
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                //Capturar totales
+            }
+
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    bean = new A4040Filter();
+                    bean.RN = rst.getLong("RN");
+                    bean.PRDA = rst.getString("PRDA").trim();
+                    bean.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    bean.RECNBR = rst.getString("RECNBR").trim();
+                    bean.PARTEID = rst.getString("PARTEID").trim();
+
+                    bean.TOTTRAAMOU = rst.getDouble("TOTTRAAMOU");
+                    bean.TOTSETAMOU = rst.getDouble("TOTSETAMOU");
+                    bean.TOTPENAMOU = rst.getDouble("TOTPENAMOU");
+                    bean.TOTREJAMOU = rst.getDouble("TOTREJAMOU");
+                    bean.TOTTRAAMOC = rst.getDouble("TOTTRAAMOC");
+                    bean.TOTSETAMOC = rst.getDouble("TOTSETAMOC");
+                    bean.TOTPENAMOC = rst.getDouble("TOTPENAMOC");
+                    bean.TOTREJAMOC = rst.getDouble("TOTREJAMOC");
+
+                    bean.DIF_TOTTRAAMO = bean.TOTTRAAMOU - bean.TOTTRAAMOC;
+                    bean.DIF_TOTSETAMO = bean.TOTSETAMOU - bean.TOTSETAMOC;
+                    bean.DIF_TOTPENAMO = bean.TOTPENAMOU - bean.TOTPENAMOC;
+                    bean.DIF_TOTREJAMO = bean.TOTREJAMOU - bean.TOTREJAMOC;
+
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
                     bean.page.TOTPAG = filter.page.TOTPAG;

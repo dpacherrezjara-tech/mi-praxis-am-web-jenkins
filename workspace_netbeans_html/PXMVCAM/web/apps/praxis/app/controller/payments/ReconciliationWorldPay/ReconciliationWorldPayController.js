@@ -20,6 +20,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
     me: '',
     searchParams: {},
     paramsDetail: {},
+    paramsHeaderDetail: {},
+    beanHeaderDay: {},
     dataObtain: {},
     init: function (view) {
         me = this;
@@ -64,6 +66,18 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             },
             '#ReconciliationWorldPayForm-btn-pag-last': {
                 click: this.pagLast
+            },
+            '#ReconciliationWorldPayForm-cmbDateFromYear': {
+//                afterrender: this.afterRenderYear,
+                select: this.selectComboFromYear
+            },
+            '#ReconciliationWorldPayForm-cmbDateFromMonth': {
+//                afterrender: this.afterRenderMonth,
+                select: this.selectComboFromMonth
+            },
+            '#ReconciliationWorldPayForm-cmbDateToMonth': {
+//                afterrender: this.afterRenderMonth,
+                select: this.selectComboToMonth
             }
 //            //-----------------Eventos Especificos -------------------    
 //
@@ -111,7 +125,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             ]
         }));
         cmbDateSel.setValue("PRDA");
-        
+
         var month = this.fecha.getMonth() + 1;
 
         if (month < 10) {
@@ -121,7 +135,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
-        
+
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
@@ -151,7 +165,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
         me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() +
                 Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
-        
+
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             bean: me.bean,
@@ -169,7 +183,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
         win.lblUser_toolTip("Estructura: A4040");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        
+
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -201,15 +215,64 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             });
 
 //            console.log(storeGridDatas);
-            
+
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataAirport').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },
     // </editor-fold>
+    OnGridHeaderDetByDate: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridHeaderDetail';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
 
+        var beanHeaderDay = {};
+        beanHeaderDay.DATE = rowData.data.PRDA;
+        beanHeaderDay.IN_DATE = 'PRDA';
 
+        me.paramsHeaderDetail.beanString = JSON.stringify(beanHeaderDay);
+
+        this.setOnGridHeaderDetByDate();
+    },
+    setOnGridHeaderDetByDate: function () {
+        win.lblUser_toolTip("Estructura: A4040");
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchHeaderDetailByDate'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsHeaderDetail
+                    },
+                    load: function (obj) {
+//                        console.log(obj.data);
+                        me.setWidthPie();
+                        var pag = Ext.getCmp(prototype.id + '-paggin2');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+
+//            console.log(storeGridDatas);
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridHeaderDetail').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+        }
+    },
     validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
@@ -255,7 +318,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             global.showMenu();
         }
     },
-    btnClear_click: function (obj, e) {        
+    btnClear_click: function (obj, e) {
 
     },
     btnExcel_click: function (obj, e) {
@@ -338,6 +401,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             case  '-panelGridData':
                 me.pagginActual = '-paggin';
                 break;
+            case  '-panelGridHeaderDetail':
+                me.pagginActual = '-paggin2';
+                break;
         }
     },
     /*     
@@ -385,8 +451,30 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
     getDoubleColor3: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = 'text-align:right;background:#FCF5F2';
         return Ext.util.Format.number(value, '0,000.00');
-    }
-
-
+    },
+    selectComboFromYear: function (obj) {
+        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
+        comboToYear.bindStore(storeComboDataYear);
+        comboToYear.setValue(obj.getValue());
+    },
+    selectComboFromMonth: function (obj) {
+        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        comboToMonth.setValue(obj.getValue());
+    },
+    selectComboToMonth: function (obj) {
+        var comboFromYear = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var comboFromMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+        if (comboFromYear.getValue() === comboToYear.getValue()) {
+            if (obj.getValue() < comboFromMonth.getValue()) {
+                comboFromMonth.setValue(obj.getValue());
+            }
+        }
+    },
+    selectComboFromDay: function (obj) {
+        var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
+        comboToDay.setValue(obj.getValue());
+    },
 }
 );

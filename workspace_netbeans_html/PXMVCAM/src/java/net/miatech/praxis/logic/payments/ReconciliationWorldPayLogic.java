@@ -27,5 +27,9 @@ public class ReconciliationWorldPayLogic {
     public List<A4040Filter> loadPX589SQP04411(A4040Filter filter) throws SQLException, Exception {
         return banksCatalogDAO.loadPX589SQP04411(filter);
     }
+    
+    public List<A4040Filter> loadPX589SQP04412(A4040Filter filter) throws SQLException, Exception {
+        return banksCatalogDAO.loadPX589SQP04412(filter);
+    }
 
 }
