@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1200,
+                width: 1370,
                 height: 700,
                 align: 'center'
             },
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width: 1164,
+                            width: 1370,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 1164,
+                                    width: 1370,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -64,8 +64,12 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                             align: 'center'
                                         },
                                         items: [
-                                            {text: 'Prda', dataIndex: 'RN', width: 40},
-                                            {text: 'Currency', dataIndex: 'RN', width: 40},
+                                            {text: 'Prda', dataIndex: 'PRDA', width: 90,
+                                            listeners: {
+                                                            click: 'onGridDetCard'
+                                                        }
+                                            },
+                                            {text: 'Currency', dataIndex: 'CURRENCY', width: 80},
                                             {text: 'Total Transaction(312-00)',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -74,10 +78,34 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Ctry', dataIndex: 'COUNTRY', width: 50},
-                                                    {text: 'Code', dataIndex: 'CODEBANK', width: 50},
-                                                    {text: 'Nrc. Code', dataIndex: 'CODBANKN', width: 70},
-                                                    {text: 'Name', dataIndex: 'NAMEBANK', width: 220, align: 'left'}
+                                                    {text: 'Tran.Accepted', dataIndex: 'TOTTRAAMOU', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Setllem.Accep', dataIndex: 'TOTSETAMOU', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Trans.Pendien', dataIndex: 'TOTPENAMOU', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Trans.Rejecti', dataIndex: 'TOTREJAMOU', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
                                             },
                                             {text: 'Reconciliation Transaction',
@@ -88,10 +116,34 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Ctry', dataIndex: 'COUNTRY', width: 50},
-                                                    {text: 'Code', dataIndex: 'CODEBANK', width: 50},
-                                                    {text: 'Nrc. Code', dataIndex: 'CODBANKN', width: 70},
-                                                    {text: 'Name', dataIndex: 'NAMEBANK', width: 220, align: 'left'}
+                                                    {text: 'Tran.Accepted', dataIndex: 'TOTTRAAMOC', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Setllem.Accep', dataIndex: 'TOTSETAMOC', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Trans.Pendien', dataIndex: 'TOTPENAMOC', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Trans.Rejecti', dataIndex: 'TOTREJAMOC', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
                                             },
                                             {text: 'Differences',
@@ -102,10 +154,34 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Ctry', dataIndex: 'COUNTRY', width: 50},
-                                                    {text: 'Code', dataIndex: 'CODEBANK', width: 50},
-                                                    {text: 'Nrc. Code', dataIndex: 'CODBANKN', width: 70},
-                                                    {text: 'Name', dataIndex: 'NAMEBANK', width: 220, align: 'left'}
+                                                    {text: 'Tran.Accepted', dataIndex: 'DIF_TOTTRAAMO', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Setllem.Accep', dataIndex: 'DIF_TOTSETAMO', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Trans.Pendien', dataIndex: 'DIF_TOTPENAMO', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Trans.Rejecti', dataIndex: 'DIF_TOTREJAMO', width: 100,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;text-align:right;background-color:#d5f4d5;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000') + '</b>';
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
                                             }
                                         ]
@@ -120,7 +196,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                         pack: 'center'
                                     },
                                     border: true,
-                                    width: 1115,
+                                    width: 1000,
                                     height: 25,
                                     bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
 //                                    defaults: {
@@ -131,7 +207,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                     items: [
                                         {
                                             xtype: 'panel',
-                                            width: 1164,
+                                            width: 600,
                                             height: 25,
                                             layout: {
                                                 type: 'hbox',

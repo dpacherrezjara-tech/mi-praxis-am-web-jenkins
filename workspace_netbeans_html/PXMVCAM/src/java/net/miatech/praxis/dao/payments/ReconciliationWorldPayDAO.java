@@ -96,7 +96,26 @@ public class ReconciliationWorldPayDAO {
                 while (rst.next()) {
                     bean = new A4040Filter();
                     bean.RN = rst.getLong("RN");
-
+                    bean.PRDA = rst.getString("PRDA").trim();
+                    bean.SCURRENCY = rst.getString("SCURRENCY").trim();
+                  //  bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    //bean.RECNBR = rst.getString("RECNBR").trim();
+                   // bean.PARTEID = rst.getString("PARTEID").trim();
+                    
+                    bean.TOTTRAAMOU = rst.getInt("TOTTRAAMOU");
+                    bean.TOTSETAMOU = rst.getInt("TOTSETAMOU");
+                    bean.TOTPENAMOU = rst.getInt("TOTPENAMOU");
+                    bean.TOTREJAMOU = rst.getInt("TOTREJAMOU");
+                    bean.TOTTRAAMOC = rst.getInt("TOTTRAAMOC");
+                    bean.TOTSETAMOC = rst.getInt("TOTSETAMOC");
+                    bean.TOTPENAMOC = rst.getInt("TOTPENAMOC");
+                    bean.TOTREJAMOC = rst.getInt("TOTREJAMOC");
+                    
+                    bean.DIF_TOTTRAAMO = bean.TOTTRAAMOU - bean.TOTTRAAMOC;
+                    bean.DIF_TOTSETAMO = bean.TOTSETAMOU - bean.TOTSETAMOC;
+                    bean.DIF_TOTPENAMO = bean.TOTPENAMOU - bean.TOTPENAMOC;
+                    bean.DIF_TOTREJAMO = bean.TOTREJAMOU - bean.TOTREJAMOC;
+                    
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;
                     bean.page.TOTPAG = filter.page.TOTPAG;

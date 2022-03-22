@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Filters', {
                     valueField: 'code',
                     displayField: 'name',
                     fieldStyle: 'text-align: left;',
-                    width: 90,
+                    width: 120,
                     hidden: false
                 },
                 {

@@ -11,7 +11,6 @@ package net.miatech.praxis.payment;
 public class A4040 {
 public String CCUST = "";    
 public String PRDA = "";
-public String CURRENCY = "";
 public String SCOUNTRY = "";
 public String RECNBR = "";
 public String PARTEID = "";

@@ -169,7 +169,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
         win.lblUser_toolTip("Estructura: A4040");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
+        
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({msg: msj
@@ -185,6 +185,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
                     },
                     load: function (obj) {
 //                        console.log(obj.data);
+                        me.setWidthPie();
                         var pag = Ext.getCmp(prototype.id + '-paggin');
                         var pagData = pag.getPageData();
                         Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
@@ -200,6 +201,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             });
 
 //            console.log(storeGridDatas);
+            
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataAirport').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
