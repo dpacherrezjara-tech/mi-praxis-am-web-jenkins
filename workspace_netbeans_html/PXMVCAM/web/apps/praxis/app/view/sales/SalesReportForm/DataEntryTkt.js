@@ -886,7 +886,12 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
                                         },
                                         //PANEL 3
                                         // <editor-fold defaultstate="collapsed" desc="PANEL 3">
-
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.idSale + '-panelDetalles',
+                                            width: 1350,
+                                            height: 330
+                                        },
                                         {
                                             xtype: 'panel',
                                             bodyStyle: 'background: #E5ECEF',
