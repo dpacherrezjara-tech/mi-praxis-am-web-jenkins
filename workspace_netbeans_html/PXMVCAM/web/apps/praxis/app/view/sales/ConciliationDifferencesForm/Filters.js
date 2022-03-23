@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationDifferencesForm.Filters', {
                             xtype: 'datefield',
                             format: 'Y/m/d',
                             fieldLabel: 'From', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                            anchor: '100%',value:'2021/01/10',
+                            anchor: '100%',value: new Date(),
                             id: prototype.id + '-txtFPRDA_FROM',
                             fieldStyle: 'text-align:center',
                             maskRe: /[0-9/]/,
@@ -83,9 +83,14 @@ Ext.define('Ext.Praxis.view.sales.ConciliationDifferencesForm.Filters', {
                             width: 140,
                             labelWidth: 40,
                             enableKeyEvents: true,
-                            listeners: {
+                            listeners: {                                
+                                change:function( obj, newValue, oldValue, eOpts){
+                                    //console.log('****' + newValue);
+                                    Ext.getCmp(prototype.id + '-txtFPRDA_TO').setValue( newValue );
+                                },
                                 keypress: function (obj, e, eOpts) {
                                     if (e.getKey() === e.ENTER) {
+                                        Ext.getCmp(prototype.id + '-txtFPRDA_TO').setValue( Ext.getCmp(prototype.id + '-txtFPRDA_FROM').getValue() );
                                         Ext.getCmp(prototype.id + '-txtFPRDA_TO').focus();
                                     }
                                 }
@@ -95,7 +100,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationDifferencesForm.Filters', {
                             xtype: 'datefield',
                             format: 'Y/m/d',
                             fieldLabel: 'To', labelAlign: 'right', labelStyle: 'font-weight: bold;',
-                            anchor: '100%',value:'2021/01/10',
+                            anchor: '100%',value:new Date(),
                             id: prototype.id + '-txtFPRDA_TO',
                             fieldStyle: 'text-align:center',
                             maskRe: /[0-9/]/,
@@ -170,7 +175,7 @@ Ext.define('Ext.Praxis.view.sales.ConciliationDifferencesForm.Filters', {
                             enableKeyEvents: true,                            
                             enforceMaxLength: true,
                             maxLength: 8,
-                            maskRe: /[a-zA-Z]/,
+                            //maskRe: /[a-zA-Z]/,
                             listeners: {
                                 keypress: 'onTextKeypress'
                             }
