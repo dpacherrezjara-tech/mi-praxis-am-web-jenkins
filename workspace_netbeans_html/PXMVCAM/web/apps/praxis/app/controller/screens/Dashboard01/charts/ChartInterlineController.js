@@ -140,6 +140,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     hidePanelGraficos: function () {
         Ext.getCmp(prototype.id + '-boxInt_Month').hide();
         Ext.getCmp(prototype.id + '-boxInt_Airline').hide();
+        Ext.getCmp(prototype.id + '-boxInt_Workp').hide();
     },
 
     onChangeRadioAirline: function (obj, rb_new, rb_old, func) {
@@ -288,7 +289,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                 this.searchInterlineByAir();
                 break;
             case 'rbc3_IA' :
-
+                Ext.getCmp(prototype.id + '-boxInt_Workp').show();
+                this.setFormatParameter();
+                this.searchInterlineByAir();
                 break;
 
         }
