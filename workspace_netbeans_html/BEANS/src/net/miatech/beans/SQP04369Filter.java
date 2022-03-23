@@ -21,6 +21,7 @@ public class SQP04369Filter {
     public String IN_MDA = "";
     public String IN_IDFIL = "";
     public String IN_STATUS = "";
+    public String IN_TIPO = "";
     //**out
     public String PROCESSING_DATE = "";
     public String OPEN_DATE = "";
