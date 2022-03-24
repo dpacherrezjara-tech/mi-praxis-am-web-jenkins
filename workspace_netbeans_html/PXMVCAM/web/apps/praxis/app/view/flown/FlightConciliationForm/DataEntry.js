@@ -674,7 +674,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a',
+                                    id: prototype.id + '-txtDESCRIP2',
                                     fieldStyle: 'text-align:left',
                                     enforceMaxLength: true,
                                     maxLength: 50,

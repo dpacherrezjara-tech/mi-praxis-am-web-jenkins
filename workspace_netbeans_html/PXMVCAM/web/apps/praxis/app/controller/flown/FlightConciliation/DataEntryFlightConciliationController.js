@@ -212,7 +212,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         } else if (bean.FSTAOD === '1') {
             Ext.getCmp(prototype.id+"-cmbFSTAOD").disable(true);
         }
-        Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion);
+        Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion.substring(0,49));
+        Ext.getCmp(prototype.id+"-txtDESCRIP2").setValue(bean.strDescripcion.substring(50,100));
         Ext.getCmp(prototype.id+"-txtFSENDVC").setValue(bean.FSENDVC);
         Ext.getCmp(prototype.id+"-txtQCPNVC").setValue(bean.QCPNVC);
         Ext.getCmp(prototype.id+"-txtQCPNMA").setValue(bean.QCPNMA);
@@ -548,7 +549,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         }else{
             beanOption.FSTAOD = this.getValue('cmbFSTAOD');
         }
-        beanOption.strDescripcion = this.getValue('txtDESCRIP').trim();
+        beanOption.strDescripcion = this.getValue('txtDESCRIP') + this.getValue('txtDESCRIP2');
         beanOption.FSENDVC = Ext.util.Format.date(this.getValue('txtFSENDVC'), 'Ymd');
         if (this.getValue("txtQCPNVC").trim() !== '') {
             beanOption.QCPNVC = Number(this.getValue('txtQCPNVC').replace(',', '').trim());
