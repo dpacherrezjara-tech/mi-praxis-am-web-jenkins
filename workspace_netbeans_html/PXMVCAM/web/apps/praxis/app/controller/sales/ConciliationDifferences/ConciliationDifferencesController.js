@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
                 ["2", "Open Date"]
             ]
         }));
-        cbxSearchBy.setValue("1");
+        cbxSearchBy.setValue("2");
 
     },
     tnvMain_changeHandler: function (tab, x) {
@@ -171,6 +171,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
     },
     onDetalleClick: function (obj, rowIndex) {
         var rec = obj.getStore().getAt(rowIndex);
+        var me = this;
         //console.log(rec);
         var p_searchParams = {
             IN_TFILTER: '',
@@ -182,7 +183,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
             IN_IATA: '', //--pendiente
             IN_MDA: rec.data.CURRENCY,
             IN_IDFIL: rec.data.A1698IDFIL, //-- para detalle de cada linea        
-            IN_STATUS: rec.data.STATUS_DIFF
+            IN_STATUS: rec.data.STATUS_DIFF,
+            IN_TIPO: me.tipo
         };
         this.setGridDataDetalle(p_searchParams);
     },
@@ -257,7 +259,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
             IN_IATA: IN_IATA,
             IN_MDA: IN_MDA,
             IN_IDFIL: IN_IDFIL, //-- para detalle de cada linea        
-            IN_STATUS: IN_STATUS
+            IN_STATUS: IN_STATUS,
+            IN_TIPO: me.tipo
         };
         //console.log(searchParams);
     },
@@ -405,7 +408,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
             IN_IATA: IN_IATA,
             IN_MDA: IN_MDA,
             IN_IDFIL: IN_IDFIL, //-- para detalle de cada linea        
-            IN_STATUS: IN_STATUS
+            IN_STATUS: IN_STATUS,
+            IN_TIPO: me.tipo
         };
 
         var msj = this.validateFields();
@@ -493,7 +497,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
             IN_IATA: IN_IATA,
             IN_MDA: IN_MDA,
             IN_IDFIL: IN_IDFIL, //-- para detalle de cada linea        
-            IN_STATUS: IN_STATUS
+            IN_STATUS: IN_STATUS,
+            IN_TIPO: me.tipo
         };
         
         var msj = this.validateFields();
@@ -542,29 +547,44 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
             option.setVisible(true);
         }
     },
-    //no usado
+    
     onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         var all = grid.getStore();
         this.winDataEntry('U', rec, all, rowIndex);
 
     },
-    //no usado
+    
     winDataEntry: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         all = all === null || all === undefined ? {} : all;
         rowIndex = rowIndex === null || rowIndex === undefined ? {} : rowIndex;
-
-        Ext.create('Ext.Praxis.view.sales.ConciliationDifferencesForm.DataEntry', {
-            id: prototype.id + '-dataEntry',
-            params: {
-                action: action,
-                rec: rec,
-                all: all,
-                rowIndex: rowIndex
-            }
-        }).show();
+        
+        console.log(rec.data.A1698SOURC);
+        if (rec.data.A1698SOURC === 'BSP'){
+           Ext.create('Ext.Praxis.view.sales.ConciliationDifferencesForm.DataEntry', {
+                id: prototype.id + '-dataEntry',
+                params: {
+                    action: action,
+                    rec: rec,
+                    all: all,
+                    rowIndex: rowIndex
+                }
+            }).show(); 
+        }
+        if (rec.data.A1698SOURC === 'ARC'){
+           Ext.create('Ext.Praxis.view.sales.ConciliationDifferencesForm.DataEntryARC', {
+                id: prototype.id + '-dataEntry',
+                params: {
+                    action: action,
+                    rec: rec,
+                    all: all,
+                    rowIndex: rowIndex
+                }
+            }).show(); 
+        }
+        
 
     },
     //detalle de diferencias ASR

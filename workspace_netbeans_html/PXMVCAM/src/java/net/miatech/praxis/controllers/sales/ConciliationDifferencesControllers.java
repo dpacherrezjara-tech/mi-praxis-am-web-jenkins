@@ -209,6 +209,8 @@ public class ConciliationDifferencesControllers extends BaseController {
             filter.IN_MDA = request.getParameter("IN_MDA");
             filter.IN_IDFIL = request.getParameter("IN_IDFIL");
             filter.IN_STATUS = request.getParameter("IN_STATUS");
+            filter.IN_TIPO = request.getParameter("IN_TIPO");
+            
 
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
