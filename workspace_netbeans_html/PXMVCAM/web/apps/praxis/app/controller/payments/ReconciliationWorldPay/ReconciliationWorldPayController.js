@@ -21,6 +21,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
     searchParams: {},
     paramsDetail: {},
     paramsHeaderDetail: {},
+    paramsHeaderDetailByParteID: {},
     beanHeaderDay: {},
     dataObtain: {},
     init: function (view) {
@@ -273,6 +274,84 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
         }
     },
+    OnGridHeaderDetByParteID: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridHeaderDetailByParteID';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var beanHeaderDay = {};
+        beanHeaderDay.IN_PRDA = rowData.data.PRDA;
+        beanHeaderDay.IN_PARTEID = rowData.data.PARTEID;
+
+        me.paramsHeaderDetailByParteID.beanString = JSON.stringify(beanHeaderDay);
+
+        this.setOnGridHeaderDetByParteID();
+    },
+    setOnGridHeaderDetByParteID: function () {
+        win.lblUser_toolTip("Estructura: A4040");
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchHeaderDetailByParteID'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsHeaderDetailByParteID
+                    },
+                    load: function (obj) {
+//                        console.log(obj.data);
+                        me.setWidthPie();
+                        var pag = Ext.getCmp(prototype.id + '-paggin3');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        var data = obj.data.items[0].data;
+                        Ext.getCmp(prototype.id + '-gridHeaderDetailByParteID').setTitle('<center style="font-size:12px;">Processing Date: ' + data.IN_PRDA + ' - Party ID: ' + data.IN_PARTEID + '</center>');
+
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+
+//            console.log(storeGridDatas);
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridHeaderDetailByParteID').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
+        }
+    },
+    showTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        var data = {}
+        data.CCIA = rowData.data.TKTNUMBER.substring(0, 3);
+        data.FORMA = rowData.data.TKTNUMBER.substring(3, 7);
+        data.SERIE = rowData.data.TKTNUMBER.substring(7, 13);
+        console.log(data);
+        me.viewMasterTkt(data);
+    },
+    viewMasterTkt: function (data) {
+
+        prototypeProgram.view = 'payments-reconciliation-world-pay-form';
+        prototypeProgram.nprog = 'PX00000589';
+        prototypeProgram.title = 'Reconciliation by WORLDPAY';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        beanProMasterTicket.IN_CIA = data.CCIA;
+        beanProMasterTicket.IN_FORMA = data.FORMA;
+        beanProMasterTicket.IN_SERIE = data.SERIE;
+        beanProMasterTicket.IN_SEQ = '';
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
+    },
     validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
@@ -353,11 +432,11 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
                 break;
             case  '-panelGridHeaderDetail':
                 global.getFile(prototype.url + '/getXLSXHeaderDetail?beanString=' + searchParams.beanString);
-                break;    
+                break;
             default:
-                global.Msg(
-                        {msg: 'Under Construction'
-                        });
+                global.Msg({
+                    msg: 'Under Construction'
+                });
         }
 
     },
@@ -398,6 +477,15 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
         var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
         Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
     },
+    setWidthPie1: function () {
+        var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
+        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridHeaderDetail' || me.panelActual === '-panelGridHeaderDetailByParteID') {
+            Ext.getCmp(prototype.id + '-pie').setVisible(false);
+        } else {
+            Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
+            Ext.getCmp(prototype.id + '-pie').setVisible(true);
+        }
+    },
     getPaggin: function () {
         me.pagginActual = '';
         switch (me.panelActual) {
@@ -406,6 +494,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
                 break;
             case  '-panelGridHeaderDetail':
                 me.pagginActual = '-paggin2';
+                break;
+            case  '-panelGridHeaderDetailByParteID':
+                me.pagginActual = '-paggin3';
                 break;
         }
     },
