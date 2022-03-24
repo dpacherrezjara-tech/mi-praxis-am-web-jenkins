@@ -22,6 +22,7 @@ import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.ReconciliationWorldPayLogic;
 import net.miatech.praxis.payment.filter.A4040Filter;
+import net.miatech.praxis.payment.filter.A4041Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -113,7 +114,7 @@ public class ReconciliationWorldPayController extends BaseController {
     @RequestMapping(value = "searchHeaderDetailByDate")
     public @ResponseBody
     String searchHeaderDetailByDate(ModelMap map, HttpServletRequest request) {
-        System.out.println("-------------- ReconciliationWorldPay : Search-------------");
+        System.out.println("-------------- ReconciliationWorldPay : searchHeaderDetailByDate-------------");
         map.put("success", true);
         List<A4040Filter> lst = this.getListHeaderDetailByDate(request, false);
         System.out.println("Total : " + lst.size());
@@ -152,6 +153,54 @@ public class ReconciliationWorldPayController extends BaseController {
             }
 
             lst = logic.loadPX589SQP04412(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchHeaderDetailByParteID")
+    public @ResponseBody
+    String searchHeaderDetailByParteID(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- ReconciliationWorldPay : searchHeaderDetailByParteID-------------");
+        map.put("success", true);
+        List<A4041Filter> lst = this.getListHeaderDetailByParteID(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4041Filter> getListHeaderDetailByParteID(HttpServletRequest request, Boolean bExcel) {
+
+        List<A4041Filter> lst = new ArrayList<>(0);
+        A4041Filter filter = new A4041Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new ReconciliationWorldPayLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4041Filter.class);
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX589SQP04430(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -445,7 +494,7 @@ public class ReconciliationWorldPayController extends BaseController {
             Cell CH1_14 = row1.createCell(14);
             Cell CH1_15 = row1.createCell(15);
             Cell CH1_16 = row1.createCell(16);
-            
+
             CH1_0.setCellValue("Processing");
             CH1_1.setCellValue("Rec.");
             CH1_2.setCellValue("Part");
@@ -463,7 +512,6 @@ public class ReconciliationWorldPayController extends BaseController {
             CH1_14.setCellValue("");
             CH1_15.setCellValue("");
             CH1_16.setCellValue("");
-            
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -482,7 +530,7 @@ public class ReconciliationWorldPayController extends BaseController {
             CH1_14.setCellStyle(headerStyle);
             CH1_15.setCellStyle(headerStyle);
             CH1_16.setCellStyle(headerStyle);
-            
+
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 2));

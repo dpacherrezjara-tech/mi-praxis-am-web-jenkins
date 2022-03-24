@@ -10,6 +10,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ReconciliationWorldPayDAO;
 import net.miatech.praxis.payment.filter.A4040Filter;
+import net.miatech.praxis.payment.filter.A4041Filter;
 
 /**
  *
@@ -30,6 +31,10 @@ public class ReconciliationWorldPayLogic {
     
     public List<A4040Filter> loadPX589SQP04412(A4040Filter filter) throws SQLException, Exception {
         return banksCatalogDAO.loadPX589SQP04412(filter);
+    }
+    
+    public List<A4041Filter> loadPX589SQP04430(A4041Filter filter) throws SQLException, Exception {
+        return banksCatalogDAO.loadPX589SQP04430(filter);
     }
 
 }
