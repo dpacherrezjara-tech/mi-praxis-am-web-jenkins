@@ -720,7 +720,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
 
         try {
 
-            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?)}";
+            String strSQL = "{CALL " + session.getMainLibrary() + ".SQP04322(?,?,?,?,?,?)}";
 //            String strSQL = "{CALL " + session.getMainLibrary() + ".PX095S01A3729GG(?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -731,6 +731,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
             cs.setString(3, filter.NFLIGHT);
             cs.setString(4, filter.IN_FSABRE);
             cs.setString(5, filter.CDEPART);
+            cs.setString(6, "A3729");
 
             cs.execute();
 
@@ -2285,7 +2286,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
         String strMsj = "";
         CallableStatement cstmt = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04320(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2319,6 +2320,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
             cstmt.setString(19, session.getUserView().getUserInfo().USR);
             cstmt.setString(20, Functions.getFechaActual());
             cstmt.setString(21, Functions.getHoraActual());
+            cstmt.setString(22, "A3729");
             cstmt.execute();
             
             strMsj = "Upgrade was successful.";
@@ -2430,6 +2432,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
             cstmt.setString(25, session.getUserView().getUserInfo().USR);
             cstmt.setString(26, Functions.getFechaActual());
             cstmt.setString(27, Functions.getHoraActual());
+            cstmt.setString(28, "A3729");
             cstmt.execute();
             
             strMsj = "Insertion was successful.";
