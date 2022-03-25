@@ -642,8 +642,8 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                         //var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00'; 
                         if (dt.getDay() === 0 || dt.getDay() === 6) {
                             color = '#FFFFFF'
-                        } else if(me.beanCalendar.IN_FUENTE === 'AXGRRCN-D' && res[i].fecha === '20220223' ){
-                            color = '#D7FE01'
+                        } else if(res[i].strFormatDate === 'YELLOW' ){
+                            color = '#D8FF02'
                         } else{
                             color = res[i].strFormatDate === 'AMBAR' ? '#ff4d00' : '#00ff00';
                         }
