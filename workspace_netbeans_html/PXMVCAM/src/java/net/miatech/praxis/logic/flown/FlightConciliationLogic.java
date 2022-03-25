@@ -40,8 +40,8 @@ public class FlightConciliationLogic {
         return objDAO.loadPX095S09A1692(filter, hmAeropuertos);
     }
 
-    public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo, HashMap hmAeropuertos) throws SQLException, Exception {
-        return objDAO.loadPX095S02A1691(filter, strTipo, hmAeropuertos);
+    public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo, HashMap hmAeropuertos, String f_Diff) throws SQLException, Exception {
+        return objDAO.loadPX095S02A1691(filter, strTipo, hmAeropuertos, f_Diff);
     }
 
     public List<A1691Filter> loadPX095S15A1691(A1691Filter filter) throws SQLException, Exception {

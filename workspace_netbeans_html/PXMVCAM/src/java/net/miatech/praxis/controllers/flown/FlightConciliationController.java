@@ -205,6 +205,7 @@ public class FlightConciliationController extends BaseController {
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             String strTipo = request.getParameter("strTipo");
+            String f_Diff = request.getParameter("cmb_Diff");
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
             filter.page.TOTROW = -1;
             filter.page.START = 0;
@@ -220,7 +221,7 @@ public class FlightConciliationController extends BaseController {
                     loadCiudadesHash();
 
             List<A1691Filter2> listaData = new FlightConciliationLogic(this.serverSession.getServerSession()).
-                    loadPX095S02A1691(filter, strTipo, hmAeropuertos);
+                    loadPX095S02A1691(filter, strTipo, hmAeropuertos, f_Diff);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -1446,12 +1447,13 @@ public class FlightConciliationController extends BaseController {
             filter.DFLIGHT = request.getParameter("DFLIGHT");
             filter.NFLIGHT = request.getParameter("NFLIGHT");
             filter.IN_OBS = request.getParameter("IN_OBS");
+            String f_Diff = request.getParameter("cmb_Diff");
 
             HashMap<String, String> hmAeropuertos = new MasterDAO(this.serverSession.getServerSession())
                     .loadCiudadesHash();
 
             List<A1691Filter2> listaData = new FlightConciliationLogic(this.serverSession.getServerSession())
-                    .loadPX095S02A1691(filter, strTipo, hmAeropuertos);
+                    .loadPX095S02A1691(filter, strTipo, hmAeropuertos, f_Diff);
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             Workbook workbook = new XSSFWorkbook();
