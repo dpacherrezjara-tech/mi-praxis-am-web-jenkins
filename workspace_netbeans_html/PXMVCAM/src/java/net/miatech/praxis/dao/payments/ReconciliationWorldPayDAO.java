@@ -16,6 +16,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A4040Filter;
 import net.miatech.praxis.payment.filter.A4041Filter;
+import net.miatech.praxis.payment.filter.A4042Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -204,6 +205,8 @@ public class ReconciliationWorldPayDAO {
                     bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                     bean.RECNBR = rst.getString("RECNBR").trim();
                     bean.PARTEID = rst.getString("PARTEID").trim();
+                    bean.MERCHID = rst.getString("MERCHID").trim();
+                    bean.PARTEIDSE = rst.getString("PARTEIDSE").trim();
 
                     bean.TOTTRAAMOU = rst.getDouble("TOTTRAAMOU");
                     bean.TOTSETAMOU = rst.getDouble("TOTSETAMOU");
@@ -318,9 +321,110 @@ public class ReconciliationWorldPayDAO {
                     bean.TKTNUMBER = rst.getString("TKTNUMBER").trim();
                     bean.TRATYPE = rst.getString("TRATYPE").trim();
                     bean.SETAMOUNT = rst.getDouble("SETAMOUNT");
+                    bean.PARTEIDSE = rst.getString("PARTEIDSE").trim();
+                    bean.SETCURREN = rst.getString("SETCURREN").trim();
                     
                     bean.SVFOP_TOT = SVFOP;
                     bean.SETAMOUNT_TOT = SETAMOUNT;
+
+                    bean.page.PAGNUM = filter.page.PAGNUM;
+                    bean.page.PAGROW = filter.page.PAGROW;
+                    bean.page.TOTPAG = filter.page.TOTPAG;
+                    bean.page.TOTROW = filter.page.TOTROW;
+                    lstData.add(bean);
+                }
+            }
+
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstData;
+    }
+    
+    public List<A4042Filter> loadPX589SQP04431(A4042Filter filter) throws SQLException, Exception {
+
+        List<A4042Filter> lstData = new ArrayList<A4042Filter>(0);
+        A4042Filter bean;
+        double SVFOP = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04431(?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+            cstmt.registerOutParameter(8, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_PRDA.trim());
+            cstmt.setString(3, filter.IN_PARTEIDSE.trim());
+            cstmt.setString(4, filter.IN_SCURRENCY.trim());
+
+            cstmt.setInt(5, filter.page.PAGNUM);
+            cstmt.setInt(6, filter.page.PAGROW);
+            cstmt.setInt(7, filter.page.TOTPAG);
+            cstmt.setInt(8, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(5);
+            filter.page.PAGROW = cstmt.getInt(6);
+            filter.page.TOTPAG = cstmt.getInt(7);
+            filter.page.TOTROW = cstmt.getInt(8);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                SVFOP = rst.getDouble("SVFOP");
+            }
+
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+                    bean = new A4042Filter();
+                    bean.RN = rst.getLong("RN");
+                    bean.IN_PRDA = filter.IN_PRDA;
+                    bean.IN_PARTEIDSE = filter.IN_PARTEIDSE;
+                    bean.IN_SCURRENCY = filter.IN_SCURRENCY;
+                    
+                    bean.PRDA = rst.getString("PRDA").trim();
+                    bean.RECTYPE = rst.getString("RECTYPE").trim();
+                    bean.PARTEIDSE = rst.getString("PARTEIDSE").trim();
+                    bean.NAMEID = rst.getString("NAMEID").trim();
+                    bean.BILLCODID = rst.getString("BILLCODID").trim();
+                    bean.SVFOP = rst.getDouble("SVFOP");
+                    bean.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    bean.DUEDATE = rst.getString("DUEDATE").trim();
+                    
+                    bean.SVFOP_TOT = SVFOP;
 
                     bean.page.PAGNUM = filter.page.PAGNUM;
                     bean.page.PAGROW = filter.page.PAGROW;

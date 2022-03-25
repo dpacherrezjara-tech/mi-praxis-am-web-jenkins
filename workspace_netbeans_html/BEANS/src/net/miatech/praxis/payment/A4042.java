@@ -9,7 +9,7 @@ package net.miatech.praxis.payment;
  *
  * @author ctarazona
  */
-public class A4041 {
+public class A4042 {
     public String CCUST = "";
     public String PRDA = "";
     public String SCOUNTRY = "";
@@ -25,5 +25,8 @@ public class A4041 {
     public String TRATYPE = "";
     public String PARTEIDSE = "";
     public String SETCURREN = "";
+    public String NAMEID = "";
+    public String BILLCODID = "";
+    public String DUEDATE = "";
     public double SETAMOUNT = 0;
 }

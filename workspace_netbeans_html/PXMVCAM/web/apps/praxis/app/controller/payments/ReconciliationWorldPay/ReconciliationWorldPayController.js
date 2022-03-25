@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
     paramsDetail: {},
     paramsHeaderDetail: {},
     paramsHeaderDetailByParteID: {},
+    paramsHeaderDetailByParteIDSE: {},
     beanHeaderDay: {},
     dataObtain: {},
     init: function (view) {
@@ -312,7 +313,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
                         Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
 
                         var data = obj.data.items[0].data;
-                        Ext.getCmp(prototype.id + '-gridHeaderDetailByParteID').setTitle('<center style="font-size:12px;">Processing Date: ' + data.IN_PRDA + ' - Party ID: ' + data.IN_PARTEID + '</center>');
+                        Ext.getCmp(prototype.id + '-gridHeaderDetailByParteID').setTitle('<center style="font-size:12px;">Processing Date: ' + data.IN_PRDA + ' - Part ID: ' + data.IN_PARTEID + '</center>');
 
                         if (obj.data.length === 0) {
                             global.Msg({
@@ -329,6 +330,63 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
         }
     },
+    OnGridHeaderDetByParteIDSE: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridHeaderDetailByParteIDSE';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var beanHeaderDay = {};
+        beanHeaderDay.IN_PRDA = rowData.data.PRDA;
+        beanHeaderDay.IN_PARTEIDSE = rowData.data.PARTEIDSE;
+        beanHeaderDay.IN_SCURRENCY = rowData.data.SCURRENCY;
+
+        me.paramsHeaderDetailByParteIDSE.beanString = JSON.stringify(beanHeaderDay);
+
+        this.setOnGridHeaderDetByParteIDSE();
+    },
+    setOnGridHeaderDetByParteIDSE: function () {
+        win.lblUser_toolTip("Estructura: A4042");
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchHeaderDetailByParteIDSE'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsHeaderDetailByParteIDSE
+                    },
+                    load: function (obj) {
+//                        console.log(obj.data);
+                        me.setWidthPie();
+                        var pag = Ext.getCmp(prototype.id + '-paggin4');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        var data = obj.data.items[0].data;
+                        //Ext.getCmp(prototype.id + '-gridHeaderDetailByParteIDSE').setTitle('<center style="font-size:12px;">Processing Date: ' + data.IN_PRDA + ' - Part ID: ' + data.IN_PARTEIDSE + ' - Currency: ' + data.IN_SCURRENCY +'</center>');
+                        Ext.getCmp(prototype.id + '-gridHeaderDetailByParteIDSE').setTitle('<center style="font-size:12px;">Processing Date: ' + data.IN_PRDA + ' - Part ID: ' + data.IN_PARTEIDSE +'</center>');
+
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+
+//            console.log(storeGridDatas);
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridHeaderDetailByParteIDSE').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin4').bindStore(storeGridDatas);
+        }
+    },    
     showTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         var data = {}
         data.CCIA = rowData.data.TKTNUMBER.substring(0, 3);
@@ -479,7 +537,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
     },
     setWidthPie1: function () {
         var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
-        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridHeaderDetail' || me.panelActual === '-panelGridHeaderDetailByParteID') {
+        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridHeaderDetail' || me.panelActual === '-panelGridHeaderDetailByParteID' || me.panelActual === '-panelGridHeaderDetailByParteIDSE') {
             Ext.getCmp(prototype.id + '-pie').setVisible(false);
         } else {
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
@@ -497,6 +555,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
                 break;
             case  '-panelGridHeaderDetailByParteID':
                 me.pagginActual = '-paggin3';
+                break;
+            case  '-panelGridHeaderDetailByParteIDSE':
+                me.pagginActual = '-paggin4';
                 break;
         }
     },
