@@ -309,7 +309,7 @@ public class FlightConciliationController extends BaseController {
 
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4190Filter> listaData = logic.loadPX095SQP04410(filter);
+            List<A4190Filter> listaData = new ArrayList<A4190Filter>();// = logic.loadPX095SQP04410(filter);
 
             map.put("success", true);
             map.put("data", listaData);
@@ -3123,7 +3123,7 @@ public class FlightConciliationController extends BaseController {
 
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
-            List<A4190Filter> listaData = logic.loadPX095SQP04410(filter);
+            List<A4190Filter> listaData = new ArrayList<A4190Filter>();// logic.loadPX095SQP04410(filter);
 
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
             workbook = new XSSFWorkbook();
