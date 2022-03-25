@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                             border: true,
                             hidden: false,
                             height: 516,
-                            width: 1215,
+                            width: 1182,
                             margin: '10 0 0 150',
                             layout: {
                                 type: 'vbox',
@@ -50,7 +50,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainData',
                                     height: 510,
-                                    width: 1215,
+                                    width: 1182,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -127,7 +127,7 @@ Ext.define('Ext.Praxis.view.payments.InputsForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Details / error Message', dataIndex: 'MENSA', width: 400,
+                                                text: 'Details / error Message', dataIndex: 'MENSA', width: 380,
                                                     renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                         var data = record.data;
                                                         metaData.style = "text-align:left;";
