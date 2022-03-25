@@ -1052,7 +1052,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
 
         try {
             //PX09500004
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S04A1691(?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04432(?,?,?,?,?,?,?)}";
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
@@ -1085,7 +1085,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
                 }
                 //Obteniendo Descripción ODS ===================================
                 if (cs.getString(7) != null) {
-                    beanCons.strDescripcion = cs.getString(7).trim();
+                    beanCons.strDescripcion = cs.getString(7);
                 }
                 beanCons.FSENDSS = rst.getString("FSENDSS").trim();
                 beanCons.CDEPART = rst.getString("CDEPART").trim();
@@ -1219,7 +1219,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
 
         try {
             //PX09500006
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX095S03A1691(?,?,?,?,?,?,?,?,?,?"
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04413(?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?"
                     + ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
@@ -1271,7 +1271,7 @@ public List<A1691Filter2> loadPX095S02A1691(A1691Filter2 filter, String strTipo,
             cs.setInt(42, Integer.parseInt(String.valueOf(filter.QCPCHD)));
             cs.setInt(43, Integer.parseInt(String.valueOf(filter.QCPINF)));
 
-            cs.setString(44, filter.strDescripcion.trim());
+            cs.setString(44, filter.strDescripcion);
             cs.setString(45, filter.FMULTI.trim());
             cs.execute();
 
