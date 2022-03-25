@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     objA3729: {},
     objODS: {},
     objVCRJ: {},
+    objDetail: {},
     gloTipoTkt: '',
     g_nflight: '',
     status: '',
@@ -108,6 +109,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     // <editor-fold defaultstate="collapsed" desc="onViewClick">
     onViewDetailClick: function (column, e, row, column, x, rowData) {
+        
+        Ext.getCmp(prototype.id + '-cmb_Diff').setValue('N');
+        
         this.bean = x.record.data;
         var strTipo = Ext.getCmp(prototype.id + '-gridData').headerCt.getGridColumns()[column].dataIndex.replace('lng', '');
         var cant = 0;
@@ -163,7 +167,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             } else {
                 this.bean.IN_OBS = ''
             }
-            this.searchDetail(this.bean, strTipo);
+            this.searchDetail(this.bean, strTipo, 'N');
         } else {
             global.Msg({msg: 'Data Not Found'});
         }
@@ -326,6 +330,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function(obj, e) {
+        
+        Ext.getCmp(prototype.id + '-cmb_Diff').setValue('N');
+        Ext.getCmp(prototype.id + '-filter_3').hide();
         Ext.getCmp(prototype.id + '-pie').hide();
         var chkManifest = this.getValue("chkManifest");
 
@@ -544,6 +551,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         }
     },
     btnBack_click: function() {
+        
+        Ext.getCmp(prototype.id + '-filter_3').hide();
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
@@ -555,6 +564,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 if (this.peek() === prototype.id + '-boxMainData') {
                     this.selectedChild('boxMainData', '', false);
                 } else if (this.peek() === prototype.id + '-boxDetailData') {
+                    Ext.getCmp(prototype.id + '-filter_3').show();
                     this.selectedChild('boxDetailData', 'paggin', false);
                 } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
                     this.selectedChild('boxDetailNFLGITHData', 'paggin2', false);
@@ -754,8 +764,23 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             this.searchDetail(this.bean, this.gloTipo);
         }
     },
+    onDIFF: function () {
+        
+        if (me.stack[me.stack.length - 1 ] === 'FlightConciliationForm-boxDetailData') {
+            if (this.getValue('chkObs')) {
+                this.bean.IN_OBS = 'Y'
+            } else {
+                this.bean.IN_OBS = ''
+            }
+            var cmb_Diff = Ext.getCmp(prototype.id + '-cmb_Diff').getValue();
+            this.searchDetail(this.bean, this.gloTipo, cmb_Diff);
+        }
+    },
     //<editor-fold defaultstate="collapsed" desc="searchDetail">
-    searchDetail: function(bean, strTipo) {
+    searchDetail: function(bean, strTipo, cmb_Diff) {
+        
+        Ext.getCmp(prototype.id + '-filter_3').show();
+        
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetail'
@@ -763,7 +788,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-boxMainData').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(bean), strTipo: strTipo};
+                    obj.proxy.extraParams = {beanString: JSON.stringify(bean), strTipo: strTipo, cmb_Diff};
                 },
                 load: function(obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-boxMainData').unmask();
@@ -800,6 +825,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         //        _pathDetail = prototype.url+'/getXLSXDetail?beanString='+JSON.stringify(bean)+'&strTipo='+strTipo;
         _pathDetail = prototype.url + '/getXLSXDetail?' +
                 'strTipo=' + strTipo + '&' +
+                'cmb_Diff=' + cmb_Diff + '&' +
                 'yearFrom=' + bean.yearFrom + '&' +
                 'monthFrom=' + bean.monthFrom + '&' +
                 'dayFrom=' + bean.dayFrom + '&' +

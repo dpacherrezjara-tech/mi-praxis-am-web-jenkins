@@ -506,6 +506,49 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             width: 100
                         }
                     ]
+                },
+                {
+                    xtype: 'panel',
+                    id: prototype.id + '-filter_3',
+                    hidden: true,
+                    layout: 'hbox',
+                    style: 'border-top: 4px #ffffff solid;border-left: 0px;',
+                    defaults: {
+                        padding: '5px 1px 5px 1px',
+                        anchor: '100%'
+                    },
+                    items:[                       
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmb_Diff',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["N", "All"],
+                                    ["Y", "Diff > 0"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            fieldLabel: 'ODS vs VCR',
+//                            hidden: true,
+                            allowBlank: true,
+                            forceSelection: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: false,
+                            labelWidth: 75,
+                            width: 150,
+                            value: "N",
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            listeners: {
+                                change: 'onDIFF'
+                            }
+                        }
+                    ]
                 }
             ]
         }
