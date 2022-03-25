@@ -34,6 +34,7 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author gsanchezs
+ * Modificado por Luis Zambrano
  */
 public class FlightConciliationDAO {
 
