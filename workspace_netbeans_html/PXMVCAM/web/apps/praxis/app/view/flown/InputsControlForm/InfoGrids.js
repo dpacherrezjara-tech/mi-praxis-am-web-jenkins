@@ -273,7 +273,7 @@ Ext.define('Ext.Praxis.view.flown.InputsControlForm.InfoGrids', {
                                 items: [
                                     {text: 'Seq', width: 60, dataIndex: 'RN'},
                                     {text: 'Source', width: 120, dataIndex: 'FUENTE'},
-                                    {text: 'Flight <br> Date', width: 120, dataIndex: 'strFormatDate3',
+                                    {text: 'Flight <br> Date', id: prototype.id + '-flightDate', width: 120, dataIndex: 'strFormatDate3',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             metaData.style = 'text-decoration:underline; color:#008FE3; ';
                                             return '<a href="#flown-inputs-control-form" style="color:#008FE3">' + value + '</a>';

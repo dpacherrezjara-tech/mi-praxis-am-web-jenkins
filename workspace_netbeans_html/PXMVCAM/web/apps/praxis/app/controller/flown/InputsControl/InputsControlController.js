@@ -753,7 +753,14 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     var foot = Ext.getCmp(prototype.id + '-pie');
                     pag.hide();
                     foot.hide();
-
+                    
+                    var cmbSource = Ext.getCmp(prototype.id + '-cmbSource').getValue();
+                    if (cmbSource === 'TCN (ISR)' || cmbSource === 'SSIM'){
+                        Ext.getCmp(prototype.id + '-flightDate').setText('Generation <br> Date');
+                    } else {
+                        Ext.getCmp(prototype.id + '-flightDate').setText('Flight <br> Date');
+                    }
+                    
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'

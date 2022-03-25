@@ -644,7 +644,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     padding: '0px 80px 0px 0px',
                                     html: '<strong style="color:#000; text-decoration: underline; ">ODS File Information</strong>'
                                 },
-                                {xtype: 'tbspacer', width: 300},
                                 {
                                     xtype: 'label',
                                     id: prototype.id + '-txtDESCRIP-label',
@@ -657,7 +656,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                         'data-qtip': 'Mandatory Field'
                                     }
                                 },
+                                {xtype: 'tbspacer', width: 300},
                                 {
+                                xtype: 'panel',
+                                border: false,
+                                bodyStyle: 'background: #EFE9E5',
+                                items:[
+                                   {
                                     xtype: 'textfield',
                                     id: prototype.id + '-txtDESCRIP',
                                     fieldStyle: 'text-align:left',
@@ -666,7 +671,19 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                                     inputAttrTpl: "data-qtip='Enter an observation if is needed'",
                                     width: 400,
                                     hidden: false
-                                }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtDESCRIP2',
+                                    fieldStyle: 'text-align:left',
+                                    enforceMaxLength: true,
+                                    maxLength: 50,
+                                    inputAttrTpl: "data-qtip='Enter an observation if is needed'",
+                                    width: 400,
+                                    hidden: false
+                                } 
+                                ]
+                            }
                             ]
                         },
                         {

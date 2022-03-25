@@ -571,20 +571,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Received',
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: true,
-                                                            align: 'center'
-                                                        },
-                                                        columns: [
-                                                            {
-                                                                text: 'Date', dataIndex: 'strFormatFSENDOD', width: 100
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        text: 'Qty', dataIndex: 'QCPNOD', width: 45,
+                                                        text: 'Qty', dataIndex: 'QCPNOD', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#d5f4d5;";
                                                             return value;
@@ -707,7 +694,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Total', dataIndex: 'QCPNTOT', width: 75, sortable: true,
+                                                text: 'Total', dataIndex: 'QCPNTOT', width: 60, sortable: true,
                                                 listeners: {
                                                     click: 'onViewDetTicketClick'
                                                 },
@@ -723,6 +710,29 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 }
                                             },
                                             {
+                                                text: 'ODS Data',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Received',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Date', dataIndex: 'strFormatFSENDOD', width: 100
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
                                                 text: 'Coupons',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -730,7 +740,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Valued', dataIndex: 'QCPNVAL', width: 75, sortable: true,
+                                                    {text: 'Valued', dataIndex: 'QCPNVAL', width: 60, sortable: true,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
@@ -867,7 +877,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background:#d5f4d5;";
                                                             if (record.data.DESCRIP !== '') {
-                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP + '"';
+                                                                metaData.tdAttr = 'data-qtip="' + record.data.DESCRIP.substring(0,50).trim() + '<br>' + record.data.DESCRIP.substring(50,100).trim() + '"';
                                                                 return 'Y';
                                                             } else {
                                                                 return 'N';
