@@ -756,7 +756,7 @@ Ext.define('Ext.Praxis.controller.flown.InputsControl.InputsControlController', 
                     
                     var cmbSource = Ext.getCmp(prototype.id + '-cmbSource').getValue();
                     console.log(cmbSource);
-                    if (cmbSource === 'ISR' || cmbSource === 'SSIM'){
+                    if (cmbSource === 'ISR'){
                         Ext.getCmp(prototype.id + '-flightDate').setText('Processing <br> Date');
                     } else {
                         Ext.getCmp(prototype.id + '-flightDate').setText('Flight <br> Date');
