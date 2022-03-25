@@ -761,7 +761,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             } else {
                 this.bean.IN_OBS = ''
             }
-            this.searchDetail(this.bean, this.gloTipo);
+            var cmb_Diff = Ext.getCmp(prototype.id + '-cmb_Diff').getValue();
+            this.searchDetail(this.bean, this.gloTipo, cmb_Diff);
         }
     },
     onDIFF: function () {
@@ -788,7 +789,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-boxMainData').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(bean), strTipo: strTipo, cmb_Diff};
+                    obj.proxy.extraParams = {beanString: JSON.stringify(bean), strTipo: strTipo, cmb_Diff: cmb_Diff};
                 },
                 load: function(obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-boxMainData').unmask();
