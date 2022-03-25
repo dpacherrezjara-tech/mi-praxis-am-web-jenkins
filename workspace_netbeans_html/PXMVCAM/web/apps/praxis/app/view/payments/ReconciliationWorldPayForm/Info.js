@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1600,
+                width: 1720,
                 height: 800,
                 align: 'center'
             },
@@ -211,7 +211,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width: 1580,
+                            width: 1720,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -221,7 +221,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridHeaderDetail',
                                     height: 520,
-                                    width: 1580,
+                                    width: 1720,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -242,17 +242,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     {text: 'Date', dataIndex: 'PRDA', width: 90, },
                                                 ]
                                             },
-                                            {text: 'Rec.',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: true,
-                                                    align: 'center',
-                                                    border: true
-                                                },
-                                                columns: [
-                                                    {text: 'Nbr.', dataIndex: 'RECNBR', width: 70},
-                                                ]
-                                            },
                                             {text: 'Part',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -264,6 +253,37 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     {text: 'ID', dataIndex: 'PARTEID', width: 100,
                                                         listeners: {
                                                             click: 'OnGridHeaderDetByParteID'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-reconciliation-world-pay-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Merch',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'ID', dataIndex: 'MERCHID', width: 100,},
+                                                ]
+                                            },
+                                            {text: 'Part',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'ID Settlement', dataIndex: 'PARTEIDSE', width: 100,
+                                                        listeners: {
+                                                            click: 'OnGridHeaderDetByParteIDSE'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "color:#057ECB;";
@@ -403,7 +423,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridHeaderDetailByParteID',
                                     height: 520,
-                                    width: 874,
+                                    width: 1034,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -485,6 +505,8 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
+                                                    {text: 'Part ID', dataIndex: 'PARTEIDSE', width: 100, },
+                                                    {text: 'Cur.', dataIndex: 'SETCURREN', width: 60, },
                                                     {text: 'Amount', dataIndex: 'SETAMOUNT', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right";
@@ -494,6 +516,71 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     },
                                                 ]
                                             },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridHeaderDetailByParteIDSE',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '1',
+                            border: true,
+                            height: 560,
+                            width: 1580,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridHeaderDetailByParteIDSE',
+                                    height: 520,
+                                    width: 704,
+                                    hidden: false,
+                                    columnLines: true,
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [         
+                                            {text: 'Record',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Type', dataIndex: 'RECTYPE', width: 70, },
+                                                ]
+                                            },
+                                            {text: 'Name ID', dataIndex: 'NAMEID', width: 320, },
+                                            {text: 'Bill ID', dataIndex: 'BILLCODID, ', width: 80, },
+                                            {text: 'Due Date', dataIndex: 'DUEDATE', width: 80, },
+                                            {text: 'Settlement',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Cur.', dataIndex: 'SCURRENCY', width: 60, },
+                                                    {text: 'Amount', dataIndex: 'SVFOP', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            
                                         ]
                                     }
                                 },

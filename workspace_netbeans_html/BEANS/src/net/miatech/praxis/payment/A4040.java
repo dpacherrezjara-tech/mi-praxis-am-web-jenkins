@@ -14,6 +14,8 @@ public String PRDA = "";
 public String SCOUNTRY = "";
 public String RECNBR = "";
 public String PARTEID = "";
+public String PARTEIDSE = "";
+public String MERCHID = "";
 
 public double TOTTRAAMOU = 0;                    
 public double TOTSETAMOU = 0;     
