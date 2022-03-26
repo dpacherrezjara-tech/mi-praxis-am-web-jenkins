@@ -98,7 +98,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (value > 15) {
                                                                 metaData.style = "color:#de2828";
-                                                            }                                                            
+                                                            }
                                                             return value;
                                                         },
                                                     }
@@ -212,6 +212,19 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     },
                                                 ]
                                             },
+                                            {text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40,
+                                                listeners: {
+                                                    click: 'onTktsDetail'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    if (value === 0) {
+                                                        return value;
+                                                    } else {
+                                                        return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                    }
+                                                }
+                                            },
                                             {
                                                 text: 'PNR', dataIndex: 'PNR', width: 80,
                                                 listeners: {
@@ -275,6 +288,162 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'Ticket Number', dataIndex: 'ADDPAXTKT', width: 280
                                                     },
                                                 ]
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        //Panel detalle plusgrade por tkt
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelDetPGTkt',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            border: true,
+                            width: 1700,
+                            margin: '0 0 0 0 ',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataPGTkt',
+                                    width: 1350,
+                                    //height: 600,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Sales',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'SDATE', width: 80
+                                                    },
+                                                    {
+                                                        text: 'Type', dataIndex: 'TVENTA', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Ticket', dataIndex: 'TKT', width: 120,
+                                                listeners: {
+                                                    click: 'gridData_DetVIEWTKT_clickHandler'
+                                                }, renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;";
+                                                    return '<a href="#payments-sales-complement-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {
+                                                text: 'Country', dataIndex: 'SCOUNTRY', width: 80
+                                            },
+                                            {
+                                                text: 'Cod Trans',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Used', dataIndex: 'TRNCU', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Document',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Type', dataIndex: 'TDOC', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Agent', dataIndex: 'SAGENT', width: 80
+                                            },
+                                            {
+                                                text: 'Reason',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Code', dataIndex: 'RFIC', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Reason',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Sub Code', dataIndex: 'RFIS1', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Credit Card',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Code', dataIndex: 'SCARCOD', width: 80
+                                                    },
+                                                    {
+                                                        text: 'Number', dataIndex: 'SCARDN', width: 120
+                                                    },
+                                                    {
+                                                        text: 'Auth', dataIndex: 'SAUTHOC', width: 80
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Cur.', dataIndex: 'SCURRENCY', width: 60
+                                            },
+                                            {
+                                                text: 'Amount', dataIndex: 'SVFOP', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataPGTkt').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.SVFOP_TOT, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
+                                                text: 'PNR', dataIndex: 'SPNR', width: 120
                                             },
                                         ]
                                     }
@@ -353,7 +522,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (value > 15) {
                                                                 metaData.style = "color:#de2828";
-                                                            }                                                            
+                                                            }
                                                             return value;
                                                         },
                                                     }
@@ -586,7 +755,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (value > 15) {
                                                                 metaData.style = "color:#de2828";
-                                                            }                                                            
+                                                            }
                                                             return value;
                                                         },
                                                     }

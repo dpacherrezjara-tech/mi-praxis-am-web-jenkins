@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import net.miatech.praxis.logic.payments.SalesComplementAmexLogic;
 import net.miatech.praxis.payment.filter.A4124Filter;
 import net.miatech.praxis.payment.filter.A4166Filter;
+import net.miatech.praxis.payment.filter.A4164Filter;
 import net.miatech.utils.Functions;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -112,6 +113,59 @@ public class SalesComplementAmexController extends BaseController {
 
             //--------------------
             lst = logic.loadPX585SQP04354(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
+    @RequestMapping(value = "searchPGByTkt")
+    public @ResponseBody
+    String searchPGByTkt(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- SalesComplementAmex : searchPGByTkt-------------");
+
+        map.put("success", true);
+        List<A4164Filter> lst = this.getListPGByTkt(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4164Filter> getListPGByTkt(HttpServletRequest request, Boolean bExcel) {
+
+        List<A4164Filter> lst = new ArrayList<>(0);
+        A4164Filter filter = new A4164Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new SalesComplementAmexLogic();
+
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4164Filter.class);
+
+            // Paginacion
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            //--------------------
+            lst = logic.loadPX585SQP04433(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -224,7 +278,6 @@ public class SalesComplementAmexController extends BaseController {
         return lst;
     }
 
-    
     @RequestMapping(value = "/searchPNR")
     public @ResponseBody
     String searchPNR(ModelMap map, HttpServletRequest request) {
@@ -250,7 +303,7 @@ public class SalesComplementAmexController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
@@ -292,7 +345,7 @@ public class SalesComplementAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -347,7 +400,7 @@ public class SalesComplementAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
 
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -509,7 +562,7 @@ public class SalesComplementAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -581,7 +634,7 @@ public class SalesComplementAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 19));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -776,7 +829,7 @@ public class SalesComplementAmexController extends BaseController {
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -848,7 +901,7 @@ public class SalesComplementAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 7));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 19));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -918,7 +971,7 @@ public class SalesComplementAmexController extends BaseController {
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
             ++vj;
-             //============================================
+            //============================================
 
             while (iter.hasNext()) {
                 row1 = sheet.createRow(vj);
@@ -989,7 +1042,7 @@ public class SalesComplementAmexController extends BaseController {
             sheet.autoSizeColumn(18, true);
             sheet.autoSizeColumn(19, true);
 
-             //============================================
+            //============================================
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 

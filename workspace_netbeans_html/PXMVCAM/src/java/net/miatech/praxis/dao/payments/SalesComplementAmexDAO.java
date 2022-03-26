@@ -16,6 +16,7 @@ import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A4124Filter;
 import net.miatech.praxis.payment.filter.A4166Filter;
+import net.miatech.praxis.payment.filter.A4164Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -125,6 +126,7 @@ public class SalesComplementAmexDAO {
 
                 bean.FCONT = rst.getString("FCONT").trim();
                 bean.IDCON = rst.getString("IDCON").trim();
+                bean.QTYTKT = rst.getInt("QTYTKT");
                 bean.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
 
                 bean.page.PAGNUM = filter.page.PAGNUM;
@@ -158,6 +160,108 @@ public class SalesComplementAmexDAO {
         }
 
         return lst;
+    }
+    
+    public List<A4164Filter> loadPX585SQP04433(A4164Filter filter) throws SQLException, Exception {
+
+        List<A4164Filter> lstTkts = new ArrayList<A4164Filter>(0);
+        A4164Filter beanTkt;
+        double SVFOP = 0;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04433(?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+            cstmt.registerOutParameter(7, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_SDATE);
+            cstmt.setString(3, filter.IN_SPNR);
+            cstmt.setInt(4, filter.page.PAGNUM);
+            cstmt.setInt(5, filter.page.PAGROW);
+            cstmt.setInt(6, filter.page.TOTPAG);
+            cstmt.setInt(7, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(4);
+            filter.page.PAGROW = cstmt.getInt(5);
+            filter.page.TOTPAG = cstmt.getInt(6);
+            filter.page.TOTROW = cstmt.getInt(7);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                SVFOP = rst.getDouble("SVFOP");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                    beanTkt = new A4164Filter();
+                    beanTkt.IN_SDATE = filter.IN_SDATE.trim();
+                    beanTkt.IN_SPNR = filter.IN_SPNR.trim();
+
+                    beanTkt.SDATE = rst.getString("SDATE").trim();
+                    beanTkt.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                    beanTkt.TRNCU = rst.getString("TRNCU").trim();
+                    beanTkt.TDOC = rst.getString("TDOC").trim();
+                    beanTkt.SAGENT = rst.getString("SAGENT").trim();
+                    beanTkt.TKT = rst.getString("TKT").trim();
+                    beanTkt.RFIC = rst.getString("RFIC").trim();
+                    beanTkt.RFIS1 = rst.getString("RFIS1").trim();
+                    beanTkt.SCARCOD = rst.getString("SCARCOD").trim();
+                    beanTkt.SCARDN = rst.getString("SCARDN").trim();
+                    beanTkt.SAUTHOC = rst.getString("SAUTHOC").trim();
+                    beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
+                    beanTkt.SVFOP = rst.getDouble("SVFOP");
+                    beanTkt.SPNR = rst.getString("SPNR").trim();
+                    beanTkt.TVENTA = rst.getString("TVENTA").trim();
+                    
+                    beanTkt.SVFOP_TOT = SVFOP;
+                    
+                    beanTkt.page.PAGNUM = filter.page.PAGNUM;
+                    beanTkt.page.PAGROW = filter.page.PAGROW;
+                    beanTkt.page.TOTPAG = filter.page.TOTPAG;
+                    beanTkt.page.TOTROW = filter.page.TOTROW;
+
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
     }
 
     public List<A4166Filter> loadPX585SQP04355(A4166Filter filter) throws SQLException, Exception {
