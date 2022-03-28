@@ -1844,6 +1844,7 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Forced Match");
         
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -1945,6 +1946,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DATE = rst.getString(filter.IN_DATE.trim()).trim();
                     beanTkt.TRANSDATE = rst.getString("TRANSDATE").trim();
                     beanTkt.AXPRODAT = rst.getString("AXPRODAT").trim();
+                    beanTkt.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
                     beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();

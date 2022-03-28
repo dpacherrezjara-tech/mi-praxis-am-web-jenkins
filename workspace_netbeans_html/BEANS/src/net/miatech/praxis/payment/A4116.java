@@ -32,6 +32,7 @@ public class A4116 {
     public String FORMA = "";
     public String SERIE = "";
     public String SEQ = "";
+    public String PASSED_DAYS = "";
     
     public String LMERCHID = "";
     public String INVORNBR = "";

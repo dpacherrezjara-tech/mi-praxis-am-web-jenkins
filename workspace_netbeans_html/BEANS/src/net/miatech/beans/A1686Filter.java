@@ -62,6 +62,8 @@ public class A1686Filter extends A1686 {
     public int QCONL = 0;
     public int QCONE = 0;
     public int QCONN = 0;
+    
+    public int QTYRECEI = 0;
 
     public Pagination page = new Pagination();
 }

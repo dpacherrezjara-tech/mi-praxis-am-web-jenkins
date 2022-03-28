@@ -952,8 +952,10 @@ public class InputsDAO {
             rs01 = cstmt01.getResultSet();
             hm = new HashMap();
             while (rs01.next()) {
-
-                hm.put(rs01.getString("FECHA"), "");
+                    
+                objeto = new A1686Filter();                
+                hm.put(rs01.getString("FECHA"), rs01.getInt("QTYRECEI"));                
+                
             }
 
             String fecha;
@@ -983,6 +985,13 @@ public class InputsDAO {
                                 objeto.strFormatDate = "AMBAR";
                                 if (hm.containsKey(fecha)) {
                                     objeto.strFormatDate = "VERDE";
+                                    
+                                    // Verificar si archivo vino vacio (pintar amarillo)
+                                    if(filter.IN_FUENTE.trim().equals("AXGRRCN-D")){
+                                        if(hm.get(fecha).toString().equals("0") ){
+                                            objeto.strFormatDate = "YELLOW";
+                                        }
+                                    }
                                 }
                                 lista.add(objeto);
                             }

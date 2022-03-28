@@ -3146,6 +3146,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Passed',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Days', dataIndex: 'PASSED_DAYS', width: 60,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value > 10) {
+                                                                metaData.style = "color:#de2828";
+                                                            }                                                            
+                                                            return value;
+                                                        },
+                                                    }
+                                                ]
+                                            },
+                                            /*{
                                                 text: 'Processing',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -3157,7 +3176,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         text: 'Date', dataIndex: 'AXPRODAT', width: 85,
                                                     }
                                                 ]
-                                            },
+                                            },*/
                                             {
                                                 text: 'Status',
                                                 defaults: {

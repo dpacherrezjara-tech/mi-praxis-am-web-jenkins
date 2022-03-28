@@ -12,6 +12,7 @@ import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesComplementAmexDAO;
 import net.miatech.praxis.payment.filter.A4124Filter;
 import net.miatech.praxis.payment.filter.A4166Filter;
+import net.miatech.praxis.payment.filter.A4164Filter;
 
 /**
  *
@@ -27,6 +28,11 @@ public class SalesComplementAmexLogic {
 
     public List<A4124Filter> loadPX585SQP04354(A4124Filter filter) throws SQLException, Exception {
         return SalesComplementAmexDAO.loadPX585SQP04354(filter);
+
+    }
+    
+    public List<A4164Filter> loadPX585SQP04433(A4164Filter filter) throws SQLException, Exception {
+        return SalesComplementAmexDAO.loadPX585SQP04433(filter);
 
     }
 

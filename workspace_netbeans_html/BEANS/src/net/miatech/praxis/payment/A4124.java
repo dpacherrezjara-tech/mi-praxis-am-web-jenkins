@@ -68,6 +68,7 @@ public class A4124 {
     public String STCON = "";
     public String FCONT = "";
     public String IDCON = "";
+    public int QTYTKT = 0;
     public String CERROR = "";
     public String USCR = "";
     public String FECR = "";

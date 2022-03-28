@@ -48,6 +48,11 @@ public class A4164Filter extends A4164 {
     public String IN_BSTVAL = "";
     public String IN_COUNTRY = "";
     public String IN_SDATE = "";
+    public String IN_SPNR = "";
+    public String TKT = "";
+    public String RFIC = "";
+    public String RFIS1 = "";
+    public double SVFOP_TOT = 0;
     public String descSDATE = "";
     public String NUMAVIS = "";
     public String IN_TICKET = "";
