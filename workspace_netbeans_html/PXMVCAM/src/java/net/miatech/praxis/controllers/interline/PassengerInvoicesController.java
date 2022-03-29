@@ -5632,6 +5632,68 @@ public class PassengerInvoicesController extends BaseController {
         }
     }
     
+    /*
+    
+    @RequestMapping(value = "/downloadExcelEMD")
+    public @ResponseBody
+    void downloadExcelEMD(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String serverPath = request.getSession().getServletContext().getRealPath("/");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHSS");
+            String path = sdf.format(new Date());
+            ZipFiles zipFiles = new ZipFiles();
+            List<File> srcfile = new ArrayList<File>();
+            srcfile.add(downloadXLSX_30(request));
+
+            File zipfile = new File(serverPath + path + ".zip");
+            zipFiles.zipFiles(srcfile, zipfile);
+            zipFiles.downFile(response, serverPath, path + ".zip");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    */
+    
+    @RequestMapping(value = "downloadExcelEMD")
+    public @ResponseBody
+    void downloadExcelEMD(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        System.out.println("downloadExcelEMD : downloadExcelEMD");
+        
+        SFI040Filter filter = new SFI040Filter();
+        filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+        InputStream is = null;
+        try {
+            
+//            String rutaFile = "\\\\px\\AM\\EMD-DELTA-SKYLINK";
+            String rutaFile = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK";
+            String fileName = "Detale del EMD _" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM + ".xlsx";
+
+//            response.setContentType("application/zip");
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+
+            OutputStream out = response.getOutputStream();
+            is = new FileInputStream(rutaFile + "\\" + fileName);
+
+            int bytes;
+            while ((bytes = is.read()) != -1) {
+                out.write(bytes);
+            }
+            is.close();
+            response.flushBuffer();
+//            IOUtils.copy(is, response.getOutputStream());
+//            response.flushBuffer();
+
+        } catch (IOException ex) {
+            System.out.println(ex);
+        } finally {
+            is.close();
+        }
+
+    }
+    
     @RequestMapping(value = "/downloadTxt")
     public @ResponseBody
     void downloadTxt(HttpServletRequest request, HttpServletResponse response) {
