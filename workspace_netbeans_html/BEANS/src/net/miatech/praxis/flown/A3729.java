@@ -36,8 +36,7 @@ public class A3729 {
 
     public String FSABRE = "";
     public String STASABR = "";
-    public String FSALES = "";
-    public String IN_TABLE = "";
+    public String FSALES = "";    
 
     //Auditoria
     public String USCR = "";
