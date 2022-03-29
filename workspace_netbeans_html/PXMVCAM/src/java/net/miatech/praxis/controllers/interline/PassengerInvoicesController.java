@@ -189,7 +189,55 @@ public class PassengerInvoicesController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    @RequestMapping(value = "/ObtenDato")
+    public @ResponseBody
+    String ObtenDato(ModelMap map, HttpServletRequest request) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
 
+        String[] lista;//Nombres de los archivos en general
+        String file = "";
+        SFI040Filter filter = new SFI040Filter();
+        List<SFI040Filter> listaArray = new ArrayList<SFI040Filter>();
+        byte[] bytes = null;
+        //OBTENIENDO EL ZIP DESEADO ========================================
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            FilenameFilter fnfZIP = new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return (name.startsWith("Detale del EMD _") && name.toLowerCase().endsWith(".xlsx"));
+                }
+            };
+            String cia = serverSession.getServerSession().getUserView().getCustomerInfo().CCUST;
+            //OBTENIENDO NOMBRE DE ZIP REJECTION y BILLING MEMO,
+            // listaArray=null;
+            String pathImgs = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK";
+            File archivo = new File(pathImgs);
+            lista = archivo.list(fnfZIP);//
+            if (lista != null && lista.length > 0) {
+                for (int i = 0; i < lista.length; i++) {
+                    if (lista[i].toString().trim().startsWith("Detale del EMD _" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM )) {
+                        //  file = lista[i].toString().trim();
+                        SFI040Filter nombre = new SFI040Filter();
+                        nombre.strFormatDate = lista[i].toString().trim();
+                        nombre.FILLER1 = pathImgs;
+                        listaArray.add(nombre);
+                    }
+                }
+            }
+            map.put("success", true);
+            map.put("listaArray", listaArray);
+        } catch (Exception e) {
+            e.printStackTrace(pw);
+            sw.toString();
+            map.put("success", false);
+            map.put("sesion", " Message: " + e.getMessage() + ". StackTrace:" + sw.toString());
+        }
+        return new Gson().toJson(map);
+    }
     @RequestMapping(value = "getIDECZip")
     public @ResponseBody
     void getIDECZip(HttpServletRequest request, HttpServletResponse response) throws IOException {
