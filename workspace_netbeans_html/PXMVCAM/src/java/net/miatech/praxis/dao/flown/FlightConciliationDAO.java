@@ -732,7 +732,7 @@ public class FlightConciliationDAO {
             cs.setString(3, filter.NFLIGHT);
             cs.setString(4, filter.IN_FSABRE);
             cs.setString(5, filter.CDEPART);
-            cs.setString(6, "A3729");
+            cs.setString(6, filter.IN_TABLE.trim());
 
             cs.execute();
 
@@ -2318,7 +2318,7 @@ public class FlightConciliationDAO {
             cstmt.setString(19, session.getUserView().getUserInfo().USR);
             cstmt.setString(20, Functions.getFechaActual());
             cstmt.setString(21, Functions.getHoraActual());
-            cstmt.setString(22, "A3729");
+            cstmt.setString(22, filter.IN_TABLE.trim());
             cstmt.execute();
 
             strMsj = "Upgrade was successful.";
@@ -2429,7 +2429,7 @@ public class FlightConciliationDAO {
             cstmt.setString(25, session.getUserView().getUserInfo().USR);
             cstmt.setString(26, Functions.getFechaActual());
             cstmt.setString(27, Functions.getHoraActual());
-            cstmt.setString(28, "A3729");
+            cstmt.setString(28, filter.IN_TABLE.trim());
             cstmt.execute();
 
             strMsj = "Insertion was successful.";

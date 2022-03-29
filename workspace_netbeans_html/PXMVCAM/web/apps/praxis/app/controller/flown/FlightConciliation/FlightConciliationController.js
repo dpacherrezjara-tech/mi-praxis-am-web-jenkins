@@ -183,11 +183,20 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         this.bean = x.record.data;
         var cant = 0;
         cant = this.bean.QCPNFI;
+        
+        var chkNewManifest = this.getValue("chkNewManifest");
 
         if (cant > 0) {
             var IN_FSABRE = this.getValue("cmbFSabre");
             this.objFLIGHTMANIF = x.record.data;
             this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
+            
+            if (chkNewManifest) {
+                this.objFLIGHTMANIF.IN_TABLE = 'A4190';
+            } else {
+                this.objFLIGHTMANIF.IN_TABLE = 'A3729';
+            }
+            
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
         } else {
             global.Msg({msg: 'Data Not Found'});
@@ -334,6 +343,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-cmb_Diff').setValue('N');
         Ext.getCmp(prototype.id + '-filter_3').hide();
         Ext.getCmp(prototype.id + '-pie').hide();
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
         var chkManifest = this.getValue("chkManifest");
 
         if (this.getValue("txtTKT") !== '') {
@@ -360,6 +370,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             } else {
                 Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
                 Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
+                Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
                 Ext.getCmp(prototype.id + '-boxPrincipal').show();
                 Ext.getCmp(prototype.id + '-boxFlightManifest').hide();
                 Ext.getCmp(prototype.id + '-BoxSecundario').hide();
@@ -555,6 +566,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-filter_3').hide();
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
             if (this.peek() === prototype.id + '-boxMainData') {
                 global.showMenu();
@@ -872,6 +884,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     searchDetailFlightManifest: function(objFLIGHTMANIF) {
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(true);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetailFlightManifest'
@@ -951,15 +964,22 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
          _pathDetFlightMain = prototype.url + '/getXLSX_Flight_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
-    cmbFSabre_changeHandler: function() {
+    cmbFSabre_changeHandler: function () {
         var chkManifest = this.getValue("chkManifest");
-        
+        var chkNewManifest = this.getValue("chkNewManifest");
+
+        if (chkNewManifest) {
+            this.objFLIGHTMANIF.IN_TABLE = 'A4190';
+        } else {
+            this.objFLIGHTMANIF.IN_TABLE = 'A3729';
+        }
+
         objA3729 = {};
         var IN_FSABRE = this.getValue("cmbFSabre");
         this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
 
         this.objA3729 = this.objFLIGHTMANIF;
-        
+
         if (chkManifest) {
             this.objFLIGHTMANIF.yearFrom = this.getValue("cmbDateFromYear");
             this.objFLIGHTMANIF.monthFrom = this.getValue("cmbDateFromMonth");
@@ -967,12 +987,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             this.objFLIGHTMANIF.monthTo = this.getValue("cmbDateToMonth");
             this.objFLIGHTMANIF.dayFrom = this.getValue("cmbDateFromDay");
             this.objFLIGHTMANIF.dayTo = this.getValue("cmbDateToDay");
-            
+
             this.searchFlightManifest(this.objFLIGHTMANIF);
         } else {
             this.searchDetailFlightManifest(this.objFLIGHTMANIF);
         }
-        
+
     },
     openExport: function(grid, rowIndex, colIndex, a, b, c) {
         var grid = Ext.getCmp(prototype.id + '-gridDetailFlightManifest')
