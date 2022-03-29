@@ -301,7 +301,7 @@ Ext.define('Ext.Praxis.view.interline.PassengerInvoicesForm.Info', {
                                                         items: [
                                                             {
                                                                 icon: 'resources/img/botones/16x16/1384382451_window_new.png',
-                                                                handler: 'openExport2'
+                                                                handler: 'exportExcelEMD'
                                                             }
                                                         ]
                                                     }
