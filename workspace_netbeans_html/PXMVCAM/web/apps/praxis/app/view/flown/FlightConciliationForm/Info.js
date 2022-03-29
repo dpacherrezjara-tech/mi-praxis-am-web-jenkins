@@ -571,6 +571,19 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                 },
                                                 columns: [
                                                     {
+                                                        text: 'Received',
+                                                        defaults: {
+                                                            menuDisabled: true,
+                                                            sortable: true,
+                                                            align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: 'Date', dataIndex: 'strFormatFSENDOD', width: 100
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
                                                         text: 'Qty', dataIndex: 'QCPNOD', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background:#d5f4d5;";
@@ -708,29 +721,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                                     var data = Ext.getCmp(prototype.id + '-gridDetail').getStore().getData().items[0].data;
                                                     return Ext.util.Format.number(data.totQCPNTOT, '0,000');
                                                 }
-                                            },
-                                            {
-                                                text: 'ODS Data',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: true,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Received',
-                                                        defaults: {
-                                                            menuDisabled: true,
-                                                            sortable: true,
-                                                            align: 'center'
-                                                        },
-                                                        columns: [
-                                                            {
-                                                                text: 'Date', dataIndex: 'strFormatFSENDOD', width: 100
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
                                             },
                                             {
                                                 text: 'Coupons',
