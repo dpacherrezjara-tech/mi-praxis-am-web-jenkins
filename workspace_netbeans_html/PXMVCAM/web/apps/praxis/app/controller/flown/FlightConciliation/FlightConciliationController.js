@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     objA3729: {},
     objODS: {},
     objVCRJ: {},
+    objDetail: {},
     gloTipoTkt: '',
     g_nflight: '',
     status: '',
@@ -22,10 +23,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     _pathDetFlightMain: '',
     me: '',
     NPROG: 'PX00000095',
-    init: function (view) {
+    init: function(view) {
         this.childs = Ext.getCmp(prototype.id + '-boxPrincipal').items.items;
     },
-    afterRender: function () {
+    afterRender: function() {
         this.setStoreData();
         this.initDate();
         this.btnSearch_click();
@@ -33,10 +34,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 //        global.validateProgram("a", "b", "c");
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
-    initDate: function () {
+    initDate: function() {
         this.setValue('cmbDateFromYear', new Date().getFullYear());
         this.setValue('cmbDateToYear', new Date().getFullYear());
-
+        
         var month = new Date().getMonth() + 1;
         if (month < 9) {
             Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('0' + month);
@@ -51,16 +52,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
     },
-    cbxDateFromYear_changeHandler: function () {
+    cbxDateFromYear_changeHandler: function() {
         this.setValue('cmbDateToYear', this.getValue("cmbDateFromYear"));
     },
-    cbxDateFromMonth_changeHandler: function () {
+    cbxDateFromMonth_changeHandler: function() {
         this.setValue('cmbDateToMonth', this.getValue("cmbDateFromMonth"));
     },
-    cbxDateFromDay_changeHandler: function () {
+    cbxDateFromDay_changeHandler: function() {
         this.setValue('cmbDateToDay', this.getValue("cmbDateFromDay"));
     },
-    setStoreData: function () {
+    setStoreData: function() {
         var storeComboDataYear = win.getStoreYear(true);
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
@@ -74,7 +75,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataMonth);
     },
     // </editor-fold>
-    BuscarTKT_keyDownHandler: function (obj, e, eOpts) {
+    BuscarTKT_keyDownHandler: function(obj, e, eOpts) {
         switch (e.getKey()) {
             case 13:
                 this.cargarTicket();
@@ -96,53 +97,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             this.habilitarFiltros();
         }
     },
-    //<editor-fold defaultstate="collapsed" desc="searchDetailFlightManifest">
-    searchDetailFlightManifest: function (objFLIGHTMANIF) {
-        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
-        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
-        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(true);
-        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
-            proxy: {
-                url: prototype.url + '/searchDetailFlightManifest'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    Ext.getCmp(prototype.id + '-boxDetailData').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(objFLIGHTMANIF)};
-                },
-                load: function (obj, obj2, success, obj4, obj5) {
-                    Ext.getCmp(prototype.id + '-boxDetailData').unmask();
-                    win.lblUser_toolTip("Estructura: A3729");
-
-                    if (obj.data.length > 0) {
-                        console.log(obj.data.items[0].data);
-                        var beanTemp = obj.data.items[0].data;
-                        console.log(beanTemp);
-                        if (!me.peek().includes('boxDetailFlightManifest')) {
-                            me.selectedChild('boxDetailFlightManifest');
-                        }
-//
-//                        Ext.getCmp(prototype.id + '-setTitulo').setTitle('<center style="font-size:12px;">Flight Date : ' +
-//                                beanTemp.strFormatDate + ' - Flight Number : ' + beanTemp.NFLIGHT +
-//                         '</center>'
-//                                );
-                        Ext.getCmp(prototype.id + '-FlightDate').setText(beanTemp.strFormatDate);
-                        Ext.getCmp(prototype.id + '-FlightNumber').setText(beanTemp.NFLIGHT);
-                        Ext.getCmp(prototype.id + '-txtQty').setText(obj.data.length);
-//                          this.g_nflight = beanTemp.NFLIGHT;
-                    } else {
-                        global.Msg({msg: 'Data not found'});
-                    }
-                    global.clear();
-                }
-            }
-        });
-        Ext.getCmp(prototype.id + '-gridDetailFlightManifest').bindStore(storeGridDatas);
-        _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
-//        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
-    },
-    //</editor-fold>
-    cargarTicket: function () {
+    cargarTicket: function() {
         if (this.getValue("txtTKT").length === 13) {
             this.bean.IN_TKT = this.getValue("txtTKT");
             this.bean.IN_SEQRO = this.getValue("txtROLL");
@@ -152,60 +107,104 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             global.Msg({msg: 'Ticket number must contain 13 digits.'});
         }
     },
-    onChangeChkObs: function () {
-        if (me.stack[me.stack.length - 1 ] === 'FlightConciliationForm-boxDetailData') {
+    // <editor-fold defaultstate="collapsed" desc="onViewClick">
+    onViewDetailClick: function (column, e, row, column, x, rowData) {
+        
+        Ext.getCmp(prototype.id + '-cmb_Diff').setValue('N');
+        
+        this.bean = x.record.data;
+        var strTipo = Ext.getCmp(prototype.id + '-gridData').headerCt.getGridColumns()[column].dataIndex.replace('lng', '');
+        var cant = 0;
+        this.status = '';
+        // <editor-fold defaultstate="collapsed" desc="switch (strTipo)">
+        switch (strTipo) {
+            case "QPRO":
+                cant = this.bean.lngQPRO;
+                break;
+            case "QCLO":
+                cant = this.bean.lngQCLO;
+                break;
+            case "QACC":
+                this.status = 'Close';
+                cant = this.bean.lngQACC;
+                break;
+            case "QSSIM":
+                cant = this.bean.lngQSSIM;
+                break;
+            case "QODS":
+                cant = this.bean.lngQODS;
+                break;
+            case "QtyCANCEL":
+                cant = this.bean.lngQtyCANCEL;
+                break;
+            case "QVCR":
+                cant = this.bean.lngQVCR;
+                break;
+            case "QPHY":
+                cant = this.bean.lngQPHY;
+                break;
+            case "QSVOPRO":
+                cant = this.bean.lngQSVOPRO;
+                break;
+            case "QSVOPEND":
+                cant = this.bean.lngQSVOPEND;
+                break;
+            case "QSVVPRO":
+                cant = this.bean.lngQSVVPRO;
+                break;
+            case "QSVVPEND":
+                cant = this.bean.lngQSVVPEND;
+                break;
+            case "QFFLOW":
+                cant = this.bean.lngQFFLOW;
+                break;
+        }
+        // </editor-fold>
+        if (cant > 0) {
+            this.gloTipo = strTipo;
             if (this.getValue('chkObs')) {
                 this.bean.IN_OBS = 'Y'
             } else {
                 this.bean.IN_OBS = ''
             }
-            this.searchDetail(this.bean, this.gloTipo);
+            this.searchDetail(this.bean, strTipo, 'N');
+        } else {
+            global.Msg({msg: 'Data Not Found'});
         }
     },
-    // <editor-fold defaultstate="collapsed" desc="onViewClick">    
-    onViewDetailNFLIGHTClick: function (column, e, row, column, x) {
+    onViewDetailNFLIGHTClick: function(column, e, row, column, x) {
         this.objANFLIGHT = x.record.data;
         this.searchDetailNFLIGHT(this.objANFLIGHT);
     },
-    btnSearch_click: function (obj, e) {
-        Ext.getCmp(prototype.id + '-pie').hide();
-        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
-        var chkManifest = this.getValue("chkManifest");
+    onViewDetailFlightManifest: function(column, e, row, column, x, y, z) {
 
-        if (this.getValue("txtTKT") !== '') {
-            this.cargarTicket();
-        } else {
-            this.bean.yearFrom = this.getValue("cmbDateFromYear");
-            this.bean.monthFrom = this.getValue("cmbDateFromMonth");
-            this.bean.yearTo = this.getValue("cmbDateToYear");
-            this.bean.monthTo = this.getValue("cmbDateToMonth");
-            this.bean.dayFrom = this.getValue("cmbDateFromDay");
-            this.bean.dayTo = this.getValue("cmbDateToDay");
-            //Fuente ======================================================
-            this.bean.FFLOW = this.getValue("cmbFlagFlown");
-            //Carrier =====================================================
-            this.bean.CARRI = this.getValue("cmbCarrier");
-            this.bean.NFLIGHT = this.getValue("txtFlight");
+//        Ext.getCmp(prototype.id + '-txtInfo1').show();
+//        Ext.getCmp(prototype.id + '-imgInfo1').show();
+        this.bean = x.record.data;
+        var cant = 0;
+        cant = this.bean.QCPNFI;
+        
+        var chkNewManifest = this.getValue("chkNewManifest");
 
-            if (chkManifest) {
-                Ext.getCmp(prototype.id + '-boxPrincipal').hide();
-                Ext.getCmp(prototype.id + '-boxFlightManifest').show();
-                Ext.getCmp(prototype.id + '-BoxSecundario').hide();
-                this.bean.IN_FSABRE = this.getValue("cmbFSabre");
-                this.searchFlightManifest(this.bean);
+        if (cant > 0) {
+            var IN_FSABRE = this.getValue("cmbFSabre");
+            this.objFLIGHTMANIF = x.record.data;
+            this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
+            
+            if (chkNewManifest) {
+                this.objFLIGHTMANIF.IN_TABLE = 'A4190';
             } else {
-                Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
-                Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
-                Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
-                Ext.getCmp(prototype.id + '-boxPrincipal').show();
-                Ext.getCmp(prototype.id + '-boxFlightManifest').hide();
-                Ext.getCmp(prototype.id + '-BoxSecundario').hide();
-                this.search(this.bean);
+                this.objFLIGHTMANIF.IN_TABLE = 'A3729';
             }
-
+            
+            this.searchDetailFlightManifest(this.objFLIGHTMANIF);
+        } else {
+            global.Msg({msg: 'Data Not Found'});
         }
+
+//           
     },
-    onViewDetTicketClick: function (column, e, row, column, x, y, z) {
+    onViewDetTicketClick: function(column, e, row, column, x, y, z) {
         this.objA1691 = x.record.data;
         var strTipo = '';
         var dataIndex, box = '';
@@ -288,99 +287,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             global.Msg({msg: 'Data Not Found'});
         }
     },
-    onViewDetailClick: function (column, e, row, column, x, rowData) {
-        this.bean = x.record.data;
-        var strTipo = Ext.getCmp(prototype.id + '-gridData').headerCt.getGridColumns()[column].dataIndex.replace('lng', '');
-        var cant = 0;
-        this.status = '';
-        // <editor-fold defaultstate="collapsed" desc="switch (strTipo)">
-        switch (strTipo) {
-            case "QPRO":
-                cant = this.bean.lngQPRO;
-                break;
-            case "QCLO":
-                cant = this.bean.lngQCLO;
-                break;
-            case "QACC":
-                this.status = 'Close';
-                cant = this.bean.lngQACC;
-                break;
-            case "QSSIM":
-                cant = this.bean.lngQSSIM;
-                break;
-            case "QODS":
-                cant = this.bean.lngQODS;
-                break;
-            case "QtyCANCEL":
-                cant = this.bean.lngQtyCANCEL;
-                break;
-            case "QVCR":
-                cant = this.bean.lngQVCR;
-                break;
-            case "QPHY":
-                cant = this.bean.lngQPHY;
-                break;
-            case "QSVOPRO":
-                cant = this.bean.lngQSVOPRO;
-                break;
-            case "QSVOPEND":
-                cant = this.bean.lngQSVOPEND;
-                break;
-            case "QSVVPRO":
-                cant = this.bean.lngQSVVPRO;
-                break;
-            case "QSVVPEND":
-                cant = this.bean.lngQSVVPEND;
-                break;
-            case "QFFLOW":
-                cant = this.bean.lngQFFLOW;
-                break;
-        }
-        // </editor-fold>
-        if (cant > 0) {
-            this.gloTipo = strTipo;
-            if (this.getValue('chkObs')) {
-                this.bean.IN_OBS = 'Y'
-            } else {
-                this.bean.IN_OBS = ''
-            }
-            this.searchDetail(this.bean, strTipo);
-        } else {
-            global.Msg({msg: 'Data Not Found'});
-        }
-    },
-    onViewDetailFlightManifest: function (column, e, row, column, x, y, z) {
-
-//        Ext.getCmp(prototype.id + '-txtInfo1').show();
-//        Ext.getCmp(prototype.id + '-imgInfo1').show();
-        this.bean = x.record.data;
-        var cant = 0;
-        cant = this.bean.QCPNFI;
-
-        var chkNewManifest = this.getValue("chkNewManifest");
-
-        if (cant > 0) {
-            var IN_FSABRE = this.getValue("cmbFSabre");
-            this.objFLIGHTMANIF = x.record.data;
-            this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
-
-            if (chkNewManifest) {
-                this.objFLIGHTMANIF.IN_TABLE = 'A4190';
-            } else {
-                this.objFLIGHTMANIF.IN_TABLE = 'A3729';
-            }
-
-            this.searchDetailFlightManifest(this.objFLIGHTMANIF);
-        } else {
-            global.Msg({msg: 'Data Not Found'});
-        }
-    },
-    viewDataEntry_clickHandler: function (grid, rowIndex, colIndex) {
+    viewDataEntry_clickHandler: function(grid, rowIndex, colIndex) {
         var store = grid.getStore();
         var data = store.getAt(rowIndex).data;
         this.searchBean(data, rowIndex, true, prototype.id + '-boxDetailData');
     },
-    viewDataEntryTkt_clickHandler: function (column, e, row, column, x) {
+    viewDataEntryTkt_clickHandler: function(column, e, row, column, x) {
         var data = x.record.data;
 
 //        if(data.CCIA === '139'){
@@ -389,7 +301,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         me.viewDataEntryTkt(data, row);
 //        }
     },
-    viewDataEntryTkt: function (obj, row) {
+    viewDataEntryTkt: function(obj, row) {
         var data = obj;
         var store, boxActual;
         if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
@@ -405,13 +317,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         }
         this.searchBeanTkt(data.strTicket.replace(' ', '').replace(' ', ''), data.SEQ, data.SEQRO, row, store, boxActual, true);
     },
-    viewDataEntry_A3729: function (grid, rowIndex, colIndex) {
-
+    
+    viewDataEntry_A3729: function(grid, rowIndex, colIndex) {
+                
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('U', rec);
-
+        
     },
-    winDataEntry: function (action, rec) {
+    winDataEntry: function(action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
 
@@ -423,45 +336,57 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         }).show();
     },
+    
     // <editor-fold defaultstate="collapsed" desc="Options">
-    cmbFSabre_changeHandler: function () {
+    btnSearch_click: function(obj, e) {
+        
+        Ext.getCmp(prototype.id + '-cmb_Diff').setValue('N');
+        Ext.getCmp(prototype.id + '-filter_3').hide();
+        Ext.getCmp(prototype.id + '-pie').hide();
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
         var chkManifest = this.getValue("chkManifest");
-        var chkNewManifest = this.getValue("chkNewManifest");
 
-        if (chkNewManifest) {
-            this.objFLIGHTMANIF.IN_TABLE = 'A4190';
+        if (this.getValue("txtTKT") !== '') {
+            this.cargarTicket();
         } else {
-            this.objFLIGHTMANIF.IN_TABLE = 'A3729';
+            this.bean.yearFrom = this.getValue("cmbDateFromYear");
+            this.bean.monthFrom = this.getValue("cmbDateFromMonth");
+            this.bean.yearTo = this.getValue("cmbDateToYear");
+            this.bean.monthTo = this.getValue("cmbDateToMonth");
+            this.bean.dayFrom = this.getValue("cmbDateFromDay");
+            this.bean.dayTo = this.getValue("cmbDateToDay");
+            //Fuente ======================================================
+            this.bean.FFLOW = this.getValue("cmbFlagFlown");
+            //Carrier =====================================================
+            this.bean.CARRI = this.getValue("cmbCarrier");
+            this.bean.NFLIGHT = this.getValue("txtFlight");
+
+            if (chkManifest) {
+                Ext.getCmp(prototype.id + '-boxPrincipal').hide();
+                Ext.getCmp(prototype.id + '-boxFlightManifest').show();
+                Ext.getCmp(prototype.id + '-BoxSecundario').hide();
+                this.bean.IN_FSABRE = this.getValue("cmbFSabre");
+                this.searchFlightManifest(this.bean);
+            } else {
+                Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
+                Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
+                Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
+                Ext.getCmp(prototype.id + '-boxPrincipal').show();
+                Ext.getCmp(prototype.id + '-boxFlightManifest').hide();
+                Ext.getCmp(prototype.id + '-BoxSecundario').hide();
+                this.search(this.bean);
+            }
+
         }
-
-        objA3729 = {};
-        var IN_FSABRE = this.getValue("cmbFSabre");
-        this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
-
-        this.objA3729 = this.objFLIGHTMANIF;
-
-        if (chkManifest) {
-            this.objFLIGHTMANIF.yearFrom = this.getValue("cmbDateFromYear");
-            this.objFLIGHTMANIF.monthFrom = this.getValue("cmbDateFromMonth");
-            this.objFLIGHTMANIF.yearTo = this.getValue("cmbDateToYear");
-            this.objFLIGHTMANIF.monthTo = this.getValue("cmbDateToMonth");
-            this.objFLIGHTMANIF.dayFrom = this.getValue("cmbDateFromDay");
-            this.objFLIGHTMANIF.dayTo = this.getValue("cmbDateToDay");
-
-            this.searchFlightManifest(this.objFLIGHTMANIF);
-        } else {
-            this.searchDetailFlightManifest(this.objFLIGHTMANIF);
-        }
-
     },
-    btnFilter_click: function (obj) {
+    btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
         if (option.isVisible())
             option.setVisible(false);
         else
             option.setVisible(true);
     },
-    btnExcel_click: function (obj, e) {
+    btnExcel_click: function(obj, e) {
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
             if (this.peek() === prototype.id + '-boxMainData') {
                 var gridData = Ext.getCmp(prototype.id + '-gridData');
@@ -477,6 +402,74 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     }
                 }
                 this.exportExcel(_path + "&dataIndex=" + dataIndex + "&sortState=" + sortState);
+                //<editor-fold defaultstate="collapsed" desc="Ext.Ajax.request">
+//                Ext.Msg.show({
+//                    title: '.:PRAXIS:.',
+//                    msg: 'Download Excel ?',
+//                    buttons: Ext.MessageBox.OKCANCEL,
+//                    scope: this,
+//                    icon: Ext.MessageBox.QUESTION,
+//                    modal: true,
+//                    fn: function(btn) {
+//                        if (btn === 'ok') {
+//                            var data = new Array();
+//                            var items = Ext.getCmp(prototype.id+'-gridData').getStore().data.items;
+//                            for (var i = 0; i < items.length; i++) {
+//                                data.push(items[i].data);
+//                            }
+//                            Ext.Ajax.request({
+//                                url: prototype.url+'/searchExport',
+//                                method: 'POST',
+//                                timeout: 60000000,
+//                                params: {listaData: JSON.stringify(data)},
+//                                success: function(response, opts, a, b, c) {
+//                                    var disposition = response.getResponseHeader('Content-disposition');
+//                                    var contentType = response.getResponseHeader('Content-Type');
+//                                    var matches = /"([^"]*)"/.exec(disposition);
+//                                    var filename = (matches != null && matches[1] ? matches[1] : 'flight.xlsx');
+//                                    var sliceSize = 512;
+//                                    var byteCharacters = window.atob(response.responseText);
+//                                    var byteArrays = [];
+//                                    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+//                                        var slice = byteCharacters.slice(offset, offset+sliceSize);
+//
+//                                        var byteNumbers = new Array(slice.length);
+//                                        for (var i = 0; i < slice.length; i++) {
+//                                            byteNumbers[i] = slice.charCodeAt(i);
+//                                        }
+//
+//                                        var byteArray = new Uint8Array(byteNumbers);
+//
+//                                        byteArrays.push(byteArray);
+//                                    }
+//                                    //Tras el procesado anterior creamos un objeto blob
+//                                    var blob = new Blob(byteArrays, {
+//                                        type: contentType
+//                                    });
+//
+//                                    // IE 10+
+//                                    if (navigator.msSaveBlob) {
+//                                        navigator.msSaveBlob(blob, filename);
+//                                    } else {
+//                                        //Descargamos el fichero obtenido en la petición ajax
+//                                        var url = URL.createObjectURL(blob);
+//                                        var link = document.createElement('a');
+//                                        link.href = url;
+//                                        link.download = filename;
+//                                        document.body.appendChild(link);
+//                                        link.click();
+//                                        document.body.removeChild(link);
+//                                    }
+//
+//                                },
+//                                failure: function(response, opts) {
+//                                    console.log('server-side failure with status code '+response.status);
+//                                }
+//                            });
+//                        }
+//                    }
+//                });
+                //</editor-fold>
             } else if (this.peek() === prototype.id + '-boxDetailData') {
                 this.exportExcel(_pathDetail);
             } else if (this.peek() === prototype.id + '-boxDetailLeg') {
@@ -485,15 +478,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 this.exportExcel(_pathDetTkt);
             } else if (this.peek() === prototype.id + '-boxDetailFlightManifest') {
                 this.exportExcel(_pathDetFlight);
-            }
+            } 
         } else if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
 
         } else if (Ext.getCmp(prototype.id + '-boxFlightManifest').isVisible()) {
-            console.log("")
-            this.exportExcel(_pathDetFlightMain);
+             console.log("")
+             this.exportExcel(_pathDetFlightMain);
         }
     },
-    btnClear_click: function (obj, e) {
+    btnClear_click: function(obj, e) {
         this.initDate();
 
         Ext.getCmp(prototype.id + '-cmbFlagFlown').setValue("");
@@ -504,7 +497,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
         this.habilitarFiltros();
     },
-    btnAdd_click: function () {
+    btnAdd_click: function() {
         if (this.peek() === prototype.id + '-boxDetTicket') {
             Ext.create('Ext.Praxis.view.flown.FlightConciliationForm.DataEntryTicket', {
                 id: 'DataEntryTicketFlightConciliationForm',
@@ -521,31 +514,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }).show();
         }
     },
-    btnBack_click: function () {
-        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
-        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
-        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
-        if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
-            if (this.peek() === prototype.id + '-boxMainData') {
-                global.showMenu();
-            } else {
-                this.stack.pop();
-                global.selectedChild(this.childs, this.peek());
-                if (this.peek() === prototype.id + '-boxMainData') {
-                    this.selectedChild('boxMainData', '', false);
-                } else if (this.peek() === prototype.id + '-boxDetailData') {
-                    this.selectedChild('boxDetailData', 'paggin', false);
-                } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
-                    this.selectedChild('boxDetailNFLGITHData', 'paggin2', false);
-                }
-            }
-        } else if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
-            Ext.getCmp(prototype.id + '-BoxSecundario').hide();
-            Ext.getCmp(prototype.id + '-boxPrincipal').show();
-            this.setValue('txtTKT', '');
-        }
-    },
-    btnQuery_click: function () {
+    btnQuery_click: function() {
         var beanQuery = {};
         if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
             if (this.peek() === prototype.id + '-boxMainData') {
@@ -592,7 +561,34 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             });
         }
     },
-    imFavo_clickHandler: function (cmp) {
+    btnBack_click: function() {
+        
+        Ext.getCmp(prototype.id + '-filter_3').hide();
+        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(false);
+        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(false);
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(false);
+        if (Ext.getCmp(prototype.id + '-boxPrincipal').isVisible()) {
+            if (this.peek() === prototype.id + '-boxMainData') {
+                global.showMenu();
+            } else {
+                this.stack.pop();
+                global.selectedChild(this.childs, this.peek());
+                if (this.peek() === prototype.id + '-boxMainData') {
+                    this.selectedChild('boxMainData', '', false);
+                } else if (this.peek() === prototype.id + '-boxDetailData') {
+                    Ext.getCmp(prototype.id + '-filter_3').show();
+                    this.selectedChild('boxDetailData', 'paggin', false);
+                } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
+                    this.selectedChild('boxDetailNFLGITHData', 'paggin2', false);
+                }
+            }
+        } else if (Ext.getCmp(prototype.id + '-BoxSecundario').isVisible()) {
+            Ext.getCmp(prototype.id + '-BoxSecundario').hide();
+            Ext.getCmp(prototype.id + '-boxPrincipal').show();
+            this.setValue('txtTKT', '');
+        }
+    },
+    imFavo_clickHandler: function(cmp) {
         var url = "resources/img/botones/";
         console.log(optionSelect);
         this.bean2149.A2149IDMEN = optionSelect.nprog;
@@ -612,7 +608,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
     },
     // </editor-fold>
-    insertFavoriteMenu: function () {
+    insertFavoriteMenu: function() {
         var beanString = JSON.stringify(this.bean2149);
         console.log(beanString);
         Ext.Ajax.request({
@@ -621,7 +617,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-boxPrincipal').mask('Loading...'),
             params: {beanString: beanString},
-            success: function (response, opts) {
+            success: function(response, opts) {
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 menuLoaded = false;
@@ -633,12 +629,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
             }
         });
     },
-    deleteFavoriteMenu: function () {
+    deleteFavoriteMenu: function() {
         var beanString = JSON.stringify(this.bean2149);
         console.log(beanString);
         Ext.Ajax.request({
@@ -647,7 +643,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-boxPrincipal').mask('Loading...'),
             params: {beanString: beanString},
-            success: function (response, opts) {
+            success: function(response, opts) {
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 menuLoaded = false;
@@ -659,12 +655,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
             }
         });
     },
-    validateAccess: function (info, opcion) {
+    validateAccess: function(info, opcion) {
         var bolRtn = false;
         switch (opcion)
         {
@@ -697,7 +693,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         return bolRtn;
     },
     //<editor-fold defaultstate="collapsed" desc="validateProgram">
-    validateProgram: function (cmp, nprog, opcion) {
+    validateProgram: function(cmp, nprog, opcion) {
 //        console.log('------- validateProgram ---------');
 //        console.log('------- nprog ' + nprog);
 //        console.log('------- opcion  ' +opcion);
@@ -706,7 +702,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             method: 'POST',
             timeout: 60000000,
             params: {nprog: nprog || ''},
-            success: function (response, opts) {
+            success: function(response, opts) {
 //                console.log(response);
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -719,14 +715,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
             }
         });
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="search">
-    search: function (bean) {
+    search: function(bean) {
         Ext.getCmp(prototype.id + '-BoxSecundario').hide();
         Ext.getCmp(prototype.id + '-boxPrincipal').show();
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
@@ -734,12 +730,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 url: prototype.url + '/search'
             },
             listeners: {
-                beforeload: function (obj) {
-                    Ext.getCmp(prototype.id + '-boxConsultas').mask('Loading...');
+                beforeload: function(obj) {
                     obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
                 },
-                load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-boxConsultas').unmask();
+                load: function(obj, obj2, success, response, obj5) {
                     win.lblUser_toolTip("Estructura: A1691");
                     if (!me.peek().includes('boxMainData'))
                         me.selectedChild('boxMainData', '');
@@ -772,18 +766,104 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-gridData').bindStore(storeGridDatas);
         _path = prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean));
     }, //</editor-fold>
+    onChangeChkObs: function () {
+        if (me.stack[me.stack.length - 1 ] === 'FlightConciliationForm-boxDetailData') {
+            if (this.getValue('chkObs')) {
+                this.bean.IN_OBS = 'Y'
+            } else {
+                this.bean.IN_OBS = ''
+            }
+            var cmb_Diff = Ext.getCmp(prototype.id + '-cmb_Diff').getValue();
+            this.searchDetail(this.bean, this.gloTipo, cmb_Diff);
+        }
+    },
+    onDIFF: function () {
+        
+        if (me.stack[me.stack.length - 1 ] === 'FlightConciliationForm-boxDetailData') {
+            if (this.getValue('chkObs')) {
+                this.bean.IN_OBS = 'Y'
+            } else {
+                this.bean.IN_OBS = ''
+            }
+            var cmb_Diff = Ext.getCmp(prototype.id + '-cmb_Diff').getValue();
+            this.searchDetail(this.bean, this.gloTipo, cmb_Diff);
+        }
+    },
+    //<editor-fold defaultstate="collapsed" desc="searchDetail">
+    searchDetail: function(bean, strTipo, cmb_Diff) {
+        
+        Ext.getCmp(prototype.id + '-filter_3').show();
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetail'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + '-boxMainData').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(bean), strTipo: strTipo, cmb_Diff: cmb_Diff};
+                },
+                load: function(obj, obj2, success, response, obj5) {
+                    Ext.getCmp(prototype.id + '-boxMainData').unmask();
+                    win.lblUser_toolTip("Estructura: A1691");
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    if (res.success) {
+                        if (obj.data.length > 0) {
+                            if (!me.peek().includes('boxDetailData'))
+                                me.selectedChild('boxDetailData', 'paggin');
+                            else
+                                me.selectedChild('boxDetailData', 'paggin', false);
+                            var obj = obj.data.items[0].data;
+                            if (this.gloTipo === 'QPHY') {
+                                Ext.getCmp(prototype.id + '-adgcPhysical').show();
+                            } else {
+                                Ext.getCmp(prototype.id + '-adgcPhysical').hide();
+                            }
+                            Ext.getCmp(prototype.id + '-gridDetail').setTitle('<center style="font-size:12px;">Operation Date : ' +
+                                    bean.strFormatDate.substring(0, 4) + ' ' +
+                                    bean.strFormatDate.substring(5, 8) + ' - ' +
+                                    obj.strDescripcion + '</center>');
+                        } else {
+                            global.Msg({msg: 'Data not found'});
+                        }
+                    } else {
+                        global.Msg({msg: res.sesion});
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetail').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
+        //        _pathDetail = prototype.url+'/getXLSXDetail?beanString='+JSON.stringify(bean)+'&strTipo='+strTipo;
+        _pathDetail = prototype.url + '/getXLSXDetail?' +
+                'strTipo=' + strTipo + '&' +
+                'cmb_Diff=' + cmb_Diff + '&' +
+                'yearFrom=' + bean.yearFrom + '&' +
+                'monthFrom=' + bean.monthFrom + '&' +
+                'dayFrom=' + bean.dayFrom + '&' +
+                'yearTo=' + bean.yearTo + '&' +
+                'monthTo=' + bean.monthTo + '&' +
+                'dayTo=' + bean.dayTo + '&' +
+                'CARRI=' + bean.CARRI + '&' +
+                'FFLOW=' + bean.FFLOW + '&' +
+                'DFLIGHT=' + bean.DFLIGHT + '&' +
+                'NFLIGHT=' + bean.NFLIGHT + '&' + 
+                'IN_OBS=' + bean.IN_OBS;;
+    },
+    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchTKT">
-    searchTKT: function (bean, boxActual) {
+    searchTKT: function(bean, boxActual) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchTKT'
             },
             listeners: {
-                beforeload: function (obj) {
+                beforeload: function(obj) {
                     Ext.getCmp(boxActual).mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
                 },
-                load: function (obj, obj2, success, obj4, obj5) {
+                load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(boxActual).unmask();
                     win.lblUser_toolTip("Estructura: A1692");
 
@@ -799,8 +879,53 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         });
         Ext.getCmp(prototype.id + '-gridTkt').bindStore(storeGridDatas);
     },
-    //</editor-fold>    
-    searchFlightManifest: function (objFLIGHTMANIF) {
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="searchDetailFlightManifest">
+    searchDetailFlightManifest: function(objFLIGHTMANIF) {
+        Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
+        Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
+        Ext.getCmp(prototype.id + '-chkNewManifest').setVisible(true);
+        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
+            proxy: {
+                url: prototype.url + '/searchDetailFlightManifest'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    Ext.getCmp(prototype.id + '-boxDetailData').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(objFLIGHTMANIF)};
+                },
+                load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + '-boxDetailData').unmask();
+                    win.lblUser_toolTip("Estructura: A3729");
+
+                    if (obj.data.length > 0) {
+                        console.log(obj.data.items[0].data);
+                        var beanTemp = obj.data.items[0].data;
+                        console.log(beanTemp);
+                        if (!me.peek().includes('boxDetailFlightManifest'))
+                            me.selectedChild('boxDetailFlightManifest');
+//
+//                        Ext.getCmp(prototype.id + '-setTitulo').setTitle('<center style="font-size:12px;">Flight Date : ' +
+//                                beanTemp.strFormatDate + ' - Flight Number : ' + beanTemp.NFLIGHT +
+//                         '</center>'
+//                                );
+                        Ext.getCmp(prototype.id + '-FlightDate').setText(beanTemp.strFormatDate);
+                        Ext.getCmp(prototype.id + '-FlightNumber').setText(beanTemp.NFLIGHT);
+                        Ext.getCmp(prototype.id + '-txtQty').setText(obj.data.length);
+//                          this.g_nflight = beanTemp.NFLIGHT;
+                    } else {
+                        global.Msg({msg: 'Data not found'});
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDetailFlightManifest').bindStore(storeGridDatas);
+        _pathDetFlight = prototype.url + '/getXLSX_Flight_Manifest?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
+//        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
+    },
+    //</editor-fold>
+    searchFlightManifest: function(objFLIGHTMANIF) {
         Ext.getCmp(prototype.id + '-labelFSabre').setVisible(true);
         Ext.getCmp(prototype.id + '-cmbFSabre').setVisible(true);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
@@ -808,11 +933,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 url: prototype.url + '/searchFlightManifest'
             },
             listeners: {
-                beforeload: function (obj) {
+                beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-boxFlightManifest').mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(objFLIGHTMANIF)};
                 },
-                load: function (obj, obj2, success, obj4, obj5) {
+                load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(prototype.id + '-boxFlightManifest').unmask();
                     win.lblUser_toolTip("Estructura: A3729");
 
@@ -836,10 +961,40 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
         Ext.getCmp(prototype.id + '-gridFlightManifest').bindStore(storeGridDatas);
-        _pathDetFlightMain = prototype.url + '/getXLSX_Flight_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
+         _pathDetFlightMain = prototype.url + '/getXLSX_Flight_Manifest_Main?beanString=' + encodeURI(JSON.stringify(objFLIGHTMANIF));
 //        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
     },
-    openExport: function (grid, rowIndex, colIndex, a, b, c) {
+    cmbFSabre_changeHandler: function () {
+        var chkManifest = this.getValue("chkManifest");
+        var chkNewManifest = this.getValue("chkNewManifest");
+
+        if (chkNewManifest) {
+            this.objFLIGHTMANIF.IN_TABLE = 'A4190';
+        } else {
+            this.objFLIGHTMANIF.IN_TABLE = 'A3729';
+        }
+
+        objA3729 = {};
+        var IN_FSABRE = this.getValue("cmbFSabre");
+        this.objFLIGHTMANIF.IN_FSABRE = IN_FSABRE;
+
+        this.objA3729 = this.objFLIGHTMANIF;
+
+        if (chkManifest) {
+            this.objFLIGHTMANIF.yearFrom = this.getValue("cmbDateFromYear");
+            this.objFLIGHTMANIF.monthFrom = this.getValue("cmbDateFromMonth");
+            this.objFLIGHTMANIF.yearTo = this.getValue("cmbDateToYear");
+            this.objFLIGHTMANIF.monthTo = this.getValue("cmbDateToMonth");
+            this.objFLIGHTMANIF.dayFrom = this.getValue("cmbDateFromDay");
+            this.objFLIGHTMANIF.dayTo = this.getValue("cmbDateToDay");
+
+            this.searchFlightManifest(this.objFLIGHTMANIF);
+        } else {
+            this.searchDetailFlightManifest(this.objFLIGHTMANIF);
+        }
+
+    },
+    openExport: function(grid, rowIndex, colIndex, a, b, c) {
         var grid = Ext.getCmp(prototype.id + '-gridDetailFlightManifest')
         var RutaF = grid.getStore().getAt(0).data.LNKMVLO;
         var fecha = grid.getStore().getAt(0).data.DFLIGHT;
@@ -856,14 +1011,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         this.exportFile1(RutaF, fecha, nFlight);
     },
     //<editor-fold defaultstate="collapsed" desc="exportFile1">
-    exportFile1: function (ruta, fecha, nFlight) {
+    exportFile1: function(ruta, fecha, nFlight) {
         Ext.Ajax.request({
             url: prototype.url + '/exportFile1',
             method: 'POST',
             timeout: 60000000,
             params: {ruta: ruta, fecha: fecha, nFlight: nFlight},
             beforerequest: Ext.getCmp('DataEntryExportFlightConciliationForm').mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp('DataEntryExportFlightConciliationForm').unmask();
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -874,14 +1029,15 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                                 );
                         meEntry.strFormatDate = listaFile[0].strFormatDate;
                         meEntry.str = res.str;
-                    } else {
+                    }
+                    else {
                         global.Msg({msg: 'This File has not been created.'});
                         meEntry.btnCancel_clickHandler();
                     }
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp('DataEntryExportFlightConciliationForm').unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
@@ -890,17 +1046,17 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     //</editor-fold>   
 
     //<editor-fold defaultstate="collapsed" desc="searchDetailNFLIGHT">
-    searchDetailNFLIGHT: function (objANFLIGHT) {
+    searchDetailNFLIGHT: function(objANFLIGHT) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetailNFLIGHT'
             },
             listeners: {
-                beforeload: function (obj) {
+                beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-boxDetailData').mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(objANFLIGHT)};
                 },
-                load: function (obj, obj2, success, obj4, obj5) {
+                load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(prototype.id + '-boxDetailData').unmask();
                     win.lblUser_toolTip("Estructura: A1691");
 
@@ -927,16 +1083,16 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchDetTicket">
-    searchDetTicket: function (bean91, strTipo, n, boxActual) {
+    searchDetTicket: function(bean91, strTipo, n, boxActual) {
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {url: prototype.url + '/searchDetTicket'
             },
             listeners: {
-                beforeload: function (obj) {
+                beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-' + boxActual).mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(bean91), strTipo: strTipo};
                 },
-                load: function (obj, obj2, success, obj4, obj5) {
+                load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(prototype.id + '-' + boxActual).unmask();
                     win.lblUser_toolTip("Estructura: A1692");
 
@@ -972,13 +1128,13 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchBeanTkt">
-    searchBeanTkt: function (strTicket, SEQ, SEQRO, row, store, mask, abrir) {
+    searchBeanTkt: function(strTicket, SEQ, SEQRO, row, store, mask, abrir) {
         Ext.Ajax.request({
             url: prototype.url + '/searchBeanTkt', method: 'POST',
             timeout: 60000000,
             params: {strTicket: strTicket, SEQ: SEQ, SEQRO: SEQRO},
             beforerequest: Ext.getCmp(mask).mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp(mask).unmask();
                 win.lblUser_toolTip("Estructura: A1692");
                 var res = Ext.JSON.decode(response.responseText);
@@ -1017,7 +1173,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     global.Msg({msg: res.sesion});
                 global.clear();
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp(mask).unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
@@ -1025,14 +1181,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="searchBean">
-    searchBean: function (data, rowIndex, abrir, wActual) {
+    searchBean: function(data, rowIndex, abrir, wActual) {
         Ext.Ajax.request({
             url: prototype.url + '/searchBean',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(data)},
             beforerequest: Ext.getCmp(wActual).mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp(wActual).unmask();
                 win.lblUser_toolTip("Estructura: A1691");
                 var res = Ext.JSON.decode(response.responseText);
@@ -1066,7 +1222,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     global.Msg({msg: res.sesion});
                 global.clear();
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp(wActual).unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
@@ -1074,14 +1230,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="validFlight">
-    validFlight: function (beanOption, strOption, rowIndex, abrir, wActual) {
+    validFlight: function(beanOption, strOption, rowIndex, abrir, wActual) {
         Ext.Ajax.request({
             url: prototype.url + '/validFlight',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(beanOption), strOption: strOption},
             beforerequest: Ext.getCmp(wActual).mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp(wActual).unmask();
                 win.lblUser_toolTip("Estructura: A1691");
                 var res = Ext.JSON.decode(response.responseText);
@@ -1111,7 +1267,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp(wActual).unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
@@ -1119,14 +1275,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="executeOption">
-    executeOption: function (beanOption, strOption, wActual) {
+    executeOption: function(beanOption, strOption, wActual) {
         Ext.Ajax.request({
             url: prototype.url + '/executeOption',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(beanOption), strOption: strOption},
             beforerequest: Ext.getCmp(wActual).mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp(wActual).unmask();
                 win.lblUser_toolTip("Estructura: A1691");
                 var res = Ext.JSON.decode(response.responseText);
@@ -1140,80 +1296,21 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp(wActual).unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
         });
     },
     //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="searchDetail">
-    searchDetail: function (bean, strTipo) {
-        var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
-            proxy: {
-                url: prototype.url + '/searchDetail'
-            },
-            listeners: {
-                beforeload: function (obj) {
-                    Ext.getCmp(prototype.id + '-boxMainData').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(bean), strTipo: strTipo};
-                },
-                load: function (obj, obj2, success, response, obj5) {
-                    Ext.getCmp(prototype.id + '-boxMainData').unmask();
-                    win.lblUser_toolTip("Estructura: A1691");
-                    var res = Ext.JSON.decode(response._response.responseText);
-                    if (res.success) {
-                        if (obj.data.length > 0) {
-                            if (!me.peek().includes('boxDetailData'))
-                                me.selectedChild('boxDetailData', 'paggin');
-                            else
-                                me.selectedChild('boxDetailData', 'paggin', false);
-                            var obj = obj.data.items[0].data;
-                            if (this.gloTipo === 'QPHY') {
-                                Ext.getCmp(prototype.id + '-adgcPhysical').show();
-                            } else {
-                                Ext.getCmp(prototype.id + '-adgcPhysical').hide();
-                            }
-                            Ext.getCmp(prototype.id + '-gridDetail').setTitle('<center style="font-size:12px;">Operation Date : ' +
-                                    bean.strFormatDate.substring(0, 4) + ' ' +
-                                    bean.strFormatDate.substring(5, 8) + ' - ' +
-                                    obj.strDescripcion + '</center>');
-                        } else {
-                            global.Msg({msg: 'Data not found'});
-                        }
-                    } else {
-                        global.Msg({msg: res.sesion});
-                    }
-                    global.clear();
-                }
-            }
-        });
-        Ext.getCmp(prototype.id + '-gridDetail').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-        //        _pathDetail = prototype.url+'/getXLSXDetail?beanString='+JSON.stringify(bean)+'&strTipo='+strTipo;
-        _pathDetail = prototype.url + '/getXLSXDetail?' +
-                'strTipo=' + strTipo + '&' +
-                'yearFrom=' + bean.yearFrom + '&' +
-                'monthFrom=' + bean.monthFrom + '&' +
-                'dayFrom=' + bean.dayFrom + '&' +
-                'yearTo=' + bean.yearTo + '&' +
-                'monthTo=' + bean.monthTo + '&' +
-                'dayTo=' + bean.dayTo + '&' +
-                'CARRI=' + bean.CARRI + '&' +
-                'FFLOW=' + bean.FFLOW + '&' +
-                'DFLIGHT=' + bean.DFLIGHT + '&' +
-                'NFLIGHT=' + bean.NFLIGHT + '&' +
-                'IN_OBS=' + bean.IN_OBS;
-    },
-    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="buscarDatosVenta">
-    buscarDatosVenta: function (beanOption) {
+    buscarDatosVenta: function(beanOption) {
         Ext.Ajax.request({url: prototype.url + '/buscarDatosVenta',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(beanOption)},
             beforerequest: Ext.getCmp('DataEntryTicketFlightConciliationForm').mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
                 win.lblUser_toolTip("Estructura: A1692");
                 var res = Ext.JSON.decode(response.responseText);
@@ -1234,7 +1331,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     global.Msg({msg: res.sesion});
                 global.clear();
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
@@ -1242,14 +1339,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="executeOptionTkt">
-    executeOptionTkt: function (bean, strOption, recalculo) {
+    executeOptionTkt: function(bean, strOption, recalculo) {
         Ext.Ajax.request({
             url: prototype.url + '/executeOptionTkt',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(bean), strOption: strOption, recalculo: recalculo},
             beforerequest: Ext.getCmp('DataEntryTicketFlightConciliationForm').mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
                 win.lblUser_toolTip("Estructura: A1692");
                 var res = Ext.JSON.decode(response.responseText);
@@ -1271,7 +1368,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                     global.Msg({msg: res.sesion});
                 global.clear();
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
@@ -1279,14 +1376,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     },
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="validTicket">
-    validTicket: function (bean, soloValidar) {
+    validTicket: function(bean, soloValidar) {
         Ext.Ajax.request({
             url: prototype.url + '/validTicket',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(bean), soloValidar: soloValidar},
             beforerequest: Ext.getCmp('DataEntryTicketFlightConciliationForm').mask('Loading...'),
-            success: function (response, opts) {
+            success: function(response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
                 win.lblUser_toolTip("Estructura: A1692");
                 var res = Ext.JSON.decode(response.responseText);
@@ -1307,20 +1404,20 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
                 } else
                     global.Msg({msg: res.sesion});
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 Ext.getCmp('DataEntryTicketFlightConciliationForm').unmask();
                 console.log('server-side failure with status code ' + response.status);
             }});
     },
     //</editor-fold>
-
-    onFileLoad: function () {
-
+    
+    onFileLoad: function() {
+        
         var me = this;
 //        var banco = Ext.getCmp(prototype.id + '-cmbBankCode').getValue();
 //        var input = Ext.getCmp(prototype.id + '-cmbInput').getValue();
         var file = Ext.getCmp(prototype.id + '-file').getValue();
-
+        
         if (file === '') {
             Ext.MessageBox.alert('PRAXIS', "::: Select only one file. Please :::", function (btn, text) {
                 if (btn === 'ok' || btn === 'cancel')
@@ -1328,7 +1425,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             });
             return;
         }
-
+        
         var form = Ext.getCmp(prototype.id + '-form-01').getForm();
         form.submit({
             url: prototype.url + '/updateCouponA3729',
@@ -1337,22 +1434,23 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             success: function (fp, o) {
                 var res = Ext.decode(o.response.responseText);
                 console.log(res);
-
+                
                 if (res.success) {
                     var msjResult = res.objResult.qty_update;
-                    global.Msg({msg: 'Updated ' + msjResult + ' tickets.'});
-                } else {
+                    global.Msg({msg: 'Updated ' + msjResult + ' tickets.' });
+                }else{
                     global.Msg({msg: "Error Excel Load"});
                 }
 //                Ext.getCmp(prototype.id+'-btn-upload').enable(true);
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
             }
         });
-
+        
     },
-    exportExcel: function (_path) {
+
+    exportExcel: function(_path) {
         console.log('exportExcel');
         console.log(_path);
         Ext.Msg.show({
@@ -1362,24 +1460,26 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function (btn) {
+            fn: function(btn) {
                 if (btn === 'ok') {
                     global.getFile(_path);
                 }
             }
         });
     },
-    post_to_url: function (path, params, method, id) {
+    post_to_url: function(path, params, method, id) {
         path = encodeURI(path);
         method = method || "post";
+
         var form = document.createElement("form");
         form.setAttribute("method", method);
         form.setAttribute("action", path);
         form.setAttribute("id", id);
+
         document.body.appendChild(form);
         form.submit();
     },
-    deshabilitarFiltros: function () {
+    deshabilitarFiltros: function() {
         Ext.getCmp(prototype.id + '-cmbTipoFecha').disable(true);
         Ext.getCmp(prototype.id + '-cmbDateFromYear').disable(true);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').disable(true);
@@ -1391,7 +1491,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-cmbCarrier').disable(true);
         Ext.getCmp(prototype.id + '-txtFlight').setReadOnly(true);
     },
-    habilitarFiltros: function () {
+    habilitarFiltros: function() {
         Ext.getCmp(prototype.id + '-cmbTipoFecha').enable(true);
         Ext.getCmp(prototype.id + '-cmbDateFromYear').enable(true);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').enable(true);
@@ -1403,7 +1503,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         Ext.getCmp(prototype.id + '-cmbCarrier').enable(true);
         Ext.getCmp(prototype.id + '-txtFlight').setReadOnly(false);
     },
-    onValidarChange: function () {
+    onValidarChange: function() {
         var list = this.getValue("txtTKT").replace(/\s/g, "").split("");
         var txtTKT = '';
         for (var i = 0; i < list.length; i++) {
@@ -1416,11 +1516,11 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             this.habilitarFiltros();
         }
     },
-    esNumero: function (valor) {
+    esNumero: function(valor) {
         return valor.toLowerCase() === valor.toUpperCase();
     },
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
-    pagFirst: function (obj, e) {
+    pagFirst: function(obj, e) {
         if (this.peek() === prototype.id + '-boxDetailData') {
             Ext.getCmp(prototype.id + '-paggin').moveFirst();
         } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
@@ -1431,7 +1531,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             Ext.getCmp(prototype.id + '-paggin5').moveFirst();
         }
     },
-    pagPrevious: function (obj, e) {
+    pagPrevious: function(obj, e) {
         if (this.peek() === prototype.id + '-boxDetailData') {
             Ext.getCmp(prototype.id + '-paggin').movePrevious();
         } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
@@ -1442,7 +1542,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             Ext.getCmp(prototype.id + '-paggin5').movePrevious();
         }
     },
-    pagNext: function (obj, e) {
+    pagNext: function(obj, e) {
         if (this.peek() === prototype.id + '-boxDetailData') {
             Ext.getCmp(prototype.id + '-paggin').moveNext();
         } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
@@ -1453,7 +1553,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             Ext.getCmp(prototype.id + '-paggin5').moveNext();
         }
     },
-    pagLast: function (obj, e) {
+    pagLast: function(obj, e) {
         if (this.peek() === prototype.id + '-boxDetailData') {
             Ext.getCmp(prototype.id + '-paggin').moveLast();
         } else if (this.peek() === prototype.id + '-boxDetailNFLGITHData') {
@@ -1467,7 +1567,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
-    selectedChild: function (boxId, pagginId, add) {
+    selectedChild: function(boxId, pagginId, add) {
         global.selectedChild(this.childs, prototype.id + '-' + boxId);
         add = add === null || add === undefined ? true : add;
         if (add)
@@ -1502,25 +1602,25 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             Ext.getCmp(prototype.id + '-pie').setWidth(width);
         }
     },
-    peek: function () {
+    peek: function() {
         if (this.stack.length > 0) {
             return this.stack[this.stack.length - 1];
         } else
             return "";
     },
-    getValue: function (id) {
+    getValue: function(id) {
         return Ext.getCmp(prototype.id + '-' + id).getValue();
     },
-    focus: function (id) {
+    focus: function(id) {
         Ext.getCmp(prototype.id + '-' + id).focus();
     },
-    setValue: function (id, txt) {
+    setValue: function(id, txt) {
         return Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
-    onUpperValue: function (field, newValue, oldValue) {
+    onUpperValue: function(field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onTextKeypress: function (obj, e, eOpts) {
+    onTextKeypress: function(obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
             this.btnSearch_click();
         }
@@ -1538,7 +1638,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
      }
      
      },*/
-    viewTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+    viewTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
 
         var strTkt = rowData.data.strTicket;
 
@@ -1557,12 +1657,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
-    showTicket: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+    showTicket: function(obj, metaData, rowNum, columnNum, obj2, rowData) {
         console.log('RowData');
         console.log(rowData.data);
         me.viewMasterTkt(rowData.data);
     },
-    viewMasterTkt: function (data) {
+    viewMasterTkt: function(data) {
 
         prototypeProgram.view = 'flown-flight-conciliation-form';
         prototypeProgram.nprog = 'PX00000095';
@@ -1578,14 +1678,14 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
         win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
-    viewProrate: function (data) {
+    viewProrate: function(data) {
         var bean104 = {};
         bean104.FUENTE = data.strFuente;
 //        if(data.CPN_Billed>1){
 //            bean104.TDNR =data.CCIA + data.FORMA + data.SERIE+'                  '+data.monthTo;
-//   }else{
+//	}else{
         bean104.TDNR = data.CCIA + data.FORMA + data.SERIE;
-//   }
+//	}
         bean104.CPUI = data.CUPON;
         bean104.COUNTRY = data.PSVVTA;
         bean104.HRED = data.FVTA;
@@ -1598,7 +1698,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
         win.displayProFacsimilSearch(me, bean104, 'FlightConciliation');
     },
-    changeControl: function () {
+    changeControl: function() {
 
         var v_cmbControl = this.getValue("cmbControl");
 
@@ -1611,18 +1711,18 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         }
 
     },
-    actualizar: function () {
+    actualizar: function() {
         this.searchControlODS();
     },
     //<editor-fold defaultstate="collapsed" desc="searchControlODS">
-    searchControlODS: function () {
+    searchControlODS: function() {
 
         Ext.Ajax.request({
             url: prototype.url + '/searchControlODS',
             method: 'POST',
             timeout: 60000000,
             params: {nprog: nprog || ''},
-            success: function (response, opts) {
+            success: function(response, opts) {
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
 
@@ -1641,7 +1741,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
 
                 }
             },
-            failure: function (response, opts) {
+            failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
             }
         });

@@ -151,7 +151,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
 
     },
 
-    llenarData: function (beanTemp) {
+    llenarData: function(beanTemp) {
 
         beanTemp.TICKET = this.getValue("txtTICKET");
         beanTemp.TICKET_2 = this.getValue("txtTICKET_2");
@@ -169,25 +169,22 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
         beanTemp.CARRIVA = this.getValue("txtCARRIVA");
         beanTemp.CHAIR = this.getValue("txtCHAIR");
 
-        beanTemp.LNAME = this.getValue("txtLNAME").trim();
-        ;
-        beanTemp.FNAME = this.getValue("txtFNAME").trim();
-        ;
+        beanTemp.LNAME = this.getValue("txtLNAME").trim();;
+        beanTemp.FNAME = this.getValue("txtFNAME").trim();;
 
         beanTemp.STVAL = this.getValue("cmbSTVAL");
         beanTemp.STVCR = this.getValue("cmbSTVCR");
         beanTemp.FSALES = this.getValue("cmbFSALES");
-        if (beanTemp.FSALES === null) {
+        if(beanTemp.FSALES === null){
             beanTemp.FSALES = '';
         }
 
         beanTemp.FSABRE = this.getValue("cmbFSABRE");
-        if (beanTemp.FSABRE === null) {
+        if(beanTemp.FSABRE === null){
             beanTemp.FSABRE = '';
         }
 
-        beanTemp.STASABR = this.getValue("txtSTASABR").trim();
-        ;
+        beanTemp.STASABR = this.getValue("txtSTASABR").trim();;
 
         beanTemp.USCR = this.getValue("txtUSCR").trim();
         beanTemp.FECR = this.getValue("txtFECR").trim();
@@ -333,7 +330,10 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryA3729Control
                     global.Msg({msg: res.Mensaje});
                     Ext.getCmp(prototype.id + '-DataEntryA3729').unmask();
                     Ext.getCmp(prototype.id + '-DataEntryA3729').close();
+                    
+                    if( Ext.getCmp(prototype.id + '-chkManifest').getValue()){
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    }
 
                 } else
                     global.Msg({msg: ''});
