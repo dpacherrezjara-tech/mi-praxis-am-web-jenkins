@@ -1699,22 +1699,27 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoices.PassengerInvoicesC
     },
     
     exportExcelEMD: function(grid, rowIndex, colIndex) {
-        
-        var flagByMonth = "";
-        
         this.beanDetail = grid.getStore().getAt(rowIndex).data;
         this.beanExcel.BDATE = this.beanDetail.BDATE;
         this.beanExcel.PERNUM = this.beanDetail.PERNUM;
-//        
-        me.paramsDetailExcel.beanString = JSON.stringify(this.beanExcel);
-        
-//        if(colIndex === 12){
-//            flagByMonth = "Y";
-            global.getFile(prototype.url + '/downloadExcelEMD?beanString=' + me.paramsDetailExcel.beanString);
-//        }else{
-//            flagByMonth = "";
-//            global.getFile(prototype.url + '/downloadXlsxs?beanString=' + me.paramsDetailExcel.beanString + '&flagByMonth=' + flagByMonth);
-//        }
-    },   
-    // </editor-fold>
+        me.paramsDetailExcel.beanString = JSON.stringify(this.beanExcel);   
+        Ext.Ajax.request({
+            url: prototype.url + '/ObtenDato',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.beanExcel)},
+            success: function (response, opts) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    var listaFile = res.listaArray;
+                    if(listaFile.length > 0){
+                        
+                        global.getFile(prototype.url + '/downloadExcelEMD?beanString=' + me.paramsDetailExcel.beanString);
+                    } else {
+                        global.Msg({msg: 'This File has not been created.'});
+                    }
+                } else global.Msg({msg: res.sesion});
+            }
+        });
+    }
 });
