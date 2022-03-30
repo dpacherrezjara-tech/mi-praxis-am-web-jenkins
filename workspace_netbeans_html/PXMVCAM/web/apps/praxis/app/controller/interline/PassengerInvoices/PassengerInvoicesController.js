@@ -1716,7 +1716,7 @@ Ext.define('Ext.Praxis.controller.interline.PassengerInvoices.PassengerInvoicesC
                         
                         global.getFile(prototype.url + '/downloadExcelEMD?beanString=' + me.paramsDetailExcel.beanString);
                     } else {
-                        global.Msg({msg: 'This File has not been created.'});
+                        global.Msg({msg: 'Data not found.'});
                     }
                 } else global.Msg({msg: res.sesion});
             }
