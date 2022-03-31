@@ -2366,33 +2366,34 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(5, Types.INTEGER);
             cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
+            cstmt.registerOutParameter(9, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
             cstmt.setString(3, filter.IN_DATETO);
             cstmt.setString(4, filter.IN_DATE);
-            cstmt.setInt(5, filter.page.PAGNUM);
-            cstmt.setInt(6, filter.page.PAGROW);
-            cstmt.setInt(7, filter.page.TOTPAG);
-            cstmt.setInt(8, filter.page.TOTROW);
+            cstmt.setString(5, filter.IN_WARNING);
+            cstmt.setInt(6, filter.page.PAGNUM);
+            cstmt.setInt(7, filter.page.PAGROW);
+            cstmt.setInt(8, filter.page.TOTPAG);
+            cstmt.setInt(9, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(5);
-            filter.page.PAGROW = cstmt.getInt(6);
-            filter.page.TOTPAG = cstmt.getInt(7);
-            filter.page.TOTROW = cstmt.getInt(8);
+            filter.page.PAGNUM = cstmt.getInt(6);
+            filter.page.PAGROW = cstmt.getInt(7);
+            filter.page.TOTPAG = cstmt.getInt(8);
+            filter.page.TOTROW = cstmt.getInt(9);
 
             cstmt.execute();
 
@@ -2457,6 +2458,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TRANSID = rst.getString("TRANSID");
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC");
                     beanTkt.INSTANBR = rst.getString("INSTANBR");
+                    beanTkt.DES_CERROR = rst.getString("DES_CERROR");
 
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
                     beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
@@ -2477,7 +2479,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
                     beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
                     beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
-
+                    
                     beanTkt.DISCAMOUN_TOTAL = DISCAMOUN_TOTAL;
                     beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;

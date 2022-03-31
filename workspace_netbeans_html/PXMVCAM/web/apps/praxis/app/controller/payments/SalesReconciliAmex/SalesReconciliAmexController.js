@@ -238,7 +238,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     setFormatParameter: function () {
         me.bean = {};
-
+        if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked') ) {
+            me.bean.IN_WARNING = 'Y';
+        }else{
+            me.bean.IN_WARNING = 'N';
+        } 
         me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
         me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
@@ -266,25 +270,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     rbChangeType: function () {
 
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
-        console.log(selectedValue);
-
+    
         this.setFormatParameter();
 
         switch (selectedValue) {
             case 'SU':
                 Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
+                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
                 this.setGridDataMainSummary();
                 break;
             case 'SE':
                 this.setGridDataMainSettlement();
+                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
                 break;
             case 'AD':
                 Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
+                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
                 this.setGridDataMainAdjustment();
                 break;
             case 'ER':
                 Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
                 this.setGridDataMainErrorTransaction();
+                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(true);
                 break;
         }
     },
@@ -1652,6 +1659,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             case  '-boxMainAdjustment':
                 global.getFile(prototype.url + '/getXLSXMainAdjustment?beanString=' + searchParams.beanString);
                 break;
+            case  '-boxMainErrorTransaction':
+                global.getFile(prototype.url + '/getXLSXMainErrorTransactiont?beanString=' + searchParams.beanString);
+            break;
         }
     },
     onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {

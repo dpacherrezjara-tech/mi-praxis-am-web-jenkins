@@ -176,19 +176,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 change: 'rbChangeType'
                             }
                         },
-//                {
-//                    xtype: 'checkboxfield',
-//                    id: prototype.id + '-chkChargeback',
-//                    margin: '0 0 0 15',
-//                    width: 200,
-//                    boxLabel: 'Chargeback & Adjustment',
-////                    inputValue: '0',
-//                    checked: false,
-////                    listeners:{
-////                        change: 'btnSearch_click'
-////                    }
-//                },
-//                {
+                        {
+                             xtype: 'checkboxfield',
+                             id: prototype.id + '-chkWarnings',
+                             margin: '0 0 0 15',
+                             width: 200,
+                             boxLabel: 'Warnings',
+                             inputValue: '0',
+                            checked: false,
+                            hidden: true,
+                             listeners:{
+                                 change: 'btnSearch_click'
+                             }
+                         },
 //                    xtype: 'textfield',
 //                    fieldLabel: 'Merchant Number:',
 //                    id: prototype.id + '-txtMerchant',

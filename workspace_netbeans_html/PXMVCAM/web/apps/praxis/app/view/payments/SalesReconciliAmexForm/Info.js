@@ -606,7 +606,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     if (record.data.CERROR === '') {
                                                         metaData.style = "text-align:center;background-color:#C6E5B1;";
                                                     } else {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
+                                                        if(record.data.CERROR >= 80){
+                                                            metaData.style = "text-align:center;background-color:#ffff6b;";
+                                                        }else{
+                                                            metaData.style = "text-align:center;background-color:#FF6F6F;"; 
+                                                        }
                                                     }
                                                     return value;
                                                 }
@@ -1607,7 +1611,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
 //                                                            value = '<br>' + value + '<br>';
-                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;text-align:center">' + value + '</a>';
                                                         }
                                                     },
                                                     {text: 'Seller ID', dataIndex: 'SELLERID', width: 80,
@@ -4376,7 +4380,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
                             height: 'auto',
-                            width: 1750,
+                            width: 1550,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -4386,7 +4390,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainErrorTransaction',
-                                    width: 1750,
+                                    width: 1550,
                                     columnLines: true,
                                     features: [{
                                             ftype: 'summary',
@@ -4444,8 +4448,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: 'CERROR', width: 70, },
+                                                    {text: 'Code', dataIndex: 'CERROR', width: 70 }
                                                 ]
+                                            },
+                                            {
+                                                text: 'Description', dataIndex: 'DES_CERROR', width: 200,
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                }
                                             },
                                             {
                                                 text: 'Transaction',
