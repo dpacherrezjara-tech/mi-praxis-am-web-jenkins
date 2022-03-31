@@ -749,6 +749,7 @@ public class FlightConciliationDAO {
                 beanCons.FNAME = rst.getString("FNAME").trim();
                 beanCons.LNAME = rst.getString("LNAME").trim();
                 beanCons.SEQ = rst.getString("SEQ").trim();
+                beanCons.SPNR = rst.getString("SPNR").trim();
                 beanCons.DFLIGHT = rst.getString("DFLIGHT").trim();
                 beanCons.strFormatDate = Functions.getMonthConvert(beanCons.DFLIGHT);
 //                beanCons.strDescripcion = Functions.getMonthConvert(beanCons.DFLIGHT);
