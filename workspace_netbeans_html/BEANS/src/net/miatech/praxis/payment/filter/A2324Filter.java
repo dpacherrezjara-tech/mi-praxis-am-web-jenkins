@@ -26,6 +26,8 @@ public class A2324Filter extends A2324 {
     public String IN_STVAL = "";
     public String IN_DATSET = "";
     public String IN_WEEKMO = "";
+    public int FACUMULADO = 0;
+    public long AMTSET = 0;
     public double tot_SVFOP = 0.0;
 
     // Qty
@@ -44,6 +46,7 @@ public class A2324Filter extends A2324 {
 
     public String strFormatDate = "";
     public long totSVFOP = 0;
+    public long totSVFOP_COMPLEMENTO = 0;
     public long totSVFOPS = 0;
     public long difSVFOP = 0;
     public long totdifSVFOP = 0;
@@ -82,6 +85,10 @@ public class A2324Filter extends A2324 {
     public double totTOTCOMISI = 0.0;
     public double IVA = 0.0;    
     public double totIVA = 0.0;    
+    public double TOT_DESC = 0.0;
+    public double totTOT_DESC = 0.0;
+    public double NET = 0.0;    
+    public double totNET = 0.0;    
 
     //BOOMER
     public String TDOCB = "";
@@ -101,6 +108,7 @@ public class A2324Filter extends A2324 {
     public String SPNRB = "";
     public String option = "";
     public String estadoTitulo = "";
+    public String FCOMPLEMENTO = "";
     
     //BOOMER UPDATE
     public String NEW_SDATE = "";

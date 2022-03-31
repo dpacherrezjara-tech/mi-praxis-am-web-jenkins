@@ -24,10 +24,12 @@ public class A2318Filter extends A2318{
     public String desSTVAL = "";
     public String IN_PNR = "";
     public String descSTVAL = "";
+    public String descSTVALC = "";
     public String descTREG = "";
     public String IN_DATSET = "";
     public String IN_WEEKMO = "";
     public String TITLE_DATE = "";
+    public String STVALC = "";
     
     public double SVFOP_SG = 0.0;
     public double AMTCOM_SG = 0.0;
