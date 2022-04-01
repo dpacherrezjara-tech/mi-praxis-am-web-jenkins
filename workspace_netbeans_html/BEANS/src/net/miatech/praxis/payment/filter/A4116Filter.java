@@ -26,6 +26,7 @@ public class A4116Filter extends A4116 {
     public String IN_FREGLA = "";
     public String IN_SCARDN = "";
     public String IN_SAUTHOC = "";
+    public String IN_WARNING = "";
     
     public double DISCAMOUN_IMPORT = 0;
     public double DISCAMOUN_IVA = 0;
@@ -79,6 +80,7 @@ public class A4116Filter extends A4116 {
     public String IN_IDITEMS = "";
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
+    public String DES_CERROR = "";
 
     //CAMPOS A720
     public String A720AGENTE = "";
@@ -89,5 +91,7 @@ public class A4116Filter extends A4116 {
     public String A720FVLO1 = "";
     
     public Pagination page = new Pagination();
+    
+    
     
 }
