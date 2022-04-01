@@ -27,6 +27,7 @@ public class A4113Filter extends A4113 {
     public String IN_SETTLD = "";
     public String IN_NBATCH = "";
     public String DES_MERCHANT = "";
+    public String DES_CERROR = "";
 
     //Diferencias
     public double DIFF_PGROSAMOU = 0;
