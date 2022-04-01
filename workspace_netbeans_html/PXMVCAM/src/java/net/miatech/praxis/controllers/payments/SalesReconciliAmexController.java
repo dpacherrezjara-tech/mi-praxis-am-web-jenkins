@@ -658,6 +658,7 @@ public class SalesReconciliAmexController extends BaseController {
             logic = new SalesReconciliAmexLogic();
             logic.setSession(this.serverSession.getServerSession());
 
+            
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A4116Filter.class);
 

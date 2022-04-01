@@ -27,6 +27,7 @@ public class A4116Filter extends A4116 {
     public String IN_SCARDN = "";
     public String IN_SAUTHOC = "";
     public String IN_WARNING = "";
+    public String IN_CERROR = "";
     
     public double DISCAMOUN_IMPORT = 0;
     public double DISCAMOUN_IVA = 0;
@@ -91,6 +92,8 @@ public class A4116Filter extends A4116 {
     public String A720FVLO1 = "";
     
     public Pagination page = new Pagination();
+    
+    
     
     
     
