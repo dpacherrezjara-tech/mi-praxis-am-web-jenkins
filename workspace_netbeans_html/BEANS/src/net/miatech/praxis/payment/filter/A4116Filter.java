@@ -91,6 +91,10 @@ public class A4116Filter extends A4116 {
     public String A720NVLO1 = "";
     public String A720FVLO1 = "";
     
+    //Listado de codigos de error
+    public String CODE = "";
+    public String NAME = "";
+    
     public Pagination page = new Pagination();
     
     

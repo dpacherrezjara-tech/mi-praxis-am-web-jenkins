@@ -658,7 +658,6 @@ public class SalesReconciliAmexController extends BaseController {
             logic = new SalesReconciliAmexLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A4116Filter.class);
 
@@ -3766,7 +3765,6 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH1_27 = row1.createCell(27);
             Cell CH1_28 = row1.createCell(28);
             Cell CH1_29 = row1.createCell(29);
-            
 
             CH1_0.setCellValue("Payment");
             CH1_1.setCellValue("Payment");
@@ -3798,7 +3796,6 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_27.setCellValue("");
             CH1_28.setCellValue("");
             CH1_29.setCellValue("");
-           
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -3830,7 +3827,6 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_27.setCellStyle(headerStyle);
             CH1_28.setCellStyle(headerStyle);
             CH1_29.setCellStyle(headerStyle);
-            
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -3876,7 +3872,6 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH2_27 = row2.createCell(27);
             Cell CH2_28 = row2.createCell(28);
             Cell CH2_29 = row2.createCell(29);
-            
 
             CH2_0.setCellValue("Date");
             CH2_1.setCellValue("Merchant ID");
@@ -3908,7 +3903,6 @@ public class SalesReconciliAmexController extends BaseController {
             CH2_27.setCellValue("");
             CH2_28.setCellValue("");
             CH2_29.setCellValue("");
-            
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -3940,7 +3934,6 @@ public class SalesReconciliAmexController extends BaseController {
             CH2_27.setCellStyle(headerStyle);
             CH2_28.setCellStyle(headerStyle);
             CH2_29.setCellStyle(headerStyle);
-            
 
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
@@ -3965,7 +3958,7 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 24, 25));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 26, 29));
-            
+
             ++vj;
             //============================================
 
@@ -4001,7 +3994,6 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH3_27 = row3.createCell(27);
             Cell CH3_28 = row3.createCell(28);
             Cell CH3_29 = row3.createCell(29);
-            
 
             CH3_0.setCellValue("");
             CH3_1.setCellValue("");
@@ -4033,7 +4025,6 @@ public class SalesReconciliAmexController extends BaseController {
             CH3_27.setCellValue("Discount Amount Co...");
             CH3_28.setCellValue("Discount Rate VAT.");
             CH3_29.setCellValue("Discount Amount VAT");
-            
 
             CH3_0.setCellStyle(headerStyle);
             CH3_1.setCellStyle(headerStyle);
@@ -4065,7 +4056,6 @@ public class SalesReconciliAmexController extends BaseController {
             CH3_27.setCellStyle(headerStyle);
             CH3_28.setCellStyle(headerStyle);
             CH3_29.setCellStyle(headerStyle);
-            
 
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 8, 8));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 9, 9));
@@ -4109,7 +4099,6 @@ public class SalesReconciliAmexController extends BaseController {
                 Cell rcell27 = row1.createCell(27);
                 Cell rcell28 = row1.createCell(28);
                 Cell rcell29 = row1.createCell(29);
-                
 
                 rcell0.setCellValue(listaData.get(vi).DATE);
                 rcell1.setCellValue(listaData.get(vi).MERCHID);
@@ -4143,8 +4132,8 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell27.setCellValue(listaData.get(vi).DISCAMOUNC);
                 rcell28.setCellValue(listaData.get(vi).DISCRATEIC);
                 rcell29.setCellValue(listaData.get(vi).DISCAMOUIC);
-           //     rcell30.setCellValue(listaData.get(vi).FINSAMOUC);
-             //   rcell31.setCellValue(listaData.get(vi).SINSAMOUC);
+                //     rcell30.setCellValue(listaData.get(vi).FINSAMOUC);
+                //   rcell31.setCellValue(listaData.get(vi).SINSAMOUC);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -4180,7 +4169,6 @@ public class SalesReconciliAmexController extends BaseController {
             sheet.autoSizeColumn(27, true);
             sheet.autoSizeColumn(28, true);
             sheet.autoSizeColumn(29, true);
-            
 
             //============================================
             response.setContentType("application/vnd.openxml");
@@ -5342,5 +5330,56 @@ public class SalesReconciliAmexController extends BaseController {
         } catch (IOException e) {
             throw new SpringException(e);
         }
+    }
+
+    //Listado de Codigos de error
+    @RequestMapping(value = "getErrorCodes")
+    public @ResponseBody
+    String getErrorCodes(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- SalesReconciliAmex : getErrorCodes-------------");
+
+        map.put("success", true);
+        List<A4116Filter> lst = this.getListGetErrorCodes(request, false);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A4116Filter> getListGetErrorCodes(HttpServletRequest request, Boolean bExcel) {
+
+        List<A4116Filter> lst = new ArrayList<>(0);
+        A4116Filter filter = new A4116Filter();
+        Gson gson = new Gson();
+        String beanString = "";
+
+        try {
+            logic = new SalesReconciliAmexLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A4116Filter.class);
+
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
+
+            if (!bExcel) {
+                filter.page.PAGROW = 20;
+                start = (start != 0 ? start : 0);
+                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+            } else {
+                filter.page.PAGROW = -1;
+                filter.page.PAGNUM = 1;
+            }
+
+            lst = logic.loadPX570SQP04414(filter);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
     }
 }

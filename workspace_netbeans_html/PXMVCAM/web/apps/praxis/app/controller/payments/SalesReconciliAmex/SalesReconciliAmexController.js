@@ -177,83 +177,38 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }));
         cmbSTVAL.setValue("");
 
-        var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
+        /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
         cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
-            fields: ['code', 'name'],
+            fields: ['CODE', 'NAME'],
             data: [
                 ["", "All"],
                 ["81", "81"],
                 ["82", "82"]
             ]
         }));
-        cmbErrorCode.setValue("");
+        cmbErrorCode.setValue("");*/
 
-        /*Ext.Ajax.request({
-            url: prototype.url + '/obtainError',
+        Ext.Ajax.request({
+            url: prototype.url + '/getErrorCodes',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(this.dataObtain)},
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);             
                 if (res.success) {
-                    me.lstCError = res.lstCError;
                     Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
-                        Ext.create('Ext.data.Store', {data: res.lstCError, autoLoad: true})
+                        Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                     );
                     Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
                     me.btnSearch_click();
                 } else
                     global.Msg({msg: res.sesion});
             }
-        });*/
+        });
 
-//        var cmbEFTE = Ext.getCmp(prototype.id + '-cmbEFTE');
-//        cmbEFTE.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["BX", "BANAMEX"],
-//                ["4401", "BANAMEX BOOMER CTA 4401"],
-//                ["8221", "BANAMEX BOOMER CTA 8221"],
-//                ["9133", "BANAMEX OPER.FRANQ. 9133"]
-//            ]
-//        }));
-//        cmbEFTE.setValue("");
-//
-//        var cmbTTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN');
-//        cmbTTRAN.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["C", "Charge"],
-//                ["A", "Pay"]
-//            ]
-//        }));
-//        cmbTTRAN.setValue("");
-//
-//        this.dataObtain.BANK = 2;
-//        Ext.Ajax.request({
-//            url: prototype.urlMaster + '/obtainData',
-//            method: 'POST',
-//            timeout: 60000000,
-//            params: {
-//                beanString: JSON.stringify(this.dataObtain)},
-//            success: function (response, options) {
-//                var res = Ext.JSON.decode(response.responseText);
-//
-//                var lstBank = res.lstBank;
-//                var storeData = Ext.create('Ext.data.Store', {
-//                    data: lstBank,
-//                    autoLoad: true
-//                });
-//                Ext.getCmp(prototype.id + '-cmbBank').bindStore(storeData);
-//                Ext.getCmp(prototype.id + '-cmbBank').setValue('');
-        me.btnSearch_click();
-//            }
-//        });
+        //me.btnSearch_click();
+
     },
     checkEvent: function (obj, e) {
         //true : check ; false : uncheck

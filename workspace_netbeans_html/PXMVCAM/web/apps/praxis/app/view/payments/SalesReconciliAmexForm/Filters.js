@@ -197,12 +197,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             enableKeyEvents: true,
                             readOnly: false,
                             editable: true,
-                            valueField: 'code',
-                            displayField: 'name',
+                            valueField: 'CODE',
+                            displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
                             labelWidth: 100,
                             width: 150,
-                            hidden: false
+                            hidden: false,
+                            listeners:{
+                                 change: 'btnSearch_click'
+                             }
                         }
 //                    xtype: 'textfield',
 //                    fieldLabel: 'Merchant Number:',
