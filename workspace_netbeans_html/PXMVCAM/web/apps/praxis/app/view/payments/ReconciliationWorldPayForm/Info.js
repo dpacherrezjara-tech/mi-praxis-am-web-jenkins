@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1720,
+                width: 1900,
                 height: 800,
                 align: 'center'
             },
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width: 1600,
+                            width: 1700,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataAirport',
                                     height: 520,
-                                    width: 1384,
+                                    width: 1644,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -84,7 +84,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            {text: 'Currency', dataIndex: 'SCURRENCY', width: 80},
+                                            
                                             {text: 'Total Transaction (312-00)',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -93,14 +93,26 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOU', width: 100,
+                                                    {text: 'Currency', dataIndex: 'SETCURREN', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#B2DAFA;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Setllem. Accep', dataIndex: 'TOTSETAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Setllem. Accep', dataIndex: 'TOTSETAMOU', width: 100,
+                                                    {text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#B2DAFA;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
@@ -131,14 +143,26 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOC', width: 100,
+                                                    {text: 'Currency', dataIndex: 'SETCURREN', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#B2FAC6;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Setllem. Accep', dataIndex: 'TOTSETAMOC', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Setllem. Accep', dataIndex: 'TOTSETAMOC', width: 100,
+                                                    {text: 'Currency', dataIndex: 'SCURRENCY', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#B2FAC6;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOC', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
@@ -211,7 +235,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                             padding: '1',
                             border: true,
                             height: 560,
-                            width: 1720,
+                            width: 1900,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -221,7 +245,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridHeaderDetail',
                                     height: 520,
-                                    width: 1720,
+                                    width: 1850,
                                     hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -294,7 +318,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                 ]
                                             },
                                             {text: 'Country', dataIndex: 'SCOUNTRY', width: 60},
-                                            {text: 'Cur.', dataIndex: 'SCURRENCY', width: 60},
                                             {text: 'Total Transaction(312-00)',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -303,30 +326,33 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOU', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
-                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
-                                                            return value;
-                                                        }},
+                                                    {text: 'Cur.', dataIndex: 'SETCURREN', width: 60},
                                                     {text: 'Setllem. Accep', dataIndex: 'TOTSETAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
-                                                        }},
+                                                    }},
+                                                    {text: 'Cur.', dataIndex: 'SCURRENCY', width: 60},
+                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOU', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
+                                                            return value;
+                                                    }},
                                                     {text: 'Trans. Pendien', dataIndex: 'TOTPENAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
-                                                        }},
+                                                    }},
                                                     {text: 'Trans. Rejecti', dataIndex: 'TOTREJAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
-                                                        }}
+                                                    }},
+
                                                 ]
                                             },
                                             {text: 'Reconciliation Transaction',
@@ -337,13 +363,15 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOC', width: 100,
+                                                    {text: 'Cur.', dataIndex: 'SETCURREN', width: 60},
+                                                    {text: 'Setllem. Accep', dataIndex: 'TOTSETAMOC', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
                                                         }},
-                                                    {text: 'Setllem. Accep', dataIndex: 'TOTSETAMOC', width: 100,
+                                                    {text: 'Cur.', dataIndex: 'SCURRENCY', width: 60},
+                                                    {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOC', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2FAC6;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
