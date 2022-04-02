@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
-                            width: 110,
+                            width: 100,
                             hidden: false
                         },
                         {
@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             labelWidth: 60,
-                            width: 150,
+                            width: 140,
                             anchor: '100%'
                         },
                         {
@@ -201,7 +201,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
                             labelWidth: 100,
-                            width: 150,
+                            width: 250,
                             hidden: false,
                             listeners:{
                                  change: 'btnSearch_click'
