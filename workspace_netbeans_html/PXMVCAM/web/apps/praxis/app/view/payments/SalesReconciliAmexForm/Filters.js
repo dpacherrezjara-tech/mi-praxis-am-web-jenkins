@@ -52,7 +52,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             valueField: 'code',
                             displayField: 'name',
                             fieldStyle: 'text-align: left;',
-                            width: 110,
+                            width: 100,
                             hidden: false
                         },
                         {
@@ -71,7 +71,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             labelWidth: 60,
-                            width: 150,
+                            width: 140,
                             anchor: '100%'
                         },
                         {
@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         {
                             xtype: 'radiogroup',
                             id: prototype.id + '-radiogroupType',
-                            width: 640,
+                            width: 620,
                             items: [
                                 {boxLabel: '<b style="color:#148D28;">Summary</b>', inputValue: 'SU', name: 'rbgType', checked: true},
                                 {boxLabel: '<b style="color:#148D28;">Settlement</b>', inputValue: 'SE', name: 'rbgType'},
@@ -180,7 +180,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                              xtype: 'checkboxfield',
                              id: prototype.id + '-chkWarnings',
                              margin: '0 0 0 15',
-                             width: 200,
+                             width: 50,
                              boxLabel: 'Warnings',
                              inputValue: '0',
                             checked: false,
@@ -189,6 +189,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                  change: 'btnSearch_click'
                              }
                          },
+                         {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbErrorCode',
+                            fieldLabel: 'Error Code',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 100,
+                            width: 250,
+                            hidden: false,
+                            listeners:{
+                                 change: 'btnSearch_click'
+                             }
+                        }
 //                    xtype: 'textfield',
 //                    fieldLabel: 'Merchant Number:',
 //                    id: prototype.id + '-txtMerchant',

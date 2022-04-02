@@ -4433,12 +4433,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Description', dataIndex: 'DES_CERROR', width: 200,
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                }
+                                                text: 'Description', dataIndex: 'DES_CERROR', width: 270,
+                                                    renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        metaData.style = "text-align:left";
+                                                        return value ;
+                                            }
                                             },
                                             {
                                                 text: 'Transaction',
@@ -4465,8 +4464,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             click: 'onViewPNR'
                                                         },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
-//                                                            value = '<br>' + value + '<br>';
+                                                            metaData.style = "text-align:left;background-color:#FCF6DC";
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },

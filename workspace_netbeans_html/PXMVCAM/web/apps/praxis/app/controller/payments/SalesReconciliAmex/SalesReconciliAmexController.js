@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
 
-
+        
         Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
@@ -151,7 +151,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
-
 
         var cmbDateSel = Ext.getCmp(prototype.id + '-cmbDateSel');
         cmbDateSel.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -177,53 +176,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbSTVAL.setValue("");
-//
-//        var cmbEFTE = Ext.getCmp(prototype.id + '-cmbEFTE');
-//        cmbEFTE.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["BX", "BANAMEX"],
-//                ["4401", "BANAMEX BOOMER CTA 4401"],
-//                ["8221", "BANAMEX BOOMER CTA 8221"],
-//                ["9133", "BANAMEX OPER.FRANQ. 9133"]
-//            ]
-//        }));
-//        cmbEFTE.setValue("");
-//
-//        var cmbTTRAN = Ext.getCmp(prototype.id + '-cmbTTRAN');
-//        cmbTTRAN.bindStore(Ext.create('Ext.data.ArrayStore', {
-//            autoLoad: false,
-//            fields: ['code', 'name'],
-//            data: [
-//                ["", "All"],
-//                ["C", "Charge"],
-//                ["A", "Pay"]
-//            ]
-//        }));
-//        cmbTTRAN.setValue("");
-//
-//        this.dataObtain.BANK = 2;
-//        Ext.Ajax.request({
-//            url: prototype.urlMaster + '/obtainData',
-//            method: 'POST',
-//            timeout: 60000000,
-//            params: {
-//                beanString: JSON.stringify(this.dataObtain)},
-//            success: function (response, options) {
-//                var res = Ext.JSON.decode(response.responseText);
-//
-//                var lstBank = res.lstBank;
-//                var storeData = Ext.create('Ext.data.Store', {
-//                    data: lstBank,
-//                    autoLoad: true
-//                });
-//                Ext.getCmp(prototype.id + '-cmbBank').bindStore(storeData);
-//                Ext.getCmp(prototype.id + '-cmbBank').setValue('');
-        me.btnSearch_click();
-//            }
-//        });
+
+        /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
+        cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['CODE', 'NAME'],
+            data: [
+                ["", "All"],
+                ["81", "81"],
+                ["82", "82"]
+            ]
+        }));
+        cmbErrorCode.setValue("");*/
+
+        Ext.Ajax.request({
+            url: prototype.url + '/getErrorCodes',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(this.dataObtain)},
+            success: function(response, options) {
+                var res = Ext.JSON.decode(response.responseText);             
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
+                        Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                    );
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
+                    me.btnSearch_click();
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+
+        //me.btnSearch_click();
+
     },
     checkEvent: function (obj, e) {
         //true : check ; false : uncheck
@@ -247,7 +232,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
-
+        me.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
+        
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -272,26 +258,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
     
         this.setFormatParameter();
-
+        if(selectedValue === 'ER'){
+            Ext.getCmp(prototype.id + '-chkWarnings').setVisible(true);
+            Ext.getCmp(prototype.id + '-cmbErrorCode').setVisible(true);
+        }
+        else{
+            Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
+            Ext.getCmp(prototype.id + '-cmbErrorCode').setVisible(false);
+        }
         switch (selectedValue) {
             case 'SU':
                 Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
-                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
                 this.setGridDataMainSummary();
                 break;
             case 'SE':
                 this.setGridDataMainSettlement();
-                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
                 break;
             case 'AD':
                 Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
-                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
                 this.setGridDataMainAdjustment();
                 break;
             case 'ER':
                 Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
                 this.setGridDataMainErrorTransaction();
-                Ext.getCmp(prototype.id + '-chkWarnings').setVisible(true);
                 break;
         }
     },
