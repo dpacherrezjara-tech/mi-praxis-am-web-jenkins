@@ -231,6 +231,8 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
 
         var beanHeaderDay = {};
         beanHeaderDay.DATE = rowData.data.PRDA;
+        beanHeaderDay.SETCURREN = rowData.data.SETCURREN;
+        beanHeaderDay.SCURRENCY = rowData.data.SCURRENCY;
         beanHeaderDay.IN_DATE = 'PRDA';
 
         me.paramsHeaderDetail.beanString = JSON.stringify(beanHeaderDay);

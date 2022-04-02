@@ -21,6 +21,7 @@ public class A4040Filter extends A4040 {
     public long RN = 0;
     
     public String SCURRENCY = "";
+    public String SETCURREN = "";
     public double DIF_TOTTRAAMO = 0;
     public double DIF_TOTSETAMO = 0;
     public double DIF_TOTPENAMO = 0;
