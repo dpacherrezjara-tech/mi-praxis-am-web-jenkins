@@ -11,6 +11,7 @@ import net.miatech.beans.PX019S01A721Filter;
 import net.miatech.beans.spring.ServerSession;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
+import net.miatech.praxis.A003;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,7 @@ public class CurrentSession {
     public List<A1007> lstCiudades;
     public List<A006> lstPaises;
     public List<PX019S01A721Filter> lstFB;
+    public List<A003> lstAM;
     
     public List<A1007> getCiudades() {
         return lstCiudades;
@@ -48,6 +50,10 @@ public class CurrentSession {
         this.lstFB = paramFB;
     }
     
+    public void setAgentMasterFile(List<A003> paramAM) {
+        this.lstAM = paramAM;
+    }
+    
     public List<A006> getPaises() {
         return lstPaises;
     }
@@ -56,6 +62,10 @@ public class CurrentSession {
         return lstFB;
     }
 
+    public List<A003> getAgentMaster() {
+        return lstAM;
+    }
+    
     public void setPaises(List<A006> paramPaises) {
         this.lstPaises = paramPaises;
     }

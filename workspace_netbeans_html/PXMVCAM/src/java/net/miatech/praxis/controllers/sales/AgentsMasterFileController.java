@@ -118,8 +118,16 @@ public class AgentsMasterFileController extends BaseController {
                 filter.strExcel = "TRUE";
             }
 
-            lst = logic.loadAgentReport(filter);
+            if(this.serverSession.getFareBasis()!=null && "".equals(filter.VP_ACTION) && "".equals(filter.A003KEY1) && "".equals(filter.A003KEY2) && "".equals(filter.A003KEY3) && filter.page.PAGNUM == 1)
+            {
+                lst = serverSession.getAgentMaster();
+            }
+            else
+            {
+                lst = logic.loadAgentReport(filter);
+            }
 
+            
         } catch (Exception e) {
             throw new SpringException(e);
         }

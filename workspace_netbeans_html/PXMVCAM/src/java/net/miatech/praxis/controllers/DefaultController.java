@@ -442,6 +442,20 @@ public class DefaultController extends BaseController {
         List<A1007> lstCiudades;
         List<A006> lstPaises;
         
+        List<A003> lstAM = new ArrayList<>(0);
+        A003 filter = new A003();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        filter.VP_ACTION = "";
+        filter.A003KEY1 = "";
+        filter.A003KEY2 = "";
+        filter.A003KEY3 = "";
+        filter.page.PAGROW = 20;
+        filter.page.PAGNUM = 1;
+        filter.intCurrentPg = filter.page.PAGNUM;
+        filter.strExcel = "FALSE";        
+
         List<PX019S01A721Filter> lstFB = new ArrayList<>(0);
         PX019S01A721Filter filterFB = new PX019S01A721Filter();
 
@@ -459,9 +473,11 @@ public class DefaultController extends BaseController {
         try {
             lstCiudades = logic.loadCiudades3();
             lstPaises = logic.loadPaises();
+            logic.setSession(this.serverSession.getServerSession());
             logicFB.setSession(this.serverSession.getServerSession());
             lstFB = logicFB.loadPX019S01A721(filterFB);
-        
+            lstAM = logic.loadAgentReport(filter);
+            
             map.put("dataPaises", lstPaises);
             map.put("dataCity", lstCiudades);            
             
@@ -469,6 +485,7 @@ public class DefaultController extends BaseController {
                 serverSession.setPaises(lstPaises);
                 serverSession.setCiudades(lstCiudades);
                 serverSession.setFareBasis(lstFB);
+                serverSession.setAgentMasterFile(lstAM);
             }            
             
         } catch (Exception ex) {
