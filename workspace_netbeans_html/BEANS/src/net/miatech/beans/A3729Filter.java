@@ -4,22 +4,22 @@
  * and open the template in the editor.
  */
 package net.miatech.beans;
-
+ 
 import net.miatech.praxis.flown.A3729;
-
+ 
 /**
  *
  * @author ggutierrez
  */
 public class A3729Filter extends A3729 {
-
+ 
     public String yearFrom = "";
     public String monthFrom = "";
     public String dayFrom = "";
     public String yearTo = "";
     public String monthTo = "";
     public String dayTo = "";
-
+ 
     public String strTicket = "";
     public String desSTVAL = "";
     public String strFormatDate = "";
@@ -29,7 +29,7 @@ public class A3729Filter extends A3729 {
     public String descFSABRE = "";
     public String descSTASABR = "";
     public String descFSALES = "";
-
+ 
     public String IN_FSABRE = "";
     public String IN_TABLE = "";
     public String nameTxt = "";
@@ -37,7 +37,7 @@ public class A3729Filter extends A3729 {
     public String TICKET_2 = "";
     public String CUPON_2 = "";
     //public String IN_TABLE = "";
-    
+
     public int qty_update = 0;
     public String SPNR = "";
     public String option = "";

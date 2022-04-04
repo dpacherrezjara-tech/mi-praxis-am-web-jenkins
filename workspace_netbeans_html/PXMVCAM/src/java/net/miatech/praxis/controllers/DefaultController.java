@@ -7,6 +7,7 @@ package net.miatech.praxis.controllers;
 import com.google.gson.Gson;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
+import net.miatech.beans.PX019S01A721Filter;
 import net.miatech.beans.PX041S01INF001Filter;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
@@ -36,6 +38,7 @@ import net.miatech.praxis.A003;
 import net.miatech.praxis.controllers.sales.AgentsMasterFileController;
 import net.miatech.praxis.logic.program.UserLogic;
 import net.miatech.praxis.logic.sales.AgentsMasterFileLogic;
+import net.miatech.praxis.logic.sales.FareBasisLogic;
 import net.miatech.praxis.persistence.facade.UserFacade;
 import net.miatech.praxis.persistence.facadeimpl.UserFacadeImpl;
 import net.miatech.utils.Functions;
@@ -434,18 +437,55 @@ public class DefaultController extends BaseController {
         System.out.println("-------------- getTables : Controller-------------");
         map.put("success", true);
         AgentsMasterFileLogic logic = new AgentsMasterFileLogic();
+        FareBasisLogic logicFB = new FareBasisLogic();
         logic.setSession(this.serverSession.getServerSession());
         List<A1007> lstCiudades;
         List<A006> lstPaises;
+        
+        List<A003> lstAM = new ArrayList<>(0);
+        A003 filter = new A003();
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+        filter.VP_ACTION = "";
+        filter.A003KEY1 = "";
+        filter.A003KEY2 = "";
+        filter.A003KEY3 = "";
+        filter.page.PAGROW = 20;
+        filter.page.PAGNUM = 1;
+        filter.intCurrentPg = filter.page.PAGNUM;
+        filter.strExcel = "FALSE";        
+
+        List<PX019S01A721Filter> lstFB = new ArrayList<>(0);
+        PX019S01A721Filter filterFB = new PX019S01A721Filter();
+
+        filterFB.page.TOTROW = -1;
+        filterFB.page.START = 0;
+        filterFB.page.LIMIT = 0;
+        filterFB.IN_OPCION = 1;
+        filterFB.IN_AIRLIN = "";
+        filterFB.IN_FBASIS = "";
+        filterFB.page.PAGNUM = 1;
+        filterFB.page.PAGROW = 20;
+        filterFB.page.TOTPAG = -1;
+        filterFB.page.TOTROW = -1;
+        
         try {
             lstCiudades = logic.loadCiudades3();
             lstPaises = logic.loadPaises();
+            logic.setSession(this.serverSession.getServerSession());
+            logicFB.setSession(this.serverSession.getServerSession());
+            lstFB = logicFB.loadPX019S01A721(filterFB);
+            lstAM = logic.loadAgentReport(filter);
+            
             map.put("dataPaises", lstPaises);
             map.put("dataCity", lstCiudades);            
             
             if (serverSession.getServerSession() != null) {
                 serverSession.setPaises(lstPaises);
                 serverSession.setCiudades(lstCiudades);
+                serverSession.setFareBasis(lstFB);
+                serverSession.setAgentMasterFile(lstAM);
             }            
             
         } catch (Exception ex) {
