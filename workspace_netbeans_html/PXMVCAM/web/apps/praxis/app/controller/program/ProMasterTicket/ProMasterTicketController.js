@@ -5,6 +5,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     dataEntryADM: Ext.create('Ext.Praxis.view.program.ProMasterTicketForm.DataEntryADM', {id: 'DataEntryADMProMasterTicketForm'} ),             
     ACT_VIEW_BY_TKT: 'ACT_VIEW_BY_TKT',
     ACT_VIEW_BY_TKT_ADM: 'ACT_VIEW_BY_TKT_ADM',
+    SELECT_BY_TKT_1: 'TKT',
     SELECT_BY_TKT_2: 'TKT2',
     SELECT_BY_PAX: 'PAX',
     SELECT_BY_PNR: 'PNR',
@@ -25,6 +26,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     beanAccounting: {},
     gloA720TKVOID: '',
     filterTKT: {},
+    filterTKTSeq: {},
     URL_VIEWTICKET : '',
     gridDataMemoAC: [],
     gridDataTktRealUsesAC: [],
@@ -69,11 +71,17 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
             win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
         } else if (this.actionCode===this.ACT_VIEW_BY_TKT_ADM) {
             win.setValue('cbxSelectBy', 'ADM');
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
             win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
         } else if (this.actionCode === 'ViewDashboard' || this.actionCode === 'ViewConciliation' || this.actionCode === 'BankConciliation' || this.actionCode === 'BoomerConciliation'  || this.actionCode === 'Unmatched' 
 		|| this.actionCode === 'VIEWTICKET_FOR_BWRMASTERTICKET' || this.actionCode === 'ViewBalance' || this.actionCode === 'ABValues' || this.actionCode === 'ViewRedempPLM' || this.actionCode === 'ViewDOT' 
 		|| this.actionCode === 'ViewDBNew' || this.actionCode === 'ANTI_FRAUD_REFUND' || this.actionCode === 'DETERMINATE_OF_COMMISSION' || this.actionCode ==='ViewProMatchTkt'
@@ -85,11 +93,63 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
             this.cbxSelectBy_closeHandler();
             win.setValue('txtFilterTicketCia', this.bean.IN_CIA);
             win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
-            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            //if(this.bean.IN_SEQ==="") this.bean.IN_SEQ = "00";
+            if(this.bean.IN_SEQ!=="") win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            
+            //this.loadTicket(this.bean);
+            this.loadTicketSeq(this.bean);
         } else {
             this.imgBrowser_clickHandler();
         }
-        this.imgSearch_clickHandler();
+        console.log(this.bean);
+        //this.imgSearch_clickHandler();
+        global.clear();
+        //this.controlLight();
+    },
+    startDisplayFromBrowser: function() {
+        console.log('PERMC');
+        console.log(userAccess);
+        console.log(optionSelect);
+        $.each(userAccess, function(x, y) {
+            if (y.NPROG === optionSelect.nprog) {                
+                PERMC = y.PERMC;
+                console.log('Access:'+PERMC);
+            }
+        });
+        
+        if (this.params.actionCode !== undefined && this.params.bean !== undefined) {
+            this.actionCode = this.params.actionCode;
+            this.bean = this.params.bean;
+        }
+        if(this.actionCode==='WorkProgAudit'){
+            Ext.getCmp(prototype.id+'-btnADM').show();
+	}else{
+            Ext.getCmp(prototype.id+'-btnADM').hide();
+	}
+        if (this.actionCode===this.ACT_VIEW_BY_TKT) {
+            win.setValue('cbxSelectBy', 'TKT');
+            this.cbxSelectBy_closeHandler();
+            win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
+            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
+        } else if (this.actionCode===this.ACT_VIEW_BY_TKT_ADM) {
+            win.setValue('cbxSelectBy', 'ADM');
+            this.cbxSelectBy_closeHandler();
+            win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
+            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.limpiarData();
+            this.execSearch();
+            this.controlLight();
+        } else if (this.actionCode === 'VIEWTICKET_FOR_BWRMASTERTICKET' ) {
+            win.setValue('cbxSelectBy', 'TKT');
+            this.cbxSelectBy_closeHandler();
+            win.setValue('txtFilterTicketCia', this.bean.IN_CIA);
+            win.setValue('txtFilterTicketFormSer', this.bean.IN_FORMA+this.bean.IN_SERIE);
+            win.setValue('txtFilterTicketSeq', this.bean.IN_SEQ);
+            this.loadTicket(this.bean);
+        }
         global.clear();
         //this.controlLight();
     },
@@ -101,7 +161,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                 this.limpiarData();
                 Ext.getCmp(prototype.id+'-boxFilterByTKT').show();
                 Ext.getCmp(prototype.id+'-boxFilterByPAX').hide();
-                
+                this.actionCode2 = this.SELECT_BY_TKT_2;
                 win.focus('txtFilterTicketFormSer');
                 break;
             case 'PAX':
@@ -799,9 +859,20 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     // <editor-fold defaultstate="collapsed" desc="Options">
     imgSearch_clickHandler: function (obj, e) {
         this.limpiarData();
-        this.bean = {};
-        this.execSearch();
-        //this.controlLight();
+        //this.bean = {};
+        if (win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length === 10) {
+            this.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
+            this.bean.IN_FORMA  = win.getValue('txtFilterTicketFormSer').trim().substr(0, 4);
+            this.bean.IN_SERIE = win.getValue('txtFilterTicketFormSer').trim().substr(4, 6);
+            this.loadTicketSeq(this.bean);
+        }
+        else if(this.bean.IN_FORMA !== null && this.bean.IN_FORMA.length === 4 && this.bean.IN_SERIE !== null && this.bean.IN_SERIE.length === 6) {
+            this.loadTicketSeq(this.bean);
+        }
+        else {    
+            this.execSearch();
+        }
+        this.controlLight();
     },
     imgExportText_clickHandler: function (obj, e) {        
         this.loadSabre();
@@ -809,11 +880,19 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     imgBrowser_clickHandler: function () {
         prototype.url = URL_VIEWTICKET;
         console.log('this.dataEntry');
+        console.log(this.actionCode2);
         console.log(this.dataEntry);
         console.log(prototype.id);
         var controller = this.dataEntry.getController();
         controller.ticketNumber = "";
-        controller.actionCode = this.actionCode2;
+        
+        if (win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length === 10) {
+            controller.ticketNumber = win.getValue('txtFilterTicketCia').trim()+win.getValue('txtFilterTicketFormSer').trim()
+        }else {    
+            controller.ticketNumber = "";
+        }
+        
+        controller.actionCode = win.getValue('cbxSelectBy');
         controller.startDisplay();
         this.dataEntry.show();
         
@@ -982,6 +1061,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
     loadTicket: function (bean) {
         var me01 = this;
         console.log('loadTicket');
+        console.log(bean);
         console.log(prototype.url+'/loadTicket');
         prototype.url = URL_VIEWTICKET;
         Ext.Ajax.request({
@@ -1000,8 +1080,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                         var controller = me01.dataEntry.getController();
                         controller.ticketNumber = win.getValue('txtFilterTicketCia').trim()+win.getValue('txtFilterTicketFormSer').trim();
                         controller.actionCode = me01.SELECT_BY_TKT_2;
-                        controller.startDisplay();
-                        me01.dataEntry.show();
+                        //controller.startDisplay();
+                        //me01.dataEntry.show();
                     } else {
                         me01.beanResultSet01 = {};
                         me01.beanResultSet01.fileA720 = {};
@@ -3150,6 +3230,51 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     
                     }
                     Ext.getCmp(prototype.id+'-gridDataAccounting').el.setStyle({height: '100%'});
+                } else global.Msg({ msg: "Bad Request" });
+            },
+            failure: function(response, opts) {
+                Ext.getBody().unmask();
+                console.log('server-side failure with status code '+response.status);
+            }
+        });
+    },
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="loadTicketSeq">
+    loadTicketSeq: function (bean) {
+        var me01 = this;
+        console.log('loadTicketSeq');
+        console.log(prototype.url+'/loadTicketSeq');
+        prototype.url = URL_VIEWTICKET;
+        Ext.Ajax.request({
+            url: prototype.url+'/loadTicketSeq',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(bean)},
+            beforerequest: Ext.getBody().mask('Loading...'),
+            success: function(response, options){
+                Ext.getBody().unmask();
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    //win.setValue('txtFilterTicketSeq', '');
+                    console.log(res.filterTKTSeq);
+                    me01.filterTKTSeq = res.filterTKTSeq;
+                        if(me01.filterTKTSeq.length == 1){
+                            //this.execSearch();
+                            console.log(me01.filterTKTSeq[0]);
+                            me01.bean.IN_CIA = me01.filterTKTSeq[0].IN_CIA;
+                            me01.bean.IN_FORMA  = me01.filterTKTSeq[0].IN_FORMA;
+                            me01.bean.IN_SERIE = me01.filterTKTSeq[0].IN_SERIE;
+                            me01.bean.IN_SEQ = me01.filterTKTSeq[0].IN_SEQ;
+                            console.log(me01.bean);
+                            me01.loadTicket(me01.bean);
+                            Ext.getCmp(prototype.id+'-lblCupon').hide();
+                            me01.controlLight();
+                        }
+                        else
+                        {
+                            //global.Msg({ msg: "It's rolling" });
+                            me01.imgBrowser_clickHandler();
+                        }
                 } else global.Msg({ msg: "Bad Request" });
             },
             failure: function(response, opts) {

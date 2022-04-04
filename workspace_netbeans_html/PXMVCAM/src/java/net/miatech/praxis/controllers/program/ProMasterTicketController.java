@@ -42,6 +42,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -96,6 +97,30 @@ public class ProMasterTicketController extends BaseController {
 
             map.put("success", true);
             map.put("filterTKT", filterTKT);
+        } catch (Exception e) {
+            map.put("success", false);
+            new SpringLog(e.getMessage());
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/loadTicketSeq")
+    public @ResponseBody
+    String loadTicketSeq(ModelMap map, HttpServletRequest request) {
+        PX040S01A720Filter filter = new PX040S01A720Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new ProMasterTicketLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
+            if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
+                filterTKT = logic.SQP04422(filter);
+            }
+            map.put("success", true);
+            map.put("filterTKTSeq", filterTKT);
         } catch (Exception e) {
             map.put("success", false);
             new SpringLog(e.getMessage());
