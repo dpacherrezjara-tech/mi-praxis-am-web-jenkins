@@ -753,10 +753,11 @@ public class SalesReconciliAmexDAO {
     public List<A4115Filter> loadPX570SQP04269(A4115Filter filter) throws SQLException, Exception {
 
         List<A4115Filter> lstTkts = new ArrayList<A4115Filter>(0);
-        A4115Filter beanTkt;
+        A4115Filter beanTkt, filaTotal, filaAdjustment;
         double totSGROSAMOS = 0, totGROSAMOUN = 0, totDISCAMOUN = 0, totTAXAMOUN = 0, totNETAMOUN = 0, totSDGROSSA = 0, totSCGROSSA = 0;
         double totGROSAMOUNC = 0, totDISCAMOUNC = 0, totTAXAMOUNC = 0, totNETAMOUNC = 0, totTRANCOUNTC = 0, totTRANCOUNT = 0, totINSTANBR = 0;
-
+        double totalParcial = 0;
+        String merchID = "";
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
@@ -799,6 +800,8 @@ public class SalesReconciliAmexDAO {
                 totDISCAMOUN = rst.getDouble("DISCAMOUN");
                 totTAXAMOUN = rst.getDouble("TAXAMOUN");
                 totNETAMOUN = rst.getDouble("NETAMOUN");
+                totalParcial = totNETAMOUN;
+                totNETAMOUN = totNETAMOUN + filter.IN_PADJAMOUN;
                 totSDGROSSA = rst.getDouble("SDGROSSA");
                 totSCGROSSA = rst.getDouble("SCGROSSA");
 
@@ -830,6 +833,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.RECTYPE = rst.getString("RECTYPE").trim();
                     beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    merchID = beanTkt.MERCHID;
                     beanTkt.STYPECD = rst.getString("STYPECD").trim();
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -893,6 +897,19 @@ public class SalesReconciliAmexDAO {
                     lstTkts.add(beanTkt);
                 }
                 rst.close();
+            }
+            if (filter.IN_PADJAMOUN != 0) {
+                filaTotal = new A4115Filter();
+                filaTotal.MERCHID = merchID;
+                filaTotal.desCERROR = "Total Parcial";
+                filaTotal.NETAMOUN = totalParcial;
+                lstTkts.add(filaTotal);
+                
+                filaAdjustment = new A4115Filter();
+                filaAdjustment.MERCHID = merchID;
+                filaAdjustment.desCERROR = "Adjustment";
+                filaAdjustment.NETAMOUN = filter.IN_PADJAMOUN;
+                lstTkts.add(filaAdjustment);
             }
 
         } catch (Exception e) {
@@ -2757,7 +2774,7 @@ public class SalesReconciliAmexDAO {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
-        
+
         A4116Filter objRtn;
         objRtn = new A4116Filter();
         objRtn.CODE = "";

@@ -722,7 +722,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_DATEFROM = rowData.data.IN_DATEFROM;
         this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
         this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
-
+        this.beanSubmission.IN_PADJAMOUN = rowData.data.PADJAMOUN;
+        
         this.beanSubmission.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSubmission.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
@@ -791,7 +792,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSubmission.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
-
+        
         this.beanSubmission.strDATE = rowData.data.DATE;
         //console.log(this.beanSubmission);
         //me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);                
