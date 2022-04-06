@@ -822,6 +822,7 @@ public class SalesReconciliAmexController extends BaseController {
             workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Report");
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+            XSSFCellStyle totalStyle = (XSSFCellStyle) workbook.createCellStyle();
             XSSFCellStyle bodyStyle = (XSSFCellStyle) workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
@@ -839,6 +840,19 @@ public class SalesReconciliAmexController extends BaseController {
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
             headerStyle.setFont(headerFont);
+            totalStyle.setBorderRight(CellStyle.BORDER_THIN);
+            totalStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            totalStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderLeft(CellStyle.BORDER_THIN);
+            totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setBorderTop(CellStyle.BORDER_THIN);
+            totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            totalStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+            totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
+            totalStyle.setFont(headerFont);
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -1178,7 +1192,81 @@ public class SalesReconciliAmexController extends BaseController {
                     rcell22.setCellStyle(bodyStyle);
                 }
             }
-            
+
+            // ======  Nivel de TOTALES ==========
+            Row rowTotal = sheet.createRow(vj);
+            Cell CH1_0_T = rowTotal.createCell(0);
+            Cell CH1_1_T = rowTotal.createCell(1);
+            Cell CH1_2_T = rowTotal.createCell(2);
+            Cell CH1_3_T = rowTotal.createCell(3);
+            Cell CH1_4_T = rowTotal.createCell(4);
+            Cell CH1_5_T = rowTotal.createCell(5);
+            Cell CH1_6_T = rowTotal.createCell(6);
+            Cell CH1_7_T = rowTotal.createCell(7);
+            Cell CH1_8_T = rowTotal.createCell(8);
+            Cell CH1_9_T = rowTotal.createCell(9);
+            Cell CH1_10_T = rowTotal.createCell(10);
+            Cell CH1_11_T = rowTotal.createCell(11);
+            Cell CH1_12_T = rowTotal.createCell(12);
+            Cell CH1_13_T = rowTotal.createCell(13);
+            Cell CH1_14_T = rowTotal.createCell(14);
+            Cell CH1_15_T = rowTotal.createCell(15);
+            Cell CH1_16_T = rowTotal.createCell(16);
+            Cell CH1_17_T = rowTotal.createCell(17);
+            Cell CH1_18_T = rowTotal.createCell(18);
+            Cell CH1_19_T = rowTotal.createCell(19);
+            Cell CH1_20_T = rowTotal.createCell(20);
+            Cell CH1_21_T = rowTotal.createCell(21);
+            Cell CH1_22_T = rowTotal.createCell(22);
+
+            CH1_0_T.setCellValue("");
+            CH1_1_T.setCellValue("");
+            CH1_2_T.setCellValue(listaData.get(0).totPGROSAMOU);
+            CH1_3_T.setCellValue(listaData.get(0).totPDISCAMOU);
+            CH1_4_T.setCellValue(listaData.get(0).totPSFEEAMOU);
+            CH1_5_T.setCellValue(listaData.get(0).totPADJAMOUN);
+            CH1_6_T.setCellValue(listaData.get(0).totPTAXAMOU);
+            CH1_7_T.setCellValue(listaData.get(0).totODBALAMOU);
+            CH1_8_T.setCellValue(listaData.get(0).totPNETAMOU);
+            CH1_9_T.setCellValue(listaData.get(0).totGROSAMOUNC);
+            CH1_10_T.setCellValue(listaData.get(0).totDISCAMOUNC);
+            CH1_11_T.setCellValue(listaData.get(0).totSFEEAMOUNC);
+            CH1_12_T.setCellValue(listaData.get(0).totADJAMOUNC);
+            CH1_13_T.setCellValue(listaData.get(0).totTAXAMOUNC);
+            CH1_14_T.setCellValue(listaData.get(0).totODBALAMOUC);
+            CH1_15_T.setCellValue(listaData.get(0).totNETAMOUNC);
+            CH1_16_T.setCellValue(listaData.get(0).totDIFF_PGROSAMOU);
+            CH1_17_T.setCellValue(listaData.get(0).totDIFF_PDISCAMOU);
+            CH1_18_T.setCellValue(listaData.get(0).totDIFF_PSFEEAMOU);
+            CH1_19_T.setCellValue(listaData.get(0).totDIFF_PADJAMOUN);
+            CH1_20_T.setCellValue(listaData.get(0).totDIFF_PTAXAMOU);
+            CH1_21_T.setCellValue(listaData.get(0).totDIFF_ODBALAMOU);
+            CH1_22_T.setCellValue(listaData.get(0).totDIFF_PNETAMOU);
+
+            CH1_0_T.setCellStyle(totalStyle);
+            CH1_1_T.setCellStyle(totalStyle);
+            CH1_2_T.setCellStyle(totalStyle);
+            CH1_3_T.setCellStyle(totalStyle);
+            CH1_4_T.setCellStyle(totalStyle);
+            CH1_5_T.setCellStyle(totalStyle);
+            CH1_6_T.setCellStyle(totalStyle);
+            CH1_7_T.setCellStyle(totalStyle);
+            CH1_8_T.setCellStyle(totalStyle);
+            CH1_9_T.setCellStyle(totalStyle);
+            CH1_10_T.setCellStyle(totalStyle);
+            CH1_11_T.setCellStyle(totalStyle);
+            CH1_12_T.setCellStyle(totalStyle);
+            CH1_13_T.setCellStyle(totalStyle);
+            CH1_14_T.setCellStyle(totalStyle);
+            CH1_15_T.setCellStyle(totalStyle);
+            CH1_16_T.setCellStyle(totalStyle);
+            CH1_17_T.setCellStyle(totalStyle);
+            CH1_18_T.setCellStyle(totalStyle);
+            CH1_19_T.setCellStyle(totalStyle);
+            CH1_20_T.setCellStyle(totalStyle);
+            CH1_21_T.setCellStyle(totalStyle);
+            CH1_22_T.setCellStyle(totalStyle);
+
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);
