@@ -295,7 +295,7 @@ public class SalesReconciliAmexDAO {
                 totDIFF_PADJAMOUN = totPADJAMOUN - totADJAMOUNC;
                 totDIFF_PTAXAMOU = totPTAXAMOU - totTAXAMOUNC;
                 totDIFF_ODBALAMOU = totODBALAMOU - totODBALAMOUC;
-                totDIFF_PNETAMOU = totPNETAMOU - totNETAMOUNC;
+                totDIFF_PNETAMOU = totDIFF_PGROSAMOU + totDIFF_PDISCAMOU + totDIFF_PSFEEAMOU + totDIFF_PADJAMOUN + totDIFF_PTAXAMOU + totDIFF_ODBALAMOU + totDIFF_PNETAMOU;
             }
             rst.close();
 
@@ -348,8 +348,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DIFF_PADJAMOUN = beanTkt.PADJAMOUN - beanTkt.ADJAMOUNC;
                     beanTkt.DIFF_PTAXAMOU = beanTkt.PTAXAMOU - beanTkt.TAXAMOUNC;
                     beanTkt.DIFF_ODBALAMOU = beanTkt.ODBALAMOU - beanTkt.ODBALAMOUC;
-                    beanTkt.DIFF_PNETAMOU = beanTkt.PNETAMOU - beanTkt.NETAMOUNC;
-
+                    beanTkt.DIFF_PNETAMOU = beanTkt.DIFF_PGROSAMOU + beanTkt.DIFF_PDISCAMOU + beanTkt.DIFF_PSFEEAMOU + beanTkt.DIFF_PADJAMOUN + beanTkt.DIFF_PTAXAMOU + beanTkt.DIFF_ODBALAMOU;
                     //TOTALEs
                     beanTkt.totPNETAMOU = totPNETAMOU;
                     beanTkt.totPGROSAMOU = totPGROSAMOU;
