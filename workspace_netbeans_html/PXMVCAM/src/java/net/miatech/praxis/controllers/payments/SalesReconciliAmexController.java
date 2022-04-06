@@ -848,7 +848,7 @@ public class SalesReconciliAmexController extends BaseController {
             totalStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
             totalStyle.setBorderTop(CellStyle.BORDER_THIN);
             totalStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            totalStyle.setAlignment(CellStyle.ALIGN_CENTER);
+            totalStyle.setAlignment(CellStyle.ALIGN_RIGHT);
             totalStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
             totalStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             totalStyle.setVerticalAlignment(CellStyle.ALIGN_RIGHT);
