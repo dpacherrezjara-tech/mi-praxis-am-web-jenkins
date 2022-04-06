@@ -186,7 +186,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             checked: false,
                             hidden: true,
                              listeners:{
-                                 change: 'btnSearch_click'
+                                 change: 'chkWarning_Click'
                              }
                          },
                          {

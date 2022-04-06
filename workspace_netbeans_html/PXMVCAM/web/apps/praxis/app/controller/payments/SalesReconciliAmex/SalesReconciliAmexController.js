@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     beanMerchantByS: {},
     beanByMerchant: {},
     beanSettlementTktsDetail: {},
+    bean_warning: {},
     optionCheck: '',
     paginActual: '',
     drillDown: [],
@@ -143,7 +144,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
 
-        
+
         Ext.getCmp(prototype.id + '-cmbDateToYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateToMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
@@ -178,28 +179,33 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         cmbSTVAL.setValue("");
 
         /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
-        cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
-            autoLoad: false,
-            fields: ['CODE', 'NAME'],
-            data: [
-                ["", "All"],
-                ["81", "81"],
-                ["82", "82"]
-            ]
-        }));
-        cmbErrorCode.setValue("");*/
-
+         cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
+         autoLoad: false,
+         fields: ['CODE', 'NAME'],
+         data: [
+         ["", "All"],
+         ["81", "81"],
+         ["82", "82"]
+         ]
+         }));
+         cmbErrorCode.setValue("");*/
+        me.bean_warning = {};
+        if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked')) {
+            me.bean_warning.IN_WARNING = 'Y';
+        } else {
+            me.bean_warning.IN_WARNING = 'N';
+        }
         Ext.Ajax.request({
             url: prototype.url + '/getErrorCodes',
             method: 'POST',
             timeout: 60000000,
-            params: {beanString: JSON.stringify(this.dataObtain)},
-            success: function(response, options) {
-                var res = Ext.JSON.decode(response.responseText);             
+            params: {beanString: JSON.stringify(me.bean_warning)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
                     Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
-                        Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
-                    );
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
                     Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
                     me.btnSearch_click();
                 } else
@@ -223,17 +229,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     setFormatParameter: function () {
         me.bean = {};
-        if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked') ) {
+        if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked')) {
             me.bean.IN_WARNING = 'Y';
-        }else{
+        } else {
             me.bean.IN_WARNING = 'N';
-        } 
+        }
         me.bean.IN_DATEFROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromDay').getValue();
         me.bean.IN_DATETO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue() + Ext.getCmp(prototype.id + '-cmbDateToDay').getValue();
 
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         me.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
-        
+
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -253,16 +259,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             this.rbChangeType();
         }
     },
+    chkWarning_Click: function () {
+        me.bean_warning = {};
+        if ($(Ext.getCmp(prototype.id + '-chkWarnings')).prop('checked')) {
+            me.bean_warning.IN_WARNING = 'Y';
+        } else {
+            me.bean_warning.IN_WARNING = 'N';
+        }
+        Ext.Ajax.request({
+            url: prototype.url + '/getErrorCodes',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(me.bean_warning)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+    },
     rbChangeType: function () {
 
         var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType').getValue().rbgType;
-    
+
         this.setFormatParameter();
-        if(selectedValue === 'ER'){
+        if (selectedValue === 'ER') {
             Ext.getCmp(prototype.id + '-chkWarnings').setVisible(true);
             Ext.getCmp(prototype.id + '-cmbErrorCode').setVisible(true);
-        }
-        else{
+        } else {
             Ext.getCmp(prototype.id + '-chkWarnings').setVisible(false);
             Ext.getCmp(prototype.id + '-cmbErrorCode').setVisible(false);
         }
@@ -723,7 +752,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_DATETO = rowData.data.IN_DATETO;
         this.beanSubmission.IN_DATE = rowData.data.IN_DATE;
         this.beanSubmission.IN_PADJAMOUN = rowData.data.PADJAMOUN;
-        
+
         this.beanSubmission.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSubmission.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
@@ -792,7 +821,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSubmission.IN_MERCHID = rowData.data.PMERCHID;
         this.beanSubmission.IN_AXPAYNBR = rowData.data.AXPAYNBR;
         this.beanSubmission.IN_PCURRENCY = rowData.data.PCURRENCY;
-        
+
         this.beanSubmission.strDATE = rowData.data.DATE;
         //console.log(this.beanSubmission);
         //me.paramsDetail.beanString = JSON.stringify(this.beanSubmission);                
@@ -1651,7 +1680,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 break;
             case  '-boxMainErrorTransaction':
                 global.getFile(prototype.url + '/getXLSXMainErrorTransactiont?beanString=' + searchParams.beanString);
-            break;
+                break;
         }
     },
     onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {

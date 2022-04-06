@@ -901,10 +901,10 @@ public class SalesReconciliAmexDAO {
             if (filter.IN_PADJAMOUN != 0) {
                 filaTotal = new A4115Filter();
                 filaTotal.MERCHID = merchID;
-                filaTotal.desCERROR = "Total Parcial";
+                filaTotal.desCERROR = "Sub Total";
                 filaTotal.NETAMOUN = totalParcial;
                 lstTkts.add(filaTotal);
-                
+
                 filaAdjustment = new A4115Filter();
                 filaAdjustment.MERCHID = merchID;
                 filaAdjustment.desCERROR = "Adjustment";
@@ -2784,7 +2784,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04414(?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04414(?,?)}";
 
         Connection cnx = null;
         try {
@@ -2792,6 +2792,7 @@ public class SalesReconciliAmexDAO {
             cstmt = cnx.prepareCall(SQLCLL01);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2,filter.IN_WARNING.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();
@@ -2802,7 +2803,6 @@ public class SalesReconciliAmexDAO {
 
                 beanTkt.CODE = rst.getString("CODE").trim();
                 beanTkt.NAME = rst.getString("NAME").trim();
-
                 lstTkts.add(beanTkt);
             }
             rst.close();
