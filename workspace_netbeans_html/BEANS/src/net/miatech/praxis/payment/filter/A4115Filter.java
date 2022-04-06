@@ -44,6 +44,7 @@ public class A4115Filter extends A4115 {
     public double totTAXAMOUNC = 0;
     public double totNETAMOUNC = 0; 
     public double totTRANCOUNTC = 0;
+    public double IN_PADJAMOUN = 0;
 
     public Pagination page = new Pagination();
 
