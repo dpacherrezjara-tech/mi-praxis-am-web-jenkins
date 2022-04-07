@@ -740,7 +740,7 @@ public class FlightConciliationDAO {
             while (rst.next()) {
 
                 beanCons = new A3729Filter();
-
+                
                 beanCons.RN = rst.getLong("RN");
                 beanCons.CHAIR = rst.getString("CHAIR").trim();
                 beanCons.strTicket = rst.getString("TICKET").trim();
@@ -797,18 +797,28 @@ public class FlightConciliationDAO {
                 beanCons.TPAX = rst.getString("TPAX").trim();
                 beanCons.TPAX_V = rst.getString("TPAX_V").trim();
 
-                if (!beanCons.TPAX_V.equals("")) {
-                    beanCons.TPAX = beanCons.TPAX_V;
-                }
+                if(filter.IN_TABLE.equals("A3729")){
+                    if (!beanCons.TPAX_V.equals("")) {
+                        beanCons.TPAX = beanCons.TPAX_V;
+                    }
 
-                if (beanCons.TPAX.equals("A")) {
-                    beanCons.desPAX = "Adult";
-                } else if (beanCons.TPAX.equals("C")) {
-                    beanCons.desPAX = "Children";
-                } else if (beanCons.TPAX.equals("I")) {
-                    beanCons.desPAX = "Infant";
-                } else if (beanCons.TPAX.equals("INF")) {
-                    beanCons.desPAX = "Infant";
+                    if (beanCons.TPAX.equals("A")) {
+                        beanCons.desPAX = "Adult";
+                    } else if (beanCons.TPAX.equals("C")) {
+                        beanCons.desPAX = "Children";
+                    } else if (beanCons.TPAX.equals("I")) {
+                        beanCons.desPAX = "Infant";
+                    } else if (beanCons.TPAX.equals("INF")) {
+                        beanCons.desPAX = "Infant";
+                    }
+                }else{
+                    if (beanCons.TPAX.equals("AD")) {
+                        beanCons.desPAX = "Adult";
+                    } else if (beanCons.TPAX.equals("INF")) {
+                        beanCons.desPAX = "Infant";
+                    } else {
+                        beanCons.desPAX = beanCons.TPAX;
+                    }
                 }
 
                 beanCons.FA720 = rst.getString("FA720").trim();
