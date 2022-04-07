@@ -208,7 +208,7 @@ public class PassengerInvoicesController extends BaseController {
             FilenameFilter fnfZIP = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    return (name.startsWith("Detale del EMD _") && name.toLowerCase().endsWith(".xlsx"));
+                    return (name.startsWith("Detalle del EMD_") && name.toLowerCase().endsWith(".xlsx"));
                 }
             };
             String cia = serverSession.getServerSession().getUserView().getCustomerInfo().CCUST;
@@ -219,7 +219,7 @@ public class PassengerInvoicesController extends BaseController {
             lista = archivo.list(fnfZIP);//
             if (lista != null && lista.length > 0) {
                 for (int i = 0; i < lista.length; i++) {
-                    if (lista[i].toString().trim().startsWith("Detale del EMD _" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM )) {
+                    if (lista[i].toString().trim().startsWith("Detalle del EMD_" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM )) {
                         //  file = lista[i].toString().trim();
                         SFI040Filter nombre = new SFI040Filter();
                         nombre.strFormatDate = lista[i].toString().trim();
@@ -5716,7 +5716,7 @@ public class PassengerInvoicesController extends BaseController {
             
 //            String rutaFile = "\\\\px\\AM\\EMD-DELTA-SKYLINK";
             String rutaFile = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK";
-            String fileName = "Detale del EMD _" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM + ".xlsx";
+            String fileName = "Detalle del EMD_" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM + ".xlsx";
 
 //            response.setContentType("application/zip");
             response.setContentType("application/vnd.openxml");
