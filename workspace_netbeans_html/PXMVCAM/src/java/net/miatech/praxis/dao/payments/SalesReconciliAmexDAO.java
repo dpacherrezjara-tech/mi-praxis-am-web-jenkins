@@ -1891,6 +1891,7 @@ public class SalesReconciliAmexDAO {
         double DISCAMOUNC_TOTAL = 0;
         double DISCAMOUIC_TOTAL = 0;
         double VATCOMMSIC_TOTAL = 0;
+        double DISCAMOUN_CB_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1949,6 +1950,7 @@ public class SalesReconciliAmexDAO {
                 DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
                 DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
                 VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
+                DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
             }
             rst.close();
 
@@ -1987,9 +1989,10 @@ public class SalesReconciliAmexDAO {
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
                     beanTkt.GROSAMOUN_CB = rst.getDouble("GROSAMOUN_CB");
                     beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
+                    beanTkt.DISCAMOUN_CB = rst.getDouble("DISCAMOUN_CB");
                     beanTkt.TAXAMOUN_CB = rst.getDouble("TAXAMOUN_CB");
                     beanTkt.TAXAMOUN_AD = rst.getDouble("TAXAMOUN_AD");
-                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD;
+                    beanTkt.NETAMOUN = beanTkt.TGROSAMOUN - beanTkt.DISCAMOUN_IMPORT - beanTkt.DISCAMOUN_IVA - beanTkt.SFEEAMOU - beanTkt.ACCEAMOU - beanTkt.GROSAMOUN_CB - beanTkt.DISCAMOUN - beanTkt.TAXAMOUN_CB - beanTkt.TAXAMOUN_AD - beanTkt.DISCAMOUN_CB;
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.FREGLA = rst.getString("FREGLA").trim();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
@@ -2052,6 +2055,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
                     beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
+                    beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
