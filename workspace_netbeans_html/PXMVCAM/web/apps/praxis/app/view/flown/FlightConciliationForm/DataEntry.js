@@ -327,8 +327,9 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
-                                    ["L", "L"],
-                                    ["S", "S"]
+                                    ["", "None"],
+                                    ["L", "Leg"],
+                                    ["S", "Segment"]
                                 ]
                             }),
                             queryMode: 'local',
@@ -340,10 +341,9 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             selectOnFocus: false,
                             caseSensitive: false,
                             autoSelect: true,
-                            editable: true,
+                            editable: false,
                             width: 90,
                             typeAhead: true,
-                            emptyText: 'In Process',
                             valueField: 'code', displayField: 'name',
                             listConfig: {maxHeight: 111},
                             enableKeyEvents: true,
