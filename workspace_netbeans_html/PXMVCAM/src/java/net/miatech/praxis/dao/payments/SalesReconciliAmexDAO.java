@@ -143,18 +143,52 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.PNETAMOU = rst.getDouble("PNETAMOU");
                     beanTkt.PGROSAMOU = rst.getDouble("PGROSAMOU");
-                    beanTkt.PDISCAMOU = rst.getDouble("PDISCAMOU");
+                    if (beanTkt.PGROSAMOU >= 0) {
+                        beanTkt.PDISCAMOU = rst.getDouble("PDISCAMOU") * -1;
+                    } else {
+                        beanTkt.PDISCAMOU = rst.getDouble("PDISCAMOU");
+                    }
                     beanTkt.PSFEEAMOU = rst.getDouble("PSFEEAMOU");
                     beanTkt.PADJAMOUN = rst.getDouble("PADJAMOUN");
-                    beanTkt.PTAXAMOU = rst.getDouble("PTAXAMOU");
-                    beanTkt.ODBALAMOU = rst.getDouble("ODBALAMOU");
+                    
+                    if (beanTkt.PDISCAMOU >= 0) {
+                        if (beanTkt.PTAXAMOU >= 0) {
+                            beanTkt.PTAXAMOU = rst.getDouble("PTAXAMOU");
+                        } else {
+                            beanTkt.PTAXAMOU = rst.getDouble("PTAXAMOU") * -1;
+                        }
+                    } else {
+                        if (beanTkt.PTAXAMOU >= 0) {
+                            beanTkt.PTAXAMOU = rst.getDouble("PTAXAMOU") * - 1;
+                        } else {
+                            beanTkt.PTAXAMOU = rst.getDouble("PTAXAMOU");
+                        }
+                    }
 
+                    beanTkt.ODBALAMOU = rst.getDouble("ODBALAMOU");
                     beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
-                    beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                    if (beanTkt.GROSAMOUNC >= 0) {
+                        beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC") * -1;
+                    } else {
+                        beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
+                    }
                     beanTkt.SFEEAMOUNC = rst.getDouble("SFEEAMOUNC");
                     beanTkt.ADJAMOUNC = rst.getDouble("ADJAMOUNC");
-                    beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                    
+                    if (beanTkt.DISCAMOUNC >= 0) {
+                        if (beanTkt.TAXAMOUNC >= 0) {
+                            beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                        } else {
+                            beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC") * -1;
+                        }
+                    } else {
+                        if (beanTkt.TAXAMOUNC >= 0) {
+                            beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC") * - 1;
+                        } else {
+                            beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                        }
+                    }                    
                     beanTkt.ODBALAMOUC = rst.getDouble("ODBALAMOUC");
 
                     //Diferencias
@@ -1069,7 +1103,12 @@ public class SalesReconciliAmexDAO {
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
                     beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
-                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    if (rst.getDouble("DISCRATEI") < 0) {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI") * -1;
+                    } else {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    }
+
                     beanTkt.DISCAMOUNI = rst.getDouble("DISCAMOUNI");
                     beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
                     beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
@@ -1078,7 +1117,11 @@ public class SalesReconciliAmexDAO {
                     beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                     beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
                     beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
-                    beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    if (rst.getDouble("DISCRATEIC") < 0) {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
+                    } else {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    }
                     beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
 
                     beanTkt.CERROR = rst.getString("CERROR").trim();
@@ -2012,7 +2055,11 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
-                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    if (rst.getDouble("DISCRATEI") < 0) {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI") * -1;
+                    } else {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    }
                     beanTkt.DISCAMOUNI = rst.getDouble("DISCAMOUNI");
                     beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
                     beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
@@ -2021,7 +2068,11 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
                     beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
                     beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
-                    beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    if (rst.getDouble("DISCRATEIC") < 0) {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
+                    } else {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    }
                     beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
 
                     if (beanTkt.CERROR.equals("")) {
@@ -2232,7 +2283,11 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
-                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    if (rst.getDouble("DISCRATEI") < 0) {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI") * -1;
+                    } else {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    }
                     beanTkt.DISCAMOUNI = rst.getDouble("DISCAMOUNI");
                     beanTkt.TGROSAMOUC = rst.getDouble("TGROSAMOUC");
                     beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
@@ -2241,7 +2296,11 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
                     beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
                     beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
-                    beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    if (rst.getDouble("DISCRATEIC") < 0) {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
+                    } else {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    }
                     beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
 
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
@@ -2495,7 +2554,11 @@ public class SalesReconciliAmexDAO {
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
                     beanTkt.DISCRATE = rst.getDouble("DISCRATE");
                     beanTkt.DISCAMOUN = rst.getDouble("DISCAMOUN");
-                    beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    if (rst.getDouble("DISCRATEI") < 0) {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI") * -1;
+                    } else {
+                        beanTkt.DISCRATEI = rst.getDouble("DISCRATEI");
+                    }
                     beanTkt.DISCAMOUNI = rst.getDouble("DISCAMOUNI");
                     beanTkt.RATESFEEC = rst.getDouble("RATESFEEC");
                     beanTkt.SFEEAMOUC = rst.getDouble("SFEEAMOUC");
@@ -2504,7 +2567,11 @@ public class SalesReconciliAmexDAO {
                     beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                     beanTkt.DISCRATEC = rst.getDouble("DISCRATEC");
                     beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
-                    beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    if (rst.getDouble("DISCRATEIC") < 0) {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
+                    } else {
+                        beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    }
                     beanTkt.DISCAMOUIC = rst.getDouble("DISCAMOUIC");
 
                     beanTkt.DISCAMOUN_TOTAL = DISCAMOUN_TOTAL;
@@ -2795,7 +2862,7 @@ public class SalesReconciliAmexDAO {
             cstmt = cnx.prepareCall(SQLCLL01);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2,filter.IN_WARNING.trim());
+            cstmt.setString(2, filter.IN_WARNING.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();
