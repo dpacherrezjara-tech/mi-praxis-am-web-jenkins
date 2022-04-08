@@ -179,7 +179,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             Ext.getCmp(prototype.id+"-cmbSTVAL").setValue(bean.STVAL);
         }
         Ext.getCmp(prototype.id+"-txtCARRI").setValue(bean.CARRI);
-        Ext.getCmp(prototype.id+"-cmbFMulti").setValue(bean.FMULTI);
+        Ext.getCmp(prototype.id+"-cmbFMulti").setValue(bean.FMULTI.trim());
         Ext.getCmp(prototype.id+"-cmbFFLOW").setValue(bean.FFLOW);
         Ext.getCmp(prototype.id+"-txtFSENDSS").setValue(bean.FSENDSS);
         Ext.getCmp(prototype.id+"-txtCDEPART").setValue(bean.CDEPART);
