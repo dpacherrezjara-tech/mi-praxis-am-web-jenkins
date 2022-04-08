@@ -312,6 +312,43 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.DataEntry', {
                             minLength: 2,
                             maxLength: 2,
                             width: 100
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'label',
+                            text: 'Flight Multileg',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 100
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFMulti',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["L", "L"],
+                                    ["S", "S"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            hidden: false,
+                            readOnly: false,
+                            allowBlank: true,
+                            hiddenLabel: false,
+                            forceSelection: true,
+                            selectOnFocus: false,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: true,
+                            width: 90,
+                            typeAhead: true,
+                            emptyText: 'In Process',
+                            valueField: 'code', displayField: 'name',
+                            listConfig: {maxHeight: 111},
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            hideTrigger: false
                         }
                     ]
                 },

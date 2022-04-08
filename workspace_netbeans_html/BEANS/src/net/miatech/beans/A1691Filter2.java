@@ -81,4 +81,5 @@ public class A1691Filter2 {
     public String USUP = "";
     public String FEUP = "";
     public String HOUP = "";
+    public String FMULTI = "";
 }
