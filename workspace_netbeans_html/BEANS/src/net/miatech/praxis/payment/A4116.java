@@ -13,6 +13,7 @@ public class A4116 {
     
     public String CCUST = "";
     public String PRDA = "";
+    public String TDOC = "";
     public String RECTYPE = "";
     public String MERCHID = "";
     public String STYPECD = "";
