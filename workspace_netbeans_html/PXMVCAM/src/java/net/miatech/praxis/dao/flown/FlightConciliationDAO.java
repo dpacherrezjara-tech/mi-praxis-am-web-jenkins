@@ -489,7 +489,7 @@ public class FlightConciliationDAO {
 
                     beanCons.FOPERZUL = rst.getString("FOPERZUL");
                     beanCons.strFormatDate2 = Functions.getMonthConvert(beanCons.FOPERZUL);
-                    beanCons.FMULTI= rst.getString("FMULTI").trim();
+                    beanCons.FMULTI = rst.getString("FMULTI").trim();
                     beanCons.QCPNOD = rst.getLong("QCPNOD");
                     beanCons.QCPNFI = rst.getInt("QCPNFI");
                     beanCons.QCPNFRE = rst.getInt("QCPNFRE");
