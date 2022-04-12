@@ -39,6 +39,88 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                         //-----------------------------------------------------------------
                         {
                             xtype: 'panel',
+                            id: prototype.id + '-panelGridSummaryData',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '1',
+                            border: true,
+                            height: 560,
+                            width: 1700,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataSummary',
+                                    height: 520,
+                                    width: 424,
+                                    hidden: false,
+                                    columnLines: true,
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Processing',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'PRDA', width: 90,
+                                                        listeners: {
+                                                            click: 'OnGridMainData'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "color:#057ECB;";
+                                                            value = '<b>' + value + '</b>';
+                                                            return '<a href="#payments-reconciliation-world-pay-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Currency', dataIndex: 'SETCURREN', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    //metaData.style = "background-color:#B2DAFA;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Transaction',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: true,
+                                                    align: 'center',
+                                                    border: true
+                                                },
+                                                columns: [
+                                                    {text: 'Setllem. Amount', dataIndex: 'SETAMOUNT', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2DAFA;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Setllem. Amount C', dataIndex: 'SETAMOUNTC', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#B2FAC6;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                        ]
+                                    }
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
                             id: prototype.id + '-panelGridData',
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
@@ -84,7 +166,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            
                                             {text: 'Total Transaction (312-00)',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -294,7 +375,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     border: true
                                                 },
                                                 columns: [
-                                                    {text: 'ID', dataIndex: 'MERCHID', width: 100,},
+                                                    {text: 'ID', dataIndex: 'MERCHID', width: 100, },
                                                 ]
                                             },
                                             {text: 'Part',
@@ -332,27 +413,26 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
-                                                    }},
+                                                        }},
                                                     {text: 'Cur.', dataIndex: 'SCURRENCY', width: 60},
                                                     {text: 'Tran. Accepted', dataIndex: 'TOTTRAAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
-                                                    }},
+                                                        }},
                                                     {text: 'Trans. Pendien', dataIndex: 'TOTPENAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
-                                                    }},
+                                                        }},
                                                     {text: 'Trans. Rejecti', dataIndex: 'TOTREJAMOU', width: 100,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#B2DAFA;";
                                                             value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '</b>';
                                                             return value;
-                                                    }},
-
+                                                        }},
                                                 ]
                                             },
                                             {text: 'Reconciliation Transaction',
@@ -575,7 +655,7 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                             sortable: true,
                                             align: 'center'
                                         },
-                                        items: [         
+                                        items: [
                                             {text: 'Record',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -608,7 +688,6 @@ Ext.define('Ext.Praxis.view.payments.ReconciliationWorldPayForm.Info', {
                                                     },
                                                 ]
                                             },
-                                            
                                         ]
                                     }
                                 },
