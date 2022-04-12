@@ -130,6 +130,7 @@ public class SalesComplementAmexDAO {
                     bean.PASSED_DAYS = "00";
                 }
                 bean.CERROR = rst.getString("CERROR").trim();
+                bean.DES_CERROR = rst.getString("DES_CERROR").trim();
                 
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
