@@ -20,10 +20,12 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
     me: '',
     searchParams: {},
     paramsDetail: {},
+    paramsMainData: {},
     paramsHeaderDetail: {},
     paramsHeaderDetailByParteID: {},
     paramsHeaderDetailByParteIDSE: {},
     beanHeaderDay: {},
+    beanMainData: {},
     dataObtain: {},
     init: function (view) {
         me = this;
@@ -182,9 +184,63 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
     // <editor-fold defaultstate="collapsed" desc="setGridData">
 
     setGridData: function () {
-        win.lblUser_toolTip("Estructura: A4040");
+        win.lblUser_toolTip("Estructura: A4042");
+        me.panelActual = '-panelGridSummaryData';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchSummary'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParams
+
+                    },
+                    load: function (obj) {
+//                        console.log(obj.data);
+                        me.setWidthPie();
+                        var pag = Ext.getCmp(prototype.id + '-paggin5');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        }
+                    }
+                }
+            });
+
+//            console.log(storeGridDatas);
+
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataSummary').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
+        }
+    },
+    OnGridMainData: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        var beanMainData = {};
+        beanMainData.DATE = rowData.data.PRDA;
+        beanMainData.SETCURREN = rowData.data.SETCURREN;
+        beanMainData.IN_DATE = 'PRDA';
+
+        me.paramsMainData.beanString = JSON.stringify(beanMainData);
+
+        this.setOnGridMainData();
+    },
+    setOnGridMainData: function () {
+        win.lblUser_toolTip("Estructura: A4040");
 
         var msj = this.validateFields();
         if (msj !== '') {
@@ -196,8 +252,7 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
                     url: prototype.url + '/search'
                 }, listeners: {
                     beforeload: function (obj) {
-                        obj.proxy.extraParams = searchParams
-
+                        obj.proxy.extraParams = me.paramsMainData
                     },
                     load: function (obj) {
 //                        console.log(obj.data);
@@ -217,7 +272,6 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
             });
 
 //            console.log(storeGridDatas);
-
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataAirport').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
@@ -560,6 +614,9 @@ Ext.define('Ext.Praxis.controller.payments.ReconciliationWorldPay.Reconciliation
                 break;
             case  '-panelGridHeaderDetailByParteIDSE':
                 me.pagginActual = '-paggin4';
+                break;
+            case  '-panelGridSummaryData':
+                me.pagginActual = '-paggin5';
                 break;
         }
     },

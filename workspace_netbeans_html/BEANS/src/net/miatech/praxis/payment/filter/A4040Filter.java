@@ -26,6 +26,10 @@ public class A4040Filter extends A4040 {
     public double DIF_TOTSETAMO = 0;
     public double DIF_TOTPENAMO = 0;
     public double DIF_TOTREJAMO = 0;
+    
+    //A4042
+    public double SETAMOUNT = 0;
+    public double SETAMOUNTC = 0;
 
     public Pagination page = new Pagination();
     
