@@ -4515,15 +4515,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Code', dataIndex: 'CERROR', width: 70}
+                                                    {text: 'Code', dataIndex: 'CERROR', width: 70},
+                                                    {
+                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 270,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left";
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
-                                            },
-                                            {
-                                                text: 'Description', dataIndex: 'DES_CERROR', width: 270,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left";
-                                                    return value;
-                                                }
                                             },
                                             {
                                                 text: 'Transaction',
@@ -4543,6 +4543,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
+                                                        }
+                                                    },
+                                                    {text: 'Indust.Speci. <br> Ref.Nbr<br>TKT', dataIndex: 'ISREFNBR', width: 120,
+                                                        listeners: {
+                                                            click: 'viewTicket'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            value = '<b>' + value + '</b>';
+                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {text: 'Invoice <br> Refer. Number<br>PNR', dataIndex: 'INVORNBR', width: 120,
@@ -4592,16 +4602,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;
-                                                        }
-                                                    },
-                                                    {text: 'Indust.Speci. <br> Ref.Nbr<br>TKT', dataIndex: 'ISREFNBR', width: 120,
-                                                        listeners: {
-                                                            click: 'viewTicket'
-                                                        },
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            value = '<b>' + value + '</b>';
-                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
-                                                            return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {text: 'Date', dataIndex: 'TRANSDATE', width: 100,
