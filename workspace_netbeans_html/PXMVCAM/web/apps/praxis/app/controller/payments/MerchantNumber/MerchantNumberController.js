@@ -115,6 +115,19 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         Ext.getCmp(prototype.id + '-txtMERCHN').show();
         Ext.getCmp(prototype.id + '-txtRSOCIAL').hide();
         
+        var cmbUNIOPE = Ext.getCmp(prototype.id + '-cmbUNIOPE');
+        cmbUNIOPE.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["1", "Aerovias MX"],
+                ["2", "Aeromexico Cargo"],
+                ["3", "PLM"]
+            ]
+        }));
+        cmbUNIOPE.setValue("");
+        
     },
     
     cmbFind_changeHandler: function() {      
@@ -135,15 +148,18 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
     setFormatParameter: function() {
 
         me.bean = {};
-//        me.bean.CODE = Ext.getCmp(prototype.id + '-cmbCode').getValue();
         me.bean.IN_MERCHN = Ext.getCmp(prototype.id + '-txtMERCHN').getValue();
         me.bean.IN_RSOCIAL = Ext.getCmp(prototype.id + '-txtRSOCIAL').getValue();
+        
+        me.bean.IN_UNIOPE = Ext.getCmp(prototype.id + '-cmbUNIOPE').getValue();
+        me.bean.IN_CANAL = Ext.getCmp(prototype.id + '-txtCANAL').getValue();
+        
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             bean: me.bean,
             beanString: beanString
         };
-//        console.log(searchParams);
+        console.log(searchParams);
     },
     btnSearch_click: function(obj, e) {
         this.setFormatParameter();
@@ -236,9 +252,11 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         }
     },
     btnClear_click: function(obj, e) {
-//        Ext.getCmp(prototype.id + '-cmbCode').setValue('');
+        
         Ext.getCmp(prototype.id + '-txtMERCHN').setValue('');
         Ext.getCmp(prototype.id + '-txtRSOCIAL').setValue('');
+        Ext.getCmp(prototype.id + '-cmbUNIOPE').setValue('');
+        Ext.getCmp(prototype.id + '-txtCANAL').setValue('');
 
     },
     btnExcel_click: function(obj, e) {
