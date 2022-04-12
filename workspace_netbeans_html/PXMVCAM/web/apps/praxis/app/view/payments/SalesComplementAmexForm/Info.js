@@ -67,6 +67,24 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 90
                                             },
                                             {
+                                                text: 'Error',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Code', dataIndex: 'CERROR', width: 70},
+                                                    {
+                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 270,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
                                                 text: 'Merchant', dataIndex: 'MERCHID', width: 90
                                             },
                                             {

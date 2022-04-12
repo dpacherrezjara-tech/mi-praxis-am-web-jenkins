@@ -170,17 +170,17 @@ public class SalesReconciliAmexDAO {
                     //TOTALEs
                     beanTkt.totPNETAMOU = totPNETAMOU;
                     beanTkt.totPGROSAMOU = totPGROSAMOU;
-                    beanTkt.totPDISCAMOU = totPDISCAMOU;
+                    beanTkt.totPDISCAMOU = this.cambioSigno(beanTkt.totPGROSAMOU, totPDISCAMOU);
+                    beanTkt.totPTAXAMOU = this.mantenerSigno(beanTkt.totPDISCAMOU, totPTAXAMOU); 
                     beanTkt.totPSFEEAMOU = totPSFEEAMOU;
                     beanTkt.totPADJAMOUN = totPADJAMOUN;
-                    beanTkt.totPTAXAMOU = totPTAXAMOU;
                     beanTkt.totODBALAMOU = totODBALAMOU;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
-                    beanTkt.totDISCAMOUNC = totDISCAMOUNC;
+                    beanTkt.totDISCAMOUNC = this.cambioSigno(beanTkt.totGROSAMOUNC, totDISCAMOUNC);
+                    beanTkt.totTAXAMOUNC = this.mantenerSigno(beanTkt.totDISCAMOUNC, totTAXAMOUNC);
                     beanTkt.totSFEEAMOUNC = totSFEEAMOUNC;
                     beanTkt.totADJAMOUNC = totADJAMOUNC;
-                    beanTkt.totTAXAMOUNC = totTAXAMOUNC;
                     beanTkt.totODBALAMOUC = totODBALAMOUC;
 
                     //Diferencia en totales
@@ -354,17 +354,17 @@ public class SalesReconciliAmexDAO {
                     //TOTALEs
                     beanTkt.totPNETAMOU = totPNETAMOU;
                     beanTkt.totPGROSAMOU = totPGROSAMOU;
-                    beanTkt.totPDISCAMOU = totPDISCAMOU;
+                    beanTkt.totPDISCAMOU = this.cambioSigno(beanTkt.totPGROSAMOU, totPDISCAMOU);
+                    beanTkt.totPTAXAMOU = this.mantenerSigno(beanTkt.totPDISCAMOU, totPTAXAMOU);
                     beanTkt.totPSFEEAMOU = totPSFEEAMOU;
                     beanTkt.totPADJAMOUN = totPADJAMOUN;
-                    beanTkt.totPTAXAMOU = totPTAXAMOU;
                     beanTkt.totODBALAMOU = totODBALAMOU;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
-                    beanTkt.totDISCAMOUNC = totDISCAMOUNC;
+                    beanTkt.totDISCAMOUNC = this.cambioSigno(beanTkt.totGROSAMOUNC, totDISCAMOUNC);
+                    beanTkt.totTAXAMOUNC = this.mantenerSigno(beanTkt.totDISCAMOUNC, totTAXAMOUNC);
                     beanTkt.totSFEEAMOUNC = totSFEEAMOUNC;
                     beanTkt.totADJAMOUNC = totADJAMOUNC;
-                    beanTkt.totTAXAMOUNC = totTAXAMOUNC;
                     beanTkt.totODBALAMOUC = totODBALAMOUC;
 
                     //Diferencia en totales
@@ -529,17 +529,17 @@ public class SalesReconciliAmexDAO {
                     //TOTALEs
                     beanTkt.totPNETAMOU = totPNETAMOU;
                     beanTkt.totPGROSAMOU = totPGROSAMOU;
-                    beanTkt.totPDISCAMOU = totPDISCAMOU;
+                    beanTkt.totPDISCAMOU = this.cambioSigno(beanTkt.totPGROSAMOU, totPDISCAMOU);
+                    beanTkt.totPTAXAMOU = this.mantenerSigno(beanTkt.totPDISCAMOU, totPTAXAMOU);  
                     beanTkt.totPSFEEAMOU = totPSFEEAMOU;
                     beanTkt.totPADJAMOUN = totPADJAMOUN;
-                    beanTkt.totPTAXAMOU = totPTAXAMOU;
                     beanTkt.totODBALAMOU = totODBALAMOU;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
-                    beanTkt.totDISCAMOUNC = totDISCAMOUNC;
+                    beanTkt.totDISCAMOUNC = this.cambioSigno(beanTkt.totGROSAMOUNC, totDISCAMOUNC);
+                    beanTkt.totTAXAMOUNC = this.mantenerSigno(beanTkt.totDISCAMOUNC, totTAXAMOUNC);
                     beanTkt.totSFEEAMOUNC = totSFEEAMOUNC;
                     beanTkt.totADJAMOUNC = totADJAMOUNC;
-                    beanTkt.totTAXAMOUNC = totTAXAMOUNC;
                     beanTkt.totODBALAMOUC = totODBALAMOUC;
 
                     //Diferencia en totales
@@ -698,17 +698,17 @@ public class SalesReconciliAmexDAO {
                     //TOTALEs
                     beanTkt.totPNETAMOU = totPNETAMOU;
                     beanTkt.totPGROSAMOU = totPGROSAMOU;
-                    beanTkt.totPDISCAMOU = totPDISCAMOU;
+                    beanTkt.totPDISCAMOU = this.cambioSigno(beanTkt.totPGROSAMOU, totPDISCAMOU);
+                    beanTkt.totPTAXAMOU = this.mantenerSigno(beanTkt.totPDISCAMOU, totPTAXAMOU);
                     beanTkt.totPSFEEAMOU = totPSFEEAMOU;
                     beanTkt.totPADJAMOUN = totPADJAMOUN;
-                    beanTkt.totPTAXAMOU = totPTAXAMOU;
                     beanTkt.totODBALAMOU = totODBALAMOU;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
-                    beanTkt.totDISCAMOUNC = totDISCAMOUNC;
+                    beanTkt.totDISCAMOUNC = this.cambioSigno(beanTkt.totGROSAMOUNC, totDISCAMOUNC);
+                    beanTkt.totTAXAMOUNC = this.mantenerSigno(beanTkt.totDISCAMOUNC, totTAXAMOUNC);
                     beanTkt.totSFEEAMOUNC = totSFEEAMOUNC;
                     beanTkt.totADJAMOUNC = totADJAMOUNC;
-                    beanTkt.totTAXAMOUNC = totTAXAMOUNC;
                     beanTkt.totODBALAMOUC = totODBALAMOUC;
 
                     //Diferencia en totales
@@ -881,8 +881,8 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.totSGROSAMOS = totSGROSAMOS;
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
-                    beanTkt.totDISCAMOUN = totDISCAMOUN;
-                    beanTkt.totTAXAMOUN = totTAXAMOUN;
+                    beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totGROSAMOUN, totDISCAMOUN);
+                    beanTkt.totTAXAMOUN = this.mantenerSigno(beanTkt.totDISCAMOUN, totTAXAMOUN);
                     beanTkt.totNETAMOUN = totNETAMOUN;
                     beanTkt.totSDGROSSA = totSDGROSSA;
                     beanTkt.totSCGROSSA = totSCGROSSA;
@@ -891,8 +891,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.totINSTANBR = totINSTANBR;
 
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
-                    beanTkt.totDISCAMOUNC = totDISCAMOUNC;
-                    beanTkt.totTAXAMOUNC = totTAXAMOUNC;
+                    beanTkt.totDISCAMOUNC = this.cambioSigno(beanTkt.totGROSAMOUNC, totDISCAMOUNC);
+                    beanTkt.totTAXAMOUNC = this.mantenerSigno(beanTkt.totDISCAMOUNC, totTAXAMOUNC);
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
                     beanTkt.totTRANCOUNTC = totTRANCOUNTC;
 
@@ -1051,17 +1051,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
 
-                    beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");                    
-                    beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
-                    beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
-                    beanTkt.DISCAMOUN_TOTAL = DISCAMOUN_TOTAL;
-                    beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
-                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
-                    beanTkt.SFEEAMOU_TOTAL = SFEEAMOU_TOTAL;
-                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
-                    beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
-                    beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
-                    beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
+                    beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");                                        
 
                     beanTkt.TRANSDATE = rst.getString("TRANSDATE");
                     beanTkt.TRANSID = rst.getString("TRANSID");
@@ -1107,6 +1097,20 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
+                    
+                    //Totales
+                    beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
+                    beanTkt.DISCAMOUN_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUN_TOTAL, DISCAMOUN_TOTAL);
+                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUN_TOTAL, DISCAMOUNI_TOTAL);
+                    
+                    beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUNC_TOTAL, DISCAMOUNC_TOTAL);
+                    beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
+                    
+                    beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
+                    beanTkt.SFEEAMOU_TOTAL = SFEEAMOU_TOTAL;
+                    beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
+                    beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -1252,11 +1256,12 @@ public class SalesReconciliAmexDAO {
                     }
 
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
+                    beanTkt.totDISCAMOUN_IMPORT = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN_IMPORT);
+                    beanTkt.totDISCAMOUN_IVA = this.mantenerSigno(beanTkt.totDISCAMOUN_IMPORT, totDISCAMOUN_IVA);
+                    
                     beanTkt.totTGROSAMOUC = totTGROSAMOUC;
-                    beanTkt.totDISCAMOUN_IVA = totDISCAMOUN_IVA;
-                    beanTkt.totDISCAMOUN_IMPORT = totDISCAMOUN_IMPORT;
-                    beanTkt.totDISCAMOUNC_IVA = totDISCAMOUNC_IVA;
-                    beanTkt.totDISCAMOUNC_IMPORT = totDISCAMOUNC_IMPORT;
+                    beanTkt.totDISCAMOUNC_IMPORT = this.cambioSigno(beanTkt.totTGROSAMOUC, totDISCAMOUNC_IMPORT);
+                    beanTkt.totDISCAMOUNC_IVA = this.mantenerSigno(beanTkt.totDISCAMOUNC_IMPORT, totDISCAMOUNC_IVA);
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -1404,15 +1409,15 @@ public class SalesReconciliAmexDAO {
                     }
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
-                    beanTkt.totDISCAMOUN = totDISCAMOUN;
+                    beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totGROSAMOUN, totDISCAMOUN);
+                    beanTkt.totTAXAMOUN = this.mantenerSigno(beanTkt.totDISCAMOUN, totTAXAMOUN); 
                     beanTkt.totSFEEAMOUN = totSFEEAMOUN;
                     beanTkt.totSFEEAMOUNC = totSFEEAMOUNC;
-                    beanTkt.totTAXAMOUN = totTAXAMOUN;
                     beanTkt.totNETAMOUN = totNETAMOUN;
 
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
-                    beanTkt.totDISCAMOUNC = totDISCAMOUNC;
-                    beanTkt.totTAXAMOUNC = totTAXAMOUNC;
+                    beanTkt.totDISCAMOUNC = this.cambioSigno(beanTkt.totGROSAMOUNC, totDISCAMOUNC);
+                    beanTkt.totTAXAMOUNC = this.mantenerSigno(beanTkt.totDISCAMOUNC, totTAXAMOUNC); 
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
@@ -1543,8 +1548,8 @@ public class SalesReconciliAmexDAO {
                     beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
 
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
-                    beanTkt.DISCAMOUNC = rst.getDouble("DISCAMOUNC");
-                    beanTkt.TAXAMOUNC = rst.getDouble("TAXAMOUNC");
+                    beanTkt.DISCAMOUNC = this.cambioSigno(beanTkt.GROSAMOUNC, rst.getDouble("DISCAMOUNC"));
+                    beanTkt.TAXAMOUNC = this.mantenerSigno(beanTkt.DISCAMOUNC, rst.getDouble("TAXAMOUNC"));
                     beanTkt.NETAMOUNC = rst.getDouble("NETAMOUNC");
 
                     beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
@@ -1569,15 +1574,15 @@ public class SalesReconciliAmexDAO {
                     beanTkt.IDCON = rst.getString("IDCON").trim();
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
-                    beanTkt.totDISCAMOUN = totDISCAMOUN;
+                    beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totGROSAMOUN, totDISCAMOUN);
+                    beanTkt.totTAXAMOUN = this.mantenerSigno(beanTkt.totDISCAMOUN, totTAXAMOUN);
                     beanTkt.totSFEEAMOUN = totSFEEAMOUN;
                     beanTkt.totSFEEAMOUNC = totSFEEAMOUNC;
-                    beanTkt.totTAXAMOUN = totTAXAMOUN;
                     beanTkt.totNETAMOUN = totNETAMOUN;
 
                     beanTkt.totGROSAMOUNC = totGROSAMOUNC;
-                    beanTkt.totDISCAMOUNC = totDISCAMOUNC;
-                    beanTkt.totTAXAMOUNC = totTAXAMOUNC;
+                    beanTkt.totDISCAMOUNC = this.cambioSigno(beanTkt.totGROSAMOUNC, totDISCAMOUNC);
+                    beanTkt.totTAXAMOUNC = this.mantenerSigno(beanTkt.totDISCAMOUNC, totTAXAMOUNC);                   
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
@@ -1837,16 +1842,15 @@ public class SalesReconciliAmexDAO {
                     beanTkt.page.TOTROW = filter.page.TOTROW;
 
                     //Totales
-                    beanTkt.totDISCAMOUN_IMPORT = totDISCAMOUN_IMPORT;
-                    beanTkt.totDISCAMOUN_IVA = totDISCAMOUN_IVA;
                     beanTkt.totTAXAMOUN_AD = totTAXAMOUN_AD;
                     beanTkt.totTAXAMOUN_CB = totTAXAMOUN_CB;
                     beanTkt.totNETAMOUN = totNETAMOUN;
                     beanTkt.totNETAMOUNC = totNETAMOUNC;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
+                    beanTkt.totDISCAMOUN_IMPORT = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN_IMPORT);
+                    beanTkt.totDISCAMOUN_IVA = this.mantenerSigno(beanTkt.totDISCAMOUN_IMPORT, totDISCAMOUN_IVA);
                     beanTkt.totSFEEAMOU = totSFEEAMOU;
                     beanTkt.totACCEAMOU = totACCEAMOU;
-                    beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totDISCAMOUN = totDISCAMOUN;
 
                     lstTkts.add(beanTkt);
@@ -2075,24 +2079,24 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
+                    beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN);
+                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.totDISCAMOUN, DISCAMOUNI_TOTAL);
                     beanTkt.totDISCAMOUN_IMPORT = totDISCAMOUN_IMPORT;
                     beanTkt.totDISCAMOUN_IVA = totDISCAMOUN_IVA;
                     beanTkt.totSFEEAMOU = totSFEEAMOU;
                     beanTkt.totACCEAMOU = totACCEAMOU;
                     beanTkt.totTAXAMOUN_AD = totTAXAMOUN_AD;
                     beanTkt.totIVACOM12 = totIVACOM12;
-                    beanTkt.totDISCAMOUN = totDISCAMOUN;
                     beanTkt.totTAXAMOUN_CB = totTAXAMOUN_CB;
                     beanTkt.totNETAMOUN = totNETAMOUN;
                     beanTkt.totDISCAMOSC = totDISCAMOSC;
                     beanTkt.totGROSAMOUN_CB = totGROSAMOUN_CB;
 
                     beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
-                    beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
                     beanTkt.TGROSAMOUC_TOTAL = TGROSAMOUC_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUC_TOTAL, DISCAMOUNC_TOTAL);
+                    beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
-                    beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
-                    beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
                     beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
 
@@ -2155,6 +2159,7 @@ public class SalesReconciliAmexDAO {
         double DISCAMOUNC_TOTAL = 0;
         double DISCAMOUIC_TOTAL = 0;
         double VATCOMMSIC_TOTAL = 0;
+        double DISCAMOUN_CB_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -2217,6 +2222,7 @@ public class SalesReconciliAmexDAO {
                 DISCAMOUNC_TOTAL = rst.getDouble("DISCAMOUNC_TOTAL");
                 DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
                 VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
+                DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
             }
             rst.close();
 
@@ -2247,6 +2253,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SPNR = rst.getString("SPNR").trim();
                     beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
+                    beanTkt.DISCAMOUN_CB = rst.getDouble("DISCAMOUN_CB");
                     
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.DISCAMOUN = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN"));
@@ -2301,25 +2308,26 @@ public class SalesReconciliAmexDAO {
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
+                    beanTkt.totDISCAMOUN = this.cambioSigno(beanTkt.totTGROSAMOUN, totDISCAMOUN);
+                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.totDISCAMOUN, DISCAMOUNI_TOTAL);
                     beanTkt.totDISCAMOUN_IMPORT = totDISCAMOUN_IMPORT;
                     beanTkt.totDISCAMOUN_IVA = totDISCAMOUN_IVA;
                     beanTkt.totSFEEAMOU = totSFEEAMOU;
                     beanTkt.totACCEAMOU = totACCEAMOU;
                     beanTkt.totTAXAMOUN_AD = totTAXAMOUN_AD;
                     beanTkt.totIVACOM12 = totIVACOM12;
-                    beanTkt.totDISCAMOUN = totDISCAMOUN;
                     beanTkt.totTAXAMOUN_CB = totTAXAMOUN_CB;
                     beanTkt.totNETAMOUN = totNETAMOUN;
                     beanTkt.totDISCAMOSC = totDISCAMOSC;
                     beanTkt.totGROSAMOUN_CB = totGROSAMOUN_CB;
 
                     beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
-                    beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
                     beanTkt.TGROSAMOUC_TOTAL = TGROSAMOUC_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUC_TOTAL, DISCAMOUNC_TOTAL);
+                    beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
-                    beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
-                    beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
+                    beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -2569,16 +2577,17 @@ public class SalesReconciliAmexDAO {
                         beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
                     }                    
 
-                    beanTkt.DISCAMOUN_TOTAL = DISCAMOUN_TOTAL;
                     beanTkt.DISCAMOUNI_TOTAL = DISCAMOUNI_TOTAL;
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
                     beanTkt.SFEEAMOU_TOTAL = SFEEAMOU_TOTAL;
                     beanTkt.ACCEAMOUC_TOTAL = ACCEAMOUC_TOTAL;
                     beanTkt.ACCEAMOU_TOTAL = ACCEAMOU_TOTAL;
-                    beanTkt.DISCAMOUNC_TOTAL = DISCAMOUNC_TOTAL;
-                    beanTkt.DISCAMOUIC_TOTAL = DISCAMOUIC_TOTAL;
                     beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
+                    beanTkt.DISCAMOUN_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUN_TOTAL, DISCAMOUN_TOTAL);
+                    beanTkt.DISCAMOUNI_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUN_TOTAL, DISCAMOUNI_TOTAL);
                     beanTkt.TGROSAMOUNC_TOTAL = TGROSAMOUNC_TOTAL;
+                    beanTkt.DISCAMOUNC_TOTAL = this.cambioSigno(beanTkt.TGROSAMOUNC_TOTAL, DISCAMOUNC_TOTAL);
+                    beanTkt.DISCAMOUIC_TOTAL = this.mantenerSigno(beanTkt.DISCAMOUNC_TOTAL, DISCAMOUIC_TOTAL);
 
                     beanTkt.CERROR = rst.getString("CERROR").trim();
 

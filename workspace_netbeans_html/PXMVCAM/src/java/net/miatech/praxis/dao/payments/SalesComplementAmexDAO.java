@@ -109,12 +109,7 @@ public class SalesComplementAmexDAO {
                 bean.ADDPAXEMD = rst.getString("ADDPAXEMD").trim();
                 bean.ADDPAXTKT = rst.getString("ADDPAXTKT").trim();
                 bean.FAMEX = rst.getString("FAMEX").trim();
-                if (bean.FAMEX.equals("")) {
-                    bean.descFAMEX = "Pending";
-                } else if (bean.FAMEX.equals("1")) {
-                    bean.descFAMEX = "Processed";
-                }
-
+                
                 bean.STCON = rst.getString("STCON").trim();
                 if (bean.STCON.equals("")) {
                     bean.descSTCON = "Pending";
@@ -128,7 +123,14 @@ public class SalesComplementAmexDAO {
                 bean.IDCON = rst.getString("IDCON").trim();
                 bean.QTYTKT = rst.getInt("QTYTKT");
                 bean.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
-
+                if (bean.FAMEX.equals("")) {
+                    bean.descFAMEX = "Pending";
+                } else if (bean.FAMEX.equals("1")) {
+                    bean.descFAMEX = "Processed";
+                    bean.PASSED_DAYS = "00";
+                }
+                bean.CERROR = rst.getString("CERROR").trim();
+                
                 bean.page.PAGNUM = filter.page.PAGNUM;
                 bean.page.PAGROW = filter.page.PAGROW;
                 bean.page.TOTPAG = filter.page.TOTPAG;
