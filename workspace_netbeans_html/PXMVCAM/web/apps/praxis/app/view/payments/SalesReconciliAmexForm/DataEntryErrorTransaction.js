@@ -89,14 +89,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Submission Date',
+                                    text: 'Transact. Date',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtBSUMDATE',
+                                    id: prototype.id + '-de-txtTRANSDATE',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -363,7 +363,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
-                                    text: 'Transact. Date',
+                                    text: 'Sales Date',
                                     //fontSize: 15,
                                     textAlign: 'center',
                                     paddingLeft: 3,
@@ -373,7 +373,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtTRANSDATE',
+                                    id: prototype.id + '-de-txtBSUMDATE',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     readOnly: true,
                                     fieldStyle: 'text-align:center;',
@@ -394,12 +394,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtINVORNBR',
+                                    id: prototype.id + '-de-txtSPNR',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
+                                    enforceMaxLength: true,
+                                    maskRe: /[A-Z]/,
+                                    maxLength: 6,
                                     width: 100,
                                     
-                                    //maxLength: 5
                                 },
                                 {xtype: 'tbspacer', width: 40},
                                 {
@@ -420,7 +422,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     fieldStyle: 'text-align:center;',
                                     width: 100,
                                     maskRe: /[0-9]/,
-                                    //maxLength: 13
+                                    enforceMaxLength: true,
+                                    maxLength: 14
                                 },
                                 
                             ]
