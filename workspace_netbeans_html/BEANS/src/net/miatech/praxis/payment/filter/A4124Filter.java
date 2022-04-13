@@ -32,7 +32,8 @@ public class A4124Filter extends A4124 {
     public String IN_ISREFNBR = "";    
     public String IN_INVORNBR = "";    
     public String IN_TKT = "";    
-    public String IN_PNR = "";    
+    public String IN_PNR = "";   
+    public String DES_CERROR = "";
     
     public Pagination page = new Pagination();
 }
