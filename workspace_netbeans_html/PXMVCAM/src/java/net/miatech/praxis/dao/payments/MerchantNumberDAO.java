@@ -581,6 +581,78 @@ public class MerchantNumberDAO {
         return lstData;
     }
 
+    public List<A2354Filter> loadPX305SQP04415(A2354Filter filter) throws SQLException, Exception {
+
+        List<A2354Filter> lstData = new ArrayList<A2354Filter>(0);
+        A2354Filter bean;
+        
+        HashMap<String, String> hmDescUNIOPE = new HashMap<String, String>();
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04415(?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(2, Types.INTEGER);
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setInt(2, filter.page.PAGNUM);
+            cstmt.setInt(3, filter.page.PAGROW);
+            cstmt.setInt(4, filter.page.TOTPAG);
+            cstmt.setInt(5, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(2);
+            filter.page.PAGROW = cstmt.getInt(3);
+            filter.page.TOTPAG = cstmt.getInt(4);
+            filter.page.TOTROW = cstmt.getInt(5);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                bean = new A2354Filter();
+                bean.CIATA = rst.getString("CIATA").trim();
+                bean.strDescrip = rst.getString("DES_IATA").trim();
+              
+                bean.page.PAGNUM = filter.page.PAGNUM;
+                bean.page.PAGROW = filter.page.PAGROW;
+                bean.page.TOTPAG = filter.page.TOTPAG;
+                bean.page.TOTROW = filter.page.TOTROW;
+                lstData.add(bean);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstData;
+    }
     
     public String loadPX305SQP00934(A2354Filter filter, String option) throws SQLException, Exception {
 

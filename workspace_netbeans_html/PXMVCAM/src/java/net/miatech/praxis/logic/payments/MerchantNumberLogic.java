@@ -48,6 +48,10 @@ public class MerchantNumberLogic {
         return MerchantNumberDAO.loadPX305SQP00933(filter);
     }
     
+    public List<A2354Filter> loadPX305SQP04415(A2354Filter filter) throws SQLException, Exception {
+        return MerchantNumberDAO.loadPX305SQP04415(filter);
+    }
+    
     public String loadPX305SQP00934(A2354Filter filter, String option) throws SQLException, Exception {
         return MerchantNumberDAO.loadPX305SQP00934(filter, option);
     }
