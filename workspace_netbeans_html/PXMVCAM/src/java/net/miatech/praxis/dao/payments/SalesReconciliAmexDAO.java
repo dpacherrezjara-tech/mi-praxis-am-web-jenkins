@@ -2702,6 +2702,13 @@ public class SalesReconciliAmexDAO {
                 objRtn.SINSAMOUC = rs01.getDouble("SINSAMOUC");
 
                 objRtn.CERROR = rs01.getString("CERROR");
+                objRtn.DES_CERROR = rs01.getString("DES_CERROR");
+                objRtn.FSELEC = rs01.getString("FSELEC");
+                if("".equals(objRtn.FSELEC)){
+                    objRtn.FSELEC = "Not loaded";
+                }else{
+                    objRtn.FSELEC = "Loaded";
+                }
 
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
