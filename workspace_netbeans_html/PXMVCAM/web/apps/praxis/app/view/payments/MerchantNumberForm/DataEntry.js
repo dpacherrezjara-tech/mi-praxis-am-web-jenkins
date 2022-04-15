@@ -304,13 +304,14 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                         },
                         {xtype: 'panel',
                             layout: 'vbox',
-                            border: true,
-                            width: 600,
+                            border: false,
+                            width: 620,
                             margin: '2 2 0 20',
                             height: 200,
                             defaults: {
                                 anchor: '100%',
                                 width: 580,
+                                align: 'center'
                             },
                             items: [
                                 {
@@ -320,6 +321,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     defaults: {
                                         anchor: '100%',
                                         width: 580,
+                                        align: 'center'
                                     },
                                     items: [
                                         {xtype: 'tbspacer', width: 10},
@@ -351,21 +353,22 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     bodyStyle: 'background: transparent;',
                                     defaults: {
                                         anchor: '100%',
-                                        width: 550
+                                        width: 550,
+                                        align: 'center'
                                     },
                                     items: [
                                         {xtype: 'tbspacer', width: 10},
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtIATA',
-//                                            enforceMaxLength: true,
+                                            enforceMaxLength: true,
 //                                            enforceMinLength: true,
 //                                            minLength: 5,
-//                                            maxLength: 5,
-//                                            maskRe: /[0-9/]/,
+                                            maxLength: 8,
+                                            maskRe: /[0-9/]/,
                                             padding: '3 0',
                                             fieldStyle: 'text-align:center',
-                                            width: 50
+                                            width: 120
                                         },
                                         {xtype: 'tbspacer', width: 3},
                                         {
@@ -397,20 +400,22 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     xtype: 'panel',
                                     margin: '5 5 0 10',
                                     padding: '0 0 0 0',
-                                    width: 570,
+                                    width: 620,
                                     height: 135,
                                     autoScroll: true,
                                     align: 'center',
                                     border: false,
                                     //title: '<b style="font-size:13px;color:white">RAPID Information</b>',
                                     layout: {
-                                        type: 'hbox'
+                                        type: 'hbox',
+                                        align: 'center',
                                     },
                                     items: [
+                                        {xtype: 'tbspacer', width: 60},
                                         {
                                             xtype: 'grid',
                                             id: prototype.id + '-gridIATA',
-                                            width: 550,
+                                            width: 500,
                                             height: 130,
                                             columnLines: true,
                                             padding: '1',
@@ -434,7 +439,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                                     dataIndex: 'strDESCRIP',
                                                     xtype: 'gridcolumn',
                                                     align: 'center',
-                                                    width: 150
+                                                    width: 200
                                                 },
                                                 {
                                                     header: 'Country',
@@ -442,7 +447,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                                     dataIndex: 'SCOUNTRY',
                                                     xtype: 'gridcolumn',
                                                     align: 'center',
-                                                    width: 160
+                                                    width: 80
                                                 },
                                                 {
                                                     header: 'Chanel',

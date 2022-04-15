@@ -8,7 +8,9 @@ package net.miatech.praxis.logic.payments;
 import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.A003;
 import net.miatech.praxis.dao.payments.MerchantNumberDAO;
+import net.miatech.praxis.payment.A4202;
 import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A2354Filter;
 
@@ -48,8 +50,12 @@ public class MerchantNumberLogic {
         return MerchantNumberDAO.loadPX305SQP00933(filter);
     }
     
-    public List<A2354Filter> loadPX305SQP04415(A2354Filter filter) throws SQLException, Exception {
-        return MerchantNumberDAO.loadPX305SQP04415(filter);
+    public List<A003> loadPX305SQP04435(String IATA) throws SQLException, Exception {
+        return MerchantNumberDAO.loadPX305SQP04435(IATA);
+    }
+    
+    public List<A4202> loadPX305SQP04415(String MERCHN) throws SQLException, Exception {
+        return MerchantNumberDAO.loadPX305SQP04415(MERCHN);
     }
     
     public String loadPX305SQP00934(A2354Filter filter, String option) throws SQLException, Exception {

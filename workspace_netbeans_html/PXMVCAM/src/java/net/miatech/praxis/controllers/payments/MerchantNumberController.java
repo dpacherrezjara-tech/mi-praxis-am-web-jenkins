@@ -17,10 +17,12 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.miatech.praxis.A003;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.MerchantNumberLogic;
+import net.miatech.praxis.payment.A4202;
 import net.miatech.praxis.payment.filter.A2354Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
@@ -109,49 +111,62 @@ public class MerchantNumberController extends BaseController {
         }
         return lst;
     }
-    
+
+    @RequestMapping(value = "validateIATA")
+    public @ResponseBody
+    String validateIATA(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- MerchantNumber : ValidateIATA-------------");
+        map.put("success", true);
+        List<A003> lst = this.getListValidateIATA(request);
+        System.out.println("Total : " + lst.size());
+        map.put("total", lst.size());
+        map.put("data", lst);
+        return new Gson().toJson(map);
+    }
+
+    public List<A003> getListValidateIATA(HttpServletRequest request) {
+
+        List<A003> lst = new ArrayList<>(0);
+        Gson gson = new Gson();
+        String IATA = "";
+
+        try {
+            logic = new MerchantNumberLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            IATA = request.getParameter("IATA");
+
+            lst = logic.loadPX305SQP04435(IATA);
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+        return lst;
+    }
+
     @RequestMapping(value = "searchIATA")
     public @ResponseBody
     String searchIATA(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- MerchantNumber : SearchIATA-------------");
         map.put("success", true);
-        List<A2354Filter> lst = this.getList(request, false);
+        List<A4202> lst = this.getListIata(request);
         System.out.println("Total : " + lst.size());
-        map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
         map.put("data", lst);
         return new Gson().toJson(map);
     }
-    
-    public List<A2354Filter> getListIata(HttpServletRequest request, Boolean bExcel) {
 
-        List<A2354Filter> lst = new ArrayList<>(0);
-        A2354Filter filter = new A2354Filter();
+    public List<A4202> getListIata(HttpServletRequest request) {
+
+        List<A4202> lst = new ArrayList<>(0);
         Gson gson = new Gson();
-        String beanString = "";
+        String MERCHN = "";
 
         try {
             logic = new MerchantNumberLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            beanString = request.getParameter("beanString");
-            filter = gson.fromJson(beanString, A2354Filter.class);
-            filter.page.TOTROW = -1;
-            filter.page.START = 0;
-            filter.page.LIMIT = 0;
+            MERCHN = request.getParameter("MERCHN");
 
-            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit").toString());
-            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start").toString());
-
-            if (!bExcel) {
-                filter.page.PAGROW = 20;
-                start = (start != 0 ? start : 0);
-                filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            } else {
-                filter.page.PAGROW = -1;
-                filter.page.PAGNUM = 1;
-            }
-
-            lst = logic.loadPX305SQP04415(filter);
+            lst = logic.loadPX305SQP04415(MERCHN);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -266,7 +281,6 @@ public class MerchantNumberController extends BaseController {
             Cell CH2_10 = row2.createCell(10);
             Cell CH2_11 = row2.createCell(11);
 
-            
             CH2_5.setCellValue("Reason");
             CH2_6.setCellValue("Code");
             CH2_7.setCellValue("Name");
@@ -351,168 +365,6 @@ public class MerchantNumberController extends BaseController {
         }
     }
 
-//    @RequestMapping(value = "getXLSX")
-//    public @ResponseBody
-//    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-//        System.out.println("MerchantNumber : getXLSX");
-//
-//        String fileNameDownload = String.format("MerchantNumber - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
-//
-//        try {
-//
-//            Workbook workbook;
-//            File file = File.createTempFile(fileNameDownload, ".xlsx");
-//            List<A2354Filter> listaData = this.getList(request, true);
-//
-//            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-//
-//            workbook = new XSSFWorkbook();
-//
-//            Sheet sheet = workbook.createSheet("ReasonCodeReport");
-//
-//            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-//            CellStyle bodyStyle = workbook.createCellStyle();
-//            Font headerFont = workbook.createFont();
-//
-//            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-//            headerFont.setColor(IndexedColors.BLACK.getIndex());
-//
-//            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-//            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-//            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-//            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-//            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-//            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-//            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-//            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-//            headerStyle.setFont(headerFont);
-//
-//            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-//            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-//            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-//            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-//            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-//            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-//            Integer vi = 0;
-//            Integer vj = 0; //Almacena el numero de fila
-//            Iterator iter = listaData.iterator();
-//
-//            // ====== CREANDO TITULOS ======================================
-//            Row row = sheet.createRow(vj);
-//
-//            Cell CH1_00 = row.createCell(0);
-//            Cell CH1_01 = row.createCell(1);
-//            Cell CH1_02 = row.createCell(2);
-//            Cell CH1_03 = row.createCell(3);
-//            Cell CH1_04 = row.createCell(4);
-//            Cell CH1_05 = row.createCell(5);
-//            Cell CH1_06 = row.createCell(6);
-//
-//            CH1_00.setCellValue("Nbr");
-//            CH1_01.setCellValue("Merchant Nbr.");
-//            CH1_02.setCellValue("Merchant Name");
-//            CH1_03.setCellValue("Canal");
-//            CH1_04.setCellValue("Social");
-//            CH1_05.setCellValue("IATA");
-//
-//            CH1_00.setCellStyle(headerStyle);
-//            CH1_01.setCellStyle(headerStyle);
-//            CH1_02.setCellStyle(headerStyle);
-//            CH1_03.setCellStyle(headerStyle);
-//            CH1_04.setCellStyle(headerStyle);
-//            CH1_05.setCellStyle(headerStyle);
-//            CH1_06.setCellStyle(headerStyle);
-//
-//
-//            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 3, 3));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 4, 4));
-//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 6));
-//            
-//
-//            //*******************
-//            ++vj;
-//            Row row2 = sheet.createRow(vj);
-//            Cell CH2_00 = row2.createCell(0);
-//            Cell CH2_01 = row2.createCell(1);
-//            Cell CH2_02 = row2.createCell(2);
-//            Cell CH2_03 = row2.createCell(3);
-//            Cell CH2_04 = row2.createCell(4);
-//            Cell CH2_05 = row2.createCell(5);
-//            Cell CH2_06 = row2.createCell(6);
-//
-//         
-//            CH2_04.setCellValue("Reason");
-//            CH2_05.setCellValue("Code");
-//            CH2_06.setCellValue("Name");
-//
-//            CH2_00.setCellStyle(headerStyle);
-//            CH2_01.setCellStyle(headerStyle);
-//            CH2_02.setCellStyle(headerStyle);
-//            CH2_03.setCellStyle(headerStyle);
-//            CH2_04.setCellStyle(headerStyle);
-//            CH2_05.setCellStyle(headerStyle);
-//            CH2_06.setCellStyle(headerStyle);
-//
-//
-//            //          ========================================================
-//            ++vj;
-//            while (iter.hasNext()) {
-//
-//                row = sheet.createRow(vj);
-//                Cell rcell0 = row.createCell(0);
-//                Cell rcell1 = row.createCell(1);
-//                Cell rcell2 = row.createCell(2);
-//                Cell rcell3 = row.createCell(3);
-//                Cell rcell4 = row.createCell(4);
-//                Cell rcell5 = row.createCell(5);
-//                Cell rcell6 = row.createCell(6);
-//
-//
-//                rcell0.setCellValue(listaData.get(vi).RN);
-//                rcell1.setCellValue(listaData.get(vi).MERCHN);
-//                rcell2.setCellValue(listaData.get(vi).DESCR);
-//                rcell3.setCellValue(listaData.get(vi).CANAL);
-//                rcell4.setCellValue(listaData.get(vi).RSOCIAL);
-//                rcell5.setCellValue(listaData.get(vi).CIATA);
-//                rcell6.setCellValue(listaData.get(vi).strDescrip);
-//
-//                iter.next();
-//                ++vi;
-//                ++vj;
-//            }
-//            sheet.autoSizeColumn(0, true);
-//            sheet.autoSizeColumn(1, true);
-//            sheet.autoSizeColumn(2, true);
-//            sheet.autoSizeColumn(3, true);
-//            sheet.autoSizeColumn(4, true);
-//            sheet.autoSizeColumn(5, true);
-//            sheet.autoSizeColumn(6, true);
-//
-//
-//            /**
-//             * fileNameDownload = Nombre de descarga
-//             */
-//            response.setContentType("application/vnd.openxml");
-//            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
-//
-//            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-//            workbook.write(response.getOutputStream());
-//            fos.close();
-//
-//        } catch (IOException e) {
-//            throw new SpringException(e);
-//        }
-//    }
     @RequestMapping(value = "MaintenanceA2354")
     public @ResponseBody
     String MaintenanceA2354(ModelMap map, HttpServletRequest request) {
@@ -558,7 +410,7 @@ public class MerchantNumberController extends BaseController {
     public @ResponseBody
     String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
         System.out.println("-------------- MerchantNumber : searchCompleteDetail-------------");
-        
+
         Gson gson = new Gson();
         A2354Filter filter = new A2354Filter();
         A2354Filter result = new A2354Filter();

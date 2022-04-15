@@ -76,6 +76,8 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
+        
+        this.setGridIATA(this.beanResult.MERCHN);
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
@@ -102,6 +104,23 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         beanTemp.HOUP = this.getValue("txtHOUP").trim();
 
 //        console.log(beanTemp);
+
+        var listaGrilla = Ext.getCmp(prototype.id + '-gridIATA').getStore().data;
+        var beanDet = {};
+        var listaNueva = [];
+
+        for (var i = 0; i < listaGrilla.length; i++) {
+            beanDet = listaGrilla.items[i];
+
+            var beanNuevo = {};
+            beanNuevo.CIATA = beanDet.data.CIATA;
+            beanNuevo.MERCHN = this.getValue("de-txtMERCHN");
+            beanNuevo.SCOUNTRY = beanDet.data.SCOUNTRY;
+            beanNuevo.CANAL = beanDet.data.CANAL;
+
+            listaNueva.push(beanNuevo);
+        }
+        beanTemp.lstDetalle = listaNueva;
 
     },
     getData: function () {
@@ -287,7 +306,6 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             Ext.getCmp(prototype.id + '-lbldes2').show();
         }
     },
-
     getIATAList: function () {
 
         var lstIATA = []; // empty array
@@ -322,41 +340,69 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
     addIATA: function () {
         if (Ext.getCmp(prototype.id + '-txtIATA').getValue() !== '') {
             var beanTemp = {};
-            var dataRow = {};
-            var duplicado = true;
-            var vacio = true;
             beanTemp.changeIATA = true;
             var store_gridIATA = Ext.getCmp(prototype.id + '-gridIATA').getStore();
+            var new_IATA = Ext.getCmp(prototype.id + '-txtIATA').getValue()
 
-            if (store_gridIATA.data.length > 0) {
-                for (var i = 0; i < store_gridIATA.data.length; i++) {
-                    var dataRow1 = store_gridIATA.data.items[i];
-                    if (dataRow1.data.CIATA === this.getValue("txtIATA")) {
-                        duplicado = false;
+            Ext.Ajax.request({
+                url: prototype.url + '/validateIATA',
+                method: 'POST',
+                timeout: 60000000,
+//            params: beanTemp,
+                params: {IATA: new_IATA},
+                beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+                success: function (response, opts) {
+                    Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                    var res = Ext.JSON.decode(response.responseText);
+                    console.log(res);
+                    if (res.total > 0) {
+                        meDE.insertIATA(store_gridIATA, res.data[0]);
+                    } else {
+                        global.Msg({msg: 'IATA does not exist'});
                     }
-                }
-                if (duplicado) {
-                    dataRow = store_gridIATA.data.items[store_gridIATA.data.length - 1 ].copy();
-                    dataRow.id = 'ItrecordIATA' + store_gridIATA.data.length + 1;
-                    dataRow.data.CIATA = this.getValue("txtIATA");
-                }
-            } else {
-                dataRow.id = 'ItrecordIATA';
-                dataRow.CIATA = Ext.getCmp(prototype.id + '-txtIATA').getValue();
-            }
 
-            console.log(dataRow);
-            if (duplicado) {
-                store_gridIATA.add(dataRow);
-                Ext.getCmp(prototype.id + '-gridIATA').getView().refresh();
-                this.clearIATA();
-            } else {
-                alert("Registro duplicado");
-            }
-            console.log(store_gridIATA.data.length);
+                }
+            });
+
         } else {
-            alert("Registro vacío");
+            global.Msg({msg: 'Registro vacío'});
         }
+    },
+    insertIATA: function (store_gridIATA, objIATA) {
+        var dataRow = {};
+        var duplicado = false;
+        if (store_gridIATA.data.length > 0) {
+            for (var i = 0; i < store_gridIATA.data.length; i++) {
+                var dataRow1 = store_gridIATA.data.items[i];
+                if (dataRow1.data.CIATA === this.getValue("txtIATA")) {
+                    duplicado = true;
+                }
+            }
+            if (!duplicado) {
+                dataRow = store_gridIATA.data.items[store_gridIATA.data.length - 1 ].copy();
+                dataRow.id = 'ItrecordIATA' + Math.random();
+                dataRow.data.CIATA = this.getValue("txtIATA");
+                dataRow.data.strDESCRIP = objIATA.A003KEY1;
+                dataRow.data.SCOUNTRY = objIATA.A003PAIS;
+                dataRow.data.CANAL = objIATA.A003CANAL;
+            }
+        } else {
+            dataRow.id = 'ItrecordIATA';
+            dataRow.CIATA = Ext.getCmp(prototype.id + '-txtIATA').getValue();
+            dataRow.strDESCRIP = objIATA.A003KEY1;
+            dataRow.SCOUNTRY = objIATA.A003PAIS;
+            dataRow.CANAL = objIATA.A003CANAL;
+        }
+
+        console.log(dataRow);
+        if (!duplicado) {
+            store_gridIATA.add(dataRow);
+            Ext.getCmp(prototype.id + '-gridIATA').getView().refresh();
+            this.clearIATA();
+        } else {
+            global.Msg({msg: 'Registro duplicado'});
+        }
+        console.log(store_gridIATA.data.length);
     },
     removeIATA: function (record) {
         var store_gridIATA = Ext.getCmp(prototype.id + '-gridIATA').getStore();
@@ -371,41 +417,29 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
     clearIATA: function () {
         Ext.getCmp(prototype.id + '-txtIATA').setValue('');
     },
-    setGridIATA: function () {
-        win.lblUser_toolTip("Estructura: A4202");
-        me.panelActual = '-gridIATA';
-        global.selectedChild(me.childs, prototype.id + me.panelActual);
-        me.setWidthPie();
-        var msj = this.validateFields();
-        if (msj !== '') {
-            global.Msg({msg: msj
-            });
-        } else {
-            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-                proxy: {
-                    url: prototype.url + '/searchIATA'
-                }, listeners: {
-                    beforeload: function (obj) {
-                        obj.proxy.extraParams = searchParams;
-                    },
-                    load: function (obj) {
-                        var pag = Ext.getCmp(prototype.id + '-paggin');
-                        var pagData = pag.getPageData();
-                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                        if (obj.data.length === 0) {
-                            global.Msg({
-                                msg: 'Data not found.'
-                            });
-                        }
-                    }
-                }
-            });
-            global.clear();
-            Ext.getCmp(prototype.id + '-gridIATA').bindStore(storeGridDatas);
-            Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
-        }
+    setGridIATA: function (MERCHN) {
+
+        Ext.Ajax.request({
+            url: prototype.url + '/searchIATA',
+            method: 'POST',
+            timeout: 60000000,
+//            params: beanTemp,
+            params: {MERCHN: MERCHN},
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+
+                var storeData = Ext.create('Ext.data.Store', {
+                    data: res.data,
+                    autoLoad: true
+                });
+
+                Ext.getCmp(prototype.id + '-gridIATA').bindStore(storeData);
+
+            }
+        });        
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {
