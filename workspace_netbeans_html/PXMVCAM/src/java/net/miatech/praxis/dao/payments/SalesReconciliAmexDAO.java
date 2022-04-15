@@ -2521,6 +2521,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                    beanTkt.SPNR = rst.getString("SPNR").trim();
 
                     beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
@@ -2680,6 +2681,7 @@ public class SalesReconciliAmexDAO {
 
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
                 objRtn.INVORNBR = rs01.getString("INVORNBR").trim();
+                objRtn.SPNR = rs01.getString("SPNR").trim();
                 objRtn.SELLERID = rs01.getString("SELLERID").trim();
                 objRtn.SCARDN = rs01.getString("SCARDN").trim();
                 objRtn.ISREFNBR = rs01.getString("ISREFNBR").trim();
@@ -2700,6 +2702,13 @@ public class SalesReconciliAmexDAO {
                 objRtn.SINSAMOUC = rs01.getDouble("SINSAMOUC");
 
                 objRtn.CERROR = rs01.getString("CERROR");
+                objRtn.DES_CERROR = rs01.getString("DES_CERROR");
+                objRtn.FSELEC = rs01.getString("FSELEC");
+                if("".equals(objRtn.FSELEC)){
+                    objRtn.FSELEC = "Not loaded";
+                }else{
+                    objRtn.FSELEC = "Loaded";
+                }
 
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
@@ -2739,25 +2748,26 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04360(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04360(?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(6, Types.VARCHAR);
+            cstmt01.registerOutParameter(7, Types.VARCHAR);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.SCARDN.trim());
-            cstmt01.setString(3, filter.INVORNBR.trim());
+            cstmt01.setString(3, filter.SPNR.trim());
             cstmt01.setString(4, filter.ISREFNBR.trim());
-            cstmt01.setString(5, filter.TRANSDATE.trim());
-            cstmt01.setString(6, msj);
+            cstmt01.setString(5, filter.BSUMDATE.trim());
+            cstmt01.setDouble(6, filter.TGROSAMOUN);
+            cstmt01.setString(7, msj);
 
             cstmt01.execute();
 
-            msj = cstmt01.getString(6).trim();
+            msj = cstmt01.getString(7).trim();
 
         } catch (Exception e) {
             msj = e.getMessage();
@@ -2791,7 +2801,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2810,14 +2820,15 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(10, filter.SAUTHOC.trim());
             cstmt01.setString(11, filter.IDITEMS.trim());
             cstmt01.setString(12, filter.IDITEMT.trim());
-            cstmt01.setString(13, filter.INVORNBR.trim());
+            cstmt01.setString(13, filter.SPNR.trim());
             cstmt01.setString(14, filter.ISREFNBR.trim());
-            cstmt01.setString(15, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(16, Functions.getFechaActual());
-            cstmt01.setString(17, Functions.getHoraActual());
+            cstmt01.setDouble(15, filter.TGROSAMOUN);
+            cstmt01.setString(16, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(17, Functions.getFechaActual());
+            cstmt01.setString(18, Functions.getHoraActual());
 
             cstmt01.execute();
-
+            
         } catch (Exception e) {
             msj = e.getMessage();
         } finally {

@@ -58,8 +58,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtIDITEMS', this.beanResult.IDITEMS);
         this.setValue('de-txtIDITEMT', this.beanResult.IDITEMT);
         this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
-        this.setValue('de-txtINVORNBR', this.beanResult.INVORNBR);
+        this.setValue('de-txtSPNR', this.beanResult.SPNR);
         this.setValue('de-txtTRANSDATE', this.beanResult.TRANSDATE);
+        this.setValue('txtCERROR', this.beanResult.CERROR);
+        this.setValue('txtDES_CERROR', this.beanResult.DES_CERROR);
+        this.setValue('txtFLAG', this.beanResult.FSELEC);
 
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
         this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
@@ -91,9 +94,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.SCARDN = this.getValue("de-txtSCARDN");      
         beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");      
         beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");      
-        beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");      
+        beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
+        
+        if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
+            beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+        } else {
+            beanTemp.TGROSAMOUN = 0;
+        }      
      
-        beanTemp.INVORNBR = this.getValue("de-txtINVORNBR");      
+        beanTemp.SPNR = this.getValue("de-txtSPNR");      
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");      
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");           
         console.log(beanTemp);
@@ -228,7 +237,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
     validacionInsert: function () {
         var msjResult = '';
-        if (this.getValue("de-txtINVORNBR") === '' || this.getValue("de-txtISREFNBR") === '') {
+        if (this.getValue("de-txtSPNR") === '' || this.getValue("de-txtISREFNBR") === '') {
             msjResult = "You must enter the required field.";
         }
         return msjResult;

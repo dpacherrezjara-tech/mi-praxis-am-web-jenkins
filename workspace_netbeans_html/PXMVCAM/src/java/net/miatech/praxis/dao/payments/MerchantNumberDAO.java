@@ -9,6 +9,7 @@ import net.miatech.praxis.dao.interline.*;
 import net.miatech.praxis.dao.sales.*;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -18,8 +19,10 @@ import java.util.List;
 import net.miatech.beans.ReportEmdDetailsA1530Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.A003;
 import net.miatech.praxis.interline.filter.SFI021Filter;
 import net.miatech.praxis.interline.filter.WRF016Filter;
+import net.miatech.praxis.payment.A4202;
 import net.miatech.praxis.payment.filter.A2280Filter;
 import net.miatech.praxis.payment.filter.A2287Filter;
 import net.miatech.praxis.payment.filter.A2290Filter;
@@ -55,7 +58,7 @@ public class MerchantNumberDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-   
+
     public String loadPX267SQP00672(A2280Filter filter, String option) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A2280.
         String strMsj = "Operation was successful.";
@@ -173,8 +176,7 @@ public class MerchantNumberDAO {
 
         return objRtn;
     }
-   
-    
+
     public List<A2280Filter> loadPX267SQP00671(A2280Filter filter) throws SQLException, Exception {
 
         List<A2280Filter> lstData = new ArrayList<A2280Filter>(0);
@@ -265,8 +267,7 @@ public class MerchantNumberDAO {
 
         return lstData;
     }
-    
-    
+
     public List<A2280Filter> loadPX265SQP00660(A2280Filter filter) throws SQLException, Exception {
 
         List<A2280Filter> lstData = new ArrayList<A2280Filter>(0);
@@ -356,7 +357,7 @@ public class MerchantNumberDAO {
 
         return lstData;
     }
-    
+
     public String loadPX265SQP00661(A2280Filter filter, String option) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A2280.
         String strMsj = "Operation was successful.";
@@ -412,7 +413,7 @@ public class MerchantNumberDAO {
 
         return strMsj;
     }
-    
+
     public A2280Filter loadPX265SQP00662(A2280Filter filter) throws SQLException, Exception {
 
         A2280Filter objRtn = new A2280Filter();
@@ -484,12 +485,12 @@ public class MerchantNumberDAO {
 
         return objRtn;
     }
-    
+
     public List<A2354Filter> loadPX305SQP00933(A2354Filter filter) throws SQLException, Exception {
 
         List<A2354Filter> lstData = new ArrayList<A2354Filter>(0);
         A2354Filter bean;
-        
+
         HashMap<String, String> hmDescUNIOPE = new HashMap<String, String>();
         hmDescUNIOPE.put("1", "Aerovias MX");
         hmDescUNIOPE.put("2", "Aeromexico Cargo");
@@ -542,7 +543,7 @@ public class MerchantNumberDAO {
                 bean.CODCLIT2 = rst.getString("CODCLIT2").trim();
                 bean.DIRCLIT2 = rst.getString("DIRCLIT2").trim();
                 bean.strDescrip = rst.getString("DES_IATA").trim();
-                bean.UNIOPE = rst.getString("UNIOPE").trim();                
+                bean.UNIOPE = rst.getString("UNIOPE").trim();
                 if (hmDescUNIOPE.containsKey(rst.getString("UNIOPE").trim().toUpperCase())) {
                     bean.strDescripUNIOPE = hmDescUNIOPE.get(rst.getString("UNIOPE").trim()).toString();
                 } else {
@@ -581,13 +582,128 @@ public class MerchantNumberDAO {
         return lstData;
     }
 
-    
+    public List<A003> loadPX305SQP04435(String IATA) throws SQLException, Exception {
+
+        List<A003> lstData = new ArrayList<A003>(0);
+        A003 bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04435(?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, IATA.trim());
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                bean = new A003();
+
+                bean.A003KEY = rst.getString("A003KEY").trim();
+                bean.A003KEY1 = rst.getString("A003KEY1").trim();
+                bean.A003CANAL = rst.getString("A003CANAL").trim();
+                bean.A003PAIS = rst.getString("A003PAIS").trim();
+
+                lstData.add(bean);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstData;
+    }
+
+    public List<A4202> loadPX305SQP04415(String MERCHN) throws SQLException, Exception {
+
+        List<A4202> lstData = new ArrayList<A4202>(0);
+        A4202 bean;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04415(?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, MERCHN.trim());
+
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                bean = new A4202();
+                bean.CIATA = rst.getString("CIATA").trim();
+                bean.strDESCRIP = rst.getString("strDESCRIP").trim();
+                bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
+                bean.CANAL = rst.getString("CANAL").trim();
+
+                lstData.add(bean);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstData;
+    }
+
     public String loadPX305SQP00934(A2354Filter filter, String option) throws SQLException, Exception {
 
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A2284.
         String strMsj = "Operation was successful.";
+        List<A4202> lstDetalle = filter.lstDetalle;
+        A4202 beanDet;
 
         CallableStatement cstmt = null;
+        PreparedStatement pstmt = null;
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00934(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -598,13 +714,13 @@ public class MerchantNumberDAO {
 
             cstmt.setString(1, option);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST.trim());
-            cstmt.setString(3, filter.MERCHN.trim());            
+            cstmt.setString(3, filter.MERCHN.trim());
             cstmt.setString(4, filter.DESCR.trim());
             cstmt.setString(5, filter.RSOCIAL.trim());
             cstmt.setString(6, filter.CIATA.trim());
             cstmt.setString(7, filter.CANAL.trim());
             cstmt.setString(8, filter.SCOUNTRY.trim());
-            cstmt.setString(9, filter.UNIOPE.trim());            
+            cstmt.setString(9, filter.UNIOPE.trim());
 
             cstmt.setString(10, filter.CODCLIT1.trim());
             cstmt.setString(11, filter.DIRCLIT1.trim());
@@ -616,6 +732,29 @@ public class MerchantNumberDAO {
             cstmt.setString(16, Functions.getFechaActual());
             cstmt.setString(17, Functions.getHoraActual());
             cstmt.execute();
+            
+            String SQL_DELETE = "DELETE FROM LIBSAP12.A4202 WHERE MERCHN = ?";
+            (pstmt = cnx.prepareStatement(SQL_DELETE)).setString(1, filter.MERCHN.trim());
+            pstmt.execute();
+
+            if (lstDetalle != null && lstDetalle.size() > 0 && !option.equals("D")) {
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04436(?,?,?,?,?,?,?,?)}";
+                cstmt = cnx.prepareCall(SQLCLL02);
+                for (int i = 0; i < lstDetalle.size(); i++) {
+                    beanDet = lstDetalle.get(i);
+                    
+                    cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+                    cstmt.setString(2, filter.MERCHN.trim());
+                    cstmt.setString(3, beanDet.CIATA.trim());
+                    cstmt.setString(4, beanDet.SCOUNTRY.trim());
+                    cstmt.setString(5, beanDet.CANAL.trim());
+                    cstmt.setString(6, session.getUserView().getUserInfo().USR);
+                    cstmt.setString(7, Functions.getFechaActual());
+                    cstmt.setString(8, Functions.getHoraActual());
+
+                    cstmt.execute();
+                }
+            }
 
         } catch (Exception e) {
             // e.printStackTrace();
@@ -675,7 +814,7 @@ public class MerchantNumberDAO {
                 objRtn.CODCLIT2 = rs01.getString("CODCLIT2").trim();
                 objRtn.DIRCLIT2 = rs01.getString("DIRCLIT2").trim();
                 objRtn.UNIOPE = rs01.getString("UNIOPE").trim();
-                
+
                 objRtn.USCR = rs01.getString("USCR");
                 objRtn.FECR = rs01.getString("FECR");
                 objRtn.HOCR = rs01.getString("HOCR");

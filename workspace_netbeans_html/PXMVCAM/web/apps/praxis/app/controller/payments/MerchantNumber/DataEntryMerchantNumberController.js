@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
     lstA1852: {},
     dataObtain: {},
     // </editor-fold>
-    init: function(view) {
+    init: function (view) {
         prototype.id = 'MerchantNumberForm';
         prototype.url = CONTEXTPATH + '/MerchantNumber';
         meDE = this;
@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 //        console.log(this.p);
 //        this.obtainData();
     },
-    afterRender: function() {
+    afterRender: function () {
 //        console.log('afterRender');
         switch (this.actionCode) {
             case 'I':
@@ -53,16 +53,14 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                 break;
         }
     },
-    mostrarData: function() {
+    mostrarData: function () {
 //        console.log(meDE.beanResult);
 //        console.log(this.beanResult.CODEREJ);
         this.setValue('de-txtMERCHN', this.beanResult.MERCHN);
         this.setValue('de-txtMERCHP', this.beanResult.MERCHP);
         this.setValue('de-txtDESCR', this.beanResult.DESCR);
         this.setValue('de-txtRSOCIAL', this.beanResult.RSOCIAL);
-        this.setValue('de-txtCIATA', this.beanResult.CIATA);
         this.setValue('de-txtCANAL', this.beanResult.CANAL);
-        this.setValue('de-txtNameIATA', this.beanResult.strDescrip);
         this.setValue('de-txtSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtNameCTRY', this.beanResult.strDescripCtry);
         this.setValue('de-cmbUNIOPE', this.beanResult.UNIOPE);
@@ -78,16 +76,17 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
+        
+        this.setGridIATA(this.beanResult.MERCHN);
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
-    llenarData: function(beanTemp) {
+    llenarData: function (beanTemp) {
 //        console.log('llenarData');
 
         beanTemp.MERCHN = this.getValue("de-txtMERCHN");
         beanTemp.MERCHP = this.getValue("de-txtMERCHP");
         beanTemp.DESCR = this.getValue("de-txtDESCR");
         beanTemp.RSOCIAL = this.getValue("de-txtRSOCIAL");
-        beanTemp.CIATA = this.getValue("de-txtCIATA");
         beanTemp.CANAL = this.getValue("de-txtCANAL");
         beanTemp.SCOUNTRY = this.getValue("de-txtSCOUNTRY");
         beanTemp.UNIOPE = this.getValue("de-cmbUNIOPE");
@@ -106,8 +105,25 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 
 //        console.log(beanTemp);
 
+        var listaGrilla = Ext.getCmp(prototype.id + '-gridIATA').getStore().data;
+        var beanDet = {};
+        var listaNueva = [];
+
+        for (var i = 0; i < listaGrilla.length; i++) {
+            beanDet = listaGrilla.items[i];
+
+            var beanNuevo = {};
+            beanNuevo.CIATA = beanDet.data.CIATA;
+            beanNuevo.MERCHN = this.getValue("de-txtMERCHN");
+            beanNuevo.SCOUNTRY = beanDet.data.SCOUNTRY;
+            beanNuevo.CANAL = beanDet.data.CANAL;
+
+            listaNueva.push(beanNuevo);
+        }
+        beanTemp.lstDetalle = listaNueva;
+
     },
-    getData: function() {
+    getData: function () {
 //        console.log('getData');
         var cmbUNIOPE = Ext.getCmp(prototype.id + '-de-cmbUNIOPE');
         cmbUNIOPE.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -130,7 +146,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             timeout: 60000000,
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
             params: {beanString: beanString},
-            success: function(response, options) {
+            success: function (response, options) {
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
@@ -142,7 +158,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
-    limpiarData: function() {
+    limpiarData: function () {
         this.setValue('txtCODSOUR', '');
         this.setValue('txtDESSOU', '');
         this.setValue('txtGRUSOR', '');
@@ -158,13 +174,13 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         //this.setValue('-de-cmbUNIOPE', '');
     },
     //</editor-fold>
-    toUpperCase: function(obj, value, opts) {
+    toUpperCase: function (obj, value, opts) {
 //        console.log(obj);
 //        console.log(value);
 //        console.log(opts);
     },
     // <editor-fold defaultstate="collapsed" desc="Botones">
-    onSaveClick: function(btn) {
+    onSaveClick: function (btn) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Are you sure to insert ?',
@@ -172,7 +188,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
@@ -188,7 +204,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             }
         });
     },
-    onUpdateClick: function(btn) {
+    onUpdateClick: function (btn) {
         console.log('onUpdateClick');
         Ext.Msg.show(
                 {
@@ -199,7 +215,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     animateTarget: btn,
                     icon: Ext.MessageBox.QUESTION,
                     modal: true,
-                    fn: function(btn) {
+                    fn: function (btn) {
                         if (btn === 'yes') {
                             var beanTemp = {};
                             this.llenarData(beanTemp);
@@ -209,7 +225,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     }
                 });
     },
-    onDeleteClick: function(btn) {
+    onDeleteClick: function (btn) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
             msg: 'Are you sure to delete ?',
@@ -217,7 +233,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     var beanTemp = {};
                     this.llenarData(beanTemp);
@@ -227,13 +243,13 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             }
         });
     },
-    onCancelClick: function(btn) {
+    onCancelClick: function (btn) {
         this.view.close();
     },
     // </editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="MaintenanceA1852">
-    MaintenanceA2354: function(beanTemp) {
+    MaintenanceA2354: function (beanTemp) {
 //        console.log(beanTemp);
         var beanString = JSON.stringify(beanTemp);
         Ext.Ajax.request({
@@ -243,7 +259,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
 //            params: beanTemp,
             params: {beanString: beanString, option: beanTemp.option},
             beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
-            success: function(response, opts) {
+            success: function (response, opts) {
                 Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 //                console.log(res);
@@ -259,31 +275,30 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
     },
     //</editor-fold>
 
-    validacionInsert: function(beanTemp) {
+    validacionInsert: function (beanTemp) {
         var msjResult = '';
         if (this.getValue("de-txtMERCHN") === '') {
             msjResult = "You must enter the required field.";
         }
         return msjResult;
     },
-    DeshabilitarCampoClave: function() {
+    DeshabilitarCampoClave: function () {
         Ext.getCmp(prototype.id + '-de-txtMERCHN').setEditable(false);
-        Ext.getCmp(prototype.id + '-de-txtNameIATA').setReadOnly(true);
         Ext.getCmp(prototype.id + '-de-txtNameCTRY').setReadOnly(true);
     },
-    Habilitarlbl: function() {
+    Habilitarlbl: function () {
         Ext.getCmp(prototype.id + '-lblDescripcion').show();
         Ext.getCmp(prototype.id + '-txtDESSOU').hide();
         Ext.getCmp(prototype.id + '-lbldes2').show();
     },
-    desHabilitartxt: function() {
+    desHabilitartxt: function () {
         if (this.getValue("txtGRUSOR") !== this.bean.GRUSOR) {
             Ext.getCmp(prototype.id + '-lbldes').hide();
         } else {
             Ext.getCmp(prototype.id + '-lbldes').show();
         }
     },
-    Habilitarlbl1: function() {
+    Habilitarlbl1: function () {
         Ext.getCmp(prototype.id + '-lbldes').hide();
         if (this.getValue("txtCODSOUR") === '') {
             Ext.getCmp(prototype.id + '-lbldes2').hide();
@@ -291,23 +306,160 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             Ext.getCmp(prototype.id + '-lbldes2').show();
         }
     },
+    getIATAList: function () {
+
+        var lstIATA = []; // empty array
+        var storeIATA = Ext.getCmp(prototype.id + '-gridIATA').getStore();
+        var selIATA = storeIATA.getRange();
+
+        Ext.each(selIATA, function (item) {
+            var Obj = {
+                CIATA: item.get('CIATA'),
+            };
+            lstIATA.push(Obj);
+        }, this);
+
+        console.log(lstIATA);
+        var a = [];
+        var data = [];
+        for (var vi = 0; vi < lstIATA.length; ++vi) {
+            // console.log(lstFOPVta[vi]);
+            if (a.indexOf(String(lstIATA[vi].CIATA)) < 0) {
+                a.push(String(lstIATA[vi].CIATA));
+
+                data.push({
+                    CIATA: String(lstIATA[vi].CIATA)
+                })
+            } else {
+                data[a.indexOf(String(lstIATA[vi].CIATA))].CIATA = String(lstIATA[vi].CIATA);
+            }
+        }
+        console.log(data);
+        return data;
+    },
+    addIATA: function () {
+        if (Ext.getCmp(prototype.id + '-txtIATA').getValue() !== '') {
+            var beanTemp = {};
+            beanTemp.changeIATA = true;
+            var store_gridIATA = Ext.getCmp(prototype.id + '-gridIATA').getStore();
+            var new_IATA = Ext.getCmp(prototype.id + '-txtIATA').getValue()
+
+            Ext.Ajax.request({
+                url: prototype.url + '/validateIATA',
+                method: 'POST',
+                timeout: 60000000,
+//            params: beanTemp,
+                params: {IATA: new_IATA},
+                beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+                success: function (response, opts) {
+                    Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                    var res = Ext.JSON.decode(response.responseText);
+                    console.log(res);
+                    if (res.total > 0) {
+                        meDE.insertIATA(store_gridIATA, res.data[0]);
+                    } else {
+                        global.Msg({msg: 'IATA does not exist'});
+                    }
+
+                }
+            });
+
+        } else {
+            global.Msg({msg: 'Registro vacío'});
+        }
+    },
+    insertIATA: function (store_gridIATA, objIATA) {
+        var dataRow = {};
+        var duplicado = false;
+        if (store_gridIATA.data.length > 0) {
+            for (var i = 0; i < store_gridIATA.data.length; i++) {
+                var dataRow1 = store_gridIATA.data.items[i];
+                if (dataRow1.data.CIATA === this.getValue("txtIATA")) {
+                    duplicado = true;
+                }
+            }
+            if (!duplicado) {
+                dataRow = store_gridIATA.data.items[store_gridIATA.data.length - 1 ].copy();
+                dataRow.id = 'ItrecordIATA' + Math.random();
+                dataRow.data.CIATA = this.getValue("txtIATA");
+                dataRow.data.strDESCRIP = objIATA.A003KEY1;
+                dataRow.data.SCOUNTRY = objIATA.A003PAIS;
+                dataRow.data.CANAL = objIATA.A003CANAL;
+            }
+        } else {
+            dataRow.id = 'ItrecordIATA';
+            dataRow.CIATA = Ext.getCmp(prototype.id + '-txtIATA').getValue();
+            dataRow.strDESCRIP = objIATA.A003KEY1;
+            dataRow.SCOUNTRY = objIATA.A003PAIS;
+            dataRow.CANAL = objIATA.A003CANAL;
+        }
+
+        console.log(dataRow);
+        if (!duplicado) {
+            store_gridIATA.add(dataRow);
+            Ext.getCmp(prototype.id + '-gridIATA').getView().refresh();
+            this.clearIATA();
+        } else {
+            global.Msg({msg: 'Registro duplicado'});
+        }
+        console.log(store_gridIATA.data.length);
+    },
+    removeIATA: function (record) {
+        var store_gridIATA = Ext.getCmp(prototype.id + '-gridIATA').getStore();
+        var rowIndex = store_gridIATA.indexOf(record);
+        store_gridIATA.removeAt(rowIndex);
+
+        var beanTemp = {};
+        beanTemp.changeIATA = true;
+        Ext.getCmp(prototype.id + '-gridIATA').getView().refresh();
+        console.log(store_gridIATA.data.length);
+    },
+    clearIATA: function () {
+        Ext.getCmp(prototype.id + '-txtIATA').setValue('');
+    },
+    setGridIATA: function (MERCHN) {
+
+        Ext.Ajax.request({
+            url: prototype.url + '/searchIATA',
+            method: 'POST',
+            timeout: 60000000,
+//            params: beanTemp,
+            params: {MERCHN: MERCHN},
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntry').mask('Loading...'),
+            success: function (response, opts) {
+                Ext.getCmp(prototype.id + '-dataEntry').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+
+                var storeData = Ext.create('Ext.data.Store', {
+                    data: res.data,
+                    autoLoad: true
+                });
+
+                Ext.getCmp(prototype.id + '-gridIATA').bindStore(storeData);
+
+            }
+        });        
+    },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
-    getValue: function(id) {
+    getValue: function (id) {
         return Ext.getCmp(prototype.id + '-' + id).getValue();
     },
-    focus: function(id) {
+    focus: function (id) {
         Ext.getCmp(prototype.id + '-' + id).focus();
     },
-    setValue: function(id, txt) {
+    setValue: function (id, txt) {
         Ext.getCmp(prototype.id + '-' + id).setValue(txt);
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     },
-    onTextKeypress: function(obj, e, eOpts) {
+    onTextKeypress: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
 //            this.btnSearch_click();
         }
     }
 // </editor-fold>
+
+
 });

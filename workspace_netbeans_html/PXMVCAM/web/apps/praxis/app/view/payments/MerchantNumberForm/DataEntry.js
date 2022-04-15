@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
     controller: 'DataEntryMerchantNumberController',
     title: 'Merchant Number - Data Entry Form',
     header: true,
-    height: 500,
+    height: 740,
     width: 765,
     resizable: false,
     layout: 'fit',
@@ -194,59 +194,6 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                             border: false,
                             margin: '4 2 4 20',
 //                            bodyStyle: 'background:#E5ECEF;',
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'label',
-                                    text: 'IATA Code',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 150
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtCIATA',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
-                                    enforceMaxLength: true,
-                                    width: 150,
-                                    maskRe: /[1-9]/,
-                                    maxLength: 8
-                                },
-                                {xtype: 'tbspacer', width: 30},
-                                {
-                                    xtype: 'label',
-                                    text: ' Name',
-                                    fontSize: 15,
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 50
-                                },
-                                {xtype: 'tbspacer', width: 4},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtNameIATA',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    readOnly: true,
-//                                    enforceMaxLength: true,
-                                    fieldStyle: 'text-align:left;',
-                                    width: 286,
-                                    maskRe: /[a-zA-Z]/
-//                                    maxLength: 5
-                                },
-                                {xtype: 'tbspacer', width: 5}
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '4 2 4 20',
-//                            bodyStyle: 'background:#E5ECEF;',
 
                             items: [
                                 {xtype: 'tbspacer', width: 7},
@@ -321,7 +268,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     width: 150,
                                     fieldStyle: 'color:#074066;',
                                     queryMode: 'local',
-                                            forceSelection: true,
+                                    forceSelection: true,
                                     selectOnFocus: false,
                                     caseSensitive: false,
                                     autoSelect: true,
@@ -338,6 +285,201 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                 {xtype: 'tbspacer', width: 4},
                                 {xtype: 'tbspacer', width: 286},
                                 {xtype: 'tbspacer', width: 5}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: "Add IATA's",
+                                    style: 'font-weight:bold; color:#121E31; text-decoration: underline;',
+                                    width: 90,
+                                    margin: '2 2 0 20',
+                                }
+                            ]
+                        },
+                        {xtype: 'panel',
+                            layout: 'vbox',
+                            border: false,
+                            width: 620,
+                            margin: '2 2 0 20',
+                            height: 200,
+                            defaults: {
+                                anchor: '100%',
+                                width: 580,
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    defaults: {
+                                        anchor: '100%',
+                                        width: 580,
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 10},
+                                        {
+                                            xtype: 'label',
+                                            text: 'IATA',
+                                            style: 'font-weight:bold;color:#121E31;',
+                                            width: 50,
+                                            padding: '3 0'
+                                        },
+                                        {
+                                            xtype: 'label',
+                                            labelAlign: 'center',
+                                            padding: '1px 1px 1px 1px',
+                                            html: '<strong style="color:#AC4546;font-size:13px;">(*)</strong>',
+                                            width: 30,
+                                            autoEl: {
+                                                tag: 'label',
+                                                'data-qtip': 'Required field'
+                                            }
+                                        }
+                                    ]
+                                },
+                                //*****
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background: transparent;',
+                                    defaults: {
+                                        anchor: '100%',
+                                        width: 550,
+                                        align: 'center'
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 10},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-txtIATA',
+                                            enforceMaxLength: true,
+//                                            enforceMinLength: true,
+//                                            minLength: 5,
+                                            maxLength: 8,
+                                            maskRe: /[0-9/]/,
+                                            padding: '3 0',
+                                            fieldStyle: 'text-align:center',
+                                            width: 120
+                                        },
+                                        {xtype: 'tbspacer', width: 3},
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            margin: '4 1 1 1',
+                                            iconCls: 'prx-icon-add',
+                                            tooltip: 'Add',
+                                            listeners: {
+                                                click: 'addIATA'
+                                            }
+
+                                        },
+                                        {xtype: 'tbspacer', width: 3},
+                                        {
+                                            xtype: 'button',
+                                            width: 25,
+                                            margin: '4 1 1 1',
+                                            iconCls: 'prx-icon-clear',
+                                            tooltip: 'clear',
+                                            listeners: {
+                                                click: 'clearIATA'
+                                            }
+                                        }
+                                    ]
+                                },
+                                //grilla------
+                                {
+                                    xtype: 'panel',
+                                    margin: '5 5 0 10',
+                                    padding: '0 0 0 0',
+                                    width: 620,
+                                    height: 135,
+                                    autoScroll: true,
+                                    align: 'center',
+                                    border: false,
+                                    //title: '<b style="font-size:13px;color:white">RAPID Information</b>',
+                                    layout: {
+                                        type: 'hbox',
+                                        align: 'center',
+                                    },
+                                    items: [
+                                        {xtype: 'tbspacer', width: 60},
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridIATA',
+                                            width: 500,
+                                            height: 130,
+                                            columnLines: true,
+                                            padding: '1',
+                                            margin: '1',
+                                            defaults: {
+                                                sortable: true,
+                                                align: 'center'
+                                            },
+                                            columns: [
+                                                {
+                                                    header: 'IATA',
+                                                    id: prototype.id + '-colIATA',
+                                                    dataIndex: 'CIATA',
+                                                    xtype: 'gridcolumn',
+                                                    align: 'center',
+                                                    width: 80
+                                                },
+                                                {
+                                                    header: 'Name',
+                                                    id: prototype.id + '-colIataName',
+                                                    dataIndex: 'strDESCRIP',
+                                                    xtype: 'gridcolumn',
+                                                    align: 'center',
+                                                    width: 200
+                                                },
+                                                {
+                                                    header: 'Country',
+                                                    id: prototype.id + '-colCountry',
+                                                    dataIndex: 'SCOUNTRY',
+                                                    xtype: 'gridcolumn',
+                                                    align: 'center',
+                                                    width: 80
+                                                },
+                                                {
+                                                    header: 'Chanel',
+                                                    id: prototype.id + '-colCanal',
+                                                    dataIndex: 'CANAL',
+                                                    xtype: 'gridcolumn',
+                                                    align: 'center',
+                                                    width: 80
+                                                },
+                                                {
+                                                    header: '',
+                                                    dataIndex: '',
+                                                    xtype: 'widgetcolumn',
+                                                    align: 'center',
+                                                    width: 40,
+                                                    widget: {
+                                                        xtype: 'button',
+                                                        iconCls: 'prx-icon-delete',
+                                                        tooltip: 'remove',
+                                                        listeners: {
+                                                            click: function (button, e, eOpts) {
+                                                                var record = button.getWidgetRecord();
+                                                                meDE.removeIATA(record);
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
                             ]
                         },
                         // <editor-fold defaultstate="collapsed" desc="Commission Policy Information">
