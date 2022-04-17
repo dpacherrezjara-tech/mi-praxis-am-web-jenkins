@@ -93,6 +93,20 @@ public class A4116Filter extends A4116 {
     public String A720RUTA1 = "";
     public String A720NVLO1 = "";
     public String A720FVLO1 = "";
+    public String A720PNR = "";
+    public String A720FECVTA = "";
+    
+    
+    // A1531
+    public String A1531CIA = "";
+    public String A1531FORMA = "";
+    public String A1531SERIE = "";
+    public String A1531TKT = "";
+    public String A1531NREF = "";
+    public String A1531CAPL = "";
+    public String A1531CFOP = "";
+    public String A1531TTARJ = "";
+    public double A1531VFOP = 0.0;
     
     //Listado de codigos de error
     public String CODE = "";
