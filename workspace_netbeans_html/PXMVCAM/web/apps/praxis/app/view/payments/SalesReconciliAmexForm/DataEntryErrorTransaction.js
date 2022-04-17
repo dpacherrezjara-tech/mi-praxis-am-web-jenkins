@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
     controller: 'DataEntryErrorTransactionSalesReconciliAmexController',
     title: 'Sales Reconciliation by Amex - Transaction Error Form',
     header: true,
-    height: 520,
+    height: 600,
     width: 840,
     resizable: false,
     layout: 'fit',
@@ -396,7 +396,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 200,
-                                }
+                                },
+//                                {xtype: 'tbspacer', width: 70},
+//                                {
+//                                    xtype: 'checkboxfield',
+//                                    id: prototype.id + '-chkSelection',
+//                                    margin: '0 20 0 0',
+//                                    width: 80,
+//                                    boxLabel: '<b>Match</b>',
+//                                    inputValue: '1'
+//                                }
                             ]
                         },
                         {
@@ -482,32 +491,95 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 }
                             ]
                         },
-                        {xtype: 'tbspacer', width: 80, height: 10},
+                        {xtype: 'tbspacer', width: 80, height: 5},
                         {
                             xtype: 'panel',
                             layout: 'hbox',
                             border: false,
-                            margin: '2 2 2 20',
+                            margin: '4 2 0 20',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
                                 {
-                                    xtype: 'label',
-                                    text: 'Flag Selection',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-txtFLAG',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id + '-chkSelection',
+                                    margin: '0 20 0 0',
+                                    width: 80,
+                                    boxLabel: '<b>Match</b>',
+                                    inputValue: '1',
+                                    listeners: {
+                                        change: 'onGridInfo'
+                                    }
                                 }
                             ]
-                        }
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelDataInfo',
+                            layout: 'hbox',
+                            border: false,
+                            width: 602,
+                            height: 600,
+                            hidden: true,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '10 2 12 100',
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataInfo',
+                                    width: 602,
+//                                    hidden: false,
+                                    columnLines: true,
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'NREF', dataIndex: 'A1531NREF', width: 130,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'PNR', dataIndex: 'A720PNR', width: 90,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'AGENT', dataIndex: 'A720AGENTE', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'TKT', dataIndex: 'A1531TKT', width: 130,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'TTARJ', dataIndex: 'A1531TTARJ', width: 50,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'FVOP', dataIndex: 'A1531FVOP', width: 100,
+                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        
                     ]
                 },
                 // <editor-fold defaultstate="collapsed" desc="ControlData">

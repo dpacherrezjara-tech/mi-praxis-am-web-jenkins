@@ -7,6 +7,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     msjValidate: '',
     bean: {},
     beanResult: {},
+    beanInfo: {},
     lstCountry: [],
     searchParams: {},
     lstA1852: {},
@@ -44,8 +45,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
     },
     mostrarData: function () {
-//        console.log(meDE.beanResult);
-//        console.log(this.beanResult.CODEREJ);
+        
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
@@ -75,6 +75,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
+        
+        
+        var storeData = Ext.create('Ext.data.Store', {
+            data: this.beanInfo,
+            autoLoad: true
+        });
+
+        Ext.getCmp(prototype.id + '-gridDataCommInfo').bindStore(storeData);
+        
     },
     obtainData: function () {
 //        console.log('obtainData');
@@ -109,9 +118,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
     },
     getData: function () {
-//        console.log('getData');
+                
         var beanString = JSON.stringify(meDE.bean);
-
         Ext.Ajax.request({
             url: prototype.url + '/searchTransactionErrorDetail',
             method: 'POST',
@@ -122,6 +130,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanResult = res.result;
+                meDE.beanInfo = res.lstInfo;
                 meDE.mostrarData();
 
             }
@@ -283,6 +292,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         if (e.getKey() === e.ENTER) {
 //            this.btnSearch_click();
         }
-    }
+    },
 // </editor-fold>
+
+    onGridInfo: function () {
+        
+        var chk = Ext.getCmp(prototype.id + '-chkSelection').getValue();
+        
+        if(chk){
+            Ext.getCmp(prototype.id + '-panelDataInfo').show();
+        }else{
+            Ext.getCmp(prototype.id + '-panelDataInfo').hide();
+        }
+    },
+
 });
