@@ -1901,6 +1901,11 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("2", "PNR");
         hmDescReglas.put("3", "CCard");
 
+        HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
+        hmDescTDOC.put("", "");
+        hmDescTDOC.put("S", "Sales");
+        hmDescTDOC.put("R", "Refund");
+
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
         double totDISCAMOUN_IMPORT = 0;
@@ -2006,8 +2011,13 @@ public class SalesReconciliAmexDAO {
                     beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
                     beanTkt.QTYTKT = rst.getInt("QTYTKT");
                     beanTkt.INVORNBR = rst.getString("INVORNBR");
-                    beanTkt.SPNR = rst.getString("SPNR");
-                    beanTkt.TDOC = rst.getString("TDOC");
+                    beanTkt.SPNR = rst.getString("SPNR").trim();
+                    beanTkt.TDOC = rst.getString("TDOC").trim();
+                    if (hmDescTDOC.containsKey(rst.getString("TDOC").trim())) {
+                        beanTkt.descTDOC = hmDescTDOC.get(rst.getString("TDOC").trim()).toString();
+                    } else {
+                        beanTkt.descTDOC = rst.getString("TDOC").trim();
+                    }
                     beanTkt.INSTANBR = rst.getString("INSTANBR").trim();
                     beanTkt.DES_CERROR = rst.getString("DES_CERROR").trim();
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
@@ -2706,7 +2716,7 @@ public class SalesReconciliAmexDAO {
                 objRtn.CERROR = rs01.getString("CERROR");
                 objRtn.DES_CERROR = rs01.getString("DES_CERROR");
                 objRtn.FSELEC = rs01.getString("FSELEC");
-                if ("".equals(objRtn.FSELEC)) {
+                if ("".equals(objRtn.FSELEC.trim())) {
                     objRtn.FSELEC = "Not loaded";
                 } else {
                     objRtn.FSELEC = "Loaded";

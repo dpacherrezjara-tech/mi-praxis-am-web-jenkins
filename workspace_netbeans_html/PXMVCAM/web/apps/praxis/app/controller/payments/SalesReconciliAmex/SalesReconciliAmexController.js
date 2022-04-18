@@ -184,8 +184,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             fields: ['code', 'name'],
             data: [
                 ["", "All"],
-                ["R", "R"],
-                ["S", "S"]
+                ["S", "Sales"],
+                ["R", "Refund"]
             ]
         }));
         cmbTDOC.setValue("");

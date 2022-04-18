@@ -104,6 +104,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");      
         beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");      
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
+        beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));

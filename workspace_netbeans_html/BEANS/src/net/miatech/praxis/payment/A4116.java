@@ -88,6 +88,7 @@ public class A4116 {
     public String desCERROR = "";
     public String STVAL = "";
     public String descSTVAL = "";
+    public String descTDOC = "";
     public String descFREGLA = "";
     
     //Variables del Sistema
