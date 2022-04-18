@@ -500,6 +500,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Flag Selection',
                                     width: 120
                                 },
@@ -511,6 +512,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    text: 'Installment Nbr.',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtINSTANBR',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 50
                                 }
                             ]
                         },

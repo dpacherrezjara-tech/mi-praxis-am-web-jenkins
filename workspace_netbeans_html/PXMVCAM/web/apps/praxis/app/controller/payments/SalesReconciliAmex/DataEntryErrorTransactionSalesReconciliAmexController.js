@@ -63,6 +63,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtCERROR', this.beanResult.CERROR);
         this.setValue('txtDES_CERROR', this.beanResult.DES_CERROR);
         this.setValue('txtFLAG', this.beanResult.FSELEC);
+        this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
 
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
         this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
