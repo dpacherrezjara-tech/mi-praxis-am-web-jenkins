@@ -16,8 +16,14 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
     },
     startDisplay: function () {
         win.visible('1-boxSearchFilter', true);
+        console.log('Entró a SELECT_BY_TKT_2');
+        console.log(this.ticketNumber);
+        console.log(this.actionCode);
         switch (this.actionCode) {
+            case me.SELECT_BY_TKT_1:
             case me.SELECT_BY_TKT_2:
+                console.log('Entró a -->> SELECT_BY_TKT_2');
+                console.log(this.ticketNumber);
                 win.setValue('1-cbxSearchBy', "1");
                 this.cbxSearchBy_changeHandler();
                 if (this.ticketNumber.length === 13) {
@@ -276,7 +282,14 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                     win.lblUser_toolTip("Estructura: A720");
                     
                     if (res.success) {
-                        if (obj.data.length > 0) {
+                        if (obj.data.length === 0) {
+                            console.log(obj.data);
+                            Ext.getCmp(prototype.id+'-1-gridData').getStore().removeAll();
+                                Ext.getCmp(prototype.id+'-1-pie').hide();
+                                Ext.getCmp(prototype.id+'-1-lblPagActual').setText('0');
+                                global.Msg({msg: win.STR_NO_DATA});
+                        }
+                         else if (obj.data.length > 0) {
 //                            var pagData = Ext.getCmp(prototype.id+'-1-paggin').getPageData();
 //                            var currentPage = Ext.util.Format.number(pagData.currentPage, '0,000');
 //
@@ -356,7 +369,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
             me.params.actionCode = 'VIEWTICKET_FOR_BWRMASTERTICKET';
         }
         me.params.bean = this.beanProMasterTicket;
-        me.startDisplay();
+        me.startDisplayFromBrowser();
 	me.dataEntry.hide(); //Ext.getCmp('DataEntryProMasterTicketForm').hide();
     },
     onCancelClick: function(btn){
