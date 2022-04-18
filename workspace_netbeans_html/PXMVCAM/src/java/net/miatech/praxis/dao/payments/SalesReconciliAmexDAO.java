@@ -2933,4 +2933,73 @@ public class SalesReconciliAmexDAO {
         }
         return numero_a_cambiar;
     }
+    
+    
+    public List<A4116Filter> loadPX570SQP04395(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+        A4116Filter beanRec;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.SCARDN.trim());
+            cstmt.setString(3, filter.BSUMDATE.trim());
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanRec = new A4116Filter();
+
+                beanRec.A1531NREF = rst.getString("A1531NREF").trim();
+                beanRec.A1531CAPL = rst.getString("A1531CAPL").trim();
+                beanRec.A1531CIA = rst.getString("A1531CIA").trim();
+                beanRec.A1531FORMA = rst.getString("A1531FORMA").trim();
+                beanRec.A1531SERIE = rst.getString("A1531SERIE").trim();
+                beanRec.A1531TKT = beanRec.A1531CIA + beanRec.A1531FORMA + beanRec.A1531SERIE;
+                beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
+                beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
+                beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
+
+                
+                beanRec.A720PNR = rst.getString("A720PNR").trim();
+                beanRec.A720FECVTA = rst.getString("A720FECVTA").trim();
+                beanRec.A720AGENTE = rst.getString("A720AGENTE").trim();
+                lstInfo.add(beanRec);
+            }
+            rst.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstInfo;
+    }
 }
