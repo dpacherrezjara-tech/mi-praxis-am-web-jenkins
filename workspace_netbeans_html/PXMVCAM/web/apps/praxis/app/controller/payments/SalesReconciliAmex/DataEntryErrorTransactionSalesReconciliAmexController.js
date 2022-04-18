@@ -76,22 +76,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
         
+        this.getDataGrid(this.beanResult);
         
-        var storeData = Ext.create('Ext.data.Store', {
-            data: this.beanInfo,
-            autoLoad: true
-        });
-
-        Ext.getCmp(prototype.id + '-gridDataInfo').bindStore(storeData);
+//        var storeData = Ext.create('Ext.data.Store', {
+//            data: this.beanInfo,
+//            autoLoad: true
+//        });
+//
+//        Ext.getCmp(prototype.id + '-gridDataInfo').bindStore(storeData);
         
     },
     obtainData: function () {
 //        console.log('obtainData');
 
     },
-    //<editor-fold defaultstate="collapsed" desc="llenarData">
     llenarData: function (beanTemp) {
-//        console.log('llenarData');
 
         beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");      
         beanTemp.PRDA = this.getValue("de-txtPRDA");      
@@ -136,7 +135,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             }
         });
     },
-    //</editor-fold>
+    getDataGrid: function (beanGrid) {
+            
+        console.log(beanGrid);
+        console.log(beanGrid.SCARDN);
+        console.log(beanGrid.SAUTHOC);
+        console.log(beanGrid.BSUMDATE);
+        var beanStringGrid = JSON.stringify(beanGrid);
+        Ext.Ajax.request({
+            url: prototype.url + '/gridTransactionError',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataInfo').mask('Loading...'),
+            params: {beanString: beanStringGrid},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataInfo').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanInfo = res.lstInfo;
+                
+                console.log(meDE.beanInfo);
+                
+                var storeData = Ext.create('Ext.data.Store', {
+                    data: meDE.beanInfo,
+                    autoLoad: true
+                });
+                
+                Ext.getCmp(prototype.id + '-gridDataInfo').bindStore(storeData);
+
+            }
+        });
+    },
 
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function () {
@@ -298,11 +326,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onGridInfo: function () {
         
         var chk = Ext.getCmp(prototype.id + '-chkSelection').getValue();
-        
         if(chk){
             Ext.getCmp(prototype.id + '-panelDataInfo').show();
+//            Ext.getCmp(prototype.id + '-gridDataInfo').show();
         }else{
             Ext.getCmp(prototype.id + '-panelDataInfo').hide();
+//            Ext.getCmp(prototype.id + '-gridDataInfo').hide();
         }
     },
 
