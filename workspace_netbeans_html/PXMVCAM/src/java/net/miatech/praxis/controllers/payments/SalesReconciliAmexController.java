@@ -727,7 +727,34 @@ public class SalesReconciliAmexController extends BaseController {
         logic.setSession(this.serverSession.getServerSession());
         try {
             result = logic.loadPX570SQP04359(filter);
-            lstInfo = logic.loadPX570SQP04395(result);
+//            lstInfo = logic.loadPX570SQP04395(result);
+            map.put("result", result);
+            map.put("lstInfo", lstInfo);
+            map.put("success", true);
+        } catch (Exception ex) {
+            map.put("success", false);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "gridTransactionError")
+    public @ResponseBody
+    String gridTransactionError(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : gridTransactionError-------------");
+
+        Gson gson = new Gson();
+        A4116Filter filter = new A4116Filter();
+        A4116Filter result = new A4116Filter();
+        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A4116Filter.class);
+
+        logic = new SalesReconciliAmexLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            
+            lstInfo = logic.loadPX570SQP04395(filter);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
