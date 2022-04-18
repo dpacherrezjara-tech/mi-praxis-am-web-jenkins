@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             autoLoad: true
         });
 
-        Ext.getCmp(prototype.id + '-gridDataCommInfo').bindStore(storeData);
+        Ext.getCmp(prototype.id + '-gridDataInfo').bindStore(storeData);
         
     },
     obtainData: function () {
