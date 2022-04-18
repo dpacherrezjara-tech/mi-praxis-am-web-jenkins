@@ -178,6 +178,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         }));
         cmbSTVAL.setValue("");
 
+        var cmbTDOC = Ext.getCmp(prototype.id + '-cmbTDOC');
+        cmbTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["R", "R"],
+                ["S", "S"]
+            ]
+        }));
+        cmbTDOC.setValue("");
+        
         /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
          cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
          autoLoad: false,
@@ -491,6 +503,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     setFilterParameterDetSettMerchant: function () {
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataDetSettlement();
     },
@@ -506,6 +519,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
         this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
 
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataDetSettlement();
@@ -1593,6 +1607,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
             Ext.getCmp(prototype.id + '-cmbSTVAL').setValue("");
             Ext.getCmp(prototype.id + '-txtPNR').setValue("");
+            Ext.getCmp(prototype.id + '-cmbTDOC').setValue("");
 
         }
 

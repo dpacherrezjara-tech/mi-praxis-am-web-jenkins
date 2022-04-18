@@ -28,6 +28,7 @@ public class A4116Filter extends A4116 {
     public String IN_SAUTHOC = "";
     public String IN_WARNING = "";
     public String IN_CERROR = "";
+    public String IN_TDOC = "";
     
     public double DISCAMOUN_IMPORT = 0;
     public double DISCAMOUN_IVA = 0;
