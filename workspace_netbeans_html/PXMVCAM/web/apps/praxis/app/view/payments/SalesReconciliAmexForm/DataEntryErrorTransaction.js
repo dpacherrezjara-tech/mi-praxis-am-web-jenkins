@@ -528,7 +528,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     id: prototype.id + '-chkSelection',
                                     margin: '0 20 0 0',
                                     width: 80,
-                                    boxLabel: '<b>Match</b>',
+                                    boxLabel: '<b>Scan</b>',
                                     inputValue: '1',
                                     listeners: {
                                         change: 'onGridInfo'
