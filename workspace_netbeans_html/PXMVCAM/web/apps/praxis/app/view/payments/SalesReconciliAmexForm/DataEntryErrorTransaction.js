@@ -7,7 +7,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
     controller: 'DataEntryErrorTransactionSalesReconciliAmexController',
     title: 'Sales Reconciliation by Amex - Transaction Error Form',
     header: true,
-    height: 600,
+//    height: 650,
     width: 840,
     resizable: false,
     layout: 'fit',
@@ -541,17 +541,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfo',
                             layout: 'hbox',
                             border: false,
-                            width: 750,
-                            height: 600,
+                            width: 800,
+                            height: 150,
                             hidden: true,
                             bodyStyle: 'background:#E5ECEF;',
-                            margin: '10 2 12 30',
+                            margin: '10 2 12 20',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfo',
-                                    width: 750,
-                                    height: 600,
+                                    width: 800,
+                                    height: 150,
 //                                    hidden: false,
                                     columnLines: true,
                                     columns: {
@@ -596,6 +596,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
+                                            {text: 'Total', dataIndex: 'tot_VFOP', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'Sales Date', dataIndex: 'A720FECVTA', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
@@ -614,7 +622,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 100,
+                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 95,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;

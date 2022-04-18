@@ -2943,7 +2943,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2952,7 +2952,10 @@ public class SalesReconciliAmexDAO {
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.SCARDN.trim());
-            cstmt.setString(3, filter.BSUMDATE.trim());
+            cstmt.setString(3, filter.SAUTHOC.trim());
+            cstmt.setString(4, filter.BSUMDATE.trim());
+            cstmt.setString(5, Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1));
+            cstmt.setString(6, Functions.restXDaystoDate(filter.BSUMDATE.trim(), 1));
             cstmt.execute();
 
             rst = cstmt.getResultSet();
@@ -2970,6 +2973,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
+                beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
 
                 
                 beanRec.A720PNR = rst.getString("A720PNR").trim();
