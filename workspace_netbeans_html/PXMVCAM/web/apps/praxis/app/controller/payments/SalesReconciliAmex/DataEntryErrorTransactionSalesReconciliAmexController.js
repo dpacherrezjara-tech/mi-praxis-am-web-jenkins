@@ -51,6 +51,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
         this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
+        
+        var sMerch = this.beanResult.SMERCHID.trim();
+        if( sMerch === '9353227755' ||  sMerch === '8133735688' ||  sMerch === '9352724851'){
+            Ext.getCmp(prototype.id + '-chkSelection').hide();
+        }else{
+            Ext.getCmp(prototype.id + '-chkSelection').show();
+        }
+        
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
@@ -79,12 +87,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         
         this.getDataGrid(this.beanResult);
         
-//        var storeData = Ext.create('Ext.data.Store', {
-//            data: this.beanInfo,
-//            autoLoad: true
-//        });
-//
-//        Ext.getCmp(prototype.id + '-gridDataInfo').bindStore(storeData);
+        
         
     },
     obtainData: function () {
