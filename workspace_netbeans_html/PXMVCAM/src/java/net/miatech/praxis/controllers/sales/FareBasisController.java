@@ -145,7 +145,7 @@ public class FareBasisController extends BaseController {
 
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<PX019S01A721Filter> listaData = this.getList(request, false);
+            List<PX019S01A721Filter> listaData = this.getList(request, true);
 
             System.out.println("Tamaño de lista devuelta : " + listaData.size());
 

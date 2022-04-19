@@ -170,7 +170,7 @@ public class AgentsMasterFileController extends BaseController {
 
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
-            List<A003> listaData = this.getList(request, false);
+            List<A003> listaData = this.getList(request, true);
 
             System.out.println("Agents Master File : " + listaData.size());
 
