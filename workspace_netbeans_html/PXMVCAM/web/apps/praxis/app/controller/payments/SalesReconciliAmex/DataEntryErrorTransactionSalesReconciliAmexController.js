@@ -51,6 +51,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
         this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
+        
+        var sMerch = this.beanResult.SMERCHID.trim();
+        if( sMerch === '9353227755' ||  sMerch === '8133735688' ||  sMerch === '9352724851'){
+            Ext.getCmp(prototype.id + '-chkSelection').hide();
+        }else{
+            Ext.getCmp(prototype.id + '-chkSelection').show();
+        }
+        
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
@@ -63,6 +71,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtCERROR', this.beanResult.CERROR);
         this.setValue('txtDES_CERROR', this.beanResult.DES_CERROR);
         this.setValue('txtFLAG', this.beanResult.FSELEC);
+        this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
 
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
         this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
@@ -78,12 +87,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         
         this.getDataGrid(this.beanResult);
         
-//        var storeData = Ext.create('Ext.data.Store', {
-//            data: this.beanInfo,
-//            autoLoad: true
-//        });
-//
-//        Ext.getCmp(prototype.id + '-gridDataInfo').bindStore(storeData);
+        
         
     },
     obtainData: function () {
@@ -103,6 +107,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");      
         beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");      
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
+        beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
@@ -137,10 +142,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     getDataGrid: function (beanGrid) {
             
-        console.log(beanGrid);
-        console.log(beanGrid.SCARDN);
-        console.log(beanGrid.SAUTHOC);
-        console.log(beanGrid.BSUMDATE);
         var beanStringGrid = JSON.stringify(beanGrid);
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionError',
@@ -328,11 +329,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var chk = Ext.getCmp(prototype.id + '-chkSelection').getValue();
         if(chk){
             Ext.getCmp(prototype.id + '-panelDataInfo').show();
-//            Ext.getCmp(prototype.id + '-gridDataInfo').show();
         }else{
             Ext.getCmp(prototype.id + '-panelDataInfo').hide();
-//            Ext.getCmp(prototype.id + '-gridDataInfo').hide();
         }
+    },
+    onTktPnr: function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex).data;
+        console.log(rec);
+        
+        this.setValue('de-txtISREFNBR', rec.A1531TKT);
+        this.setValue('de-txtSPNR', rec.A720PNR);
+        
     },
 
 });

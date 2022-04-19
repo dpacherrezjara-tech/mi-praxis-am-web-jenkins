@@ -284,6 +284,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'txtPNR_keyDownHandler'
                             }
                         },
+                        {
+                            xtype: 'combo',
+                            fieldLabel: 'Document:',
+                            id: prototype.id + '-cmbTDOC',
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            valueField: 'code',
+                            displayField: 'name',
+                            readOnly: false,
+                            editable: true,
+                            emptyText: 'All',
+                            //maxLength: 3,
+                            labelWidth: 100,
+                            width: 200,
+                            hiddenLabel: false,
+                            value: '',
+                            listeners: {
+                                change: 'cmbSTVAL_keyDownHandler',
+                            }
+                        }
                     ]
                 },
             ]

@@ -500,6 +500,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Flag Selection',
                                     width: 120
                                 },
@@ -511,6 +512,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    text: 'Installment Nbr.',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtINSTANBR',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 50
                                 }
                             ]
                         },
@@ -528,7 +545,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     id: prototype.id + '-chkSelection',
                                     margin: '0 20 0 0',
                                     width: 80,
-                                    boxLabel: '<b>Match</b>',
+                                    boxLabel: '<b>Scan</b>',
                                     inputValue: '1',
                                     listeners: {
                                         change: 'onGridInfo'
@@ -589,14 +606,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
-                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 80,
+                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Total', dataIndex: 'tot_VFOP', width: 80,
+                                            {text: 'Total <br> Amount', dataIndex: 'tot_VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     
                                                     metaData.style = "text-align:right;";
@@ -610,7 +627,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'A720PNR', width: 80,
+                                            {text: 'PNR', dataIndex: 'A720PNR', width: 75,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
@@ -622,11 +639,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 95,
+                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 90,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 30,
+                                                text: '',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Fill TKT & PNR',
+                                                        handler: 'onTktPnr'
+                                                    }
+                                                ]
                                             },
                                         ]
                                     }

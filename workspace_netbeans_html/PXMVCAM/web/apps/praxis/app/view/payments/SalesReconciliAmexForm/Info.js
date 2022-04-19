@@ -1227,10 +1227,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             var data = record.data;
                                                             if (data.desCERROR === 'Sub Total') {
                                                                 metaData.style = "text-align:center;background-color:#BAC9F4;";
-                                                            }else {
+                                                            } else {
                                                                 metaData.style = "text-align:center;";
                                                             }
-                                                            
+
                                                             metaData.tdAttr = 'data-qtip="' + data.DES_MERCHANT + '"';
                                                             value = '<b>' + value + '</b>';
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
@@ -3322,6 +3322,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
+                                            {
+                                                text: 'Document <br> Type', dataIndex: 'descTDOC', width: 80,
+                                            },
                                             {text: 'Indust.Speci. <br> Ref.Nbr', dataIndex: 'ISREFNBR', width: 120,
                                                 listeners: {
                                                     click: 'viewTicket'
@@ -3869,7 +3872,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Rule', dataIndex: 'descFREGLA', width: 85,
-                                            }
+                                            },
+                                            {
+                                                text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100,
+                                            },
                                         ]
                                     }
                                 }
@@ -4572,7 +4578,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
-                                                    },                                                    
+                                                    },
                                                     {text: 'Seller ID', dataIndex: 'SELLERID', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
@@ -4891,6 +4897,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                 ]
+                                            },
+                                            {
+                                                text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100, hidden:true,
                                             },
                                             {
                                                 sortable: false,
