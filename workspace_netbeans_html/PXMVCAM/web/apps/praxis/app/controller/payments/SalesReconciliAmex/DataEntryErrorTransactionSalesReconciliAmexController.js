@@ -139,10 +139,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     getDataGrid: function (beanGrid) {
             
-        console.log(beanGrid);
-        console.log(beanGrid.SCARDN);
-        console.log(beanGrid.SAUTHOC);
-        console.log(beanGrid.BSUMDATE);
         var beanStringGrid = JSON.stringify(beanGrid);
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionError',
@@ -330,11 +326,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var chk = Ext.getCmp(prototype.id + '-chkSelection').getValue();
         if(chk){
             Ext.getCmp(prototype.id + '-panelDataInfo').show();
-//            Ext.getCmp(prototype.id + '-gridDataInfo').show();
         }else{
             Ext.getCmp(prototype.id + '-panelDataInfo').hide();
-//            Ext.getCmp(prototype.id + '-gridDataInfo').hide();
         }
+    },
+    onTktPnr: function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex).data;
+        console.log(rec);
+        
+        this.setValue('de-txtISREFNBR', rec.A1531TKT);
+        this.setValue('de-txtSPNR', rec.A720PNR);
+        
     },
 
 });
