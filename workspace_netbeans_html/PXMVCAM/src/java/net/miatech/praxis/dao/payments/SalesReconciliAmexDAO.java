@@ -3035,6 +3035,7 @@ public class SalesReconciliAmexDAO {
             }
             rst.close();
 
+        /*
             for (int i = 0; i < lstInfo.size(); i++) {
                 String pnr2 = "";
                 String pnr1 = lstInfo.get(i).A720PNR;
@@ -3046,6 +3047,7 @@ public class SalesReconciliAmexDAO {
                     lstInfo.get(i).tot_VFOP = 0.00;
                 }
             }
+        */
 
         } catch (Exception e) {
             e.printStackTrace();
