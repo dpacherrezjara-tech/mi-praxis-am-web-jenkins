@@ -178,7 +178,41 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
         this.execSearch();
     },
     imgExcel_click: function(){
-        alert('excel export');
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.exportExcel();
+                }
+            }
+        });
+    },
+    exportExcel: function() {
+        //this.setParams();
+        //global.getFile(prototype.url + '/getXLSX?IN_OPCION=' + searchParams.IN_OPCION + '&IN_AIRLIN=' + searchParams.IN_AIRLIN + '&IN_FBASIS=' + searchParams.IN_FBASIS);
+    },
+    setParams: function() {
+
+        var IN_OPCION = Ext.getCmp(prototype.id + '-cmbSearchType').getValue();
+        var IN_AIRLIN = Ext.getCmp(prototype.id + '-txtCampo').getValue();
+        var IN_FBASIS = Ext.getCmp(prototype.id + '-txtCamp2').getValue();
+
+
+
+        searchParams = {
+            IN_OPCION: IN_OPCION,
+            IN_AIRLIN: IN_AIRLIN,
+            IN_FBASIS: IN_FBASIS
+        };
+        console.log("IN_OPCION : " + IN_OPCION);
+        console.log("IN_AIRLIN : " + IN_AIRLIN);
+        console.log("IN_FBASIS : " + IN_FBASIS);
+
     },
     imgClear_clickHandler: function(obj, e) {
         Ext.getCmp(prototype.id+'-1-cbxSearchBy').setValue('');

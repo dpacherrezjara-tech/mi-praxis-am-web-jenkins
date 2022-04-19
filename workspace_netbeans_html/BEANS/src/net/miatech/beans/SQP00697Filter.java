@@ -43,6 +43,8 @@ public class SQP00697Filter {
     public double A1531VFOP = 0d;
     public double totA1531VFOP = 0d;
     public String A720SEQ = "";
+    public String A1531CAPL = "";
+    public String A1531MFOP = "";
     public String IN_DATE_FROM = "";
     public String IN_DATE_TO = "";
     public String IN_IATA = "";

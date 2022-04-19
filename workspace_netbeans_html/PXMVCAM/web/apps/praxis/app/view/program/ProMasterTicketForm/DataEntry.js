@@ -514,10 +514,13 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
-                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 150,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'Ticket Number', dataIndex: 'TICKET', width: 120,editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
-                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 180,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 120,editor:{ xtype:'textfield', editable: false }
+                                                    },
+                                                    {
+                                                        text: 'Approved Cod.', dataIndex: 'A1531CAPL', width: 100,editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
                                                         text: 'Issue<br/>Orig.', dataIndex: 'A720CIUVTA', width: 60
@@ -543,7 +546,7 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         }
                                                     },
                                                     {
-                                                        text: 'Cur', dataIndex: 'A720MONEDA', width: 40
+                                                        text: 'Cur', dataIndex: 'A1531MFOP', width: 40
                                                     },
                                                     {
                                                         text: 'PNR', dataIndex: 'A720PNR', width: 80,editor:{ xtype:'textfield', editable: false }

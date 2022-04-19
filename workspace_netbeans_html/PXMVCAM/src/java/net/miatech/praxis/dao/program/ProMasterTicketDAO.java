@@ -1925,6 +1925,8 @@ public class ProMasterTicketDAO {
                 objRtn.A720MONEDA = rs01.getString("A720MONEDA");
                 objRtn.A720PNR = rs01.getString("A720PNR");
                 objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
+                objRtn.A1531MFOP = rs01.getString("A1531MFOP");
+                objRtn.A1531CAPL = rs01.getString("A1531CAPL");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 lstRtn.add(objRtn);
             }
