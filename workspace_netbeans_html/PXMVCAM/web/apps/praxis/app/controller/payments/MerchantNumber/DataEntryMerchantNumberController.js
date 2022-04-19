@@ -358,7 +358,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     if (res.total > 0) {
                         meDE.insertIATA(store_gridIATA, res.data[0]);
                     } else {
-                        global.Msg({msg: 'IATA does not exist'});
+                        global.Msg({msg: 'Not Found / No Travel Agency'});
                     }
 
                 }
