@@ -120,7 +120,10 @@ public class AgentsMasterFileController extends BaseController {
 
             if(this.serverSession.getFareBasis()!=null && "".equals(filter.VP_ACTION) && "".equals(filter.A003KEY1) && "".equals(filter.A003KEY2) && "".equals(filter.A003KEY3) && filter.page.PAGNUM == 1)
             {
-                lst = serverSession.getAgentMaster();
+                if (!bExcel) 
+                    lst = serverSession.getAgentMaster();
+                else
+                    lst = logic.loadAgentReport(filter);
             }
             else
             {

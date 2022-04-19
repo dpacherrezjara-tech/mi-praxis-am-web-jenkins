@@ -111,7 +111,10 @@ public class FareBasisController extends BaseController {
 
             if(this.serverSession.getFareBasis()!=null && filter.IN_OPCION == 1 && "".equals(filter.IN_AIRLIN) && "".equals(filter.IN_FBASIS) && filter.page.PAGNUM == 1)
             {
-                lst = serverSession.getFareBasis();
+                if (!bExcel) 
+                    lst = serverSession.getFareBasis();
+                else
+                    lst = logic.loadPX019S01A721(filter);
             }
             else
             {
