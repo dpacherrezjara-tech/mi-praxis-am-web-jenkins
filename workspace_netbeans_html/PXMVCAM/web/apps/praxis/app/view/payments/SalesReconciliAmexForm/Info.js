@@ -3872,7 +3872,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Rule', dataIndex: 'descFREGLA', width: 85,
-                                            }
+                                            },
+                                            {
+                                                text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100,
+                                            },
                                         ]
                                     }
                                 }
@@ -4894,6 +4897,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         }
                                                     },
                                                 ]
+                                            },
+                                            {
+                                                text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100, hidden:true,
                                             },
                                             {
                                                 sortable: false,

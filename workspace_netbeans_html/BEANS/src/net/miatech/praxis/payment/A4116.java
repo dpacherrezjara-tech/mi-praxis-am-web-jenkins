@@ -21,6 +21,7 @@ public class A4116 {
     public String PAYDATE = "";
     public String PCURRENCY = "";
     public String FREGLA = "";
+    public String FCOMPL = "";
     
     public String SMERCHID = "";
     public String BSUMDATE = "";
@@ -90,6 +91,7 @@ public class A4116 {
     public String descSTVAL = "";
     public String descTDOC = "";
     public String descFREGLA = "";
+    public String descFCOMPL = "";
     
     //Variables del Sistema
     public String USCR = "";

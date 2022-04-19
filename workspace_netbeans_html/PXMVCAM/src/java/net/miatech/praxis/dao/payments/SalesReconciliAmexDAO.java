@@ -1906,6 +1906,13 @@ public class SalesReconciliAmexDAO {
         hmDescTDOC.put("S", "Sales");
         hmDescTDOC.put("R", "Refund");
 
+        HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
+        hmDescFCOMPL.put("", "");
+        hmDescFCOMPL.put("1", "PLUSGRADE");
+        hmDescFCOMPL.put("2", "LIGAS");
+        hmDescFCOMPL.put("3", "TABLET");
+        hmDescFCOMPL.put("4", "BPO");
+
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
         double totDISCAMOUN_IMPORT = 0;
@@ -2054,6 +2061,13 @@ public class SalesReconciliAmexDAO {
                         beanTkt.descFREGLA = hmDescReglas.get(rst.getString("FREGLA").trim()).toString();
                     } else {
                         beanTkt.descFREGLA = rst.getString("FREGLA").trim();
+                    }
+
+                    beanTkt.FCOMPL = rst.getString("FCOMPL").trim();
+                    if (hmDescFCOMPL.containsKey(rst.getString("FCOMPL").trim())) {
+                        beanTkt.descFCOMPL = hmDescFCOMPL.get(rst.getString("FCOMPL").trim()).toString();
+                    } else {
+                        beanTkt.descFCOMPL = rst.getString("FCOMPL").trim();
                     }
 
                     beanTkt.ACCEAMOUC = rst.getDouble("ACCEAMOUC");
@@ -2458,6 +2472,13 @@ public class SalesReconciliAmexDAO {
         double DISCAMOUNC_TOTAL = 0;
         double DISCAMOUIC_TOTAL = 0;
 
+        HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
+        hmDescFCOMPL.put("", "");
+        hmDescFCOMPL.put("1", "PLUSGRADE");
+        hmDescFCOMPL.put("2", "LIGAS");
+        hmDescFCOMPL.put("3", "TABLET");
+        hmDescFCOMPL.put("4", "BPO");
+
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
@@ -2542,6 +2563,13 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
                     beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
+
+                    beanTkt.FCOMPL = rst.getString("FCOMPL").trim();
+                    if (hmDescFCOMPL.containsKey(rst.getString("FCOMPL").trim())) {
+                        beanTkt.descFCOMPL = hmDescFCOMPL.get(rst.getString("FCOMPL").trim()).toString();
+                    } else {
+                        beanTkt.descFCOMPL = rst.getString("FCOMPL").trim();
+                    }
 
                     beanTkt.LMERCHID = rst.getString("LMERCHID").trim();
                     beanTkt.INVORNBR = rst.getString("INVORNBR").trim();
