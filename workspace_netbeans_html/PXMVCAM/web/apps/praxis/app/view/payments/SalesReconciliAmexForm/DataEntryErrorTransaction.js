@@ -649,12 +649,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
                                                 width: 30,
-                                                text: 'Edit',
+                                                text: '',
                                                 align: 'center',
                                                 items: [
                                                     {
                                                         iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Edit',
+                                                        tooltip: 'Fill TKT & PNR',
                                                         handler: 'onTktPnr'
                                                     }
                                                 ]
