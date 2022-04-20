@@ -43,6 +43,7 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -53,7 +54,11 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
+import net.miatech.beans.PX0094S01A007Filter;
+import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
+import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.exceptions.SpringLog;
+import net.miatech.praxis.logic.LoadDataLogic;
 import net.sabre.miatech.praxis.SabreRecordLocator;
 import net.sabre.miatech.praxis.SabreRecordLocatorSoap;
 import net.sabre.miatech.praxis.TicketREQ;
@@ -420,5 +425,116 @@ public class ProMasterTicketController extends BaseController {
             map.put("strTexto", e.getMessage());
         }
         return new Gson().toJson(map);
+    }
+    
+    
+    @RequestMapping(value = "getXLSX")
+    public @ResponseBody
+    void GetXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
+        SQP00697Filter filter = new SQP00697Filter();
+        String strALL = "";
+        Functions.msjConsola("PRAXIS",  this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ScrProrationFactorsPMP");
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            //filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            filter.IN_TFILTER = Integer.parseInt(request.getParameter("IN_TFILTER").trim());
+            filter.IN_TEXT = request.getParameter("IN_TEXT").trim();            
+            filter.IN_IATA = request.getParameter("IN_IATA").trim();
+            filter.IN_DATE_FROM = request.getParameter("IN_DATE_FROM").trim();
+            filter.IN_DATE_TO = request.getParameter("IN_DATE_TO").trim();            
+            
+            ProMasterTicketLogic logic = new ProMasterTicketLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            
+            List<SQP00697Filter> listaData = logic.loadSQP00697(filter);
+            
+            String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+            String RUTA_FILE_NAME_SERVER_40 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_40").toString();
+            String RUTA_FILE_NAME_SERVER_41 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_41").toString();
+            String RUTA_FILE_NAME_SERVER_33 = serverSession.getServerSession().getPropertySession().get("RUTA_FILE_NAME_SERVER_33").toString();
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            Date date = new Date();
+            
+            
+            int len = listaData.size();
+            Integer vi = 0;            
+            String fileName = "PX040_TKT_Report-"+date.getDay()+date.getMinutes()+date.getSeconds();
+            File file = new File(rutaFile + "\\" + fileName + ".csv");
+            
+            if (file.exists())
+                file.delete();
+            
+            PrintWriter writer = new PrintWriter(file, "UTF-8");
+            String cadena = "";
+            
+            for (vi = 0; vi < len; vi++) {
+                //titulos en la primera fila
+                if ( vi == 0 ){
+                    cadena = "Passenger Name,Ticket Number,CC Number,Approved Cod,Issue Orig,Issue Date,IATA,Fare,Amount,Currency,PNR";
+                    writer.println("" + cadena );
+                }
+                
+                cadena = "";                                
+                cadena += "" + listaData.get(vi).A720PAX.trim() + ",";
+                cadena += "" + listaData.get(vi).TICKET.trim() + ",";
+                cadena += "" + listaData.get(vi).A1531NREF.trim() + ",";
+                cadena += "" + listaData.get(vi).A1531CAPL.trim() + ",";
+                cadena += "" + listaData.get(vi).A720CIUVTA.trim() + ",";
+                cadena += "" + listaData.get(vi).A720FECVTA.trim() + ",";
+                cadena += "" + listaData.get(vi).A720AGENTE.trim() + ",";
+                cadena += "" + listaData.get(vi).A720TARIFA + ",";
+                cadena += "" + listaData.get(vi).A1531VFOP + ",";
+                cadena += "" + listaData.get(vi).A1531MFOP.trim() + ",";
+                cadena += "" + listaData.get(vi).A720PNR.trim() ;
+                                              
+                writer.println("" + cadena );
+            }
+            writer.flush();
+            writer.close();
+            
+            /**
+             * Comprimimos archivo generado para su optima descarga
+             */
+            if (zipCSV(fileName)){
+                File file1 = new File(RUTA_FILE_NAME_SERVER_40 + "\\" + fileName + ".zip");
+                File file2 = new File(RUTA_FILE_NAME_SERVER_41 + "\\" + fileName + ".zip");
+                File file3 = new File(RUTA_FILE_NAME_SERVER_33 + "\\" + fileName + ".zip");
+                if(!file1.exists())
+                    Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_40 + "\\" + fileName + ".zip");
+                if(!file2.exists())
+                    Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_41 + "\\" + fileName + ".zip");
+                if(!file3.exists())
+                    Functions.copyFilesWithName(rutaFile + "\\" + fileName + ".zip", RUTA_FILE_NAME_SERVER_33 + "\\" + fileName + ".zip");
+            }            
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + ".zip" + "\"");
+
+            InputStream is = new FileInputStream(rutaFile + "\\" + fileName + ".zip");
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+            
+        } catch (IOException e) {
+            throw new SpringException(e);
+        }
+    }
+
+    public Boolean zipCSV(String fileName){
+        String path = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD").toString();
+        Boolean existe = false;
+        try {
+            File fileZip = new File( path + "\\" + fileName + ".zip");
+            
+            if (fileZip.exists())
+                fileZip.delete();
+            
+            zipFile(new File(path + "\\" + fileName + ".csv"), path + "\\" + fileName + ".zip");
+            
+            existe = true;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+        }
+        return existe;
     }
 }
