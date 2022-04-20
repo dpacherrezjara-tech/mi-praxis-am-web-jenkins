@@ -175,37 +175,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             listeners: {
                                 change: 'rbChangeType'
                             }
-                        },
-                        {
-                             xtype: 'checkboxfield',
-                             id: prototype.id + '-chkWarnings',
-                             margin: '0 0 0 15',
-                             width: 50,
-                             boxLabel: 'Warnings',
-                             inputValue: '0',
-                            checked: false,
-                            hidden: true,
-                             listeners:{
-                                 change: 'chkWarning_Click'
-                             }
-                         },
-                         {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbErrorCode',
-                            fieldLabel: 'Error Code',
-                            triggerAction: 'all',
-                            enableKeyEvents: true,
-                            readOnly: false,
-                            editable: true,
-                            valueField: 'CODE',
-                            displayField: 'NAME',
-                            fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
-                            width: 250,
-                            hidden: false,
-                            listeners:{
-                                 change: 'btnSearch_click'
-                             }
                         }
 //                    xtype: 'textfield',
 //                    fieldLabel: 'Merchant Number:',
@@ -306,7 +275,78 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         }
                     ]
                 },
+                {
+                    xtype: 'form',
+                    padding: '2px 5px 1px 5px',
+                    id: prototype.id + '-frmQueueError',
+                    border: false,
+                    bodyStyle: 'background: transparent',
+                    margin: '0 0 0 40px',
+                    hidden: true,
+                    layout: 'column',
+                    defaults: {
+//                labelStyle: 'font-weight:bold;',
+                        fieldStyle: 'text-align: center;',
+                        padding: '5px 1px 5px 1px',
+                        anchor: '100%',
+                        hiddenLabel: false,
+                        labelAlign: 'right',
+                        hidden: false
+                    },
+                    items: [
+                        {xtype: 'tbspacer', width: 270},
+                        {
+                             xtype: 'checkboxfield',
+                             id: prototype.id + '-chkWarnings',
+                             width: 50,
+                             boxLabel: 'Warnings',
+                             inputValue: '0',
+                            checked: false,
+                             listeners:{
+                                 change: 'chkWarning_Click'
+                             }
+                         },
+                         {xtype: 'tbspacer', width: 20},
+                         {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbErrorCode',
+                            fieldLabel: 'Error Code',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'CODE',
+                            displayField: 'NAME',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 100,
+                            width: 250,
+                            hidden: false,
+                            listeners:{
+                                 change: 'btnSearch_click'
+                             }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbComplement',
+                            fieldLabel: 'Complements',
+                            triggerAction: 'all',
+                            enableKeyEvents: true,
+                            readOnly: false,
+                            editable: true,
+                            valueField: 'code',
+                            displayField: 'name',
+                            fieldStyle: 'text-align: left;',
+                            labelWidth: 100,
+                            width: 250,
+                            hidden: false,
+                            listeners:{
+                                 change: 'btnSearch_click'
+                             }
+                        }
+                    ]
+                }
             ]
-        },
+        }
     ]
 });
