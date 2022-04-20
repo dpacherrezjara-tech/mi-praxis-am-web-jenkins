@@ -86,6 +86,7 @@ public class A4116Filter extends A4116 {
     public String DES_SMERCHANT = "";
     public String DES_CERROR = "";
     public String FSELEC = "";
+    public Integer FDUPLI = 0;
 
     //CAMPOS A720
     public String A720AGENTE = "";

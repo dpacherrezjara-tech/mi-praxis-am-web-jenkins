@@ -2588,6 +2588,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TRANSID = rst.getString("TRANSID");
                     beanTkt.SAUTHOC = rst.getString("SAUTHOC");
                     beanTkt.INSTANBR = rst.getString("INSTANBR");
+                    beanTkt.NBRINSTA = rst.getInt("NBRINSTA");
                     beanTkt.DES_CERROR = rst.getString("DES_CERROR");
 
                     beanTkt.GROSAMOUNC = rst.getDouble("GROSAMOUNC");
@@ -2735,6 +2736,7 @@ public class SalesReconciliAmexDAO {
                 objRtn.TRANSID = rs01.getString("TRANSID");
                 objRtn.SAUTHOC = rs01.getString("SAUTHOC");
                 objRtn.INSTANBR = rs01.getString("INSTANBR");
+                objRtn.NBRINSTA = rs01.getInt("NBRINSTA");
 
                 objRtn.GROSAMOUNC = rs01.getDouble("GROSAMOUNC");
                 objRtn.TGROSAMOUC = rs01.getDouble("TGROSAMOUC");
@@ -3027,6 +3029,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
+                beanRec.FDUPLI = rst.getInt("FDUPLI");
 
                 beanRec.A720PNR = rst.getString("A720PNR").trim();
                 beanRec.A720FECVTA = rst.getString("A720FECVTA").trim();
