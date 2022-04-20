@@ -318,7 +318,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             valueField: 'CODE',
                             displayField: 'NAME',
                             fieldStyle: 'text-align: left;',
-                            labelWidth: 100,
+                            labelWidth: 150,
                             width: 250,
                             hidden: false,
                             listeners:{
