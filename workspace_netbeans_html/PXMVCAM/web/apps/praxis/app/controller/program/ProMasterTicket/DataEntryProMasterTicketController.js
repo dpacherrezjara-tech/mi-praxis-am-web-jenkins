@@ -178,8 +178,89 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
         this.execSearch();
     },
     imgExcel_click: function(){
-        alert('excel export');
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function(btn) {
+                if (btn === 'ok') {
+                    this.exportExcel();
+                }
+            }
+        });
     },
+    exportExcel: function() {
+        var selectedValue = win.getValue('1-cbxSearchBy');
+	if(selectedValue !== ''){
+            this.bean.IN_TFILTER = parseInt(selectedValue);
+            switch(this.bean.IN_TFILTER){
+                case 1:
+                    this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
+                    break;
+                case 2:
+                    this.bean.IN_TEXT = win.getValue('1-txtPassenger');
+                    break;
+                case 3:
+                    this.bean.IN_TEXT = win.getValue('1-txtPNR');
+                    break;
+                case 4:
+                    this.bean.IN_TEXT = win.getValue('1-txtNREF_P1')+win.getValue('1-txtNREF_P2');
+                    break;
+                case 5:
+                    this.bean.IN_TEXT = win.getValue('1-txtIATA');
+                    break;
+                case 6:
+                    this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
+                    break;
+            }
+            
+            
+            if(this.bean.IN_TEXT === null || this.bean.IN_TEXT === ""){
+                return;
+            }   
+            
+            if(win.getValue('1-txtToDate') === null && win.getValue('1-txtFromDate') !== null){
+                Ext.getCmp(prototype.id+'-1-txtToDate').setValue(win.getValue('1-txtFromDate'));
+                //txtToDate.text = txtFromDate.text;
+            }
+            else{
+                if(win.getValue('1-txtFromDate') === null && win.getValue('1-txtToDate') !== null){
+                    Ext.getCmp(prototype.id+'-1-txtFromDate').setValue(win.getValue('1-txtToDate'));
+                    //txtFromDate.text = txtToDate.text;
+                }
+            }
+            
+            this.bean.IN_IATA = (win.getValue('1-txtIATA') || '').trim();
+            this.bean.IN_CAPL = (win.getValue('1-txtCAPL') || '').trim();
+            
+            if(this.bean.IN_TFILTER == 5 && this.bean.IN_IATA == ''){
+                alert("Please enter issue date range and IATA");
+                return;
+            }
+
+            if(this.bean.IN_IATA != ''){
+                if(this.bean.IN_IATA.length != 8){
+                    alert("IATA number must be 8 characters");
+                    return;
+                }else{
+                    if((win.getValue('1-txtFromDate') === null || win.getValue('1-txtToDate') === null) && this.bean.IN_TFILTER == 5){
+                        alert("Please enter issue date range");
+                        return;
+                    }
+                }
+            }
+            
+            this.bean.IN_DATE_FROM = Ext.util.Format.date(win.getValue('1-txtFromDate'), 'Ymd');
+            this.bean.IN_DATE_TO = Ext.util.Format.date(win.getValue('1-txtToDate'), 'Ymd');
+            
+            console.log({ BEAN_SEARCH: this.bean });
+            
+            this.getXLSX(this.bean);
+	}
+    },    
     imgClear_clickHandler: function(obj, e) {
         Ext.getCmp(prototype.id+'-1-cbxSearchBy').setValue('');
         this.cbxSearchBy_changeHandler();
@@ -238,6 +319,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
             }
             
             this.bean.IN_IATA = (win.getValue('1-txtIATA') || '').trim();
+            this.bean.IN_CAPL = (win.getValue('1-txtCAPL') || '').trim();
             
             if(this.bean.IN_TFILTER == 5 && this.bean.IN_IATA == ''){
                 alert("Please enter issue date range and IATA");
@@ -264,6 +346,13 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
             this.search(this.bean);
 	}
     },
+    //<editor-fold defaultstate="collapsed" desc="XLS">
+    getXLSX: function (bean) {
+        console.log('_getXLSX_');
+        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + bean.IN_TFILTER + '&IN_TEXT='+bean.IN_TEXT+'&IN_IATA='+bean.IN_IATA+'&IN_DATE_FROM='+bean.IN_DATE_FROM+'&IN_DATE_TO='+bean.IN_DATE_TO+'&IN_CAPL='+bean.IN_CAPL);
+        
+    },
+    //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="search">
     search: function (bean) {
