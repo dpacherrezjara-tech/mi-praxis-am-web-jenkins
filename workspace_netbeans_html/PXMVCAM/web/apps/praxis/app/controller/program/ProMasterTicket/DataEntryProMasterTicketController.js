@@ -234,6 +234,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
             }
             
             this.bean.IN_IATA = (win.getValue('1-txtIATA') || '').trim();
+            this.bean.IN_CAPL = (win.getValue('1-txtCAPL') || '').trim();
             
             if(this.bean.IN_TFILTER == 5 && this.bean.IN_IATA == ''){
                 alert("Please enter issue date range and IATA");
@@ -318,6 +319,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
             }
             
             this.bean.IN_IATA = (win.getValue('1-txtIATA') || '').trim();
+            this.bean.IN_CAPL = (win.getValue('1-txtCAPL') || '').trim();
             
             if(this.bean.IN_TFILTER == 5 && this.bean.IN_IATA == ''){
                 alert("Please enter issue date range and IATA");
@@ -347,7 +349,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
     //<editor-fold defaultstate="collapsed" desc="XLS">
     getXLSX: function (bean) {
         console.log('_getXLSX_');
-        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + bean.IN_TFILTER + '&IN_TEXT='+bean.IN_TEXT+'&IN_IATA='+bean.IN_IATA+'&IN_DATE_FROM='+bean.IN_DATE_FROM+'&IN_DATE_TO='+bean.IN_DATE_TO);
+        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + bean.IN_TFILTER + '&IN_TEXT='+bean.IN_TEXT+'&IN_IATA='+bean.IN_IATA+'&IN_DATE_FROM='+bean.IN_DATE_FROM+'&IN_DATE_TO='+bean.IN_DATE_TO+'&IN_CAPL='+bean.IN_CAPL);
         
     },
     //</editor-fold>

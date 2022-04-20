@@ -443,6 +443,7 @@ public class ProMasterTicketController extends BaseController {
             filter.IN_IATA = request.getParameter("IN_IATA").trim();
             filter.IN_DATE_FROM = request.getParameter("IN_DATE_FROM").trim();
             filter.IN_DATE_TO = request.getParameter("IN_DATE_TO").trim();            
+            filter.IN_CAPL = request.getParameter("IN_CAPL").trim();            
             
             ProMasterTicketLogic logic = new ProMasterTicketLogic();
             logic.setSession(this.serverSession.getServerSession());

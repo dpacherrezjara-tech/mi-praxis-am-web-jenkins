@@ -345,6 +345,25 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                             listeners: {
                                                                 //keypress: 'onTextKeypress'
                                                             }
+                                                        },
+                                                        {xtype: 'tbspacer', width: 8},
+                                                        {
+                                                            xtype: 'label', text: 'Approved Cod:', padding: '4 0 0 0'
+                                                        },
+                                                        {xtype: 'tbspacer', width: 4},
+                                                        {
+                                                            xtype: 'textfield',
+                                                            id: prototype.id+'-1-txtCAPL',
+                                                            fieldStyle: 'text-align:center',
+                                                            enableKeyEvents: true,
+                                                            enforceMaxLength: true,
+                                                            maxLength: 8,
+                                                            width: 100,
+                                                            maskRe: /[0-9/]/,
+                                                            value: '',
+                                                            listeners: {
+                                                                //keypress: 'onTextKeypress'
+                                                            }
                                                         }
                                                     ]
                                                 },
