@@ -86,6 +86,7 @@ public class A4116 {
     public double DISCAMOUIC = 0;
     
     public String CERROR = "";
+    public String CERRORHST = "";
     public String desCERROR = "";
     public String STVAL = "";
     public String descSTVAL = "";

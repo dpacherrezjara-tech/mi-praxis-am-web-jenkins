@@ -29,6 +29,7 @@ public class A4116Filter extends A4116 {
     public String IN_WARNING = "";
     public String IN_CERROR = "";
     public String IN_TDOC = "";
+    public String IN_COMPLEMENT = "";
     
     public double DISCAMOUN_IMPORT = 0;
     public double DISCAMOUN_IVA = 0;
@@ -86,6 +87,7 @@ public class A4116Filter extends A4116 {
     public String DES_SMERCHANT = "";
     public String DES_CERROR = "";
     public String FSELEC = "";
+    public Integer FDUPLI = 0;
 
     //CAMPOS A720
     public String A720AGENTE = "";
