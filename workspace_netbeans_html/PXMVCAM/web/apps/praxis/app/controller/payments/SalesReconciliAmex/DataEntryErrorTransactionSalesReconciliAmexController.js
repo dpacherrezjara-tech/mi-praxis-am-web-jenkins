@@ -68,6 +68,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
         this.setValue('de-txtSPNR', this.beanResult.SPNR);
         this.setValue('de-txtTRANSDATE', this.beanResult.TRANSDATE);
+        this.setValue('txtCERRORHST', this.beanResult.CERRORHST);
         this.setValue('txtCERROR', this.beanResult.CERROR);
         this.setValue('txtDES_CERROR', this.beanResult.DES_CERROR);
         this.setValue('txtFLAG', this.beanResult.FSELEC);
@@ -109,6 +110,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");      
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
+        beanTemp.CERROR = this.getValue("txtCERROR");
         
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
