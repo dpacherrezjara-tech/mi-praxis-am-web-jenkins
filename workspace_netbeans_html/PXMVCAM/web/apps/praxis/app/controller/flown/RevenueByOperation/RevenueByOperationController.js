@@ -5,8 +5,11 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
     fecha: new Date(),
     searchParams: {},
     _path: '',
+    boxActual: '-boxMainData',
+    drillDown: [],
     flagNPLANE: false,
     flagZONA: false,
+    dw_excel: false,
     me: '',
     setContext: function() {
         me = this;
@@ -18,9 +21,9 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
         prototype.url = CONTEXTPATH + '/RevenueByOperation';
         prototype.widthContenedor = 1630;
         prototype.widthGrid = 1620;
-        prototype.widthGridByZone = 900;
-        prototype.widthGridByCityPair = 900;
-        prototype.widthGridByNPlane = 900;
+        prototype.widthGridByZone = 1620;
+        prototype.widthGridByCityPair = 1620;
+        prototype.widthGridByNPlane = 1620;
         // </editor-fold>
         this.control({
         });
@@ -284,6 +287,11 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
             IN_FECHA_FROM: fyear + fmonth,
             IN_FECHA_TO: tyear + tmonth
         };
+        
+        var beanString = JSON.stringify(searchParams);
+        searchParams = beanString;
+        
+        console.log(searchParams);
 
 //        _path = prototype.url+'/getXLSX?' +
 //                'IN_TKT='+searchParams.IN_TKT+'&' +
@@ -315,6 +323,9 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
             IN_FECHA_FROM: fyear + fmonth,
             IN_FECHA_TO: tyear + tmonth
         };
+        
+        var beanString = JSON.stringify(searchParams);
+        searchParams = beanString;
 
 //        _path = prototype.url+'/getXLSX?' +
 //                'IN_TKT='+searchParams.IN_TKT+'&' +
@@ -349,6 +360,9 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
             NPLANE: '',
             ZONA: ''
         };
+        
+        var beanString = JSON.stringify(searchParams);
+        searchParams = beanString;
 
 //        _path = prototype.url+'/getXLSX?' +
 //                'IN_TKT='+searchParams.IN_TKT+'&' +
@@ -380,7 +394,10 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
             IN_FECHA_FROM: fyear + fmonth,
             IN_FECHA_TO: tyear + tmonth
         };
-
+        
+        var beanString = JSON.stringify(searchParams);
+        searchParams = beanString;
+        
 //        _path = prototype.url+'/getXLSX?' +
 //                'IN_TKT='+searchParams.IN_TKT+'&' +
 //                'IN_FECHA_FROM='+searchParams.IN_FECHA_FROM+'&' +
@@ -394,15 +411,20 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
 
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
+        
+        console.log(searchParams);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueByOperation.GridData', {
             proxy: {
                 url: prototype.url + '/search'
             },
             listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel:false};
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
                     win.lblUser_toolTip("Estructura: A1971");
                     var pag = Ext.getCmp(prototype.id + '-paggin');
                     var pagData = pag.getPageData();
@@ -427,15 +449,20 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
     },
     setGridDataByZone: function() {
+        
+        this.showGrid('-boxByZone');
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueByOperation.GridDataByZone', {
             proxy: {
                 url: prototype.url + '/searchByZone'
             },
             listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel:false};
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
                     win.lblUser_toolTip("Estructura: A1971");
                     var pag = Ext.getCmp(prototype.id + '-paggin2');
                     var pagData = pag.getPageData();
@@ -460,15 +487,20 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
         Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
     },
     setGridDataByCityPair: function() {
+        
+        this.showGrid('-boxByCityPair');
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueByOperation.GridDataByCityPair', {
             proxy: {
                 url: prototype.url + '/searchByCityPair'
             },
             listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel:false};
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
                     win.lblUser_toolTip("Estructura: A1971");
                     var pag = Ext.getCmp(prototype.id + '-paggin3');
                     var pagData = pag.getPageData();
@@ -493,15 +525,21 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
         Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
     },
     setGridDataByNPlane: function() {
+        
+        this.showGrid('-boxByNPlane');
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueByOperation.GridDataByNPlane', {
             proxy: {
                 url: prototype.url + '/searchByNPlane'
             },
             listeners: {
                 beforeload: function(obj) {
-                    obj.proxy.extraParams = searchParams;
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel:false};
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+                    
+                    
                     win.lblUser_toolTip("Estructura: A1972");
                     var pag = Ext.getCmp(prototype.id + '-paggin4');
                     var pagData = pag.getPageData();
@@ -527,30 +565,115 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
     // </editor-fold>
 
     exportExcel: function() {
-        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
-            global.getFile(_path);
+//        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+//            global.getFile(_path);
+//        }
+        console.log(me.boxActual);
+        me.dw_excel = true;
+        if(me.boxActual === '-boxMainData'){
+            global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams);
+//            me.goURLpost('search',searchParams ,Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+        }else if(me.boxActual === '-boxByZone'){
+            me.goURLpost('searchByZone', searchParams , Ext.getCmp(prototype.id + '-gridDetPoli').config.columns.items);
+        }else if(me.boxActual === '-boxByCityPair'){
+            me.goURLpost('searchByCityPair', searchParams , Ext.getCmp(prototype.id + '-gridDet').config.columns.items);
+        }else if(me.boxActual === '-boxByNPlane'){
+            me.goURLpost('searchByNPlane', searchParams , Ext.getCmp(prototype.id + '-gridDetCtas').config.columns.items);
+        }else{
+            me.dw_excel = false;
+        }
+
+    },
+    
+    goURLpost: function (method,parms,columns) {
+        
+        var js_columns = JSON.stringify(columns);
+        
+        var mapForm = document.createElement("form");
+        mapForm.target = "_blank";
+        mapForm.method = "POST"; // or "post" if appropriate
+        mapForm.action = prototype.url + '/' +method+'?dw_excel=true';
+
+        var mapInput = document.createElement("input");
+        mapInput.type = "text";
+        mapInput.name = "beanString";
+        mapInput.value = parms;
+        mapForm.appendChild(mapInput);
+        
+        var mapInput = document.createElement("input");
+        mapInput.type = "text";
+        mapInput.name = "columns";
+        mapInput.value = js_columns;
+        mapForm.appendChild(mapInput);
+
+        document.body.appendChild(mapForm);
+
+
+        mapForm.submit();
+    },
+    
+    showGrid: function (nameGrid) {
+        
+        me.drillDown.push(me.boxActual);
+        Ext.getCmp(prototype.id + me.boxActual).hide();
+
+        me.boxActual = nameGrid;
+        console.log(me.boxActual);
+        Ext.getCmp(prototype.id + me.boxActual).show();
+
+    },
+    
+    getPaggin: function () {
+        me.pagginActual = '';
+        switch (me.boxActual) {
+            case  '-boxMainData':
+                me.pagginActual = '-paggin';
+                break;
+            case '-boxByZone':
+                me.pagginActual = '-paggin2';
+                break;
+            case '-boxByCityPair':
+                me.pagginActual = '-paggin3';
+                break;
+            case '-boxByNPlane':
+                me.pagginActual = '-paggin4';
+                break;
         }
     },
+    
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function(obj, e) {
-        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id + '-paggin').moveFirst();
-        }
+//        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+//            Ext.getCmp(prototype.id + '-paggin').moveFirst();
+//        }
+        
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveFirst();
     },
     pagPrevious: function(obj, e) {
-        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id + '-paggin').movePrevious();
-        }
+//        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+//            Ext.getCmp(prototype.id + '-paggin').movePrevious();
+//        }
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.movePrevious();
     },
     pagNext: function(obj, e) {
-        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id + '-paggin').moveNext();
-        }
+//        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+//            Ext.getCmp(prototype.id + '-paggin').moveNext();
+//        }
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveNext();
     },
     pagLast: function(obj, e) {
-        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
-            Ext.getCmp(prototype.id + '-paggin').moveLast();
-        }
+//        if (Ext.getCmp(prototype.id + '-boxMainData').isVisible()) {
+//            Ext.getCmp(prototype.id + '-paggin').moveLast();
+//        }
+        this.getPaggin();
+        var pag = Ext.getCmp(prototype.id + me.pagginActual);
+        pag.moveLast();
     },
     // </editor-fold>
 
