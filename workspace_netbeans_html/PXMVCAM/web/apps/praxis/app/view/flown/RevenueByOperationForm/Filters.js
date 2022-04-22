@@ -80,7 +80,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             hiddenLabel: false,
                             listConfig: {maxHeight: 111},
                             listeners: {
-                                change: 'onFromYearChange',
+//                                change: 'onFromYearChange',
+                                change: 'cbxDateFromYear_changeHandler',
 //                                focus: function(combo) {
 //                                    combo.expand();
 //                                },
@@ -109,7 +110,8 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                             anchor: '100%',
                             listConfig: {maxHeight: 111},
                             listeners: {
-                                change: 'onFromMonthChange',
+//                                change: 'onFromMonthChange',
+                                change: 'cbxDateFromMonth_changeHandler',
 //                                focus: function(combo) {
 //                                    combo.expand();
 //                                },
@@ -249,6 +251,7 @@ Ext.define('Ext.Praxis.view.flown.RevenueByOperationForm.Filters', {
                         },
                         {xtype: 'tbspacer', width: 10},
                         // </editor-fold>
+                        
                         {xtype: 'tbspacer', width: 700},
                         {
                             xtype: 'radiogroup',
