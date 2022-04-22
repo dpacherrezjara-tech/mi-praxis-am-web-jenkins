@@ -93,6 +93,7 @@ public class A4116 {
     public String descTDOC = "";
     public String descFREGLA = "";
     public String descFCOMPL = "";
+    public String descSTCONL = "";
     
     //Variables del Sistema
     public String USCR = "";

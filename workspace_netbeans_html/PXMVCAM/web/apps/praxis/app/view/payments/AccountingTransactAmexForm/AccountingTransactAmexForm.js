@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.AccountingTransa
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1400,
+                                        width: 1700,
                                         align: 'center'
                                     },
                                     items: [
@@ -71,13 +71,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.AccountingTransa
                                         {
                                             xtype: 'panel',
                                             height: 600,
-                                            width: 1400,
+                                            width: 1700,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1400,
+                                                    width: 1700,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,
