@@ -385,6 +385,12 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
+            case  '-panelGridDataByDate':
+                global.getFile(prototype.url + '/getXLSXByDate?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataByQty':
+                global.getFile(prototype.url + '/getXLSXByQty?beanString=' + searchParams.beanString);
+                break;
             default:
                 global.Msg(
                         {msg: 'Under Construction'
