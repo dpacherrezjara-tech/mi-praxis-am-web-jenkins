@@ -90,15 +90,27 @@ public class A4116Filter extends A4116 {
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
     public String DES_CERROR = "";
+    public String IN_SPNR = "";
+    public String IN_BSUMDATE = "";
     public String STCONL = "";
     public String FCONTL = "";
     public String IDCONL = "";
+    public String TKT = "";
+    public String IDCON = "";
+    public String FCONT = "";
     public String FSELEC = "";
     public Integer FDUPLI = 0;
     
     //Flag contabilizado
     public double TGROSAMOUN_ACCOUNTED = 0;
     public double TGROSAMOUN_TO_DEBUG = 0;
+    public int QTY_ACCOUNTED = 0;
+    public int QTY_TO_DEBUG = 0;
+    public int QTY_TOTAL = 0;
+    public int totQTY_ACCOUNTED = 0;
+    public int totQTY_TO_DEBUG = 0;
+    public int totQTY_TOTAL = 0;
+    public double totSVFOPS = 0;
 
     //CAMPOS A720
     public String A720AGENTE = "";
