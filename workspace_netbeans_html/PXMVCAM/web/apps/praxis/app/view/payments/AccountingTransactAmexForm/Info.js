@@ -43,7 +43,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 560,
+                            height: 'auto',
                             width: 870,
                             layout: {
                                 type: 'vbox',
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainAcountTransact',
-                                    height: 520,
+                                    height: 'auto',
                                     width: 870,
                                     hidden: false,
                                     columnLines: true,
@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 560,
+                            height: 'auto',
                             width: 1620,
                             layout: {
                                 type: 'vbox',
@@ -194,7 +194,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainDataByDate',
-                                    height: 540,
+                                    height: 'auto',
                                     width: 1564,
                                     hidden: false,
                                     columnLines: true,
@@ -355,7 +355,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                             bodyStyle: 'background-color: #E3EAEF;',
                             padding: '1',
                             border: true,
-                            height: 560,
+                            height: 'auto',
                             width: 1510,
                             layout: {
                                 type: 'vbox',
@@ -365,7 +365,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainDataByQty',
-                                    height: 540,
+                                    height: 'auto',
                                     width: 1510,
                                     hidden: false,
                                     columnLines: true,
