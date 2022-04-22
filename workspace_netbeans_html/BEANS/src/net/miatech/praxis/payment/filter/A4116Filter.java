@@ -17,7 +17,9 @@ public class A4116Filter extends A4116 {
     public String RN = "";
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
+    public String IN_STCONL = "";
     public String IN_DATE = "";
+    public String IN_DATE_VALUE = "";
     public String DATE = "";
     public String IN_PNR = "";
     public String IN_STVAL = "";
@@ -61,6 +63,8 @@ public class A4116Filter extends A4116 {
     
     public double totGROSAMOUN = 0;
     public double totTGROSAMOUN = 0;
+    public double totTGROSAMOUN_ACCOUNTED = 0;
+    public double totTGROSAMOUN_TO_DEBUG = 0;
     public double totDISCAMOUN_IMPORT = 0;
     public double totDISCAMOUN_IVA = 0;
     public double totSFEEAMOU = 0;
@@ -86,8 +90,15 @@ public class A4116Filter extends A4116 {
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
     public String DES_CERROR = "";
+    public String STCONL = "";
+    public String FCONTL = "";
+    public String IDCONL = "";
     public String FSELEC = "";
     public Integer FDUPLI = 0;
+    
+    //Flag contabilizado
+    public double TGROSAMOUN_ACCOUNTED = 0;
+    public double TGROSAMOUN_TO_DEBUG = 0;
 
     //CAMPOS A720
     public String A720AGENTE = "";
