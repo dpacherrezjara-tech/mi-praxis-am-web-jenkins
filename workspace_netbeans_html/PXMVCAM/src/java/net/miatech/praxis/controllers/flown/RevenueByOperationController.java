@@ -390,7 +390,7 @@ public class RevenueByOperationController extends BaseController {
 //            CH1_13.setCellValue("");
 //            CH1_14.setCellValue("");
 //            CH1_15.setCellValue("");
-//            CH1_16.setCellValue("");
+            CH1_16.setCellValue("KMS");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -416,7 +416,8 @@ public class RevenueByOperationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 5));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 16, 16));
             ++vj;
             //============================================
 
