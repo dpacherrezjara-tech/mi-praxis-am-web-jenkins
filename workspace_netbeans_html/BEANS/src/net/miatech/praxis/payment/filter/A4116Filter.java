@@ -5,6 +5,8 @@
  */
 package net.miatech.praxis.payment.filter;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.miatech.beans.Pagination;
 import net.miatech.praxis.payment.A4116;
 
@@ -13,7 +15,7 @@ import net.miatech.praxis.payment.A4116;
  * @author ggutierrez
  */
 public class A4116Filter extends A4116 {
-    
+
     public String RN = "";
     public String IN_DATEFROM = "";
     public String IN_DATETO = "";
@@ -32,7 +34,7 @@ public class A4116Filter extends A4116 {
     public String IN_CERROR = "";
     public String IN_TDOC = "";
     public String IN_COMPLEMENT = "";
-    
+
     public double DISCAMOUN_IMPORT = 0;
     public double DISCAMOUN_IVA = 0;
     public double DISCRATE_IMPORT = 0;
@@ -50,8 +52,7 @@ public class A4116Filter extends A4116 {
     public double ACCEAMOU_TOTAL = 0;
     public double DISCAMOUNC_TOTAL = 0;
     public double DISCAMOUIC_TOTAL = 0;
-    
-    
+
     public double DISCAMOUN = 0;
     public double DISCAMOUN_CB = 0;
     public double TAXAMOUN_CB = 0;
@@ -60,7 +61,7 @@ public class A4116Filter extends A4116 {
     public double NETAMOUNC = 0;
     public double DISCAMOSC = 0;
     public double GROSAMOUN_CB = 0;
-    
+
     public double totGROSAMOUN = 0;
     public double totTGROSAMOUN = 0;
     public double totTGROSAMOUN_ACCOUNTED = 0;
@@ -77,7 +78,7 @@ public class A4116Filter extends A4116 {
     public double totNETAMOUN = 0;
     public double totDISCAMOSC = 0;
     public double totNETAMOUNC = 0;
-    
+
     public String strDATE = "";
     public String IN_AXPAYNBR = "";
     public String IN_PCURRENCY = "";
@@ -90,15 +91,27 @@ public class A4116Filter extends A4116 {
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
     public String DES_CERROR = "";
+    public String IN_SPNR = "";
+    public String IN_BSUMDATE = "";
     public String STCONL = "";
     public String FCONTL = "";
     public String IDCONL = "";
+    public String TKT = "";
+    public String IDCON = "";
+    public String FCONT = "";
     public String FSELEC = "";
     public Integer FDUPLI = 0;
-    
+
     //Flag contabilizado
     public double TGROSAMOUN_ACCOUNTED = 0;
     public double TGROSAMOUN_TO_DEBUG = 0;
+    public int QTY_ACCOUNTED = 0;
+    public int QTY_TO_DEBUG = 0;
+    public int QTY_TOTAL = 0;
+    public int totQTY_ACCOUNTED = 0;
+    public int totQTY_TO_DEBUG = 0;
+    public int totQTY_TOTAL = 0;
+    public double totSVFOPS = 0;
 
     //CAMPOS A720
     public String A720AGENTE = "";
@@ -109,8 +122,7 @@ public class A4116Filter extends A4116 {
     public String A720FVLO1 = "";
     public String A720PNR = "";
     public String A720FECVTA = "";
-    
-    
+
     // A1531
     public String A1531CIA = "";
     public String A1531FORMA = "";
@@ -122,15 +134,13 @@ public class A4116Filter extends A4116 {
     public String A1531TTARJ = "";
     public double A1531VFOP = 0.0;
     public double tot_VFOP = 0.0;
-    
+
     //Listado de codigos de error
     public String CODE = "";
     public String NAME = "";
-    
+
+    public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
+
     public Pagination page = new Pagination();
-    
-    
-    
-    
-    
+
 }

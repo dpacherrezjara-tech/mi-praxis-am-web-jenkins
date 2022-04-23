@@ -23,4 +23,8 @@ public class AccountingTransactAmexLogic {
         return AccountingTransactAmexDAO.loadPX590SQP04417(filter);
     }
     
+    public List<A4116Filter> loadPX590SQP04418(A4116Filter filter) throws SQLException, Exception {
+        return AccountingTransactAmexDAO.loadPX590SQP04418(filter);
+    }
+    
 }

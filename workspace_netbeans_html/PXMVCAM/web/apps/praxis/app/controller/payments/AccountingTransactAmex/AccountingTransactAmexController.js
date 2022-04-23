@@ -16,7 +16,11 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
     searchParamsByDate: {},
     paramsDetail: {},
     paramsDetailByDate: {},
+    paramsDetailByQty: {},
     beanDetByDate: {},
+    beanDetByAcount: {},
+    beanDetByDebug: {},
+    beanDetByQty: {},
     dataObtain: {},
     init: function (view) {
         me = this;
@@ -107,7 +111,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             ]
         }));
         cmbDateSel.setValue("PAYDATE");
-        
+
         this.btnSearch_click();
     },
     setFormatParameter: function () {
@@ -128,7 +132,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.setGridData();
     },
     setGridData: function () {
-        win.lblUser_toolTip("Estructura: A4116");        
+        win.lblUser_toolTip("Estructura: A4116");
         me.panelActual = '-panelGridData';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
@@ -181,6 +185,33 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDate);
         this.setGridDataDetByDate();
     },
+    onGridDetByAcount: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataByDate';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetByAcount.IN_DATE = rowData.data.IN_DATE;
+        this.beanDetByAcount.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByAcount.IN_STCONL = '1';
+        console.log(this.beanDetByAcount);
+        me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByAcount);
+        this.setGridDataDetByDate();
+    },
+    onGridDetByDebug: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataByDate';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetByDebug.IN_DATE = rowData.data.IN_DATE;
+        this.beanDetByDebug.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByDebug.IN_STCONL = '2';
+        console.log(this.beanDetByDebug);
+
+        me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDebug);
+        this.setGridDataDetByDate();
+    },
     setGridDataDetByDate: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.setWidthPie();
@@ -200,7 +231,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                    
+
                     me.setWidthPie();
 
                     if (obj.data.length === 0) {
@@ -209,7 +240,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         });
                     }
 
-                    
+
                 }
             }
         });
@@ -217,6 +248,61 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         Ext.getCmp(prototype.id + '-gridMainDataByDate').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridMainDataByDate').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
+    },
+    onGridDetByQty: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataByQty';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetByQty.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByQty.IN_DATE = rowData.data.IN_DATE;
+        this.beanDetByQty.IN_SPNR = rowData.data.SPNR;
+        this.beanDetByQty.IN_ISREFNBR = rowData.data.ISREFNBR;
+        this.beanDetByQty.IN_BSUMDATE = rowData.data.IN_BSUMDATE;
+        this.beanDetByQty.IN_FREGLA = rowData.data.FREGLA;
+        this.beanDetByQty.IN_SCARDN = rowData.data.SCARDN;
+        this.beanDetByQty.IN_SAUTHOC = rowData.data.SAUTHOC;
+        
+        console.log(this.beanDetByQty);
+
+        me.paramsDetailByQty.beanString = JSON.stringify(this.beanDetByQty);
+        this.setGridDataDetByQty();
+    },
+    setGridDataDetByQty: function () {
+        win.lblUser_toolTip("Estructura: A4116");
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByQty'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = me.paramsDetailByQty;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin3');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    me.setWidthPie();
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridMainDataByQty').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridMainDataByQty').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
     },
     validateFields: function () {
         var msj = '';
@@ -299,6 +385,12 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             case  '-panelGridData':
                 global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
                 break;
+            case  '-panelGridDataByDate':
+                global.getFile(prototype.url + '/getXLSXByDate?beanString=' + searchParams.beanString);
+                break;
+            case  '-panelGridDataByQty':
+                global.getFile(prototype.url + '/getXLSXByQty?beanString=' + searchParams.beanString);
+                break;
             default:
                 global.Msg(
                         {msg: 'Under Construction'
@@ -340,8 +432,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         }
     },
     setWidthPie: function () {
-             console.log(me.panelActual);
-        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridDataByDate') {
+        console.log(me.panelActual);
+        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridDataByDate' || me.panelActual === '-panelGridDataByQty') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -358,6 +450,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             case  '-panelGridDataByDate':
                 me.pagginActual = '-paggin2';
                 break;
+            case  '-panelGridDataByQty':
+                me.pagginActual = '-paggin3';
+                break;    
         }
     },
     pagFirst: function (obj, e) {

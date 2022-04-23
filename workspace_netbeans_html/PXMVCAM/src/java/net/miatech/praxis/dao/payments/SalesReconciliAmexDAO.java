@@ -2851,8 +2851,11 @@ public class SalesReconciliAmexDAO {
         A4116Filter objRtn = new A4116Filter();
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
+        //lstSendManual
+        List<A4116Filter> lstSendManual = filter.lstSendManual;
+        A4116Filter beanDet;
         String msj = "";
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04361(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -2875,11 +2878,42 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(14, filter.ISREFNBR.trim());
             cstmt01.setDouble(15, filter.TGROSAMOUN);
             cstmt01.setString(16, filter.CERROR);
-            cstmt01.setString(17, session.getUserView().getUserInfo().USR);
-            cstmt01.setString(18, Functions.getFechaActual());
-            cstmt01.setString(19, Functions.getHoraActual());
+            cstmt01.setInt(17, lstSendManual.size());
+            cstmt01.setString(18, session.getUserView().getUserInfo().USR);
+            cstmt01.setString(19, Functions.getFechaActual());
+            cstmt01.setString(20, Functions.getHoraActual());
 
             cstmt01.execute();
+
+            //Añadir tickets para el desglose
+            if (lstSendManual != null && lstSendManual.size() > 0) {
+                String SQLCLL02 = "{CALL " + session.getMainLibrary() + ".SQP04453(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+                cstmt01 = cnx.prepareCall(SQLCLL02);
+                for (int i = 0; i < lstSendManual.size(); i++) {
+                    beanDet = lstSendManual.get(i);
+
+                    cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST.trim());
+                    cstmt01.setString(2, filter.PRDA.trim());
+                    cstmt01.setString(3, filter.IDITEMS.trim());
+                    cstmt01.setString(4, filter.IDITEMT.trim());
+                    cstmt01.setString(5, filter.MERCHID.trim());
+                    cstmt01.setString(6, filter.PAYDATE.trim());
+                    cstmt01.setString(7, filter.AXPAYNBR.trim());
+                    cstmt01.setString(8, filter.BSUMDATE.trim());
+                    
+                    cstmt01.setString(9, beanDet.A1531NREF.trim());
+                    cstmt01.setString(10, beanDet.A1531CAPL.trim());
+                    cstmt01.setDouble(11, beanDet.A1531VFOP);
+                    cstmt01.setString(12, beanDet.A720PNR.trim());
+                    cstmt01.setString(13, beanDet.A1531TKT.trim());
+                    cstmt01.setString(14, beanDet.A720FECVTA.trim());
+                    cstmt01.setString(15, session.getUserView().getUserInfo().USR);
+                    cstmt01.setString(16, Functions.getFechaActual());
+                    cstmt01.setString(17, Functions.getHoraActual());
+
+                    cstmt01.execute();
+                }
+            }
 
         } catch (Exception e) {
             msj = e.getMessage();
@@ -3041,7 +3075,7 @@ public class SalesReconciliAmexDAO {
             }
             rst.close();
 
-        /*
+            /*
             for (int i = 0; i < lstInfo.size(); i++) {
                 String pnr2 = "";
                 String pnr1 = lstInfo.get(i).A720PNR;
@@ -3053,8 +3087,7 @@ public class SalesReconciliAmexDAO {
                     lstInfo.get(i).tot_VFOP = 0.00;
                 }
             }
-        */
-
+             */
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
