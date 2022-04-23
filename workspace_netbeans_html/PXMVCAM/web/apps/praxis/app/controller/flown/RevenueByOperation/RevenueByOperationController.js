@@ -4,6 +4,7 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
     // <editor-fold defaultstate="collapsed" desc="Variables Globales">
     fecha: new Date(),
     searchParams: {},
+    searchParams_Plane: {},
     _path: '',
     boxActual: '-boxMainData',
     drillDown: [],
@@ -52,6 +53,15 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
             }
         }
     },
+    
+    cbxDateFromYear_changeHandler: function() {
+        this.setValue('cmbDateToYear', this.getValue("cmbDateFromYear"));
+    },
+    
+    cbxDateFromMonth_changeHandler: function() {
+        this.setValue('cmbDateToMonth', this.getValue("cmbDateFromMonth"));
+    },
+    
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     onFromYearChange: function(combo, newValue, oldValue, eOpts) {
         var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
@@ -374,7 +384,7 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
         // </editor-fold>
     },
     setFormatParameterByNPlane: function() {
-        searchParams = {};
+        searchParams_Plane = {};
         // <editor-fold defaultstate="collapsed" desc="Combo Date">
         var fyear = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue();
         var fmonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
@@ -390,13 +400,13 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
         // </editor-fold>
 
         // <editor-fold defaultstate="collapsed" desc="asignación">
-        searchParams = {
+        searchParams_Plane = {
             IN_FECHA_FROM: fyear + fmonth,
             IN_FECHA_TO: tyear + tmonth
         };
         
-        var beanString = JSON.stringify(searchParams);
-        searchParams = beanString;
+        var beanString = JSON.stringify(searchParams_Plane);
+        searchParams_Plane = beanString;
         
 //        _path = prototype.url+'/getXLSX?' +
 //                'IN_TKT='+searchParams.IN_TKT+'&' +
@@ -412,7 +422,7 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
     // <editor-fold defaultstate="collapsed" desc="setGridData">
     setGridData: function() {
         
-        console.log(searchParams);
+        this.showGrid('-boxMainData');
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.RevenueByOperation.GridData', {
             proxy: {
                 url: prototype.url + '/search'
@@ -440,6 +450,8 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
                         global.Msg({
                             msg: 'Data not found'
                         });
+                    }else{
+                        console.log(obj.data);
                     }
                 }
             }
@@ -534,7 +546,7 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
             listeners: {
                 beforeload: function(obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
-                    obj.proxy.extraParams = {beanString: searchParams, dw_excel:false};
+                    obj.proxy.extraParams = {beanString: searchParams_Plane, dw_excel:false};
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
@@ -578,7 +590,8 @@ Ext.define('Ext.Praxis.controller.flown.RevenueByOperation.RevenueByOperationCon
         }else if(me.boxActual === '-boxByCityPair'){
             me.goURLpost('searchByCityPair', searchParams , Ext.getCmp(prototype.id + '-gridDet').config.columns.items);
         }else if(me.boxActual === '-boxByNPlane'){
-            me.goURLpost('searchByNPlane', searchParams , Ext.getCmp(prototype.id + '-gridDetCtas').config.columns.items);
+            global.getFile(prototype.url + '/getXLSX_ByNPlane?beanString=' + searchParams_Plane);
+//            me.goURLpost('searchByNPlane', searchParams , Ext.getCmp(prototype.id + '-gridDetCtas').config.columns.items);
         }else{
             me.dw_excel = false;
         }
