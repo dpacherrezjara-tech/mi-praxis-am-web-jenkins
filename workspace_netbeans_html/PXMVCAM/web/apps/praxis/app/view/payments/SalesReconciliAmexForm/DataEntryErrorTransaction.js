@@ -464,7 +464,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
-                                    text: 'Code',
+                                    text: 'History',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -635,7 +635,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfo',
                             layout: 'hbox',
                             border: false,
-                            width: 800,
+                            width: 785,
                             height: 150,
                             hidden: true,
                             bodyStyle: 'background:#E5ECEF;',
@@ -644,7 +644,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfo',
-                                    width: 800,
+                                    width: 785,
                                     height: 150,
 //                                    hidden: false,
                                     columnLines: true,
@@ -663,7 +663,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 50,
+                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.FDUPLI > 0) {
                                                                 metaData.style = "text-align:center;background-color:#FF4444";
@@ -683,7 +683,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Approval', dataIndex: 'A1531CAPL', width: 80,
+                                                    {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.FDUPLI > 0) {
                                                                 metaData.style = "text-align:center;background-color:#FF4444";
@@ -738,7 +738,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 120,
+                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.FDUPLI > 0) {
                                                         metaData.style = "text-align:center;background-color:#FF4444";
@@ -748,7 +748,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 90,
+                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 65,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.FDUPLI > 0) {
                                                         metaData.style = "text-align:center;background-color:#FF4444";
@@ -757,6 +757,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                     return value;
                                                 }
+                                            },
+                                            {
+                                                text: 'Select',
+                                                xtype: 'checkcolumn',
+                                                id: prototype.id + '-id_checkManual',
+                                                width: 50,
+                                                dataIndex: 'false',
+                                                listeners: {
+                                                    checkchange: 'checkManual'
+                                                },                                                
                                             },
                                             {
                                                 sortable: false,

@@ -12,11 +12,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     searchParams: {},
     lstA1852: {},
     dataObtain: {},
+    lstSendManual: [],
     // </editor-fold>
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
         meDE = this;
+        
+        this.lstSendManual = [];
 
         this.p = this.view.params;
         this.actionCode = this.p.action;
@@ -45,20 +48,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
     },
     mostrarData: function () {
-        
+
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
         this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
-        
+
         var sMerch = this.beanResult.SMERCHID.trim();
-        if( sMerch === '9353227755' ||  sMerch === '8133735688' ||  sMerch === '9352724851'){
+        if (sMerch === '9353227755' || sMerch === '8133735688' || sMerch === '9352724851') {
             Ext.getCmp(prototype.id + '-chkSelection').hide();
-        }else{
+        } else {
             Ext.getCmp(prototype.id + '-chkSelection').show();
         }
-        
+
         this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
@@ -86,11 +89,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
-        
+
         this.getDataGrid(this.beanResult);
-        
-        
-        
+
+
+
     },
     obtainData: function () {
 //        console.log('obtainData');
@@ -98,34 +101,37 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     llenarData: function (beanTemp) {
 
-        beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");      
-        beanTemp.PRDA = this.getValue("de-txtPRDA");      
-        beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");      
-        beanTemp.MERCHID = this.getValue("de-txtMERCHID");      
-        beanTemp.SMERCHID = this.getValue("de-txtSMERCHID");      
-        beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");      
-        beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");      
-        beanTemp.SCARDN = this.getValue("de-txtSCARDN");      
-        beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");      
-        beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");      
+        beanTemp.PAYDATE = this.getValue("de-txtPAYDATE");
+        beanTemp.PRDA = this.getValue("de-txtPRDA");
+        beanTemp.BSUMDATE = this.getValue("de-txtBSUMDATE");
+        beanTemp.MERCHID = this.getValue("de-txtMERCHID");
+        beanTemp.SMERCHID = this.getValue("de-txtSMERCHID");
+        beanTemp.AXPAYNBR = this.getValue("de-txtAXPAYNBR");
+        beanTemp.PCURRENCY = this.getValue("de-txtPCURRENCY");
+        beanTemp.SCARDN = this.getValue("de-txtSCARDN");
+        beanTemp.SAUTHOC = this.getValue("de-txtSAUTHOC");
+        beanTemp.IDITEMS = this.getValue("de-txtIDITEMS");
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
-        
+
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
         } else {
             beanTemp.TGROSAMOUN = 0;
-        }      
-     
-        beanTemp.SPNR = this.getValue("de-txtSPNR");      
-        beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");      
-        beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");           
+        }
+
+        beanTemp.SPNR = this.getValue("de-txtSPNR");
+        beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
+        beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
+        
+        beanTemp.lstSendManual = this.lstSendManual;
+        
         console.log(beanTemp);
 
     },
     getData: function () {
-                
+
         var beanString = JSON.stringify(meDE.bean);
         Ext.Ajax.request({
             url: prototype.url + '/searchTransactionErrorDetail',
@@ -144,7 +150,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         });
     },
     getDataGrid: function (beanGrid) {
-            
+
         var beanStringGrid = JSON.stringify(beanGrid);
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionError',
@@ -156,20 +162,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-gridDataInfo').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanInfo = res.lstInfo;
-                
+
                 console.log(meDE.beanInfo);
-                
+
                 var storeData = Ext.create('Ext.data.Store', {
                     data: meDE.beanInfo,
                     autoLoad: true
                 });
-                
+
                 Ext.getCmp(prototype.id + '-gridDataInfo').bindStore(storeData);
 
             }
         });
     },
-
     //<editor-fold defaultstate="collapsed" desc="limpiarData">
     limpiarData: function () {
         //this.setValue('txtCODSOUR', '');        
@@ -187,18 +192,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onUpdateClick: function (btn) {
 //        console.log('onUpdateClick');
         var txtMsj = this.validacionInsert();
+        var txtMsj = this.validacionDesglose();
         if (txtMsj === '') {
             var beanTemp = {};
             this.llenarData(beanTemp);
             beanTemp.option = 'U';
-            this.ValidateTicketPNR(beanTemp, btn);                                   
+            this.ValidateTicketPNR(beanTemp, btn);            
         } else {
             global.Msg({msg: txtMsj});
         }
 
     },
     onDeleteClick: function (btn) {
-        
+
     },
     onCancelClick: function (btn) {
         this.view.close();
@@ -231,7 +237,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     global.Msg({msg: res.msjOption});
                     //global.Msg({msg: 'Failed to Update Transaction'});
                 }
-                    
+
             }
         });
     },
@@ -251,28 +257,28 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 if (res.success) {
-                    
+
                     Ext.Msg.show(
-                    {
-                        title: '.:PRAXIS:.',
-                        msg: 'Are you sure to update?',
-                        buttons: Ext.MessageBox.YESNO,
-                        scope: this,
-                        animateTarget: btn,
-                        icon: Ext.MessageBox.QUESTION,
-                        modal: true,
-                        fn: function (btn) {
-                            if (btn === 'yes') {                                                                
-                                meDE.MaintenanceA4116(beanTemp);
-                            }
-                        }
-                    });
-                    
+                            {
+                                title: '.:PRAXIS:.',
+                                msg: 'Are you sure to update?',
+                                buttons: Ext.MessageBox.YESNO,
+                                scope: this,
+                                animateTarget: btn,
+                                icon: Ext.MessageBox.QUESTION,
+                                modal: true,
+                                fn: function (btn) {
+                                    if (btn === 'yes') {
+                                        meDE.MaintenanceA4116(beanTemp);
+                                    }
+                                }
+                            });
+
                 } else {
                     global.Msg({msg: res.msjOption});
-                }                    
+                }
             }
-        });        
+        });
     },
     //</editor-fold>
 
@@ -280,6 +286,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var msjResult = '';
         if (this.getValue("de-txtSPNR") === '' || this.getValue("de-txtISREFNBR") === '') {
             msjResult = "You must enter the required field.";
+        }
+        return msjResult;
+    },
+    validacionDesglose: function () {
+        var msjResult = '';
+        if (this.lstSendManual.length === 0 ) {
+            msjResult = "You must select at least one ticket.";
         }
         return msjResult;
     },
@@ -328,21 +341,45 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 // </editor-fold>
 
     onGridInfo: function () {
-        
+
         var chk = Ext.getCmp(prototype.id + '-chkSelection').getValue();
-        if(chk){
+        if (chk) {
             Ext.getCmp(prototype.id + '-panelDataInfo').show();
-        }else{
+        } else {
             Ext.getCmp(prototype.id + '-panelDataInfo').hide();
         }
     },
     onTktPnr: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex).data;
         console.log(rec);
-        
+
         this.setValue('de-txtISREFNBR', rec.A1531TKT);
         this.setValue('de-txtSPNR', rec.A720PNR);
-        
-    },
 
+    },
+    checkManual: function (a, b, bol, rowData, e, f, g, h) {
+        console.log(bol);
+
+        if (bol === true) {
+            this.lstSendManual.push(rowData.data);
+            console.log(this.lstSendManual);
+
+        } else {
+            for (var j = 0; j < this.lstSendManual.length; j++) {
+                if (this.lstSendManual[j].A1531TTARJ === rowData.data.A1531TTARJ &&
+                        this.lstSendManual[j].A1531NREF === rowData.data.A1531NREF &&
+                        this.lstSendManual[j].A1531CAPL === rowData.data.A1531CAPL &&
+                        this.lstSendManual[j].A1531VFOP === rowData.data.A1531VFOP &&
+                        this.lstSendManual[j].tot_VFOP === rowData.data.tot_VFOP &&
+                        this.lstSendManual[j].A720FECVTA === rowData.data.A720FECVTA &&
+                        this.lstSendManual[j].A720PNR === rowData.data.A720PNR &&
+                        this.lstSendManual[j].A1531TKT === rowData.data.A1531TKT &&
+                        this.lstSendManual[j].A720AGENTE === rowData.data.A720AGENTE) {
+                    this.lstSendManual.splice(j, 1);
+                    console.log(this.lstSendManual);
+                }
+            }
+        }
+
+    },
 });
