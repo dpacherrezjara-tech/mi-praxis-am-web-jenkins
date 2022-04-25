@@ -50,7 +50,11 @@ public class AccountingTransactAmexDAO {
         int totQTY_ACCOUNTED  = 0;
         int totQTY_TO_DEBUG  = 0;
         int totQTY_TOTAL  = 0;
-
+        int totQTY_ALL  = 0;
+        double totTGROSAMOUN_ALL  = 0;
+        int totQTY_DIFF  = 0;
+        double totTGROSAMOUN_DIFF  = 0;  
+                
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
@@ -91,6 +95,10 @@ public class AccountingTransactAmexDAO {
                 totQTY_ACCOUNTED = rst.getInt("QTY_ACCOUNTED");
                 totQTY_TO_DEBUG = rst.getInt("QTY_TO_DEBUG");
                 totQTY_TOTAL = rst.getInt("QTY_TOTAL");
+                totQTY_ALL = rst.getInt("QTY_ALL");
+                totTGROSAMOUN_ALL = rst.getDouble("TGROSAMOUN_ALL");
+                totQTY_DIFF = totQTY_TOTAL - totQTY_ALL;
+                totTGROSAMOUN_DIFF = totTGROSAMOUN - totTGROSAMOUN_ALL;         
             }
             rst.close();
 
@@ -111,6 +119,8 @@ public class AccountingTransactAmexDAO {
                     beanTkt.QTY_ACCOUNTED = rst.getInt("QTY_ACCOUNTED");
                     beanTkt.QTY_TO_DEBUG = rst.getInt("QTY_TO_DEBUG");
                     beanTkt.QTY_TOTAL = rst.getInt("QTY_TOTAL");
+                    beanTkt.QTY_ALL= rst.getInt("QTY_ALL");
+                    beanTkt.TGROSAMOUN_ALL = rst.getDouble("TGROSAMOUN_ALL");
 
                     //TOTALEs
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
@@ -119,6 +129,14 @@ public class AccountingTransactAmexDAO {
                     beanTkt.totQTY_ACCOUNTED = totQTY_ACCOUNTED;
                     beanTkt.totQTY_TO_DEBUG = totQTY_TO_DEBUG;
                     beanTkt.totQTY_TOTAL = totQTY_TOTAL;
+                    beanTkt.totQTY_ALL = totQTY_ALL;
+                    beanTkt.totTGROSAMOUN_ALL = totTGROSAMOUN_ALL;
+                    beanTkt.totQTY_DIFF = totQTY_DIFF;
+                    beanTkt.totTGROSAMOUN_DIFF = totTGROSAMOUN_DIFF;
+                    
+                    //DIFERENCIAs
+                    beanTkt.QTY_DIFF = beanTkt.QTY_TOTAL - beanTkt.QTY_ALL;
+                    beanTkt.TGROSAMOUN_DIFF = beanTkt.TGROSAMOUN - beanTkt.TGROSAMOUN_ALL;  
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
