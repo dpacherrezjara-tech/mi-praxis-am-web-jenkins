@@ -200,8 +200,8 @@ public class AccountingTransactAmexController extends BaseController {
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Report : getXLSX");
-        String fileNameDownload = String.format("Report  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("Report Accounting Transaction AMEX : getXLSX");
+        String fileNameDownload = String.format("Report Accounting Transaction AMEX  - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         try {
             Workbook workbook;
             File file = File.createTempFile(fileNameDownload, ".xlsx");
@@ -264,15 +264,23 @@ public class AccountingTransactAmexController extends BaseController {
             Cell CH1_5 = row1.createCell(5);
             Cell CH1_6 = row1.createCell(6);
             Cell CH1_7 = row1.createCell(7);
+            Cell CH1_8 = row1.createCell(8);
+            Cell CH1_9 = row1.createCell(9);
+            Cell CH1_10 = row1.createCell(10);
+            Cell CH1_11 = row1.createCell(11);
 
             CH1_0.setCellValue("Payment Date");
             CH1_1.setCellValue("Currency");
-            CH1_2.setCellValue("Transaction");
+            CH1_2.setCellValue("Accounting Transaction");
             CH1_3.setCellValue("");
             CH1_4.setCellValue("");
             CH1_5.setCellValue("");
             CH1_6.setCellValue("");
             CH1_7.setCellValue("");
+            CH1_8.setCellValue("Transacation AMEX");
+            CH1_9.setCellValue("");
+            CH1_10.setCellValue("Differences");
+            CH1_11.setCellValue("");
 
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
@@ -282,11 +290,17 @@ public class AccountingTransactAmexController extends BaseController {
             CH1_5.setCellStyle(headerStyle);
             CH1_6.setCellStyle(headerStyle);
             CH1_7.setCellStyle(headerStyle);
+            CH1_8.setCellStyle(headerStyle);
+            CH1_9.setCellStyle(headerStyle);
+            CH1_10.setCellStyle(headerStyle);
+            CH1_11.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 2, 7));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 8, 9));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 11));
             ++vj;
             //============================================
 
@@ -300,6 +314,10 @@ public class AccountingTransactAmexController extends BaseController {
             Cell CH2_5 = row2.createCell(5);
             Cell CH2_6 = row2.createCell(6);
             Cell CH2_7 = row2.createCell(7);
+            Cell CH2_8 = row2.createCell(8);
+            Cell CH2_9 = row2.createCell(9);
+            Cell CH2_10 = row2.createCell(10);
+            Cell CH2_11 = row2.createCell(11);
 
             CH2_0.setCellValue("");
             CH2_1.setCellValue("");
@@ -309,6 +327,10 @@ public class AccountingTransactAmexController extends BaseController {
             CH2_5.setCellValue("Qty To Debug");
             CH2_6.setCellValue("Total");
             CH2_7.setCellValue("Qty Total");
+            CH2_8.setCellValue("Total Amount");
+            CH2_9.setCellValue("Qty Total");
+            CH2_10.setCellValue("Amount");
+            CH2_11.setCellValue("Qty");
 
             CH2_0.setCellStyle(headerStyle);
             CH2_1.setCellStyle(headerStyle);
@@ -318,6 +340,10 @@ public class AccountingTransactAmexController extends BaseController {
             CH2_5.setCellStyle(headerStyle);
             CH2_6.setCellStyle(headerStyle);
             CH2_7.setCellStyle(headerStyle);
+            CH2_8.setCellStyle(headerStyle);
+            CH2_9.setCellStyle(headerStyle);
+            CH2_10.setCellStyle(headerStyle);
+            CH2_11.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 2, 2));
@@ -326,6 +352,10 @@ public class AccountingTransactAmexController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 5, 5));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 7, 7));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 8, 8));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 9, 9));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 10));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 11, 11));
             ++vj;
             //============================================
 
@@ -339,6 +369,10 @@ public class AccountingTransactAmexController extends BaseController {
                 Cell rcell5 = row1.createCell(5);
                 Cell rcell6 = row1.createCell(6);
                 Cell rcell7 = row1.createCell(7);
+                Cell rcell8 = row1.createCell(8);
+                Cell rcell9 = row1.createCell(9);
+                Cell rcell10 = row1.createCell(10);
+                Cell rcell11 = row1.createCell(11);
 
                 rcell0.setCellValue(listaData.get(vi).PAYDATE);
                 rcell1.setCellValue(listaData.get(vi).PCURRENCY);
@@ -348,6 +382,10 @@ public class AccountingTransactAmexController extends BaseController {
                 rcell5.setCellValue(listaData.get(vi).QTY_TO_DEBUG);
                 rcell6.setCellValue(listaData.get(vi).TGROSAMOUN);
                 rcell7.setCellValue(listaData.get(vi).QTY_TOTAL);
+                rcell8.setCellValue(listaData.get(vi).TGROSAMOUN_ALL);
+                rcell9.setCellValue(listaData.get(vi).QTY_ALL);
+                rcell10.setCellValue(listaData.get(vi).TGROSAMOUN_DIFF);
+                rcell11.setCellValue(listaData.get(vi).QTY_DIFF);
                 iter.next();
                 ++vi;
                 ++vj;
@@ -362,6 +400,10 @@ public class AccountingTransactAmexController extends BaseController {
             Cell CH1_5_T = rowTotal.createCell(5);
             Cell CH1_6_T = rowTotal.createCell(6);
             Cell CH1_7_T = rowTotal.createCell(7);
+            Cell CH1_8_T = rowTotal.createCell(8);
+            Cell CH1_9_T = rowTotal.createCell(9);
+            Cell CH1_10_T = rowTotal.createCell(10);
+            Cell CH1_11_T = rowTotal.createCell(11);
 
             CH1_0_T.setCellValue("");
             CH1_1_T.setCellValue("");
@@ -371,6 +413,10 @@ public class AccountingTransactAmexController extends BaseController {
             CH1_5_T.setCellValue(listaData.get(0).totQTY_TO_DEBUG);
             CH1_6_T.setCellValue(listaData.get(0).totTGROSAMOUN);
             CH1_7_T.setCellValue(listaData.get(0).totQTY_TOTAL);
+            CH1_8_T.setCellValue(listaData.get(0).totTGROSAMOUN_ALL);
+            CH1_9_T.setCellValue(listaData.get(0).totQTY_ALL);
+            CH1_10_T.setCellValue(listaData.get(0).totTGROSAMOUN_DIFF);
+            CH1_11_T.setCellValue(listaData.get(0).totQTY_DIFF);
 
             CH1_0_T.setCellStyle(totalStyle);
             CH1_1_T.setCellStyle(totalStyle);
@@ -380,6 +426,10 @@ public class AccountingTransactAmexController extends BaseController {
             CH1_5_T.setCellStyle(totalStyle);
             CH1_6_T.setCellStyle(totalStyle);
             CH1_7_T.setCellStyle(totalStyle);
+            CH1_8_T.setCellStyle(totalStyle);
+            CH1_9_T.setCellStyle(totalStyle);
+            CH1_10_T.setCellStyle(totalStyle);
+            CH1_11_T.setCellStyle(totalStyle);
 
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
@@ -389,6 +439,10 @@ public class AccountingTransactAmexController extends BaseController {
             sheet.autoSizeColumn(5, true);
             sheet.autoSizeColumn(6, true);
             sheet.autoSizeColumn(7, true);
+            sheet.autoSizeColumn(8, true);
+            sheet.autoSizeColumn(9, true);
+            sheet.autoSizeColumn(10, true);
+            sheet.autoSizeColumn(11, true);
 
             //============================================
             response.setContentType("application/vnd.openxml");

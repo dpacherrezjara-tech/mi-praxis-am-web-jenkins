@@ -78,6 +78,8 @@ public class A4116Filter extends A4116 {
     public double totNETAMOUN = 0;
     public double totDISCAMOSC = 0;
     public double totNETAMOUNC = 0;
+    public double TGROSAMOUN_ALL = 0;
+    public double TGROSAMOUN_DIFF = 0;
 
     public String strDATE = "";
     public String IN_AXPAYNBR = "";
@@ -112,6 +114,12 @@ public class A4116Filter extends A4116 {
     public int totQTY_TO_DEBUG = 0;
     public int totQTY_TOTAL = 0;
     public double totSVFOPS = 0;
+    public int QTY_ALL = 0;
+    public int QTY_DIFF = 0;
+    public int totQTY_ALL = 0;
+    public double totTGROSAMOUN_ALL= 0;
+    public int totQTY_DIFF= 0;
+    public double totTGROSAMOUN_DIFF = 0;
 
     //CAMPOS A720
     public String A720AGENTE = "";
@@ -142,5 +150,6 @@ public class A4116Filter extends A4116 {
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
     public Pagination page = new Pagination();
-
+    
+    
 }

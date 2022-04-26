@@ -99,6 +99,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnAdd',
                             iconCls: 'prx-icon-add',
+                            hidden: true,
                             tooltip: 'New'
                         },
 //                        {
