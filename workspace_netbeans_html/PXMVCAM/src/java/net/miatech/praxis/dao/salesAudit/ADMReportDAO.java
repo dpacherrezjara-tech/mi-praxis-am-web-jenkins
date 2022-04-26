@@ -289,9 +289,8 @@ public class ADMReportDAO {
                     if (rs01.getString("A2548CODR2") != null) {
                         objRtn.A2548CODR2 = rs01.getString("A2548CODR2") + "-" + rs01.getString("A2548DESC2");
                     }
-                    if (rs01.getString("A2548CODR3") != null) {
-                        objRtn.A2548DESC3 = rs01.getString("A2548CODR3") + "-" + rs01.getString("A2548DESC3");
-                    }
+                    objRtn.A2548DESC3 = rs01.getString("A2548DESC3");
+                    
                     objRtn.A2548CATNDOCUM = rs01.getInt("VL_CANTDOC");
                     objRtn.A2548CATNMEMO = rs01.getInt("A2548CATNMEMO");
 
