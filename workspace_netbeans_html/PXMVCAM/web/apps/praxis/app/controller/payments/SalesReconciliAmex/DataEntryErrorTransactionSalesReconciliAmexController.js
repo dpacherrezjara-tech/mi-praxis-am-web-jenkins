@@ -193,6 +193,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 //        console.log('onUpdateClick');
         var txtMsj = this.validacionInsert();
         var txtMsj = this.validacionDesglose();
+        var txtMsj = this.validacionMontos();
         if (txtMsj === '') {
             var beanTemp = {};
             this.llenarData(beanTemp);
@@ -293,6 +294,29 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var msjResult = '';
         if (this.lstSendManual.length === 0 ) {
             msjResult = "You must select at least one ticket.";
+        }
+        return msjResult;
+    },
+    validacionMontos: function () {
+        var msjResult = '';
+        var suma_montos = 0;
+        var monto_venta = 0;
+        
+        for (var j = 0; j < this.lstSendManual.length; j++) {
+            suma_montos = suma_montos + this.lstSendManual[j].A1531VFOP;
+        }
+        
+        if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
+            monto_venta = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
+        } else {
+            monto_venta = 0;
+        }
+        
+        console.log(suma_montos);
+        console.log(monto_venta);
+                
+        if (suma_montos !== monto_venta ) {
+            msjResult = "Sum of the mounts must match with Transaction Amount";
         }
         return msjResult;
     },
