@@ -1936,6 +1936,7 @@ public class SalesReconciliAmexDAO {
         double DISCAMOUIC_TOTAL = 0;
         double VATCOMMSIC_TOTAL = 0;
         double DISCAMOUN_CB_TOTAL = 0;
+        double SVFOPS_TOTAL = 0;
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
@@ -1996,6 +1997,7 @@ public class SalesReconciliAmexDAO {
                 DISCAMOUIC_TOTAL = rst.getDouble("DISCAMOUIC_TOTAL");
                 VATCOMMSIC_TOTAL = rst.getDouble("VATCOMMSIC_TOTAL");
                 DISCAMOUN_CB_TOTAL = rst.getDouble("DISCAMOUN_CB_TOTAL");
+                SVFOPS_TOTAL = rst.getDouble("SVFOPS_TOTAL");
             }
             rst.close();
 
@@ -2035,6 +2037,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOUN = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN"));
                     beanTkt.DISCAMOUNI = this.mantenerSigno(beanTkt.DISCAMOUN, rst.getDouble("DISCAMOUNI"));
 
+                    beanTkt.SVFOPS = rst.getDouble("SVFOPS");
                     beanTkt.SFEEAMOU = rst.getDouble("SFEEAMOU");
                     beanTkt.ACCEAMOU = rst.getDouble("ACCEAMOU");
                     beanTkt.DISCAMOUN_IMPORT = rst.getDouble("DISCAMOUN_IMPORT");
@@ -2127,6 +2130,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
                     beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
+                    beanTkt.SVFOPS_TOTAL = SVFOPS_TOTAL;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
