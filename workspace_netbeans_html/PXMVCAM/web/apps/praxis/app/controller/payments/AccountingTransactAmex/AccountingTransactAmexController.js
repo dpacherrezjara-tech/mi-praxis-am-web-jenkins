@@ -102,7 +102,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
         Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue('');
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
-        
+
         var cmbTDOC = Ext.getCmp(prototype.id + '-cmbTDOC');
         cmbTDOC.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -136,7 +136,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
 
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
-        
+
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             bean: me.bean,
@@ -144,8 +144,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         };
     },
     btnSearch_click: function (obj, e) {
-        this.setFormatParameter();
-        this.setGridData();
+            this.setFormatParameter();
+            this.setGridData();
     },
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A4116");
@@ -193,11 +193,10 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataByDate';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-
         this.beanDetByDate.IN_DATE = rowData.data.IN_DATE;
         this.beanDetByDate.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByDate.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         console.log(this.beanDetByDate);
-
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDate);
         this.setGridDataDetByDate();
     },
@@ -209,6 +208,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
 
         this.beanDetByAcount.IN_DATE = rowData.data.IN_DATE;
         this.beanDetByAcount.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByAcount.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByAcount.IN_STCONL = '1';
         console.log(this.beanDetByAcount);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByAcount);
@@ -222,9 +222,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
 
         this.beanDetByDebug.IN_DATE = rowData.data.IN_DATE;
         this.beanDetByDebug.IN_DATE_VALUE = rowData.data.PAYDATE;
+        this.beanDetByDebug.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         this.beanDetByDebug.IN_STCONL = '2';
         console.log(this.beanDetByDebug);
-
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDebug);
         this.setGridDataDetByDate();
     },
@@ -326,8 +326,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         global.selectedChild(me.childs, prototype.id + me.panelActual);
 
         this.beanDetByDay.IN_DATE = rowData.data.IN_DATE;
-        this.beanDetByDay.IN_DATE_VALUE = rowData.data.PAYDATE;        
+        this.beanDetByDay.IN_DATE_VALUE = rowData.data.PAYDATE;
         this.beanDetByDay.strFormatDate = rowData.data.strFormatDate;
+        this.beanDetByDay.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         console.log(this.beanDetByDay);
 
         me.paramsDetailByDay.beanString = JSON.stringify(this.beanDetByDay);
