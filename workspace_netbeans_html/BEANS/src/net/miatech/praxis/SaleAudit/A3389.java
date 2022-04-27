@@ -77,6 +77,8 @@ public class A3389 {
     public String A3389CANTPROC;
     public String A3389TKTDUPLI;
     public String A3389TKTDUPLI2;
+    public String A3401STATU;
+    public String A3401RAAG;
 
     public double A3389VCASH;
     public double A3389VCRED;

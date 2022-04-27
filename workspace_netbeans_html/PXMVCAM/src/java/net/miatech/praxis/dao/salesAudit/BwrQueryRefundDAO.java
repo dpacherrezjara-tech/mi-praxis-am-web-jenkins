@@ -153,6 +153,11 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389RAAR = rs01.getString("A3389RAAR");
                 objRtn.A3389RAUD = rs01.getString("A3389RAUD");
                 objRtn.A3389PGNA = rs01.getString("A3389PGNA");
+
+                objRtn.A3389FREJE = rs01.getString("A3389FREJE");
+                objRtn.A3389HRERR = rs01.getString("A3389HRERR");
+                objRtn.A3389TARIA = rs01.getDouble("A3389TARIA");
+                objRtn.A3389FRERR = rs01.getString("A3389FRERR");
                 // A2548EMISION
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
@@ -586,7 +591,6 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389STATO = rs01.getString("A3389STATO");
                 objRtn.A3389RAAG = rs01.getString("A3389RAAG");
                 objRtn.A3389RAAR = rs01.getString("A3389RAZON");
-                
 
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
 
@@ -618,6 +622,7 @@ public class BwrQueryRefundDAO {
         }
         return lstRtn;
     }
+
     public String ProcesaMantenimiento(A3389Filter beanGuardarA3389) throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -628,7 +633,7 @@ public class BwrQueryRefundDAO {
         try {
             String SQLCLL01 = "{CALL PXSAUDIT.SQP02873(?,?,?,?,?,?)}";//SQP02515
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
-            
+
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
             cs.setString("IN_PREME", beanGuardarA3389.IN_PREME);
             cs.setString("IN_STATUS", beanGuardarA3389.IN_STATUS);
@@ -645,10 +650,10 @@ public class BwrQueryRefundDAO {
             cs.close();
         } catch (SQLException e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } catch (Exception e) {
             logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
-            STR_RESULT=e.getMessage();
+            STR_RESULT = e.getMessage();
         } finally {
             strSQL = null;
             session.getCNXIBMDB2().close();
@@ -656,7 +661,7 @@ public class BwrQueryRefundDAO {
 
         return STR_RESULT;
     }
-    
+
     public List<A3908Filter> searchSabreLst(A3908Filter filter) throws SQLException, Exception {
         List<A3908Filter> lstRtn = new ArrayList<A3908Filter>(0);
         A3908Filter objRtn;
@@ -669,12 +674,11 @@ public class BwrQueryRefundDAO {
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            
+
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_PREME);
 
             cstmt01.execute();
-
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -691,7 +695,7 @@ public class BwrQueryRefundDAO {
                 objRtn.A3908PAIS = rs01.getString("A3908PAIS");
                 objRtn.A3908STATO = rs01.getString("A3908STATO");
                 objRtn.A3908HCAMB = rs01.getString("A3908HCAMB");
-                
+
                 lstRtn.add(objRtn);
 
                 //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);
@@ -720,5 +724,5 @@ public class BwrQueryRefundDAO {
         }
         return lstRtn;
     }
-    
+
 }
