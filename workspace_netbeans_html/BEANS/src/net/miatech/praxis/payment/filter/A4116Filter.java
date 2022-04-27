@@ -23,6 +23,7 @@ public class A4116Filter extends A4116 {
     public String IN_DATE = "";
     public String IN_DATE_VALUE = "";
     public String DATE = "";
+    public String strFormatDate = "";
     public String IN_PNR = "";
     public String IN_STVAL = "";
     public String IN_TRANSDATE = "";
