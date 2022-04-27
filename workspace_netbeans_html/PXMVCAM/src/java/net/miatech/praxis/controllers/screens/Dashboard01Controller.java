@@ -39,9 +39,13 @@ import net.miatech.beans.A1971Filter;
 import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
+import net.miatech.libcust.A005wr;
+import net.miatech.libcust.A051wr;
+import net.miatech.praxis.A005;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
+import net.miatech.praxis.interline.filter.WRF016Filterwk;
 import net.miatech.utils.ExportSchema;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -1738,6 +1742,88 @@ public class Dashboard01Controller extends BaseController {
 //            } else {
 //                map.put("lstData", mapData);
 //            }
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
+    @RequestMapping(value = "obtainDataFilter_WK")
+    public @ResponseBody
+    String obtainDataFilter_WK(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        
+//        List<A005wr> lstAerolineas;
+        List<A051wr> lstUsos;
+        Gson gson = new Gson();
+        A050Filter filter;
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A050Filter.class);
+            
+            
+            masterDAO = new MasterDAO();
+            masterDAO.setSession(this.serverSession.getServerSession());
+            List<A005> lstAerolineas = masterDAO.loadAirlines(true);
+            
+            
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            lstUsos = logic.loadUsoswr("");
+
+            
+            map.put("success", true);
+            map.put("lstAerolineas", lstAerolineas);
+            map.put("data", lstUsos);
+
+//            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
+//                String nameExcel = exportFieldsCompleto(request, response, (List<?>) mapData);
+//                map.put("nameExcel", nameExcel);
+//            } else {
+//                map.put("lstUsos", mapData);
+//            }
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+            throw new SpringException(e);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    
+    @RequestMapping(value = "search_WK")
+    public @ResponseBody
+    String search_WK(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        List<A050Filter> lstData;
+        Gson gson = new Gson();
+        WRF016Filterwk filter;
+        
+        HashMap hm;
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            String beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, WRF016Filterwk.class);
+
+            logic = new Dashboard01Logic();
+            logic.setSession(this.serverSession.getServerSession());
+            hm = logic.loadPX165S01WRF016(filter);
+
+            map.put("success", true);
+            map.put("data",  hm.get("lst1"));
+            map.put("listaData2",  hm.get("lst2"));
+            map.put("listaRates",  hm.get("lstRates"));
+
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);

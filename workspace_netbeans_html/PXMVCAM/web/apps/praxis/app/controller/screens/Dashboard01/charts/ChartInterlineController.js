@@ -4,9 +4,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     searchParams: {},
     columns2: {},
     bean: {},
+    beanWK: {},
     beanDet: {},
     dataObtain_chart: {},
     dataAirline_chart: [],
+    gridData_WK_AC: [],
+    gridData2AC: [],
+    gridDataRatesAC: [],
     storeGridDatas: '',
     meIChart: '',
     dw_excel: false,
@@ -84,6 +88,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                 break;
 
             case 'rbc3_IA' :
+//                this.obtainDataFilter_WK();
+                this.search_WK();
                 break;
 
         }
@@ -91,17 +97,25 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     setFormatParameter: function () {
 
         meIChart.bean = {};
+        
+        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue('')
+        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue('')
 
         var valueRadio = Ext.getCmp(prototype.id + '-rbChart_IA').getValue().rb;
-
         switch (valueRadio) {
             case 'rbc1_IA':
+                Ext.getCmp(prototype.id + '-cmbAirline_INT2').show();
+                Ext.getCmp(prototype.id + '-cmbAirline_INT2_2').show();
+                
                 meIChart.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
                 meIChart.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').getValue();
                 meIChart.bean.A050AIRLIN = Ext.getCmp(prototype.id + '-cmbAirline_INT2').getValue();
 
                 break;
             case 'rbc2_IA':
+                Ext.getCmp(prototype.id + '-cmbAirline_INT2').hide();
+                Ext.getCmp(prototype.id + '-cmbAirline_INT2_2').hide();
+                
                 meIChart.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
                 meIChart.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').getValue();
 
@@ -119,6 +133,23 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 
                 break;
             case 'rbc3_IA' :
+                Ext.getCmp(prototype.id + '-cmbAirline_INT2').hide();
+                Ext.getCmp(prototype.id + '-cmbAirline_INT2_2').hide();
+                
+                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue('04')
+                Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue('04')
+                
+//                meIChart.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
+                meIChart.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
+                
+                meIChart.bean.IN_SELECTBY = Ext.getCmp(prototype.id + '-cmbSelectBy_WK').getValue();
+                meIChart.bean.IN_TYPEDOC = Ext.getCmp(prototype.id + '-cmbTypeDoc').getValue();
+                meIChart.bean.IN_TIPOFECHA = Ext.getCmp(prototype.id + '-cmbFecha').getValue();
+                meIChart.bean.IN_AIRLINE = Ext.getCmp(prototype.id + '-cmbAerolinea').getValue();
+                meIChart.bean.IN_SOURCE = Ext.getCmp(prototype.id + '-cmbSourceCode').getValue();
+                if(meIChart.bean.IN_SOURCE == null){
+                    meIChart.bean.IN_SOURCE = "";
+                }
                 break;
 
         }
@@ -126,6 +157,22 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         console.log(meIChart.bean);
 
     },
+    
+    setFormatParameter_WK: function () {
+
+        meIChart.beanWK = {};
+       
+
+        meIChart.beanWK.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
+        meIChart.beanWK.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').getValue();
+
+        
+        meIChart.searchParams = JSON.stringify(meIChart.beanWK);
+        console.log(meIChart.beanWK);
+
+    },
+    
+    
 //    checkEvent: function (obj, e) {
 //        console.log(obj);
 //        console.log(e);
@@ -140,7 +187,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     hidePanelGraficos: function () {
         Ext.getCmp(prototype.id + '-boxInt_Month').hide();
         Ext.getCmp(prototype.id + '-boxInt_Airline').hide();
-        Ext.getCmp(prototype.id + '-boxInt_Workp').hide();
+        Ext.getCmp(prototype.id + '-boxInt_WorkProgress').hide();
     },
 
     onChangeRadioAirline: function (obj, rb_new, rb_old, func) {
@@ -273,6 +320,150 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 
 
     },
+    obtainDataFilter_WK: function () {
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/obtainDataFilter_WK'
+            },
+            listeners: {
+                beforeload: function (obj) {
+//                    Ext.getCmp(prototype.id + '-boxPrincipal').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: meIChart.searchParams};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+//                    Ext.getCmp(prototype.id + '-boxPrincipal').unmask();                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    var listaUsos = res.data;
+                    var lstAerolineas = res.lstAerolineas;
+                    
+                    var storeDataUso = Ext.create('Ext.data.Store', {
+                        data: listaUsos,
+                        autoLoad: true
+                    });
+                    
+                    var storeDataAero = Ext.create('Ext.data.Store', {
+                        data: lstAerolineas,
+                        autoLoad: true
+                    });
+
+                    Ext.getCmp(prototype.id + '-cmbSourceCode').bindStore(storeDataUso);
+                    Ext.getCmp(prototype.id + '-cmbSourceCode').setValue('');
+                    
+                    Ext.getCmp(prototype.id + '-cmbAerolinea').bindStore(storeDataAero);
+                    Ext.getCmp(prototype.id + '-cmbAerolinea').setValue('');
+                    
+                    meIChart.onClickSearch();
+                }
+            }
+        });
+        
+        
+//        Ext.getCmp(prototype.id + '-gridData_INT').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridData_INT2').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridData_INT_TOT').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_A').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_D').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_A').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_03').bindStore(storeGridDatas);
+        me.storeGridDatas = storeGridDatas;
+    },
+    
+    search_WK: function () {
+        
+        win.lblUser_toolTip("Estructura: WRF016");
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/search_WK'
+            },
+            listeners: {
+                beforeload: function (obj) {
+//                    Ext.getCmp(prototype.id + '-boxPrincipal').mask('Loading...');
+                    obj.proxy.extraParams = {beanString: meIChart.searchParams};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+//                    Ext.getCmp(prototype.id + '-boxPrincipal').unmask();                    
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    
+                    meIChart.gridData_WK_AC = res.data;
+                    meIChart.gridData2AC = res.listaData2;
+                    meIChart.gridDataRatesAC = res.listaRates;
+                    
+                    
+                    meIChart.imgChart_WK_clickHandler();
+                    global.clear();
+                }
+            }
+        });
+//        Ext.getCmp(prototype.id + '-gridData_INT').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridData_INT2').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridData_INT_TOT').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_A').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_D').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_A').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_03').bindStore(storeGridDatas);
+//        me.storeGridDatas = storeGridDatas;
+    },
+    
+    imgChart_WK_clickHandler: function () {
+        
+//        if(vskMainWorkProgress.selectedChild == boxMainData && gridData_SUP.visible==false){}
+        
+        var cmbSelectBy_WK = Ext.getCmp(prototype.id + '-cmbSelectBy_WK').getValue();
+        if(cmbSelectBy_WK === '1'){
+            this.change_clickHandler();
+        }else{
+//            if(boxChart_03.visible==true){
+//                StyleGrafic03();
+                this.displayWorkProgressChart_03();
+//            }else{
+//                StyleNormal_02();
+//            }
+        }
+        
+    },
+    
+    change_clickHandler: function () {
+        
+        var cmbSelectGrafic = Ext.getCmp(prototype.id + '-cmbSelectGrafic').getValue();
+        if(cmbSelectGrafic === '1'){
+//            StyleGrafic01();
+            this.displayWorkProgressChart_01();
+        }else if(cmbSelectGrafic === '2'){
+            this.displayWorkProgressChart_02();
+        }
+        
+    },
+    
+    displayWorkProgressChart_01: function () {
+        
+        /*CHARTS COLUMNS*/
+//        beanRates= WRF016Filterwk(gridDataRatesAC.getItemAt(2));
+//        var xmlRoot1:XML = new XML("<chart/>");
+        console.log(meIChart.gridData_WK_AC);
+        console.log(meIChart.gridDataRatesAC);
+//        var lstPie = meIChart.gridDataRatesAC;
+//        
+//        var storeDataPie = Ext.create('Ext.data.Store', {
+//            data: lstPie,
+//            autoLoad: true
+//        });        
+//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C_WK').bindStore(storeDataPie);
+//        
+    },
+    
+    displayWorkProgressChart_03: function () {
+        
+        /*CHARTS COLUMNS*/
+//        var beanWP:WRF016Filterwk;
+//        beanWP = WRF016Filterwk(gridData_WK_AC.getItemAt(0));
+        
+    },
 
     onChangeRadio: function (obj, rb_new, rb_old, func) {
         console.log('onChangeRadio');
@@ -281,6 +472,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         switch (valueRadio) {
             case 'rbc1_IA':
                 Ext.getCmp(prototype.id + '-boxInt_Month').show();
+                this.setFormatParameter();
                 this.searchInterline();
                 break;
             case 'rbc2_IA':
@@ -289,13 +481,70 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                 this.searchInterlineByAir();
                 break;
             case 'rbc3_IA' :
-                Ext.getCmp(prototype.id + '-boxInt_Workp').show();
+                Ext.getCmp(prototype.id + '-boxInt_WorkProgress').show();
+                this.llenarCombos();
                 this.setFormatParameter();
-                this.searchInterlineByAir();
+                
+//                this.setFormatParameter_WK();
+                this.search_WK();
                 break;
 
         }
     },
+    
+    llenarCombos: function (obj, rb_new, rb_old, func) {
+        
+        var cmbFecha = Ext.getCmp(prototype.id + '-cmbFecha');
+        cmbFecha.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "By Clearing"],
+                ["2", "By Invoice"]
+            ]
+        }));
+        cmbFecha.setValue("1");
+        
+        var cmbSelectBy_WK = Ext.getCmp(prototype.id + '-cmbSelectBy_WK');
+        cmbSelectBy_WK.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "Coupon"],
+                ["2", "Amount"],
+                ["3", "Tax"]
+            ]
+        }));
+        cmbSelectBy_WK.setValue("1");
+        
+        var cmbSelectGrafic = Ext.getCmp(prototype.id + '-cmbSelectGrafic');
+        cmbSelectGrafic.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["1", "Grafic 01"],
+                ["2", "Grafic 02"]
+            ]
+        }));
+        cmbSelectGrafic.setValue("1");
+        
+        var cmbTypeDoc = Ext.getCmp(prototype.id + '-cmbTypeDoc');
+        cmbTypeDoc.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["1", "Prime Billing"],
+                ["4", "RM"],
+                ["9", "Billing Memo"]
+            ]
+        }));
+        cmbTypeDoc.setValue("");
+        
+        this.obtainDataFilter_WK();
+        
+    },
+    
     onChangeChart_IA_01: function (obj, rb_new, rb_old, func) {
 
 

@@ -146,6 +146,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                         {xtype: 'tbspacer', width: 4},
                                         {
                                             xtype: 'label',
+                                            id: prototype.id + '-cmbAirline_INT2_2',
                                             html: '<b>Billing Airline:</b>',
                                             fieldStyle: 'text-align: center;'
                                         },
@@ -1287,47 +1288,201 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                 /**
                  * PANEL DE GRILLA Y GRAFICOS - WORKP
                  * */
+                
                 {
                     xtype: 'panel',
                     id: prototype.id + '-boxInt_WorkProgress',
-                    margin: '0 0 0 0',
-                    border: false,
+                    margin: '20 0 0 0',
+                    border: true,
                     layout: {
                         type: 'vbox',
                         pack: 'center'
                     },
                     bodyStyle: 'background-color: transparent;',
                     items: [
-                        // FILTOS - WORKP
+                        // Filtros
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-boxSearchFilter_WK',
+                            id: prototype.id + '-SalesAnalysis_filter_WK',
+                            layout: 'hbox',
                             border: false,
-                            margin: '5 0 5 0',
-                            layout: {
-                                type: 'hbox',
-                                align: 'center'
-                            },
-                            bodyStyle: 'background-color: transparent;',
+                            width: 1200,
+                            bodyStyle: 'background: transparent',
+                            margin: '0 800 5 0',
                             items: [
-                                {xtype: 'tbspacer', width: 700},
                                 {
-                                    xtype: 'checkboxfield',
-                                    id: prototype.id + '-chkMonthXX',
-                                    margin: '0 5 0 5',
-                                    labelStyle: 'color:#378BCC;font-weight:bold;',
-                                    width: 100,
-                                    boxLabel: 'Total',
-                                    inputValue: '1',
-                                    listeners: {
-                                        change: 'onChangeCKTotal'
-                                    }
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    width: 1200,
+                                    border: false,
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    items: [
+                                        {xtype: 'tbspacer', width: 230},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbFecha',
+                                            fieldStyle: 'text-align:left;',
+                                            padding: '5px 20px 5px 0px',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: false,
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            labelWidth: 100,
+                                            width: 140,
+//                                            listeners: {
+//                                                change: 'imgSearch_clickHandler'
+//                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 80},
+                                        {
+                                            xtype: 'label',
+                                            html: '<strong style="color:#000;">Select By : </strong>',
+                                            align: 'left',
+                                            fieldStyle: 'text-align: center;',
+        //                                    width: 120,
+                                            padding: '8px 0px 0px 5px',
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbSelectBy_WK',
+                                            fieldStyle: 'text-align:left;',
+                                            padding: '5px 20px 5px 0px',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: false,
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            labelWidth: 100,
+                                            width: 140,
+//                                            listeners: {
+//                                                change: 'imgSearch_clickHandler'
+//                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 100},
+                                        {
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbSelectGrafic',
+                                            fieldStyle: 'text-align:left;',
+                                            padding: '5px 20px 5px 0px',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: false,
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            labelWidth: 100,
+                                            width: 100,
+//                                            listeners: {
+//                                                change: 'imgSearch_clickHandler'
+//                                            }
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        
+                                    ]
                                 }
                             ]
                         },
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-byMonth_01',
+                            id: prototype.id + '-SalesAnalysis_filter_WK_2',
+                            width: 1200,
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background: transparent',
+                            items: [
+                                {
+                                    xtype: 'panel',
+                                    width: 1200,
+                                    layout: 'hbox',
+                                    border: false,
+                                    bodyStyle: 'background-color: #E3EAF9;',
+                                    items: [
+                                        {xtype: 'tbspacer', width: 230},
+                                        {
+                                            xtype: 'combo',
+                                            fieldLabel: 'Source Code ',
+                                            id: prototype.id + '-cmbSourceCode',
+                                            fieldStyle: 'text-align: left;',
+                                            labelAlign: 'left',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: false,
+                                            valueField: 'A051KEY2',
+                                            displayField: 'A051DESCR1',
+                                            emptyText: 'All',
+                                            labelWidth: 100,
+                                            width: 350,
+                                            anchor: '100%'
+                                        },
+                                        {xtype: 'tbspacer', width: 80},
+                                        {
+                                            xtype: 'combo',
+                                            fieldLabel: 'Type Doc ',
+                                            id: prototype.id + '-cmbTypeDoc',
+                                            fieldStyle: 'text-align: left;',
+                                            labelAlign: 'right',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: false,
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            emptyText: 'All',
+                                            labelWidth: 100,
+                                            width: 200,
+                                            anchor: '100%'
+                                        },
+                                        {xtype: 'tbspacer', width: 20},
+                                        {
+                                            xtype: 'combo',
+                                            fieldLabel: 'Billing Airline ',
+                                            id: prototype.id + '-cmbAerolinea',
+                                            fieldStyle: 'text-align: left;',
+                                            labelAlign: 'right',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            enableKeyEvents: true,
+                                            caseSensitive: true,
+                                            hidden: false,
+                                            valueField: 'A005KEY',
+                                            displayField: 'A005KEY2',
+                                            emptyText: 'All',
+                                            labelWidth: 130,
+                                            width: 320,
+                                            anchor: '100%'
+                                        },
+                                        
+                                    ]
+                                }
+                            ]
+                        },
+                        
+                        // INFO PRINCIPAL
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-byMonth_01_W',
                             border: false,
                             margin: '5 0 5 0',
                             layout: {
@@ -1336,7 +1491,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                             },
                             bodyStyle: 'background-color: transparent;',
                             items: [
-
+                                // GRAFICO
                                 {
                                     xtype: 'panel',
                                     margin: '5 0 5 0',
@@ -1347,111 +1502,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     },
                                     bodyStyle: 'background-color: transparent;',
                                     items: [
-                                        {
-                                            xtype: 'grid',
-                                            id: prototype.id + '-gridData_INT',
-                                            width: 703,
-                                            columnLines: true,
-                                            margin: "5 0 0 0",
-                                            features: [{
-                                                    ftype: 'summary'
-                                                }],
-                                            columns: {
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                items: [
-                                                    {text: 'Billing <br> Date', dataIndex: 'strDescripcion', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "";
-                                                            value = '<b>' + value + '</b>';
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {
-                                                        text: ' Outgoing Prime ',
-                                                        defaults: {
-                                                            menuDisabled: true, sortable: false, align: 'center'
-                                                        },
-                                                        columns: [
-                                                            {text: 'Coupons', dataIndex: 'QTY', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#99CCFF;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totQTY, '0,000') + '<b>';
-                                                                }
-                                                            },
-                                                            {text: 'Curr', dataIndex: 'strDescripcion5', width: 50,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#99CCFF;text-align:center";
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {text: 'Gross', dataIndex: 'A050ACEPTA', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#99CCFF;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050ACEPTA, '0,000') + '<b>';
-                                                                }
-                                                            },
-                                                            {text: 'Isc', dataIndex: 'A050COMISI', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#99CCFF;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050COMISI, '0,000') + '<b>';
-                                                                }
-                                                            },
-                                                            {text: 'Tax', dataIndex: 'A050TUA', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#99CCFF;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050TUA, '0,000') + '<b>';
-                                                                }
-                                                            },
-                                                            {text: 'Net', dataIndex: 'A050NETO', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#E1FFE1;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050TUA, '0,000') + '<b>';
-                                                                }
-                                                            },
-                                                            {text: '%', dataIndex: 'Perc1', width: 50,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#E1FFE1;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                }
-
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
+                                        // id: prototype.id + '-gridData_INT',
+                                        
                                         {
                                             xtype: 'panel',
                                             bodyStyle: 'background-color: #E3EAF9;',
@@ -1464,38 +1516,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             },
                                             items: [
                                                 {
-                                                    xtype: 'panel',
-                                                    margin: '5 0 5 0',
-                                                    border: false,
-                                                    layout: {
-                                                        type: 'hbox',
-                                                        pack: 'left'
-                                                    },
-                                                    bodyStyle: 'background-color: transparent;',
-                                                    items: [
-                                                        {
-                                                            xtype: 'radiogroup',
-                                                            id: prototype.id + '-rbChart1_IA',
-                                                            fieldLabel: '',
-                                                            horizontal: true,
-                                                            items: [
-                                                                {boxLabel: '<strong >Coupons</strong>', name: 'rb2', inputValue: 'rbcC_IA', width: 100, checked: true},
-                                                                {boxLabel: '<strong >Amount</strong>', name: 'rb2', inputValue: 'rbcG_IA', width: 100}
-                                                            ],
-                                                            listeners: {
-                                                                change: 'onChangeChart_IA_01'
-                                                            }
-                                                        }
-                                                    ]
-                                                },
-                                                {
                                                     xtype: 'cartesian',
-                                                    id: prototype.id + '-ChtSalesAnalysis_IA_01_C',
+                                                    id: prototype.id + '-ChtSalesAnalysis_IA_01_C_WK',
                                                     width: 780,
                                                     height: 380,
                                                     background: '#E3EAF9',
                                                     captions: {
-                                                        title: {text: 'Coupons by Month - Prime', alignTo: 'chart'}
+                                                        title: {text: 'Total Reject in USD', alignTo: 'chart'}
                                                     },
                                                     animation: {duration: 200},
                                                     interactions: ['itemhighlight'],
@@ -1554,72 +1581,14 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 
                                                     ]
                                                 },
-                                                {
-                                                    xtype: 'cartesian',
-                                                    hidden: true,
-                                                    id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
-                                                    width: 780,
-                                                    height: 380,
-                                                    background: '#E3EAF9',
-                                                    captions: {
-                                                        title: {text: 'Amount by Month - Prime', alignTo: 'chart'}
-                                                    },
-                                                    animation: {duration: 200},
-                                                    interactions: ['itemhighlight'],
-                                                    axes: [{
-                                                            type: 'numeric3d',
-                                                            position: 'left',
-                                                            yField: ['A050NETO'],
-                                                            grid: true,
-                                                            title: '',
-                                                            renderer: function (obj, value) {
-                                                                if (value > 1) {
-                                                                    return  Ext.util.Format.number((value / 1000), '0.0') + 'K';
-                                                                } else {
-                                                                    return '';
-                                                                }
-                                                            }
-                                                        }, {
-                                                            type: 'category3d',
-                                                            position: 'bottom',
-                                                            fields: 'strDescripcion',
-                                                            grid: true,
-//                                                            title: {
-//                                                                text: '',
-//                                                                translationX: -30
-//                                                            }
-                                                            label: {
-                                                                rotate: {
-                                                                    degrees: -45
-                                                                }
-                                                            }
-                                                        }],
-                                                    series: [{
-                                                            type: 'bar3d',
-                                                            stacked: false,
-                                                            title: [''],
-                                                            colors: ['#38A0F0', ],
-                                                            xField: 'strDescripcion',
-                                                            yField: ['A050NETO'],
-                                                            highlight: true,
-                                                            style: {
-                                                                inGroupGapWidth: -7
-                                                            },
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-
-                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
-                                                                }
-                                                            },
-                                                            renderer: 'onColumnRender'
-                                                        }]
-                                                }
+//                                                hidden: true,
+//                                                id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
                                             ]
                                         },
                                     ]
                                 },
+                                
+                                // GRID
                                 {
                                     xtype: 'panel',
                                     margin: '5 0 5 0',
@@ -1631,7 +1600,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     items: [
                                         {
                                             xtype: 'grid',
-                                            id: prototype.id + '-gridData_INT2',
+                                            id: prototype.id + '-gridData_INT2_WK',
                                             width: 703,
                                             columnLines: true,
                                             margin: "5 0 0 0",
@@ -1734,385 +1703,17 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                     },
                                                 ]
                                             }
-                                        },
-                                        {
-                                            xtype: 'panel',
-                                            bodyStyle: 'background-color: #E3EAF9;',
-                                            padding: '5 0 0 20',
-                                            width: 800,
-                                            height: 400,
-                                            border: false,
-                                            layout: {
-                                                type: 'vbox'
-                                            },
-                                            items: [
-                                                {
-                                                    xtype: 'panel',
-                                                    margin: '5 0 5 0',
-                                                    border: false,
-                                                    layout: {
-                                                        type: 'hbox',
-                                                        pack: 'left'
-                                                    },
-                                                    bodyStyle: 'background-color: transparent;',
-                                                    items: [
-                                                        {
-                                                            xtype: 'radiogroup',
-                                                            id: prototype.id + '-rbChart2_IA',
-                                                            fieldLabel: '',
-                                                            horizontal: true,
-                                                            items: [
-                                                                {boxLabel: '<strong >Documents</strong>', name: 'rb3', inputValue: 'rbcD_IA2', width: 100, checked: true},
-                                                                {boxLabel: '<strong >Amount</strong>', name: 'rb3', inputValue: 'rbcA_IA2', width: 100}
-                                                            ],
-                                                            listeners: {
-                                                                change: 'onChangeChart_IA_02'
-                                                            }
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    xtype: 'cartesian',
-                                                    id: prototype.id + '-ChtSalesAnalysis_IA_02_D',
-                                                    width: 800,
-                                                    height: 400,
-                                                    background: '#E3EAF9',
-                                                    captions: {
-                                                        title: {
-                                                            text: 'Documents by Month - Reject',
-                                                            alignTo: 'chart'
-                                                        }
-                                                    },
-                                                    animation: {
-                                                        duration: 200
-                                                    },
-                                                    interactions: ['itemhighlight'],
-//                                            legend: {
-//                                                background: '#E3EAF9',
-//                                                //type: 'dom',
-//                                                docked: 'bottom'
-//                                            },
-                                                    axes: [{
-                                                            type: 'numeric3d',
-                                                            position: 'left',
-                                                            yField: ['QTY2'],
-                                                            grid: true,
-                                                            title: '',
-
-                                                            renderer: function (obj, value) {
-                                                                if (value > 1) {
-                                                                    return  Ext.util.Format.number((value / 1000), '0.0') + 'K';
-                                                                } else {
-                                                                    return '';
-                                                                }
-                                                            }
-                                                        }, {
-                                                            type: 'category3d',
-                                                            position: 'bottom',
-                                                            fields: 'strDescripcion',
-                                                            grid: true,
-//                                                            title: {
-//                                                                text: 'Date',
-//                                                                translationX: -30
-//                                                            }
-                                                            label: {
-                                                                rotate: {
-                                                                    degrees: -45
-                                                                }
-                                                            }
-                                                        }],
-                                                    series: [{
-                                                            type: 'bar3d',
-                                                            stacked: false,
-                                                            title: ['Amount'],
-                                                            colors: ['#A3F36B', ],
-                                                            xField: 'strDescripcion',
-                                                            yField: ['QTY2'],
-                                                            highlight: true,
-                                                            style: {
-                                                                inGroupGapWidth: -7
-                                                            },
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-                                                                    var label = '';
-                                                                    if (ctx.field === 'QTY2') {
-                                                                        label = 'Amount';
-                                                                    }
-                                                                    toolTip.setHtml(label + ' -  ' + record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
-                                                                }
-                                                            },
-                                                            renderer: 'onColumnRender'
-                                                        }]
-                                                },
-                                                {
-                                                    xtype: 'cartesian',
-                                                    id: prototype.id + '-ChtSalesAnalysis_IA_02_A',
-                                                    width: 800,
-                                                    height: 400,
-                                                    background: '#E3EAF9',
-                                                    captions: {
-                                                        title: {
-                                                            text: 'Amount by Month - Reject',
-                                                            alignTo: 'chart'
-                                                        }
-                                                    },
-                                                    animation: {
-                                                        duration: 200
-                                                    },
-                                                    interactions: ['itemhighlight'],
-//                                            legend: {
-//                                                background: '#E3EAF9',
-//                                                //type: 'dom',
-//                                                docked: 'bottom'
-//                                            },
-                                                    axes: [{
-                                                            type: 'numeric3d',
-                                                            position: 'left',
-                                                            yField: ['A050NETO2'],
-                                                            grid: true,
-                                                            title: '',
-
-                                                            renderer: function (obj, value) {
-                                                                if (value > 1) {
-                                                                    return  Ext.util.Format.number((value / 1000), '0.0') + 'K';
-                                                                } else {
-                                                                    return '';
-                                                                }
-                                                            }
-                                                        }, {
-                                                            type: 'category3d',
-                                                            position: 'bottom',
-                                                            fields: 'strDescripcion',
-                                                            grid: true,
-//                                                            title: {
-//                                                                text: 'Date',
-//                                                                translationX: -30
-//                                                            }
-                                                            label: {
-                                                                rotate: {
-                                                                    degrees: -45
-                                                                }
-                                                            }
-                                                        }],
-                                                    series: [{
-                                                            type: 'bar3d',
-                                                            stacked: false,
-                                                            title: ['Amount'],
-                                                            colors: ['#A3F36B', ],
-                                                            xField: 'strDescripcion',
-                                                            yField: ['A050NETO2'],
-                                                            highlight: true,
-                                                            style: {
-                                                                inGroupGapWidth: -7
-                                                            },
-                                                            tooltip: {
-                                                                trackMouse: true,
-                                                                height: 28,
-                                                                renderer: function (toolTip, record, ctx) {
-                                                                    var label = '';
-                                                                    if (ctx.field === 'A050NETO2') {
-                                                                        label = 'Amount';
-                                                                    }
-                                                                    toolTip.setHtml(label + ' -  ' + record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
-                                                                }
-                                                            },
-                                                            renderer: 'onColumnRender'
-                                                        }]
-                                                }
-                                            ]
                                         }
                                     ]
                                 }
                             ]
                         },
-                        // By MONTH - TOTAL
-                        {
-                            xtype: 'panel',
-                            id: prototype.id + '-byMonth_02',
-                            hidden: true,
-                            margin: '5 0 5 0',
-                            border: false,
-                            layout: {
-                                type: 'vbox',
-                                aling: 'center'
-                            },
-                            bodyStyle: 'background-color: transparent;',
-                            items: [
-                                {
-                                    xtype: 'grid',
-                                    id: prototype.id + '-gridData_INT_TOT',
-                                    width: 703,
-                                    columnLines: true,
-                                    margin: "5 0 0 0",
-                                    features: [{
-                                            ftype: 'summary'
-                                        }],
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: false,
-                                            align: 'center'
-                                        },
-                                        items: [
-                                            {text: 'Billing <br> Date', dataIndex: 'strDescripcion', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "";
-                                                    value = '<b>' + value + '</b>';
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Curr', dataIndex: 'strDescripcion5', width: 50,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "background:#99CCFF;text-align:center";
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: ' Outgoing  ',
-                                                defaults: {
-                                                    menuDisabled: true, sortable: false, align: 'center'
-                                                },
-                                                columns: [
-
-                                                    {text: 'Gross', dataIndex: 'ACEPTA', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "background:#99CCFF;text-align:right";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridData_INT_TOT').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totGros_T, '0,000') + '<b>';
-                                                        }
-                                                    },
-                                                    {text: 'Isc', dataIndex: 'COMISI', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "background:#99CCFF;text-align:right";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridData_INT_TOT').getStore().getData().items[0].data;
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totIsc_T, '0,000') + '<b>';
-                                                        }
-                                                    },
-                                                    {text: 'Tax', dataIndex: 'TUA', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "background:#99CCFF;text-align:right";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridData_INT_TOT').getStore().getData().items[0].data;
-
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totTua_T, '0,000') + '<b>';
-                                                        }
-                                                    },
-                                                    {text: 'Net', dataIndex: 'NETO', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "background:#E1FFE1;text-align:right";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        },
-                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                            var data = Ext.getCmp(prototype.id + '-gridData_INT_TOT').getStore().getData().items[0].data;
-
-                                                            metaData.style = 'text-align:right; margin-right:3px ';
-                                                            return '<b>' + Ext.util.Format.number(data.totNet_T, '0,000') + '<b>';
-                                                        }
-                                                    },
-                                                    {text: '%', dataIndex: 'Perc3', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "background:#E1FFE1;text-align:right";
-                                                            return Ext.util.Format.number(value, '0,000');
-                                                        }
-
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    xtype: 'panel',
-                                    bodyStyle: 'background-color: #E3EAF9;',
-                                    padding: '5 0 0 20',
-                                    width: 700,
-                                    height: 400,
-                                    border: false,
-                                    layout: {
-                                        type: 'vbox'
-                                    },
-                                    items: [
-                                        {
-                                            xtype: 'cartesian',
-                                            id: prototype.id + '-ChtSalesAnalysis_IA_03',
-                                            width: 680,
-                                            height: 380,
-                                            background: '#E3EAF9',
-                                            captions: {
-                                                title: {text: 'Amount by Month - Reject', alignTo: 'chart'}
-                                            },
-                                            animation: {duration: 200},
-                                            interactions: ['itemhighlight'],
-                                            axes: [{
-                                                    type: 'numeric3d',
-                                                    position: 'left',
-                                                    yField: ['ACEPTA'],
-                                                    grid: true,
-                                                    title: '',
-                                                    renderer: function (obj, value) {
-                                                        if (value > 1) {
-                                                            return  Ext.util.Format.number((value / 1000), '0.0') + 'K';
-                                                        } else {
-                                                            return '';
-                                                        }
-                                                    }
-                                                }, {
-                                                    type: 'category3d',
-                                                    position: 'bottom',
-                                                    fields: 'strDescripcion',
-                                                    grid: true,
-//                                                    title: {
-//                                                        text: 'Date',
-//                                                        translationX: -30
-//                                                    }                                                            
-                                                    label: {
-                                                        rotate: {
-                                                            degrees: -45
-                                                        }
-                                                    }
-
-                                                }],
-                                            series: [{
-                                                    type: 'bar3d',
-                                                    stacked: false,
-                                                    title: [''],
-                                                    colors: ['#38A0F0', ],
-                                                    xField: 'strDescripcion',
-                                                    yField: ['ACEPTA'],
-                                                    highlight: true,
-                                                    style: {
-                                                        inGroupGapWidth: -7
-                                                    },
-                                                    tooltip: {
-                                                        trackMouse: true,
-                                                        height: 28,
-                                                        renderer: function (toolTip, record, ctx) {
-
-                                                            toolTip.setHtml(record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
-                                                        }
-                                                    },
-                                                    renderer: 'onColumnRender'
-                                                }]
-                                        },
-                                    ]
-                                }
-                            ]
-                        }
+                        
                     ]
                 }
+                
+                
+                
             ]
         },
     ]
