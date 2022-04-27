@@ -47,6 +47,7 @@ public class A4116Filter extends A4116 {
     public double TGROSAMOUC_TOTAL = 0;
     public double VATCOMMSIC_TOTAL = 0;
     public double DISCAMOUN_CB_TOTAL = 0;
+    public double SVFOPS_TOTAL = 0;
     public double SFEEAMOUC_TOTAL = 0;
     public double SFEEAMOU_TOTAL = 0;
     public double ACCEAMOUC_TOTAL = 0;
