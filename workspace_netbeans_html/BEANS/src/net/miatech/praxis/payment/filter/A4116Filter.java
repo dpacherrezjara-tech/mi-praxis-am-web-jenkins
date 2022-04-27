@@ -129,6 +129,8 @@ public class A4116Filter extends A4116 {
     public String A720NVLO1 = "";
     public String A720FVLO1 = "";
     public String A720PNR = "";
+    public String A720SEQ = "";
+    public String A720GRUPO = "";
     public String A720FECVTA = "";
 
     // A1531

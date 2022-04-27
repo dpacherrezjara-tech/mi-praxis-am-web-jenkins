@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                         items: [
                                             {text: 'Payment <br> Date ', dataIndex: 'PAYDATE', width: 120,
                                                 listeners: {
-                                                    click: 'onGridDetByDate'
+                                                    click: 'onGridDetByDay'
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
@@ -106,13 +106,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Qty Accounted', dataIndex: 'QTY_ACCOUNTED', width: 120,
-                                                        listeners: {
-                                                            click: 'onGridDetByAcount'
-                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#68EAFB";
                                                             value = Ext.util.Format.number(value, '0,000');
-                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return '<a>' + value + '</a>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
@@ -133,13 +130,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Qty To Debug', dataIndex: 'QTY_TO_DEBUG', width: 120,
-                                                        listeners: {
-                                                            click: 'onGridDetByDebug'
-                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#68EAFB";
                                                             value = Ext.util.Format.number(value, '0,000');
-                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return '<a>' + value + '</a>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
@@ -194,13 +188,10 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Qty Total', dataIndex: 'QTY_ALL', width: 100,
-                                                        listeners: {
-                                                            click: 'onGridDetByDate'
-                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;background-color:#88FF89";
                                                             value = Ext.util.Format.number(value, '0,000');
-                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                            return '<a>' + value + '</a>';
                                                         },
                                                         summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                             var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
@@ -619,6 +610,240 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                         ]
                                     }
                                 }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridDataByDay',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '1',
+                            border: true,
+                            height: 'auto',
+                            width: 1310,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridMainDataByDay',
+                                    height: 'auto',
+                                    width: 1310,
+                                    hidden: false,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Payment <br> Date ', dataIndex: 'PAYDATE', width: 120,
+                                                listeners: {
+                                                    click: 'onGridDetByDate'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = record.data;
+                                                    metaData.style = "text-align:center;";
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Currency', dataIndex: 'PCURRENCY', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Accounting Transaction',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Accounted', dataIndex: 'TGROSAMOUN_ACCOUNTED', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#68EAFB";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_ACCOUNTED, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Qty Accounted', dataIndex: 'QTY_ACCOUNTED', width: 120,
+                                                        listeners: {
+                                                            click: 'onGridDetByAcount'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#68EAFB";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY_ACCOUNTED, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'To Debug', dataIndex: 'TGROSAMOUN_TO_DEBUG', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#68EAFB";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_TO_DEBUG, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Qty To Debug', dataIndex: 'QTY_TO_DEBUG', width: 120,
+                                                        listeners: {
+                                                            click: 'onGridDetByDebug'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#68EAFB";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY_TO_DEBUG, '0,000') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Total', dataIndex: 'TGROSAMOUN', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#68EAFB";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Qty Total', dataIndex: 'QTY_TOTAL', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#68EAFB";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY_TOTAL, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Transaction AMEX',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Total Amount', dataIndex: 'TGROSAMOUN_ALL', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#88FF89";
+                                                            value = Ext.util.Format.number(value, '0,000.00');
+                                                            return value;
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN_ALL, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                    {text: 'Qty Total', dataIndex: 'QTY_ALL', width: 100,
+                                                        listeners: {
+                                                            click: 'onGridDetByDate'
+                                                        },
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#88FF89";
+                                                            value = Ext.util.Format.number(value, '0,000');
+                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totQTY_ALL, '0,000') + '<b>';
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Differences',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Amount', dataIndex: 'TGROSAMOUN_DIFF', width: 120,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#F0FF88";
+                                                            if (value < 0) {
+                                                                value = Ext.util.Format.number(value, '0,000.00');
+                                                                return '<a style="color:#cb0519;">' + value + '</a>';
+                                                            } else {
+                                                                value = Ext.util.Format.number(value, '0,000.00');
+                                                                return '<a style="color:#057ECB;">' + value + '</a>';
+                                                            }
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            metaData.style = 'text-align:right; margin-right:3px ;';
+                                                            if (value < 0) {
+                                                                var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                                return '<b style="color:#cb0519>' + Ext.util.Format.number(data.totTGROSAMOUN_DIFF, '0,000.00') + '<b>';
+                                                            } else {
+                                                                var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                                return '<b >' + Ext.util.Format.number(data.totTGROSAMOUN_DIFF, '0,000.00') + '<b>';
+                                                            }
+                                                        }
+                                                    },
+                                                    {text: 'Qty', dataIndex: 'QTY_DIFF', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (value < 0) {
+                                                                metaData.style = "text-align:right; color:#cb0519;background-color:#F0FF88";
+                                                                value = Ext.util.Format.number(value, '0,000');
+                                                                return value;
+                                                            } else {
+                                                                metaData.style = "text-align:right;background-color:#F0FF88";
+                                                                value = Ext.util.Format.number(value, '0,000');
+                                                                return value;
+                                                            }
+                                                        },
+                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            if (value < 0) {
+                                                                var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                                metaData.style = 'text-align:right; margin-right:3px ;color:#cb0519';
+                                                                return '<b>' + Ext.util.Format.number(data.totQTY_DIFF, '0,000') + '<b>';
+                                                            } else {
+                                                                var data = Ext.getCmp(prototype.id + '-gridMainAcountTransact').getStore().getData().items[0].data;
+                                                                metaData.style = 'text-align:right; margin-right:3px ;';
+                                                                return '<b>' + Ext.util.Format.number(data.totQTY_DIFF, '0,000') + '<b>';
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
                             ]
                         },
                         {

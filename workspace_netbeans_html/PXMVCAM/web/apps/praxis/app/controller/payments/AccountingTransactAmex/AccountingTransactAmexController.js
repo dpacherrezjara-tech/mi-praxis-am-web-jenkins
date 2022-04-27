@@ -17,9 +17,11 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
     paramsDetail: {},
     paramsDetailByDate: {},
     paramsDetailByQty: {},
+    paramsDetailByDay: {},
     beanDetByDate: {},
     beanDetByAcount: {},
     beanDetByDebug: {},
+    beanDetByDay: {},
     beanDetByQty: {},
     dataObtain: {},
     init: function (view) {
@@ -304,6 +306,53 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         Ext.getCmp(prototype.id + '-gridMainDataByQty').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
     },
+    onGridDetByDay: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataByDay';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+
+        this.beanDetByDay.IN_DATE = rowData.data.IN_DATE;
+        this.beanDetByDay.IN_DATE_VALUE = rowData.data.PAYDATE;
+        console.log(this.beanDetByDay);
+
+        me.paramsDetailByDay.beanString = JSON.stringify(this.beanDetByDay);
+        this.setGridDataDetByDay();
+    },
+    setGridDataDetByDay: function () {
+        win.lblUser_toolTip("Estructura: A4116");
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByDay'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = me.paramsDetailByDay;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin4');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    me.setWidthPie();
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridMainDataByDay').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridMainDataByDay').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin4').bindStore(storeGridDatas);
+    },
     validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
@@ -391,6 +440,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             case  '-panelGridDataByQty':
                 global.getFile(prototype.url + '/getXLSXByQty?beanString=' + searchParams.beanString);
                 break;
+            case  '-panelGridDataByDay':
+                global.getFile(prototype.url + '/getXLSXByDay?beanString=' + searchParams.beanString);
+                break;    
             default:
                 global.Msg(
                         {msg: 'Under Construction'
@@ -433,7 +485,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
     },
     setWidthPie: function () {
         console.log(me.panelActual);
-        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridDataByDate' || me.panelActual === '-panelGridDataByQty') {
+        if (me.panelActual === '-panelGridData' || me.panelActual === '-panelGridDataByDate' || me.panelActual === '-panelGridDataByQty' || me.panelActual == '-panelGridDataByNew') {
             var ancho = Ext.getCmp(prototype.id + me.panelActual).getWidth();
             Ext.getCmp(prototype.id + '-pie').setWidth(ancho);
             Ext.getCmp(prototype.id + '-pie').setVisible(true);
@@ -452,7 +504,10 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                 break;
             case  '-panelGridDataByQty':
                 me.pagginActual = '-paggin3';
-                break;    
+                break;
+            case  '-panelGridDataByDay':
+                me.pagginActual = '-paggin4';
+                break;
         }
     },
     pagFirst: function (obj, e) {
