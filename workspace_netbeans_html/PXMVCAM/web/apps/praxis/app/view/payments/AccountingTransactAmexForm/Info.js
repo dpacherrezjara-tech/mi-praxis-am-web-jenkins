@@ -503,7 +503,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                             padding: '1',
                             border: true,
                             height: 'auto',
-                            width: 1620,
+                            width: 1720,
                             layout: {
                                 type: 'vbox',
                                 align: 'center'
@@ -513,7 +513,7 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridMainDataByDate',
                                     height: 'auto',
-                                    width: 1564,
+                                    width: 1660,
                                     hidden: false,
                                     columnLines: true,
                                     features: [{
@@ -528,6 +528,12 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                         },
                                         items: [
                                             {text: 'Payment <br> Date', dataIndex: 'PAYDATE', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Document Type', dataIndex: 'TDOC', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;

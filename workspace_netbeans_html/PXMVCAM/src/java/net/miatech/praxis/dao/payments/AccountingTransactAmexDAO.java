@@ -398,6 +398,13 @@ public class AccountingTransactAmexDAO {
                     beanTkt.IN_DATE_VALUE = filter.IN_DATE_VALUE.trim();
 
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                    beanTkt.TDOC = rst.getString("TDOC").trim();
+                    if (beanTkt.TDOC.equals("S")) {
+                        beanTkt.TDOC = "Sales";
+                    }
+                    if (beanTkt.TDOC.equals("R")) {
+                        beanTkt.TDOC = "Refund";
+                    }
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
