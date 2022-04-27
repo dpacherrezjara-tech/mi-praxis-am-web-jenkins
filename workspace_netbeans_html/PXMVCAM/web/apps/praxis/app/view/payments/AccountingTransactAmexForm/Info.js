@@ -633,8 +633,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     click: 'viewTicket'
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return value;
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                    return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
                                             {
@@ -718,8 +719,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     click: 'viewTKT'
                                                 },
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    return value;
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                    return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                 }
                                             },
                                             {text: 'Seq', dataIndex: 'SEQ', width: 40,
