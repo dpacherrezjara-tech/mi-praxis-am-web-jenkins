@@ -183,8 +183,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             });
 
             global.clear();
-            Ext.getCmp(prototype.id + '-gridMainAcountTransact').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridMainAcountTransact').bindStore(storeGridDatas);            
             Ext.getCmp(prototype.id + '-gridMainAcountTransact').setStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-displayChart01').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },

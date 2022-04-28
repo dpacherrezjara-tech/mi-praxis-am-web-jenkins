@@ -331,6 +331,7 @@ public class AccountingTransactAmexDAO {
         A4116Filter beanTkt;
 
         double totTGROSAMOUN = 0;
+        double SVFOPS = 0;
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");
@@ -385,7 +386,8 @@ public class AccountingTransactAmexDAO {
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
-                totTGROSAMOUN = rst.getInt("TGROSAMOUN");
+                totTGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                SVFOPS = rst.getDouble("SVFOPS");
             }
             rst.close();
 
@@ -406,6 +408,7 @@ public class AccountingTransactAmexDAO {
                         beanTkt.TDOC = "Refund";
                     }
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
+                    beanTkt.SVFOPS = rst.getDouble("SVFOPS");
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
@@ -440,6 +443,7 @@ public class AccountingTransactAmexDAO {
 
                     //TOTALEs
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
+                    beanTkt.SVFOPS_TOTAL = SVFOPS;
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
