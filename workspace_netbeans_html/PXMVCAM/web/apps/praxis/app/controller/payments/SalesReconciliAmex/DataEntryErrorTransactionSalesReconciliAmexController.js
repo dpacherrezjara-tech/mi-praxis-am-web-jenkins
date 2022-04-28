@@ -77,6 +77,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFLAG', this.beanResult.FSELEC);
         this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
         this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
+        this.setValue('txtSTVAL', this.beanResult.descSTVAL);
+        this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
 
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
         //this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
