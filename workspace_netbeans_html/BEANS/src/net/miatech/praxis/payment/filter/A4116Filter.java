@@ -23,6 +23,7 @@ public class A4116Filter extends A4116 {
     public String IN_DATE = "";
     public String IN_DATE_VALUE = "";
     public String DATE = "";
+    public String strFormatDate = "";
     public String IN_PNR = "";
     public String IN_STVAL = "";
     public String IN_TRANSDATE = "";
@@ -46,6 +47,7 @@ public class A4116Filter extends A4116 {
     public double TGROSAMOUC_TOTAL = 0;
     public double VATCOMMSIC_TOTAL = 0;
     public double DISCAMOUN_CB_TOTAL = 0;
+    public double SVFOPS_TOTAL = 0;
     public double SFEEAMOUC_TOTAL = 0;
     public double SFEEAMOU_TOTAL = 0;
     public double ACCEAMOUC_TOTAL = 0;

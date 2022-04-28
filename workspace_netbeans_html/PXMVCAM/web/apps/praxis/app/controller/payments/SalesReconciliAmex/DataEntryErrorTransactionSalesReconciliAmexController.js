@@ -316,7 +316,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         console.log(monto_venta);
                 
         if (suma_montos !== monto_venta ) {
-            msjResult = "Sum of the mounts must match with Transaction Amount";
+            msjResult = "Dont match with Transaction Amount";
         }
         return msjResult;
     },

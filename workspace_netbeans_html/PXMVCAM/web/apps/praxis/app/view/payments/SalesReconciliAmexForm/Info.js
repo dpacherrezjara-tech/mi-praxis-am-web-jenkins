@@ -3466,6 +3466,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                              }
                                              },*/
                                             {
+                                                text: 'SVFOPS', dataIndex: 'SVFOPS', width: 100,
+                                                listeners: {
+//                                                    click: 'onGridDetBankS'
+                                                },
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDetSettlement').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.SVFOPS_TOTAL, '0,000.00') + '<b>';
+                                                }
+                                            },
+                                            {
                                                 text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
