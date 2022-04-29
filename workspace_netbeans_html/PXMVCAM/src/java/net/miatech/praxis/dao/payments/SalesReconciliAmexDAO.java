@@ -1237,8 +1237,13 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.DISCAMOUN_IMPORT = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN_IMPORT"));
                     beanTkt.DISCAMOUN_IVA = this.mantenerSigno(beanTkt.DISCAMOUN_IMPORT, rst.getDouble("DISCAMOUN_IVA"));
-
-                    beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA");
+                    
+                    if (rst.getDouble("DISCRATE_IVA") < 0) {
+                        beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA") * -1;
+                    } else {
+                        beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA");
+                    }
+                    
                     beanTkt.DISCRATE_IMPORT = rst.getDouble("DISCRATE_IMPORT");
                     beanTkt.DISCRATEBA_IVA = rst.getDouble("DISCRATEBA_IVA");
                     beanTkt.DISCRATEBA_IMPORT = rst.getDouble("DISCRATEBA_IMPORT");
