@@ -381,25 +381,54 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
             },
             listeners: {
                 beforeload: function (obj) {
-//                    Ext.getCmp(prototype.id + '-boxPrincipal').mask('Loading...');
+                    Ext.getCmp(prototype.id + '-panelData_WK').mask('Loading...');
                     obj.proxy.extraParams = {beanString: meIChart.searchParams};
                 },
                 load: function (obj, obj2, success, response, obj5) {
-//                    Ext.getCmp(prototype.id + '-boxPrincipal').unmask();                    
+                    Ext.getCmp(prototype.id + '-panelData_WK').unmask();                    
                     var res = Ext.JSON.decode(response._response.responseText);
                     console.log(res);
+                    
+                    var cmbFecha = Ext.getCmp(prototype.id + '-cmbFecha').getValue();
+                    if(cmbFecha === '1'){
+                        Ext.getCmp(prototype.id + '-titHorzFecha1').setText('Clearing Date');
+                        Ext.getCmp(prototype.id + '-titVertFecha1').setText('Invoice Date');
+                    }else{
+                        Ext.getCmp(prototype.id + '-titHorzFecha1').setText('Invoice Date');
+                        Ext.getCmp(prototype.id + '-titVertFecha1').setText('Clearing Date');
+                    }
+                    
+                    // Agregamos ID de meses
+                    Ext.getCmp(prototype.id + '-titFecha6').setText(res.data[0].strFormatDate4);
+                    Ext.getCmp(prototype.id + '-titFecha5').setText(res.data[0].strDescripcion);
+                    Ext.getCmp(prototype.id + '-titFecha4').setText(res.data[0].strDescripcion1);
+                    Ext.getCmp(prototype.id + '-titFecha3').setText(res.data[0].strDescripcion2);
+                    Ext.getCmp(prototype.id + '-titFecha2').setText(res.data[0].strDescripcion3);
+                    Ext.getCmp(prototype.id + '-titFecha1').setText(res.data[0].strDescripcion4);
                     
                     meIChart.gridData_WK_AC = res.data;
                     meIChart.gridData2AC = res.listaData2;
                     meIChart.gridDataRatesAC = res.listaRates;
                     
+                    var cmbSelectBy_WK = Ext.getCmp(prototype.id + '-cmbSelectBy_WK').getValue();
+                    if(cmbSelectBy_WK === '1'){
+//                        with(gridData_SUP){includeInLayout = false; visible = false;}
+//                        with(gridData_AMT){includeInLayout = false; visible = false;}
+//                        with(gridData2_AMT){includeInLayout = false; visible = false;}
+//                        with(gridData_WK){includeInLayout = true; visible = true;}
+//                        with(gridData2_WK){includeInLayout = true; visible = true;}
+                        
+                        
+                    }else{
+
+                    }
                     
                     meIChart.imgChart_WK_clickHandler();
                     global.clear();
                 }
             }
         });
-//        Ext.getCmp(prototype.id + '-gridData_INT').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData_WK').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-gridData_INT2').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-gridData_INT_TOT').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C').bindStore(storeGridDatas);
@@ -447,14 +476,19 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 //        var xmlRoot1:XML = new XML("<chart/>");
         console.log(meIChart.gridData_WK_AC);
         console.log(meIChart.gridDataRatesAC);
-//        var lstPie = meIChart.gridDataRatesAC;
-//        
-//        var storeDataPie = Ext.create('Ext.data.Store', {
-//            data: lstPie,
-//            autoLoad: true
-//        });        
-//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C_WK').bindStore(storeDataPie);
-//        
+        var lstColumns = meIChart.gridDataRatesAC;
+        
+        
+//        for (var i = 0; i < lstColumns.length; i++) {
+//            lstColumns[i].totNETO = lstColumns[i].strDescription + ' ,  ' + Ext.util.Format.number(lstDataEdit[i].CUPONS_PERCENT, '0,000.00') + '%';
+//        }
+        
+        var storeDataColumns = Ext.create('Ext.data.Store', {
+            data: lstColumns,
+            autoLoad: true
+        });        
+        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C_WK').bindStore(storeDataColumns);
+        
     },
     
     displayWorkProgressChart_03: function () {

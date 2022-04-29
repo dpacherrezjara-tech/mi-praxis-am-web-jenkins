@@ -1530,7 +1530,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                         {
                                                             type: 'numeric3d',
                                                             position: 'left',
-                                                            yField: ['QTY'],
+                                                            yField: ['totNet1'],
                                                             grid: true,
                                                             title: '',
                                                             renderer: function (obj, value) {
@@ -1563,7 +1563,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             title: [''],
                                                             colors: ['#38A0F0', ],
                                                             xField: 'strDescripcion',
-                                                            yField: ['QTY'],
+                                                            yField: ['totNet1'],
                                                             highlight: true,
                                                             style: {
                                                                 inGroupGapWidth: -7
@@ -1591,7 +1591,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                 // GRID
                                 {
                                     xtype: 'panel',
-                                    margin: '5 0 5 0',
+                                    id: prototype.id + '-panelData_WK',
+                                    margin: '15 270 5 0',
+                                    width: 1343,
                                     layout: {
                                         type: 'hbox',
                                         pack: 'center'
@@ -1600,8 +1602,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     items: [
                                         {
                                             xtype: 'grid',
-                                            id: prototype.id + '-gridData_INT2_WK',
-                                            width: 703,
+                                            id: prototype.id + '-gridData_WK',
+                                            width: 1343,
                                             columnLines: true,
                                             margin: "5 0 0 0",
                                             features: [{
@@ -1614,93 +1616,286 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                     align: 'center'
                                                 },
                                                 items: [
-                                                    {text: 'Billing <br> Date', dataIndex: 'strDescripcion', width: 100,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "";
-                                                            value = '<b>' + value + '</b>';
-                                                            return value;
-                                                        }
-                                                    },
                                                     {
-                                                        text: ' Outgoing Reject ',
+                                                        text: ' Total Audited Coupons by Billing Month vs. Rejected Month ( FC ) ',
                                                         defaults: {
                                                             menuDisabled: true, sortable: false, align: 'center'
                                                         },
                                                         columns: [
-                                                            {text: 'Documents', dataIndex: 'QTY2', width: 100,
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titHorzFecha1',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: '', dataIndex: 'FINVOICE', width: 110, id: prototype.id + '-titVertFecha1',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;";
+                                                                            return value;
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha1',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Audit', dataIndex: 'Aud1', width: 70, id: prototype.id + '-totAud1',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud1, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Rej', dataIndex: 'Rej1', width: 70, id: prototype.id + '-totRej1',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totRej1, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha2',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Audit', dataIndex: 'Aud2', width: 70, id: prototype.id + '-totAud2',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud2, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Rej', dataIndex: 'Rej2', width: 70, id: prototype.id + '-totRej2',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totRej2, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha3',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Audit', dataIndex: 'Aud3', width: 70, id: prototype.id + '-totAud3',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud3, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Rej', dataIndex: 'Rej3', width: 70, id: prototype.id + '-totRej3',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totRej3, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha4',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Audit', dataIndex: 'Aud4', width: 70, id: prototype.id + '-totAud4',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud4, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Rej', dataIndex: 'Rej4', width: 70, id: prototype.id + '-totRej4',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totRej4, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha5',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Audit', dataIndex: 'Aud5', width: 70, id: prototype.id + '-totAud5',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud5, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Rej', dataIndex: 'Rej5', width: 70, id: prototype.id + '-totRej5',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totRej5, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha6',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Audit', dataIndex: 'Aud6', width: 70, id: prototype.id + '-totAud6',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud6, '0,000');
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        text: 'Rej', dataIndex: 'Rej6', width: 70, id: prototype.id + '-totRej6',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totRej6, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {text: 'Total Documents', dataIndex: 'QCUPON', width: 110,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#FFCCCC;text-align:right";
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
                                                                     return Ext.util.Format.number(value, '0,000');
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT2').getStore().getData().items[0].data;
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totQTY2, '0,000') + '<b>';
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totQCUPON, '0,000');
                                                                 }
                                                             },
-                                                            {text: 'Curr', dataIndex: 'strDescripcion5', width: 50,
+                                                            {text: 'Total Audited <br> Documents', dataIndex: 'QAUDI', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#FFCCCC;text-align:center";
-                                                                    return value;
-                                                                }
-                                                            },
-                                                            {text: 'Gross', dataIndex: 'A050ACEPTA2', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#FFCCCC;text-align:right";
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
                                                                     return Ext.util.Format.number(value, '0,000');
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT2').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050ACEPTA2, '0,000') + '<b>';
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totQAUDI, '0,000');
                                                                 }
                                                             },
-                                                            {text: 'Isc', dataIndex: 'A050COMISI2', width: 100,
+                                                            {text: '% Reviewed', dataIndex: 'Porc', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#FFCCCC;text-align:right";
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
                                                                     return Ext.util.Format.number(value, '0,000');
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT2').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050COMISI2, '0,000') + '<b>';
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totPorc, '0,000');
                                                                 }
                                                             },
-                                                            {text: 'Tax', dataIndex: 'A050TUA2', width: 100,
+                                                            {text: 'Total Rejected <br> Coupons', dataIndex: 'QRM', width: 100,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#FFCCCC;text-align:right";
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
                                                                     return Ext.util.Format.number(value, '0,000');
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT2').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050TUA2, '0,000') + '<b>';
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totQRM, '0,000');
                                                                 }
-                                                            },
-                                                            {text: 'Net', dataIndex: 'A050NETO2', width: 100,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#E1FFE1;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                },
-                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT2').getStore().getData().items[0].data;
-
-                                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                                    return '<b>' + Ext.util.Format.number(data.totA050TUA2, '0,000') + '<b>';
-                                                                }
-                                                            },
-                                                            {text: '%', dataIndex: 'Perc2', width: 50,
-                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                                    metaData.style = "background:#E1FFE1;text-align:right";
-                                                                    return Ext.util.Format.number(value, '0,000');
-                                                                }
-
-                                                            },
+                                                            }
                                                         ]
-                                                    },
+                                                    }
                                                 ]
                                             }
                                         }
