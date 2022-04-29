@@ -325,7 +325,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 370},
                                 {xtype: 'tbspacer', width: 170},
                             ]
-                        },                        
+                        },
                         {
                             xtype: 'label',
                             text: 'Sales Information',
@@ -597,10 +597,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                         {
                             xtype: 'panel',
                             id: prototype.id + '-panelDataInfo',
-                            layout: 'hbox',
+                            layout: 'vbox',
                             border: false,
                             width: 785,
-                            height: 150,
+                            height: 180,
                             hidden: true,
                             bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 12 20',
@@ -630,7 +630,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#FF4444";
+                                                                metaData.style = "text-align:center;background-color:#f55a42";
                                                             } else {
                                                                 metaData.style = "text-align:center;";
                                                             }
@@ -640,7 +640,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     {text: 'Number', dataIndex: 'A1531NREF', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#FF4444";
+                                                                metaData.style = "text-align:center;background-color:#f55a42";
                                                             } else {
                                                                 metaData.style = "text-align:center;";
                                                             }
@@ -650,7 +650,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#FF4444";
+                                                                metaData.style = "text-align:center;background-color:#f55a42";
                                                             } else {
                                                                 metaData.style = "text-align:center;";
                                                             }
@@ -662,7 +662,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#FF4444";
+                                                        metaData.style = "text-align:right;background-color:#f55a42";
                                                     } else {
                                                         metaData.style = "text-align:right;";
                                                     }
@@ -674,7 +674,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#FF4444";
+                                                        metaData.style = "text-align:right;background-color:#f55a42";
                                                     } else {
                                                         metaData.style = "text-align:right;";
                                                     }
@@ -685,7 +685,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Sales Date', dataIndex: 'A720FECVTA', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#FF4444";
+                                                        metaData.style = "text-align:center;background-color:#f55a42";
                                                     } else {
                                                         metaData.style = "text-align:center;";
                                                     }
@@ -695,7 +695,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'PNR', dataIndex: 'A720PNR', width: 75,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#FF4444";
+                                                        metaData.style = "text-align:center;background-color:#f55a42";
                                                     } else {
                                                         metaData.style = "text-align:center;";
                                                     }
@@ -705,7 +705,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#FF4444";
+                                                        metaData.style = "text-align:center;background-color:#f55a42";
                                                     } else {
                                                         metaData.style = "text-align:center;";
                                                     }
@@ -715,7 +715,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 65,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#FF4444";
+                                                        metaData.style = "text-align:center;background-color:#f55a42";
                                                     } else {
                                                         metaData.style = "text-align:center;";
                                                     }
@@ -748,6 +748,30 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             },
                                         ]
                                     }
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    margin: '0 2 0 20',
+                                    bodyStyle: 'background:#efe5e5;',
+                                    items: [
+                                        {
+                                            xtype: 'label',
+                                            text: 'Sum Amount',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 120
+                                        },
+                                        {xtype: 'tbspacer', width: 10},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtSumAmount',
+                                            fieldStyle: 'text-align:right',
+                                            enforceMaxLength: true,
+                                            readOnly: true,
+                                            width: 100,
+                                        },
+                                    ]
                                 }
                             ]
                         },

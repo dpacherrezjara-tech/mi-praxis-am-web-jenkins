@@ -186,6 +186,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             Ext.getCmp(prototype.id + '-gridMainAcountTransact').bindStore(storeGridDatas);            
             Ext.getCmp(prototype.id + '-gridMainAcountTransact').setStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-displayChart01').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-displayChart02').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
         }
     },
@@ -466,6 +467,20 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         });
         }
 
+    },
+    rbChangeType_tc: function(){
+      var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType_tc').getValue().rbgType_tc;
+      
+        switch (selectedValue) {
+            case 'A':
+                Ext.getCmp(prototype.id + '-displayChart01').setVisible(true);
+                Ext.getCmp(prototype.id + '-displayChart02').setVisible(false);
+                break;
+            case 'T':
+                Ext.getCmp(prototype.id + '-displayChart01').setVisible(false);
+                Ext.getCmp(prototype.id + '-displayChart02').setVisible(true);
+                break;
+        }
     },
     onDownloadFile: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.paramsDetail.beanString = JSON.stringify(rowData.data);

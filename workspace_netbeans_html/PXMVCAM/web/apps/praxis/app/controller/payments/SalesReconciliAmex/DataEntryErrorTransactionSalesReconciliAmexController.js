@@ -13,6 +13,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     lstA1852: {},
     dataObtain: {},
     lstSendManual: [],
+    sumAmount: 0,
     // </editor-fold>
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
@@ -20,6 +21,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         meDE = this;
         
         this.lstSendManual = [];
+        
+        this.setValue('de-txtSumAmount', this.sumAmount);
 
         this.p = this.view.params;
         this.actionCode = this.p.action;
@@ -389,8 +392,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         if (bol === true) {
             this.lstSendManual.push(rowData.data);
             console.log(this.lstSendManual);
+            this.sumAmount = this.sumAmount + rowData.data.A1531VFOP;
+            
 
         } else {
+            this.sumAmount = this.sumAmount - rowData.data.A1531VFOP;
             for (var j = 0; j < this.lstSendManual.length; j++) {
                 if (this.lstSendManual[j].A1531TTARJ === rowData.data.A1531TTARJ &&
                         this.lstSendManual[j].A1531NREF === rowData.data.A1531NREF &&
@@ -406,6 +412,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 }
             }
         }
-
+        
+        this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));        
     },
 });
