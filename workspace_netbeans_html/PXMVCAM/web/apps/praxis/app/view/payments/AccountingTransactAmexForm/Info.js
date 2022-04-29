@@ -272,6 +272,18 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                     bodyStyle: 'background-color: transparent;',
                                     items: [
                                         {
+                                            xtype: 'radiogroup',
+                                            id: prototype.id + '-radiogroupType_tc',
+                                            width: 180,
+                                            items: [
+                                                {boxLabel: '<b style="color:#148D28;">Amount</b>', inputValue: 'A', name: 'rbgType_tc', checked: true},
+                                                {boxLabel: '<b style="color:#148D28;">Tickets</b>', inputValue: 'T', name: 'rbgType_tc'},
+                                            ],
+                                            listeners: {
+                                                change: 'rbChangeType_tc'
+                                            }
+                                        },
+                                        {
                                             xtype: 'cartesian',
                                             id: prototype.id + '-displayChart01',
                                             border: false,
@@ -290,9 +302,9 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             },
                                             interactions: ['itemhighlight'],
                                             legend: {
-                                             docked: 'bottom',
-                                             background: '#E3EAEF'
-                                             },
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
                                             axes: [
                                                 {
                                                     type: 'numeric3d',
@@ -361,7 +373,104 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                             } else if (ctx.field === 'TGROSAMOUN_TO_DEBUG') {
                                                                 label = 'To Debug';
                                                             }
-                                                            toolTip.setHtml(label + 'Amount : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                            toolTip.setHtml(label + ' Amount: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                        }
+                                                    },
+                                                    //renderer: 'onColumnRender'
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            xtype: 'cartesian',
+                                            id: prototype.id + '-displayChart02',
+                                            border: false,
+                                            width: 1400,
+                                            height: 350,
+                                            hidden: true,
+                                            background: '#E0F8F7',
+                                            captions: {
+                                                title: {
+                                                    text: 'Accounting Transaction AMEX',
+                                                    alignTo: 'chart'
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 200
+                                            },
+                                            interactions: ['itemhighlight'],
+                                            legend: {
+                                                docked: 'bottom',
+                                                background: '#E3EAEF'
+                                            },
+                                            axes: [
+                                                {
+                                                    type: 'numeric3d',
+                                                    position: 'left',
+                                                    fields: ['QTY_ACCOUNTED', 'QTY_TO_DEBUG'],
+                                                    minimum: 0,
+                                                    grid: true,
+                                                    title: '',
+                                                    renderer: function (obj, value) {
+                                                        if (value > 1) {
+                                                            if ((value / 1000).toString().length > 3) {
+                                                                return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                            } else {
+                                                                return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                            }
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    type: 'category3d',
+                                                    position: 'bottom',
+                                                    grid: true,
+                                                    title: {
+                                                        translationX: -30
+                                                    }
+                                                },
+                                            ],
+                                            series: [
+                                                {
+                                                    type: 'bar3d',
+                                                    stacked: false,
+                                                    xField: 'strFormatDate',
+                                                    yField: ['QTY_ACCOUNTED', 'QTY_TO_DEBUG'],
+                                                    title: ['Accounted', 'To Debug'],
+                                                    colors: ['#42f59e', '#FFBF00'],
+                                                    highlight: true,
+                                                    style: {
+                                                        inGroupGapWidth: -7,
+                                                        minGapWidth: 2,
+                                                        maxBarWidth: 1200
+                                                    },
+                                                    label: {
+                                                        field: ['QTY_ACCOUNTED', 'QTY_TO_DEBUG'],
+//                                                            display: 'insideEnd',
+                                                        /*display: 'outside',
+                                                         calloutLine: {
+                                                         length: 10,
+                                                         width: 0,
+                                                         //                                                                color: '#FFFFFF',
+                                                         },*/
+                                                        renderer: function (value, b, callout) {
+                                                            //callout.calloutVertical = false;
+                                                            //return Ext.util.Format.number(value, '0')
+                                                            return ''
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        trackMouse: true,
+                                                        height: 28,
+                                                        renderer: function (toolTip, record, ctx) {
+                                                            var label = '';
+                                                            if (ctx.field === 'QTY_ACCOUNTED') {
+                                                                label = 'Accounted';
+                                                            } else if (ctx.field === 'QTY_TO_DEBUG') {
+                                                                label = 'To Debug';
+                                                            }
+                                                            toolTip.setHtml(label + ' Tickets: ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                         }
                                                     },
                                                     //renderer: 'onColumnRender'
@@ -720,11 +829,11 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                             {text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
-                                                    if (data.SVFOPS === data.TGROSAMOUN){
+                                                    if (data.SVFOPS === data.TGROSAMOUN) {
                                                         metaData.style = "text-align:right;";
                                                     } else {
                                                         metaData.style = "text-align:right;color:#cb0519";
-                                                    }                                                    
+                                                    }
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 },
