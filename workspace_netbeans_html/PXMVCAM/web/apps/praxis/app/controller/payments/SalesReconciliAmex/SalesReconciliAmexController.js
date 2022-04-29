@@ -264,7 +264,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         me.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         me.bean.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-
+        me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
+        me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -463,6 +466,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.DATE = rowData.data.DATE;
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
+        this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
 
         me.paramsDetailSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataSettlement();
@@ -508,7 +514,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     txtPNR_keyDownHandler: function (e, eOpts) {
         switch (eOpts.getKey()) {
             case 13:
-                this.setFilterParameterDetSettMerchant();
+                this.btnSearch_click();
         }
     },
     cmbSTVAL_keyDownHandler: function () {
@@ -1617,8 +1623,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         });
     },
     btnBack_click: function (obj, e) {
-        if (me.panelActual === '-boxDetSettlement') {
-            Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
+        if (me.panelActual === '-boxSettlement') {
             Ext.getCmp(prototype.id + '-cmbSTVAL').setValue("");
             Ext.getCmp(prototype.id + '-txtPNR').setValue("");
             Ext.getCmp(prototype.id + '-cmbTDOC').setValue("");
