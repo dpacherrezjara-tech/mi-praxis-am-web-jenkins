@@ -572,74 +572,37 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 100
                                 }
                             ]
-                        },                        
-                        {xtype: 'tbspacer', height: 15},
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '0 2 0 20',
-                            bodyStyle: 'background:#efe5e5;',
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'radiogroup',
-                                    id: prototype.id + '-radiogroupTypeDEE',
-                                    width: 200,
-                                    items: [
-                                        {boxLabel: '<b style="color:#148D28;">Breakdown</b>', inputValue: 'B', name: 'rbgTypeDEE', checked: true},
-                                        {boxLabel: '<b style="color:#148D28;">Scan</b>', inputValue: 'S', name: 'rbgTypeDEE'},
-                                    ],
-                                    listeners: {
-                                        change: 'rbChangeTypeDEE'
-                                    }
-                                }
-                            ]
                         },
                         {xtype: 'tbspacer', height: 15},
+                        {
+                            xtype: 'label',
+                            text: 'Scan',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            bodyStyle: 'background:#E5ECEF;',
+                            fontSize: '11',
+                            width: 234,
+                            height: 20,
+                            margin: '4 2 4 8'
+                        },
                         {
                             xtype: 'panel',
                             id: prototype.id + '-panelScan',
                             layout: 'hbox',
-                            hidden: true,
+                            hidden: false,
                             border: false,
                             margin: '0 2 0 20',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
                                 {
-                                    xtype: 'radiogroup',
-                                    id: prototype.id + '-radiogroupTypeDEEScan',
-                                    width: 200,
-                                    items: [
-                                        {boxLabel: '<b style="color:#148D28;">Auto</b>', inputValue: 'A', name: 'rbgTypeDEEScan', checked: true},
-                                        {boxLabel: '<b style="color:#148D28;">Manual</b>', inputValue: 'M', name: 'rbgTypeDEEScan'},
-                                    ],
-                                    listeners: {
-                                        change: 'rbChangeTypeDEEScan'
-                                    }
-                                },
-                                /*{
-                                    xtype: 'checkboxfield',
-                                    id: prototype.id + '-chkSelection',
-                                    margin: '0 20 0 0',
-                                    width: 80,
-                                    boxLabel: '<b>Scan</b>',
-                                    inputValue: '1',
-                                    listeners: {
-                                        change: 'onGridInfo'
-                                    }
-                                },*/
-                                {xtype: 'tbspacer', width: 20},
-                                {
                                     xtype: 'label',
-                                    text: 'TICKET',
+                                    text: 'ADD Ticket',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
                                     width: 80
                                 },
-                                {xtype: 'tbspacer', width: 10},
+                                {xtype: 'tbspacer', width: 5},
                                 {
                                     xtype: 'textfield',
                                     id: prototype.id + '-input-txtTKTScan',
@@ -649,16 +612,45 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     maskRe: /[0-9]/,
                                     enforceMaxLength: true,
                                     maxLength: 13,
-                                    enableKeyEvents: true,
+                                },
+                                {xtype: 'tbspacer', width: 3},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    margin: '4 1 1 1',
+                                    iconCls: 'prx-icon-add',
+                                    tooltip: 'Add',
                                     listeners: {
-                                        keypress: 'txtTKTScan_keyDownHandler'
+                                        click: 'txtTKTScan_keyDownHandler'
                                     }
-                                }
+
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reset Scan',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    margin: '4 1 1 1',
+                                    icon: 'resources/img/icon/48x48/exchange.png',
+                                    tooltip: 'Reset',
+                                    listeners: {
+                                        click: 'resetScan_keyDownHandler'
+                                    }
+
+                                },
                             ]
                         },
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelDataInfo',
+                            id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
                             width: 785,
@@ -669,7 +661,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             items: [
                                 {
                                     xtype: 'grid',
-                                    id: prototype.id + '-gridDataInfo',
+                                    id: prototype.id + '-gridDataInfoScan',
                                     width: 785,
                                     height: 150,
 //                                    hidden: false,
@@ -785,14 +777,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             {
-                                                text: 'Select',
-                                                xtype: 'checkcolumn',
-                                                id: prototype.id + '-id_checkBreakdown',
-                                                width: 50,
-                                                dataIndex: 'false',
-                                                listeners: {
-                                                    checkchange: 'checkManual'
-                                                },
+                                                header: '',
+                                                dataIndex: '',
+                                                xtype: 'widgetcolumn',
+                                                align: 'center',
+                                                width: 40,
+                                                widget: {
+                                                    xtype: 'button',
+                                                    icon: 'resources/img/icon/delete.png',
+                                                    tooltip: 'remove',
+                                                    listeners: {
+                                                        click: function (button, e, eOpts) {
+                                                            var record = button.getWidgetRecord();
+                                                            meDE.removeTKT(record);
+                                                        }
+                                                    }
+                                                }
+
                                             },
                                             {
                                                 sortable: false,
@@ -808,6 +809,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
+                                            /*{
+                                             text: 'Select',
+                                             xtype: 'checkcolumn',
+                                             id: prototype.id + '-id_checkManual',
+                                             width: 50,
+                                             dataIndex: 'false',
+                                             listeners: {
+                                             checkchange: 'checkManual'
+                                             },
+                                             },*/
                                         ]
                                     }
                                 },
@@ -834,149 +845,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             width: 100,
                                         },
                                     ]
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            id: prototype.id + '-panelDataInfoScan',
-                            layout: 'vbox',
-                            border: false,
-                            width: 785,
-                            height: 180,
-                            hidden: true,
-                            bodyStyle: 'background:#E5ECEF;',
-                            margin: '10 2 12 20',
-                            items: [
-                                {
-                                    xtype: 'grid',
-                                    id: prototype.id + '-gridDataInfoScan',
-                                    width: 755,
-                                    height: 150,
-//                                    hidden: false,
-                                    columnLines: true,
-                                    columns: {
-                                        defaults: {
-                                            menuDisabled: true,
-                                            sortable: true,
-                                            align: 'center'
-                                        },
-                                        items: [
-                                            {
-                                                text: 'Credit Card',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
-                                                            }
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {text: 'Number', dataIndex: 'A1531NREF', width: 120,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
-                                                            }
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
-                                                            }
-                                                            return value;
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:right;";
-                                                    }
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Total <br> Amount', dataIndex: 'tot_VFOP', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:right;";
-                                                    }
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Sales Date', dataIndex: 'A720FECVTA', width: 80,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'PNR', dataIndex: 'A720PNR', width: 75,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 65,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                text: 'Select',
-                                                xtype: 'checkcolumn',
-                                                id: prototype.id + '-id_checkManual',
-                                                width: 50,
-                                                dataIndex: 'false',
-                                                listeners: {
-                                                    checkchange: 'checkManual'
-                                                },
-                                            },                                            
-                                        ]
-                                    }
                                 },
                             ]
                         },
