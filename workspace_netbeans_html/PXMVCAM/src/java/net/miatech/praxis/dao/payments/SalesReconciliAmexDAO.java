@@ -1237,13 +1237,13 @@ public class SalesReconciliAmexDAO {
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
                     beanTkt.DISCAMOUN_IMPORT = this.cambioSigno(beanTkt.TGROSAMOUN, rst.getDouble("DISCAMOUN_IMPORT"));
                     beanTkt.DISCAMOUN_IVA = this.mantenerSigno(beanTkt.DISCAMOUN_IMPORT, rst.getDouble("DISCAMOUN_IVA"));
-                    
+
                     if (rst.getDouble("DISCRATE_IVA") < 0) {
                         beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA") * -1;
                     } else {
                         beanTkt.DISCRATE_IVA = rst.getDouble("DISCRATE_IVA");
                     }
-                    
+
                     beanTkt.DISCRATE_IMPORT = rst.getDouble("DISCRATE_IMPORT");
                     beanTkt.DISCRATEBA_IVA = rst.getDouble("DISCRATEBA_IVA");
                     beanTkt.DISCRATEBA_IMPORT = rst.getDouble("DISCRATEBA_IMPORT");
@@ -2406,20 +2406,20 @@ public class SalesReconciliAmexDAO {
         return lstTkts;
     }
 
-        public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
+    public List<SQP00697Filter> loadSQP00697(SQP00697Filter filter) throws SQLException, Exception {
         List<SQP00697Filter> lstRtn = new ArrayList<SQP00697Filter>(0);
         SQP00697Filter objRtn;
- 
+
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
- 
+
         String SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; //LIBSAP23.SQP00697V2
- 
+
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
- 
+
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setInt(2, filter.IN_TFILTER);
             cstmt01.setString(3, filter.IN_TEXT);
@@ -2429,9 +2429,9 @@ public class SalesReconciliAmexDAO {
             cstmt01.setString(7, filter.IN_DATE_TO);
             cstmt01.setString(8, filter.IN_IATA);
             cstmt01.setString(9, ""); //IN_CAPL
- 
+
             cstmt01.execute();
- 
+
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
                 objRtn = new SQP00697Filter();
@@ -3131,6 +3131,79 @@ public class SalesReconciliAmexDAO {
                 }
             }
              */
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstInfo;
+    }
+
+    public List<A4116Filter> loadPX570SQP04455(A4116Filter filter) throws SQLException, Exception {
+
+        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+        A4116Filter beanRec;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.TKT.trim());
+            cstmt.setString(3, filter.SCARDN.trim());
+            cstmt.setString(4, filter.SAUTHOC.trim());
+            cstmt.setString(5, filter.BSUMDATE.trim());
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+
+                beanRec = new A4116Filter();
+
+                beanRec.A1531NREF = rst.getString("A1531NREF").trim();
+                beanRec.A1531CAPL = rst.getString("A1531CAPL").trim();
+                beanRec.A1531CIA = rst.getString("A1531CIA").trim();
+                beanRec.A1531FORMA = rst.getString("A1531FORMA").trim();
+                beanRec.A1531SERIE = rst.getString("A1531SERIE").trim();
+                beanRec.A1531TKT = beanRec.A1531CIA + beanRec.A1531FORMA + beanRec.A1531SERIE;
+                beanRec.A1531CFOP = rst.getString("A1531CFOP").trim();
+                beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
+                beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
+                beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
+                beanRec.FDUPLI = rst.getInt("FDUPLI");
+
+                beanRec.A720PNR = rst.getString("A720PNR").trim();
+                beanRec.A720SEQ = rst.getString("A720SEQ").trim();
+                beanRec.A720GRUPO = rst.getString("A720GRUPO").trim();
+                beanRec.A720FECVTA = rst.getString("A720FECVTA").trim();
+                beanRec.A720AGENTE = rst.getString("A720AGENTE").trim();
+                lstInfo.add(beanRec);
+            }
+            rst.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
