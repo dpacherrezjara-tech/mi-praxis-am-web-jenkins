@@ -406,6 +406,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                     Ext.getCmp(prototype.id + '-titFecha2').setText(res.data[0].strDescripcion3);
                     Ext.getCmp(prototype.id + '-titFecha1').setText(res.data[0].strDescripcion4);
                     
+                    console.log(res.data);
                     meIChart.gridData_WK_AC = res.data;
                     meIChart.gridData2AC = res.listaData2;
                     meIChart.gridDataRatesAC = res.listaRates;
@@ -431,7 +432,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         Ext.getCmp(prototype.id + '-gridData_WK').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-gridData_INT2').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-gridData_INT_TOT').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-grafico01').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_A').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_D').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_A').bindStore(storeGridDatas);

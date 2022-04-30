@@ -1023,8 +1023,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                             ]
                         }
                     ]
-                }
-                ,
+                },
                 /**
                  * PANEL DE GRILLA Y GRAFICOS - AIRLINE
                  * */
@@ -1503,7 +1502,153 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     bodyStyle: 'background-color: transparent;',
                                     items: [
                                         // id: prototype.id + '-gridData_INT',
-                                        
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            padding: '5 0 0 20',
+                                            width: 800,
+                                            height: 400,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+//                                                {
+//                                                    xtype: 'label',
+//                                                    labelAlign: 'center',
+//                                                    style: 'color:#3C3C3D;font-size:16px;font-weight:bold',
+//                                                    align: 'center',
+//                                                    margin: '5 0 0 450',
+//                                                    text: 'Passenger by Market'
+//                                                },
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-grafico01',
+                                                    width: 1000,
+                                                    border: false,
+                                                    height: 300,
+                                                    background: '#E3EAEF',
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric',
+                                                            position: 'left',
+                                                            grid: true,
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    if ((value / 1000).toString().length > 3) {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                                                    } else {
+                                                                        return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                                                    }
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            type: 'category',
+                                                            position: 'bottom',
+                                                            visibleRange: [0, 1]
+                                                        }],
+                                                        series: [
+                                                            {
+                                                                type: 'line',
+                                                                xField: 'strDescripcion4',
+                                                                yField: 'Aud1',
+                                                                title: 'Audited',
+                                                                fill: true,
+                                                                highlight: true,
+//                                                                tooltip: {
+//                                                                    trackMouse: true,
+//                                                                    style: 'background: #FFF',
+//                                                                    height: 20,
+//                                                                    showDelay: 0,
+//                                                                    dismissDelay: 0,
+//                                                                    hideDelay: 0,
+//                                                                    renderer: function (toolTip, record, ctx) {
+//                                                                        toolTip.setHtml('Total Coupons : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+//                                                                    }
+//                                                                },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: '#fcfcfc',    // punto
+                                                                    stroke: '#33bdda',
+                                                                    
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 2,
+                                                                    stroke: "#33bdda",
+                                                                    fill: 'white'
+                                                                },
+//                                                                label: {
+//                                                                    field: 'Aud1',
+//                                                                    display: 'over',
+//                                                                    renderer: function (value, b, callout) {
+//                                                                        callout.calloutVertical = false;
+//                                                                        //return Ext.util.Format.number(value, '0')
+//                                                                        return ''
+//                                                                    }
+//                                                                },
+//                                                                markerConfig: {
+//                                                                    radius: 4
+//                                                                },
+//                                                                highlight: {
+//                                                                    fill: '#fcfcfc',
+//                                                                    radius: 5,
+//                                                                    'stroke-width': 2,
+//                                                                    stroke: '#fff'
+//                                                                },
+                                                                //renderer: 'onColumnRender'
+                                                            },
+                                                            
+                                                            {
+                                                                type: 'line',
+                                                                id: prototype.id + '-leyendLastG1',
+                                                                xField: 'strDescripcion4',
+                                                                yField: 'Rej1',
+                                                                title: 'Rejected',
+                                                                fill: true,
+                                                                highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion4') + ' : ' + Ext.util.Format.number(record.get('Rej1'), '0,000.00'));
+                                                                    }
+                                                                },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: "#FAB347",
+                                                                    stroke: "#FAB347",
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 1,
+                                                                    stroke: "#FAB347",
+                                                                    fill: 'white'
+                                                                }
+                                                            }
+                                                            
+                                                    ]
+                                                }
+                                            ]
+                                        },
                                         {
                                             xtype: 'panel',
                                             bodyStyle: 'background-color: #E3EAF9;',
@@ -1584,7 +1729,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 //                                                hidden: true,
 //                                                id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
                                             ]
-                                        },
+                                        }
                                     ]
                                 },
                                 
