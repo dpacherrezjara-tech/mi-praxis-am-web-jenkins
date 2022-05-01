@@ -736,7 +736,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     @RequestMapping(value = "gridTransactionError")
     public @ResponseBody
     String gridTransactionError(ModelMap map, HttpServletRequest request) {
@@ -753,8 +753,35 @@ public class SalesReconciliAmexController extends BaseController {
         logic = new SalesReconciliAmexLogic();
         logic.setSession(this.serverSession.getServerSession());
         try {
-            
+
             lstInfo = logic.loadPX570SQP04395(filter);
+            map.put("result", result);
+            map.put("lstInfo", lstInfo);
+            map.put("success", true);
+        } catch (Exception ex) {
+            map.put("success", false);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "gridTransactionErrorByTKT")
+    public @ResponseBody
+    String gridTransactionErrorByTKT(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : gridTransactionErrorByTKT-------------");
+
+        Gson gson = new Gson();
+        A4116Filter filter = new A4116Filter();
+        A4116Filter result = new A4116Filter();
+        List<A4116Filter> lstInfo = new ArrayList<A4116Filter>(0);
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A4116Filter.class);
+
+        logic = new SalesReconciliAmexLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+
+            lstInfo = logic.loadPX570SQP04455(filter);
             map.put("result", result);
             map.put("lstInfo", lstInfo);
             map.put("success", true);
@@ -4829,13 +4856,13 @@ public class SalesReconciliAmexController extends BaseController {
             CH3_38.setCellStyle(headerStyle);
 
             //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress( 2, 2, 25, 25));
-            sheet.addMergedRegion(new CellRangeAddress( 2, 2, 26, 26));
-            sheet.addMergedRegion(new CellRangeAddress( 2, 2, 27, 27));
-            sheet.addMergedRegion(new CellRangeAddress( 2, 2, 28, 28));
-            sheet.addMergedRegion(new CellRangeAddress( 2, 2, 29, 29));
-            sheet.addMergedRegion(new CellRangeAddress( 2, 2, 30, 30));
-            sheet.addMergedRegion(new CellRangeAddress( 2, 2, 31, 31));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 25, 25));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 26, 26));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 27, 27));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 28, 28));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 29, 29));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 30, 30));
+            sheet.addMergedRegion(new CellRangeAddress(2, 2, 31, 31));
             ++vj;
             //============================================
 
@@ -4920,10 +4947,10 @@ public class SalesReconciliAmexController extends BaseController {
                 rcell36.setCellValue(listaData.get(vi).IN_PCURRENCY);
                 rcell37.setCellValue(listaData.get(vi).DISCAMOSC);
                 rcell38.setCellValue(listaData.get(vi).descFREGLA);
-                
+
                 if (listaData.get(vi).CERROR.equals("")) {
                     //nadine
-                }else{
+                } else {
                     rcell3.setCellStyle(bodyStyle);
                 }
                 iter.next();
@@ -4994,24 +5021,24 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_19_T.setCellValue(listaData.get(0).totIVACOM12);
             CH1_20_T.setCellValue("");
             CH1_21_T.setCellValue(listaData.get(0).totDISCAMOUN);
-            CH1_22_T.setCellValue(""); 
-            CH1_23_T.setCellValue(listaData.get(0).DISCAMOUNI_TOTAL); 
-            CH1_24_T.setCellValue(listaData.get(0).TGROSAMOUC_TOTAL); 
-            CH1_25_T.setCellValue(""); 
-            CH1_26_T.setCellValue(listaData.get(0).SFEEAMOUC_TOTAL); 
-            CH1_27_T.setCellValue(listaData.get(0).VATCOMMSIC_TOTAL); 
-            CH1_28_T.setCellValue(""); 
-            CH1_29_T.setCellValue(listaData.get(0).DISCAMOUNC_TOTAL); 
-            CH1_30_T.setCellValue(""); 
-            CH1_31_T.setCellValue(listaData.get(0).DISCAMOUIC_TOTAL); 
-            CH1_32_T.setCellValue(listaData.get(0).totGROSAMOUN_CB); 
-            CH1_33_T.setCellValue(listaData.get(0).DISCAMOUN_CB_TOTAL); 
-            CH1_34_T.setCellValue(listaData.get(0).totTAXAMOUN_CB); 
-            CH1_35_T.setCellValue(listaData.get(0).totNETAMOUN); 
+            CH1_22_T.setCellValue("");
+            CH1_23_T.setCellValue(listaData.get(0).DISCAMOUNI_TOTAL);
+            CH1_24_T.setCellValue(listaData.get(0).TGROSAMOUC_TOTAL);
+            CH1_25_T.setCellValue("");
+            CH1_26_T.setCellValue(listaData.get(0).SFEEAMOUC_TOTAL);
+            CH1_27_T.setCellValue(listaData.get(0).VATCOMMSIC_TOTAL);
+            CH1_28_T.setCellValue("");
+            CH1_29_T.setCellValue(listaData.get(0).DISCAMOUNC_TOTAL);
+            CH1_30_T.setCellValue("");
+            CH1_31_T.setCellValue(listaData.get(0).DISCAMOUIC_TOTAL);
+            CH1_32_T.setCellValue(listaData.get(0).totGROSAMOUN_CB);
+            CH1_33_T.setCellValue(listaData.get(0).DISCAMOUN_CB_TOTAL);
+            CH1_34_T.setCellValue(listaData.get(0).totTAXAMOUN_CB);
+            CH1_35_T.setCellValue(listaData.get(0).totNETAMOUN);
             CH1_36_T.setCellValue("");
             CH1_37_T.setCellValue(listaData.get(0).totDISCAMOSC);
-            CH1_38_T.setCellValue("");        
-                    
+            CH1_38_T.setCellValue("");
+
             CH1_0_T.setCellStyle(totalStyle);
             CH1_1_T.setCellStyle(totalStyle);
             CH1_2_T.setCellStyle(totalStyle);
@@ -5570,7 +5597,7 @@ public class SalesReconciliAmexController extends BaseController {
                 ++vi;
                 ++vj;
             }
-            
+
             Row rowTotal = sheet.createRow(vj);
             Cell CH1_0_T = rowTotal.createCell(0);
             Cell CH1_1_T = rowTotal.createCell(1);
@@ -5602,7 +5629,7 @@ public class SalesReconciliAmexController extends BaseController {
             Cell CH1_27_T = rowTotal.createCell(27);
             Cell CH1_28_T = rowTotal.createCell(28);
             Cell CH1_29_T = rowTotal.createCell(29);
-            
+
             CH1_0_T.setCellValue("");
             CH1_1_T.setCellValue("");
             CH1_2_T.setCellValue("");
@@ -5664,7 +5691,7 @@ public class SalesReconciliAmexController extends BaseController {
             CH1_27_T.setCellStyle(totalStyle);
             CH1_28_T.setCellStyle(totalStyle);
             CH1_29_T.setCellStyle(totalStyle);
-            
+
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);

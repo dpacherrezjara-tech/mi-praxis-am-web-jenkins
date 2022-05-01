@@ -173,7 +173,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["1", "Match"],
                 ["2", "Sales Without Settlement"],
                 ["3", "Settlement Without Sales"],
-                ["4", "Match with Differences"]
+                ["4", "Match with Differences"],
+                ["5", "Match Manual"]
             ]
         }));
         cmbSTVAL.setValue("");
@@ -189,7 +190,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbTDOC.setValue("");
-        
+
         var cmbComplement = Ext.getCmp(prototype.id + '-cmbComplement');
         cmbComplement.bindStore(Ext.create('Ext.data.ArrayStore', {
             autoLoad: false,
@@ -201,7 +202,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbComplement.setValue("");
-        
+
         /*var cmbErrorCode = Ext.getCmp(prototype.id + '-cmbErrorCode');
          cmbErrorCode.bindStore(Ext.create('Ext.data.ArrayStore', {
          autoLoad: false,
@@ -264,7 +265,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
         me.bean.IN_CERROR = Ext.getCmp(prototype.id + '-cmbErrorCode').getValue();
         me.bean.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
-
+        me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
+        me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
             beanString: beanString,
@@ -277,12 +281,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         };
     },
     btnSearch_click: function (obj, e) {
-        if (me.panelActual === '-boxDetSettlement' && (Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '')) {
+        /*if (me.panelActual === '-boxDetSettlement' && (Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '')) {
             this.setFilterParameterDetSettMerchant();
-        } else {
-            Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
-            this.rbChangeType();
-        }
+        } else {*/
+        Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
+        this.rbChangeType();
+        //}
     },
     chkWarning_Click: function () {
         me.bean_warning = {};
@@ -463,6 +467,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanSettlement.DATE = rowData.data.DATE;
         this.beanSettlement.IN_DATE = rowData.data.IN_DATE;
         this.beanSettlement.IN_PCURRENCY = rowData.data.PCURRENCY;
+        this.beanSettlement.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
+        this.beanSettlement.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        this.beanSettlement.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
 
         me.paramsDetailSettlement.beanString = JSON.stringify(this.beanSettlement);
         this.setGridDataSettlement();
@@ -508,7 +515,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     txtPNR_keyDownHandler: function (e, eOpts) {
         switch (eOpts.getKey()) {
             case 13:
-                this.setFilterParameterDetSettMerchant();
+                this.btnSearch_click();
         }
     },
     cmbSTVAL_keyDownHandler: function () {
@@ -621,10 +628,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
                     var pag = Ext.getCmp(prototype.id + '-paggin17');
-                     var pagData = pag.getPageData();
-                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
-                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
-                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
 
                     if (obj.data.length === 0) {
                         global.Msg({
@@ -1617,13 +1624,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         });
     },
     btnBack_click: function (obj, e) {
-        if (me.panelActual === '-boxDetSettlement') {
-            Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
-            Ext.getCmp(prototype.id + '-cmbSTVAL').setValue("");
-            Ext.getCmp(prototype.id + '-txtPNR').setValue("");
-            Ext.getCmp(prototype.id + '-cmbTDOC').setValue("");
-        }
-        
         if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);

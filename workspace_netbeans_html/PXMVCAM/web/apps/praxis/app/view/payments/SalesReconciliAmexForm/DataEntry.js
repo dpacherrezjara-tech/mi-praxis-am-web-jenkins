@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntry',{
     title:'Payment Reconciliation - Data Entry Form',
     header:true,
     height: 640,
-    width: 1200,
+    width: 1320,
     resizable:false,
     layout:'fit',
     modal:true,
@@ -506,7 +506,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntry',{
                                                         text: 'Nbr', dataIndex: 'ROYKEY', width: 35, hidden: true
                                                     },
                                                     {
-                                                        text: 'Passenger Name', dataIndex: 'A720PAX', flex: 1,//width: 280,
+                                                        text: 'Passenger Name', dataIndex: 'A720PAX', width: 280,
                                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
@@ -517,7 +517,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntry',{
                                                         text: 'Ticket Number', dataIndex: 'TICKET', width: 150,editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
-                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 180,editor:{ xtype:'textfield', editable: false }
+                                                        text: 'CC Number', dataIndex: 'A1531NREF', width: 120,editor:{ xtype:'textfield', editable: false }
+                                                    },
+                                                    {
+                                                        text: 'Approved Code', dataIndex: 'IN_IATA', width: 120,editor:{ xtype:'textfield', editable: false }
                                                     },
                                                     {
                                                         text: 'Issue<br/>Orig.', dataIndex: 'A720CIUVTA', width: 60

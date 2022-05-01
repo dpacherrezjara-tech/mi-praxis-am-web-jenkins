@@ -573,41 +573,95 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 }
                             ]
                         },
+                        {xtype: 'tbspacer', height: 15},
+                        {
+                            xtype: 'label',
+                            text: 'Scan',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            bodyStyle: 'background:#E5ECEF;',
+                            fontSize: '11',
+                            width: 234,
+                            height: 20,
+                            margin: '4 2 4 8'
+                        },
                         {
                             xtype: 'panel',
+                            id: prototype.id + '-panelScan',
                             layout: 'hbox',
+                            hidden: false,
                             border: false,
                             margin: '0 2 0 20',
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7},
                                 {
-                                    xtype: 'checkboxfield',
-                                    id: prototype.id + '-chkSelection',
-                                    margin: '0 20 0 0',
-                                    width: 80,
-                                    boxLabel: '<b>Scan</b>',
-                                    inputValue: '1',
+                                    xtype: 'label',
+                                    text: 'ADD Ticket',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-input-txtTKTScan',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    width: 100,
+                                    maskRe: /[0-9]/,
+                                    enforceMaxLength: true,
+                                    maxLength: 13,
+                                },
+                                {xtype: 'tbspacer', width: 3},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    margin: '4 1 1 1',
+                                    iconCls: 'prx-icon-add',
+                                    tooltip: 'Add',
                                     listeners: {
-                                        change: 'onGridInfo'
+                                        click: 'txtTKTScan_keyDownHandler'
                                     }
-                                }
+
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Reset Scan',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    margin: '4 1 1 1',
+                                    icon: 'resources/img/icon/48x48/exchange.png',
+                                    tooltip: 'Reset',
+                                    listeners: {
+                                        click: 'resetScan_keyDownHandler'
+                                    }
+
+                                },
                             ]
                         },
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelDataInfo',
+                            id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
                             width: 785,
                             height: 180,
-                            hidden: true,
+                            hidden: false,
                             bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 12 20',
                             items: [
                                 {
                                     xtype: 'grid',
-                                    id: prototype.id + '-gridDataInfo',
+                                    id: prototype.id + '-gridDataInfoScan',
                                     width: 785,
                                     height: 150,
 //                                    hidden: false,
@@ -723,14 +777,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             {
-                                                text: 'Select',
-                                                xtype: 'checkcolumn',
-                                                id: prototype.id + '-id_checkManual',
-                                                width: 50,
-                                                dataIndex: 'false',
-                                                listeners: {
-                                                    checkchange: 'checkManual'
-                                                },
+                                                header: '',
+                                                dataIndex: '',
+                                                xtype: 'widgetcolumn',
+                                                align: 'center',
+                                                width: 40,
+                                                widget: {
+                                                    xtype: 'button',
+                                                    icon: 'resources/img/icon/delete.png',
+                                                    tooltip: 'remove',
+                                                    listeners: {
+                                                        click: function (button, e, eOpts) {
+                                                            var record = button.getWidgetRecord();
+                                                            meDE.removeTKT(record);
+                                                        }
+                                                    }
+                                                }
+
                                             },
                                             {
                                                 sortable: false,
@@ -746,6 +809,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
+                                            /*{
+                                             text: 'Select',
+                                             xtype: 'checkcolumn',
+                                             id: prototype.id + '-id_checkManual',
+                                             width: 50,
+                                             dataIndex: 'false',
+                                             listeners: {
+                                             checkchange: 'checkManual'
+                                             },
+                                             },*/
                                         ]
                                     }
                                 },
@@ -772,7 +845,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             width: 100,
                                         },
                                     ]
-                                }
+                                },
                             ]
                         },
                     ]
