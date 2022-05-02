@@ -1481,7 +1481,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                         // INFO PRINCIPAL
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-byMonth_01_W',
+                            id: prototype.id + '-byWork_WK',
                             border: false,
                             margin: '5 0 5 0',
                             layout: {
@@ -1558,8 +1558,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                         series: [
                                                             {
                                                                 type: 'line',
-                                                                xField: 'strDescripcion4',
-                                                                yField: 'Aud1',
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totAud1',
                                                                 title: 'Audited',
                                                                 fill: true,
                                                                 highlight: true,
@@ -1611,12 +1611,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
 //                                                                },
                                                                 //renderer: 'onColumnRender'
                                                             },
-                                                            
                                                             {
                                                                 type: 'line',
                                                                 id: prototype.id + '-leyendLastG1',
-                                                                xField: 'strDescripcion4',
-                                                                yField: 'Rej1',
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totRej1',
                                                                 title: 'Rejected',
                                                                 fill: true,
                                                                 highlight: true,
@@ -1624,7 +1623,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                                     trackMouse: true,
                                                                     height: 28,
                                                                     renderer: function(toolTip, record, ctx) {
-                                                                        toolTip.setHtml(record.get('strDescripcion4') + ' : ' + Ext.util.Format.number(record.get('Rej1'), '0,000.00'));
+                                                                        toolTip.setHtml(record.get('strDescripcion4') + ' : ' + Ext.util.Format.number(record.get('totRej1'), '0,000.00'));
                                                                     }
                                                                 },
                                                                 style: {
@@ -1649,6 +1648,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                 }
                                             ]
                                         },
+                                        
+                                        // Grafico Barras
                                         {
                                             xtype: 'panel',
                                             bodyStyle: 'background-color: #E3EAF9;',
@@ -1662,7 +1663,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             items: [
                                                 {
                                                     xtype: 'cartesian',
-                                                    id: prototype.id + '-ChtSalesAnalysis_IA_01_C_WK',
+                                                    id: prototype.id + '-byWork_WK_barras',
                                                     width: 780,
                                                     height: 380,
                                                     background: '#E3EAF9',
@@ -1675,7 +1676,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                         {
                                                             type: 'numeric3d',
                                                             position: 'left',
-                                                            yField: ['totNet1'],
+                                                            yField: ['totNETO'],
                                                             grid: true,
                                                             title: '',
                                                             renderer: function (obj, value) {
@@ -1708,7 +1709,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             title: [''],
                                                             colors: ['#38A0F0', ],
                                                             xField: 'strDescripcion',
-                                                            yField: ['totNet1'],
+                                                            yField: ['totNETO'],
                                                             highlight: true,
                                                             style: {
                                                                 inGroupGapWidth: -7
@@ -1718,10 +1719,10 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                                 height: 28,
                                                                 renderer: function (toolTip, record, ctx) {
 
-                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000.00') + '</b>');
+                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
                                                                 }
                                                             },
-                                                            renderer: 'onColumnRender'
+                                                            renderer: 'onColumnRender_WK'
                                                         }
 
                                                     ]

@@ -30,6 +30,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         '#cbaa4b',
         '#998baa'
     ],
+    colors_WK: [
+        '#33bdda',
+        '#FAB347',
+        '#6baa01',
+        '#FF7F00',
+        '#025669',
+        '#e44a00'
+    ],
     _path: '',
     init: function (view) {
         meIChart = this;
@@ -472,23 +480,88 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     
     displayWorkProgressChart_01: function () {
         
+        console.log('------ displayWorkProgressChart_01 ');
+        
         /*CHARTS COLUMNS*/
 //        beanRates= WRF016Filterwk(gridDataRatesAC.getItemAt(2));
 //        var xmlRoot1:XML = new XML("<chart/>");
+
         console.log(meIChart.gridData_WK_AC);
         console.log(meIChart.gridDataRatesAC);
         var lstColumns = meIChart.gridDataRatesAC;
+        var lst_beanWP = meIChart.gridData_WK_AC;
         
+        console.log(lstColumns);
+        for (var i = 0; i <= lstColumns.length; i++) {
+            
+            if(i == 0){
+                lstColumns[i].totNETO = lstColumns[2].totNet2;  // eje Y
+                lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion3.substring(5,8);  // eje X
+            }else if(i == 1){
+                lstColumns[i].totNETO = lstColumns[2].totNet3;
+                lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion2.substring(5,8);
+            }else if(i == 2){
+                lstColumns[i].totNETO = lstColumns[2].totNet4;
+                lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion1.substring(5,8);
+            }else if(i == 3){
+                lstColumns[i].totNETO = lstColumns[2].totNet5;
+                lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion.substring(5,8);
+            }else if(i == 4){
+                lstColumns[i].totNETO = lstColumns[2].totNet6;
+                lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion4.substring(5,8);
+            }else if(i == 5){
+                lstColumns[i].totNETO = lstColumns[2].totNet1;
+                lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion4.substring(5,8);
+            }
+        }
         
-//        for (var i = 0; i < lstColumns.length; i++) {
-//            lstColumns[i].totNETO = lstColumns[i].strDescription + ' ,  ' + Ext.util.Format.number(lstDataEdit[i].CUPONS_PERCENT, '0,000.00') + '%';
-//        }
+        console.log('---------------------------------');
+        console.log(lstColumns);
         
         var storeDataColumns = Ext.create('Ext.data.Store', {
             data: lstColumns,
             autoLoad: true
         });        
-        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C_WK').bindStore(storeDataColumns);
+        Ext.getCmp(prototype.id + '-byWork_WK_barras').bindStore(storeDataColumns);
+        
+        for (var i = 0; i <= lst_beanWP.length; i++) {
+            
+            if(i == 0){
+                lst_beanWP[i].totAud1 = lst_beanWP[0].totAud2;  // eje Y
+                lst_beanWP[i].totRej1 = lst_beanWP[0].totRej2;  // eje Y
+                lst_beanWP[i].strDescripcion = lst_beanWP[0].strDescripcion3.substring(5,8);  // eje X
+            }else if(i == 1){
+                lst_beanWP[i].totAud1 = lst_beanWP[0].totAud3;
+                lst_beanWP[i].totRej1 = lst_beanWP[0].totRej3;
+                lst_beanWP[i].strDescripcion = lst_beanWP[0].strDescripcion2.substring(5,8);
+            }else if(i == 2){
+                lst_beanWP[i].totAud1 = lst_beanWP[0].totAud4;
+                lst_beanWP[i].totRej1 = lst_beanWP[0].totRej4;
+                lst_beanWP[i].strDescripcion = lst_beanWP[0].strDescripcion1.substring(5,8);
+            }else if(i == 3){
+                lst_beanWP[i].totAud1 = lst_beanWP[0].totAud5;
+                lst_beanWP[i].totRej1 = lst_beanWP[0].totRej5;
+                lst_beanWP[i].strDescripcion = lst_beanWP[0].strDescripcion.substring(5,8);
+            }else if(i == 4){
+                lst_beanWP[i].totAud1 = lst_beanWP[0].totAud6;
+                lst_beanWP[i].totRej1 = lst_beanWP[0].totRej6;
+                lst_beanWP[i].strDescripcion = lst_beanWP[0].strDescripcion4.substring(5,8);
+            }else if(i == 5){
+                lst_beanWP[i].totAud1 = lst_beanWP[0].totAud1;
+                lst_beanWP[i].totRej1 = lst_beanWP[0].totRej1;
+                lst_beanWP[i].strDescripcion = lst_beanWP[0].strDescripcion4.substring(5,8);
+            }
+            
+        }
+        
+        console.log('---------------------------------');
+        console.log(lst_beanWP);
+        
+        var storeDataLine = Ext.create('Ext.data.Store', {
+            data: lst_beanWP,
+            autoLoad: true
+        });        
+        Ext.getCmp(prototype.id + '-grafico01').bindStore(storeDataLine);
         
     },
     
@@ -665,6 +738,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     onColumnRender: function (sprite, config, data, index) {
         return {
             fillStyle: this.colors[index],
+            strokeStyle: index % 2 ? 'none' : 'black',
+            opacity: index % 2 ? 1 : 0.5
+        };
+    },
+    onColumnRender_WK: function (sprite, config, data, index) {
+        return {
+            fillStyle: this.colors_WK[index],
             strokeStyle: index % 2 ? 'none' : 'black',
             opacity: index % 2 ? 1 : 0.5
         };
