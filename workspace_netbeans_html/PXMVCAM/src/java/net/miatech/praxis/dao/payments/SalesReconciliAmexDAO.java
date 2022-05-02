@@ -1906,6 +1906,8 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -2711,6 +2713,8 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
