@@ -450,7 +450,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     insertTKT: function (store_gridInfoScan, objTKT) {
         if (objTKT.A1531CFOP !== 'CC') {
             global.Msg({msg: 'Is not Credit Card'});
+        } else if (objTKT.A1531TTARJ !== 'AX') {
+            global.Msg({msg: 'Credit Card Is not AMEX'});
         } else {
+            for (var i = 0; i < store_gridInfoScan.data.length; i++) {                
+                if (store_gridInfoScan.data.items[i].data.A1531TTARJ === objTKT.A1531TTARJ &&
+                        store_gridInfoScan.data.items[i].data.A1531NREF === objTKT.A1531NREF &&
+                        store_gridInfoScan.data.items[i].data.A1531CAPL === objTKT.A1531CAPL &&
+                        store_gridInfoScan.data.items[i].data.A1531VFOP === objTKT.A1531VFOP &&
+                        store_gridInfoScan.data.items[i].data.tot_VFOP === objTKT.tot_VFOP &&
+                        store_gridInfoScan.data.items[i].data.A720FECVTA === objTKT.A720FECVTA &&
+                        store_gridInfoScan.data.items[i].data.A720PNR === objTKT.A720PNR &&
+                        store_gridInfoScan.data.items[i].data.A1531TKT === objTKT.A1531TKT &&
+                        store_gridInfoScan.data.items[i].data.A720AGENTE === objTKT.A720AGENTE) {
+                    global.Msg({msg: 'Duplicate Ticket'});
+                    return;
+                }
+            }
+
             store_gridInfoScan.add(objTKT);
             Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
         }

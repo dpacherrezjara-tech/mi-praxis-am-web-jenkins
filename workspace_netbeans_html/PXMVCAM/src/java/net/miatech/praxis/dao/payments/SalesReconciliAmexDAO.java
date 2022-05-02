@@ -2183,7 +2183,7 @@ public class SalesReconciliAmexDAO {
 
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
-        
+
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");
         hmDescEstados.put("0", "Pending");
@@ -2192,6 +2192,8 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
 
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
@@ -2361,7 +2363,7 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.descSTVAL = rst.getString("STVAL").trim();
                     }
-                    
+
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
                     beanTkt.RATEACCE = rst.getDouble("RATEACCE");
                     beanTkt.IVACOM12 = rst.getDouble("IVACOM12");

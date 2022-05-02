@@ -175,8 +175,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["2", "Sales Without Settlement"],
                 ["3", "Settlement Without Sales"],
                 ["4", "Match with Differences"],
-                ["5", "Match Manual"]
-                ["6", "Forced Match"]
+                ["5", "Match Manual"],
+                ["6", "Forced Match"],
                 ["7", "Compensation Match"]
             ]
         }));
