@@ -2807,6 +2807,7 @@ public class SalesReconciliAmexDAO {
 
                 objRtn.GROSAMOUN = rs01.getDouble("GROSAMOUN");
                 objRtn.TGROSAMOUN = rs01.getDouble("TGROSAMOUN");
+                objRtn.SVFOPS = rs01.getDouble("SVFOPS");
 
                 objRtn.TRANSDATE = rs01.getString("TRANSDATE");
                 objRtn.TRANSID = rs01.getString("TRANSID");

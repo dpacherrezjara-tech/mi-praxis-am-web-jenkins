@@ -84,6 +84,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
 
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
+        this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         //this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
         // this.setValue('de-txtFINSAMOUC', Ext.util.Format.number(this.beanResult.FINSAMOUC, '0,000.00'));
         // this.setValue('de-txtSINSAMOUC', Ext.util.Format.number(this.beanResult.SINSAMOUC, '0,000.00'));
@@ -198,18 +199,42 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onSaveClick: function (btn) {
 
     },
+    validacionTicketPNRVacio: function () {
+                
+        if(this.getValue("de-txtSPNR").trim() === ''){            
+            return 'PNR field is empty';
+        }
+        
+        if(this.getValue("de-txtISREFNBR").trim() === ''){
+            return 'Ticket field is empty';
+        }
+        
+        return '';
+    },
     onUpdateClick: function (btn) {
 //        console.log('onUpdateClick');
-        var txtMsj = this.validacionInsert();
-        var txtMsj = this.validacionDesglose();
-        var txtMsj = this.validacionMontos();
-        if (txtMsj === '') {
+        var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio();
+        //var txtMsjInsert = this.validacionInsert();
+        var txtMsjDesglose = this.validacionDesglose();
+        var txtMsjMontos = this.validacionMontos();
+        
+        if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
             var beanTemp = {};
             this.llenarData(beanTemp);
             beanTemp.option = 'U';
             this.ValidateTicketPNR(beanTemp, btn);
         } else {
-            global.Msg({msg: txtMsj});
+            if (txtMsjValidacionTktPNR !== '') {
+                console.log(txtMsjValidacionTktPNR);
+                global.Msg({msg: txtMsjValidacionTktPNR});
+            } else if (txtMsjDesglose !== '') {
+                console.log(txtMsjDesglose);
+                global.Msg({msg: txtMsjDesglose});
+            } else if (txtMsjMontos !== '') {
+                console.log(txtMsjMontos);
+                global.Msg({msg: txtMsjMontos});
+            }
+            
         }
 
     },
@@ -302,7 +327,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     validacionDesglose: function () {
         var msjResult = '';
         if (this.lstSendManual.length === 0) {
-            msjResult = "You must select at least one ticket.";
+            msjResult = "You must have at least one ticket.";
         }
         return msjResult;
     },

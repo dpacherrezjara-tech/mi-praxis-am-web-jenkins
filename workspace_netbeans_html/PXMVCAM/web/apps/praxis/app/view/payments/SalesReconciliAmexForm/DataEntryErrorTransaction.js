@@ -321,7 +321,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 370},
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    text: 'Flag Selection',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtFLAG',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 200
+                                },
                                 {xtype: 'tbspacer', width: 170},
                             ]
                         },
@@ -443,7 +458,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Transaction Amount',
+                                    text: 'Transact. Amount',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -501,14 +516,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'label',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    text: 'Flag Selection',
+                                    text: 'Sales Amount',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-txtFLAG',
-                                    fieldStyle: 'text-align:center',
+                                    id: prototype.id + '-de-txtSVFOPS',
+                                    fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
