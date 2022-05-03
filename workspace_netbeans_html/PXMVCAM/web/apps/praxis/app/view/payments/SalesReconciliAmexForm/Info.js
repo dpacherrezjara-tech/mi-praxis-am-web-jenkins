@@ -3959,7 +3959,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Transaction',
+                                                text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
