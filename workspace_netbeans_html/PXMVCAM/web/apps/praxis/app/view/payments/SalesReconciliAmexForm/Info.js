@@ -3226,7 +3226,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     {
                                                         text: 'Days', dataIndex: 'PASSED_DAYS', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (value > 10) {
+                                                            if (value > 11) {
                                                                 metaData.style = "color:#de2828";
                                                             }
                                                             
