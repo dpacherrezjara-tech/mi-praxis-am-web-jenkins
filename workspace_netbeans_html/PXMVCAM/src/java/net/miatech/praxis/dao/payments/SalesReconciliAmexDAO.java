@@ -2732,6 +2732,11 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
+        
+        HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
+        hmDescSTCONL.put("", "");
+        hmDescSTCONL.put("1", "Accounted");
+        hmDescSTCONL.put("2", "Accounted to Debug");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -2780,6 +2785,16 @@ public class SalesReconciliAmexDAO {
                     objRtn.descSTVAL = rs01.getString("STVAL").trim();
                 }
                 objRtn.QTYTKT = rs01.getInt("QTYTKT");
+                
+                objRtn.STCONL = rs01.getString("STCONL").trim();
+                if (hmDescSTCONL.containsKey(rs01.getString("STCONL").trim())) {
+                    objRtn.descSTCONL = hmDescSTCONL.get(rs01.getString("STCONL").trim()).toString();
+                } else {
+                    objRtn.descSTCONL = rs01.getString("STCONL").trim();
+                }
+                
+                objRtn.FCONTL = rs01.getString("FCONTL").trim();
+                objRtn.IDCONL = rs01.getString("IDCONL").trim();
 
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
                 objRtn.INVORNBR = rs01.getString("INVORNBR").trim();

@@ -88,6 +88,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         // this.setValue('de-txtFINSAMOUC', Ext.util.Format.number(this.beanResult.FINSAMOUC, '0,000.00'));
         // this.setValue('de-txtSINSAMOUC', Ext.util.Format.number(this.beanResult.SINSAMOUC, '0,000.00'));
 
+        this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
+        this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
+        this.setValue('de-txtIDCONL', this.beanResult.IDCONL);
+
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
@@ -453,7 +457,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         } else if (objTKT.A1531TTARJ !== 'AX') {
             global.Msg({msg: 'Credit Card Is not AMEX'});
         } else {
-            for (var i = 0; i < store_gridInfoScan.data.length; i++) {                
+            for (var i = 0; i < store_gridInfoScan.data.length; i++) {
                 if (store_gridInfoScan.data.items[i].data.A1531TTARJ === objTKT.A1531TTARJ &&
                         store_gridInfoScan.data.items[i].data.A1531NREF === objTKT.A1531NREF &&
                         store_gridInfoScan.data.items[i].data.A1531CAPL === objTKT.A1531CAPL &&
