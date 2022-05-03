@@ -191,11 +191,14 @@ public class AccountingTransactAmexDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
-        hmDescEstados.put("5", "Forced Match");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -335,11 +338,14 @@ public class AccountingTransactAmexDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
-        hmDescEstados.put("5", "Forced Match");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -488,11 +494,14 @@ public class AccountingTransactAmexDAO {
 
         HashMap<String, String> hmDescEstados = new HashMap<String, String>();
         hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
         hmDescEstados.put("1", "Match");
         hmDescEstados.put("2", "Sales Without Settlement");
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
-        hmDescEstados.put("5", "Forced Match");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");

@@ -1906,6 +1906,8 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
 
         HashMap<String, String> hmDescReglas = new HashMap<String, String>();
         hmDescReglas.put("", "");
@@ -2182,6 +2184,17 @@ public class SalesReconciliAmexDAO {
         List<A4116Filter> lstTkts = new ArrayList<A4116Filter>(0);
         A4116Filter beanTkt;
 
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("1", "Match");
+        hmDescEstados.put("2", "Sales Without Settlement");
+        hmDescEstados.put("3", "Settlement Without Sales");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
+
         double totGROSAMOUN = 0;
         double totTGROSAMOUN = 0;
         double totDISCAMOUN_IMPORT = 0;
@@ -2343,6 +2356,12 @@ public class SalesReconciliAmexDAO {
                         beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC") * -1;
                     } else {
                         beanTkt.DISCRATEIC = rst.getDouble("DISCRATEIC");
+                    }
+                    beanTkt.STVAL = rst.getString("STVAL").trim();
+                    if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
+                        beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                    } else {
+                        beanTkt.descSTVAL = rst.getString("STVAL").trim();
                     }
 
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
@@ -2711,6 +2730,13 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("3", "Settlement Without Sales");
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
+        
+        HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
+        hmDescSTCONL.put("", "");
+        hmDescSTCONL.put("1", "Accounted");
+        hmDescSTCONL.put("2", "Accounted to Debug");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -2759,6 +2785,16 @@ public class SalesReconciliAmexDAO {
                     objRtn.descSTVAL = rs01.getString("STVAL").trim();
                 }
                 objRtn.QTYTKT = rs01.getInt("QTYTKT");
+                
+                objRtn.STCONL = rs01.getString("STCONL").trim();
+                if (hmDescSTCONL.containsKey(rs01.getString("STCONL").trim())) {
+                    objRtn.descSTCONL = hmDescSTCONL.get(rs01.getString("STCONL").trim()).toString();
+                } else {
+                    objRtn.descSTCONL = rs01.getString("STCONL").trim();
+                }
+                
+                objRtn.FCONTL = rs01.getString("FCONTL").trim();
+                objRtn.IDCONL = rs01.getString("IDCONL").trim();
 
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
                 objRtn.INVORNBR = rs01.getString("INVORNBR").trim();

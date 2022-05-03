@@ -3229,6 +3229,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             if (value > 10) {
                                                                 metaData.style = "color:#de2828";
                                                             }
+                                                            
+                                                            if (record.data.INSTANBR > 0 && value > 2) {
+                                                                metaData.style = "color:#de2828";
+                                                            }
                                                             return value;
                                                         },
                                                     }
@@ -3966,15 +3970,34 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     }
                                                 ]
                                             },
-                                            {text: 'Status', dataIndex: 'desCERROR', width: 80,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.CERROR === '') {
-                                                        metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                    } else {
-                                                        metaData.style = "text-align:center;background-color:#FF6F6F;";
-                                                    }
-                                                    return value;
-                                                }
+                                            {
+                                                text: 'Status',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'desCERROR', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (record.data.CERROR === '') {
+                                                                metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                            } else {
+                                                                metaData.tdAttr = 'data-qtip="' + record.data.DES_CERROR + '"';
+                                                                metaData.style = "text-align:center;background-color:#FF6F6F;";
+                                                            }
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;";
+                                                            metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
                                             },
                                             {
                                                 text: 'Transaction',

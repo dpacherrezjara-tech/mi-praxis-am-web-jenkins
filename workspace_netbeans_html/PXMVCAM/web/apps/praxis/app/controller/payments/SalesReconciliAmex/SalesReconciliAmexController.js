@@ -170,11 +170,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             fields: ['code', 'name'],
             data: [
                 ["", "All"],
+                ["0", "Pending"],
                 ["1", "Match"],
                 ["2", "Sales Without Settlement"],
                 ["3", "Settlement Without Sales"],
                 ["4", "Match with Differences"],
-                ["5", "Match Manual"]
+                ["5", "Match Manual"],
+                ["6", "Forced Match"],
+                ["7", "Compensation Match"]
             ]
         }));
         cmbSTVAL.setValue("");

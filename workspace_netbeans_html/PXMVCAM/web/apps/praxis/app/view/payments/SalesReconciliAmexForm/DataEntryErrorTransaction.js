@@ -246,7 +246,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 //                                },
 //                            ]
 //                        },
-                        {xtype: 'tbspacer', width: 30, height: 10},
                         {
                             xtype: 'label',
                             text: 'Error Information',
@@ -573,7 +572,79 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 }
                             ]
                         },
-                        {xtype: 'tbspacer', height: 15},
+                        {xtype: 'tbspacer', height: 5},
+                        {
+                            xtype: 'label',
+                            text: 'Accounting Information',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            bodyStyle: 'background:#E5ECEF;',
+                            fontSize: '11',
+                            width: 234,
+                            height: 20,
+                            margin: '4 2 4 8'
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSTCONL',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    readOnly: true,
+                                    fieldStyle: 'text-align:center;',
+                                    width: 105,
+                                },
+                                {xtype: 'tbspacer', width: 35},
+                                {
+                                    xtype: 'label',
+                                    text: 'Date',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFCONTL',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    readOnly: true,
+                                    width: 100,
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'ID',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtIDCONL',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    readOnly: true,
+                                    width: 100,
+                                }
+                            ]
+                        },
                         {
                             xtype: 'label',
                             text: 'Scan',
@@ -654,7 +725,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             layout: 'vbox',
                             border: false,
                             width: 785,
-                            height: 180,
+                            height: 280,
                             hidden: false,
                             bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 12 20',
@@ -663,7 +734,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
                                     width: 785,
-                                    height: 150,
+                                    height: 250,
 //                                    hidden: false,
                                     columnLines: true,
                                     columns: {
