@@ -3229,6 +3229,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                             if (value > 10) {
                                                                 metaData.style = "color:#de2828";
                                                             }
+                                                            
+                                                            if (record.data.INSTANBR > 0 && value > 2) {
+                                                                metaData.style = "color:#de2828";
+                                                            }
                                                             return value;
                                                         },
                                                     }
