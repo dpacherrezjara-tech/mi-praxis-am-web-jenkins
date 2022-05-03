@@ -2120,6 +2120,18 @@ public class SalesReconciliAmexDAO {
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
                     beanTkt.RATEACCE = rst.getDouble("RATEACCE");
                     beanTkt.IVACOM12 = rst.getDouble("IVACOM12");
+                    
+                    
+                    beanTkt.PRDA = rst.getString("PRDA").trim();
+                    beanTkt.MERCHID = rst.getString("MERCHID").trim();
+                    beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
+                    beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
+                    beanTkt.AXPAYNBR = rst.getString("AXPAYNBR").trim();
+                    beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
+                    beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
+                    beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
+                    beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
+                    
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
@@ -2823,6 +2835,9 @@ public class SalesReconciliAmexDAO {
                 objRtn.CERRORHST = rs01.getString("CERRORHST");
                 objRtn.CERROR = rs01.getString("CERROR");
                 objRtn.DES_CERROR = rs01.getString("DES_CERROR");
+                if ("".equals(objRtn.CERROR.trim())) {
+                    objRtn.DES_CERROR = "";
+                }
                 objRtn.FSELEC = rs01.getString("FSELEC");
                 if ("".equals(objRtn.FSELEC.trim())) {
                     objRtn.FSELEC = "Not loaded";

@@ -1820,7 +1820,24 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             id: prototype.id + '-dataEntryError',
             params: {
                 action: action,
-                rec: rec,
+                rec: rec
+            }
+        }).show();
+    },
+    onEditClickSettlement: function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        console.log(rec);
+        this.winDataEntrySettlement('U', rec);
+    },
+    winDataEntrySettlement: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement', {
+            id: prototype.id + '-dataEntrySettlement',
+            params: {
+                action: action,
+                rec: rec
             }
         }).show();
     },

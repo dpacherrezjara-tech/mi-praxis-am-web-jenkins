@@ -3203,7 +3203,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Transaction',
+                                                text: 'Sales',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -3895,6 +3895,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100,
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 40,
+                                                text: 'Edit',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'onEditClickSettlement'
+                                                    }
+                                                ]
                                             },
                                         ]
                                     }
