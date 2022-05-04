@@ -349,9 +349,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     id: prototype.id + '-de-txtSPNR',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
-                                    enforceMaxLength: true,
-                                    maskRe: /[A-Z]/,
-                                    maxLength: 6,
+                                    readOnly: true,
                                     width: 100,
                                 },
                                 {xtype: 'tbspacer', width: 40},
@@ -369,9 +367,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     style: 'font-weight:bold;color:#0B333C;',
                                     fieldStyle: 'text-align:center;',
                                     width: 100,
-                                    maskRe: /[0-9]/,
-                                    enforceMaxLength: true,
-                                    maxLength: 14
+                                    readOnly: true
                                 }
                             ]
                         },
@@ -621,7 +617,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                         },
                         {
                             xtype: 'label',
-                            text: 'Scan',
+                            text: 'Breakdown',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -631,75 +627,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                         },
                         {
                             xtype: 'panel',
-                            id: prototype.id + '-panelScan',
-                            layout: 'hbox',
-                            hidden: false,
-                            border: false,
-                            margin: '0 2 0 20',
-                            bodyStyle: 'background:#efe5e5;',
-                            items: [
-                                {xtype: 'tbspacer', width: 7},
-                                {
-                                    xtype: 'label',
-                                    text: 'ADD Ticket',
-                                    textAlign: 'center',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    margin: '4 4 4 4',
-                                    width: 80
-                                },
-                                {xtype: 'tbspacer', width: 5},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-input-txtTKTScan',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 100,
-                                    maskRe: /[0-9]/,
-                                    enforceMaxLength: true,
-                                    maxLength: 13,
-                                },
-                                {xtype: 'tbspacer', width: 3},
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    margin: '4 1 1 1',
-                                    iconCls: 'prx-icon-add',
-                                    tooltip: 'Add',
-                                    listeners: {
-                                        click: 'txtTKTScan_keyDownHandler'
-                                    }
-
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Reset Scan',
-                                    textAlign: 'center',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    margin: '4 4 4 4',
-                                    width: 80
-                                },
-                                {xtype: 'tbspacer', width: 5},
-                                {
-                                    xtype: 'button',
-                                    width: 25,
-                                    margin: '4 1 1 1',
-                                    icon: 'resources/img/icon/48x48/exchange.png',
-                                    tooltip: 'Reset',
-                                    listeners: {
-                                        click: 'resetScan_keyDownHandler'
-                                    }
-
-                                },
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 785,
-                            height: 280,
+                            width: 780,
+                            height: 250,
                             hidden: false,
                             bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 12 20',
@@ -707,10 +639,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 785,
+                                    width: 780,
                                     height: 250,
 //                                    hidden: false,
                                     columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock:  'bottom'
+                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -719,168 +655,104 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                         },
                                         items: [
                                             {
-                                                text: 'Credit Card',
+                                                text: 'Payment',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
-                                                            }
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {text: 'Number', dataIndex: 'A1531NREF', width: 120,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
-                                                            }
-                                                            return value;
-                                                        }
-                                                    },
-                                                    {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
-                                                            }
-                                                            return value;
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:right;";
-                                                    }
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Total <br> Amount', dataIndex: 'tot_VFOP', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:right;";
-                                                    }
-                                                    value = Ext.util.Format.number(value, '0,000.00');
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Sales Date', dataIndex: 'A720FECVTA', width: 80,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'PNR', dataIndex: 'A720PNR', width: 75,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 65,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
-                                                    }
-                                                    return value;
-                                                }
-                                            },
-                                            {
-                                                header: '',
-                                                dataIndex: '',
-                                                xtype: 'widgetcolumn',
-                                                align: 'center',
-                                                width: 40,
-                                                widget: {
-                                                    xtype: 'button',
-                                                    icon: 'resources/img/icon/delete.png',
-                                                    tooltip: 'remove',
-                                                    listeners: {
-                                                        click: function (button, e, eOpts) {
-                                                            var record = button.getWidgetRecord();
-                                                            meDE.removeTKT(record);
-                                                        }
-                                                    }
-                                                }
-
-                                            },
-                                            {
-                                                sortable: false,
-                                                xtype: 'actioncolumn',
-                                                width: 30,
-                                                text: '',
-                                                align: 'center',
-                                                items: [
                                                     {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Fill TKT & PNR',
-                                                        handler: 'onTktPnr'
+                                                        text: 'Date', dataIndex: 'DATE', width: 85,
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                text: 'Sales',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'TRANSDATE', width: 85,
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Processing',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'AXPRODAT', width: 85,
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Status',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'desCERROR', width: 100,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            if (record.data.CERROR === '') {
+                                                                metaData.style = "text-align:center;background-color:#C6E5B1;";
+                                                            } else {
+                                                                metaData.tdAttr = 'data-qtip="' + record.data.DES_CERROR + '"';
+                                                                metaData.style = "text-align:center;background-color:#FF6F6F;";
+                                                            }
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = record.data;
+                                                            metaData.style = "text-align:center;";
+                                                            metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'PNR', dataIndex: 'SPNR', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+//                                                            value = '<br>' + value + '<br>';
+                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Ticket', dataIndex: 'ISREFNBR', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
+                                                }
+                                            },
+                                            {text: 'Card Number', dataIndex: 'SCARDN', width: 140},
+                                            {text: 'Auth.', dataIndex: 'SAUTHOC', width: 70},
+                                            {
+                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().getData().items[0].data;
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
+                                                }
                                             }
                                         ]
                                     }
-                                },
-                                {
-                                    xtype: 'panel',
-                                    layout: 'hbox',
-                                    border: false,
-                                    margin: '0 2 0 20',
-                                    bodyStyle: 'background:#efe5e5;',
-                                    items: [
-                                        {
-                                            xtype: 'label',
-                                            text: 'Sum Amount',
-                                            style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
-                                        },
-                                        {xtype: 'tbspacer', width: 10},
-                                        {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-de-txtSumAmount',
-                                            fieldStyle: 'text-align:right',
-                                            enforceMaxLength: true,
-                                            readOnly: true,
-                                            width: 100,
-                                        },
-                                    ]
-                                },
+                                }
                             ]
                         },
                     ]
