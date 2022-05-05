@@ -3189,6 +3189,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                         },
                                         items: [
                                             {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 50,
+                                                text: 'Detail',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-detail',
+                                                        tooltip: 'Edit',
+                                                        handler: 'onEditClickSettlement'
+                                                    }
+                                                ]
+                                            },
+                                            {
                                                 text: 'Payment',
                                                 id: prototype.id + '-detSettDate',
                                                 defaults: {
@@ -3895,21 +3909,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                             },
                                             {
                                                 text: 'Flag <br> Complement', dataIndex: 'descFCOMPL', width: 100,
-                                            },
-                                            {
-                                                sortable: false,
-                                                xtype: 'actioncolumn',
-                                                width: 40,
-                                                text: 'Edit',
-                                                align: 'center',
-                                                items: [
-                                                    {
-                                                        iconCls: 'prx-icon-edit',
-                                                        tooltip: 'Edit',
-                                                        handler: 'onEditClickSettlement'
-                                                    }
-                                                ]
-                                            },
+                                            },                                            
                                         ]
                                     }
                                 }

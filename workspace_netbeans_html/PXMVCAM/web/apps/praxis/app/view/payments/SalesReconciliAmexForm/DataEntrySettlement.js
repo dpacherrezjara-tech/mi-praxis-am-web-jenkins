@@ -633,20 +633,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                             width: 780,
                             height: 250,
                             hidden: false,
-                            bodyStyle: 'background:#E5ECEF;',
+                            //bodyStyle: 'background:#E5ECEF;',
                             margin: '10 2 12 20',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 780,
+                                    width: 730,
                                     height: 250,
+                                    margin: '0 0 0 30',
 //                                    hidden: false,
                                     columnLines: true,
-                                    features: [{
-                                            ftype: 'summary',
-                                            dock:  'bottom'
-                                        }],
                                     columns: {
                                         defaults: {
                                             menuDisabled: true,
@@ -655,104 +652,122 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                         },
                                         items: [
                                             {
-                                                text: 'Payment',
+                                                text: 'Credit Card',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {
-                                                        text: 'Date', dataIndex: 'DATE', width: 85,
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Sales',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Date', dataIndex: 'TRANSDATE', width: 85,
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Processing',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {
-                                                        text: 'Date', dataIndex: 'AXPRODAT', width: 85,
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                text: 'Status',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Reconciliation<br>Settlement', dataIndex: 'desCERROR', width: 100,
+                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            if (record.data.CERROR === '') {
-                                                                metaData.style = "text-align:center;background-color:#C6E5B1;";
-                                                            } else {
-                                                                metaData.tdAttr = 'data-qtip="' + record.data.DES_CERROR + '"';
-                                                                metaData.style = "text-align:center;background-color:#FF6F6F;";
+                                                            metaData.style = "text-align:center;";                                                            
+                                                            if (value === '') {
+                                                                return 'AX';
+                                                            }  else {
+                                                                return value;
                                                             }
-                                                            return value;
+                                                            
                                                         }
                                                     },
-                                                    {text: 'Settlement<br>vs Sales', dataIndex: 'descSTVAL', width: 90,
+                                                    {text: 'Number', dataIndex: 'SCARDN', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            var data = record.data;
-                                                            metaData.style = "text-align:center;";
-                                                            metaData.tdAttr = 'data-qtip="' + data.descSTVAL + '"';
+                                                            metaData.style = "text-align:center;";                                                            
                                                             return value;
                                                         }
                                                     },
+                                                    {text: 'Approval', dataIndex: 'SAUTHOC', width: 65,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
                                             },
-                                            {text: 'PNR', dataIndex: 'SPNR', width: 80,
+                                            {text: 'Amount', dataIndex: 'TGROSAMOUN', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-//                                                            value = '<br>' + value + '<br>';
-                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                }
-                                            },
-                                            {text: 'Ticket', dataIndex: 'ISREFNBR', width: 120,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    value = '<b>' + value + '</b>';
-                                                    return '<a href="#payments-sales-reconcili-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                }
-                                            },
-                                            {text: 'Card Number', dataIndex: 'SCARDN', width: 140},
-                                            {text: 'Auth.', dataIndex: 'SAUTHOC', width: 70},
-                                            {
-                                                text: 'Transaction <br> Amount', dataIndex: 'TGROSAMOUN', width: 100,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;background-color:#B2DAFA";
+                                                    metaData.style = "text-align:right;";
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
-                                                },
-                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
-                                                    var data = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().getData().items[0].data;
-                                                    metaData.style = 'text-align:right; margin-right:3px ';
-                                                    return '<b>' + Ext.util.Format.number(data.totTGROSAMOUN, '0,000.00') + '<b>';
                                                 }
-                                            }
+                                            },
+                                            {text: 'Total <br> Amount', dataIndex: 'totTGROSAMOUN', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Sales Date', dataIndex: 'TRANSDATE', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'PNR', dataIndex: 'SPNR', width: 75,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";                                                    
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Ticket', dataIndex: 'ISREFNBR', width: 140,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 65,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";                                                    
+                                                    return value;
+                                                }
+                                            },
+                                            /*{
+                                                header: '',
+                                                dataIndex: '',
+                                                xtype: 'widgetcolumn',
+                                                align: 'center',                                                
+                                                width: 40,
+                                                widget: {
+                                                    xtype: 'button',
+                                                    icon: 'resources/img/icon/delete.png',
+                                                    tooltip: 'remove',
+                                                    listeners: {
+                                                        click: function (button, e, eOpts) {
+                                                            var record = button.getWidgetRecord();
+                                                            meDE.removeTKT(record);
+                                                        }
+                                                    }
+                                                }
+
+                                            },
+                                            {
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 30,
+                                                text: '',
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Fill TKT & PNR',
+                                                        handler: 'onTktPnr'
+                                                    }
+                                                ]
+                                            },*/
+                                            /*{
+                                             text: 'Select',
+                                             xtype: 'checkcolumn',
+                                             id: prototype.id + '-id_checkManual',
+                                             width: 50,
+                                             dataIndex: 'false',
+                                             listeners: {
+                                             checkchange: 'checkManual'
+                                             },
+                                             },*/
                                         ]
                                     }
-                                }
+                                },
                             ]
                         },
                     ]

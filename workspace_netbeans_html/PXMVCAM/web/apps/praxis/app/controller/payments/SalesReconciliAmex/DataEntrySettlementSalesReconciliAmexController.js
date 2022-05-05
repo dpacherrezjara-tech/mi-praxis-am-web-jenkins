@@ -156,6 +156,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
         this.beanSettlementTktsDetail.IN_FREGLA = this.bean.FREGLA;
         this.beanSettlementTktsDetail.IN_SCARDN = this.bean.SCARDN;
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
+        this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
+        this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
@@ -375,8 +377,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
         var rec = grid.getStore().getAt(rowIndex).data;
         console.log(rec);
 
-        this.setValue('de-txtISREFNBR', rec.A1531TKT);
-        this.setValue('de-txtSPNR', rec.A720PNR);
+        this.setValue('de-txtISREFNBR', rec.ISREFNBR);
+        this.setValue('de-txtSPNR', rec.SPNR);
 
     },
     checkManual: function (a, b, bol, rowData, e, f, g, h) {

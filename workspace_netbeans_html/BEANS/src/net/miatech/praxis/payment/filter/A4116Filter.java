@@ -92,6 +92,7 @@ public class A4116Filter extends A4116 {
     public String IN_MERCHID = "";
     public String IN_PAYDATE = "";
     public String IN_IDITEMS = "";
+    public String IN_IDITEMT = "";
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
     public String DES_CERROR = "";
@@ -105,6 +106,7 @@ public class A4116Filter extends A4116 {
     public String FCONT = "";
     public String FSELEC = "";
     public Integer FDUPLI = 0;
+    public Integer FDUPLIB = 0;
 
     //Flag contabilizado
     public double TGROSAMOUN_ACCOUNTED = 0;
