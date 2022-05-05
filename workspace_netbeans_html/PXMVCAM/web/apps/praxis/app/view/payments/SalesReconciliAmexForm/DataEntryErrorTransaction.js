@@ -769,30 +769,40 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 columns: [
                                                     {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
                                                             if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
+                                                                metaData.style = "text-align:center;background-color:#f58989";
                                                             }
+
+                                                            if (record.data.FDUPLIB > 0) {
+                                                                metaData.style = "text-align:center;background-color:#e7f589";
+                                                            }
+
                                                             return value;
                                                         }
                                                     },
                                                     {text: 'Number', dataIndex: 'A1531NREF', width: 120,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
                                                             if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
+                                                                metaData.style = "text-align:center;background-color:#f58989";
+                                                            }
+
+                                                            if (record.data.FDUPLIB > 0) {
+                                                                metaData.style = "text-align:center;background-color:#e7f589";
                                                             }
                                                             return value;
                                                         }
                                                     },
                                                     {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
                                                             if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f55a42";
-                                                            } else {
-                                                                metaData.style = "text-align:center;";
+                                                                metaData.style = "text-align:center;background-color:#f58989";
+                                                            }
+
+                                                            if (record.data.FDUPLIB > 0) {
+                                                                metaData.style = "text-align:center;background-color:#e7f589";
                                                             }
                                                             return value;
                                                         }
@@ -801,10 +811,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             },
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:right;";
+                                                        metaData.style = "text-align:center;background-color:#f58989";
+                                                    }
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
@@ -813,10 +826,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Total <br> Amount', dataIndex: 'tot_VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
+                                                    metaData.style = "text-align:center;";
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:right;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:right;";
+                                                        metaData.style = "text-align:center;background-color:#f58989";
+                                                    }
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
@@ -824,40 +840,52 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             },
                                             {text: 'Sales Date', dataIndex: 'A720FECVTA', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
+                                                        metaData.style = "text-align:center;background-color:#f58989";
+                                                    }
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
                                                     return value;
                                                 }
                                             },
                                             {text: 'PNR', dataIndex: 'A720PNR', width: 75,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
+                                                        metaData.style = "text-align:center;background-color:#f58989";
+                                                    }
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
                                                     return value;
                                                 }
                                             },
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 100,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
+                                                        metaData.style = "text-align:center;background-color:#f58989";
+                                                    }
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
                                                     return value;
                                                 }
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 65,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
                                                     if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f55a42";
-                                                    } else {
-                                                        metaData.style = "text-align:center;";
+                                                        metaData.style = "text-align:center;background-color:#f58989";
+                                                    }
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
                                                     return value;
                                                 }
