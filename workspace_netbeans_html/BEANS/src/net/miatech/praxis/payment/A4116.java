@@ -94,6 +94,7 @@ public class A4116 {
     public String descFREGLA = "";
     public String descFCOMPL = "";
     public String descSTCONL = "";
+    public String FDESGLOSE = "";
     
     //Variables del Sistema
     public String USCR = "";

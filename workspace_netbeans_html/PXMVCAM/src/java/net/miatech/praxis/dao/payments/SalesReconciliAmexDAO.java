@@ -2120,8 +2120,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
                     beanTkt.RATEACCE = rst.getDouble("RATEACCE");
                     beanTkt.IVACOM12 = rst.getDouble("IVACOM12");
-                    
-                    
+
                     beanTkt.PRDA = rst.getString("PRDA").trim();
                     beanTkt.MERCHID = rst.getString("MERCHID").trim();
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
@@ -2131,7 +2130,6 @@ public class SalesReconciliAmexDAO {
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.IDITEMS = rst.getString("IDITEMS").trim();
                     beanTkt.IDITEMT = rst.getString("IDITEMT").trim();
-                    
 
                     beanTkt.totGROSAMOUN = totGROSAMOUN;
                     beanTkt.totTGROSAMOUN = totTGROSAMOUN;
@@ -2404,6 +2402,17 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
                     beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
+                    
+                    beanTkt.A1531TTARJ = "AX";
+                    beanTkt.FDESGLOSE = "1";
+                    beanTkt.A1531NREF = beanTkt.SCARDN;
+                    beanTkt.A1531CAPL = beanTkt.SAUTHOC;
+                    beanTkt.A1531VFOP = beanTkt.TGROSAMOUN;
+                    beanTkt.tot_VFOP = beanTkt.totTGROSAMOUN;
+                    beanTkt.A720FECVTA = beanTkt.TRANSDATE;
+                    beanTkt.A720PNR = beanTkt.SPNR;                    
+                    beanTkt.A1531TKT = beanTkt.ISREFNBR;
+                    beanTkt.A720AGENTE = "";
 
                     beanTkt.page.PAGNUM = filter.page.PAGNUM;
                     beanTkt.page.PAGROW = filter.page.PAGROW;
@@ -2535,6 +2544,24 @@ public class SalesReconciliAmexDAO {
         hmDescFCOMPL.put("3", "TABLET");
         hmDescFCOMPL.put("4", "BPO");
 
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("1", "Match");
+        hmDescEstados.put("2", "Sales Without Settlement");
+        hmDescEstados.put("3", "Settlement Without Sales");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
+
+        HashMap<String, String> hmDescReglas = new HashMap<String, String>();
+        hmDescReglas.put("", "");
+        hmDescReglas.put("1", "Tkt");
+        hmDescReglas.put("2", "PNR");
+        hmDescReglas.put("3", "CCard");
+        hmDescReglas.put("4", "Manual");
+
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
@@ -2612,6 +2639,20 @@ public class SalesReconciliAmexDAO {
                     beanTkt.PAYDATE = rst.getString("PAYDATE").trim();
                     beanTkt.PCURRENCY = rst.getString("PCURRENCY").trim();
                     beanTkt.SPNR = rst.getString("SPNR").trim();
+
+                    beanTkt.STVAL = rst.getString("STVAL").trim();
+                    if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
+                        beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
+                    } else {
+                        beanTkt.descSTVAL = rst.getString("STVAL").trim();
+                    }
+
+                    beanTkt.FREGLA = rst.getString("FREGLA").trim();
+                    if (hmDescReglas.containsKey(rst.getString("FREGLA").trim())) {
+                        beanTkt.descFREGLA = hmDescReglas.get(rst.getString("FREGLA").trim()).toString();
+                    } else {
+                        beanTkt.descFREGLA = rst.getString("FREGLA").trim();
+                    }
 
                     beanTkt.SMERCHID = rst.getString("SMERCHID").trim();
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
@@ -2746,11 +2787,18 @@ public class SalesReconciliAmexDAO {
         hmDescEstados.put("5", "Match Manual");
         hmDescEstados.put("6", "Forced Match");
         hmDescEstados.put("7", "Compensation Match");
-        
+
         HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
         hmDescSTCONL.put("", "");
         hmDescSTCONL.put("1", "Accounted");
         hmDescSTCONL.put("2", "Accounted to Debug");
+
+        HashMap<String, String> hmDescReglas = new HashMap<String, String>();
+        hmDescReglas.put("", "");
+        hmDescReglas.put("1", "Tkt");
+        hmDescReglas.put("2", "PNR");
+        hmDescReglas.put("3", "CCard");
+        hmDescReglas.put("4", "Manual");
 
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
@@ -2799,14 +2847,21 @@ public class SalesReconciliAmexDAO {
                     objRtn.descSTVAL = rs01.getString("STVAL").trim();
                 }
                 objRtn.QTYTKT = rs01.getInt("QTYTKT");
-                
+
                 objRtn.STCONL = rs01.getString("STCONL").trim();
                 if (hmDescSTCONL.containsKey(rs01.getString("STCONL").trim())) {
                     objRtn.descSTCONL = hmDescSTCONL.get(rs01.getString("STCONL").trim()).toString();
                 } else {
                     objRtn.descSTCONL = rs01.getString("STCONL").trim();
                 }
-                
+
+                objRtn.FREGLA = rs01.getString("FREGLA").trim();
+                if (hmDescReglas.containsKey(rs01.getString("FREGLA").trim())) {
+                    objRtn.descFREGLA = hmDescReglas.get(rs01.getString("FREGLA").trim()).toString();
+                } else {
+                    objRtn.descFREGLA = rs01.getString("FREGLA").trim();
+                }
+
                 objRtn.FCONTL = rs01.getString("FCONTL").trim();
                 objRtn.IDCONL = rs01.getString("IDCONL").trim();
 
