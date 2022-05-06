@@ -2861,6 +2861,8 @@ public class SalesReconciliAmexDAO {
                 } else {
                     objRtn.descFREGLA = rs01.getString("FREGLA").trim();
                 }
+                
+                beanTkt.PASSED_DAYS = rst.getString("PASSED_DAYS").trim();
 
                 objRtn.FCONTL = rs01.getString("FCONTL").trim();
                 objRtn.IDCONL = rs01.getString("IDCONL").trim();
