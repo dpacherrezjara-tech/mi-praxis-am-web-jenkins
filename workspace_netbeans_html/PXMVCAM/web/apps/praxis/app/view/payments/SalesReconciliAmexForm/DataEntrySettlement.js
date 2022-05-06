@@ -57,22 +57,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Payment Date',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtPAYDATE',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
                                     text: 'Processing Date',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -102,17 +86,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 5},
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '0 2 0 20',
-                            items: [
-                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
                                     text: 'Merchant ID',
@@ -128,39 +102,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Sales Merchant ID',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSMERCHID',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Qty Tkts',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtQTYTKT',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 5},
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -184,7 +126,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
-                                    width: 100,
+                                    width: 100
                                 },
                                 {xtype: 'tbspacer', width: 40},
                                 {
@@ -200,9 +142,140 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Sales Merchant ID',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSMERCHID',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Inst. Plan',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtNBRINSTA',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Inst. Number',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtINSTANBR',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 275}
+                            ]
+                        },
+                        {
+                            xtype: 'label',
+                            text: 'Accounting Information',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            bodyStyle: 'background:#E5ECEF;',
+                            fontSize: '11',
+                            width: 234,
+                            height: 20,
+                            margin: '4 2 4 8'
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            bodyStyle: 'background:#efe5e5;',
+                            margin: '0 2 0 20',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSTCONL',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    readOnly: true,
+                                    fieldStyle: 'text-align:center;',
+                                    width: 105,
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Date',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFCONTL',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:left;',
+                                    readOnly: true,
                                     width: 100,
                                 },
-                                {xtype: 'tbspacer', width: 275},
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'ID',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtIDCONL',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    readOnly: true,
+                                    width: 100,
+                                },
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -236,7 +309,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     fieldStyle: 'text-align:right',
                                     enforceMaxLength: true,
                                     readOnly: true,
-                                    width: 100,
+                                    width: 100
                                 },
                                 {xtype: 'tbspacer', width: 40},
                                 {
@@ -252,9 +325,9 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
-                                    width: 200,
+                                    width: 200
                                 },
-                                {xtype: 'tbspacer', width: 170},
+                                {xtype: 'tbspacer', width: 175}
                             ]
                         },
                         {
@@ -296,7 +369,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 200
                                 },
-                                {xtype: 'tbspacer', width: 170},
+                                {xtype: 'tbspacer', width: 175}
                             ]
                         },
                         {
@@ -332,43 +405,41 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     style: 'font-weight:bold;color:#0B333C;',
                                     readOnly: true,
                                     fieldStyle: 'text-align:center;',
-                                    width: 100,
+                                    width: 100
                                 },
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'PNR',
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
+                                    text: 'Payment Date',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSPNR',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
+                                    id: prototype.id + '-de-txtPAYDATE',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
                                     readOnly: true,
-                                    width: 100,
+                                    width: 100
                                 },
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'TICKET',
-                                    textAlign: 'center',
+                                    text: 'Diff. Days',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtISREFNBR',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
-                                    width: 100,
-                                    readOnly: true
-                                }
+                                    id: prototype.id + '-de-txtPASSED_DAYS',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -392,7 +463,120 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'TICKET',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtISREFNBR',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
                                     width: 100,
+                                    readOnly: true
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'PNR',
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSPNR',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    fieldStyle: 'text-align:center;',
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5}
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '0 2 0 20',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Card Account Nbr.',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSCARDN',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Approval Code',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSAUTHOC',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 275}
+                            ]
+                        },
+                        {
+                            xtype: 'label',
+                            text: 'Conciliate',
+                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
+                            bodyStyle: 'background:#E5ECEF;',
+                            fontSize: '11',
+                            width: 280,
+                            height: 20,
+                            margin: '4 2 4 8'
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '0 2 0 20',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    text: 'Status',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtSTVAL',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
                                 },
                                 {xtype: 'tbspacer', width: 40},
                                 {
@@ -426,6 +610,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100,
                                 },
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
@@ -436,136 +621,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                             bodyStyle: 'background:#efe5e5;',
                             items: [
                                 {xtype: 'tbspacer', width: 7, height: 24},
-                                {
-                                    xtype: 'label',
-                                    text: 'Card Account Nbr.',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSCARDN',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Approval Code',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSAUTHOC',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    text: 'Sales Amount',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSVFOPS',
-                                    fieldStyle: 'text-align:right',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '0 2 0 20',
-                            bodyStyle: 'background:#efe5e5;',
-                            items: [
-                                {xtype: 'tbspacer', width: 7, height: 24},
-                                {
-                                    xtype: 'label',
-                                    text: 'Inst. Plan',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtNBRINSTA',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    text: 'Inst. Number',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtINSTANBR',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 40},
-                                {
-                                    xtype: 'label',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    text: 'Status',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-txtSTVAL',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100
-                                }
-                            ]
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            margin: '0 2 0 20',
-                            bodyStyle: 'background:#efe5e5;',
-                            items: [
-                                {xtype: 'tbspacer', width: 7, height: 24},
-                                {
-                                    xtype: 'label',
-                                    text: 'Diff. Days',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtPASSED_DAYS',
-                                    fieldStyle: 'text-align:center',
-                                    enforceMaxLength: true,
-                                    readOnly: true,
-                                    width: 100,
-                                },
-                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
                                     text: 'Rule',
@@ -581,80 +636,39 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 270}
-                            ]
-                        },
-                        {xtype: 'tbspacer', height: 5},
-                        {
-                            xtype: 'label',
-                            text: 'Accounting Information',
-                            style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
-                            bodyStyle: 'background:#E5ECEF;',
-                            fontSize: '11',
-                            width: 234,
-                            height: 20,
-                            margin: '4 2 4 8'
-                        },
-                        {
-                            xtype: 'panel',
-                            layout: 'hbox',
-                            border: false,
-                            bodyStyle: 'background:#efe5e5;',
-                            margin: '0 2 0 20',
-                            items: [
-                                {xtype: 'tbspacer', width: 7, height: 24},
-                                {
-                                    xtype: 'label',
-                                    text: 'Status',
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtSTCONL',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    readOnly: true,
-                                    fieldStyle: 'text-align:center;',
-                                    width: 105,
-                                },
-                                {xtype: 'tbspacer', width: 35},
-                                {
-                                    xtype: 'label',
-                                    text: 'Date',
-                                    textAlign: 'center',
-                                    paddingLeft: 3,
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    width: 120
-                                },
-                                {xtype: 'tbspacer', width: 10},
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-de-txtFCONTL',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:left;',
-                                    readOnly: true,
-                                    width: 100,
-                                },
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'ID',
-                                    textAlign: 'center',
+                                    text: 'Qty Tkts',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-txtIDCONL',
-                                    style: 'font-weight:bold;color:#0B333C;',
-                                    fieldStyle: 'text-align:center;',
+                                    id: prototype.id + '-de-txtQTYTKT',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100,
-                                }
+                                },
+                                 {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    text: 'Sales Amount',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtSVFOPS',
+                                    fieldStyle: 'text-align:right',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5}
                             ]
                         },
                         {
