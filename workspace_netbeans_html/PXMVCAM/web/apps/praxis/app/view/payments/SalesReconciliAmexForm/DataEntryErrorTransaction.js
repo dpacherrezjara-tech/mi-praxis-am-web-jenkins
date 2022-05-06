@@ -587,7 +587,35 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 }
                             ]
                         },
-                        {xtype: 'tbspacer', height: 5},
+                        {
+                            xtype: 'panel',
+                            layout: 'hbox',
+                            border: false,
+                            margin: '0 2 0 20',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7, height: 24},
+                                {
+                                    xtype: 'label',
+                                    text: 'Rule',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFREGLA',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100,
+                                },
+                                {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 270},
+                                {xtype: 'tbspacer', width: 230},
+                            ]
+                        },
+                        {xtype: 'tbspacer', height: 3},
                         {
                             xtype: 'label',
                             text: 'Accounting Information',
@@ -864,7 +892,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 100,
+                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     if (record.data.FDUPLI > 0) {
@@ -903,12 +931,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     listeners: {
                                                         click: function (button, e, eOpts) {
                                                             var record = button.getWidgetRecord();
-                                                            meDE.removeTKT(record);
+                                                            if(record.data.FDESGLOSE !== '1'){
+                                                                meDE.removeTKT(record);
+                                                            }
+                                                            
                                                         }
                                                     }
                                                 }
 
-                                            },
+                                            },                                            
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',

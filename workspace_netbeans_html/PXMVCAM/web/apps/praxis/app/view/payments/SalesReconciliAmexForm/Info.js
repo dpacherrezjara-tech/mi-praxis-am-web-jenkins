@@ -3197,7 +3197,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 items: [
                                                     {
                                                         iconCls: 'prx-icon-detail',
-                                                        tooltip: 'Edit',
+                                                        tooltip: 'Detail',
                                                         handler: 'onEditClickSettlement'
                                                     }
                                                 ]
@@ -3230,7 +3230,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Passed',
+                                                text: 'Diff.',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
