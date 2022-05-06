@@ -104,7 +104,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
 
-        this.getBreakdownDataGrid();        
+        this.getBreakdownDataGrid();
     },
     obtainData: function () {
 //        console.log('obtainData');
@@ -510,6 +510,66 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
                 if (res.lstInfo.length > 0) {
                     meDE.insertTKT(store_gridInfoScan, res.lstInfo[0]);
+                    /*for (var i = 0; i < res.lstInfo.length; i++) {
+                     store_gridInfoScan.add(res.lstInfo[i]);
+                     }*/
+                } else {
+                    global.Msg({msg: 'Not Found in Sales'});
+                }
+
+                meDE.calcularMontos();
+
+            }
+        });
+    },
+    addCreditCard_keyDownHandler: function () {
+        if (this.getValue("txtCard1") === '' || this.getValue("txtCard2") === '' || this.getValue("txtApproval") === '' || this.getValue("txtFromDate") === null) {
+            global.Msg({msg: 'There are Credit Card Fields empty'});
+        } else {
+            this.helpByCreditCard();
+        }
+    },
+    helpByCreditCard: function () {
+        this.setValue('de-txtSumAmount', Ext.util.Format.number('0', '0,000.00'));
+        this.lstSendManual = [];
+
+        var cc1 = this.getValue("txtCard1");
+        var cc2 = this.getValue("txtCard2");
+        var approval = this.getValue("txtApproval");
+        var sales_date = this.getValue("txtFromDate");
+
+        var beanGrid = {};
+
+        beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
+        beanGrid.SAUTHOC = approval;
+        beanGrid.BSUMDATE = Ext.util.Format.date(sales_date, 'Ymd');
+
+        var beanStringGrid = JSON.stringify(beanGrid);
+
+        var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
+
+        Ext.Ajax.request({
+            url: prototype.url + '/gridTransactionErrorByTKT',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataInfoScan').mask('Loading...'),
+            params: {beanString: beanStringGrid},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanInfo = res.lstInfo;
+                console.log(meDE.beanInfo);
+
+                if (res.lstInfo.length > 0) {
+                    if (res.lstInfo[0].A1531CFOP !== 'CC') {
+                        global.Msg({msg: 'Is not Credit Card'});
+                    } else if (res.lstInfo[0].A1531TTARJ !== 'AX') {
+                        global.Msg({msg: 'Credit Card Is not AMEX'});
+                    } else {
+                        for (var i = 0; i < res.lstInfo.length; i++) {
+                            meDE.insertCreditCard(store_gridInfoScan, res.lstInfo[0]);
+                        }
+                    }
                 } else {
                     global.Msg({msg: 'Not Found in Sales'});
                 }
@@ -542,6 +602,30 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
             store_gridInfoScan.add(objTKT);
             Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+        }
+    },
+    insertCreditCard: function (store_gridInfoScan, objTKT) {
+
+        if (store_gridInfoScan.data.length === 0) {
+            store_gridInfoScan.add(objTKT);
+            Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+        } else {
+            for (var i = 0; i < store_gridInfoScan.data.length; i++) {
+                if (store_gridInfoScan.data.items[i].data.A1531TTARJ === objTKT.A1531TTARJ &&
+                        store_gridInfoScan.data.items[i].data.A1531NREF === objTKT.A1531NREF &&
+                        store_gridInfoScan.data.items[i].data.A1531CAPL === objTKT.A1531CAPL &&
+                        store_gridInfoScan.data.items[i].data.A1531VFOP === objTKT.A1531VFOP &&
+                        store_gridInfoScan.data.items[i].data.tot_VFOP === objTKT.tot_VFOP &&
+                        store_gridInfoScan.data.items[i].data.A720FECVTA === objTKT.A720FECVTA &&
+                        store_gridInfoScan.data.items[i].data.A720PNR === objTKT.A720PNR &&
+                        store_gridInfoScan.data.items[i].data.A1531TKT === objTKT.A1531TKT// && store_gridInfoScan.data.items[i].data.A720AGENTE === objTKT.A720AGENTE
+                        ) {
+                    continue;
+                } else {
+                    store_gridInfoScan.add(objTKT);
+                    Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+                }
+            }
         }
     },
     removeTKT: function (record) {

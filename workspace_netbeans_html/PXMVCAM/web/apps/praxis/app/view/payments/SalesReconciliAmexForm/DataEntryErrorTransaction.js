@@ -710,7 +710,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7},
                                 {
                                     xtype: 'label',
-                                    text: 'ADD Ticket',
+                                    text: 'Add Ticket',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
@@ -731,7 +731,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'button',
                                     width: 25,
-                                    margin: '4 1 1 1',
+                                    //margin: '4 1 1 1',
                                     iconCls: 'prx-icon-add',
                                     tooltip: 'Add',
                                     listeners: {
@@ -748,11 +748,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     margin: '4 4 4 4',
                                     width: 80
                                 },
-                                {xtype: 'tbspacer', width: 5},
+                                {xtype: 'tbspacer', width: 15},
                                 {
                                     xtype: 'button',
                                     width: 25,
-                                    margin: '4 1 1 1',
+                                    //margin: '4 1 1 1',
                                     icon: 'resources/img/icon/48x48/exchange.png',
                                     tooltip: 'Reset',
                                     listeners: {
@@ -760,6 +760,115 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     }
 
                                 },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelScanCard',
+                            layout: 'hbox',
+                            hidden: false,
+                            border: false,
+                            margin: '0 2 0 20',
+                            bodyStyle: 'background:#efe5e5;',
+                            items: [
+                                {xtype: 'tbspacer', width: 7},
+                                {
+                                    xtype: 'label',
+                                    text: 'Add C. Card',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtCard1',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 6,
+                                    width: 85,
+                                    enableKeyEvents: true,
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'label',
+                                    text: '*****(*)',
+                                    padding: '3 0',
+                                    width: 65,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': '5 encrypted characters for AMEX and 6 characters for the rest.'
+                                    }
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtCard2',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 4,
+                                    width: 65,
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'label',
+                                    text: 'Approval',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 60
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-txtApproval',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    maskRe: /[0-9]/,
+                                    maxLength: 6,
+                                    width: 85,
+                                    enableKeyEvents: true,
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'label',
+                                    text: 'Sales Date',
+                                    textAlign: 'center',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    margin: '4 4 4 4',
+                                    width: 80
+                                },
+                                {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'datefield',
+                                    id: prototype.id + '-txtFromDate',
+                                    fieldStyle: 'text-align:center',
+                                    format: 'Y/m/d',
+                                    formatText: '',
+                                    invalidText: 'Format valid YYYY/MM/DD',
+                                    minValue: new Date(1990, 00, 01),
+                                    maskRe: /[0-9/]/,
+                                    editable: false,
+                                    enforceMaxLength: true,
+                                    maxLength: 10,
+                                    inputAttrTpl: "data-qtip='Format valid YYYY/MM/DD'",
+                                    width: 90
+                                },
+                                {xtype: 'tbspacer', width: 15},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-add',
+                                    tooltip: 'Add',
+                                    listeners: {
+                                        click: 'addCreditCard_keyDownHandler'
+                                    }
+
+                                },
+                                {xtype: 'tbspacer', width: 5},
                             ]
                         },
                         {
@@ -806,6 +915,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                                 metaData.style = "text-align:center;background-color:#e7f589";
                                                             }
 
+                                                            if (record.data.FDESGLOSE === '1') {
+                                                                metaData.style = "text-align:center;background-color:#9cfa89";
+                                                            }
+
                                                             return value;
                                                         }
                                                     },
@@ -819,6 +932,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                             if (record.data.FDUPLIB > 0) {
                                                                 metaData.style = "text-align:center;background-color:#e7f589";
                                                             }
+
+                                                            if (record.data.FDESGLOSE === '1') {
+                                                                metaData.style = "text-align:center;background-color:#9cfa89";
+                                                            }
                                                             return value;
                                                         }
                                                     },
@@ -831,6 +948,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                                             if (record.data.FDUPLIB > 0) {
                                                                 metaData.style = "text-align:center;background-color:#e7f589";
+                                                            }
+
+                                                            if (record.data.FDESGLOSE === '1') {
+                                                                metaData.style = "text-align:center;background-color:#9cfa89";
                                                             }
                                                             return value;
                                                         }
@@ -847,6 +968,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     if (record.data.FDUPLIB > 0) {
                                                         metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        metaData.style = "text-align:center;background-color:#9cfa89";
+                                                    }
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
@@ -862,6 +987,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     if (record.data.FDUPLIB > 0) {
                                                         metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        metaData.style = "text-align:center;background-color:#9cfa89";
+                                                    }
+
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
@@ -876,6 +1006,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     if (record.data.FDUPLIB > 0) {
                                                         metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        metaData.style = "text-align:center;background-color:#9cfa89";
+                                                    }
+
                                                     return value;
                                                 }
                                             },
@@ -888,6 +1023,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                                     if (record.data.FDUPLIB > 0) {
                                                         metaData.style = "text-align:center;background-color:#e7f589";
+                                                    }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        metaData.style = "text-align:center;background-color:#9cfa89";
                                                     }
                                                     return value;
                                                 }
@@ -902,6 +1041,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     if (record.data.FDUPLIB > 0) {
                                                         metaData.style = "text-align:center;background-color:#e7f589";
                                                     }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        metaData.style = "text-align:center;background-color:#9cfa89";
+                                                    }
                                                     return value;
                                                 }
                                             },
@@ -914,6 +1057,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                                     if (record.data.FDUPLIB > 0) {
                                                         metaData.style = "text-align:center;background-color:#e7f589";
+                                                    }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        metaData.style = "text-align:center;background-color:#9cfa89";
                                                     }
                                                     return value;
                                                 }
@@ -931,15 +1078,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     listeners: {
                                                         click: function (button, e, eOpts) {
                                                             var record = button.getWidgetRecord();
-                                                            if(record.data.FDESGLOSE !== '1'){
+                                                            if (record.data.FDESGLOSE !== '1') {
                                                                 meDE.removeTKT(record);
                                                             }
-                                                            
+
                                                         }
                                                     }
                                                 }
 
-                                            },                                            
+                                            },
                                             {
                                                 sortable: false,
                                                 xtype: 'actioncolumn',
