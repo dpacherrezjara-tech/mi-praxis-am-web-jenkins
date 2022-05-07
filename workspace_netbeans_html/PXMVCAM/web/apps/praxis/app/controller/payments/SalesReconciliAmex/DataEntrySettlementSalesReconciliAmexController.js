@@ -72,6 +72,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
         this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
         this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
+        this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
+        this.setValue('de-txtdescFREGLA', this.beanResult.descFREGLA);
         this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
 
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));

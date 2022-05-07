@@ -2861,6 +2861,8 @@ public class SalesReconciliAmexDAO {
                 } else {
                     objRtn.descFREGLA = rs01.getString("FREGLA").trim();
                 }
+                
+                objRtn.PASSED_DAYS = rs01.getString("PASSED_DAYS").trim();
 
                 objRtn.FCONTL = rs01.getString("FCONTL").trim();
                 objRtn.IDCONL = rs01.getString("IDCONL").trim();
@@ -3179,7 +3181,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3198,6 +3200,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(4, fecha_a_validar);
             cstmt.setString(5, Functions.restXDaystoDate(fecha_a_validar, -1));
             cstmt.setString(6, Functions.restXDaystoDate(fecha_a_validar, 1));
+            cstmt.setString(7, filter.ISREFNBR.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();
