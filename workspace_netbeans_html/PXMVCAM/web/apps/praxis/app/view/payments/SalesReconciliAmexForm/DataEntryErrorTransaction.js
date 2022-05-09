@@ -201,8 +201,24 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     enforceMaxLength: true,
                                     readOnly: true,
                                     width: 100
+                                },                                
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Flag Compl.',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
                                 },
-                                {xtype: 'tbspacer', width: 275}
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFCOMPL',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5},
                             ]
                         },
                         {
@@ -678,6 +694,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                         {
                             xtype: 'label',
                             text: 'Scan',
+                            id: prototype.id + '-labelScan',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',

@@ -2402,7 +2402,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SFEEAMOUC_TOTAL = SFEEAMOUC_TOTAL;
                     beanTkt.VATCOMMSIC_TOTAL = VATCOMMSIC_TOTAL;
                     beanTkt.DISCAMOUN_CB_TOTAL = DISCAMOUN_CB_TOTAL;
-                    
+
                     beanTkt.A1531TTARJ = "AX";
                     beanTkt.FDESGLOSE = "1";
                     beanTkt.A1531NREF = beanTkt.SCARDN;
@@ -2410,7 +2410,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.A1531VFOP = beanTkt.TGROSAMOUN;
                     beanTkt.tot_VFOP = beanTkt.totTGROSAMOUN;
                     beanTkt.A720FECVTA = beanTkt.TRANSDATE;
-                    beanTkt.A720PNR = beanTkt.SPNR;                    
+                    beanTkt.A720PNR = beanTkt.SPNR;
                     beanTkt.A1531TKT = beanTkt.ISREFNBR;
                     beanTkt.A720AGENTE = "";
 
@@ -2800,6 +2800,13 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
 
+        HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
+        hmDescFCOMPL.put("", "");
+        hmDescFCOMPL.put("1", "PLUSGRADE");
+        hmDescFCOMPL.put("2", "LIGAS");
+        hmDescFCOMPL.put("3", "TABLET");
+        hmDescFCOMPL.put("4", "BPO");
+
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04359(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -2861,11 +2868,18 @@ public class SalesReconciliAmexDAO {
                 } else {
                     objRtn.descFREGLA = rs01.getString("FREGLA").trim();
                 }
-                
+
                 objRtn.PASSED_DAYS = rs01.getString("PASSED_DAYS").trim();
 
                 objRtn.FCONTL = rs01.getString("FCONTL").trim();
                 objRtn.IDCONL = rs01.getString("IDCONL").trim();
+
+                objRtn.FCOMPL = rs01.getString("FCOMPL").trim();
+                if (hmDescFCOMPL.containsKey(rs01.getString("FCOMPL").trim())) {
+                    objRtn.descFCOMPL = hmDescFCOMPL.get(rs01.getString("FCOMPL").trim()).toString();
+                } else {
+                    objRtn.descFCOMPL = rs01.getString("FCOMPL").trim();
+                }
 
                 objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
                 objRtn.INVORNBR = rs01.getString("INVORNBR").trim();
