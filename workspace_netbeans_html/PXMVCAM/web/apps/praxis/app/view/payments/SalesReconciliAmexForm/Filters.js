@@ -345,6 +345,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             listeners:{
                                  change: 'btnSearch_click'
                              }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            text: 'PNR:',
+                            padding: '8px 1px 2px 1px',
+                            width: 50
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtPNRError',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
                         }
                     ]
                 }
