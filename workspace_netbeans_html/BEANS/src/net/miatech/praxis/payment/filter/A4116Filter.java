@@ -26,6 +26,7 @@ public class A4116Filter extends A4116 {
     public String strFormatDate = "";
     public String IN_PNR = "";
     public String IN_PNRError = "";
+    public String IN_TDOCError  = "";
     public String IN_STVAL = "";
     public String IN_TRANSDATE = "";
     public String IN_AXPRODAT = "";
@@ -158,6 +159,7 @@ public class A4116Filter extends A4116 {
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
     public Pagination page = new Pagination();
+    
     
     
     

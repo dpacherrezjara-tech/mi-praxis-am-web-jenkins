@@ -193,6 +193,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             ]
         }));
         cmbTDOC.setValue("");
+        
+        var cmbTDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError');
+        cmbTDOCError.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["S", "Sales"],
+                ["R", "Refund"]
+            ]
+        }));
+        cmbTDOCError.setValue("");
 
         var cmbComplement = Ext.getCmp(prototype.id + '-cmbComplement');
         cmbComplement.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -272,6 +284,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
         me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        me.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
