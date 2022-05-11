@@ -270,6 +270,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_COMPLEMENT = Ext.getCmp(prototype.id + '-cmbComplement').getValue();
         me.bean.IN_STVAL = Ext.getCmp(prototype.id + '-cmbSTVAL').getValue();
         me.bean.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);

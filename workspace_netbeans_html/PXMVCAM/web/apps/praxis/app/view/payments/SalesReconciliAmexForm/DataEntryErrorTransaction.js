@@ -202,7 +202,23 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     readOnly: true,
                                     width: 100
                                 },
-                                {xtype: 'tbspacer', width: 275}
+                                {xtype: 'tbspacer', width: 40},
+                                {
+                                    xtype: 'label',
+                                    text: 'Flag Compl.',
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 120
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-de-txtFCOMPL',
+                                    fieldStyle: 'text-align:center',
+                                    enforceMaxLength: true,
+                                    readOnly: true,
+                                    width: 100
+                                },
+                                {xtype: 'tbspacer', width: 5},
                             ]
                         },
                         {
@@ -656,7 +672,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     readOnly: true,
                                     width: 100,
                                 },
-                                 {xtype: 'tbspacer', width: 40},
+                                {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -674,10 +690,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 },
                                 {xtype: 'tbspacer', width: 5}
                             ]
-                        },                                                
+                        },
                         {
                             xtype: 'label',
                             text: 'Scan',
+                            id: prototype.id + '-labelScan',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -718,6 +735,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'button',
                                     width: 25,
+                                    hidden: true,
                                     //margin: '4 1 1 1',
                                     iconCls: 'prx-icon-add',
                                     tooltip: 'Add',
@@ -863,16 +881,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                             id: prototype.id + '-panelDataInfoScan',
                             layout: 'vbox',
                             border: false,
-                            width: 785,
-                            height: 280,
+                            width: 795,
+                            height: 245,
                             hidden: false,
                             bodyStyle: 'background:#E5ECEF;',
-                            margin: '10 2 12 20',
+                            margin: '10 2 12 10',
                             items: [
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataInfoScan',
-                                    width: 785,
+                                    width: 795,
                                     height: 220,
 //                                    hidden: false,
                                     columnLines: true,
@@ -883,6 +901,25 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             align: 'center'
                                         },
                                         items: [
+                                            {text: 'Status', dataIndex: 'STMANUAL', width: 50,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    /*if (record.data.FDUPLI > 0) {
+                                                        metaData.style = "text-align:center;background-color:#f58989";
+                                                    }*/
+                                                    
+                                                    value = 'Sales';
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        value = 'Used'
+                                                    }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        value = 'Audit'
+                                                    }
+                                                    return value;
+                                                }
+                                            },
                                             {
                                                 text: 'Credit Card',
                                                 defaults: {
@@ -894,7 +931,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
-                                                            if (record.data.FDUPLI > 0) {
+                                                            /*if (record.data.FDUPLI > 0) {
                                                                 metaData.style = "text-align:center;background-color:#f58989";
                                                             }
 
@@ -904,42 +941,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                                             if (record.data.FDESGLOSE === '1') {
                                                                 metaData.style = "text-align:center;background-color:#9cfa89";
-                                                            }
+                                                            }*/
 
                                                             return value;
                                                         }
                                                     },
-                                                    {text: 'Number', dataIndex: 'A1531NREF', width: 120,
+                                                    {text: 'Number', dataIndex: 'A1531NREF', width: 115,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f58989";
-                                                            }
-
-                                                            if (record.data.FDUPLIB > 0) {
-                                                                metaData.style = "text-align:center;background-color:#e7f589";
-                                                            }
-
-                                                            if (record.data.FDESGLOSE === '1') {
-                                                                metaData.style = "text-align:center;background-color:#9cfa89";
-                                                            }
+                                                            
                                                             return value;
                                                         }
                                                     },
                                                     {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
-                                                            if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f58989";
-                                                            }
-
-                                                            if (record.data.FDUPLIB > 0) {
-                                                                metaData.style = "text-align:center;background-color:#e7f589";
-                                                            }
-
-                                                            if (record.data.FDESGLOSE === '1') {
-                                                                metaData.style = "text-align:center;background-color:#9cfa89";
-                                                            }
+                                                            
                                                             return value;
                                                         }
                                                     }
@@ -947,108 +964,45 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             },
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f58989";
-                                                    }
-
-                                                    if (record.data.FDUPLIB > 0) {
-                                                        metaData.style = "text-align:center;background-color:#e7f589";
-                                                    }
-
-                                                    if (record.data.FDESGLOSE === '1') {
-                                                        metaData.style = "text-align:center;background-color:#9cfa89";
-                                                    }
+                                                    metaData.style = "text-align:right;";
+                                                    
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Total <br> Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-
-                                                    metaData.style = "text-align:center;";
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f58989";
-                                                    }
-
-                                                    if (record.data.FDUPLIB > 0) {
-                                                        metaData.style = "text-align:center;background-color:#e7f589";
-                                                    }
-
-                                                    if (record.data.FDESGLOSE === '1') {
-                                                        metaData.style = "text-align:center;background-color:#9cfa89";
-                                                    }
-
+                                                    metaData.style = "text-align:right;";
+                                                    
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales Date', dataIndex: 'A720FECVTA', width: 80,
+                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f58989";
-                                                    }
-
-                                                    if (record.data.FDUPLIB > 0) {
-                                                        metaData.style = "text-align:center;background-color:#e7f589";
-                                                    }
-
-                                                    if (record.data.FDESGLOSE === '1') {
-                                                        metaData.style = "text-align:center;background-color:#9cfa89";
-                                                    }
+                                                    metaData.style = "text-align:center;";                                                    
 
                                                     return value;
                                                 }
                                             },
-                                            {text: 'PNR', dataIndex: 'A720PNR', width: 75,
+                                            {text: 'PNR', dataIndex: 'A720PNR', width: 62,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f58989";
-                                                    }
-
-                                                    if (record.data.FDUPLIB > 0) {
-                                                        metaData.style = "text-align:center;background-color:#e7f589";
-                                                    }
-
-                                                    if (record.data.FDESGLOSE === '1') {
-                                                        metaData.style = "text-align:center;background-color:#9cfa89";
-                                                    }
+                                                    
                                                     return value;
                                                 }
                                             },
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f58989";
-                                                    }
-
-                                                    if (record.data.FDUPLIB > 0) {
-                                                        metaData.style = "text-align:center;background-color:#e7f589";
-                                                    }
-
-                                                    if (record.data.FDESGLOSE === '1') {
-                                                        metaData.style = "text-align:center;background-color:#9cfa89";
-                                                    }
+                                                    
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 65,
+                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f58989";
-                                                    }
-
-                                                    if (record.data.FDUPLIB > 0) {
-                                                        metaData.style = "text-align:center;background-color:#e7f589";
-                                                    }
-
-                                                    if (record.data.FDESGLOSE === '1') {
-                                                        metaData.style = "text-align:center;background-color:#9cfa89";
-                                                    }
+                                                    
                                                     return value;
                                                 }
                                             },

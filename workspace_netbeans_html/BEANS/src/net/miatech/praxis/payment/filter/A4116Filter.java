@@ -25,6 +25,7 @@ public class A4116Filter extends A4116 {
     public String DATE = "";
     public String strFormatDate = "";
     public String IN_PNR = "";
+    public String IN_PNRError = "";
     public String IN_STVAL = "";
     public String IN_TRANSDATE = "";
     public String IN_AXPRODAT = "";
@@ -138,6 +139,7 @@ public class A4116Filter extends A4116 {
     public String A720FECVTA = "";
 
     // A1531
+    public String STMANUAL = "";
     public String A1531CIA = "";
     public String A1531FORMA = "";
     public String A1531SERIE = "";
@@ -156,6 +158,7 @@ public class A4116Filter extends A4116 {
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
     public Pagination page = new Pagination();
+    
     
     
 }

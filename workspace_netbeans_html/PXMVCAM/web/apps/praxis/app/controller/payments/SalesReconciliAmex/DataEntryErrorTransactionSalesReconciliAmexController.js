@@ -26,10 +26,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
         this.setValue('de-txtSumAmount', this.sumAmount);
 
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+
         this.p = this.view.params;
         this.actionCode = this.p.action;
         this.bean = this.p.rec.data;
-        console.log(this.bean);
+        //console.log(this.bean);
 
     },
     afterRender: function () {
@@ -62,9 +65,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
 
         var sMerch = this.beanResult.SMERCHID.trim();
-        /*if (sMerch === '9353227755' || sMerch === '8133735688' || sMerch === '9352724851') {
-         Ext.getCmp(prototype.id + '-chkSelection').hide();
-         } else {
+        if (sMerch === '9353227755' || sMerch === '8133735688' || sMerch === '9352724851') {
+            Ext.getCmp(prototype.id + '-labelScan').hide();
+            Ext.getCmp(prototype.id + '-panelScan').hide();
+            Ext.getCmp(prototype.id + '-panelScanCard').hide();
+            Ext.getCmp(prototype.id + '-panelDataInfoScan').hide();
+        }/* else {
          Ext.getCmp(prototype.id + '-chkSelection').show();
          }*/
 
@@ -84,6 +90,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
         this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
         this.setValue('txtSTVAL', this.beanResult.descSTVAL);
+        this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
         this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
 
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
@@ -136,8 +143,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
 
-        beanTemp.lstSendManual = this.lstSendManual;
-
+        beanTemp.lstSendManual = [];
+        console.log(this.lstSendManual.length);
+        for (var i = 0; i < this.lstSendManual.length; i++) {
+            console.log(this.lstSendManual[i]);
+            if (this.lstSendManual[i].FDESGLOSE > 0 || this.lstSendManual[i].FDUPLIB > 0) {
+                continue
+            } else {
+                beanTemp.lstSendManual.push(this.lstSendManual[i])
+            }
+        }
         console.log(beanTemp);
 
     },
@@ -179,23 +194,36 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
 
-        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
-            proxy: {
-                url: prototype.url + '/searchDetTktSettlement'
-            }, listeners: {
-                beforeload: function (obj) {
-                    obj.proxy.extraParams = meDE.paramsDetailDEDetTktSettlement;
-                },
-                load: function (obj) {
-                    Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask();
+        var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
+
+        Ext.Ajax.request({
+            url: prototype.url + '/searchDetTktSettlement',
+            method: 'POST',
+            timeout: 60000000,
+            beforerequest: Ext.getCmp(prototype.id + '-gridDataInfoScan').mask('Loading...'),
+            params: {beanString: meDE.paramsDetailDEDetTktSettlement},
+            success: function (response, options) {
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
+                var res = Ext.JSON.decode(response.responseText);
+                meDE.beanInfo = res.data;
+
+                console.log(meDE.beanInfo);
+
+                for (var i = 0; i < res.data.length; i++) {
+                    store_gridInfoScan.add(res.data[i]);
                 }
+
+                /*var storeData = Ext.create('Ext.data.Store', {
+                 data: meDE.beanInfo,
+                 autoLoad: true
+                 });
+                 
+                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(storeData);*/
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+                meDE.getDataGrid(meDE.beanResult);
+                meDE.calcularMontos();
             }
         });
-
-        Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-gridDataInfoScan').setStore(storeGridDatas);
-        this.calcularMontos();
-        this.getDataGrid(this.beanResult);
     },
     getDataGrid: function (beanGrid) {
         var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
@@ -214,7 +242,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 console.log(meDE.beanInfo);
 
                 for (var i = 0; i < res.lstInfo.length; i++) {
-                    store_gridInfoScan.add(res.lstInfo[i]);
+                    if (res.lstInfo[i].FDUPLIB > 0) {
+                        //Guardar aquí tkts usados
+                        continue;
+                    } else {
+                        store_gridInfoScan.add(res.lstInfo[i]);
+                    }
                 }
 
                 /*var storeData = Ext.create('Ext.data.Store', {
@@ -399,7 +432,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         return msjResult;
     },
     DeshabilitarCampoClave: function () {
-
         Ext.getCmp(prototype.id + '-de-cmbCOUNTRY').setReadOnly(true);
     },
     Habilitarlbl: function () {
@@ -445,7 +477,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var rec = grid.getStore().getAt(rowIndex).data;
         console.log(rec);
 
-        this.setValue('de-txtISREFNBR', rec.A1531TKT);
+        this.setValue('de-txtISREFNBR', rec.A1531TKT.substring(0, 14));
         this.setValue('de-txtSPNR', rec.A720PNR);
 
     },
@@ -479,7 +511,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
     },
     resetScan_keyDownHandler: function () {
-        this.getDataGrid(this.beanResult);
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+        this.getBreakdownDataGrid();
     },
     txtTKTScan_keyDownHandler: function (e, eOpts) {
         this.helpByticket();
@@ -523,30 +557,82 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         });
     },
     addCreditCard_keyDownHandler: function () {
-        if (this.getValue("txtCard1") === '' || this.getValue("txtCard2") === '' || this.getValue("txtApproval") === '' || this.getValue("txtFromDate") === null) {
-            global.Msg({msg: 'There are Credit Card Fields empty'});
+        if ((this.getValue("txtCard1") !== '' && this.getValue("txtCard2") !== '') || this.getValue("input-txtTKTScan") !== '') {
+            if (this.getValue("input-txtTKTScan") !== '') {
+                this.helpByCreditCard();
+                this.calcularMontos();
+            } else {
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
+                Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+
+                var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
+
+                Ext.Ajax.request({
+                    url: prototype.url + '/searchDetTktSettlement',
+                    method: 'POST',
+                    timeout: 60000000,
+                    beforerequest: Ext.getCmp(prototype.id + '-gridDataInfoScan').mask('Loading...'),
+                    params: {beanString: meDE.paramsDetailDEDetTktSettlement},
+                    success: function (response, options) {
+                        Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
+                        var res = Ext.JSON.decode(response.responseText);
+                        meDE.beanInfo = res.data;
+
+                        console.log(meDE.beanInfo);
+
+                        for (var i = 0; i < res.data.length; i++) {
+                            store_gridInfoScan.add(res.data[i]);
+                        }
+
+                        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+                        meDE.helpByCreditCard();
+                        meDE.calcularMontos();
+                    }
+                });
+            }
+
         } else {
-            this.helpByCreditCard();
+            global.Msg({msg: 'There are Credit Card / Ticket Fields empty'});
         }
     },
     helpByCreditCard: function () {
         this.setValue('de-txtSumAmount', Ext.util.Format.number('0', '0,000.00'));
         this.lstSendManual = [];
 
+        //verificacion de fecha segun cuotas
+        var fecha_a_validar = "";
+        var cant_cuotas = this.getValue("de-txtINSTANBR");
+        if (cant_cuotas > 0) {
+            fecha_a_validar = this.getValue("de-txtTRANSDATE");
+        } else {
+            fecha_a_validar = this.getValue("de-txtBSUMDATE");
+        }
+
         var cc1 = this.getValue("txtCard1");
         var cc2 = this.getValue("txtCard2");
         var approval = this.getValue("txtApproval");
-        var sales_date = this.getValue("txtFromDate");
+        var sales_date = (this.getValue("txtFromDate") === null) ? fecha_a_validar : Ext.util.Format.date(this.getValue("txtFromDate"), 'Ymd');
+        var tkt = this.getValue("input-txtTKTScan");
 
         var beanGrid = {};
 
         beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
         beanGrid.SAUTHOC = approval;
-        beanGrid.BSUMDATE = Ext.util.Format.date(sales_date, 'Ymd');
+        beanGrid.BSUMDATE = sales_date;
+        beanGrid.INSTANBR = cant_cuotas;
+        beanGrid.TKT = tkt;
 
         var beanStringGrid = JSON.stringify(beanGrid);
 
         var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
+        /*console.log(store_gridInfoScan.data.length);
+         for (var i = 0; i < store_gridInfoScan.data.length; i++) {
+         if (store_gridInfoScan.data.items[i].data.FDESGLOSE === "") {
+         store_gridInfoScan.removeAt(i);
+         }
+         }*/
+
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
 
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionErrorByTKT',
@@ -567,7 +653,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                         global.Msg({msg: 'Credit Card Is not AMEX'});
                     } else {
                         for (var i = 0; i < res.lstInfo.length; i++) {
-                            meDE.insertCreditCard(store_gridInfoScan, res.lstInfo[0]);
+                            if (res.lstInfo[i].FDUPLIB > 0) {
+                                //Guardar aquí tkts usados
+                                continue;
+                            } else {
+                                meDE.insertCreditCard(store_gridInfoScan, res.lstInfo[i]);
+                            }
                         }
                     }
                 } else {
@@ -605,33 +696,35 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         }
     },
     insertCreditCard: function (store_gridInfoScan, objTKT) {
-
-        if (store_gridInfoScan.data.length === 0) {
-            store_gridInfoScan.add(objTKT);
-            Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
-        } else {
-            for (var i = 0; i < store_gridInfoScan.data.length; i++) {
-                if (store_gridInfoScan.data.items[i].data.A1531TTARJ === objTKT.A1531TTARJ &&
-                        store_gridInfoScan.data.items[i].data.A1531NREF === objTKT.A1531NREF &&
-                        store_gridInfoScan.data.items[i].data.A1531CAPL === objTKT.A1531CAPL &&
-                        store_gridInfoScan.data.items[i].data.A1531VFOP === objTKT.A1531VFOP &&
-                        store_gridInfoScan.data.items[i].data.tot_VFOP === objTKT.tot_VFOP &&
-                        store_gridInfoScan.data.items[i].data.A720FECVTA === objTKT.A720FECVTA &&
-                        store_gridInfoScan.data.items[i].data.A720PNR === objTKT.A720PNR &&
-                        store_gridInfoScan.data.items[i].data.A1531TKT === objTKT.A1531TKT// && store_gridInfoScan.data.items[i].data.A720AGENTE === objTKT.A720AGENTE
-                        ) {
-                    continue;
-                } else {
-                    store_gridInfoScan.add(objTKT);
-                    Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
-                }
-            }
-        }
+        store_gridInfoScan.add(objTKT);
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+        /*if (store_gridInfoScan.data.length === 0) {
+         store_gridInfoScan.add(objTKT);
+         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+         } else {
+         for (var i = 0; i < store_gridInfoScan.data.length; i++) {
+         if (//store_gridInfoScan.data.items[i].data.A1531TTARJ === objTKT.A1531TTARJ &&
+         store_gridInfoScan.data.items[i].data.A1531NREF === objTKT.A1531NREF &&
+         store_gridInfoScan.data.items[i].data.A1531CAPL === objTKT.A1531CAPL &&
+         store_gridInfoScan.data.items[i].data.A1531VFOP === objTKT.A1531VFOP &&
+         //store_gridInfoScan.data.items[i].data.tot_VFOP === objTKT.tot_VFOP &&
+         store_gridInfoScan.data.items[i].data.A720FECVTA === objTKT.A720FECVTA &&
+         store_gridInfoScan.data.items[i].data.A720PNR === objTKT.A720PNR &&
+         store_gridInfoScan.data.items[i].data.A1531TKT === objTKT.A1531TKT// && store_gridInfoScan.data.items[i].data.A720AGENTE === objTKT.A720AGENTE
+         ) {
+         continue;
+         } else {
+         store_gridInfoScan.add(objTKT);
+         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
+         }
+         }
+         }*/
     },
     removeTKT: function (record) {
         var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
         var rowIndex = store_gridInfoScan.indexOf(record);
         store_gridInfoScan.removeAt(rowIndex);
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
         this.calcularMontos();
     },
     calcularMontos: function () {
@@ -644,5 +737,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             this.sumAmount = this.sumAmount + dataRow1.data.A1531VFOP;
         }
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
+        Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
     },
 });
