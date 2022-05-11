@@ -2565,7 +2565,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357_1(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3291,7 +3291,7 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04455(?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3303,8 +3303,12 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(3, filter.SCARDN.trim());
             cstmt.setString(4, filter.SAUTHOC.trim());
             cstmt.setString(5, filter.BSUMDATE.trim());
+            cstmt.setString(6, Functions.restXDaystoDate(filter.BSUMDATE.trim(), -1));
+            cstmt.setString(7, Functions.restXDaystoDate(filter.BSUMDATE.trim(), 1));
+            cstmt.setString(8, filter.INSTANBR.trim());
             cstmt.execute();
 
+            
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
@@ -3322,6 +3326,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
                 beanRec.FDUPLI = rst.getInt("FDUPLI");
+                beanRec.FDUPLIB = rst.getInt("FDUPLIB");
 
                 beanRec.A720PNR = rst.getString("A720PNR").trim();
                 beanRec.A720SEQ = rst.getString("A720SEQ").trim();

@@ -139,6 +139,7 @@ public class A4116Filter extends A4116 {
     public String A720FECVTA = "";
 
     // A1531
+    public String STMANUAL = "";
     public String A1531CIA = "";
     public String A1531FORMA = "";
     public String A1531SERIE = "";
