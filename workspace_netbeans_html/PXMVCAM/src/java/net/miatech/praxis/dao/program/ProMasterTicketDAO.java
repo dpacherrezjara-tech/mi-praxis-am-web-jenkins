@@ -1893,7 +1893,7 @@ public class ProMasterTicketDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?)}"; //LIBSAP23.SQP00697V2
+        String SQLCLL01 = "{CALL SQP00697(?,?,?,?,?,?,?,?,?)}"; //LIBSAP23.SQP00697V2
        
         Connection cnx = null;
         try {
@@ -1908,6 +1908,7 @@ public class ProMasterTicketDAO {
             cstmt01.setString(6, filter.IN_DATE_FROM);
             cstmt01.setString(7, filter.IN_DATE_TO);
             cstmt01.setString(8, filter.IN_IATA);
+            cstmt01.setString(9, filter.IN_CAPL);
 
             cstmt01.execute();
 
@@ -1925,6 +1926,8 @@ public class ProMasterTicketDAO {
                 objRtn.A720MONEDA = rs01.getString("A720MONEDA");
                 objRtn.A720PNR = rs01.getString("A720PNR");
                 objRtn.A1531VFOP = rs01.getDouble("A1531VFOP");
+                objRtn.A1531MFOP = rs01.getString("A1531MFOP");
+                objRtn.A1531CAPL = rs01.getString("A1531CAPL");
                 objRtn.A720SEQ = rs01.getString("A720SEQ");
                 lstRtn.add(objRtn);
             }
