@@ -227,7 +227,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             value: '',
                             listeners: {
                               //  change: 'cmbSTVAL_keyDownHandler',
-                                change: 'btnSearch_click'
+                                change: 'rbChangeType'
                             }
                         },
                         {xtype: 'tbspacer', width: 20},
@@ -251,7 +251,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             width: 100,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'filterPNRSettlement'
                             }
                         },
                         {
@@ -272,7 +272,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             value: '',
                             listeners: {
                                // change: 'cmbSTVAL_keyDownHandler',
-                                change: 'btnSearch_click'
+                                change: 'rbChangeType'
                             }
                         }
                     ]

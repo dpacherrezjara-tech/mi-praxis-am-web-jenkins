@@ -3498,7 +3498,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                              }
                                              },*/
                                             {
-                                                text: 'SVFOPS', dataIndex: 'SVFOPS', width: 100,
+                                                text: 'Sales<br>Amount', dataIndex: 'SVFOPS', width: 100,
                                                 listeners: {
 //                                                    click: 'onGridDetBankS'
                                                 },

@@ -50,6 +50,7 @@ public class A4116 {
     public double GROSAMOUN = 0;
     public double TGROSAMOUN = 0;
     public double SVFOPS = 0;
+    public double DIFF_AMOUNT = 0;
     public int NBRINSTA = 0;
     public int QTYTKT = 0;
 //    public double DISCAMOUN = 0;
