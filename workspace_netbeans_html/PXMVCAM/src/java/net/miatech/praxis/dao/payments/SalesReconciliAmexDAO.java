@@ -2562,10 +2562,15 @@ public class SalesReconciliAmexDAO {
         hmDescReglas.put("3", "CCard");
         hmDescReglas.put("4", "Manual");
 
+        HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
+        hmDescTDOC.put("", "");
+        hmDescTDOC.put("S", "Sales");
+        hmDescTDOC.put("R", "Refund");
+
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357_1(?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -3308,7 +3313,6 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(8, filter.INSTANBR.trim());
             cstmt.execute();
 
-            
             rst = cstmt.getResultSet();
 
             while (rst.next()) {
