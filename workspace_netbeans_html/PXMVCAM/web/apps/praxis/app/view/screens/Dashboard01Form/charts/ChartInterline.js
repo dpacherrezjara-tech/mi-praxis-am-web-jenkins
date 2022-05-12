@@ -1502,6 +1502,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     bodyStyle: 'background-color: transparent;',
                                     items: [
                                         // id: prototype.id + '-gridData_INT',
+                                        // Grafico Lineas
                                         {
                                             xtype: 'panel',
                                             bodyStyle: 'background-color: #E3EAF9;',
@@ -1525,7 +1526,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                     xtype: 'cartesian',
                                                     // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
                                                     id: prototype.id + '-grafico01',
-                                                    width: 1000,
+                                                    width: 750,
                                                     border: false,
                                                     height: 300,
                                                     background: '#E3EAEF',
@@ -1563,6 +1564,13 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                                 title: 'Audited',
                                                                 fill: true,
                                                                 highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000'));
+                                                                    }
+                                                                },
 //                                                                tooltip: {
 //                                                                    trackMouse: true,
 //                                                                    style: 'background: #FFF',
@@ -1623,7 +1631,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                                     trackMouse: true,
                                                                     height: 28,
                                                                     renderer: function(toolTip, record, ctx) {
-                                                                        toolTip.setHtml(record.get('strDescripcion4') + ' : ' + Ext.util.Format.number(record.get('totRej1'), '0,000.00'));
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totRej1'), '0,000'));
                                                                     }
                                                                 },
                                                                 style: {
@@ -1652,6 +1660,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                         // Grafico Barras
                                         {
                                             xtype: 'panel',
+//                                            hidden: true,
                                             bodyStyle: 'background-color: #E3EAF9;',
                                             padding: '5 0 0 20',
                                             width: 800,
