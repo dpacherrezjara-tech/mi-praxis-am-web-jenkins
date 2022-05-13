@@ -42,6 +42,7 @@ import net.miatech.beans.IMF053Filter;
 import net.miatech.libcust.A005wr;
 import net.miatech.libcust.A051wr;
 import net.miatech.praxis.A005;
+import net.miatech.praxis.A051;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
@@ -1771,17 +1772,20 @@ public class Dashboard01Controller extends BaseController {
             
             masterDAO = new MasterDAO();
             masterDAO.setSession(this.serverSession.getServerSession());
-            List<A005> lstAerolineas = masterDAO.loadAirlines(true);
+            List<A005> lstAerolineas = masterDAO.loadAirlines2();
             
+            byte USO = 2;
+            List<A051> lstUSO2 = masterDAO.loadUSO(this.serverSession.getServerSession().getUserView().getCustomerInfoComplete().fileA005.A005KEY1, USO);            
             
-            logic = new Dashboard01Logic();
-            logic.setSession(this.serverSession.getServerSession());
-            lstUsos = logic.loadUsoswr("");
+//            logic = new Dashboard01Logic();
+//            logic.setSession(this.serverSession.getServerSession());
+//            lstUsos = logic.loadUsoswr("");
 
             
             map.put("success", true);
             map.put("lstAerolineas", lstAerolineas);
-            map.put("data", lstUsos);
+            map.put("data", lstUSO2);
+//            map.put("data", lstUsos);
 
 //            if (Boolean.parseBoolean(request.getParameter("dw_excel"))) {
 //                String nameExcel = exportFieldsCompleto(request, response, (List<?>) mapData);

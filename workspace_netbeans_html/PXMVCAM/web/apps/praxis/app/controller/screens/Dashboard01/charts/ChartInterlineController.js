@@ -47,8 +47,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     afterRender: function () {
 
         Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').setValue(new Date().getFullYear());
-        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue("");
-        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue("");
+        
+        var mes = new Date().getMonth() + 1;
+        if (mes < 10) mes = "0" + mes;
+        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue(mes);
+        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue(mes);
+        
         meIChart.inicio();
 
         Ext.getCmp(prototype.id + '-rbChart_IA').items.items[0].setValue(true);
@@ -82,7 +86,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         });
     },
     inicio: function () {
-        console.clear();
+//        console.clear();
         this.setFormatParameter();
         var valueRadio = Ext.getCmp(prototype.id + '-rbChart_IA').getValue().rb;
 
@@ -106,8 +110,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 
         meIChart.bean = {};
         
-        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue('')
-        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue('')
+//        Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue('')
+//        Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue('')
 
         var valueRadio = Ext.getCmp(prototype.id + '-rbChart_IA').getValue().rb;
         switch (valueRadio) {
@@ -144,11 +148,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                 Ext.getCmp(prototype.id + '-cmbAirline_INT2').hide();
                 Ext.getCmp(prototype.id + '-cmbAirline_INT2_2').hide();
                 
-                Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').setValue('06')
-                Ext.getCmp(prototype.id + '-cmbDateMonthTo_IA_Chart').setValue('06')
+                var monthSelect = Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
+                var mesFrom = parseInt(monthSelect) + 1;
                 
+                if (mesFrom < 10) mesFrom = "0" + mesFrom;
+                                
 //                meIChart.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
-                meIChart.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + Ext.getCmp(prototype.id + '-cmbDateMonthFrom_IA_Chart').getValue();
+                meIChart.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateYear_IA_Chart').getValue() + mesFrom;
                 
                 meIChart.bean.IN_SELECTBY = Ext.getCmp(prototype.id + '-cmbSelectBy_WK').getValue();
                 meIChart.bean.IN_TYPEDOC = Ext.getCmp(prototype.id + '-cmbTypeDoc').getValue();
@@ -258,9 +264,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                     if (res.success) {
                         if (obj.data.length > 0) {
                             var obj = obj.data.items[0].data;
-                        } else {
-                            global.Msg({msg: 'Data not found'});
-                        }
+                        } 
+//                        else {
+//                            global.Msg({msg: 'Data not found5555555'});
+//                        }
                     } else
                         global.Msg({msg: res.sesion});
                     global.clear();
@@ -406,13 +413,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                         Ext.getCmp(prototype.id + '-titVertFecha1').setText('Clearing Date');
                     }
                     
-                    // Agregamos ID de meses
-                    Ext.getCmp(prototype.id + '-titFecha6').setText(res.data[0].strFormatDate4);
-                    Ext.getCmp(prototype.id + '-titFecha5').setText(res.data[0].strDescripcion);
-                    Ext.getCmp(prototype.id + '-titFecha4').setText(res.data[0].strDescripcion1);
-                    Ext.getCmp(prototype.id + '-titFecha3').setText(res.data[0].strDescripcion2);
-                    Ext.getCmp(prototype.id + '-titFecha2').setText(res.data[0].strDescripcion3);
-                    Ext.getCmp(prototype.id + '-titFecha1').setText(res.data[0].strDescripcion4);
+                    if(res.data.lenght > 0){
+                        // Agregamos ID de meses
+                        Ext.getCmp(prototype.id + '-titFecha6').setText(res.data[0].strFormatDate4);
+                        Ext.getCmp(prototype.id + '-titFecha5').setText(res.data[0].strDescripcion);
+                        Ext.getCmp(prototype.id + '-titFecha4').setText(res.data[0].strDescripcion1);
+                        Ext.getCmp(prototype.id + '-titFecha3').setText(res.data[0].strDescripcion2);
+                        Ext.getCmp(prototype.id + '-titFecha2').setText(res.data[0].strDescripcion3);
+                        Ext.getCmp(prototype.id + '-titFecha1').setText(res.data[0].strDescripcion4);
+                    } 
+//                    else {
+//                        global.Msg({msg: 'Data not found'});
+//                    }
                     
                     console.log(res.data);
                     meIChart.gridData_WK_AC = res.data;
@@ -431,8 +443,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                     }else{
 
                     }
-                    
-                    meIChart.imgChart_WK_clickHandler();
+//                    if(res.listaData2.lenght > 0 && res.data.listaRates > 0){
+                        meIChart.imgChart_WK_clickHandler();
+//                    }
                     global.clear();
                 }
             }

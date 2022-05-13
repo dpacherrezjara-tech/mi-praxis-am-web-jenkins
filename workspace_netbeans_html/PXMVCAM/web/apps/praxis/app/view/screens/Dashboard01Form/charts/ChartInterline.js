@@ -1417,18 +1417,24 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             fieldStyle: 'text-align: left;',
                                             labelAlign: 'left',
                                             queryMode: 'local',
-                                            editable: false,
+                                            editable: true,
+                                            selectOnFocus: true,
                                             triggerAction: 'all',
-                                            autoSelect: false,
+//                                            autoSelect: false,
                                             enableKeyEvents: true,
                                             caseSensitive: true,
                                             hidden: false,
                                             valueField: 'A051KEY2',
                                             displayField: 'A051DESCR1',
-                                            emptyText: 'All',
+//                                            emptyText: 'All',
                                             labelWidth: 100,
                                             width: 350,
-                                            anchor: '100%'
+                                            anchor: '100%',
+                                            listeners:{
+                                                change: function(field, newValue){
+                                                    field.setValue(newValue.toUpperCase());
+                                                 } 
+                                            }
                                         },
                                         {xtype: 'tbspacer', width: 80},
                                         {
@@ -1459,18 +1465,26 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                             fieldStyle: 'text-align: left;',
                                             labelAlign: 'right',
                                             queryMode: 'local',
-                                            editable: false,
+                                            selectOnFocus: true,
+                                            editable: true,
                                             triggerAction: 'all',
-                                            autoSelect: false,
+//                                            autoSelect: false,
                                             enableKeyEvents: true,
                                             caseSensitive: true,
                                             hidden: false,
+//                                            valueField: 'A051KEY2',
+//                                            displayField: 'A051DESCR1',
                                             valueField: 'A005KEY',
                                             displayField: 'A005KEY2',
-                                            emptyText: 'All',
+//                                            emptyText: 'All',
                                             labelWidth: 130,
                                             width: 320,
-                                            anchor: '100%'
+                                            anchor: '100%',
+                                            listeners:{
+                                                change: function(field, newValue){
+                                                    field.setValue(newValue.toUpperCase());
+                                                 } 
+                                            }
                                         },
                                         
                                     ]
