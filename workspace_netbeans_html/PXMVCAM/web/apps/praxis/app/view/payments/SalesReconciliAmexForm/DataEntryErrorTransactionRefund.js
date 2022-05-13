@@ -957,11 +957,11 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     value = 'Sales';
 
                                                     if (record.data.FDUPLIB > 0) {
-                                                        value = 'Used'
+                                                        value = 'Blocked'
                                                     }
 
                                                     if (record.data.FDESGLOSE === '1') {
-                                                        value = 'Select'
+                                                        value = 'Concil.'
                                                     }
                                                     return value;
                                                 }
@@ -1108,11 +1108,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     margin: '0 2 0 20',
                                     bodyStyle: 'background:#efe5e5;',
                                     items: [
+                                        {xtype: 'tbspacer', width: 150},
                                         {
                                             xtype: 'label',
                                             text: 'Sum Amount',
                                             style: 'font-weight:bold;color:#0B333C;',
-                                            width: 120
+                                            width: 90
                                         },
                                         {xtype: 'tbspacer', width: 10},
                                         {
@@ -1121,7 +1122,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             fieldStyle: 'text-align:right',
                                             enforceMaxLength: true,
                                             readOnly: true,
-                                            width: 100,
+                                            width: 70,
                                         },
                                     ]
                                 },

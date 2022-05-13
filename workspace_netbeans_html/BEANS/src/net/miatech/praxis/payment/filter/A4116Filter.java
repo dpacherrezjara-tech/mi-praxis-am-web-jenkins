@@ -151,6 +151,7 @@ public class A4116Filter extends A4116 {
     public String A1531TTARJ = "";
     public double A1531VFOP = 0.0;
     public double tot_VFOP = 0.0;
+    public double tot_VFOPB = 0.0;
 
     //Listado de codigos de error
     public String CODE = "";
