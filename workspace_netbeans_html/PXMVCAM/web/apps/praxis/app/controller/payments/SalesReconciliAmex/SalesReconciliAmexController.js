@@ -1903,7 +1903,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         console.log(rec);
-        this.winDataEntryError('U', rec);
+        if(rec.data.TDOC === "S"){
+            this.winDataEntryError('U', rec);
+        }else{
+             this.winDataEntryErrorRefund('U', rec);
+        }
     },
     winDataEntryError: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
@@ -1911,6 +1915,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
             id: prototype.id + '-dataEntryError',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
+    winDataEntryErrorRefund: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransactionRefund', {
+            id: prototype.id + '-dataEntryErrorRefund',
             params: {
                 action: action,
                 rec: rec

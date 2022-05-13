@@ -3557,6 +3557,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
+                beanRec.tot_VFOPB = rst.getDouble("tot_VFOPB");
                 beanRec.FDUPLI = rst.getInt("FDUPLI");
                 beanRec.FDUPLIB = rst.getInt("FDUPLIB");
 
@@ -3647,6 +3648,7 @@ public class SalesReconciliAmexDAO {
                 beanRec.A1531TTARJ = rst.getString("A1531TTARJ").trim();
                 beanRec.A1531VFOP = rst.getDouble("A1531VFOP");
                 beanRec.tot_VFOP = rst.getDouble("tot_VFOP");
+                beanRec.tot_VFOPB = rst.getDouble("tot_VFOPB");
                 beanRec.FDUPLI = rst.getInt("FDUPLI");
                 beanRec.FDUPLIB = rst.getInt("FDUPLIB");
 
