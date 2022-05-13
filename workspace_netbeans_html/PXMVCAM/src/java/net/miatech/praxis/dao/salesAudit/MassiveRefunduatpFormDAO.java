@@ -57,17 +57,17 @@ public class MassiveRefunduatpFormDAO {
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null;
 
-        String SQLCLL01 = "{CALL PXSAUDIT.SQP04180(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04180(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(10, Types.INTEGER);
             cstmt01.registerOutParameter(11, Types.INTEGER);
             cstmt01.registerOutParameter(12, Types.INTEGER);
             cstmt01.registerOutParameter(13, Types.INTEGER);
+            cstmt01.registerOutParameter(14, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt01.setString(2, filter.IN_OPTION);
@@ -78,19 +78,20 @@ public class MassiveRefunduatpFormDAO {
             cstmt01.setString(7, filter.IN_IATA);
             cstmt01.setString(8, filter.IN_STATUSBPO);
             cstmt01.setString(9, filter.IN_STATUS);
+            cstmt01.setString(10, filter.IN_USER);
 
-            cstmt01.setInt(10, filter.page.PAGNUM);
-            cstmt01.setInt(11, filter.page.PAGROW);
-            cstmt01.setInt(12, filter.page.TOTPAG);
-            cstmt01.setInt(13, filter.page.TOTROW);
+            cstmt01.setInt(11, filter.page.PAGNUM);
+            cstmt01.setInt(12, filter.page.PAGROW);
+            cstmt01.setInt(13, filter.page.TOTPAG);
+            cstmt01.setInt(14, filter.page.TOTROW);
 
             cstmt01.execute();
 
             //*System.out.println("Aqui entro con Filtro Categoria: ");
-            filter.page.PAGNUM = cstmt01.getInt(10);
-            filter.page.PAGROW = cstmt01.getInt(11);
-            filter.page.TOTPAG = cstmt01.getInt(12);
-            filter.page.TOTROW = cstmt01.getInt(13);
+            filter.page.PAGNUM = cstmt01.getInt(11);
+            filter.page.PAGROW = cstmt01.getInt(12);
+            filter.page.TOTPAG = cstmt01.getInt(13);
+            filter.page.TOTROW = cstmt01.getInt(14);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -107,6 +108,10 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.SUMAOK = rs01.getDouble("SUMAOK");
                 objRtn.SUMAKO = rs01.getDouble("SUMAKO");
                 objRtn.TOTALSUMA = rs01.getDouble("SUMAOK") + rs01.getDouble("SUMAKO");
+
+                objRtn.BPOOK = rs01.getInt("BPOOK");
+                objRtn.BPOKO = rs01.getInt("BPOKO");
+                objRtn.TOTALBPO = rs01.getInt("BPOOK") + rs01.getInt("BPOKO");
 
                 objRtn.A4076BASE = rs01.getString("A4076BASE");
                 objRtn.A4076TYPE = rs01.getString("A4076TYPE");
@@ -449,8 +454,8 @@ public class MassiveRefunduatpFormDAO {
             cstmt01.setString(2, filter.IN_PREME);
             cstmt01.setString(3, filter.IN_DATEFROM);
             cstmt01.setString(4, filter.IN_USER);
-             cstmt01.setString(5, filter.IN_TICKET);
-              cstmt01.setString(6, filter.IN_IATA);
+            cstmt01.setString(5, filter.IN_TICKET);
+            cstmt01.setString(6, filter.IN_IATA);
 
             cstmt01.execute();
 
@@ -500,7 +505,7 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076ESTADO = rs01.getString("A4076ESTADO");
                 objRtn.A4076AGEN = rs01.getString("A4076AGEN");
                 objRtn.A4076TRNCU = rs01.getString("A4076TRNCU");
-                objRtn.A4076GRUPO = rs01.getString("A4076GRUPO"); 
+                objRtn.A4076GRUPO = rs01.getString("A4076GRUPO");
 
                 objRtn.A4076CPN1 = rs01.getString("A4076CPN1");
                 objRtn.A4076CPN2 = rs01.getString("A4076CPN2");
@@ -512,7 +517,7 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076USO3 = rs01.getString("A4076USO3");
                 objRtn.A4076USO4 = rs01.getString("A4076USO4");
                 objRtn.A4076DESC = rs01.getString("A4076DESC");
-                objRtn.A4076NETK = rs01.getDouble("A4076NETK");               
+                objRtn.A4076NETK = rs01.getDouble("A4076NETK");
 
                 lstRtn.add(objRtn);
             }
@@ -634,7 +639,7 @@ public class MassiveRefunduatpFormDAO {
 
         return STR_RESULT;
     }
-    
+
     public List<A4076Filter> SearchDetailError(A4076Filter filter) throws SQLException, Exception {
         List<A4076Filter> lstRtn = new ArrayList<A4076Filter>(0);
         A4076Filter objRtn;
@@ -663,7 +668,7 @@ public class MassiveRefunduatpFormDAO {
                 objRtn.A4076REGIS = rs01.getString("A4128REGIS");
                 objRtn.A4076FREGI = rs01.getString("A4128FREGI");
                 objRtn.A4076HREGI = rs01.getString("A4128HREGI");
-                
+
                 lstRtn.add(objRtn);
 
                 //System.out.println("Aqui entro con Filtro Categoria: " +lstRtn);

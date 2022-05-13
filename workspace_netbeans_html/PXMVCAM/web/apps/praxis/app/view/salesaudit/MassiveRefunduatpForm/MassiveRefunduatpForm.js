@@ -4,7 +4,7 @@ prototype.idMassiveRefunduatpFormSubiArchivo = 'MassiveRefunduatpFormSubiArchivo
 prototype.idMassiveRefunduatpFormErrorBPO = 'MassiveRefunduatpFormErrorBPO';
 prototype.url = CONTEXTPATH + '/MassiveRefunduatpForm';
 prototype.url01 = CONTEXTPATH + '/BwrBSPLINKRFND';
-prototype.widthWindow = 1300;
+prototype.widthWindow = 1400;
 prototype.heightWindow = 768;
 //
 Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpForm', {
@@ -339,6 +339,20 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                                 afterrender: 'onCmbStatusAfterRender'
                                             }
                                         },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.idMassiveRefunduatpForm + '-Audit',
+                                            fieldLabel: 'Audit',
+                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                            maxLength: 10,
+                                            enforceMaxLength: 10,
+                                            labelWidth: 30,
+                                            width: 120,
+                                            listeners: {
+                                                specialkey: 'onSearchkey',
+                                                change: 'onchange'
+                                            }
+                                        },
                                         {xtype: 'textfield', id: prototype.idMassiveRefunduatpForm + '-txtUser', hidden: true}
                                     ]
                                 }
@@ -401,26 +415,55 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     {text: 'Type', dataIndex: 'A4076TYPE', width: 100, renderer: 'onRendererColumnTYPE'},
                                     {text: 'Ticket Qty',
                                         columns: [
-                                            {
-                                                text: 'OK',
-                                                dataIndex: 'CANTOK',
-                                                width: 90,
-                                                align: 'right',
-                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+
+                                            {text: 'Load',
+                                                columns: [
+                                                    {
+                                                        text: 'OK',
+                                                        dataIndex: 'CANTOK',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Error',
+                                                        dataIndex: 'CANTKO',
+                                                        width: 70,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Total',
+                                                        dataIndex: 'TOTALCANT',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    }
+                                                ]
                                             },
-                                            {
-                                                text: 'Error',
-                                                dataIndex: 'CANTKO',
-                                                width: 90,
-                                                align: 'right',
-                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
-                                            },
-                                            {
-                                                text: 'Total',
-                                                dataIndex: 'TOTALCANT',
-                                                width: 90,
-                                                align: 'right',
-                                                summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                            {text: 'BPO',
+                                                columns: [
+                                                    {
+                                                        text: 'OK',
+                                                        dataIndex: 'BPOOK',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Error',
+                                                        dataIndex: 'BPOKO',
+                                                        width: 70,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Total',
+                                                        dataIndex: 'TOTALBPO',
+                                                        width: 60,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountInteger', renderer: 'onColumnIntegerRenderer'
+                                                    }]
                                             }
                                         ]
 
@@ -428,27 +471,31 @@ Ext.define('Ext.Praxis.view.salesaudit.MassiveRefunduatpForm.MassiveRefunduatpFo
                                     },
                                     {text: 'Ticket Amount',
                                         columns: [
-                                            {
-                                                text: 'OK',
-                                                dataIndex: 'SUMAOK',
-                                                width: 130,
-                                                align: 'right',
-                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
-                                            },
-                                            {
-                                                text: 'Error',
-                                                dataIndex: 'SUMAKO',
-                                                width: 130,
-                                                align: 'right',
-                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
-                                            },
-                                            {
-                                                text: 'Total',
-                                                dataIndex: 'TOTALSUMA',
-                                                width: 130,
-                                                align: 'right',
-                                                summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                            {text: 'Load',
+                                                columns: [
+                                                    {
+                                                        text: 'OK',
+                                                        dataIndex: 'SUMAOK',
+                                                        width: 130,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Error',
+                                                        dataIndex: 'SUMAKO',
+                                                        width: 130,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                    },
+                                                    {
+                                                        text: 'Total',
+                                                        dataIndex: 'TOTALSUMA',
+                                                        width: 130,
+                                                        align: 'right',
+                                                        summaryType: 'sum', summaryRenderer: 'OnAmountSummary', renderer: 'onColumnAmountRenderer'
+                                                    }]
                                             }
+
                                         ]
 
 
