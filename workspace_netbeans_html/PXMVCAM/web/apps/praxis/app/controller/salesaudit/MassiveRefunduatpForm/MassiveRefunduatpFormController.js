@@ -126,6 +126,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "U", "name": "WITH USES"},
                 {"code": "T", "name": "ATO ERROR"},
                 {"code": "B", "name": "TAX ERROR"},
+                {"code": "J", "name": "TICKET EXCH"},
                 {"code": "C", "name": "TICKET DOES NOT EXIST"},
                 {"code": "H", "name": "HIGHER AMOUNT FOR SALE"},
                 {"code": "M", "name": "MODIFIED"},
@@ -243,6 +244,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         me.bean.IN_IATA = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-txtIATA').getValue();
         me.bean.IN_STATUS = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-CmbStatus').getValue();
         me.bean.IN_STATUSBPO = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-CmbStatusBPO').getValue();
+        me.bean.IN_USER = Ext.getCmp(prototype.idMassiveRefunduatpForm + '-Audit').getValue();
         me.bean.pexcel = 0;
         if (me.bean.IN_OPTION === '') {
             Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
@@ -433,6 +435,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'G':
                 color = '#e4fff9';
                 value = 'INVALID IATA';
+                break;
+            case 'J':
+                color = '#D99B25';
+                value = 'TICKET EXCH';
                 break;
         }
         metaData.tdAttr = 'data-qtip="' + value + '"';
@@ -785,6 +791,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         }
 
 
+    },
+    onchange: function (field, newValue, oldValue) {
+        field.setValue(newValue.toUpperCase());
     },
     onChangeComboTkt: function (obj, val) {
         switch (val) {
