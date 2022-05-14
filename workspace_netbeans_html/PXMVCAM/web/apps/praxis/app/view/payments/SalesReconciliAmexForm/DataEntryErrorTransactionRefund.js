@@ -147,7 +147,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Sales Merchant ID',
+                                    text: 'Refund Merchant ID',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -390,7 +390,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                         },
                         {
                             xtype: 'label',
-                            text: 'Sales Information',
+                            text: 'Refund Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -408,7 +408,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Sales Date',
+                                    text: 'Refund Date',
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -676,7 +676,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'label',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    text: 'Sales Amount',
+                                    text: 'Refund Amount',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
@@ -811,13 +811,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     }
 
                                 },
-                                {xtype: 'tbspacer', width: 15},
+                                {xtype: 'tbspacer', width: 320},
                                 {
                                     xtype: 'checkboxfield',
                                     id: prototype.id + '-chkBlocked',
                                     boxLabel: '<b>Blocked</b>',
                                     checked: false,
-                                    width: 90,
+                                    width: 70,
                                     listeners: {
                                         change: 'cambiarGrillaChk'
                                     }
@@ -896,7 +896,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
-                                    text: 'Sales Date',
+                                    text: 'Refund Date',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
@@ -936,7 +936,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 25,
                                     //margin: '4 4 4 4',
                                     iconCls: 'prx-icon-clear',
-                                    tooltip: 'Add',
+                                    tooltip: 'Clear',
                                     listeners: {
                                         click: 'clear_keyDownHandler'
                                     }
@@ -976,7 +976,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                      metaData.style = "text-align:center;background-color:#f58989";
                                                      }*/
 
-                                                    value = 'Sales';
+                                                    value = 'Refund';
 
                                                     if (record.data.FDUPLIB > 0) {
                                                         value = 'Blocked'
@@ -1038,7 +1038,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Refund<br>Amount', dataIndex: 'tot_VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1046,7 +1046,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Refund<br>Date', dataIndex: 'A720FECVTA', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1182,7 +1182,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                      metaData.style = "text-align:center;background-color:#f58989";
                                                      }*/
 
-                                                    value = 'Sales';
+                                                    value = 'Refund';
 
                                                     if (record.data.FDUPLIB > 0) {
                                                         value = 'Blocked'
@@ -1244,7 +1244,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOPB', width: 70,
+                                            {text: 'Refund<br>Amount', dataIndex: 'tot_VFOPB', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
 
@@ -1252,7 +1252,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Refund<br>Date', dataIndex: 'A720FECVTA', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 

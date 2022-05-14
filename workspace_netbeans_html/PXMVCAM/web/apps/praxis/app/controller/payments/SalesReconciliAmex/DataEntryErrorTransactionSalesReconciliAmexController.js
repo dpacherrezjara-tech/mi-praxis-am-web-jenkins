@@ -142,6 +142,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.IDITEMT = this.getValue("de-txtIDITEMT");
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
+        beanTemp.TDOC = this.beanResult.TDOC;
 
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
@@ -272,24 +273,41 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onSaveClick: function (btn) {
 
     },
-    validacionTicketPNRVacio: function () {
+    validacionTicketPNRVacio: function (txtMsjMontos) {
 
-        if (this.getValue("de-txtSPNR").trim() === '') {
-            return 'PNR field is empty';
+        if (this.getValue("de-txtSPNR").trim() === '' && txtMsjMontos === '') {
+            for (var j = 0; j < this.lstSendManual.length; j++) {
+                if (this.lstSendManual[j].FDESGLOSE !== "1") {
+                    this.setValue('de-txtSPNR', this.lstSendManual[j].A720PNR.substring(0, 14));
+                    break;
+                }
+            }
+            //return 'PNR field is empty';
+        }
+        
+        if (this.getValue("de-txtISREFNBR").trim() === '' && txtMsjMontos === '') {
+
+            for (var j = 0; j < this.lstSendManual.length; j++) {
+                if (this.lstSendManual[j].FDESGLOSE !== "1") {
+                    this.setValue('de-txtISREFNBR', this.lstSendManual[j].A1531TKT.substring(0, 14));
+                    break;
+                }
+            }
+            //return 'Ticket field is empty';
         }
 
-        if (this.getValue("de-txtISREFNBR").trim() === '') {
+        /*if (this.getValue("de-txtISREFNBR").trim() === '') {
             return 'Ticket field is empty';
-        }
+        }*/
 
         return '';
     },
     onUpdateClick: function (btn) {
 //        console.log('onUpdateClick');
-        var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio();
         //var txtMsjInsert = this.validacionInsert();
         var txtMsjDesglose = this.validacionDesglose();
         var txtMsjMontos = this.validacionMontos();
+        var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
 
         if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
             var beanTemp = {};
@@ -519,6 +537,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
     },
+    clear_keyDownHandler: function () {
+        this.setValue('input-txtTKTScan', '');
+        this.setValue('txtCard1', '');
+        this.setValue('txtCard2', '');
+        this.setValue('txtApproval', '');
+        this.setValue('txtFromDate', '');
+    },
     resetScan_keyDownHandler: function () {
         this.setValue('input-txtTKTScan', '');
         this.setValue('txtCard1', '');
@@ -594,7 +619,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                         for (var i = 0; i < res.data.length; i++) {
                             meDE.lstSendManual.push(res.data[i]);
                         }
-                        
+
                         meDE.helpByCreditCard();
                     }
                 });
@@ -630,6 +655,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanGrid.BSUMDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
         beanGrid.TKT = tkt;
+        beanGrid.TDOC = this.beanResult.TDOC;
 
         var beanStringGrid = JSON.stringify(beanGrid);
 

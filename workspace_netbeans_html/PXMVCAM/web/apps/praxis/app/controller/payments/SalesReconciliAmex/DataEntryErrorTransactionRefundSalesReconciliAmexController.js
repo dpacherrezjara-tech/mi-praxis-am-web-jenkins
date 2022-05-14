@@ -272,24 +272,31 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onSaveClick: function (btn) {
 
     },
-    validacionTicketPNRVacio: function () {
+    validacionTicketPNRVacio: function (txtMsjMontos) {
 
-        if (this.getValue("de-txtSPNR").trim() === '') {
-            return 'PNR field is empty';
+        if (this.getValue("de-txtISREFNBR").trim() === '' && txtMsjMontos === '') {
+
+            for (var j = 0; j < this.lstSendManual.length; j++) {
+                if (this.lstSendManual[j].FDESGLOSE !== "1") {
+                    this.setValue('de-txtISREFNBR', this.lstSendManual[j].A1531TKT.substring(0, 14));
+                    break;
+                }
+            }
+            //return 'Ticket field is empty';
         }
 
-        if (this.getValue("de-txtISREFNBR").trim() === '') {
-            return 'Ticket field is empty';
-        }
+        /*if (this.getValue("de-txtSPNR").trim() === '') {
+         return 'PNR field is empty';
+         }*/
 
         return '';
     },
     onUpdateClick: function (btn) {
-//        console.log('onUpdateClick');
-        var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio();
+//        console.log('onUpdateClick');        
         //var txtMsjInsert = this.validacionInsert();
         var txtMsjDesglose = this.validacionDesglose();
         var txtMsjMontos = this.validacionMontos();
+        var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
 
         if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
             var beanTemp = {};
@@ -329,16 +336,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             method: 'POST',
             timeout: 60000000,
             params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryErrorRefund').mask('Loading...'),
             success: function (response, opts) {
-                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
+                Ext.getCmp(prototype.id + '-dataEntryErrorRefund').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 //                console.log(res);
 
                 if (res.success) {
                     //global.Msg({msg: res.msjOption});
-                    Ext.getCmp(prototype.id + '-dataEntryError').unmask();
-                    Ext.getCmp(prototype.id + '-dataEntryError').close();
+                    Ext.getCmp(prototype.id + '-dataEntryErrorRefund').unmask();
+                    Ext.getCmp(prototype.id + '-dataEntryErrorRefund').close();
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
 
                 } else {
@@ -359,9 +366,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             method: 'POST',
             timeout: 60000000,
             params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntryError').mask('Loading...'),
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryErrorRefund').mask('Loading...'),
             success: function (response, opts) {
-                Ext.getCmp(prototype.id + '-dataEntryError').unmask('Loading...');
+                Ext.getCmp(prototype.id + '-dataEntryErrorRefund').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 if (res.success) {
@@ -519,6 +526,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
 
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
     },
+    clear_keyDownHandler: function () {
+        this.setValue('input-txtTKTScan', '');
+        this.setValue('txtCard1', '');
+        this.setValue('txtCard2', '');
+        this.setValue('txtApproval', '');
+        this.setValue('txtFromDate', '');
+    },
     resetScan_keyDownHandler: function () {
         this.setValue('input-txtTKTScan', '');
         this.setValue('txtCard1', '');
@@ -562,7 +576,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                      store_gridInfoScan.add(res.lstInfo[i]);
                      }*/
                 } else {
-                    global.Msg({msg: 'Not Found in Sales'});
+                    global.Msg({msg: 'Not Found in Refund'});
                 }
 
                 meDE.calcularMontos();
@@ -594,7 +608,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                         for (var i = 0; i < res.data.length; i++) {
                             meDE.lstSendManual.push(res.data[i]);
                         }
-                        
+
                         meDE.helpByCreditCard();
                     }
                 });
@@ -630,6 +644,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanGrid.BSUMDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
         beanGrid.TKT = tkt;
+        beanGrid.TDOC = this.beanResult.TDOC;
 
         var beanStringGrid = JSON.stringify(beanGrid);
 
@@ -661,7 +676,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                         }
                     }
                 } else {
-                    global.Msg({msg: 'Not Found in Sales'});
+                    global.Msg({msg: 'Not Found in Refund'});
                 }
 
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').bindStore(
