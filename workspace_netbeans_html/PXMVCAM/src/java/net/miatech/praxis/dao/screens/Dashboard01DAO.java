@@ -23,9 +23,11 @@ import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.libcust.A051wr;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
+import net.miatech.praxis.interline.filter.WRF016Filterwk;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -4301,6 +4303,312 @@ public class Dashboard01DAO {
         return lstRtn;
     }
 
+    public List<A051wr> loadUsoswr(String calfa) throws SQLException, Exception {
+
+        List<A051wr> lstRtn = new ArrayList<A051wr>(0);
+        A051wr objRtn;
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PXS01_USOS(?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+            cstmt01.setString(1, calfa);
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new A051wr();
+                objRtn.A051KEY2 = rs01.getString("A051KEY2");
+                objRtn.A051DESCR1 = rs01.getString("A051DESCR1");
+
+                lstRtn.add(objRtn);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+        return lstRtn;
+    }
+    
+    public HashMap loadPX165S01WRF016(WRF016Filterwk filter) throws SQLException, Exception {
+        String SQLCLL01 = "";
+        HashMap hm = new HashMap();
+        List<WRF016Filterwk> lstRtn = new ArrayList<WRF016Filterwk>(0);
+        List<WRF016Filterwk> lstRtn2 = new ArrayList<WRF016Filterwk>(0);
+        List<WRF016Filterwk> lstRates = new ArrayList<WRF016Filterwk>(0);
+        WRF016Filterwk objRtn;
+        int Aud1 = 0, Rej1 = 0, Aud2 = 0, Rej2 = 0, Aud3 = 0, Rej3 = 0, Aud4 = 0, Rej4 = 0, Aud5 = 0, Rej5 = 0, Aud6 = 0, Rej6 = 0;
+        int Supp6 = 0, Supp5 = 0, Supp4 = 0, Supp3 = 0;
+        int QSFIM = 0, QSUPAUD = 0, QSUPRM = 0;
+        double QCUPON = 0, QAUDI = 0, QRM = 0;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX165S01WRF016(?,?,?,?,?,?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.IN_FECHA_TO);
+            cstmt01.setInt(3, filter.IN_SELECTBY);
+            cstmt01.setString(4, filter.IN_TYPEDOC);
+            cstmt01.setString(5, filter.IN_CURRENCY);
+            cstmt01.setInt(6, filter.IN_TIPOFECHA);
+            cstmt01.setString(7, filter.IN_TYPE);
+            cstmt01.setString(8, filter.IN_AIRLINE);
+            cstmt01.setString(9, filter.IN_SOURCE);
+            cstmt01.setInt(10, 0);
+            cstmt01.setInt(11, 0);
+
+            cstmt01.execute();
+
+            filter.Workable = cstmt01.getInt(10);
+            filter.Pending = cstmt01.getInt(11);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                Aud1 = rs01.getInt("A1");
+                Aud2 = rs01.getInt("A2");
+                Aud3 = rs01.getInt("A3");
+                Aud4 = rs01.getInt("A4");
+                Aud5 = rs01.getInt("A5");
+                Aud6 = rs01.getInt("A6");
+                if (filter.IN_SELECTBY == 1) {
+                    Rej1 = rs01.getInt("B1");
+                    Rej2 = rs01.getInt("B2");
+                    Rej3 = rs01.getInt("B3");
+                    Rej4 = rs01.getInt("B4");
+                    Rej5 = rs01.getInt("B5");
+                    Rej6 = rs01.getInt("B6");
+
+                    /*Supp6 = rs01.getInt("C6");
+                     Supp5 = rs01.getInt("C5");
+                     Supp4 = rs01.getInt("C4");
+                     Supp3 = rs01.getInt("C3");*/
+                    QSFIM = rs01.getInt("QSFIM");
+                    QSUPAUD = rs01.getInt("QSUPAUD");
+                    QSUPRM = rs01.getInt("QSUPRM");
+                }
+
+                QCUPON = rs01.getDouble("QCUPON");
+                QAUDI = rs01.getDouble("QAUDI");
+                QRM = rs01.getDouble("QRM");
+
+            }
+            try {
+                rs01.close();
+            } catch (SQLException e) {
+                logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+            }
+
+            if (cstmt01.getMoreResults()) {
+                rs01 = cstmt01.getResultSet();
+                int c = 0;
+                while (rs01.next()) {
+                    c++;
+                    objRtn = new WRF016Filterwk();
+                    objRtn.RN = rs01.getInt("NBR");
+                    objRtn.strDescripcion = rs01.getString("DESCRIP");
+                    objRtn.totNet1 = rs01.getDouble("MES1");
+                    objRtn.totNet2 = rs01.getDouble("MES2");
+                    objRtn.totNet3 = rs01.getDouble("MES3");
+                    objRtn.totNet4 = rs01.getDouble("MES4");
+                    objRtn.totNet5 = rs01.getDouble("MES5");
+                    objRtn.totNet6 = rs01.getDouble("MES6");
+                    lstRates.add(objRtn);
+                }
+                hm.put("lstRates", lstRates);
+                if (cstmt01.getMoreResults()) {
+                    rs01 = cstmt01.getResultSet();
+                    while (rs01.next()) {
+                        objRtn = new WRF016Filterwk();
+
+                        objRtn.FINVOICE = rs01.getString("FECHA");
+                        objRtn.strFormatDate = Functions.getMonthConvert(objRtn.FINVOICE);
+
+                        objRtn.Aud1 = rs01.getInt("A1");
+                        objRtn.Aud2 = rs01.getInt("A2");
+                        objRtn.Aud3 = rs01.getInt("A3");
+                        objRtn.Aud4 = rs01.getInt("A4");
+                        objRtn.Aud5 = rs01.getInt("A5");
+                        objRtn.Aud6 = rs01.getInt("A6");
+                        if (filter.IN_SELECTBY == 1) {
+                            objRtn.Rej1 = rs01.getInt("B1");
+                            objRtn.Rej2 = rs01.getInt("B2");
+                            objRtn.Rej3 = rs01.getInt("B3");
+                            objRtn.Rej4 = rs01.getInt("B4");
+                            objRtn.Rej5 = rs01.getInt("B5");
+                            objRtn.Rej6 = rs01.getInt("B6");
+
+                            /*objRtn.Sup6 = rs01.getInt("C6");
+                             objRtn.Sup5 = rs01.getInt("C5");
+                             objRtn.Sup4 = rs01.getInt("C4");
+                             objRtn.Sup3 = rs01.getInt("C3");*/
+                            objRtn.totSup6 = Supp6;
+                            objRtn.totSup5 = Supp5;
+                            objRtn.totSup4 = Supp4;
+                            objRtn.totSup3 = Supp3;
+
+                            objRtn.QSFIM = rs01.getInt("QSFIM");
+                            objRtn.QSUPAUD = rs01.getInt("QSUPAUD");
+                            objRtn.QSUPRM = rs01.getInt("QSUPRM");
+
+                            objRtn.totQSFIM = QSFIM;
+                            objRtn.totQSUPAUD = QSUPAUD;
+                            objRtn.totQSUPRM = QSUPRM;
+                        }
+
+                        objRtn.QCUPON = rs01.getDouble("QCUPON");
+                        objRtn.QAUDI = rs01.getDouble("QAUDI");
+                        objRtn.QRM = rs01.getDouble("QRM");
+
+                        if (filter.IN_SELECTBY == 1) {
+                            objRtn.Porc = (objRtn.QCUPON > 0) ? objRtn.QAUDI * 100 / objRtn.QCUPON : 0;
+                        } else {
+                            objRtn.Porc = (objRtn.QRM > 0) ? objRtn.QCUPON * 100 / objRtn.QRM : 0;
+                        }
+
+                        objRtn.totAud1 = Aud1;
+                        objRtn.totRej1 = Rej1;
+                        objRtn.totAud2 = Aud2;
+                        objRtn.totRej2 = Rej2;
+                        objRtn.totAud3 = Aud3;
+                        objRtn.totRej3 = Rej3;
+                        objRtn.totAud4 = Aud4;
+                        objRtn.totRej4 = Rej4;
+                        objRtn.totAud5 = Aud5;
+                        objRtn.totRej5 = Rej5;
+                        objRtn.totAud6 = Aud6;
+                        objRtn.totRej6 = Rej6;
+
+                        objRtn.totQCUPON = QCUPON;
+                        objRtn.totQAUDI = QAUDI;
+                        objRtn.totQRM = QRM;
+
+                        if (filter.IN_SELECTBY == 1) {
+                            objRtn.totPorc = (objRtn.totQCUPON > 0) ? objRtn.totQAUDI * 100 / objRtn.totQCUPON : 0;
+                        } else {
+                            objRtn.totPorc = (objRtn.totQRM > 0) ? objRtn.totQCUPON * 100 / objRtn.totQRM : 0;
+                        }
+
+                        objRtn.Workable = filter.Workable;
+                        objRtn.Pending = filter.Pending;
+
+                        objRtn.strFormatDate4 = Functions.getMonthConvert(filter.IN_FECHA_TO);
+                        objRtn.strDescripcion = Functions.getMonthConvert(Functions.restMonthtoDate(filter.IN_FECHA_TO, 1));
+                        objRtn.strDescripcion1 = Functions.getMonthConvert(Functions.restMonthtoDate(filter.IN_FECHA_TO, 2));
+                        objRtn.strDescripcion2 = Functions.getMonthConvert(Functions.restMonthtoDate(filter.IN_FECHA_TO, 3));
+                        objRtn.strDescripcion3 = Functions.getMonthConvert(Functions.restMonthtoDate(filter.IN_FECHA_TO, 4));
+                        objRtn.strDescripcion4 = Functions.getMonthConvert(Functions.restMonthtoDate(filter.IN_FECHA_TO, 5));
+
+                        objRtn.IN_FECHA_TO = filter.IN_FECHA_TO;
+                        objRtn.IN_SELECTBY = filter.IN_SELECTBY;
+                        objRtn.IN_TYPEDOC = filter.IN_TYPEDOC;
+                        objRtn.IN_CURRENCY = filter.IN_CURRENCY;
+                        objRtn.IN_TIPOFECHA = filter.IN_TIPOFECHA;
+                        objRtn.IN_TYPE = filter.IN_TYPE;
+                        objRtn.IN_AIRLINE = filter.IN_AIRLINE;
+                        objRtn.IN_SOURCE = filter.IN_SOURCE;
+
+                        lstRtn.add(objRtn);
+                    }
+                    hm.put("lst1", lstRtn);
+
+                    if (cstmt01.getMoreResults()) {
+                        rs01 = cstmt01.getResultSet();
+                        while (rs01.next()) {
+                            objRtn = new WRF016Filterwk();
+
+                            objRtn.TDOC = rs01.getString("TDOC");
+                            objRtn.strDescripcion = rs01.getString("DES_TDOC");
+                            /*if (objRtn.TDOC.equals("1")) {
+                             objRtn.strDescripcion = "LIFTED";
+                             } else if (objRtn.TDOC.equals("2")) {
+                             objRtn.strDescripcion = "FIM/SMP";
+                             } else if (objRtn.TDOC.equals("3")) {
+                             objRtn.strDescripcion = "FIM/MPA";
+                             } else if (objRtn.TDOC.equals("4")) {
+                             objRtn.strDescripcion = "CTRs/RMs";
+                             } else if (objRtn.TDOC.equals("9")) {
+                             objRtn.strDescripcion = "Billing Memo";
+                             }*/
+
+                            objRtn.Aud1 = rs01.getInt("A1");
+                            objRtn.Aud2 = rs01.getInt("A2");
+                            objRtn.Aud3 = rs01.getInt("A3");
+                            objRtn.Aud4 = rs01.getInt("A4");
+                            objRtn.Aud5 = rs01.getInt("A5");
+                            objRtn.Aud6 = rs01.getInt("A6");
+
+                            if (filter.IN_SELECTBY == 1) {
+                                objRtn.Rej1 = rs01.getInt("B1");
+                                objRtn.Rej2 = rs01.getInt("B2");
+                                objRtn.Rej3 = rs01.getInt("B3");
+                                objRtn.Rej4 = rs01.getInt("B4");
+                                objRtn.Rej5 = rs01.getInt("B5");
+                                objRtn.Rej6 = rs01.getInt("B6");
+                            }
+
+                            lstRtn2.add(objRtn);
+
+                        }
+                        hm.put("lst2", lstRtn2);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return hm;
+    }
+
+    
+    
+    
+    
     public List<IMF053Filter> PX109SQP03554(IMF053Filter filter) throws SQLException, Exception {
 
         List<IMF053Filter> lstRtn = new ArrayList<IMF053Filter>(0);
