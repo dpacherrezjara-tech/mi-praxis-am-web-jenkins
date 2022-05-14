@@ -494,7 +494,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id+'-chkADYEN',
-                            boxLabel: '<b>ADYEN</b>',
+                            boxLabel: '<b>Differences</b>',
                             checked: false,
                             width: 90,
                             listeners:{

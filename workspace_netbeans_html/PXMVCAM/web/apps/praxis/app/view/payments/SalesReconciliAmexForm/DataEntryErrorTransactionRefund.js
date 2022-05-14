@@ -147,7 +147,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 40},
                                 {
                                     xtype: 'label',
-                                    text: 'Sales Merchant ID',
+                                    text: 'Refund Merchant ID',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -390,7 +390,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                         },
                         {
                             xtype: 'label',
-                            text: 'Sales Information',
+                            text: 'Refund Information',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -408,7 +408,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
-                                    text: 'Sales Date',
+                                    text: 'Refund Date',
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -676,7 +676,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {
                                     xtype: 'label',
                                     style: 'font-weight:bold;color:#0B333C;',
-                                    text: 'Sales Amount',
+                                    text: 'Refund Amount',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
@@ -811,6 +811,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     }
 
                                 },
+                                {xtype: 'tbspacer', width: 320},
+                                {
+                                    xtype: 'checkboxfield',
+                                    id: prototype.id + '-chkBlocked',
+                                    boxLabel: '<b>Blocked</b>',
+                                    checked: false,
+                                    width: 70,
+                                    listeners: {
+                                        change: 'cambiarGrillaChk'
+                                    }
+                                }
                             ]
                         },
                         {
@@ -839,7 +850,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     enforceMaxLength: true,
                                     maskRe: /[0-9]/,
                                     maxLength: 6,
-                                    width: 85,
+                                    width: 100,
                                     enableKeyEvents: true,
                                 },
                                 {xtype: 'tbspacer', width: 5},
@@ -885,7 +896,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'label',
-                                    text: 'Sales Date',
+                                    text: 'Refund Date',
                                     textAlign: 'center',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     margin: '4 4 4 4',
@@ -920,6 +931,17 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
 
                                 },
                                 {xtype: 'tbspacer', width: 5},
+                                {
+                                    xtype: 'button',
+                                    width: 25,
+                                    //margin: '4 4 4 4',
+                                    iconCls: 'prx-icon-clear',
+                                    tooltip: 'Clear',
+                                    listeners: {
+                                        click: 'clear_keyDownHandler'
+                                    }
+
+                                },
                             ]
                         },
                         {
@@ -951,10 +973,10 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     /*if (record.data.FDUPLI > 0) {
-                                                        metaData.style = "text-align:center;background-color:#f58989";
-                                                    }*/
-                                                    
-                                                    value = 'Sales';
+                                                     metaData.style = "text-align:center;background-color:#f58989";
+                                                     }*/
+
+                                                    value = 'Refund';
 
                                                     if (record.data.FDUPLIB > 0) {
                                                         value = 'Blocked'
@@ -978,16 +1000,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             /*if (record.data.FDUPLI > 0) {
-                                                                metaData.style = "text-align:center;background-color:#f58989";
-                                                            }
-
-                                                            if (record.data.FDUPLIB > 0) {
-                                                                metaData.style = "text-align:center;background-color:#e7f589";
-                                                            }
-
-                                                            if (record.data.FDESGLOSE === '1') {
-                                                                metaData.style = "text-align:center;background-color:#9cfa89";
-                                                            }*/
+                                                             metaData.style = "text-align:center;background-color:#f58989";
+                                                             }
+                                                             
+                                                             if (record.data.FDUPLIB > 0) {
+                                                             metaData.style = "text-align:center;background-color:#e7f589";
+                                                             }
+                                                             
+                                                             if (record.data.FDESGLOSE === '1') {
+                                                             metaData.style = "text-align:center;background-color:#9cfa89";
+                                                             }*/
 
                                                             return value;
                                                         }
@@ -995,14 +1017,14 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     {text: 'Number', dataIndex: 'A1531NREF', width: 115,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
-                                                            
+
                                                             return value;
                                                         }
                                                     },
                                                     {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
-                                                            
+
                                                             return value;
                                                         }
                                                     }
@@ -1011,22 +1033,22 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    
+
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Amount', dataIndex: 'tot_VFOP', width: 70,
+                                            {text: 'Refund<br>Amount', dataIndex: 'tot_VFOP', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;";
-                                                    
+
                                                     value = Ext.util.Format.number(value, '0,000.00');
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                            {text: 'Refund<br>Date', dataIndex: 'A720FECVTA', width: 61,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:center;";                                                    
+                                                    metaData.style = "text-align:center;";
 
                                                     return value;
                                                 }
@@ -1034,21 +1056,21 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                             {text: 'PNR', dataIndex: 'A720PNR', width: 62,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    
+
                                                     return value;
                                                 }
                                             },
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    
+
                                                     return value;
                                                 }
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
-                                                    
+
                                                     return value;
                                                 }
                                             },
@@ -1119,6 +1141,167 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-de-txtSumAmount',
+                                            fieldStyle: 'text-align:right',
+                                            enforceMaxLength: true,
+                                            readOnly: true,
+                                            width: 70,
+                                        },
+                                    ]
+                                },
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelDataInfoBlocked',
+                            layout: 'vbox',
+                            border: false,
+                            width: 725,
+                            height: 245,
+                            hidden: true,
+                            bodyStyle: 'background:#E5ECEF;',
+                            margin: '10 2 12 10',
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataInfoBlocked',
+                                    width: 725,
+                                    height: 220,
+//                                    hidden: false,
+                                    columnLines: true,
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Status', dataIndex: 'STMANUAL', width: 50,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    /*if (record.data.FDUPLI > 0) {
+                                                     metaData.style = "text-align:center;background-color:#f58989";
+                                                     }*/
+
+                                                    value = 'Refund';
+
+                                                    if (record.data.FDUPLIB > 0) {
+                                                        value = 'Blocked'
+                                                    }
+
+                                                    if (record.data.FDESGLOSE === '1') {
+                                                        value = 'Concil.'
+                                                    }
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Credit Card',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Type', dataIndex: 'A1531TTARJ', width: 40,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            /*if (record.data.FDUPLI > 0) {
+                                                             metaData.style = "text-align:center;background-color:#f58989";
+                                                             }
+                                                             
+                                                             if (record.data.FDUPLIB > 0) {
+                                                             metaData.style = "text-align:center;background-color:#e7f589";
+                                                             }
+                                                             
+                                                             if (record.data.FDESGLOSE === '1') {
+                                                             metaData.style = "text-align:center;background-color:#9cfa89";
+                                                             }*/
+
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Number', dataIndex: 'A1531NREF', width: 115,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Amount', dataIndex: 'A1531VFOP', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Refund<br>Amount', dataIndex: 'tot_VFOPB', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;";
+
+                                                    value = Ext.util.Format.number(value, '0,000.00');
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Refund<br>Date', dataIndex: 'A720FECVTA', width: 61,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'PNR', dataIndex: 'A720PNR', width: 62,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+
+                                                    return value;
+                                                }
+                                            },
+                                        ]
+                                    }
+                                },
+                                {
+                                    xtype: 'panel',
+                                    layout: 'hbox',
+                                    border: false,
+                                    hidden: true,
+                                    margin: '0 2 0 20',
+                                    bodyStyle: 'background:#efe5e5;',
+                                    items: [
+                                        {xtype: 'tbspacer', width: 150},
+                                        {
+                                            xtype: 'label',
+                                            text: 'Sum Amount',
+                                            style: 'font-weight:bold;color:#0B333C;',
+                                            width: 90
+                                        },
+                                        {xtype: 'tbspacer', width: 10},
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id + '-de-txtSumAmountBlocked',
                                             fieldStyle: 'text-align:right',
                                             enforceMaxLength: true,
                                             readOnly: true,

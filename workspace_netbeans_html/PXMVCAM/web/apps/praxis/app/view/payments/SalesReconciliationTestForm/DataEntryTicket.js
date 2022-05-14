@@ -1522,6 +1522,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.DataEntryTicket
                                     id: prototype.id+'-2-chkFADYEN',
                                     boxLabel: '<b style="color:#0B333C;">ADYEN</b>',
                                     checked: false,
+                                    hidden:true,
                                     margin: '0 0 0 70',
                                     width: 90
                                 }
