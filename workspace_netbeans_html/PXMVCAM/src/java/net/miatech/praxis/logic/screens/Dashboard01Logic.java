@@ -17,9 +17,11 @@ import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
 import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.libcust.A051wr;
 import net.miatech.praxis.dao.screens.Dashboard01DAO;
 import net.miatech.praxis.interline.filter.IMF117Filter;
 import net.miatech.praxis.interline.filter.SFI040Filter;
+import net.miatech.praxis.interline.filter.WRF016Filterwk;
 
 /**
  *
@@ -187,6 +189,15 @@ public class Dashboard01Logic {
     public List<A050Filter> loadPX109SQP00882(A050Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP00882(filter);
     }
+    
+    public List<A051wr> loadUsoswr(String calfa) throws SQLException, Exception {
+        return Dashboard01DAO.loadUsoswr(calfa);
+    }
+    
+    public HashMap loadPX165S01WRF016(WRF016Filterwk filter) throws Exception {
+        return Dashboard01DAO.loadPX165S01WRF016(filter);
+    }
+    
 
     /**
      * EMD
