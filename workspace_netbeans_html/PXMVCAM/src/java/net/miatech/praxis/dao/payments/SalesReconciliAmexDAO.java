@@ -3284,8 +3284,8 @@ public class SalesReconciliAmexDAO {
 
                 if (filter.TDOC.trim().equals("R")) {
                     beanRec.A1531VFOP = beanRec.A1531VFOP * -1;
-                    beanRec.tot_VFOP = beanRec.A1531VFOP * -1;
-                    beanRec.tot_VFOPB = beanRec.A1531VFOP * -1;
+                    beanRec.tot_VFOP = beanRec.tot_VFOP * -1;
+                    beanRec.tot_VFOPB = beanRec.tot_VFOPB * -1;
                 }
 
                 lstInfo.add(beanRec);
@@ -3388,8 +3388,8 @@ public class SalesReconciliAmexDAO {
                 
                 if (filter.TDOC.trim().equals("R")) {
                     beanRec.A1531VFOP = beanRec.A1531VFOP * -1;
-                    beanRec.tot_VFOP = beanRec.A1531VFOP * -1;
-                    beanRec.tot_VFOPB = beanRec.A1531VFOP * -1;
+                    beanRec.tot_VFOP = beanRec.tot_VFOP * -1;
+                    beanRec.tot_VFOPB = beanRec.tot_VFOPB * -1;
                 }
                 
                 lstInfo.add(beanRec);
