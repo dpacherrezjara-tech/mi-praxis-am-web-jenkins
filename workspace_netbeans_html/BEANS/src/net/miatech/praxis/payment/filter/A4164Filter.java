@@ -234,6 +234,7 @@ public class A4164Filter extends A4164 {
     public int SUMA_QTYSVFOP = 0;
     public double totSUMA_SVFOP = 0;
     public int totSUMA_QTYSVFOP = 0;
+    public int valVFOP = 0;
 
     public String strIN_FTE = "";
     public String strIN_AFTE = "";
@@ -408,6 +409,7 @@ public class A4164Filter extends A4164 {
     public String select = "";
 
     public Pagination page = new Pagination();
+    
 
     public String bufferToString(String ccust) {
 
