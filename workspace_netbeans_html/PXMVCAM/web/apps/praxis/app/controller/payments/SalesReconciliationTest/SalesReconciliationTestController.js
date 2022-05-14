@@ -603,9 +603,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                     this.beanDetailTar.IN_CARDN2 = win.getValue('txtCard2');
                     this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
                     if (win.getValue('chkADYEN')) {
-                        this.beanDetailTar.IN_ADYEN = 'Y';
-                    } else {
                         this.beanDetailTar.IN_ADYEN = '';
+                    } else {
+                        this.beanDetailTar.IN_ADYEN = '1';
                     }
                     console.log(this.beanDetailTar);
                     this.searchDetTARJETA(this.beanDetailTar);
@@ -736,8 +736,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             this.bean.IN_AFTE = win.getValue('cmbAFTE');
             this.bean.IN_MERCHN = win.getValue('txtMERCHN').trim();
             this.bean.IN_AUTHNBR = win.getValue('txtAUTHNBR').trim();
-            if (win.getValue('chkADYEN')) {
-                this.bean.IN_ADYEN = 'Y';
+            if (win.getValue('chkADYEN')){
+                this.bean.IN_ADYEN = '1';
             } else {
                 this.bean.IN_ADYEN = '';
             }
