@@ -409,6 +409,7 @@ public class A4164Filter extends A4164 {
     public String select = "";
 
     public Pagination page = new Pagination();
+    public String IN_DIFF = "";
     
 
     public String bufferToString(String ccust) {
@@ -538,4 +539,6 @@ public class A4164Filter extends A4164 {
         //System.out.println(strValue.length());
         return strValue.toUpperCase();
     }
+
+    
 }

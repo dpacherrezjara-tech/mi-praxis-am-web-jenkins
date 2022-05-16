@@ -499,6 +499,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                 this.beanDetE.IN_CERROR = "";
             }
             win.selectedChild('vskMain', 'boxDetTicket');
+            
+            if (win.getValue('chkDIFF')) {
+                this.beanDetE.IN_DIFF = '1';
+            } else {
+                this.beanDetE.IN_DIFF = '';
+            }
+            console.log(this.beanDetE.IN_DIFF);
             this.searchDetTktByStval(this.beanDetE);
         }
     },
@@ -602,11 +609,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                     this.beanDetailTar.IN_CARDN1 = win.getValue('txtCard1');
                     this.beanDetailTar.IN_CARDN2 = win.getValue('txtCard2');
                     this.beanDetailTar.IN_AUTHNBR = win.getValue('txtAUTHNBR');
-                    if (win.getValue('chkADYEN')) {
-                        this.beanDetailTar.IN_ADYEN = '';
-                    } else {
-                        this.beanDetailTar.IN_ADYEN = '1';
-                    }
                     console.log(this.beanDetailTar);
                     this.searchDetTARJETA(this.beanDetailTar);
                 } else {
@@ -736,11 +738,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             this.bean.IN_AFTE = win.getValue('cmbAFTE');
             this.bean.IN_MERCHN = win.getValue('txtMERCHN').trim();
             this.bean.IN_AUTHNBR = win.getValue('txtAUTHNBR').trim();
-            if (win.getValue('chkADYEN')){
-                this.bean.IN_ADYEN = '1';
-            } else {
-                this.bean.IN_ADYEN = '';
-            }
             //            if(vskPrincipal.selectedChild == boxCharts){
             //                    with(boxSearchFilter){visible = false; includeInLayout = false}
             //                    imgFilter.toolTip = (boxSearchFilter.visible == true) ? 'Hidden filter' : 'Display filter';

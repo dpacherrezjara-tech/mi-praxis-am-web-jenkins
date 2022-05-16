@@ -493,13 +493,13 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                         {xtype: 'tbspacer', width: 40},
                         {
                             xtype: 'checkboxfield',
-                            id: prototype.id+'-chkADYEN',
+                            id: prototype.id+'-chkDIFF',
                             boxLabel: '<b>Differences</b>',
                             checked: false,
                             width: 90,
-                            listeners:{
-                                change: 'btnSearch_click'
-                            }
+//                            listeners:{
+//                                change: 'btnSearch_click'
+//                            }
                         },                        
                         {xtype: 'tbspacer', width: 10},
                         {
