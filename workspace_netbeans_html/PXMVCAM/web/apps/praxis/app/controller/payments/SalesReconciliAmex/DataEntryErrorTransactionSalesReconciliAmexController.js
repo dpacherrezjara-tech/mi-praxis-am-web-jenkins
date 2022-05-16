@@ -284,7 +284,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             }
             //return 'PNR field is empty';
         }
-        
+
         if (this.getValue("de-txtISREFNBR").trim() === '' && txtMsjMontos === '') {
 
             for (var j = 0; j < this.lstSendManual.length; j++) {
@@ -296,9 +296,21 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             //return 'Ticket field is empty';
         }
 
+        if (this.getValue("de-txtSAUTHOC").trim() === '' && txtMsjMontos === '') {
+
+            for (var j = 0; j < this.lstSendManual.length; j++) {
+                if (this.lstSendManual[j].FDESGLOSE !== "1") {
+                    this.setValue('de-txtSAUTHOC', this.lstSendManual[j].A1531CAPL);
+                    this.setValue('de-txtSCARDN', this.lstSendManual[j].A1531NREF.replaceAll('*', 'X'));
+                    break;
+                }
+            }
+            //return 'Ticket field is empty';
+        }
+
         /*if (this.getValue("de-txtISREFNBR").trim() === '') {
-            return 'Ticket field is empty';
-        }*/
+         return 'Ticket field is empty';
+         }*/
 
         return '';
     },
