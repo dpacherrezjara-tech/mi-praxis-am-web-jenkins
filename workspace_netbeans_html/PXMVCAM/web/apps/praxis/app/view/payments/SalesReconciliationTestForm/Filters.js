@@ -490,18 +490,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                                 keypress: 'BuscarPNR_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 40},
-                        {
-                            xtype: 'checkboxfield',
-                            id: prototype.id+'-chkDIFF',
-                            boxLabel: '<b>Differences</b>',
-                            checked: false,
-                            width: 90,
-//                            listeners:{
-//                                change: 'btnSearch_click'
-//                            }
-                        },                        
-                        {xtype: 'tbspacer', width: 10},
+                        {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'radiogroup',
                             id:prototype.id+'-rbgType',
@@ -511,7 +500,19 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                                 { boxLabel: '<b style="color:#148D28;">Refund</b>', inputValue: 'Refund', name: 'rbgType' }
                             ],
                             listeners: {change: 'cmbTranType_changeHandler' }
-                        }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id+'-chkDIFF',
+                            boxLabel: '<b>Differences</b>',
+                            checked: false,
+                            width: 90,
+                            hidden:true,
+                            listeners:{
+                                change: 'searchDifferences'
+                            }
+                        }, 
                     ]
                 }
             ]

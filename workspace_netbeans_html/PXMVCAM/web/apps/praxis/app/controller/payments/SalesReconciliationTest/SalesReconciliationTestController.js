@@ -483,7 +483,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             this.searchDetDayByStval(beanDet);
         }
     },
+    
+    
     gridDetTicketS_clickHandler: function(column, e, row, column, x, rowData) {
+        
+        Ext.getCmp(prototype.id + '-chkDIFF').setVisible(true);
         this.beanDetE = x.record.data;
 
         console.log(this.strSTVAL);
@@ -502,12 +506,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             
             if (win.getValue('chkDIFF')) {
                 this.beanDetE.IN_DIFF = '1';
+                this.searchDetTktByStval(this.beanDetE);;
             } else {
                 this.beanDetE.IN_DIFF = '';
+                this.searchDetTktByStval(this.beanDetE);
             }
             console.log(this.beanDetE.IN_DIFF);
-            this.searchDetTktByStval(this.beanDetE);
         }
+    },
+    searchDifferences:function(){
+        if (win.getValue('chkDIFF')) {
+                this.beanDetE.IN_DIFF = '1';
+                this.searchDetTktByStval(this.beanDetE);;
+            } else {
+                this.beanDetE.IN_DIFF = '';
+                this.searchDetTktByStval(this.beanDetE);
+            }
+        this.searchDetTktByStval(this.beanDetE);
     },
     btnQuery_click: function(obj, e) {
         var beanQuery = {};
@@ -751,6 +766,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             }
             //            }	
         }
+        Ext.getCmp(prototype.id + '-chkDIFF').setVisible(false);
     },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
@@ -857,6 +873,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
             this.stack.pop();
             this.selectedChild('vskMain', this.peek().substr(this.peek().indexOf('-') + 1), false);
         }
+        Ext.getCmp(prototype.id + '-chkDIFF').setVisible(false);
     },
     //</editor-fold>
 
