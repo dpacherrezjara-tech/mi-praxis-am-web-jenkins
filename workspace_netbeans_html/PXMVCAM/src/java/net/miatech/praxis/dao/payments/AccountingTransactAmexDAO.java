@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.filter.A4183Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -622,6 +623,108 @@ public class AccountingTransactAmexDAO {
             pasarGarbageCollector();
         }
 
+        return lstTkts;
+    }
+    
+    public List<A4183Filter> loadPX590SQP04464(A4183Filter filter) throws SQLException, Exception {
+
+        List<A4183Filter> lstTkts = new ArrayList<A4183Filter>(0);
+        A4183Filter beanTkt;
+        
+        double totA4183ACTIV = 0,totA4183PASIV = 0,totA4183ACTRV = 0,totA4183PASRV = 0;
+       
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04464(?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.registerOutParameter(4, Types.INTEGER);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.registerOutParameter(6, Types.INTEGER);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_TKT.trim());
+            cstmt.setInt(3, filter.page.PAGNUM);
+            cstmt.setInt(4, filter.page.PAGROW);
+            cstmt.setInt(5, filter.page.TOTPAG);
+            cstmt.setInt(6, filter.page.TOTROW);
+
+            cstmt.execute();
+
+            filter.page.PAGNUM = cstmt.getInt(3);
+            filter.page.PAGROW = cstmt.getInt(4);
+            filter.page.TOTPAG = cstmt.getInt(5);
+            filter.page.TOTROW = cstmt.getInt(6);
+
+            rst = cstmt.getResultSet();
+            while (rst.next()) {
+                    totA4183ACTIV = rst.getDouble("A4183ACTIV");        
+                    totA4183PASIV = rst.getDouble("A4183PASIV");        
+                    totA4183ACTRV = rst.getDouble("A4183ACTRV");        
+                    totA4183PASRV = rst.getDouble("A4183PASRV");
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+                while (rst.next()) {
+
+                    beanTkt = new A4183Filter();
+                   
+                    beanTkt.A4183MODO = rst.getString("A4183MODO").trim();        
+                    beanTkt.A4183FUENT = rst.getString("A4183FUENT").trim();        
+                    beanTkt.A4183SUBFU = rst.getString("A4183SUBFU").trim();        
+                    beanTkt.A4183FP = rst.getString("A4183FP").trim();        
+                    beanTkt.A4183CUPON = rst.getString("A4183CUPON").trim();        
+                    beanTkt.A4183SEQ = rst.getString("A4183SEQ").trim();        
+                    beanTkt.A4183FPRO = rst.getString("A4183FPRO").trim();        
+                    beanTkt.A4183FCONT = rst.getString("A4183FCONT").trim();        
+                    beanTkt.A4183CUENT = rst.getString("A4183CUENT").trim();        
+                    beanTkt.A4183CUR = rst.getString("A4183CUR").trim();        
+                    beanTkt.A4183ACTIV = rst.getDouble("A4183ACTIV");        
+                    beanTkt.A4183PASIV = rst.getDouble("A4183PASIV");        
+                    beanTkt.A4183ACTRV = rst.getDouble("A4183ACTRV");        
+                    beanTkt.A4183PASRV = rst.getDouble("A4183PASRV");        
+                    beanTkt.A4183TITU = rst.getString("A4183TITU").trim();        
+                    beanTkt.A4183COPE = rst.getString("A4183COPE").trim();        
+                    beanTkt.A4183PROV = rst.getString("A4183PROV").trim();        
+                    beanTkt.A4183IDCON = rst.getString("A4183IDCON").trim();        
+                    
+                    beanTkt.totA4183ACTIV = totA4183ACTIV;        
+                    beanTkt.totA4183PASIV = totA4183PASIV;        
+                    beanTkt.totA4183ACTRV = totA4183ACTRV;        
+                    beanTkt.totA4183PASRV = totA4183PASRV;
+                    
+                    lstTkts.add(beanTkt);
+                }
+                rst.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
         return lstTkts;
     }
 

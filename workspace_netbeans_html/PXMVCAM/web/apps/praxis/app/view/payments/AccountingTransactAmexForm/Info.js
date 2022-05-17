@@ -1067,9 +1067,13 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Id', dataIndex: 'IDCON', width: 270,
+                                                        listeners: {
+                                                            click: 'onGridDetByAccounting'
+                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;";
-                                                            return value;
+                                                            value = '<b>' + value + '</b>';
+                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     }
                                                 ]
@@ -1096,6 +1100,180 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     }
                                                 ]
                                             }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-panelGridDataByAccounting',
+                            bodyStyle: 'background-color: #E3EAEF;',
+                            padding: '1',
+                            border: true,
+                            height: 'auto',
+                            width: 1440,
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            items: [
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridMainDataByAccounting',
+                                    height: 'auto',
+                                    width: 1440,
+                                    hidden: false,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: true,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {text: 'Mode', dataIndex: 'A4183MODO', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Src', dataIndex: 'A4183FUENT', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Sub <br> SRC', dataIndex: 'A4183SUBFU', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Fop', dataIndex: 'A4183FP', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Cpn', dataIndex: 'A4183CUPON', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Seq', dataIndex: 'A4183SEQ', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Accounting Settlement',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Date', dataIndex: 'A4183FPRO', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Period', dataIndex: 'A4183FCONT', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Account Number', dataIndex: 'A4183CUENT', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Local Amount',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Cur', dataIndex: 'A4183CUR', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Debit', dataIndex: 'A4183ACTIV', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Credit', dataIndex: 'A4183PASIV', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Revenue Amount',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Debit', dataIndex: 'A4183ACTRV', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Credit', dataIndex: 'A4183PASRV', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            return value;
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {text: 'Concept', dataIndex: 'A4183TITU', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Client', dataIndex: 'A4183COPE', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Provider', dataIndex: 'A4183PROV', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {text: 'Jornal <br> Entry', dataIndex: 'A4183IDCON', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
                                         ]
                                     }
                                 }
