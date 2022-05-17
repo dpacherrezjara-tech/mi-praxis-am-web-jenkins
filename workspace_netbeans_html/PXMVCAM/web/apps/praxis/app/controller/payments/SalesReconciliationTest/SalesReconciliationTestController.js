@@ -923,7 +923,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliationTest.SalesReconcil
                 },
                 load: function(obj, obj2, success, response, obj5) {
                     Ext.getCmp(prototype.id + '-contentInfo').unmask();
-                    win.lblUser_toolTip("Estructura: A2297");
+                    win.lblUser_toolTip("Estructura: A4165");
 
                     me.selectedChild('vskMain', 'boxMainData');
 
