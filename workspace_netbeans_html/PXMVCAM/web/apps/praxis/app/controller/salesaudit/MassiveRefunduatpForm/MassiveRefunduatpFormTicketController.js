@@ -142,6 +142,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'G':
                 vl_FLAG = 'INVALID IATA';
                 break;
+            case 'J':
+                vl_FLAG = 'TICKET EXCH';
+                break;
         }
         if (String(rec.get('A4076STAT')) === 'F' || String(rec.get('A4076STAT')) === 'C') {
             grid03.show();
@@ -151,7 +154,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             grid02.hide();
             btnSave.hide();
         } else {
-            if (String(rec.get('A4076FLAG')) === 'G' || String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R' || String(rec.get('A4076FLAG')) === 'I') {
+            if (String(rec.get('A4076FLAG')) === 'J' || String(rec.get('A4076FLAG')) === 'G' || String(rec.get('A4076FLAG')) === 'U' || String(rec.get('A4076FLAG')) === 'D' || String(rec.get('A4076FLAG')) === 'R' || String(rec.get('A4076FLAG')) === 'I') {
                 grid03.show();
                 grid04.show();
                 //
@@ -202,7 +205,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtToca1').setValue(Ext.util.Format.number(rec.get('A4076TAXCO'), '0,000.00'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTcambi2').setValue(Ext.util.Format.number(rec.get('A4076TCMBT'), '0,000.00'));
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalPraxis').setValue(Ext.util.Format.number(rec.get('A4076NETK'), '0,000.00'));
-
+        //console.log(rec.get('A4076NETO'));
+        //console.log(Ext.util.Format.number(rec.get('A4076NETO'), '0,000.00'));
         //me.onTotalRFND();
     },
 
@@ -627,7 +631,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             Total += parseFloat(monto);
         }
         Ext.getCmp(prototype.idMassiveRefunduatpFormTicket + '-txtTotalTax').setValue(Ext.util.Format.number(Total, '0,000.00'));
-        console.log(Total);
+        //console.log(Total);
         me.onTotalRFND();
     },
     onTotalRFND: function () {

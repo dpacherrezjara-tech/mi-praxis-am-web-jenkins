@@ -145,6 +145,34 @@ public class A4076 {
     public double TOTALSUMA = 0d;
     public double TOTALCANT = 0d;
 
+    public int BPOOK;
+    public int BPOKO;
+    public int TOTALBPO;
+
+    public int getBPOOK() {
+        return BPOOK;
+    }
+
+    public void setBPOOK(int BPOOK) {
+        this.BPOOK = BPOOK;
+    }
+
+    public int getBPOKO() {
+        return BPOKO;
+    }
+
+    public void setBPOKO(int BPOKO) {
+        this.BPOKO = BPOKO;
+    }
+
+    public int getTOTALBPO() {
+        return TOTALBPO;
+    }
+
+    public void setTOTALBPO(int TOTALBPO) {
+        this.TOTALBPO = TOTALBPO;
+    }
+
     public String A4076CPN1;
     public String A4076CPN2;
     public String A4076CPN3;
