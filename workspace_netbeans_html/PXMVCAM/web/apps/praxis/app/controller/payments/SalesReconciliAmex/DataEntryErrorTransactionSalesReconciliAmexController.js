@@ -783,4 +783,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
     },
+    msiTracking_keyDownHandler: function(){
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking', {
+            id: prototype.id + '-msiTrackingGrid',
+            params: {
+                rec: meDE.beanResult
+//                lstCountry: me.lstCountry
+            }
+        }).show();
+    }
 });

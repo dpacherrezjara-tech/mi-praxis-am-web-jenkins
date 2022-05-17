@@ -4399,7 +4399,7 @@ public class LoadConciliationTestDAO {
             cstmt.setString(14, filter.IN_MERCHN.trim());
             cstmt.setString(15, filter.IN_CERROR.trim());
             cstmt.setString(16, filter.IN_AUTHNBR.trim());
-            cstmt.setString(17, filter.IN_ADYEN.trim());
+            cstmt.setString(17, filter.IN_DIFF.trim());
 
             cstmt.setInt(18, filter.page.PAGNUM);
             cstmt.setInt(19, filter.page.PAGROW);
