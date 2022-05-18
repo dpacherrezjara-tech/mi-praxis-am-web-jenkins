@@ -395,7 +395,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
         }
         if (selectedValue === 'SU') {
-            Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(true);
+            Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(false);
         } else {
             Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(false);
         }

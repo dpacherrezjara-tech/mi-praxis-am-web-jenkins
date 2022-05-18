@@ -98,6 +98,7 @@ public class A4116Filter extends A4116 {
     public String DES_MERCHANT = "";
     public String DES_SMERCHANT = "";
     public String DES_CERROR = "";
+    public String DES_CERROIN = "";
     public String CERROIN = "";
     public String IN_CERROIN = "";
     public String desCERROIN = "";

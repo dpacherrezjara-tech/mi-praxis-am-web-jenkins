@@ -772,10 +772,14 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                     align: 'center'
                                                 },
                                                 columns: [
-                                                    {text: 'ID', dataIndex: 'IDCONL', width: 100,
+                                                    {text: 'ID', dataIndex: 'IDCONL', width: 100,                                                        
+                                                        listeners: {
+                                                            click: 'onGridDetByAccounting'
+                                                        },
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            value = '<b>' + value + '</b>';
                                                             metaData.style = "text-align:center;background-color:#c0f0af";
-                                                            return value;
+                                                            return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
                                                         }
                                                     },
                                                     {text: 'Date', dataIndex: 'FCONTL', width: 100,
@@ -1067,14 +1071,14 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Info', {
                                                         }
                                                     },
                                                     {text: 'Id', dataIndex: 'IDCON', width: 270,
-                                                        listeners: {
+                                                        /*listeners: {
                                                             click: 'onGridDetByAccounting'
-                                                        },
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        },*/
+                                                        /*renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             value = '<b>' + value + '</b>';
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return '<a href="#payments-accounting-transact-amex-form" style="color:#057ECB;text-decoration:underline;">' + value + '</a>';
-                                                        }
+                                                        }*/
                                                     }
                                                 ]
                                             },

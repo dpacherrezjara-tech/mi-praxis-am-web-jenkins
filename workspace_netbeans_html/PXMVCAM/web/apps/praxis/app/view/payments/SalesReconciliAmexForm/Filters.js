@@ -261,7 +261,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             emptyText: 'All',
                             //maxLength: 3,
                             labelWidth: 150,
-                            width: 300,
+                            width: 400,
                             hiddenLabel: false,
                             value: '',
                             listeners: {

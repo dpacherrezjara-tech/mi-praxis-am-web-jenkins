@@ -2955,6 +2955,13 @@ public class SalesReconciliAmexDAO {
                 if ("".equals(objRtn.CERROR.trim())) {
                     objRtn.DES_CERROR = "";
                 }
+                
+                objRtn.CERROIN = rs01.getString("CERROIN");
+                objRtn.DES_CERROIN = rs01.getString("DES_CERROIN");
+                if ("".equals(objRtn.CERROIN.trim())) {
+                    objRtn.DES_CERROIN = "";
+                }
+                
                 objRtn.FSELEC = rs01.getString("FSELEC");
                 if ("".equals(objRtn.FSELEC.trim())) {
                     objRtn.FSELEC = "Not loaded";

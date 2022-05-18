@@ -694,7 +694,7 @@ public class AccountingTransactAmexDAO {
                     beanTkt.A4183SEQ = rst.getString("A4183SEQ").trim();        
                     beanTkt.A4183FPRO = rst.getString("A4183FPRO").trim();        
                     beanTkt.A4183FCONT = rst.getString("A4183FCONT").trim();        
-                    beanTkt.A4183CUENT = rst.getString("A4183CUENT").trim();        
+                    beanTkt.A4183CUENT = rst.getString("ACCOUNT").trim();        
                     beanTkt.A4183CUR = rst.getString("A4183CUR").trim();        
                     beanTkt.A4183ACTIV = rst.getDouble("A4183ACTIV");        
                     beanTkt.A4183PASIV = rst.getDouble("A4183PASIV");        
