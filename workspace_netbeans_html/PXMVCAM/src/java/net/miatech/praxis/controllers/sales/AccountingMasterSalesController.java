@@ -230,7 +230,7 @@ public class AccountingMasterSalesController extends BaseController {
             CH_10.setCellValue("Sub account");
             CH_11.setCellValue("Equipment");
             CH_12.setCellValue("Inter company");
-            CH_13.setCellValue("Apply");
+            CH_13.setCellValue("TNU Apply");
             CH_14.setCellValue("Client");
             CH_15.setCellValue("Effectiveness");
 
