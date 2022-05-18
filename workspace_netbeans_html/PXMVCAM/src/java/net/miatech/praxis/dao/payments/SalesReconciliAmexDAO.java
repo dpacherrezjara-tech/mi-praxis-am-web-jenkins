@@ -89,6 +89,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(2, filter.IN_DATEFROM);
             cstmt.setString(3, filter.IN_DATETO);
             cstmt.setString(4, filter.IN_DATE);
+            //cstmt.setString(5, filter.IN_CERROIN);
             cstmt.setInt(5, filter.page.PAGNUM);
             cstmt.setInt(6, filter.page.PAGROW);
             cstmt.setInt(7, filter.page.TOTPAG);

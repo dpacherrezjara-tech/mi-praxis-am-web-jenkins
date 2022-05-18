@@ -25,6 +25,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     beanFilterSettlement: {},
     bean_warning: {},
     bean_ErrorCodesRecSett: {},
+    bean_ErrorCodesRecSumm: {},
     optionCheck: '',
     paginActual: '',
     drillDown: [],
@@ -276,6 +277,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             }
         });
         
+        me.bean_ErrorCodesRecSumm = {};
+        me.bean_ErrorCodesRecSumm.IN_WARNING = '';
+        Ext.Ajax.request({
+            url: prototype.url + '/getErrorCodesRecSett',
+            method: 'POST',
+            timeout: 60000000,
+            params: {beanString: JSON.stringify(me.bean_ErrorCodesRecSumm)},
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
+                    me.btnSearch_click();
+                } else
+                    global.Msg({msg: res.sesion});
+            }
+        });
+        
         //me.btnSearch_click();
 
     },
@@ -308,6 +329,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         me.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
+        
+        
+        //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
+        
+        
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -367,6 +393,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(true);
         } else {
             Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(false);
+        }
+        if (selectedValue === 'SU') {
+            Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(true);
+        } else {
+            Ext.getCmp(prototype.id + '-frmFilterSummary').setVisible(false);
         }
         switch (selectedValue) {
             case 'SU':
