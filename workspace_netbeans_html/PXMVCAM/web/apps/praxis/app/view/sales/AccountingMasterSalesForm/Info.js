@@ -39,7 +39,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                             align: 'center'
                         },
                         items: [
-                            {text: 'Type', width: 80, dataIndex: 'A1740TITRA',
+                            {text: 'Type', width: 60, dataIndex: 'A1740TITRA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
@@ -75,7 +75,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                                     return value;
                                 }
                             },
-                            {text: 'Unit', width: 80, dataIndex: 'A1740UNIDA',
+                            {text: 'Unit', width: 40, dataIndex: 'A1740UNIDA',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
@@ -112,6 +112,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                                 }
                             },
                             {text: 'Inter company', width: 100, dataIndex: 'A1740ICIA',
+                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:center;";
+                                    return value;
+                                }
+                            },
+                            {text: 'TNU Apply', width: 90, dataIndex: 'A1740INTNU',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
