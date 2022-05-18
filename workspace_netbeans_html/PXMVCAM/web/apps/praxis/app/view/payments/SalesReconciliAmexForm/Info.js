@@ -617,8 +617,8 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                         if (record.data.CERROR >= 80) {
                                                             metaData.style = "text-align:center;background-color:#ffff6b;";
                                                         } else {
-                                                            metaData.style = "text-align:center;background-color:#fc8686;";
-                                                        }
+                                                        metaData.style = "text-align:center;background-color:#fc8686;";
+                                                    }
                                                     }
                                                     return value;
                                                 }
