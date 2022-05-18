@@ -1097,6 +1097,13 @@ public class SalesReconciliAmexDAO {
                     } else {
                         beanTkt.desCERROR = "Difference";
                     }
+                    beanTkt.CERROIN = rst.getString("CERROIN").trim();
+
+                    if (beanTkt.CERROIN.equals("")) {
+                        beanTkt.desCERROIN = "Conciliate";
+                    } else {
+                        beanTkt.desCERROIN = "Difference";
+                    }
 
                     //Totales
                     beanTkt.TGROSAMOUN_TOTAL = TGROSAMOUN_TOTAL;
@@ -2069,6 +2076,7 @@ public class SalesReconciliAmexDAO {
                     beanTkt.DISCAMOSC = rst.getDouble("DISCAMOSC");
                     beanTkt.FREGLA = rst.getString("FREGLA").trim();
                     beanTkt.CERROR = rst.getString("CERROR").trim();
+                    beanTkt.CERROIN = rst.getString("CERROIN").trim();
                     beanTkt.STVAL = rst.getString("STVAL").trim();
                     if (hmDescEstados.containsKey(rst.getString("STVAL").trim())) {
                         beanTkt.descSTVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
@@ -2117,6 +2125,11 @@ public class SalesReconciliAmexDAO {
                         beanTkt.desCERROR = "Conciliate";
                     } else {
                         beanTkt.desCERROR = "Difference";
+                    }
+                    if (beanTkt.CERROIN.equals("")) {
+                        beanTkt.desCERROIN = "Conciliate";
+                    } else {
+                        beanTkt.desCERROIN = "Difference";
                     }
 
                     beanTkt.RATESFEE = rst.getDouble("RATESFEE");
