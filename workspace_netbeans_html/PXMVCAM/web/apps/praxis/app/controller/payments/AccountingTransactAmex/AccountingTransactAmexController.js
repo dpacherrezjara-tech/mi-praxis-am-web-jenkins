@@ -18,11 +18,14 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
     paramsDetailByDate: {},
     paramsDetailByQty: {},
     paramsDetailByDay: {},
+    paramsDetailByAccounting: {},
     beanDetByDate: {},
     beanDetByAcount: {},
     beanDetByDebug: {},
+    beanDetByPNR: {},
     beanDetByDay: {},
     beanDetByQty: {},
+    beanDetByAccounting: {},
     dataObtain: {},
     init: function (view) {
         me = this;
@@ -144,8 +147,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         };
     },
     btnSearch_click: function (obj, e) {
-            this.setFormatParameter();
-            this.setGridData();
+        this.setFormatParameter();
+        this.setGridData();
     },
     setGridData: function () {
         win.lblUser_toolTip("Estructura: A4116");
@@ -183,7 +186,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             });
 
             global.clear();
-            Ext.getCmp(prototype.id + '-gridMainAcountTransact').bindStore(storeGridDatas);            
+            Ext.getCmp(prototype.id + '-gridMainAcountTransact').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridMainAcountTransact').setStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-displayChart01').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-displayChart02').bindStore(storeGridDatas);
@@ -228,6 +231,21 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         this.beanDetByDebug.IN_STCONL = '2';
         console.log(this.beanDetByDebug);
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDebug);
+        this.setGridDataDetByDate();
+    },
+    onGridDetByPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        if (me.panelActual !== '-panelGridDataByDate') {
+            me.drillDown.push(me.panelActual);
+            me.panelActual = '-panelGridDataByDate';
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+        }
+
+        this.beanDetByPNR.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        this.beanDetByPNR.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        this.beanDetByPNR.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        
+        console.log(this.beanDetByPNR);
+        me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByPNR);
         this.setGridDataDetByDate();
     },
     setGridDataDetByDate: function () {
@@ -371,6 +389,52 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         Ext.getCmp(prototype.id + '-gridMainDataByDay').setStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin4').bindStore(storeGridDatas);
     },
+    onGridDetByAccounting: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-panelGridDataByAccounting';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.beanDetByAccounting.IN_TKT = rowData.data.TKT;
+        this.beanDetByAccounting.IDCON = rowData.data.IDCON;
+        console.log(this.beanDetByAccounting);
+        me.paramsDetailByAccounting.beanString = JSON.stringify(this.beanDetByAccounting);
+        this.setGridDataDetByAccounting();
+    },
+    setGridDataDetByAccounting: function () {
+        win.lblUser_toolTip("Estructura: A4183");
+        me.setWidthPie();
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchByAccounting'
+            }, listeners: {
+                beforeload: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').mask('Loading...');
+                    obj.proxy.extraParams = me.paramsDetailByAccounting;
+                },
+                load: function (obj) {
+                    Ext.getCmp(prototype.id + '-contentInfo').unmask();
+
+                    var pag = Ext.getCmp(prototype.id + '-paggin5');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                    me.setWidthPie();
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var data = obj.data.items[0].data;
+                            Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + ' - Accounting ID: ' + data.IDCON + '</center>');
+                    }
+                }
+            }
+        });
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-paggin5').bindStore(storeGridDatas);
+    },
     validateFields: function () {
         var msj = '';
         var bean = searchParams.bean;
@@ -468,9 +532,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         }
 
     },
-    rbChangeType_tc: function(){
-      var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType_tc').getValue().rbgType_tc;
-      
+    rbChangeType_tc: function () {
+        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupType_tc').getValue().rbgType_tc;
+
         switch (selectedValue) {
             case 'A':
                 Ext.getCmp(prototype.id + '-displayChart01').setVisible(true);
@@ -578,6 +642,15 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             case  '-panelGridDataByDay':
                 me.pagginActual = '-paggin4';
                 break;
+            case  '-panelGridDataByAccounting':
+                me.pagginActual = '-paggin5';
+                break;
+        }
+    },
+    filterPNR: function (e, eOpts) {
+        switch (eOpts.getKey()) {
+            case 13:
+                this.onGridDetByPNR();
         }
     },
     pagFirst: function (obj, e) {

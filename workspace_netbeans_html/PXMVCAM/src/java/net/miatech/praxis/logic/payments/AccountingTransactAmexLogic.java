@@ -5,6 +5,7 @@ import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.AccountingTransactAmexDAO;
 import net.miatech.praxis.payment.filter.A4116Filter;
+import net.miatech.praxis.payment.filter.A4183Filter;
 
 
 public class AccountingTransactAmexLogic {
@@ -31,4 +32,7 @@ public class AccountingTransactAmexLogic {
         return AccountingTransactAmexDAO.loadPX590SQP04454(filter);
     }
     
+    public List<A4183Filter> loadPX590SQP04464(A4183Filter filter) throws SQLException, Exception {
+        return AccountingTransactAmexDAO.loadPX590SQP04464(filter);
+    }
 }
