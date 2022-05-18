@@ -68,9 +68,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.DataEntry',{
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
-                            text: 'Apply',
+                            text: 'TNU Apply',
                             style: 'font-weight:bold;color:#000;',
-                            width: 50
+                            width: 90
                         },
                         {
                             xtype: 'label',

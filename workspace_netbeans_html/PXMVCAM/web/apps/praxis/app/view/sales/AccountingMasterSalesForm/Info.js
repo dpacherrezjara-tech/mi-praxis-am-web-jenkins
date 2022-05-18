@@ -117,7 +117,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                                     return value;
                                 }
                             },
-                            {text: 'Apply', width: 60, dataIndex: 'A1740INTNU',
+                            {text: 'TNU Apply', width: 90, dataIndex: 'A1740INTNU',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
