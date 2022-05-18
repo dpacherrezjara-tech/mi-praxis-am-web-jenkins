@@ -26,6 +26,7 @@ public class A1740 {
     public String A1740FINI = "";
     public String A1740FFIN = "";
     public String A1740LEGER = "";
+    public String A1740INTNU = "";
     
     //campos de auditoria
     public String A1740REGIS = "";
