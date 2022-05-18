@@ -22,6 +22,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
     beanDetByDate: {},
     beanDetByAcount: {},
     beanDetByDebug: {},
+    beanDetByPNR: {},
     beanDetByDay: {},
     beanDetByQty: {},
     beanDetByAccounting: {},
@@ -232,6 +233,21 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByDebug);
         this.setGridDataDetByDate();
     },
+    onGridDetByPNR: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        if (me.panelActual !== '-panelGridDataByDate') {
+            me.drillDown.push(me.panelActual);
+            me.panelActual = '-panelGridDataByDate';
+            global.selectedChild(me.childs, prototype.id + me.panelActual);
+        }
+
+        this.beanDetByPNR.IN_DATE = Ext.getCmp(prototype.id + '-cmbDateSel').getValue();
+        this.beanDetByPNR.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
+        this.beanDetByPNR.IN_PNR = Ext.getCmp(prototype.id + '-txtPNR').getValue();
+        
+        console.log(this.beanDetByPNR);
+        me.paramsDetailByDate.beanString = JSON.stringify(this.beanDetByPNR);
+        this.setGridDataDetByDate();
+    },
     setGridDataDetByDate: function () {
         win.lblUser_toolTip("Estructura: A4116");
         me.setWidthPie();
@@ -378,6 +394,7 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.panelActual = '-panelGridDataByAccounting';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         this.beanDetByAccounting.IN_TKT = rowData.data.TKT;
+        this.beanDetByAccounting.IDCON = rowData.data.IDCON;
         console.log(this.beanDetByAccounting);
         me.paramsDetailByAccounting.beanString = JSON.stringify(this.beanDetByAccounting);
         this.setGridDataDetByAccounting();
@@ -406,6 +423,9 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         global.Msg({
                             msg: 'Data not found.'
                         });
+                    } else {
+                        var data = obj.data.items[0].data;
+                            Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + ' - Accounting ID: ' + data.IDCON + '</center>');
                     }
                 }
             }
@@ -625,6 +645,12 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
             case  '-panelGridDataByAccounting':
                 me.pagginActual = '-paggin5';
                 break;
+        }
+    },
+    filterPNR: function (e, eOpts) {
+        switch (eOpts.getKey()) {
+            case 13:
+                this.onGridDetByPNR();
         }
     },
     pagFirst: function (obj, e) {

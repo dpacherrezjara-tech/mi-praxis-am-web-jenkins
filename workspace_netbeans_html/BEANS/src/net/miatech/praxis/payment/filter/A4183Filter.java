@@ -18,7 +18,9 @@ public class A4183Filter extends A4183 {
     public double totA4183ACTRV = 0;
     public double totA4183PASRV = 0;
     
-    public List<A4183Filter> lstSendManual = new ArrayList<A4183Filter>(0);
+    //Campos A4116
+    public String TKT = "";
+    public String IDCON = "";    
 
     public Pagination page = new Pagination();
     

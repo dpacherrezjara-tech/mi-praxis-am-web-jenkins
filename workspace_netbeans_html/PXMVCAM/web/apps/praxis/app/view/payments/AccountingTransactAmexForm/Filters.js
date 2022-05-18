@@ -105,7 +105,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             width: 70,
-                            anchor: '100%'
+                            anchor: '100%',
+                            hidden:true,
                         },
                         {
                             xtype: 'combo',
@@ -158,7 +159,8 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             displayField: 'name',
                             emptyText: 'All',
                             width: 70,
-                            anchor: '100%'
+                            anchor: '100%',
+                            hidden:true,
                         },
                         {
                             xtype: 'combo',
@@ -179,7 +181,27 @@ Ext.define('Ext.Praxis.view.payments.AccountingTransactAmexForm.Filters', {
                             listeners: {
                                 change: 'cmbSTVAL_keyDownHandler',
                             }
-                        }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            text: 'PNR:',
+                            padding: '8px 1px 2px 1px',
+                            width: 50,
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtPNR',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'filterPNR'
+                            }
+                        },
                     ]
                 }
             ]

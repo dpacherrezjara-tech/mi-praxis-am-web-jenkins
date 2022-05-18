@@ -362,34 +362,35 @@ public class AccountingTransactAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04417(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04417(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(6, Types.INTEGER);
             cstmt.registerOutParameter(7, Types.INTEGER);
             cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
+            cstmt.registerOutParameter(10, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATE);
             cstmt.setString(3, filter.IN_DATE_VALUE);
             cstmt.setString(4, filter.IN_STCONL);
             cstmt.setString(5, filter.IN_TDOC);
-            cstmt.setInt(6, filter.page.PAGNUM);
-            cstmt.setInt(7, filter.page.PAGROW);
-            cstmt.setInt(8, filter.page.TOTPAG);
-            cstmt.setInt(9, filter.page.TOTROW);
+            cstmt.setString(6, filter.IN_PNR);
+            cstmt.setInt(7, filter.page.PAGNUM);
+            cstmt.setInt(8, filter.page.PAGROW);
+            cstmt.setInt(9, filter.page.TOTPAG);
+            cstmt.setInt(10, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(6);
-            filter.page.PAGROW = cstmt.getInt(7);
-            filter.page.TOTPAG = cstmt.getInt(8);
-            filter.page.TOTROW = cstmt.getInt(9);
+            filter.page.PAGNUM = cstmt.getInt(7);
+            filter.page.PAGROW = cstmt.getInt(8);
+            filter.page.TOTPAG = cstmt.getInt(9);
+            filter.page.TOTROW = cstmt.getInt(10);
 
             rst = cstmt.getResultSet();
             while (rst.next()) {
@@ -578,6 +579,11 @@ public class AccountingTransactAmexDAO {
                     beanTkt.BSUMDATE = rst.getString("BSUMDATE").trim();
                     beanTkt.SVFOPS = rst.getDouble("SVFOPS");
                     beanTkt.STCONL = rst.getString("STCONL").trim();
+                    if (hmDescSTCONL.containsKey(rst.getString("STCONL").trim())) {
+                        beanTkt.descSTCONL = hmDescSTCONL.get(rst.getString("STCONL").trim()).toString();
+                    } else {
+                        beanTkt.descSTCONL = rst.getString("STCONL").trim();
+                    }
                     beanTkt.IDCON = rst.getString("IDCON").trim();
                     beanTkt.FCONT = rst.getString("FCONT").trim();
                     beanTkt.IDCONL = rst.getString("IDCONL").trim();
@@ -677,6 +683,9 @@ public class AccountingTransactAmexDAO {
 
                     beanTkt = new A4183Filter();
                    
+                    beanTkt.TKT = filter.IN_TKT.trim();
+                    beanTkt.IDCON = filter.IDCON.trim();
+                    
                     beanTkt.A4183MODO = rst.getString("A4183MODO").trim();        
                     beanTkt.A4183FUENT = rst.getString("A4183FUENT").trim();        
                     beanTkt.A4183SUBFU = rst.getString("A4183SUBFU").trim();        
