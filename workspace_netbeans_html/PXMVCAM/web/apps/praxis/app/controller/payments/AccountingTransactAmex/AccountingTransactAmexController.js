@@ -393,8 +393,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
         me.drillDown.push(me.panelActual);
         me.panelActual = '-panelGridDataByAccounting';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-        this.beanDetByAccounting.IN_TKT = rowData.data.TKT;
-        this.beanDetByAccounting.IDCON = rowData.data.IDCON;
+        this.beanDetByAccounting.IN_TKT = rowData.data.ISREFNBR;
+        this.beanDetByAccounting.IDCON = rowData.data.IDCONL;
         console.log(this.beanDetByAccounting);
         me.paramsDetailByAccounting.beanString = JSON.stringify(this.beanDetByAccounting);
         this.setGridDataDetByAccounting();
@@ -425,7 +425,8 @@ Ext.define('Ext.Praxis.controller.payments.AccountingTransactAmex.AccountingTran
                         });
                     } else {
                         var data = obj.data.items[0].data;
-                            Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + ' - Accounting ID: ' + data.IDCON + '</center>');
+                            Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + '</center>');
+                            //Ext.getCmp(prototype.id + '-gridMainDataByAccounting').setTitle('<center style="font-size:12px;">Ticket: ' + data.TKT + ' - Accounting ID: ' + data.IDCON + '</center>');
                     }
                 }
             }

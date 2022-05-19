@@ -28,6 +28,7 @@ public class A4113Filter extends A4113 {
     public String IN_NBATCH = "";
     public String DES_MERCHANT = "";
     public String DES_CERROR = "";
+    public String IN_CERROIN = "";
 
     //Diferencias
     public double DIFF_PGROSAMOU = 0;
@@ -64,5 +65,5 @@ public class A4113Filter extends A4113 {
     public double totDIFF_PNETAMOU = 0;
 
     public Pagination page = new Pagination();
-
+    
 }
