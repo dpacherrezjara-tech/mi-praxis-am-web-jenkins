@@ -389,6 +389,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     
     search_WK: function () {
         
+        Ext.getCmp(prototype.id + '-byWork_WK').hide();
+        Ext.getCmp(prototype.id + '-byWork_WK_AMT').hide();
+        
+        var cmbSelectBy_WK = Ext.getCmp(prototype.id + '-cmbSelectBy_WK').getValue();
+        console.log(cmbSelectBy_WK);
+        if(cmbSelectBy_WK === '1'){
+            Ext.getCmp(prototype.id + '-byWork_WK').show();
+        }else{
+//            if(cmbSelectBy_WK === '2'){
+            Ext.getCmp(prototype.id + '-byWork_WK_AMT').show();
+        }
+        
         win.lblUser_toolTip("Estructura: WRF016");
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
@@ -408,19 +420,36 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                     if(cmbFecha === '1'){
                         Ext.getCmp(prototype.id + '-titHorzFecha1').setText('Clearing Date');
                         Ext.getCmp(prototype.id + '-titVertFecha1').setText('Invoice Date');
+                        
+                        Ext.getCmp(prototype.id + '-titHorzFecha2').setText('Clearing Date');
+                        Ext.getCmp(prototype.id + '-titVertFecha2').setText('Invoice Date');
                     }else{
                         Ext.getCmp(prototype.id + '-titHorzFecha1').setText('Invoice Date');
                         Ext.getCmp(prototype.id + '-titVertFecha1').setText('Clearing Date');
+                        
+                        Ext.getCmp(prototype.id + '-titHorzFecha2').setText('Invoice Date');
+                        Ext.getCmp(prototype.id + '-titVertFecha2').setText('Clearing Date');
                     }
                     
-                    if(res.data.lenght > 0){
+                    if(res.data.length > 0){
                         // Agregamos ID de meses
                         Ext.getCmp(prototype.id + '-titFecha6').setText(res.data[0].strFormatDate4);
+                        Ext.getCmp(prototype.id + '-titFecha6_AMT').setText(res.data[0].strFormatDate4);
+                        
                         Ext.getCmp(prototype.id + '-titFecha5').setText(res.data[0].strDescripcion);
+                        Ext.getCmp(prototype.id + '-titFecha5_AMT').setText(res.data[0].strDescripcion);
+                        
                         Ext.getCmp(prototype.id + '-titFecha4').setText(res.data[0].strDescripcion1);
+                        Ext.getCmp(prototype.id + '-titFecha4_AMT').setText(res.data[0].strDescripcion1);
+                        
                         Ext.getCmp(prototype.id + '-titFecha3').setText(res.data[0].strDescripcion2);
+                        Ext.getCmp(prototype.id + '-titFecha3_AMT').setText(res.data[0].strDescripcion2);
+                        
                         Ext.getCmp(prototype.id + '-titFecha2').setText(res.data[0].strDescripcion3);
+                        Ext.getCmp(prototype.id + '-titFecha2_AMT').setText(res.data[0].strDescripcion3);
+                        
                         Ext.getCmp(prototype.id + '-titFecha1').setText(res.data[0].strDescripcion4);
+                        Ext.getCmp(prototype.id + '-titFecha1_AMT').setText(res.data[0].strDescripcion4);
                     } 
 //                    else {
 //                        global.Msg({msg: 'Data not found'});
@@ -441,9 +470,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
                         
                         
                     }else{
-
+                        
                     }
-//                    if(res.listaData2.lenght > 0 && res.data.listaRates > 0){
+                    
+//                    if(res.listaData2.length > 0 && res.data.listaRates > 0){
                         meIChart.imgChart_WK_clickHandler();
 //                    }
                     global.clear();
@@ -451,9 +481,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
             }
         });
         Ext.getCmp(prototype.id + '-gridData_WK').bindStore(storeGridDatas);
-//        Ext.getCmp(prototype.id + '-gridData_INT2').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridData_WK_AMT').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-gridData_INT_TOT').bindStore(storeGridDatas);
-        Ext.getCmp(prototype.id + '-grafico01').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-graficLine').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_A').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_D').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_A').bindStore(storeGridDatas);
@@ -471,14 +501,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         }else{
 //            if(boxChart_03.visible==true){
 //                StyleGrafic03();
-                this.displayWorkProgressChart_03();
+            this.displayWorkProgressChart_03();
 //            }else{
 //                StyleNormal_02();
 //            }
         }
         
     },
-    
     change_clickHandler: function () {
         
         var cmbSelectGrafic = Ext.getCmp(prototype.id + '-cmbSelectGrafic').getValue();
@@ -490,7 +519,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         }
         
     },
-    
     displayWorkProgressChart_01: function () {
         
         console.log('------ displayWorkProgressChart_01 ');
@@ -500,22 +528,22 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
         var lst_beanWP = meIChart.gridData_WK_AC;   // listaData
         
         for (var i = 0; i <= lstColumns.length; i++) {
-            if(i == 0){
+            if(i === 0){
                 lstColumns[i].totNETO = lstColumns[2].totNet1;  // eje Y
                 lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion4.substring(5,8);  // eje X
-            }else if(i == 1){
+            }else if(i === 1){
                 lstColumns[i].totNETO = lstColumns[2].totNet2;
                 lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion3.substring(5,8);
-            }else if(i == 2){
+            }else if(i === 2){
                 lstColumns[i].totNETO = lstColumns[2].totNet3;
                 lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion2.substring(5,8);
-            }else if(i == 3){
+            }else if(i === 3){
                 lstColumns[i].totNETO = lstColumns[2].totNet4;
                 lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion1.substring(5,8);
-            }else if(i == 4){
+            }else if(i === 4){
                 lstColumns[i].totNETO = lstColumns[2].totNet5;
                 lstColumns[i].strDescripcion = lst_beanWP[0].strDescripcion.substring(5,8);
-            }else if(i == 5){
+            }else if(i === 5){
                 lstColumns[i].totNETO = lstColumns[2].totNet6;
                 lstColumns[i].strDescripcion = lst_beanWP[0].strFormatDate4.substring(5,8);
             }
@@ -534,47 +562,97 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
 //        console.log(lst_beanWP);
         
         for (var i = 0; i <= lstColumns_temp.length; i++) {            
-            if(i == 0){
+            if(i === 0){
                 lstColumns_temp[i].totAud1 = lst_beanWP[0].totAud1;  // eje Y
                 lstColumns_temp[i].totRej1 = lst_beanWP[0].totRej1;  // eje Y
                 lstColumns_temp[i].strDescripcion = lst_beanWP[0].strDescripcion4.substring(5,8);  // eje X
-            }else if(i == 1){
+            }else if(i === 1){
                 lstColumns_temp[i].totAud1 = lst_beanWP[0].totAud2;
                 lstColumns_temp[i].totRej1 = lst_beanWP[0].totRej2;
                 lstColumns_temp[i].strDescripcion = lst_beanWP[0].strDescripcion3.substring(5,8);
-            }else if(i == 2){
+            }else if(i === 2){
                 lstColumns_temp[i].totAud1 = lst_beanWP[0].totAud3;
                 lstColumns_temp[i].totRej1 = lst_beanWP[0].totRej3;
                 lstColumns_temp[i].strDescripcion = lst_beanWP[0].strDescripcion2.substring(5,8);
-            }else if(i == 3){
+            }else if(i === 3){
                 lstColumns_temp[i].totAud1 = lst_beanWP[0].totAud4;
                 lstColumns_temp[i].totRej1 = lst_beanWP[0].totRej4;
                 lstColumns_temp[i].strDescripcion = lst_beanWP[0].strDescripcion1.substring(5,8);
-            }else if(i == 4){
+            }else if(i === 4){
                 lstColumns_temp[i].totAud1 = lst_beanWP[0].totAud5;
                 lstColumns_temp[i].totRej1 = lst_beanWP[0].totRej5;
                 lstColumns_temp[i].strDescripcion = lst_beanWP[0].strDescripcion.substring(5,8);
-            }else if(i == 5){
+            }else if(i === 5){
                 lstColumns_temp[i].totAud1 = lst_beanWP[0].totAud6;
                 lstColumns_temp[i].totRej1 = lst_beanWP[0].totRej6;
                 lstColumns_temp[i].strDescripcion = lst_beanWP[0].strFormatDate4.substring(5,8);
             }
-            
         }
                 
         var storeDataLine = Ext.create('Ext.data.Store', {
             data: lstColumns_temp,
             autoLoad: true
         });        
-        Ext.getCmp(prototype.id + '-grafico01').bindStore(storeDataLine);
+        Ext.getCmp(prototype.id + '-graficLine').bindStore(storeDataLine);
         
     },
     
     displayWorkProgressChart_03: function () {
         
-        /*CHARTS COLUMNS*/
 //        var beanWP:WRF016Filterwk;
 //        beanWP = WRF016Filterwk(gridData_WK_AC.getItemAt(0));
+        
+        console.log('------ displayWorkProgressChart_03 ');
+        
+        /*  CHARTS COLUMNS - AMT */
+        var lstColumns_AMT = meIChart.gridDataRatesAC;  // listaRates
+        var lst_beanWP_AMT = meIChart.gridData_WK_AC;   // listaData
+        
+        for (var i = 0; i <= lstColumns_AMT.length; i++) {
+            if(i === 0){
+                lstColumns_AMT[i].totNETO = lst_beanWP_AMT[0].totAud1;  // eje Y
+                lstColumns_AMT[i].strDescripcion = lst_beanWP_AMT[0].strDescripcion4.substring(5,8);  // eje X
+            }else if(i === 1){
+                lstColumns_AMT[i].totNETO = lst_beanWP_AMT[0].totAud2;
+                lstColumns_AMT[i].strDescripcion = lst_beanWP_AMT[0].strDescripcion3.substring(5,8);
+            }else if(i === 2){
+                lstColumns_AMT[i].totNETO = lst_beanWP_AMT[0].totAud3;
+                lstColumns_AMT[i].strDescripcion = lst_beanWP_AMT[0].strDescripcion2.substring(5,8);
+            }else if(i === 3){
+                lstColumns_AMT[i].totNETO = lst_beanWP_AMT[0].totAud4;
+                lstColumns_AMT[i].strDescripcion = lst_beanWP_AMT[0].strDescripcion1.substring(5,8);
+            }else if(i === 4){
+                lstColumns_AMT[i].totNETO = lst_beanWP_AMT[0].totAud5;
+                lstColumns_AMT[i].strDescripcion = lst_beanWP_AMT[0].strDescripcion.substring(5,8);
+            }else if(i === 5){
+                lstColumns_AMT[i].totNETO = lst_beanWP_AMT[0].totAud6;
+                lstColumns_AMT[i].strDescripcion = lst_beanWP_AMT[0].strFormatDate4.substring(5,8);
+            }
+        }
+        
+        var storeDataColumns_AMT = Ext.create('Ext.data.Store', {
+            data: lstColumns_AMT,
+            autoLoad: true
+        });        
+        Ext.getCmp(prototype.id + '-byWork_WK_barras_ATM').bindStore(storeDataColumns_AMT);
+        
+        
+//      ------------------------------------------------------------------------------------------------------------
+        
+        /*  CHARTS LINE - AMT */
+//        console.log('--------------- CHARTS LINE - AMT------------------');
+        
+    
+        for (var i2 = 0; i2 < lst_beanWP_AMT.length; i2++) {            
+            lst_beanWP_AMT[i2].totAud1 = (lst_beanWP_AMT[i2].QAUDI>0)? lst_beanWP_AMT[i2].QCUPON*100 /lst_beanWP_AMT[i2].QAUDI :0       // eje Y
+            lst_beanWP_AMT[i2].strDescripcion = lst_beanWP_AMT[i2].strFormatDate;                                                       // eje X
+        }
+                
+        var storeDataLine_AMT = Ext.create('Ext.data.Store', {
+            data: lst_beanWP_AMT,
+            autoLoad: true
+        });        
+        Ext.getCmp(prototype.id + '-graficLine_ATM').bindStore(storeDataLine_AMT);
         
     },
 
@@ -660,45 +738,34 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
     
     onChangeChart_IA_01: function (obj, rb_new, rb_old, func) {
 
-
         var valueRadio = rb_new.rb2;
         switch (valueRadio) {
             case 'rbcC_IA':
-
-
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C').show();
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_A').hide();
                 break;
             case 'rbcG_IA':
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_C').hide();
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_01_A').show();
-
                 break;
-
         }
     },
     onChangeChart_IA_02: function (obj, rb_new, rb_old, func) {
 
-
         var valueRadio = rb_new.rb3;
         switch (valueRadio) {
             case 'rbcD_IA2':
-
-
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_D').show();
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_A').hide();
                 break;
             case 'rbcA_IA2':
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_D').hide();
                 Ext.getCmp(prototype.id + '-ChtSalesAnalysis_IA_02_A').show();
-
                 break;
-
         }
     },
 
     onChangeCKTotal: function (obj, value, old_value) {
-
 
         if (value) {
             Ext.getCmp(prototype.id + '-byMonth_01').hide();
@@ -707,10 +774,6 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartInterlineContr
             Ext.getCmp(prototype.id + '-byMonth_01').show();
             Ext.getCmp(prototype.id + '-byMonth_02').hide();
         }
-
-
-
-
     },
 
     onChangeTopAirline: function (obj, value, cmp, strFunc) {
