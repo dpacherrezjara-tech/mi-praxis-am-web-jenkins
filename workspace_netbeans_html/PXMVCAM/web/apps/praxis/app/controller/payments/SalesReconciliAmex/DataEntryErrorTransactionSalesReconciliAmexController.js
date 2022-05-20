@@ -71,13 +71,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
 
-        var sMerch = this.beanResult.SMERCHID.trim();
+        /*var sMerch = this.beanResult.SMERCHID.trim();
         if (sMerch === '9353227755' || sMerch === '8133735688' || sMerch === '9352724851') {
             Ext.getCmp(prototype.id + '-labelScan').hide();
             Ext.getCmp(prototype.id + '-panelScan').hide();
             Ext.getCmp(prototype.id + '-panelScanCard').hide();
             Ext.getCmp(prototype.id + '-panelDataInfoScan').hide();
-        }/* else {
+        }*/
+        /* else {
          Ext.getCmp(prototype.id + '-chkSelection').show();
          }*/
 
