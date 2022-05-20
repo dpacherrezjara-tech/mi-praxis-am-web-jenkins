@@ -115,15 +115,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             '#SalesReconciliAmexForm-checkSettlement': {
                 change: this.checkEvent
             },
-        });
+        });                
     },
     xpanel_afterrender: function (obj, e) {
-        this.obtainData();
+        this.obtainData();  
+        this.btnSearch_click();
     },
     eventKey: function (e, eOpts) {
-        if (eOpts.getKey() === 13) {
+        /*if (eOpts.getKey() === 13) {
             this.btnSearch_click();
-        }
+        }*/
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
@@ -251,12 +252,20 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
-                    me.btnSearch_click();
-                } else
-                    global.Msg({msg: res.sesion});
+
+                }
+                
+                me.llenarComboErrorIntegridad();
             }
         });
         
+                    
+        //me.btnSearch_click();
+    },
+    llenarComboErrorCode: function(){
+        
+    },
+    llenarComboErrorIntegridad: function(){
         me.bean_ErrorCodesRecSett = {};
         me.bean_ErrorCodesRecSett.IN_WARNING = '';
         Ext.Ajax.request({
@@ -271,34 +280,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
-                    me.btnSearch_click();
-                } else
-                    global.Msg({msg: res.sesion});
-            }
-        });
-        
-        me.bean_ErrorCodesRecSumm = {};
-        me.bean_ErrorCodesRecSumm.IN_WARNING = '';
-        Ext.Ajax.request({
-            url: prototype.url + '/getErrorCodesRecSett',
-            method: 'POST',
-            timeout: 60000000,
-            params: {beanString: JSON.stringify(me.bean_ErrorCodesRecSumm)},
-            success: function (response, options) {
-                var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
+                    
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
-                    me.btnSearch_click();
-                } else
-                    global.Msg({msg: res.sesion});
-            }
-        });
-        
-        //me.btnSearch_click();
 
+                }                
+            }
+        });  
     },
     checkEvent: function (obj, e) {
         //true : check ; false : uncheck
