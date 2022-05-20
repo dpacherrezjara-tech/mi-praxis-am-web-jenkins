@@ -1492,7 +1492,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                             ]
                         },
                         
-                        // INFO PRINCIPAL
+                        // INFO PRINCIPAL - COUPON
                         {
                             xtype: 'panel',
                             id: prototype.id + '-byWork_WK',
@@ -1515,7 +1515,6 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                     },
                                     bodyStyle: 'background-color: transparent;',
                                     items: [
-                                        // id: prototype.id + '-gridData_INT',
                                         // Grafico Lineas
                                         {
                                             xtype: 'panel',
@@ -1539,8 +1538,9 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                 {
                                                     xtype: 'cartesian',
                                                     // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
-                                                    id: prototype.id + '-grafico01',
+                                                    id: prototype.id + '-graficLine',
                                                     width: 750,
+                                                    margin: '80 0 0 0',
                                                     border: false,
                                                     height: 300,
                                                     background: '#E3EAEF',
@@ -1635,7 +1635,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             },
                                                             {
                                                                 type: 'line',
-                                                                id: prototype.id + '-leyendLastG1',
+//                                                                id: prototype.id + '-leyendLastG1',
                                                                 xField: 'strDescripcion',
                                                                 yField: 'totRej1',
                                                                 title: 'Rejected',
@@ -2044,12 +2044,12 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                             {text: '% Reviewed', dataIndex: 'Porc', width: 80,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;background-color:#EDF3F3;";
-                                                                    return Ext.util.Format.number(value, '0,000');
+                                                                    return Ext.util.Format.number(value, '0,000') + '%';
                                                                 },
                                                                 summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
                                                                     metaData.style = "text-align:right;";
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
-                                                                    return Ext.util.Format.number(data.totPorc, '0,000');
+                                                                    return Ext.util.Format.number(data.totPorc, '0,000') + '%';;
                                                                 }
                                                             },
                                                             {text: 'Total Rejected <br> Coupons', dataIndex: 'QRM', width: 100,
@@ -2061,6 +2061,449 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartInterline', {
                                                                     metaData.style = "text-align:right;";
                                                                     var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
                                                                     return Ext.util.Format.number(data.totQRM, '0,000');
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        
+                        
+                        
+                        // INFO PRINCIPAL - AMOUNT
+                        {
+                            xtype: 'panel',
+                            id: prototype.id + '-byWork_WK_AMT',
+                            border: false,
+                            hidden: true,
+                            margin: '5 0 5 0',
+                            layout: {
+                                type: 'vbox',
+                                align: 'center'
+                            },
+                            bodyStyle: 'background-color: transparent;',
+                            items: [
+                                // GRAFICOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+                                {
+                                    xtype: 'panel',
+                                    margin: '5 0 5 0',
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        
+                                        // Grafico Barras
+                                        {
+                                            xtype: 'panel',
+//                                            hidden: true,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            padding: '5 0 0 20',
+                                            width: 800,
+                                            height: 400,
+                                            border: false,
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    id: prototype.id + '-byWork_WK_barras_ATM',
+                                                    width: 780,
+                                                    height: 380,
+                                                    background: '#E3EAF9',
+                                                    captions: {
+                                                        title: {text: '', alignTo: 'chart'}
+                                                    },
+                                                    animation: {duration: 200},
+                                                    interactions: ['itemhighlight'],
+                                                    axes: [
+                                                        {
+                                                            type: 'numeric3d',
+                                                            position: 'left',
+                                                            yField: ['totNETO'],
+                                                            grid: true,
+                                                            title: '',
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    return  Ext.util.Format.number((value / 1000), '0.0') + 'K';
+                                                                } else {
+                                                                    return '';
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            type: 'category3d',
+                                                            position: 'bottom',
+                                                            fields: 'strDescripcion',
+                                                            grid: true,
+//                                                            title: {
+//                                                                text: 'Date',
+//                                                                translationX: -30
+//                                                            }
+                                                            label: {
+                                                                rotate: {
+                                                                    degrees: -45
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    series: [{
+                                                            type: 'bar3d',
+                                                            stacked: false,
+                                                            title: [''],
+                                                            colors: ['#38A0F0', ],
+                                                            xField: 'strDescripcion',
+                                                            yField: ['totNETO'],
+                                                            highlight: true,
+                                                            style: {
+                                                                inGroupGapWidth: -7
+                                                            },
+                                                            tooltip: {
+                                                                trackMouse: true,
+                                                                height: 28,
+                                                                renderer: function (toolTip, record, ctx) {
+
+                                                                    toolTip.setHtml(record.get('strDescripcion') + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                                                }
+                                                            },
+                                                            renderer: 'onColumnRender_WK'
+                                                        }
+
+                                                    ]
+                                                },
+//                                                hidden: true,
+//                                                id: prototype.id + '-ChtSalesAnalysis_IA_01_A',
+                                            ]
+                                        },
+                                        
+                                        // Grafico Lineas
+                                        {
+                                            xtype: 'panel',
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            padding: '5 0 0 20',
+                                            width: 800,
+                                            height: 400,
+                                            border: false,
+//                                            margin: '100 0 0 0',
+                                            layout: {
+                                                type: 'vbox'
+                                            },
+                                            items: [
+                                                {
+                                                    xtype: 'cartesian',
+                                                    // title: '<div style="text-align:center;color:#6E6E73;font-size:14px">Passenger by Market</div>',
+                                                    id: prototype.id + '-graficLine_ATM',
+                                                    width: 750,
+                                                    margin: '80 0 0 0',
+                                                    border: false,
+                                                    height: 300,
+                                                    background: '#E3EAEF',
+                                                    interactions: ['itemhighlight'],
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
+                                                    axes: [{
+                                                            type: 'numeric',
+                                                            position: 'left',
+                                                            grid: true,
+                                                            renderer: function (obj, value) {
+                                                                if (value > 1) {
+                                                                    return  ' ' + Ext.util.Format.number((value), '0.') + '%';
+                                                                }else 
+//                                                                    if (value < 1) {
+                                                                    return  ' ' + Ext.util.Format.number((value), '0.00') + '%';
+//                                                                }else {
+//                                                                    return ' 0%';
+//                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            type: 'category',
+                                                            position: 'bottom',
+                                                            visibleRange: [0, 1]
+                                                        }],
+                                                        series: [
+                                                            {
+                                                                type: 'line',
+                                                                xField: 'strDescripcion',
+                                                                yField: 'totAud1',
+                                                                title: 'Recovered',
+                                                                fill: true,
+                                                                highlight: true,
+                                                                tooltip: {
+                                                                    trackMouse: true,
+                                                                    height: 28,
+                                                                    renderer: function(toolTip, record, ctx) {
+                                                                        toolTip.setHtml(record.get('strDescripcion') + ' : ' + Ext.util.Format.number(record.get('totAud1'), '0,000.00') + '%');
+                                                                    }
+                                                                },
+                                                                style: {
+                                                                    smooth: true,
+                                                                    fill: '#fcfcfc',    // punto
+                                                                    stroke: '#33bdda',
+                                                                    
+                                                                    fillOpacity: 0.1,
+                                                                    miterLimit: 3,
+                                                                    lineCap: 'miter',
+                                                                    lineWidth: 2
+                                                                },
+                                                                marker: {
+                                                                    type: 'circle',
+                                                                    radius: 4,
+                                                                    lineWidth: 2,
+                                                                    stroke: "#33bdda",
+                                                                    fill: 'white'
+                                                                }
+                                                            }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                
+                                // GRID
+                                {
+                                    xtype: 'panel',
+                                    id: prototype.id + '-panelData_WK_AMT',
+                                    margin: '15 270 5 0',
+                                    width: 1323,
+                                    border: false,
+                                    layout: {
+                                        type: 'hbox',
+                                        pack: 'center'
+                                    },
+                                    bodyStyle: 'background-color: transparent;',
+                                    items: [
+                                        {
+                                            xtype: 'grid',
+                                            id: prototype.id + '-gridData_WK_AMT',
+                                            width: 1103,
+                                            columnLines: true,
+                                            margin: "5 0 0 0",
+                                            features: [{
+                                                    ftype: 'summary'
+                                                }],
+                                            columns: {
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                items: [
+                                                    {
+                                                        text: ' Total Audited Coupons by Billing Month vs. Rejected Month ( FC ) ',
+                                                        defaults: {
+                                                            menuDisabled: true, sortable: false, align: 'center'
+                                                        },
+                                                        columns: [
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titHorzFecha2',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: '', dataIndex: 'FINVOICE', width: 110, id: prototype.id + '-titVertFecha2',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:center;";
+                                                                            return value;
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha1_AMT',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'Aud1', width: 100, id: prototype.id + '-totAud1_AMT',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud1, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha2_AMT',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'Aud2', width: 100, id: prototype.id + '-totAud2_AMT',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud2, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha3_AMT',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'Aud3', width: 100, id: prototype.id + '-totAud3_AMT',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud3, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha4_AMT',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'Aud4', width: 100, id: prototype.id + '-totAud4_AMT',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud4, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha5_AMT',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'Aud5', width: 100, id: prototype.id + '-totAud5_AMT',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud5, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                text: '',
+                                                                id: prototype.id + '-titFecha6_AMT',
+                                                                defaults: {
+                                                                    menuDisabled: true,
+                                                                    sortable: true,
+                                                                    align: 'center'
+                                                                },
+                                                                columns: [
+                                                                    {
+                                                                        text: 'Amount', dataIndex: 'Aud6', width: 100, id: prototype.id + '-totAud6_AMT',
+                                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                            metaData.style = "text-align:right;background-color:#D7F1FB;";
+                                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                                        },
+                                                                        summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                            metaData.style = "text-align:right;";
+                                                                            var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                            return Ext.util.Format.number(data.totAud6, '0,000');
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {text: 'Invoice Amount', dataIndex: 'QAUDI', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totQAUDI, '0,000');
+                                                                }
+                                                            },
+                                                            {text: 'Audit Amount', dataIndex: 'QRM', width: 100,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totQRM, '0,000');
+                                                                }
+                                                            },
+                                                            {text: 'Reject Amount', dataIndex: 'QCUPON', width: 110,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
+                                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totQCUPON, '0,000');
+                                                                }
+                                                            },
+                                                            {text: '% Rec', dataIndex: 'Porc', width: 80,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    metaData.style = "text-align:right;background-color:#EDF3F3;";
+                                                                    return Ext.util.Format.number(value, '0,000.00') + '%';;
+                                                                },
+                                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                                    metaData.style = "text-align:right;";
+                                                                    var data = Ext.getCmp(prototype.id + '-gridData_WK').getStore().getData().items[0].data;
+                                                                    return Ext.util.Format.number(data.totPorc, '0,000') + '%';;
                                                                 }
                                                             }
                                                         ]
