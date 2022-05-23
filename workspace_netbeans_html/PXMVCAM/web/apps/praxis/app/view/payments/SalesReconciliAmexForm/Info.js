@@ -4594,7 +4594,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 columns: [
                                                     {text: 'Code', dataIndex: 'CERROR', width: 70},
                                                     {
-                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 270,
+                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 250,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left";
                                                             return value;
@@ -4611,6 +4611,12 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Sales<br>Merchant ID', dataIndex: 'SMERCHID', width: 90,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                            return value;
+                                                        }
+                                                    },
+                                                    {text: 'Description', dataIndex: 'DES_SMERCHANT', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#FCF6DC";
                                                             return value;

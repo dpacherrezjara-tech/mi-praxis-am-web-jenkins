@@ -829,7 +829,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Ticket', dataIndex: 'ISREFNBR', width: 140,
+                                            {text: 'Ticket', dataIndex: 'ISREFNBR', width: 130,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;

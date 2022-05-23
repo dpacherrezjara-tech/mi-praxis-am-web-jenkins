@@ -2705,7 +2705,16 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
                     beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
-
+                    beanTkt.DES_SMERCHANT = rst.getString("DES_SMERCHANT").trim();
+                    if(beanTkt.SMERCHID.equals("9353227755")){
+                        beanTkt.DES_SMERCHANT = "PLUSGRADE";
+                    }else if(beanTkt.SMERCHID.equals("8133735688")){
+                        beanTkt.DES_SMERCHANT = "LIGAS";
+                    }else if(beanTkt.SMERCHID.equals("9352724851")){
+                        beanTkt.DES_SMERCHANT = "TABLET";
+                    }
+                    
+                        
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
 
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
