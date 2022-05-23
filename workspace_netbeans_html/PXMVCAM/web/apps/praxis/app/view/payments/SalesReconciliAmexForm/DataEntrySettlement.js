@@ -148,6 +148,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                 {
                                     xtype: 'label',
                                     text: 'Sales Merchant ID',
+                                    id: prototype.id + '-txtSalesMerchantID',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
                                 },
@@ -356,6 +357,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                 {xtype: 'tbspacer', width: 7, height: 24},
                                 {
                                     xtype: 'label',
+                                    id: prototype.id + '-txtSettvsSales',
                                     text: 'Sett. vs Sales',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     width: 120
@@ -433,6 +435,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                         {
                             xtype: 'label',
                             text: 'Sales Information',
+                            id: prototype.id + '-txtSalesInformation',
                             style: 'font-weight:bold;color:#0B333C;text-decoration-line: underline;',
                             bodyStyle: 'background:#E5ECEF;',
                             fontSize: '11',
@@ -451,6 +454,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                 {
                                     xtype: 'label',
                                     text: 'Sales Date',
+                                    id: prototype.id + '-txtSalesDate',
                                     textAlign: 'center',
                                     paddingLeft: 3,
                                     style: 'font-weight:bold;color:#0B333C;',
@@ -715,6 +719,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                     xtype: 'label',
                                     style: 'font-weight:bold;color:#0B333C;',
                                     text: 'Sales Amount',
+                                    id: prototype.id + '-txtSalesAmount',
                                     width: 120
                                 },
                                 {xtype: 'tbspacer', width: 10},
@@ -812,7 +817,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement'
                                                     return value;
                                                 }
                                             },
-                                            {text: 'Sales Date', dataIndex: 'TRANSDATE', width: 80,
+                                            {text: 'Sales Date', dataIndex: 'TRANSDATE', width: 90,id: prototype.id + '-txtSalesDate2',
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
                                                     return value;
