@@ -97,6 +97,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
         this.setValue('txtHOUP', this.beanResult.HOUP);
         
         if( this.beanResult.TDOC === "R"){
+            Ext.getCmp(prototype.id + '-dataEntrySettlement').setTitle('Refund Reconciliation by Amex - Settlement Form');
             Ext.getCmp(prototype.id + '-txtSalesMerchantID').setText('Refund MerchantID');
             Ext.getCmp(prototype.id + '-txtSettvsSales').setText('Sett. vs Refund');
             Ext.getCmp(prototype.id + '-txtSalesInformation').setText('Refund Information');
