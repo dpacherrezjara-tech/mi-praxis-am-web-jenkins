@@ -63,6 +63,34 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 break;
         }
     },
+    onNextClick: function() {
+        var all = this.p.all;
+        var rec;
+        var rowIndex = this.p.rowIndex;
+        if (this.p.rowIndex < 19) {
+            rec = all.getAt(rowIndex + 1);
+            this.p = {action: "U", rec: rec, all: this.p.all, rowIndex: rowIndex + 1};
+            this.bean = this.p.rec.data;
+            this.getData();
+            //this.winDataEntry('U', rec, all, rowIndex);
+        }
+    },
+    winDataEntry: function (action, rec, all, rowIndex) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+        
+        console.log(this.bean.TDOC);
+
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
+            id: prototype.id + '-dataEntryError',
+            params: {
+                action: action,
+                rec: rec,
+                all: all,
+                rowIndex: rowIndex
+            }
+        }).show();
+    },
     mostrarData: function () {
 
         this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
@@ -371,8 +399,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 if (res.success) {
                     //global.Msg({msg: res.msjOption});
                     Ext.getCmp(prototype.id + '-dataEntryError').unmask();
-                    Ext.getCmp(prototype.id + '-dataEntryError').close();
+                    //Ext.getCmp(prototype.id + '-dataEntryError').close();
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
+                    meDE.lstSendManual = [];
+                    meDE.lstBlocked = [];
+                    meDE.onNextClick();
 
                 } else {
                     global.Msg({msg: res.msjOption});
