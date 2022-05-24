@@ -95,7 +95,17 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlemen
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
-
+        
+        if( this.beanResult.TDOC === "R"){
+            Ext.getCmp(prototype.id + '-dataEntrySettlement').setTitle('Refund Reconciliation by Amex - Settlement Form');
+            Ext.getCmp(prototype.id + '-txtSalesMerchantID').setText('Refund MerchantID');
+            Ext.getCmp(prototype.id + '-txtSettvsSales').setText('Sett. vs Refund');
+            Ext.getCmp(prototype.id + '-txtSalesInformation').setText('Refund Information');
+            Ext.getCmp(prototype.id + '-txtSalesDate').setText('Refund Date');
+            Ext.getCmp(prototype.id + '-txtSalesAmount').setText('Refund Amount');
+            Ext.getCmp(prototype.id + '-txtSalesDate2').setText('Refund Date');
+        }
+        
         this.getDataGrid();
     },
     obtainData: function () {

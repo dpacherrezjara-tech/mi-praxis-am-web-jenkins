@@ -2587,17 +2587,17 @@ public class SalesReconciliAmexDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04357(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(10, Types.INTEGER);
             cstmt.registerOutParameter(11, Types.INTEGER);
             cstmt.registerOutParameter(12, Types.INTEGER);
             cstmt.registerOutParameter(13, Types.INTEGER);
+            cstmt.registerOutParameter(14, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_DATEFROM);
@@ -2608,17 +2608,18 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(7, filter.IN_COMPLEMENT);
             cstmt.setString(8, filter.IN_PNRError);
             cstmt.setString(9, filter.IN_TDOCError);
-            cstmt.setInt(10, filter.page.PAGNUM);
-            cstmt.setInt(11, filter.page.PAGROW);
-            cstmt.setInt(12, filter.page.TOTPAG);
-            cstmt.setInt(13, filter.page.TOTROW);
+            cstmt.setString(10, filter.IN_SCARDN);
+            cstmt.setInt(11, filter.page.PAGNUM);
+            cstmt.setInt(12, filter.page.PAGROW);
+            cstmt.setInt(13, filter.page.TOTPAG);
+            cstmt.setInt(14, filter.page.TOTROW);
 
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(10);
-            filter.page.PAGROW = cstmt.getInt(11);
-            filter.page.TOTPAG = cstmt.getInt(12);
-            filter.page.TOTROW = cstmt.getInt(13);
+            filter.page.PAGNUM = cstmt.getInt(11);
+            filter.page.PAGROW = cstmt.getInt(12);
+            filter.page.TOTPAG = cstmt.getInt(13);
+            filter.page.TOTROW = cstmt.getInt(14);
 
             cstmt.execute();
 
@@ -2705,7 +2706,16 @@ public class SalesReconciliAmexDAO {
                     beanTkt.SCARDN = rst.getString("SCARDN").trim();
                     beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
-
+                    beanTkt.DES_SMERCHANT = rst.getString("DES_SMERCHANT").trim();
+                    if(beanTkt.SMERCHID.equals("9353227755")){
+                        beanTkt.DES_SMERCHANT = "PLUSGRADE";
+                    }else if(beanTkt.SMERCHID.equals("8133735688")){
+                        beanTkt.DES_SMERCHANT = "LIGAS";
+                    }else if(beanTkt.SMERCHID.equals("9352724851")){
+                        beanTkt.DES_SMERCHANT = "TABLET";
+                    }
+                    
+                        
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
 
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");

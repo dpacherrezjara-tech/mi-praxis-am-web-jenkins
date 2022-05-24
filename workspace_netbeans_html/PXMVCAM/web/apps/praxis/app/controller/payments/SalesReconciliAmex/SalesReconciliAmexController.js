@@ -115,16 +115,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             '#SalesReconciliAmexForm-checkSettlement': {
                 change: this.checkEvent
             },
-        });                
+        });
     },
     xpanel_afterrender: function (obj, e) {
-        this.obtainData();  
+        this.obtainData();
         this.btnSearch_click();
     },
     eventKey: function (e, eOpts) {
         /*if (eOpts.getKey() === 13) {
-            this.btnSearch_click();
-        }*/
+         this.btnSearch_click();
+         }*/
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
@@ -209,7 +209,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 ["R", "Refund"]
             ]
         }));
-        cmbTDOCError.setValue("");
+        cmbTDOCError.setValue("S");
 
         var cmbComplement = Ext.getCmp(prototype.id + '-cmbComplement');
         cmbComplement.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -254,18 +254,18 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                     Ext.getCmp(prototype.id + '-cmbErrorCode').setValue('');
 
                 }
-                
+
                 me.llenarComboErrorIntegridad();
             }
         });
-        
-                    
+
+
         //me.btnSearch_click();
     },
-    llenarComboErrorCode: function(){
-        
+    llenarComboErrorCode: function () {
+
     },
-    llenarComboErrorIntegridad: function(){
+    llenarComboErrorIntegridad: function () {
         me.bean_ErrorCodesRecSett = {};
         me.bean_ErrorCodesRecSett.IN_WARNING = '';
         Ext.Ajax.request({
@@ -280,15 +280,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').setValue('');
-                    
+
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').bindStore(
                             Ext.create('Ext.data.Store', {data: res.data, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').setValue('');
 
-                }                
+                }
             }
-        });  
+        });
     },
     checkEvent: function (obj, e) {
         //true : check ; false : uncheck
@@ -319,11 +319,12 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_PNRError = Ext.getCmp(prototype.id + '-txtPNRError').getValue();
         me.bean.IN_TDOC = Ext.getCmp(prototype.id + '-cmbTDOC').getValue();
         me.bean.IN_TDOCError = Ext.getCmp(prototype.id + '-cmbTDOCError').getValue();
-        
-        
+        me.bean.IN_SCARDN = Ext.getCmp(prototype.id + '-txtCC1').getValue() + '%' + Ext.getCmp(prototype.id + '-txtCC2').getValue() + '%';
+
+
         //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
-        
-        
+
+
         console.log(me.bean);
         var beanString = JSON.stringify(me.bean);
         searchParams = {
@@ -394,11 +395,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 this.setGridDataMainSummary();
                 break;
             case 'SE':
-                if((Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '')) {
+                if ((Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '')) {
                     this.filterSettlement();
                 } else {
                     this.setGridDataMainSettlement();
-                }                
+                }
                 break;
             case 'AD':
                 this.setGridDataMainAdjustment();
@@ -667,7 +668,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.panelActual = '-boxDetSettlement';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
         Ext.getCmp(prototype.id + '-frmFilterSettlement').setVisible(true);
-        
+
         this.beanSettlement.IN_DATEFROM = '';
         this.beanSettlement.IN_DATETO = '';
 
@@ -1945,14 +1946,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
     },
     onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
+        var all = grid.getStore();
         console.log(rec);
-        if(rec.data.TDOC === "S"){
-            this.winDataEntryError('U', rec);
-        }else{
-             this.winDataEntryErrorRefund('U', rec);
+        if (rec.data.TDOC === "S") {
+            this.winDataEntryError('U', rec, all, rowIndex);
+        } else {
+            this.winDataEntryErrorRefund('U', rec, all, rowIndex);
         }
     },
-    winDataEntryError: function (action, rec) {
+    winDataEntryError: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
 
@@ -1960,11 +1962,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             id: prototype.id + '-dataEntryError',
             params: {
                 action: action,
-                rec: rec
+                rec: rec,
+                all: all,
+                rowIndex: rowIndex
             }
         }).show();
     },
-    winDataEntryErrorRefund: function (action, rec) {
+    winDataEntryErrorRefund: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
 
@@ -1972,7 +1976,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
             id: prototype.id + '-dataEntryErrorRefund',
             params: {
                 action: action,
-                rec: rec
+                rec: rec,
+                all: all,
+                rowIndex: rowIndex
             }
         }).show();
     },
@@ -1987,6 +1993,23 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
 
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement', {
             id: prototype.id + '-dataEntrySettlement',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
+    onEditClick_adjustment: function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        console.log(rec);
+        this.winDataEntryAdjustment('U', rec);
+    },
+    winDataEntryAdjustment: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;
+
+        Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment', {
+            id: prototype.id + '-dataEntryAdjustment',
             params: {
                 action: action,
                 rec: rec

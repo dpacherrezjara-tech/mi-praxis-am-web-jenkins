@@ -1,11 +1,11 @@
-Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntrySettlement', {
+Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment', {
     extend: 'Ext.window.Window',
-    alias: 'widget.DataEntrySettlementSalesReconciliAmexForm',
+    alias: 'widget.DataEntryAdjustmentSalesReconciliAmexForm',
     requires: [
-        'Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntrySettlementSalesReconciliAmexController'
+        'Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmentSalesReconciliAmexController'
     ],
-    controller: 'DataEntrySettlementSalesReconciliAmexController',
-    title: 'Sales Reconciliation by Amex - Settlement Form',
+    controller: 'DataEntryAdjustmentSalesReconciliAmexController',
+    title: 'Sales Reconciliation by Amex - Adjustment Form',
     header: true,
 //    height: 650,
     width: 840,
