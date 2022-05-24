@@ -4618,7 +4618,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Info', {
                                                     },
                                                     {text: 'Description', dataIndex: 'DES_SMERCHANT', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:center;background-color:#FCF6DC";
+                                                            metaData.style = "text-align:left;background-color:#FCF6DC";
                                                             return value;
                                                         }
                                                     },
