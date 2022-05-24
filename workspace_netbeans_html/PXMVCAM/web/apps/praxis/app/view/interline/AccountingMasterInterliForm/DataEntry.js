@@ -49,23 +49,6 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterInterliForm.DataEntry', {
                             style: 'font-weight:bold;color:red;',
                             width: 20
                         },
-//                        {
-//                            xtype: 'combo',
-//                            id: prototype.id + '-cmbDocumentTypeDataEntry',
-//                            queryMode: 'local',
-//                            editable:false,
-//                            triggerAction: 'all',
-//                            autoSelect: false,
-//                            enableKeyEvents: true,
-//                            caseSensitive: true,
-//                            valueField: 'code',
-//                            displayField: 'name',
-//        //                    emptyText: 'All',
-//                            width: 200,
-//                            listeners:{
-//                                change: 'onCmbDocumentTypeChange'
-//                            }
-//                        }
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1740TITRA',
@@ -78,6 +61,48 @@ Ext.define('Ext.Praxis.view.interline.AccountingMasterInterliForm.DataEntry', {
                                 change: 'onUpperValue',
                                 blur: 'Handler_Change_DocumentType'
                             }
+                        },
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'label',
+                            text: 'Country Location',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 110
+                        },
+                        {
+                            xtype: 'label',
+                            text: '(*)',
+                            id: prototype.id+'-label_required04',
+                            style: 'font-weight:bold;color:red;',
+                            width: 20,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Mandatory Field'
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype:'combo',
+                            id: prototype.id + '-cmbINTNU',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "Select"],
+                                    ["Y", "YES"],
+                                    ["N", "NO"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            forceSelection: true,
+                            caseSensitive: true,
+                            editable: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            width: 100,
+                            listConfig: {height: 111}
                         }
                     ]
                 }

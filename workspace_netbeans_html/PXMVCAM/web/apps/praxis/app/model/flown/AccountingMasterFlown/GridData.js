@@ -34,6 +34,7 @@ Ext.define('Ext.Praxis.model.flown.AccountingMasterFlown.GridData', {
         {name: 'A1740SCTA', type: 'string'},
         {name: 'A1740EQUI', type: 'string'},
         {name: 'A1740ICIA', type: 'string'},
+        {name: 'A1740INTNU', type: 'string'},
         {name: 'A1740CLIE', type: 'string'},
         {name: 'A1740FINI', type: 'string'},
         {name: 'A1740FFIN', type: 'string'},

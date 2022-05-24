@@ -12,6 +12,7 @@ public class A1741 {
     
     public String A1741CCUST ="";
     public String A1741TIPO ="";    
+    public String A1741INTNU ="";    
     public String A1741PAIS ="";
     public String A1741CODE ="";
     public String A1741MONED ="";
