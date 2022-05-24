@@ -24,6 +24,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
                 Ext.getCmp(prototype.id+'-btn-cancel').show();
                 Ext.getCmp(prototype.id + '-txtA1740TITRA').focus();
                 Ext.getCmp(prototype.id + '-cmbCtaType2').setValue("");
+                Ext.getCmp(prototype.id + '-cmbINTNU').setValue("");
                 break;
         }
         Ext.getCmp(prototype.id + '-label_required01').show();
@@ -36,6 +37,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
     getDataInputs: function(rec) {
 //        this.setComboBoxItemData(rec.get('A1740TIPO'));
         Ext.getCmp(prototype.id + '-cmbCtaType2').setValue(rec.get('A1740TIPO'));
+        Ext.getCmp(prototype.id + '-cmbINTNU').setValue(rec.get('A1740INTNU')=== 'YES' ? 'Y' : 'N');
         Ext.getCmp(prototype.id + '-txtA1740TITRA').setValue(rec.get('A1740TITRA'));
         Ext.getCmp(prototype.id + '-txtA1740SUBTI').setValue(rec.get('A1740SUBTI'));
         Ext.getCmp(prototype.id + '-txtA1740CATEG').setValue(rec.get('A1740CATEG'));
@@ -116,22 +118,23 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         var bvalida = true;
         var TypeDocument = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
         var cmbCtaType2 = Ext.getCmp(prototype.id + '-cmbCtaType2').getValue();
+        var cmbINTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
         var txtA1740SUBTI = Ext.getCmp(prototype.id + '-txtA1740SUBTI').getValue();
         var txtA1740CATEG = Ext.getCmp(prototype.id + '-txtA1740CATEG').getValue();
         
         switch (TypeDocument) {
             case "EMD":
-                if( cmbCtaType2 ==="" || txtA1740SUBTI === "" || txtA1740CATEG ===""){
+                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA1740SUBTI === "" || txtA1740CATEG ===""){
                     bvalida = false;
                 }
                 break;
             case "MPD":
-                if( cmbCtaType2 ==="" || txtA1740SUBTI === ""){
+                if( cmbINTNU ==="" || cmbCtaType2 ==="" || txtA1740SUBTI === ""){
                     bvalida = false;
                 }
                 break;
             default:
-                if(TypeDocument.length === 0 || cmbCtaType2 ===""){//cmbDocumentType.selectedIndex
+                if(TypeDocument.length === 0 || cmbCtaType2 ==="" || cmbINTNU ===""){//cmbDocumentType.selectedIndex
                     bvalida = false;
                 }
         }
@@ -238,6 +241,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         
         var A1740TITRA = Ext.getCmp(prototype.id + '-txtA1740TITRA').getValue();
         var A1740TIPO = Ext.getCmp(prototype.id + '-cmbCtaType2').getValue();
+        var A1740INTNU = Ext.getCmp(prototype.id + '-cmbINTNU').getValue();
         var A1740SUBTI = Ext.getCmp(prototype.id + '-txtA1740SUBTI').getValue();
         var A1740CATEG = Ext.getCmp(prototype.id + '-txtA1740CATEG').getValue();
         var A1740CIA = Ext.getCmp(prototype.id + '-txtA1740CIA').getValue();
@@ -257,6 +261,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             strOption: strOption,
             A1740TITRA: A1740TITRA,
             A1740TIPO: A1740TIPO,
+            A1740INTNU: A1740INTNU,
             A1740SUBTI: A1740SUBTI,
             A1740CATEG: A1740CATEG,
             A1740CIA: A1740CIA,

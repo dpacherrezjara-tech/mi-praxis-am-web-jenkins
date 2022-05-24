@@ -65,6 +65,48 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.DataEntry', {
                             listeners:{
                                 change: 'onCmbDocumentTypeChange'
                             }
+                        },
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'label',
+                            text: 'Country Location',
+                            style: 'font-weight:bold;color:#000;',
+                            width: 110
+                        },
+                        {
+                            xtype: 'label',
+                            text: '(*)',
+                            id: prototype.id+'-label_required04',
+                            style: 'font-weight:bold;color:red;',
+                            width: 20,
+                            autoEl: {
+                                tag: 'label',
+                                'data-qtip': 'Mandatory Field'
+                            }
+                        },
+                        { xtype: 'tbspacer', width: 10 },
+                        {
+                            xtype:'combo',
+                            id: prototype.id + '-cmbINTNU',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "Select"],
+                                    ["Y", "YES"],
+                                    ["N", "NO"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            triggerAction: 'all',
+                            autoSelect: false,
+                            enableKeyEvents: true,
+                            forceSelection: true,
+                            caseSensitive: true,
+                            editable: false,
+                            valueField: 'code',
+                            displayField: 'name',
+                            width: 100,
+                            listConfig: {height: 111}
                         }
                     ]
                 }
@@ -392,7 +434,39 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.DataEntry', {
                             ]
                         }
                     ]
-                }
+                },
+                {
+                    xtype: 'panel',
+                    border: false,
+                    layout: {
+                        type: 'hbox',
+                        border: false
+                    },
+                    padding: '10 0 0 0',
+                    items:[
+                        { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'textfield',
+                            id:prototype.id+'-lblA1740TITRA',
+                            hidden: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id:prototype.id+'-lblA1740TIPO',
+                            hidden: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id:prototype.id+'-lblA1740SUBTI',
+                            hidden: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id:prototype.id+'-lblA1740CATEG',
+                            hidden: true
+                        }
+                    ]
+                },
             ]
         }
     ],

@@ -98,24 +98,25 @@ public class AccountingMasterFlownController extends BaseController {
         try {
             objFilter = new A1740Filter();
             
-            objFilter.A1740TITRA = request.getParameter("A1740TITRA");
-            objFilter.A1740TIPO = request.getParameter("A1740TIPO");
-            objFilter.A1740SUBTI = request.getParameter("A1740SUBTI");
-            objFilter.A1740CATEG = request.getParameter("A1740CATEG");
-            objFilter.A1740CIA = request.getParameter("A1740CIA");
-            objFilter.A1740UNIDA = request.getParameter("A1740UNIDA");
-            objFilter.A1740CECOS = request.getParameter("A1740CECOS");
-            objFilter.A1740UBICA = request.getParameter("A1740UBICA");
-            objFilter.A1740CTA = request.getParameter("A1740CTA");
-            objFilter.A1740SCTA = request.getParameter("A1740SCTA");
-            objFilter.A1740EQUI = request.getParameter("A1740EQUI");
-            objFilter.A1740ICIA = request.getParameter("A1740ICIA");
-            objFilter.A1740CLIE = request.getParameter("A1740CLIE");
-            objFilter.A1740FINI = request.getParameter("A1740FINI");
-            objFilter.A1740FFIN = request.getParameter("A1740FFIN");
-            objFilter.IN_A1740TITRA_OLD = request.getParameter("IN_A1740TITRA_OLD");
-            objFilter.IN_A1740TIPO_OLD = request.getParameter("IN_A1740TIPO_OLD");
-            objFilter.IN_A1740SUBTI_OLD = request.getParameter("IN_A1740SUBTI_OLD");
+            objFilter.A1740TITRA = request.getParameter("A1740TITRA").trim();
+            objFilter.A1740TIPO = request.getParameter("A1740TIPO").trim();
+            objFilter.A1740INTNU = request.getParameter("A1740INTNU").trim();
+            objFilter.A1740SUBTI = request.getParameter("A1740SUBTI").trim();
+            objFilter.A1740CATEG = request.getParameter("A1740CATEG").trim();
+            objFilter.A1740CIA = request.getParameter("A1740CIA").trim();
+            objFilter.A1740UNIDA = request.getParameter("A1740UNIDA").trim();
+            objFilter.A1740CECOS = request.getParameter("A1740CECOS").trim();
+            objFilter.A1740UBICA = request.getParameter("A1740UBICA").trim();
+            objFilter.A1740CTA = request.getParameter("A1740CTA").trim();
+            objFilter.A1740SCTA = request.getParameter("A1740SCTA").trim();
+            objFilter.A1740EQUI = request.getParameter("A1740EQUI").trim();
+            objFilter.A1740ICIA = request.getParameter("A1740ICIA").trim();
+            objFilter.A1740CLIE = request.getParameter("A1740CLIE").trim();
+            objFilter.A1740FINI = request.getParameter("A1740FINI").trim();
+            objFilter.A1740FFIN = request.getParameter("A1740FFIN").trim();
+            objFilter.IN_A1740TITRA_OLD = request.getParameter("IN_A1740TITRA_OLD").trim();
+            objFilter.IN_A1740TIPO_OLD = request.getParameter("IN_A1740TIPO_OLD").trim();
+            objFilter.IN_A1740SUBTI_OLD = request.getParameter("IN_A1740SUBTI_OLD").trim();
             objFilter.IN_A1740CATEG_OLD = request.getParameter("IN_A1740CATEG_OLD");
             
             logic = new AccountingMasterFlownLogic();
@@ -285,9 +286,11 @@ public class AccountingMasterFlownController extends BaseController {
             Cell CH1_12 = row.createCell(12);
             CH1_12.setCellValue("Inter Company");
             Cell CH1_13 = row.createCell(13);
-            CH1_13.setCellValue("Client");
+            CH1_13.setCellValue("Country Location");
             Cell CH1_14 = row.createCell(14);
-            CH1_14.setCellValue("Effective");
+            CH1_14.setCellValue("Client");
+            Cell CH1_15 = row.createCell(15);
+            CH1_15.setCellValue("Effective");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -304,6 +307,7 @@ public class AccountingMasterFlownController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 12));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 15));
 
             CH1_00.setCellStyle(headerStyle);
             CH1_01.setCellStyle(headerStyle);
@@ -320,6 +324,7 @@ public class AccountingMasterFlownController extends BaseController {
             CH1_12.setCellStyle(headerStyle);
             CH1_13.setCellStyle(headerStyle);
             CH1_14.setCellStyle(headerStyle);
+            CH1_15.setCellStyle(headerStyle);
 
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(10, true);
@@ -348,6 +353,7 @@ public class AccountingMasterFlownController extends BaseController {
                 Cell cell62 = row.createCell(12);
                 Cell cell63 = row.createCell(13);
                 Cell cell64 = row.createCell(14);
+                Cell cell65 = row.createCell(15);
                 cell50.setCellValue(listaData.get(vi).A1740TITRA);
                 cell51.setCellValue(listaData.get(vi).A1740TIPO);
                 cell52.setCellValue(listaData.get(vi).A1740TIPODESC);
@@ -361,8 +367,9 @@ public class AccountingMasterFlownController extends BaseController {
                 cell60.setCellValue(listaData.get(vi).A1740SCTA);
                 cell61.setCellValue(listaData.get(vi).A1740EQUI);
                 cell62.setCellValue(listaData.get(vi).A1740ICIA);
-                cell63.setCellValue(listaData.get(vi).A1740CLIE);
-                cell64.setCellValue(listaData.get(vi).A1740FINI);
+                cell63.setCellValue(listaData.get(vi).A1740INTNU);
+                cell64.setCellValue(listaData.get(vi).A1740CLIE);
+                cell65.setCellValue(listaData.get(vi).A1740FINI);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
@@ -379,6 +386,7 @@ public class AccountingMasterFlownController extends BaseController {
                 cell62.setCellStyle(bodyStyle);
                 cell63.setCellStyle(bodyStyle);
                 cell64.setCellStyle(bodyStyle);
+                cell65.setCellStyle(bodyStyle);
                 
                 sheet.autoSizeColumn(2, true);
                 sheet.autoSizeColumn(8, true);
