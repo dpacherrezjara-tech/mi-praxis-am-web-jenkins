@@ -515,6 +515,17 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             colors: ['#339933', '#EC3838', '#ff9900', '#0066ff', '#ffff99'],
                                                             label: {
                                                                 field: 'VENDOR',
+                                                                display: 'inside',
+                                                                calloutLine: {
+                                                                    length: 10,
+                                                                    width: 0,
+                //                                                                color: '#FFFFFF',
+                                                                },
+//                                                                renderer: function (value, b, callout) {
+//                                                                    callout.calloutVertical = false;
+//                                                                    //return Ext.util.Format.number(value, '0')
+//                                                                    return ''
+//                                                                }
 //                                                            field: 'TYPE',
 //                                                                display: 'rotate',
 //                                                                contrast: true,
@@ -2326,7 +2337,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataCabin_boxChart1',
                                     width: 450,
-                                    height: 345,
+                                    height: 355,
                                     columnLines: true,
                                     border: false,
                                     margin: "5 0 0 0",
@@ -2523,7 +2534,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataCabin_boxChart2',
                                     width: 450,
-                                    height: 345,
+                                    height: 355,
                                     columnLines: true,
                                     border: false,
                                     margin: "5 0 0 0",
@@ -3003,8 +3014,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataCabin_boxChart3',
-                                    width: 1194,
-                                    height: 345,
+                                    width: 1170,
+                                    height: 368,
                                     columnLines: true,
                                     border: false,
                                     margin: "5 0 0 0",
@@ -3899,7 +3910,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
-                                                            text: 'Sales per Channels - Coupons',
+                                                            text: 'Sales per Channels - Amount',
 //                                                            fieldStyle: 'font-size:5px',
                                                             alignTo: 'chart'
                                                         }
@@ -3967,7 +3978,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             background: '#E0F8F7',
                                             captions: {
                                                 title: {
-                                                    text: 'Sales per Countries - Amount \n\ (USD)',
+                                                    text: 'Sales per Countries - Amount \n\ USD',
                                                     alignTo: 'chart'
                                                 }
                                             },

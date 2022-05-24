@@ -65,7 +65,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.Dashboard01Form', {
                                     border: false,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1650,
+                                        width: 1750,
                                         align: 'center'
                                     },
                                     items: [

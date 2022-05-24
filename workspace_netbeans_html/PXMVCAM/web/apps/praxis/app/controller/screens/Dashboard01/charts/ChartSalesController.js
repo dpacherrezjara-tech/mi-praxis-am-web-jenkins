@@ -211,8 +211,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                                 if (label === 'SALE') {
                                     label = 'SALES';
                                 }
-                                me.lstTotales[i].VENDOR = label + ' , ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
-                                ;
+//                                me.lstTotales[i].VENDOR = label + ' , ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
+                                me.lstTotales[i].VENDOR = Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
                             }
 
                             me.lstTotalesGraf = res.data;
