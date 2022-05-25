@@ -23,19 +23,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
         meDE = this;
-
         this.lstSendManual = [];
         this.lstBlocked = [];
-
         this.setValue('de-txtSumAmount', this.sumAmount);
         //this.setValue('de-txtSumAmountBlocked', this.sumAmountBlocked);
 
         Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getStore().removeAll();
         Ext.getCmp(prototype.id + '-gridDataInfoBlocked').getView().refresh();
-
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore().removeAll();
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
-
         this.p = this.view.params;
         this.actionCode = this.p.action;
         this.bean = this.p.rec.data;
@@ -63,7 +59,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 break;
         }
     },
-    onNextClick: function() {
+    onNextClick: function () {
         var all = this.p.all;
         var rec;
         var rowIndex = this.p.rowIndex;
@@ -78,9 +74,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     winDataEntry: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
-        
         console.log(this.bean.TDOC);
-
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransaction', {
             id: prototype.id + '-dataEntryError',
             params: {
@@ -98,14 +92,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
         this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
         this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
-
         /*var sMerch = this.beanResult.SMERCHID.trim();
-        if (sMerch === '9353227755' || sMerch === '8133735688' || sMerch === '9352724851') {
-            Ext.getCmp(prototype.id + '-labelScan').hide();
-            Ext.getCmp(prototype.id + '-panelScan').hide();
-            Ext.getCmp(prototype.id + '-panelScanCard').hide();
-            Ext.getCmp(prototype.id + '-panelDataInfoScan').hide();
-        }*/
+         if (sMerch === '9353227755' || sMerch === '8133735688' || sMerch === '9352724851') {
+         Ext.getCmp(prototype.id + '-labelScan').hide();
+         Ext.getCmp(prototype.id + '-panelScan').hide();
+         Ext.getCmp(prototype.id + '-panelScanCard').hide();
+         Ext.getCmp(prototype.id + '-panelDataInfoScan').hide();
+         }*/
         /* else {
          Ext.getCmp(prototype.id + '-chkSelection').show();
          }*/
@@ -132,7 +125,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtTDOC', this.beanResult.descTDOC);
         this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
         this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
-
         this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
         this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
         this.setValue('de-txtDIFF_AMOUNT', Ext.util.Format.number(this.beanResult.DIFF_AMOUNT, '0,000.00'));
@@ -144,16 +136,26 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
         this.setValue('de-txtIDCONL', this.beanResult.IDCONL);
         this.setValue('de-txtdescFREGLA', this.beanResult.descFREGLA);
-
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
-        this.setValue('txtHOCR', this.beanResult.HOCR);
+        this.setValue('txtHOCR', this.formato(this.beanResult.HOCR));
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
-        this.setValue('txtHOUP', this.beanResult.HOUP);
-
+        this.setValue('txtHOUP', this.formato(this.beanResult.HOUP));
         this.getBreakdownDataGrid();
     },
+
+    formato: function (numero) {
+        var d, e;
+        d = String(numero);
+        if (d === "0     ") {
+            return "";
+        } else {
+            e = d.substring(0, 2) + ':' + d.substring(2, 4) + ':' + d.substring(4, 6);
+            return e;
+        }
+    },
+
     obtainData: function () {
 //        console.log('obtainData');
 
@@ -174,7 +176,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.INSTANBR = this.getValue("de-txtINSTANBR");
         beanTemp.CERROR = this.getValue("txtCERROR");
         beanTemp.TDOC = this.beanResult.TDOC;
-
         if (this.getValue("de-txtTGROSAMOUN").trim() !== '') {
             beanTemp.TGROSAMOUN = Number(this.getValue("de-txtTGROSAMOUN").trim().replace(',', ''));
         } else {
@@ -184,7 +185,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         beanTemp.SPNR = this.getValue("de-txtSPNR");
         beanTemp.ISREFNBR = this.getValue("de-txtISREFNBR");
         beanTemp.TRANSDATE = this.getValue("de-txtTRANSDATE");
-
         beanTemp.lstSendManual = [];
         //console.log(this.lstSendManual.length);
         for (var i = 0; i < this.lstSendManual.length; i++) {
@@ -213,7 +213,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 meDE.beanResult = res.result;
                 meDE.beanInfo = res.lstInfo;
                 meDE.mostrarData();
-
             }
         });
     },
@@ -235,7 +234,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
         meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
-
         Ext.Ajax.request({
             url: prototype.url + '/searchDetTktSettlement',
             method: 'POST',
@@ -246,7 +244,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanInfo = res.data;
-
                 for (var i = 0; i < res.data.length; i++) {
                     meDE.lstSendManual.push(res.data[i]);
                 }
@@ -268,9 +265,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanInfo = res.lstInfo;
-
                 console.log(meDE.beanInfo);
-
                 for (var i = 0; i < res.lstInfo.length; i++) {
                     if (res.lstInfo[i].FDUPLIB > 0) {
                         //Guardar aquí tkts usados
@@ -351,7 +346,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var txtMsjDesglose = this.validacionDesglose();
         var txtMsjMontos = this.validacionMontos();
         var txtMsjValidacionTktPNR = this.validacionTicketPNRVacio(txtMsjMontos);
-
         if (txtMsjValidacionTktPNR + txtMsjDesglose + txtMsjMontos === '') {
             var beanTemp = {};
             this.llenarData(beanTemp);
@@ -404,7 +398,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                     meDE.lstSendManual = [];
                     meDE.lstBlocked = [];
                     meDE.onNextClick();
-
                 } else {
                     global.Msg({msg: res.msjOption});
                     //global.Msg({msg: 'Failed to Update Transaction'});
@@ -445,7 +438,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                     }
                                 }
                             });
-
                 } else {
                     global.Msg({msg: res.msjOption});
                 }
@@ -472,7 +464,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var msjResult = '';
         var suma_montos = 0;
         var monto_venta = 0;
-
         for (var j = 0; j < this.lstSendManual.length; j++) {
             suma_montos = suma_montos + this.lstSendManual[j].A1531VFOP;
         }
@@ -486,7 +477,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         console.log(suma_montos);
         console.log(monto_venta);
         console.log(this.lstSendManual);
-
         if (suma_montos !== monto_venta) {
             msjResult = "Dont match with Transaction Amount";
         }
@@ -537,10 +527,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     onTktPnr: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex).data;
         console.log(rec);
-
         this.setValue('de-txtISREFNBR', rec.A1531TKT.substring(0, 14));
         this.setValue('de-txtSPNR', rec.A720PNR);
-
     },
     cambiarGrillaChk: function () {
         console.log(Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore());
@@ -556,13 +544,10 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     },
     checkManual: function (a, b, bol, rowData, e, f, g, h) {
         console.log(bol);
-
         if (bol === true) {
             this.lstSendManual.push(rowData.data);
             console.log(this.lstSendManual);
             this.sumAmount = this.sumAmount + rowData.data.A1531VFOP;
-
-
         } else {
             this.sumAmount = this.sumAmount - rowData.data.A1531VFOP;
             for (var j = 0; j < this.lstSendManual.length; j++) {
@@ -606,15 +591,11 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
     helpByticket: function () {
         this.setValue('de-txtSumAmount', Ext.util.Format.number('0', '0,000.00'));
         this.lstSendManual = [];
-
         var tkt = this.getValue("input-txtTKTScan");
         var beanGrid = {};
         beanGrid.TKT = tkt;
-
         var beanStringGrid = JSON.stringify(beanGrid);
-
         var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
-
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionErrorByTKT',
             method: 'POST',
@@ -626,7 +607,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanInfo = res.lstInfo;
                 console.log(meDE.beanInfo);
-
                 if (res.lstInfo.length > 0) {
                     meDE.insertTKT(store_gridInfoScan, res.lstInfo[0]);
                     /*for (var i = 0; i < res.lstInfo.length; i++) {
@@ -637,7 +617,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 }
 
                 meDE.calcularMontos();
-
             }
         });
     },
@@ -647,9 +626,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.helpByCreditCard();
             } else {
                 this.lstSendManual = [];
-
                 var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
-
                 Ext.Ajax.request({
                     url: prototype.url + '/searchDetTktSettlement',
                     method: 'POST',
@@ -660,7 +637,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                         Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                         var res = Ext.JSON.decode(response.responseText);
                         meDE.beanInfo = res.data;
-
                         console.log(meDE.beanInfo);
                         for (var i = 0; i < res.data.length; i++) {
                             meDE.lstSendManual.push(res.data[i]);
@@ -693,18 +669,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         var approval = this.getValue("txtApproval");
         var sales_date = (this.getValue("txtFromDate") === null) ? fecha_a_validar : Ext.util.Format.date(this.getValue("txtFromDate"), 'Ymd');
         var tkt = this.getValue("input-txtTKTScan");
-
         var beanGrid = {};
-
         beanGrid.SCARDN = cc1 + '%' + cc2 + '%';
         beanGrid.SAUTHOC = approval;
         beanGrid.BSUMDATE = sales_date;
         beanGrid.INSTANBR = cant_cuotas;
         beanGrid.TKT = tkt;
         beanGrid.TDOC = this.beanResult.TDOC;
-
         var beanStringGrid = JSON.stringify(beanGrid);
-
         Ext.Ajax.request({
             url: prototype.url + '/gridTransactionErrorByTKT',
             method: 'POST',
@@ -716,7 +688,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 var res = Ext.JSON.decode(response.responseText);
                 meDE.beanInfo = res.lstInfo;
                 console.log(meDE.beanInfo);
-
                 if (res.lstInfo.length > 0) {
                     if (res.lstInfo[0].A1531CFOP !== 'CC') {
                         global.Msg({msg: 'Is not Credit Card'});
@@ -742,9 +713,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 Ext.getCmp(prototype.id + '-gridDataInfoBlocked').bindStore(
                         Ext.create('Ext.data.Store', {data: meDE.lstBlocked, autoLoad: true})
                         );
-
                 meDE.calcularMontos();
-
             }
         });
     },
@@ -817,7 +786,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('de-txtSumAmount', Ext.util.Format.number(this.sumAmount, '0,000.00'));
         Ext.getCmp(prototype.id + '-gridDataInfoScan').getView().refresh();
     },
-    msiTracking_keyDownHandler: function(){
+    msiTracking_keyDownHandler: function () {
         Ext.create('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataGridMsiTracking', {
             id: prototype.id + '-msiTrackingGrid',
             params: {

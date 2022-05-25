@@ -1079,7 +1079,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                         }
                                                     },
                                                     {text: 'Number', dataIndex: 'A1531NREF', width: 115,
-                                                        editor:{ xtype:'textfield', editable: false },
+                                                        editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
 
@@ -1087,7 +1087,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                         }
                                                     },
                                                     {text: 'Approval', dataIndex: 'A1531CAPL', width: 65,
-                                                        editor:{ xtype:'textfield', editable: false },
+                                                        editor: {xtype: 'textfield', editable: false},
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
 
@@ -1120,7 +1120,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             {text: 'PNR', dataIndex: 'A720PNR', width: 62,
-                                                editor:{ xtype:'textfield', editable: false },
+                                                editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1128,7 +1128,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             {text: 'Ticket', dataIndex: 'A1531TKT', width: 112,
-                                                editor:{ xtype:'textfield', editable: false },
+                                                editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1136,7 +1136,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                 }
                                             },
                                             {text: 'Agent', dataIndex: 'A720AGENTE', width: 62,
-                                                editor:{ xtype:'textfield', editable: false },
+                                                editor: {xtype: 'textfield', editable: false},
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:center;";
 
@@ -1179,16 +1179,16 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                                     }
                                                 ]
                                             },
-                                            /*{
-                                             text: 'Select',
-                                             xtype: 'checkcolumn',
-                                             id: prototype.id + '-id_checkManual',
-                                             width: 50,
-                                             dataIndex: 'false',
-                                             listeners: {
-                                             checkchange: 'checkManual'
-                                             },
-                                             },*/
+                                                    /*{
+                                                     text: 'Select',
+                                                     xtype: 'checkcolumn',
+                                                     id: prototype.id + '-id_checkManual',
+                                                     width: 50,
+                                                     dataIndex: 'false',
+                                                     listeners: {
+                                                     checkchange: 'checkManual'
+                                                     },
+                                                     },*/
                                         ]
                                     }
                                 },
@@ -1514,7 +1514,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryErrorTransa
                                     width: 100,
                                     listeners: {
                                         change: 'onUpperValue'
-                                    }
+                                }
                                 }
                             ]
                         }
