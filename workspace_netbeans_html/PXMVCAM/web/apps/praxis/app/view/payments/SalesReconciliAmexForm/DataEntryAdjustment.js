@@ -64,7 +64,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a11',
+                                    id: prototype.id + '-de-txtCCUST',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a12',
+                                    id: prototype.id + '-de-txtPRDA',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a13',
+                                    id: prototype.id + '-de-txtSCOUNTRY',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -122,7 +122,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a14',
+                                    id: prototype.id + '-de-txtMERCHID',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -148,7 +148,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a15',
+                                    id: prototype.id + '-de-txtPAYDATE',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -164,7 +164,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a16',
+                                    id: prototype.id + '-de-txtPCURRENCY',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -190,7 +190,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a17',
+                                    id: prototype.id + '-de-txtAXPAYNBR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a18',
+                                    id: prototype.id + '-de-txtSMERCHID',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -232,7 +232,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a19',
+                                    id: prototype.id + '-de-txtBSUMDATE',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -258,7 +258,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a20',
+                                    id: prototype.id + '-de-txtSCARDN',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -284,7 +284,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a21',
+                                    id: prototype.id + '-de-txtISREFNBR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -310,7 +310,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a22',
+                                    id: prototype.id + '-de-txtCHADJNBR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -336,7 +336,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a23',
+                                    id: prototype.id + '-de-txtCHAADJCOD',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -352,7 +352,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a24',
+                                    id: prototype.id + '-de-RECTYPE',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -378,7 +378,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a25',
+                                    id: prototype.id + '-de-txtSTYPECD',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -394,7 +394,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a26',
+                                    id: prototype.id + '-de-txtLMERCHID',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -420,7 +420,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a27',
+                                    id: prototype.id + '-de-txtINVORNBR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -446,7 +446,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a28',
+                                    id: prototype.id + '-de-txtSPNR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -462,7 +462,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a29',
+                                    id: prototype.id + '-de-txtTDOC',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -488,7 +488,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a30',
+                                    id: prototype.id + '-de-txtSELLERID',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -514,7 +514,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a31',
+                                    id: prototype.id + '-de-txtAXPRODAT',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -530,7 +530,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a32',
+                                    id: prototype.id + '-de-txtSIREFNBR',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
@@ -556,7 +556,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + 'a33',
+                                    id: prototype.id + '-de-txtSCURRENCY',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,

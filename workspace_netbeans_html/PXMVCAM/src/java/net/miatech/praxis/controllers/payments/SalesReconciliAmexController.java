@@ -583,6 +583,7 @@ public class SalesReconciliAmexController extends BaseController {
         }
         return lst;
     }
+
     @RequestMapping(value = "searchMsiTracking")
     public @ResponseBody
     String searchMsiTracking(ModelMap map, HttpServletRequest request) {
@@ -911,6 +912,33 @@ public class SalesReconciliAmexController extends BaseController {
             map.put("sesion", "Se produjo un error. " + e.getMessage());
         }
         map.put("msjOption", msj);
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "searchAdjustmentErrorDetail")
+    public @ResponseBody
+    String searchAdjustmentErrorDetail(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- Sales Reconciliation by AMEX : searchAdjustmentErrorDetail-------------");
+
+        Gson gson = new Gson();
+        A4118Filter filter = new A4118Filter();
+        A4118Filter result = new A4118Filter();
+        List<A4118Filter> lstInfo = new ArrayList<A4118Filter>(0);
+
+        String beanString = request.getParameter("beanString");
+        filter = gson.fromJson(beanString, A4118Filter.class);
+
+        logic = new SalesReconciliAmexLogic();
+        logic.setSession(this.serverSession.getServerSession());
+        try {
+            result = logic.loadPX570SQP04466(filter);
+//            lstInfo = logic.loadPX570SQP04395(result);
+            map.put("result", result);
+            map.put("lstInfo", lstInfo);
+            map.put("success", true);
+        } catch (Exception ex) {
+            map.put("success", false);
+        }
         return new Gson().toJson(map);
     }
 
@@ -7407,10 +7435,10 @@ public class SalesReconciliAmexController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
-        
+
     }
-    
-        //Listado de Codigos de error Reconciliation Settlement
+
+    //Listado de Codigos de error Reconciliation Settlement
     @RequestMapping(value = "getErrorCodesRecSett")
     public @ResponseBody
     String getErrorCodesRecSett(ModelMap map, HttpServletRequest request) {
@@ -7459,6 +7487,6 @@ public class SalesReconciliAmexController extends BaseController {
             throw new SpringException(e);
         }
         return lst;
-        
+
     }
 }
