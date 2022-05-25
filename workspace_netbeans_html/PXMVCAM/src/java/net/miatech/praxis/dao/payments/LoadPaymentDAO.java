@@ -39,7 +39,7 @@ public class LoadPaymentDAO {
         ResultSet rs01 = null;
 
         double dblAmountS = 0, dblAmountA = 0;
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00885(?,?,?,?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00885(?,?,?,?,?,?,?,?,?,?,?)}";//" + session.getMainLibrary() + "
 
         Connection cnx = null;
         try {
