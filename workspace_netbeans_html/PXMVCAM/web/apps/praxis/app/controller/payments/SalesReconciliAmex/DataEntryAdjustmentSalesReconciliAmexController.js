@@ -1,7 +1,7 @@
 Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmentSalesReconciliAmexController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryAdjustmentSalesReconciliAmexController',
-    meDE: '',
+    meAD: '',
     actionCode: '',
     msjValidate: '',
     bean: {},
@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
-        meDE = this;
+        meAD = this;
 
         this.lstSendManual = [];
 
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
 
     },
     afterRender: function () {
-        this.obtainData();
+        //this.obtainData();
         switch (this.actionCode) {
             case 'I':
                 Ext.getCmp(prototype.id + '-btn-save').show();
@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
             case 'U':
-                this.getData();
+                //this.getData();
                 Ext.getCmp(prototype.id + '-btn-save').hide();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -139,7 +139,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
 
     },
     getData: function () {
-        var beanString = JSON.stringify(meDE.bean);
+        var beanString = JSON.stringify(meAD.bean);
         Ext.Ajax.request({
             url: prototype.url + '/searchTransactionErrorDetail',
             method: 'POST',
@@ -149,9 +149,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
             success: function (response, options) {
                 Ext.getCmp(prototype.id + '-dataEntrySettlement').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                meDE.beanResult = res.result;
-                meDE.beanInfo = res.lstInfo;
-                meDE.mostrarData();
+                meAD.beanResult = res.result;
+                meAD.beanInfo = res.lstInfo;
+                meAD.mostrarData();
             }
         });
     },
@@ -173,14 +173,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
-        meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
+        meAD.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktSettlement'
             }, listeners: {
                 beforeload: function (obj) {
-                    obj.proxy.extraParams = meDE.paramsDetailDEDetTktSettlement;
+                    obj.proxy.extraParams = meAD.paramsDetailDEDetTktSettlement;
                 },
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask();
@@ -280,7 +280,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
 //        console.log(beanTemp);
         var beanString = JSON.stringify(beanTemp);
 //        console.log(beanString);
-        meDE.msjValidate = 'Failed to Validate Transaction';
+        meAD.msjValidate = 'Failed to Validate Transaction';
         Ext.Ajax.request({
             url: prototype.url + '/ValidateTransaction',
             method: 'POST',
@@ -304,7 +304,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
                                 modal: true,
                                 fn: function (btn) {
                                     if (btn === 'yes') {
-                                        meDE.MaintenanceA4116(beanTemp);
+                                        meAD.MaintenanceA4116(beanTemp);
                                     }
                                 }
                             });
@@ -452,16 +452,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
             success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                meDE.beanInfo = res.lstInfo;
-                console.log(meDE.beanInfo);
+                meAD.beanInfo = res.lstInfo;
+                console.log(meAD.beanInfo);
 
                 if (res.lstInfo.length > 0) {
-                    meDE.insertTKT(store_gridInfoScan, res.lstInfo[0]);
+                    meAD.insertTKT(store_gridInfoScan, res.lstInfo[0]);
                 } else {
                     global.Msg({msg: 'Not Found in Sales'});
                 }
 
-                meDE.calcularMontos();
+                meAD.calcularMontos();
 
             }
         });
