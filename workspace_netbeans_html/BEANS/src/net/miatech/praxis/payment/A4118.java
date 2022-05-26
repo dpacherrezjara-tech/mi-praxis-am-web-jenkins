@@ -13,6 +13,7 @@ public class A4118 {
     
     public String CCUST = "";
     public String PRDA = "";
+    public String SCOUNTRY = "";
     public String RECTYPE = "";
     public String MERCHID = "";
     public String STYPECD = "";
@@ -50,6 +51,11 @@ public class A4118 {
     public String STCON = "";
     public String FCONT = "";
     public String IDCON = "";
+    public String SCARDN = "";
+    public String LMERCHID = "";
+    public String SPNR = "";
+    public String TDOC = "";
+    public String SELLERID = "";
     
     public double SDGROSSA = 0;
     public double SCGROSSA = 0;

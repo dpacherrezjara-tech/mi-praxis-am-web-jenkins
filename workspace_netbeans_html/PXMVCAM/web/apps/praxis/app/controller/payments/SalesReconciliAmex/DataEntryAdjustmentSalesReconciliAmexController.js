@@ -1,7 +1,7 @@
 Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmentSalesReconciliAmexController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryAdjustmentSalesReconciliAmexController',
-    meDE: '',
+    meAD: '',
     actionCode: '',
     msjValidate: '',
     bean: {},
@@ -19,7 +19,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
     init: function (view) {
         prototype.id = 'SalesReconciliAmexForm';
         prototype.url = CONTEXTPATH + '/SalesReconciliAmex';
-        meDE = this;
+        meAD = this;
 
         this.lstSendManual = [];
 
@@ -29,7 +29,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
 
     },
     afterRender: function () {
-        this.obtainData();
+        //this.obtainData();
         switch (this.actionCode) {
             case 'I':
                 Ext.getCmp(prototype.id + '-btn-save').show();
@@ -48,65 +48,39 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
     },
     mostrarData: function () {
 
-        this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
+        this.setValue('de-txtCCUST', this.beanResult.CCUST);
         this.setValue('de-txtPRDA', this.beanResult.PRDA);
-        this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
+        this.setValue('de-txtSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtMERCHID', this.beanResult.MERCHID);
-        this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
+        this.setValue('de-txtPAYDATE', this.beanResult.PAYDATE);
 
-        var sMerch = this.beanResult.SMERCHID.trim();
-
-        this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
         this.setValue('de-txtPCURRENCY', this.beanResult.PCURRENCY);
+        this.setValue('de-txtAXPAYNBR', this.beanResult.AXPAYNBR);
+        this.setValue('de-txtSMERCHID', this.beanResult.SMERCHID);
+        this.setValue('de-txtBSUMDATE', this.beanResult.BSUMDATE);
         this.setValue('de-txtSCARDN', this.beanResult.SCARDN);
-        this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
-        this.setValue('de-txtIDITEMS', this.beanResult.IDITEMS);
-        this.setValue('de-txtIDITEMT', this.beanResult.IDITEMT);
         this.setValue('de-txtISREFNBR', this.beanResult.ISREFNBR);
+        this.setValue('de-txtCHADJNBR', this.beanResult.CHADJNBR);
+        this.setValue('de-txtCHAADJCOD', this.beanResult.CHAADJCOD);
+        this.setValue('de-txtRECTYPE', this.beanResult.RECTYPE);
+        this.setValue('de-txtSTYPECD', this.beanResult.STYPECD);
+        this.setValue('de-txtLMERCHID', this.beanResult.LMERCHID);
+        this.setValue('de-txtINVORNBR', this.beanResult.INVORNBR);
         this.setValue('de-txtSPNR', this.beanResult.SPNR);
-        this.setValue('de-txtTRANSDATE', this.beanResult.TRANSDATE);
-        this.setValue('txtCERRORHST', this.beanResult.CERRORHST);
-        this.setValue('txtCERROR', this.beanResult.CERROR);
-        this.setValue('txtDES_CERROR', this.beanResult.DES_CERROR);
-        this.setValue('txtCERROIN', this.beanResult.CERROIN);
-        this.setValue('txtDES_CERROIN', this.beanResult.DES_CERROIN);
-        this.setValue('txtFLAG', this.beanResult.FSELEC);
-        this.setValue('de-txtINSTANBR', this.beanResult.INSTANBR);
-        this.setValue('de-txtNBRINSTA', this.beanResult.NBRINSTA);
-        this.setValue('txtSTVAL', this.beanResult.descSTVAL);
-        this.setValue('de-txtPASSED_DAYS', this.beanResult.PASSED_DAYS);
-        this.setValue('de-txtdescFREGLA', this.beanResult.descFREGLA);
-        this.setValue('de-txtFCOMPL', this.beanResult.descFCOMPL);
-        this.setValue('de-txtQTYTKT', this.beanResult.QTYTKT);
+        this.setValue('de-txtTDOC', this.beanResult.descTDOC);
+        this.setValue('de-txtSELLERID', this.beanResult.SELLERID);
+        this.setValue('de-txtAXPRODAT', this.beanResult.AXPRODAT);
+        this.setValue('de-txtSIREFNBR', this.beanResult.SIREFNBR);
+        this.setValue('de-txtSCURRENCY', this.beanResult.SCURRENCY);
 
-        this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
-        this.setValue('de-txtSVFOPS', Ext.util.Format.number(this.beanResult.SVFOPS, '0,000.00'));
-        //this.setValue('de-txtTGROSAMOUC', Ext.util.Format.number(this.beanResult.TGROSAMOUC, '0,000.00'));
-        // this.setValue('de-txtFINSAMOUC', Ext.util.Format.number(this.beanResult.FINSAMOUC, '0,000.00'));
-        // this.setValue('de-txtSINSAMOUC', Ext.util.Format.number(this.beanResult.SINSAMOUC, '0,000.00'));
-
-        this.setValue('de-txtSTCONL', this.beanResult.descSTCONL);
-        this.setValue('de-txtFCONTL', this.beanResult.FCONTL);
-        this.setValue('de-txtIDCONL', this.beanResult.IDCONL);
+        //this.setValue('de-txtTGROSAMOUN', Ext.util.Format.number(this.beanResult.TGROSAMOUN, '0,000.00'));
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
         this.setValue('txtHOCR', this.beanResult.HOCR);
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
-        this.setValue('txtHOUP', this.beanResult.HOUP);
-        
-        if( this.beanResult.TDOC === "R"){
-            Ext.getCmp(prototype.id + '-dataEntrySettlement').setTitle('Refund Reconciliation by Amex - Settlement Form');
-            Ext.getCmp(prototype.id + '-txtSalesMerchantID').setText('Refund MerchantID');
-            Ext.getCmp(prototype.id + '-txtSettvsSales').setText('Sett. vs Refund');
-            Ext.getCmp(prototype.id + '-txtSalesInformation').setText('Refund Information');
-            Ext.getCmp(prototype.id + '-txtSalesDate').setText('Refund Date');
-            Ext.getCmp(prototype.id + '-txtSalesAmount').setText('Refund Amount');
-            Ext.getCmp(prototype.id + '-txtSalesDate2').setText('Refund Date');
-        }
-        
-        this.getDataGrid();
+        this.setValue('txtHOUP', this.beanResult.HOUP);        
     },
     obtainData: function () {
     },
@@ -139,19 +113,19 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
 
     },
     getData: function () {
-        var beanString = JSON.stringify(meDE.bean);
+        var beanString = JSON.stringify(meAD.bean);
         Ext.Ajax.request({
-            url: prototype.url + '/searchTransactionErrorDetail',
+            url: prototype.url + '/searchAdjustmentErrorDetail',
             method: 'POST',
             timeout: 60000000,
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntrySettlement').mask('Loading...'),
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryAdjustment').mask('Loading...'),
             params: {beanString: beanString},
             success: function (response, options) {
-                Ext.getCmp(prototype.id + '-dataEntrySettlement').unmask('Loading...');
+                Ext.getCmp(prototype.id + '-dataEntryAdjustment').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                meDE.beanResult = res.result;
-                meDE.beanInfo = res.lstInfo;
-                meDE.mostrarData();
+                meAD.beanResult = res.result;
+                meAD.beanInfo = res.lstInfo;
+                meAD.mostrarData();
             }
         });
     },
@@ -173,14 +147,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
         this.beanSettlementTktsDetail.IN_SAUTHOC = this.bean.SAUTHOC;
         this.beanSettlementTktsDetail.IN_IDITEMT = this.bean.IDITEMT;
         this.beanSettlementTktsDetail.IN_IDITEMS = this.bean.IDITEMS;
-        meDE.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
+        meAD.paramsDetailDEDetTktSettlement.beanString = JSON.stringify(this.beanSettlementTktsDetail);
         
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/searchDetTktSettlement'
             }, listeners: {
                 beforeload: function (obj) {
-                    obj.proxy.extraParams = meDE.paramsDetailDEDetTktSettlement;
+                    obj.proxy.extraParams = meAD.paramsDetailDEDetTktSettlement;
                 },
                 load: function (obj) {
                     Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask();
@@ -256,16 +230,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
             method: 'POST',
             timeout: 60000000,
             params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntrySettlement').mask('Loading...'),
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryAdjustment').mask('Loading...'),
             success: function (response, opts) {
-                Ext.getCmp(prototype.id + '-dataEntrySettlement').unmask('Loading...');
+                Ext.getCmp(prototype.id + '-dataEntryAdjustment').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
 //                console.log(res);
 
                 if (res.success) {
                     //global.Msg({msg: res.msjOption});
-                    Ext.getCmp(prototype.id + '-dataEntrySettlement').unmask();
-                    Ext.getCmp(prototype.id + '-dataEntrySettlement').close();
+                    Ext.getCmp(prototype.id + '-dataEntryAdjustment').unmask();
+                    Ext.getCmp(prototype.id + '-dataEntryAdjustment').close();
                     Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
 
                 } else {
@@ -280,15 +254,15 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
 //        console.log(beanTemp);
         var beanString = JSON.stringify(beanTemp);
 //        console.log(beanString);
-        meDE.msjValidate = 'Failed to Validate Transaction';
+        meAD.msjValidate = 'Failed to Validate Transaction';
         Ext.Ajax.request({
             url: prototype.url + '/ValidateTransaction',
             method: 'POST',
             timeout: 60000000,
             params: {beanString: beanString},
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntrySettlement').mask('Loading...'),
+            beforerequest: Ext.getCmp(prototype.id + '-dataEntryAdjustment').mask('Loading...'),
             success: function (response, opts) {
-                Ext.getCmp(prototype.id + '-dataEntrySettlement').unmask('Loading...');
+                Ext.getCmp(prototype.id + '-dataEntryAdjustment').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 if (res.success) {
@@ -304,7 +278,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
                                 modal: true,
                                 fn: function (btn) {
                                     if (btn === 'yes') {
-                                        meDE.MaintenanceA4116(beanTemp);
+                                        meAD.MaintenanceA4116(beanTemp);
                                     }
                                 }
                             });
@@ -452,16 +426,16 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryAdjustmen
             success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
-                meDE.beanInfo = res.lstInfo;
-                console.log(meDE.beanInfo);
+                meAD.beanInfo = res.lstInfo;
+                console.log(meAD.beanInfo);
 
                 if (res.lstInfo.length > 0) {
-                    meDE.insertTKT(store_gridInfoScan, res.lstInfo[0]);
+                    meAD.insertTKT(store_gridInfoScan, res.lstInfo[0]);
                 } else {
                     global.Msg({msg: 'Not Found in Sales'});
                 }
 
-                meDE.calcularMontos();
+                meAD.calcularMontos();
 
             }
         });

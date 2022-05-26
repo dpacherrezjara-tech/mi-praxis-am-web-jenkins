@@ -2538,6 +2538,133 @@ public class SalesReconciliAmexDAO {
         return lstRtn;
     }
 
+    public A4118Filter loadPX570SQP04466(A4118Filter filter) throws SQLException, Exception {
+
+        A4118Filter objRtn = new A4118Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        HashMap<String, String> hmDescEstados = new HashMap<String, String>();
+        hmDescEstados.put("", "");
+        hmDescEstados.put("0", "Pending");
+        hmDescEstados.put("1", "Match");
+        hmDescEstados.put("2", "Sales Without Settlement");
+        hmDescEstados.put("3", "Settlement Without Sales");
+        hmDescEstados.put("4", "Match with Differences");
+        hmDescEstados.put("5", "Match Manual");
+        hmDescEstados.put("6", "Forced Match");
+        hmDescEstados.put("7", "Compensation Match");
+
+        HashMap<String, String> hmDescSTCONL = new HashMap<String, String>();
+        hmDescSTCONL.put("", "");
+        hmDescSTCONL.put("1", "Accounted");
+        hmDescSTCONL.put("2", "Accounted to Debug");
+
+        HashMap<String, String> hmDescReglas = new HashMap<String, String>();
+        hmDescReglas.put("", "");
+        hmDescReglas.put("1", "Tkt");
+        hmDescReglas.put("2", "PNR");
+        hmDescReglas.put("3", "CCard");
+        hmDescReglas.put("4", "Manual");
+
+        HashMap<String, String> hmDescFCOMPL = new HashMap<String, String>();
+        hmDescFCOMPL.put("", "");
+        hmDescFCOMPL.put("1", "PLUSGRADE");
+        hmDescFCOMPL.put("2", "LIGAS");
+        hmDescFCOMPL.put("3", "TABLET");
+        hmDescFCOMPL.put("4", "BPO");
+
+        HashMap<String, String> hmDescTDOC = new HashMap<String, String>();
+        hmDescTDOC.put("", "");
+        hmDescTDOC.put("S", "Sales");
+        hmDescTDOC.put("R", "Refund");
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04466(?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.CHADJNBR.trim());
+            cstmt01.setString(3, filter.CHAADJCOD.trim());
+            cstmt01.setString(4, filter.MERCHID.trim());
+            cstmt01.setString(5, filter.SMERCHID.trim());
+            cstmt01.setString(6, filter.AXPAYNBR.trim());
+            cstmt01.setString(7, filter.PRDA.trim());
+            cstmt01.setString(8, filter.PAYDATE.trim());
+            cstmt01.setString(9, filter.BSUMDATE.trim());
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn.CCUST = rs01.getString("CCUST");
+                objRtn.PRDA = rs01.getString("PRDA").trim();
+                objRtn.SCOUNTRY = rs01.getString("SCOUNTRY").trim();
+                objRtn.MERCHID = rs01.getString("MERCHID").trim();
+                objRtn.PAYDATE = rs01.getString("PAYDATE").trim();
+                objRtn.PCURRENCY = rs01.getString("PCURRENCY").trim();
+                objRtn.AXPAYNBR = rs01.getString("AXPAYNBR").trim();
+                objRtn.SMERCHID = rs01.getString("SMERCHID").trim();
+
+                objRtn.BSUMDATE = rs01.getString("BSUMDATE").trim();
+                objRtn.SCARDN = rs01.getString("SCARDN").trim();
+                objRtn.ISREFNBR = rs01.getString("ISREFNBR").trim();
+                objRtn.CHADJNBR = rs01.getString("CHADJNBR").trim();
+                objRtn.CHAADJCOD = rs01.getString("CHAADJCOD").trim();
+                objRtn.RECTYPE = rs01.getString("RECTYPE").trim();
+
+                objRtn.STYPECD = rs01.getString("STYPECD").trim();
+                objRtn.LMERCHID = rs01.getString("LMERCHID").trim();
+
+                objRtn.INVORNBR = rs01.getString("INVORNBR").trim();
+                objRtn.SPNR = rs01.getString("SPNR").trim();
+                objRtn.TDOC = rs01.getString("TDOC").trim();
+                if (hmDescTDOC.containsKey(rs01.getString("TDOC").trim())) {
+                    objRtn.descTDOC = hmDescTDOC.get(rs01.getString("TDOC").trim()).toString();
+                } else {
+                    objRtn.descTDOC = rs01.getString("TDOC").trim();
+                }
+
+                objRtn.SELLERID = rs01.getString("SELLERID").trim();
+                objRtn.AXPRODAT = rs01.getString("AXPRODAT").trim();
+                objRtn.SIREFNBR = rs01.getString("SIREFNBR").trim();
+                objRtn.SCURRENCY = rs01.getString("SCURRENCY").trim();
+
+                objRtn.USCR = rs01.getString("USCR");
+                objRtn.FECR = rs01.getString("FECR");
+                objRtn.HOCR = rs01.getString("HOCR");
+                objRtn.USUP = rs01.getString("USUP");
+                objRtn.FEUP = rs01.getString("FEUP");
+                objRtn.HOUP = rs01.getString("HOUP");
+
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return objRtn;
+    }
+
     // ---------------------------------------------------------------------------------------------------------------
     public List<A4116Filter> loadPX570SQP04357(A4116Filter filter) throws SQLException, Exception {
 
@@ -2707,15 +2834,14 @@ public class SalesReconciliAmexDAO {
                     beanTkt.ISREFNBR = rst.getString("ISREFNBR").trim();
                     beanTkt.DES_MERCHANT = rst.getString("DES_MERCHANT").trim();
                     beanTkt.DES_SMERCHANT = rst.getString("DES_SMERCHANT").trim();
-                    if(beanTkt.SMERCHID.equals("9353227755")){
+                    if (beanTkt.SMERCHID.equals("9353227755")) {
                         beanTkt.DES_SMERCHANT = "PLUSGRADE";
-                    }else if(beanTkt.SMERCHID.equals("8133735688")){
+                    } else if (beanTkt.SMERCHID.equals("8133735688")) {
                         beanTkt.DES_SMERCHANT = "LIGAS";
-                    }else if(beanTkt.SMERCHID.equals("9352724851")){
+                    } else if (beanTkt.SMERCHID.equals("9352724851")) {
                         beanTkt.DES_SMERCHANT = "TABLET";
                     }
-                    
-                        
+
                     beanTkt.GROSAMOUN = rst.getDouble("GROSAMOUN");
 
                     beanTkt.TGROSAMOUN = rst.getDouble("TGROSAMOUN");
@@ -2965,13 +3091,13 @@ public class SalesReconciliAmexDAO {
                 if ("".equals(objRtn.CERROR.trim())) {
                     objRtn.DES_CERROR = "";
                 }
-                
+
                 objRtn.CERROIN = rs01.getString("CERROIN");
                 objRtn.DES_CERROIN = rs01.getString("DES_CERROIN");
                 if ("".equals(objRtn.CERROIN.trim())) {
                     objRtn.DES_CERROIN = "";
                 }
-                
+
                 objRtn.FSELEC = rs01.getString("FSELEC");
                 if ("".equals(objRtn.FSELEC.trim())) {
                     objRtn.FSELEC = "Not loaded";
