@@ -352,7 +352,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.DataEntryAdjustment'
                                 {xtype: 'tbspacer', width: 10},
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id + '-de-RECTYPE',
+                                    id: prototype.id + '-de-txtRECTYPE',
                                     fieldStyle: 'text-align:center',
                                     enforceMaxLength: true,
                                     readOnly: true,
