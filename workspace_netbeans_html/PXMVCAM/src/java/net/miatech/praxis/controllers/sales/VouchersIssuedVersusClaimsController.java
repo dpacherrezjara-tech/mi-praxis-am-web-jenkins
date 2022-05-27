@@ -12,6 +12,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import net.miatech.beans.SQP04482Filter;
 import net.miatech.beans.SQP04483Filter;
+import net.miatech.beans.SQP04491Filter;
+import net.miatech.beans.SQP04492Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.logic.sales.VouchersIssuedVersusClaimsLogic;
@@ -40,10 +42,11 @@ public class VouchersIssuedVersusClaimsController extends BaseController {
         filter.page.START = 0;
         filter.page.LIMIT = 0;
         try {
-            filter.VP_TicketTV = request.getParameter("VP_TicketTV");           
-            filter.VP_TicketTK = request.getParameter("VP_TicketTK");           
-            filter.VP_TicketTVIssueDate = request.getParameter("VP_TicketTVIssueDate"); 
-            filter.VP_SystemDate = request.getParameter("VP_SystemDate");
+            filter.VP_FILTER = request.getParameter("VP_FILTER");           
+            filter.VP_TIPO = request.getParameter("VP_TIPO");           
+            filter.VP_Ticket = request.getParameter("VP_Ticket"); 
+            filter.VP_Fecha1 = request.getParameter("VP_Fecha1");
+            filter.VP_Fecha2 = request.getParameter("VP_Fecha2");
             filter.VP_StatusFormateo = request.getParameter("VP_StatusFormateo"); 
             
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
@@ -91,5 +94,78 @@ public class VouchersIssuedVersusClaimsController extends BaseController {
         return new Gson().toJson(map);
 
     }
+    
+    @RequestMapping(value = "/search_tkt")
+    public @ResponseBody
+    String search_tkt(ModelMap map, HttpServletRequest request) {
+        List<SQP04491Filter> listaData;
+        SQP04491Filter filter;
+        filter = new SQP04491Filter();
+//        filter.page.TOTROW = -1;
+//        filter.page.START = 0;
+//        filter.page.LIMIT = 0;
+        try {
+            filter.VP_A720CIA = request.getParameter("VP_A720CIA");           
+            filter.VP_A720FORMA = request.getParameter("VP_A720FORMA");           
+            filter.VP_A720SERIE = request.getParameter("VP_A720SERIE"); 
+            filter.VP_A720FECVTA = request.getParameter("VP_A720FECVTA");
+            filter.VP_A720CUPONES = request.getParameter("VP_A720CUPONES");                        
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+//            filter.page.PAGROW = 20;
+//            start = (start != 0 ? start : 0);
+//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new VouchersIssuedVersusClaimsLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04491Filter(filter);
+            
+            map.put("success", true);
+            map.put("total", listaData.size()); 
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/search_tkt_saved")
+    public @ResponseBody
+    String search_tkt_saved(ModelMap map, HttpServletRequest request) {
+        List<SQP04492Filter> listaData;
+        SQP04492Filter filter;
+        filter = new SQP04492Filter();
+//        filter.page.TOTROW = -1;
+//        filter.page.START = 0;
+//        filter.page.LIMIT = 0;
+        try {
+            filter.VP_A4213CIA = request.getParameter("VP_A4213CIA");           
+            filter.VP_A4213FORMA = request.getParameter("VP_A4213FORMA");           
+            filter.VP_A4213SERIE = request.getParameter("VP_A4213SERIE"); 
+            filter.VP_A4213SEQVO = request.getParameter("VP_A4213SEQVO");
+            
+//            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+//            filter.page.PAGROW = 20;
+//            start = (start != 0 ? start : 0);
+//            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;            
+            logic = new VouchersIssuedVersusClaimsLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            listaData = logic.getSQP04492Filter(filter);
+            
+            map.put("success", true);
+            map.put("total", listaData.size()); 
+            map.put("data", listaData);
+        } catch (NumberFormatException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    
 }
     

@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 import net.miatech.beans.SQP04482Filter;
 import net.miatech.beans.SQP04483Filter;
+import net.miatech.beans.SQP04491Filter;
+import net.miatech.beans.SQP04492Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.sales.VouchersIssuedVersusClaimsDAO;
 
@@ -32,4 +34,13 @@ public class VouchersIssuedVersusClaimsLogic {
     public SQP04483Filter setSQP04483Filter(SQP04483Filter filter) throws SQLException, Exception {
         return objDAO.setSQP04483Filter(filter);
     }
+    
+    public List<SQP04491Filter> getSQP04491Filter(SQP04491Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04491Filter(filter);
+    }
+    public List<SQP04492Filter> getSQP04492Filter(SQP04492Filter filter) throws SQLException, Exception {
+        return objDAO.getSQP04492Filter(filter);
+    }
+    
+    
 }

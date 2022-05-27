@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.SQP04482Filter;
 import net.miatech.beans.SQP04483Filter;
+import net.miatech.beans.SQP04491Filter;
+import net.miatech.beans.SQP04492Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import org.apache.log4j.Logger;
 
@@ -48,32 +50,33 @@ public class VouchersIssuedVersusClaimsDAO {
 
         CallableStatement cstmt01 = null;
         ResultSet rs01 = null, rs02 = null;
-        String SQLCLL01 = "{CALL PRAXIS.SQP04482(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PRAXIS.SQP04482(?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
-            cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
 
             cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt01.setString(2, filter.VP_TicketTV);
-            cstmt01.setString(3, filter.VP_TicketTK);
-            cstmt01.setString(4, filter.VP_TicketTVIssueDate);
-            cstmt01.setString(5, filter.VP_SystemDate);
-            cstmt01.setString(6, filter.VP_StatusFormateo);
+            cstmt01.setString(2, filter.VP_FILTER);
+            cstmt01.setString(3, filter.VP_TIPO);
+            cstmt01.setString(4, filter.VP_Ticket);
+            cstmt01.setString(5, filter.VP_Fecha1);
+            cstmt01.setString(6, filter.VP_Fecha2);
+            cstmt01.setString(7, filter.VP_StatusFormateo);
 
-            cstmt01.setInt(7, filter.page.PAGNUM);
-            cstmt01.setInt(8, filter.page.PAGROW);
-            cstmt01.setInt(9, filter.page.TOTPAG);
-            cstmt01.setInt(10, filter.page.TOTROW);
+            cstmt01.setInt(8, filter.page.PAGNUM);
+            cstmt01.setInt(9, filter.page.PAGROW);
+            cstmt01.setInt(10, filter.page.TOTPAG);
+            cstmt01.setInt(11, filter.page.TOTROW);
             cstmt01.execute();
-            filter.page.PAGNUM = cstmt01.getInt(7);
-            filter.page.PAGROW = cstmt01.getInt(8);
-            filter.page.TOTPAG = cstmt01.getInt(9);
-            filter.page.TOTROW = cstmt01.getInt(10);
+            filter.page.PAGNUM = cstmt01.getInt(8);
+            filter.page.PAGROW = cstmt01.getInt(9);
+            filter.page.TOTPAG = cstmt01.getInt(10);
+            filter.page.TOTROW = cstmt01.getInt(11);
 
             rs01 = cstmt01.getResultSet();
             while (rs01.next()) {
@@ -89,8 +92,8 @@ public class VouchersIssuedVersusClaimsDAO {
                 objRtn.A4213AGENT = rs01.getString("A4213AGENT");
                 objRtn.A4213TSTAT = rs01.getString("A4213TSTAT");
                 objRtn.A4213ITEMC = rs01.getString("A4213ITEMC");
-                objRtn.A4213CIATK = rs01.getString("A4213FORTK");
-                objRtn.A4213FORTK = rs01.getString("A4213TSTAT");
+                objRtn.A4213CIATK = rs01.getString("A4213CIATK");
+                objRtn.A4213FORTK = rs01.getString("A4213FORTK");
                 objRtn.A4213SERTK = rs01.getString("A4213SERTK");
                 objRtn.A4213FEMIS = rs01.getString("A4213FEMIS");
                 objRtn.A4213SEQV = rs01.getString("A4213SEQV");
@@ -179,4 +182,164 @@ public class VouchersIssuedVersusClaimsDAO {
         }
         return filter;
     }
+    
+    public List<SQP04491Filter> getSQP04491Filter(SQP04491Filter filter) throws SQLException, Exception {
+        List<SQP04491Filter> lstRtn = new ArrayList<SQP04491Filter>(0);
+        SQP04491Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null, rs02 = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP04491(?,?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+//            cstmt01.registerOutParameter(8, Types.INTEGER);
+//            cstmt01.registerOutParameter(9, Types.INTEGER);
+//            cstmt01.registerOutParameter(10, Types.INTEGER);
+//            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_A720CIA);
+            cstmt01.setString(3, filter.VP_A720FORMA);
+            cstmt01.setString(4, filter.VP_A720SERIE);
+            cstmt01.setString(5, filter.VP_A720FECVTA);  
+            cstmt01.setString(6, filter.VP_A720CUPONES);  
+//            cstmt01.setInt(8, filter.page.PAGNUM);
+//            cstmt01.setInt(9, filter.page.PAGROW);
+//            cstmt01.setInt(10, filter.page.TOTPAG);
+//            cstmt01.setInt(11, filter.page.TOTROW);
+            cstmt01.execute();
+//            filter.page.PAGNUM = cstmt01.getInt(8);
+//            filter.page.PAGROW = cstmt01.getInt(9);
+//            filter.page.TOTPAG = cstmt01.getInt(10);
+//            filter.page.TOTROW = cstmt01.getInt(11);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new SQP04491Filter();
+                objRtn.A720CIA = rs01.getString("A720CIA");
+                objRtn.A720FORMA = rs01.getString("A720FORMA");
+                objRtn.A720SERIE = rs01.getString("A720SERIE");
+                objRtn.A720SEQ = rs01.getString("A720SEQ");
+                objRtn.A720TDOC = rs01.getString("A720TDOC");
+                objRtn.A720PAX = rs01.getString("A720PAX");
+                objRtn.A720FECVTA = rs01.getString("A720FECVTA");                
+                objRtn.A720FLAG = rs01.getString("A720FLAG");                
+                objRtn.A720MONEDA = rs01.getString("A720MONEDA");
+                objRtn.A720TARIFA = rs01.getDouble("A720TARIFA");
+                objRtn.A720CPUI = rs01.getString("A720CPUI");
+                objRtn.A720USOS = rs01.getString("A720USOS");
+                
+//                objRtn.page.PAGNUM = filter.page.PAGNUM;
+//                objRtn.page.PAGROW = filter.page.PAGROW;
+//                objRtn.page.TOTPAG = filter.page.TOTPAG;
+//                objRtn.page.TOTROW = filter.page.TOTROW;
+
+                lstRtn.add(objRtn);
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    public List<SQP04492Filter> getSQP04492Filter(SQP04492Filter filter) throws SQLException, Exception {
+        List<SQP04492Filter> lstRtn = new ArrayList<SQP04492Filter>(0);
+        SQP04492Filter objRtn;
+
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null, rs02 = null;
+        String SQLCLL01 = "{CALL PRAXIS.SQP04492(?,?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+//            cstmt01.registerOutParameter(8, Types.INTEGER);
+//            cstmt01.registerOutParameter(9, Types.INTEGER);
+//            cstmt01.registerOutParameter(10, Types.INTEGER);
+//            cstmt01.registerOutParameter(11, Types.INTEGER);
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.VP_A4213CIA);
+            cstmt01.setString(3, filter.VP_A4213FORMA);
+            cstmt01.setString(4, filter.VP_A4213SERIE);
+            cstmt01.setString(5, filter.VP_A4213SEQVO);  
+//            cstmt01.setInt(8, filter.page.PAGNUM);
+//            cstmt01.setInt(9, filter.page.PAGROW);
+//            cstmt01.setInt(10, filter.page.TOTPAG);
+//            cstmt01.setInt(11, filter.page.TOTROW);
+            cstmt01.execute();
+//            filter.page.PAGNUM = cstmt01.getInt(8);
+//            filter.page.PAGROW = cstmt01.getInt(9);
+//            filter.page.TOTPAG = cstmt01.getInt(10);
+//            filter.page.TOTROW = cstmt01.getInt(11);
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn = new SQP04492Filter();
+                objRtn.A4213CCUST = rs01.getString("A4213CCUST");
+                objRtn.A4213CIA = rs01.getString("A4213CIA");
+                objRtn.A4213FORMA = rs01.getString("A4213FORMA");
+                objRtn.A4213SERIE = rs01.getString("A4213SERIE");
+                objRtn.A4213TICKET= rs01.getString("A4213CIA")+rs01.getString("A4213FORMA")+rs01.getString("A4213SERIE");
+                objRtn.A4213FECVT = rs01.getString("A4213FECVT");                
+                objRtn.A4213ITEMC = rs01.getString("A4213ITEMC");
+                objRtn.A4213CIATK = rs01.getString("A4213CIATK");
+                objRtn.A4213FORTK = rs01.getString("A4213FORTK");                
+                objRtn.A4213SERTK = rs01.getString("A4213SERTK");                
+                objRtn.A4213FEMIS = rs01.getString("A4213FEMIS");
+                objRtn.A4213SEQV = rs01.getString("A4213SEQV");
+                objRtn.A4213CUPON = rs01.getString("A4213CUPON");                
+                objRtn.A4213AMOTK = rs01.getDouble("A4213AMOTK");
+                objRtn.A4213MDATK = rs01.getString("A4213MDATK");
+                objRtn.A4213TARIF = rs01.getDouble("A4213TARIF");
+                objRtn.A4213PAX = rs01.getString("A4213PAX");
+                objRtn.A4213TDOC = rs01.getString("A4213TDOC");
+                objRtn.A4213FLG = rs01.getString("A4213FLG");
+                
+//                objRtn.page.PAGNUM = filter.page.PAGNUM;
+//                objRtn.page.PAGROW = filter.page.PAGROW;
+//                objRtn.page.TOTPAG = filter.page.TOTPAG;
+//                objRtn.page.TOTROW = filter.page.TOTROW;
+
+                lstRtn.add(objRtn);
+            }
+
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstRtn;
+    }
+    
 }
