@@ -10,13 +10,12 @@ package net.miatech.beans;
  * @author vhidalgo
  */
 public class SQP04482Filter extends A4213 {
-    public int IN_TFILTER = 0;
+    public String VP_FILTER = "";
+    public String VP_TIPO = "";
     public String VP_CCUST = "";
-    public String VP_TicketTV = "";
-    public String VP_TicketTK = "";
-    public String VP_TicketTVIssueDate = "";
-    public String VP_SystemDate = "";
-    public String VP_StatusFormateo = "";
-    
+    public String VP_Ticket = "";    
+    public String VP_Fecha1 = "";
+    public String VP_Fecha2 = "";
+    public String VP_StatusFormateo = "";    
     public Pagination page = new Pagination();
 }

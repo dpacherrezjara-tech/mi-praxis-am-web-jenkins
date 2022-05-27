@@ -32,6 +32,7 @@ public class A4213 {
     public String A4213MDATK = "";
     public Double A4213TARIF = 0.00;
     public String A4213PAX = "";
+    public String A4213TDOC= "";
     public String A4213FLG = "";
     public String A4213STAF = "";
     public String A4213DATF = "";
