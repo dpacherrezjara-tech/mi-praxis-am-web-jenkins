@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-prototype.widthContenedor = 1200;
+prototype.widthContenedor = 1100;
 prototype.widthGrid = '100%';
-prototype.id01 = 'RegistroVentaOALCrud';
+prototype.id01 = 'VouchersIssuedVersusClaims';
 
 Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedVersusClaimsForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.VouchersIssuedVersusClaimsForm',
     requires: [
         'Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssuedVersusClaimsController',
-        'Ext.Praxis.view.sales.VouchersIssuedVersusClaims.Options',
-        'Ext.Praxis.view.sales.VouchersIssuedVersusClaims.Filters',
-        'Ext.Praxis.view.sales.VouchersIssuedVersusClaims.Info'
+        'Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Options',
+        'Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters',
+        'Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info'
     ],
     controller: 'VouchersIssuedVersusClaimsController',
     id: prototype.id + '-ContenedorMain',

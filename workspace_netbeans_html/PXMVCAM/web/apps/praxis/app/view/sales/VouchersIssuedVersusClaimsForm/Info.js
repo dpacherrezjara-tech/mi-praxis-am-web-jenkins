@@ -1,7 +1,7 @@
 
 Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.' + prototype.id + '-info',    
+    alias: 'widget.' + prototype.id + '-info',
     align: 'left',
     bodyStyle: 'background-color: #E3EAEF;',
     defaults: {
@@ -42,7 +42,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData',
-                            columnLines: true,                            
+                            columnLines: true,
                             width: '99%',
                             height: 500,
                             padding: '0px 5px 1px 5px',
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                         sortable: false,
                                         width: 35,
                                         align: 'center',
-                                        locked: true,
+                                        //locked: true,
                                         items: [
                                             {
                                                 iconCls: 'prx-icon-detail',
@@ -62,21 +62,14 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                             }
                                         ]
                                     },
-                                    {text: 'Cia', dataIndex: 'A4069CIA', width: 40, align: 'center', locked: true},
                                     {
-                                        text: 'Travel Voucher Nbr', dataIndex: 'A4069TKTOR', width: 110, align: 'center', locked: true
-//                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                             
-//                                            return record.get("A4069FORMA")+record.get("A4069SERIE");
-//                                        }
+                                        text: 'Travel Voucher Nbr', dataIndex: '', width: 120, align: 'center',
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                             
+                                            return record.get("A4213CIA")+record.get("A4213FORMA")+record.get("A4213SERIE");
+                                        }
                                     },
-                                    { text: 'Trx.', dataIndex: 'A4069TRNCU', align: 'center', width: 50, locked: true},
-                                    { text: 'Grupo', dataIndex: 'A4069GRUPO', align: 'center', width: 70, locked: true},
-                                    { text: 'Fecha <br> Venta', dataIndex: 'A4069FEVTA', align: 'center', width: 70, locked: true},
-                                    { text: 'Agente', dataIndex: 'A4069IATA', align: 'center', width: 70, locked: true},
-                                    { text: 'Tipo', dataIndex: 'A4069SERV', align: 'center', width: 70, locked: true},
-                                    { text: 'Pax', dataIndex: 'A4069PAX', align: 'left', width: 120, locked: true},
-                                    {text: 'Mda.', dataIndex: 'A4069MDLOC', width: 50, align: 'center'},
-                                    {text: 'Tarifa', dataIndex: 'A4069FARE', width: 90, align: 'right',
+                                    {text: 'Issued Date', dataIndex: 'A4213FECVT', align: 'center', width: 100},
+                                    {text: 'Amount', dataIndex: 'A4213AMOUN', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
 //                                            return Ext.util.Format.number(value, '0,000.00');
@@ -85,30 +78,16 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Iva', dataIndex: 'A4069IVA', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000');
-//                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000');
+                                    {text: 'Curr.', dataIndex: 'A4213MDATK', width: 50, align: 'center'},
+                                    {text: 'Agent', dataIndex: 'A4213AGENT', align: 'center', width: 70},
+                                    {text: 'Ticket<br>Ancillaries', dataIndex: '', align: 'center', width: 120,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                         
+                                            return record.get("A4213CIATK")+record.get("A4213FORTK")+record.get("A4213SERTK");
                                         }
                                     },
-                                    { text: '%', dataIndex: 'A4069IVAP', align: 'center', width: 40},
-                                    {
-                                        text: 'TUA', dataIndex: 'A4069TUA', width: 70, align: 'right',
-//                                      summaryType: 'sum',
-//                                      summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(val_AVG, '0,000.00');
-//                                        }
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-//                                            if (record.get('IS_TOTAL'))
-//                                                metaData.tdStyle = 'font-weight: bold;';
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }                                        
-                                    },
-                                    {
-                                        text: 'YR', dataIndex: 'A4069YR', width: 70, align: 'right',
+
+                                    {text: 'Coupons', dataIndex: 'A4213CUPON', align: 'center', width: 70},
+                                    {text: 'Amount', dataIndex: 'A4213AMOTK', width: 90, align: 'right',
 //                                        summaryType: 'sum',
 //                                        summaryRenderer: function (value, summaryData, dataIndex) {
 //                                            return Ext.util.Format.number(value, '0,000.00');
@@ -117,30 +96,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {
-                                        text: 'Other', dataIndex: 'A4069OTR', width: 70, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    {
-                                        text: 'Total', dataIndex: 'A4069TOTAL', width: 90, align: 'right',
-//                                        summaryType: 'sum',
-//                                        summaryRenderer: function (value, summaryData, dataIndex) {
-//                                            return Ext.util.Format.number(value, '0,000.00');
-//                                        },
-                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        }
-                                    },
-                                    { text: 'Ruta', dataIndex: 'A4069RUTA', align: 'left', width: 120},                                    
-                                    { text: 'Carr.', dataIndex: 'A4069CARR', align: 'left', width: 120},
-                                    { text: 'Fare base', dataIndex: 'A4069FBAS', align: 'left', width: 120},
-                                    { text: 'F. Vuelo', dataIndex: 'A4069FVLO', align: 'center', width: 70}
+                                    {text: 'System Date', dataIndex: 'A4213FECIN', align: 'center', width: 100}
                                 ],
                                 defaults: {
                                     sortable: false,
@@ -172,12 +128,12 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                             xtype: 'panel',
                             id: prototype.id + '-pie',
                             width: 210,
-                            height: 35,                            
+                            height: 35,
                             layout: {
                                 type: 'hbox',
                                 pack: 'center'
                             },
-                            border: true,                            
+                            border: true,
                             bodyStyle: 'background-color: transparent; border: 1px solid #81BEF7',
                             defaults: {
                                 border: true

@@ -57,11 +57,12 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                             xtype: 'combo',
                                             id: prototype.id + '-cmbfiltro-fechas',
                                             fieldLabel: 'Filter by', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
+                                            height: 26, fieldStyle: 'text-align:left;font-size:13px;',
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
-                                                    ["01", "Fecha Venta"],
-                                                    ["02", "Fecha Registro"]
+                                                    ["01", "Issued Date Voucher"],
+                                                    ["02", "System Date"]
                                                 ]
                                             }),
                                             queryMode: 'local',
@@ -72,9 +73,9 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                             editable: true,
                                             typeAhead: true,
                                             valueField: 'code', displayField: 'name',
-                                            width: 190,
+                                            width: 200,
                                             //height: 26,
-                                            value: "01",
+                                            value: "02",
                                             listConfig: {maxHeight: 111},
                                             enableKeyEvents: true,
                                             padding: '6 0',
@@ -90,12 +91,10 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                             xtype: 'datefield',
                                             id: prototype.id + '-fecha01',
                                             fieldLabel: 'Desde', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 70,
-                                            width: 155,
-                                            //height: 24,
+                                            width: 160, height: 26, fieldStyle: 'text-align:center;font-size:13px;',
                                             format: 'Ymd',
-                                            value: '20210101',
-//                                            value: new Date(),
-                                            minValue: new Date(1990, 00, 01),
+                                            value: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+                                            //minValue: new Date(1990, 00, 01),
                                             maskRe: /[0-9/]/,
                                             editable: true,
                                             enableKeyEvents: true,
@@ -104,7 +103,11 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                             //padding:'2 2 2 2 ', 
                                             padding: '6 0',
                                             listeners: {
-                                                //change: 'onUpperValue',
+                                                change: function (obj, e) {
+                                                    //console.log(obj);
+                                                    Ext.getCmp(prototype.id + '-fecha02').setValue(obj.rawValue);
+                                                },
+                                                //change: 'CmbDate_clickHandler'
                                                 keypress: function (obj, e) {
                                                     if (e.getKey() === e.ENTER) {
                                                         Ext.getCmp(prototype.id + '-fecha02').focus();
@@ -116,7 +119,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                             xtype: 'datefield',
                                             id: prototype.id + '-fecha02',
                                             fieldLabel: 'Hasta', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 38,
-                                            width: 128,
+                                            width: 135, height: 26, fieldStyle: 'text-align:center;font-size:13px;',
                                             //height: 24,
                                             format: 'Ymd', value: new Date(),
                                             minValue: new Date(1990, 00, 01),
@@ -136,25 +139,45 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                             }
                                         },
                                         {
-                                            xtype: 'textfield',
-                                            id: prototype.id + '-TICKET-NUMBER-CIA',
-                                            fieldLabel: 'Cia', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 40,
-                                            fieldStyle: 'text-align:center;font-weight: bold;font-size:13px;',
+                                            xtype: 'combo',
+                                            id: prototype.id + '-cmbfiltro-tipo-tkt',
+                                            fieldLabel: 'Tipo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
+                                            height: 26, fieldStyle: 'text-align:center;font-size:13px;',
+                                            store: new Ext.data.SimpleStore({
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ["V", "Travel Voucher Nbr"],
+                                                    ["T", "Ticket/Ancillaries"]
+                                                ]
+                                            }),
+                                            queryMode: 'local',
+                                            triggerAction: 'all',
+                                            autoSelect: false,
+                                            forceSelection: true,
+                                            caseSensitive: false,
+                                            editable: true,
+                                            typeAhead: true,
+                                            valueField: 'code', displayField: 'name',
+                                            width: 180,
+                                            //height: 26,
+                                            value: "V",
+                                            listConfig: {maxHeight: 111},
                                             enableKeyEvents: true,
-                                            width: 90,
-                                            value:'',
-                                            enforceMaxLength: true,
-                                            maxLength: 3,padding: '6 0',
-                                            //height: 24,
+                                            padding: '6 0',
                                             listeners: {
-                                                keypress: 'onTxtFilterKeypress'
+                                                //focus: function(combo) {
+                                                //    combo.expand();
+                                                //},
+                                                //keypress: 'onTextKeypress',
+                                                //change: 'cmbfiltro_clickHandler'
                                             }
                                         },
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-TICKET-NUMBER',
                                             fieldLabel: 'Boleto', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
-                                            fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
+                                            //fieldStyle: 'text-align:left;font-weight: bold;font-size:13px;',
+                                            height: 26, fieldStyle: 'text-align:center;font-size:13px;',
                                             enableKeyEvents: true,
                                             //padding:'0 0 0 2',
                                             padding: '6 0 0 2',
@@ -168,14 +191,16 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                         },
                                         {
                                             xtype: 'combo',
-                                            id: prototype.id + '-cmbfiltro-tipo',
-                                            fieldLabel: 'Tipo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
+                                            id: prototype.id + '-cmbfiltro-estado',
+                                            fieldLabel: 'Estado', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 50,
+                                            height: 26, fieldStyle: 'text-align:center;font-size:13px;',
                                             store: new Ext.data.SimpleStore({
                                                 fields: ['code', 'name'],
                                                 data: [
                                                     ["", "ALL"],
-                                                    ["OA", "OAL"],
-                                                    ["HO", "HOSPEDAJE"]
+                                                    ["P", "PENDIENTE"],
+                                                    ["F", "PROCESADO FORMATEO"],
+                                                    ["E", "ERROR"]
                                                 ]
                                             }),
                                             queryMode: 'local',
@@ -199,27 +224,27 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Filters', {
                                                 //keypress: 'onTextKeypress',
                                                 //change: 'cmbfiltro_clickHandler'
                                             }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id + '-btn-consultar',
-                                            text: 'Consultar',
-                                            margin: '5 0 0 10',
-                                            icon: 'resources/img/icon/search.png',
-                                            listeners: {
-                                                click: 'btnSearch_click'
-                                            }
-                                        },
-                                        {
-                                            xtype: 'button',
-                                            id: prototype.id + '-btn-upload',
-                                            text: 'Upload from file',
-                                            margin: '5 0 0 5',
-                                            icon: 'resources/img/icon/file.png',
-                                            listeners: {
-                                                click: ''
-                                            }
                                         }
+//                                        {
+//                                            xtype: 'button',
+//                                            id: prototype.id + '-btn-consultar',
+//                                            text: 'Consultar',
+//                                            margin: '5 0 0 10',
+//                                            icon: 'resources/img/icon/search.png',
+//                                            listeners: {
+//                                                click: 'btnSearch_click'
+//                                            }
+//                                        },
+//                                        {
+//                                            xtype: 'button',
+//                                            id: prototype.id + '-btn-upload',
+//                                            text: 'Upload from file',
+//                                            margin: '5 0 0 5',
+//                                            icon: 'resources/img/icon/file.png',
+//                                            listeners: {
+//                                                click: ''
+//                                            }
+//                                        }
                                     ]
                                 }
                                 // </editor-fold>                                
