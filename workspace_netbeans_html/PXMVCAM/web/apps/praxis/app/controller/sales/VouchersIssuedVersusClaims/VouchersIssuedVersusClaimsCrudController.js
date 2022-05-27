@@ -234,12 +234,13 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
                         
                         me.handlerEvent_setDisabled(false);
                         //PARA ACTUALIZAR DESPUES DE INSERTAR
-                        if (strOption === "I") {
-                            Ext.getCmp(prototype.id01 + '-btn-save').hide();
-                            Ext.getCmp(prototype.id01 + '-btn-update').show();
-                            me.view.params.action = "U";
-                        }
-                        //Ext.getCmp(prototype.id01 + '-RegistroVentaOALEntry').close();
+//                        if (strOption === "I") {
+//                            Ext.getCmp(prototype.id01 + '-btn-save').hide();
+//                            Ext.getCmp(prototype.id01 + '-btn-update').show();
+//                            me.view.params.action = "U";
+//                        }
+
+                        me.onCancelClick();
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
                     }
                 });

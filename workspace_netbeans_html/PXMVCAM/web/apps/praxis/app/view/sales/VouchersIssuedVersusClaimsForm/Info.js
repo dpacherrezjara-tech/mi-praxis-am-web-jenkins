@@ -48,20 +48,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                             padding: '0px 5px 1px 5px',
                             columns: {
                                 items: [
-                                    {
-                                        xtype: 'actioncolumn',
-                                        sortable: false,
-                                        width: 35,
-                                        align: 'center',
-                                        //locked: true,
-                                        items: [
-                                            {
-                                                iconCls: 'prx-icon-detail',
-                                                tooltip: 'Ver detalle',
-                                                handler: 'onEditClick'
-                                            }
-                                        ]
-                                    },
+                                    
                                     {
                                         text: 'Travel Voucher Nbr', dataIndex: '', width: 120, align: 'center',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                             
@@ -96,7 +83,21 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'System Date', dataIndex: 'A4213FECIN', align: 'center', width: 100}
+                                    {text: 'System Date', dataIndex: 'A4213FECIN', align: 'center', width: 100},
+                                    {
+                                        xtype: 'actioncolumn',
+                                        sortable: false,
+                                        width: 35,
+                                        align: 'center',
+                                        //locked: true,
+                                        items: [
+                                            {
+                                                iconCls: 'prx-icon-detail',
+                                                tooltip: 'Ver detalle',
+                                                handler: 'onEditClick'
+                                            }
+                                        ]
+                                    }
                                 ],
                                 defaults: {
                                     sortable: false,

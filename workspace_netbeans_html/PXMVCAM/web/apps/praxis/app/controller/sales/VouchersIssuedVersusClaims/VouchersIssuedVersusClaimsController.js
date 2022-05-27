@@ -17,7 +17,7 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         me = this;
     },
     afterRender: function () {
-        
+        this.btnSearch_click();
     },
     // <editor-fold defaultstate="collapsed" desc="Options">
     btnSearch_click: function (obj, e) {
