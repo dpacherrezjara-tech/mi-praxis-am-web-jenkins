@@ -295,13 +295,14 @@ public class VouchersIssuedVersusClaimsDAO {
                 objRtn.A4213CCUST = rs01.getString("A4213CCUST");
                 objRtn.A4213CIA = rs01.getString("A4213CIA");
                 objRtn.A4213FORMA = rs01.getString("A4213FORMA");
-                objRtn.A4213SERIE = rs01.getString("A4213SERIE");
-                objRtn.A4213TICKET= rs01.getString("A4213CIA")+rs01.getString("A4213FORMA")+rs01.getString("A4213SERIE");
+                objRtn.A4213SERIE = rs01.getString("A4213SERIE");                
                 objRtn.A4213FECVT = rs01.getString("A4213FECVT");                
                 objRtn.A4213ITEMC = rs01.getString("A4213ITEMC");
                 objRtn.A4213CIATK = rs01.getString("A4213CIATK");
                 objRtn.A4213FORTK = rs01.getString("A4213FORTK");                
-                objRtn.A4213SERTK = rs01.getString("A4213SERTK");                
+                objRtn.A4213SERTK = rs01.getString("A4213SERTK");
+                objRtn.A4213TICKET= rs01.getString("A4213CIATK")+rs01.getString("A4213FORTK")+rs01.getString("A4213SERTK");  
+                
                 objRtn.A4213FEMIS = rs01.getString("A4213FEMIS");
                 objRtn.A4213SEQV = rs01.getString("A4213SEQV");
                 objRtn.A4213CUPON = rs01.getString("A4213CUPON");                
