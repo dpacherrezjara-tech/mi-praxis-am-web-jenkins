@@ -420,6 +420,7 @@ public class ElectronicMiscellaneousDAO {
 //                if (objRtn.SEQRO.equals("00")) {
 //                    objRtn.SEQRO = "";
 //                }
+                objRtn.RFIC = rs01.getString("RFIC");
                 objRtn.DFLIGHT = rs01.getString("DFLIGHT");
                 objRtn.strFormatDate = Functions.getMonthConvert(objRtn.DFLIGHT);
                 objRtn.ZONA = rs01.getString("ZONA");

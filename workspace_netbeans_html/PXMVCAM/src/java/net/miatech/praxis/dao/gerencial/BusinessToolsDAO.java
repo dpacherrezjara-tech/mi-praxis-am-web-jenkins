@@ -1146,4 +1146,82 @@ public class BusinessToolsDAO {
 
         return lista;
     }
+
+    public SQP00768 executeValuation(SQP00768 filter) throws SQLException,Exception {
+
+        List<SQP00768> lista = new ArrayList<>(0);
+        SQP00768 obj;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "";
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00768U(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        Connection cnx = null;
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.registerOutParameter(16, Types.INTEGER);
+            cstmt.registerOutParameter(17, Types.INTEGER);
+            cstmt.registerOutParameter(18, Types.VARCHAR);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, session.getUserView().getCustomerInfo().USR);
+            cstmt.setString(3, filter.strCliente);
+            cstmt.setString(4, filter.strFecha);
+            cstmt.setString(5, filter.IN_FECHA_FROM);
+            cstmt.setString(6, filter.IN_FECHA_TO);
+            cstmt.setString(7, filter.strSQL.trim());
+            cstmt.setString(8, filter.strSelectA.trim().replace("@", "''"));
+            cstmt.setString(9, filter.strSelectN.trim().replace("@", "''"));
+            cstmt.setString(10, filter.strOrderBy.trim());
+            cstmt.setString(11, filter.IN_SOURCEF.trim());
+            cstmt.setString(12, filter.IN_SOURCEF2.trim());
+            cstmt.setString(13, filter.IN_TABLA);
+            cstmt.setString(14, filter.IN_TABLA2);
+            cstmt.setString(15, filter.IN_VALID_MFSTO);
+            cstmt.setLong(16, filter.QTY);
+            cstmt.setLong(17, filter.QTY_UPDATE);
+            cstmt.setString(18, filter.strMSG);
+
+            cstmt.execute();
+
+            filter.QTY = cstmt.getInt(16);
+            filter.QTY_UPDATE = cstmt.getInt(17);
+            filter.strMSG = cstmt.getString(18);
+
+            
+        
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rst != null) {
+                    try {
+                        rst.close();
+                    } catch (SQLException e) {
+                        throw new SpringException(e);
+                    }
+                }
+                if (cstmt != null) {
+                    try {
+                        cstmt.close();
+                    } catch (SQLException e) {
+                        throw new SpringException(e);
+                    }
+                }
+                session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            } catch (Exception e) {
+            }
+
+            pasarGarbageCollector();
+        }
+
+        return filter;
+    }
 }
