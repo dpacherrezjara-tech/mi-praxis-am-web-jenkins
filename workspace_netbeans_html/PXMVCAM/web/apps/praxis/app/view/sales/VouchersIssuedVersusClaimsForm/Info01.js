@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info01', {
                                         }
                                     },
                                     {
-                                        text: 'Curr. Fare Pay', dataIndex: 'A4213MDATK', width: 50, align: 'left'
+                                        text: 'Curr.<br>Fare Pay', dataIndex: 'A4213MDATK', width: 50, align: 'left'
                                     },
                                     {
                                         text: 'Fare Pay', dataIndex: 'A4213TARIF', width: 90, align: 'right',
@@ -152,8 +152,9 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info01', {
                                         }
                                     },
                                     {text: 'Pax Name', dataIndex: 'A4213PAX', width: 150, align: 'left'},
-                                    {text: 'T. Doc.', dataIndex: 'A4213TDOC', width: 70, align: 'left'},
-                                    {text: 'CJN', dataIndex: 'A4213FLG', width: 60, align: 'left'}                                    
+                                    {text: 'T. Doc.', dataIndex: 'A4213TDOC', width: 70, align: 'center'},
+                                    {text: 'CJN', dataIndex: 'A4213FLG', width: 60, align: 'center'},
+                                    {text: 'Usages', dataIndex: 'A720USOS', width: 60, align: 'left'}                                    
                                 ],
                                 defaults: {
                                     sortable: false,

@@ -8,9 +8,6 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.id01 + '-dataEntryController',
     url: CONTEXTPATH + '/VouchersIssuedVersusClaims',
-    /**
-     * Constructor
-     */
     init: function (view) {
         var me = this;
     },
@@ -22,7 +19,7 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         var grid01 = Ext.getCmp(prototype.id01 + '-gridData-TKT');
         var storeGridDatas = Ext.create('Ext.Praxis.store.sales.GridData', {});
         grid01.setStore(storeGridDatas);
-        
+
         this.get_ClearField();
         var p = this.view.params;
         switch (p.action) {
@@ -31,58 +28,51 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
                 Ext.getCmp(prototype.id01 + '-btn-update').hide();
                 Ext.getCmp(prototype.id01 + '-btn-save').show();
 
-                //this.handlerEvent_setDisabled(true);
                 Ext.getCmp(prototype.id01 + '-A4213TKTVO').focus();
                 break;
             case 'U':
                 this.getDataInputs();
                 Ext.getCmp(prototype.id01 + '-btn-save').hide();
                 Ext.getCmp(prototype.id01 + '-btn-update').show();
-                //Ext.getCmp(prototype.id01 + '-btn-delete').show(); (no hay opcion de quitar cliente) ??
-                //this.handlerEvent_setDisabled(false);
+
                 break;
         }
-    },
-    handlerEvent_setDisabled: function (bflag) {
-        //boton logo
-        //Ext.getCmp(prototype.id01 + '-file').setDisabled(bflag);
-        //Ext.getCmp(prototype.id01 + '-btn-upload').setDisabled(bflag);
     },
     getDataInputs: function () {
         var p = this.view.params;
         var data = p.rec.data;
-        console.log(data);
+        //console.log(data);
         Ext.getCmp(prototype.id01 + '-A4213FECVT').setValue(data.A4213FECVT);
         Ext.getCmp(prototype.id01 + '-A4213TKTVO-CIA').setValue(data.A4213CIA);
-        Ext.getCmp(prototype.id01 + '-A4213TKTVO').setValue(data.A4213FORMA+data.A4213SERIE);
+        Ext.getCmp(prototype.id01 + '-A4213TKTVO').setValue(data.A4213FORMA + data.A4213SERIE);
         Ext.getCmp(prototype.id01 + '-A4213SEQVO').setValue(data.A4213SEQVO);
-        
+
         Ext.getCmp(prototype.id01 + '-A4213AMOUN').setValue(Ext.util.Format.number(data.A4213AMOUN, '0,000.00'));
         Ext.getCmp(prototype.id01 + '-A4213MONED').setValue(data.A4213MONED);
         Ext.getCmp(prototype.id01 + '-A4213AGENT').setValue(data.A4213AGENT);
-          
+
         Ext.getCmp(prototype.id01 + '-A4213USRIN').setValue(data.A4213USRIN);
         Ext.getCmp(prototype.id01 + '-A4213FECIN').setValue(data.A4213FECIN);
         Ext.getCmp(prototype.id01 + '-A4213HORIN').setValue(data.A4213HORIN);
         Ext.getCmp(prototype.id01 + '-A4213USRAC').setValue(data.A4213USRAC);
         Ext.getCmp(prototype.id01 + '-A4213FECAC').setValue(data.A4213FECAC);
-        Ext.getCmp(prototype.id01 + '-A4213HORAC').setValue(data.A4213HORAC);        
+        Ext.getCmp(prototype.id01 + '-A4213HORAC').setValue(data.A4213HORAC);
         this.search_routing();
 
     },
     getDataEntryValues: function (strOption) {
         var VP_ACTION = strOption;
         var VL_A4069CIA = Ext.getCmp(prototype.id01 + '-A4213TKTVO-CIA').getValue();
-        var VL_A4213TICKET = Ext.getCmp(prototype.id01 + '-A4213TKTVO').getValue();        
+        var VL_A4213TICKET = Ext.getCmp(prototype.id01 + '-A4213TKTVO').getValue();
         var VL_A4213FORMA = VL_A4213TICKET.substring(0, 4);
         var VL_A4213SERIE = VL_A4213TICKET.substring(4, 10);
-        var VL_A4213FECVT = Ext.util.Format.date(Ext.getCmp(prototype.id01 + '-A4213FECVT').getValue(), 'Ymd');        
+        var VL_A4213FECVT = Ext.util.Format.date(Ext.getCmp(prototype.id01 + '-A4213FECVT').getValue(), 'Ymd');
         var VL_A4213SEQVO = Ext.getCmp(prototype.id01 + '-A4213SEQVO').getValue(); //en insert va vacio ...
         var VL_A4213MONED = Ext.getCmp(prototype.id01 + '-A4213MONED').getValue();
         var VL_A4213AMOUN = Ext.Number.parseFloat(Ext.getCmp(prototype.id01 + '-A4213AMOUN').getValue().replace(",", "").replace(",", ""));
         var VL_A4213AGENT = Ext.getCmp(prototype.id01 + '-A4213AGENT').getValue();
         var VL_A4213ITEMC = ""; //Ext.getCmp(prototype.id01 + '-A4213ITEMC').getValue() ;
-        
+
         return {
             VP_ACTION: VP_ACTION,
             A4213CIA: VL_A4069CIA,
@@ -97,11 +87,11 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         };
     },
 
-    onSaveClick: function (btn) {
+    onSaveClick: async function (btn) {
         var p = this.view.params;
         var strOption = p.action;
         var params = this.getDataEntryValues(strOption);
-        var strMsg = this.validateForm(params);
+        var strMsg = await this.validateForm(params);
         if (strMsg.trim() !== '') {
             global.Msg({
                 msg: strMsg
@@ -126,14 +116,14 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
     crud: function () {
         var p = this.view.params;
         var strOption = p.action;
-        var bFlag = false;
+//        var bFlag = false;
         var lstrouting = new Array();
-                    
+
         var RemovedRecords = this.getRemovedRecords(prototype.id01 + '-gridData-TKT');
-        console.log('RemovedRecords:');
-        console.log(RemovedRecords);        
+//        console.log('RemovedRecords:');
+//        console.log(RemovedRecords);
         RemovedRecords.forEach(function (rec) {
-            if (rec.data.A4213TICKET.trim() === '') bFlag = true;
+            //if (rec.data.A4213TICKET.trim() === '') bFlag = true;
             lstrouting.push({
                 "crudState": "D", //rec.crudState,
                 "A4213TICKET": rec.data.A4213TICKET,
@@ -147,15 +137,16 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
                 "A4213TDOC": rec.data.A4213TDOC,
                 "A4213FLG": rec.data.A4213FLG,
                 "A4213ITEMC": rec.data.A4213ITEMC
-                // "A4069FVLO": Ext.util.Format.date(rec.data.A4069FVLO, 'Ymd')
+                        // "A4069FVLO": Ext.util.Format.date(rec.data.A4069FVLO, 'Ymd')
             });
         });
 
         var NewRecords = this.getNewRecords(prototype.id01 + '-gridData-TKT');
-        console.log('NewRecords:');
-        console.log(NewRecords);
+//        console.log('NewRecords:');
+//        console.log(NewRecords);
         NewRecords.forEach(function (rec) {
-            if (rec.data.A4213TICKET.trim() === '') bFlag = true;
+//            if (rec.data.A4213TICKET.trim() === '')
+//                bFlag = true;
             lstrouting.push({
                 "crudState": "I", //rec.crudState,
                 "A4213TICKET": rec.data.A4213TICKET,
@@ -173,10 +164,10 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         });
 
         var ModifiedRecords = this.getModifiedRecords(prototype.id01 + '-gridData-TKT');
-        console.log('UPDATE:');
-        console.log(ModifiedRecords); 
+//        console.log('UPDATE:');
+//        console.log(ModifiedRecords);
         ModifiedRecords.forEach(function (rec) {
-            if (rec.data.A4213TICKET.trim() === '') bFlag = true;
+            //if (rec.data.A4213TICKET.trim() === '')bFlag = true;
             lstrouting.push({
                 "crudState": "U", //rec.crudState,
                 "A4213TICKET": rec.data.A4213TICKET,
@@ -193,18 +184,18 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
             });
         });
 
-        // valida registro UATP
-        if (bFlag) {
-            global.Msg({
-                msg: 'Add Ticket/Ancillaries!'
-            });
-            return;
-        }
-        console.log( this.getDataEntryValues(strOption) );
+//        // valida registro 
+//        if (bFlag) {
+//            global.Msg({
+//                msg: 'ADD TICKET/ANCILLARIES'
+//            });
+//            return;
+//        }
+        console.log(this.getDataEntryValues(strOption));
         console.log('*******************');
         console.log(lstrouting);
-        // <return;
-        
+        // return;
+
         var me = this;
         Ext.Ajax.request({
             url: this.url + '/VouchersIssuedVersusClaimsCrud',
@@ -227,18 +218,6 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
                         //culmino PROCESO
                         if (objRtn.dbException.SQLCODE !== '1')
                             return;
-                        
-                        //revisar...
-                        //Ext.getCmp(prototype.id01 + '-INTERNAL-NUMBER').setValue(objRtn.OU_INTERNAL_NUMBER);
-                        //me.search_routing(); //cagar desde la base de datos para generar STORE.
-                        
-                        me.handlerEvent_setDisabled(false);
-                        //PARA ACTUALIZAR DESPUES DE INSERTAR
-//                        if (strOption === "I") {
-//                            Ext.getCmp(prototype.id01 + '-btn-save').hide();
-//                            Ext.getCmp(prototype.id01 + '-btn-update').show();
-//                            me.view.params.action = "U";
-//                        }
 
                         me.onCancelClick();
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
@@ -248,11 +227,11 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         });
 
     },
-    onUpdateClick: function (btn) {
+    onUpdateClick: async function (btn) {
         var p = this.view.params;
         var strOption = p.action;
         var params = this.getDataEntryValues(strOption);
-        var strMsg = this.validateForm(params);
+        var strMsg = await this.validateForm(params);
         if (strMsg.trim() !== '') {
             global.Msg({
                 msg: strMsg
@@ -292,7 +271,67 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         });
     },
     onCancelClick: function (btn) {
-        Ext.getCmp(prototype.id01 + '-VouchersIssuedVersusClaimsCrud').close();
+        var RemovedRecords = this.getRemovedRecords(prototype.id01 + '-gridData-TKT');
+        var NewRecords = this.getNewRecords(prototype.id01 + '-gridData-TKT');
+        var ModifiedRecords = this.getModifiedRecords(prototype.id01 + '-gridData-TKT');
+
+//        console.log('RemovedRecords');
+//        console.log(RemovedRecords);
+//        console.log('NewRecords');
+//        console.log(NewRecords);
+//        console.log('ModifiedRecords');
+//        console.log(ModifiedRecords);
+
+        if (RemovedRecords.length > 0) {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Unconfirmed changes (deleted) you want to leave anyway?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'yes') {
+                        Ext.getCmp(prototype.id01 + '-VouchersIssuedVersusClaimsCrud').close();
+                    }
+                }
+            });
+        }
+        if (NewRecords.length > 0) {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Unconfirmed changes (new records) you want to leave anyway?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'yes') {
+                        Ext.getCmp(prototype.id01 + '-VouchersIssuedVersusClaimsCrud').close();
+                    }
+                }
+            });
+        }
+        if (ModifiedRecords.length > 0) {
+            Ext.Msg.show({
+                title: '.:PRAXIS:.',
+                msg: 'Unconfirmed changes(update records) you want to leave anyway?',
+                buttons: Ext.MessageBox.YESNO,
+                scope: this,
+                icon: Ext.MessageBox.QUESTION,
+                modal: true,
+                fn: function (btn) {
+                    if (btn === 'yes') {
+                        Ext.getCmp(prototype.id01 + '-VouchersIssuedVersusClaimsCrud').close();
+                    }
+                }
+            });
+        }
+
+        if (RemovedRecords.length === 0 && NewRecords.length === 0 && ModifiedRecords.length === 0) {
+            Ext.getCmp(prototype.id01 + '-VouchersIssuedVersusClaimsCrud').close();
+        }
+
     },
     onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
@@ -300,63 +339,82 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
     onFocusNumberfield: function (obj, error, eOpts) {
         obj.selectText();
     },
+
     onfocusleaveNumberfield: function (obj, error, eOpts) {
         obj.setValue(Ext.util.Format.number(Ext.Number.parseFloat(obj.getValue()), '0,000.00'));
-        //console.log(obj.id); //"RegistroVentaOALCrud-A4069FARE"
-        
-//        if (obj.id === prototype.id01 + '-A4069FARE' || obj.id === prototype.id01 + '-A4069IVAP')
-//        this.calcular_iva();
-//        this.calcula_total();
-
     },
-//    calcular_iva:function(){
-//        var fare =  Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069FARE').getValue().replace(",", "").replace(",", "") );
-//        var piva = Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069IVAP').getValue().replace("%","") );        
-//        var iva = fare * piva / 100;
-//        Ext.getCmp(prototype.id01 + '-A4069IVA').setValue( Ext.util.Format.number(iva, '0,000.00') );
-//    },
-//    calcula_total:function(){
-//        var fare =  Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069FARE').getValue().replace(",", "").replace(",", "") );
-//        var iva =  Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069IVA').getValue().replace(",", "").replace(",", "") );
-//        var tua =  Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069TUA').getValue().replace(",", "").replace(",", "") );
-//        var yq =  Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069YQ').getValue().replace(",", "").replace(",", "") );
-//        var yr =  Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069YR').getValue().replace(",", "").replace(",", "") );
-//        var otr =  Ext.Number.parseFloat( Ext.getCmp(prototype.id01 + '-A4069OTR').getValue().replace(",", "").replace(",", "") );
-//        var total = (fare+iva+tua+yq+yr+otr);
-//        Ext.getCmp(prototype.id01 + '-A4069TOTAL').setValue( Ext.util.Format.number(total, '0,000.00') );
-//    },
     IsNumeric: function (input) {
         var RE = /^-{0,1}\d*\.{0,1}\d+$/;
         return (RE.test(input));
     },
     fn_completar_cia: function (obj, error, eOpts) {
-        var vl_cia = obj.getValue().substring(0, 3);
-        if (this.IsNumeric(vl_cia))
-            Ext.getCmp(prototype.id01 + '-A4069CIA').setValue(vl_cia);
+//        var vl_cia = obj.getValue().substring(0, 3);
+//        if (this.IsNumeric(vl_cia))
+//            Ext.getCmp(prototype.id01 + '-A4069CIA').setValue(vl_cia);
     },
-    validateForm: function (params) {
+
+    validateForm: async function (params) {
 //        console.log(params);
         var mensaje = "";
-        if (params.A4069TKTOR === '') {
-            mensaje = 'INGRESE TICKET NUMBER';
-            Ext.getCmp(prototype.id01 + '-A4069TKTOR').focus();
+        if (params.A4213FECVT === '') {
+            mensaje = 'NOT VALID DATE OF ISSUE';
+            Ext.getCmp(prototype.id01 + '-A4213FECVT').focus();
             return mensaje;
         }
-        if (params.A4069CIA === '') {
-            mensaje = 'INGRESE AIRLINE CODE';
-            Ext.getCmp(prototype.id01 + '-A4069CIA').focus();
+        if (params.A4213CIA === '') {
+            mensaje = 'INVALID AIRLINE CODE';
+            Ext.getCmp(prototype.id01 + '-A4213TKTVO-CIA').focus();
             return mensaje;
         }
-        if (params.A4069FEVTA === '') {
-            mensaje = 'INGRESE FECHA DE VENTA';
-            Ext.getCmp(prototype.id01 + '-A4069FEVTA').focus();
+        if (params.A4213FORMA === '' || params.A4213FORMA.length !== 4) {
+            mensaje = 'INVALID TRAVEL VOUCHER';
+            Ext.getCmp(prototype.id01 + '-A4213TKTVO').focus();
             return mensaje;
         }
-        if (params.A4069PAX === '' || params.A4069PAX === null) {
-            mensaje = 'INGRESE NOMBRE PAX';
-            Ext.getCmp(prototype.id01 + '-A4069PAX1').focus();
+        if (params.A4213SERIE === '' || params.A4213SERIE.length !== 6) {
+            mensaje = 'INVALID TRAVEL VOUCHER';
+            Ext.getCmp(prototype.id01 + '-A4213TKTVO').focus();
             return mensaje;
         }
+        if (params.A4213AMOUN === 0) {
+            mensaje = 'INVALID AMOUNT';
+            Ext.getCmp(prototype.id01 + '-A4213AMOUN').focus();
+            return mensaje;
+        }
+        if (params.A4213MONED === '' || params.A4213MONED.length !== 3) {
+            mensaje = 'INVALID CURRENCY';
+            Ext.getCmp(prototype.id01 + '-A4213MONED').focus();
+            return mensaje;
+        }
+        if (params.A4213AGENT === '' || params.A4213AGENT === null) {
+            mensaje = 'INVALID AGENT';
+            Ext.getCmp(prototype.id01 + '-A4213AGENT').focus();
+            return mensaje;
+        }
+
+        var RemovedRecords = this.getRemovedRecords(prototype.id01 + '-gridData-TKT');
+        var NewRecords = this.getNewRecords(prototype.id01 + '-gridData-TKT');
+        var ModifiedRecords = this.getModifiedRecords(prototype.id01 + '-gridData-TKT');
+
+        if (RemovedRecords.length === 0 && NewRecords.length === 0 && ModifiedRecords.length === 0) {
+            mensaje = 'ADD TICKET/ANCILLARIES';
+            Ext.getCmp(prototype.id01 + '-A4213TICKET').focus();
+            return mensaje;
+        }
+
+        //validar que ticket con uso no permita grabar
+        var grid01 = Ext.getCmp(prototype.id01 + '-gridData-TKT');
+        if (grid01.getStore().data.items.length > 0) {
+            var itemsfiltered = await grid01.getStore().data.items.filter(function (element) {
+                //console.log(element);
+                return element.data.A720USOS.trim() !== '';
+            });
+            if (itemsfiltered.length > 0) {
+                mensaje = 'Coupons have already been used';
+                return mensaje;
+            }
+        }
+        
         return mensaje;
     },
     get_ClearField: function () {
@@ -371,16 +429,17 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
     /*
      * lista ROUTING
      */
-    search_routing: function () {
-        
+    search_routing: async function () {
+
         var bean = {};
         var VP_ticket_voucher = Ext.getCmp(prototype.id01 + '-A4213TKTVO').getValue();
         bean.VP_A4213CIA = Ext.getCmp(prototype.id01 + '-A4213TKTVO-CIA').getValue();
         bean.VP_A4213FORMA = VP_ticket_voucher.substring(0, 4);
         bean.VP_A4213SERIE = VP_ticket_voucher.substring(4, 10);
-        bean.VP_A4213SEQVO = Ext.getCmp(prototype.id01 + '-A4213SEQVO').getValue();;
+        bean.VP_A4213SEQVO = Ext.getCmp(prototype.id01 + '-A4213SEQVO').getValue();
+        ;
 
-        var storeGridDatas = Ext.create('Ext.Praxis.store.sales.GridData', {
+        var storeGridDatas = await Ext.create('Ext.Praxis.store.sales.GridData', {
             proxy: {
                 url: prototype.url + '/search_tkt_saved'
             },
@@ -408,12 +467,12 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
                     global.clear();
                 }
             }
-        });      
-        Ext.getCmp(prototype.id01 + '-gridData-TKT').setStore(storeGridDatas);        
+        });
+        Ext.getCmp(prototype.id01 + '-gridData-TKT').setStore(storeGridDatas);
     },
 
     get_ticket_ancillarie: async function (in_param) {
-        
+
         var request = await Ext.Ajax.request({
             url: this.url + '/search_tkt',
             method: 'POST',
@@ -437,7 +496,7 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
     },
 
     onClickAdd: async function () {
-        
+
         var VL_A4213TICKET_CIA = Ext.getCmp(prototype.id01 + '-A4213TICKET-CIA').getValue();
         var VL_A4213TICKET = Ext.getCmp(prototype.id01 + '-A4213TICKET').getValue();
         var VL_A4213CUPON = Ext.getCmp(prototype.id01 + '-A4213CUPON').getValue();
@@ -445,45 +504,57 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         var VL_A4213FEMIS = Ext.util.Format.date(Ext.getCmp(prototype.id01 + '-A4213FEMIS').getValue(), 'Ymd');
         var me = this;
         var param = [];
-        
+
         param.A720CIA = VL_A4213TICKET_CIA; //1392140123456 
-        param.A720FORMA = VL_A4213TICKET.substring(0,4);
-        param.A720SERIE = VL_A4213TICKET.substring(4,10);
+        param.A720FORMA = VL_A4213TICKET.substring(0, 4);
+        param.A720SERIE = VL_A4213TICKET.substring(4, 10);
         param.A720FECVTA = VL_A4213FEMIS;
         param.A720CUPONES = VL_A4213CUPON;
-        
-        if (VL_A4213TICKET_CIA.length === 0 || VL_A4213TICKET_CIA.length !== 3  ){
-            global.Msg({msg: "Invalid Cia number" });
-            return;
-        }        
-        if (VL_A4213TICKET.length === 0 || VL_A4213TICKET.length !== 10  ){
-            global.Msg({msg: "Invalid ticket number" });
+
+        if (VL_A4213TICKET_CIA.length === 0 || VL_A4213TICKET_CIA.length !== 3) {
+            global.Msg({msg: "Invalid Cia number"});
             return;
         }
-        if (VL_A4213CUPON.length === 0 ){
-            global.Msg({msg: "Invalid coupons" });
+        if (VL_A4213TICKET.length === 0 || VL_A4213TICKET.length !== 10) {
+            global.Msg({msg: "Invalid ticket number"});
             return;
         }
-        
-        if (VL_A4213FEMIS.length === 0 ){
-            global.Msg({msg: "Invalid issue date" });
+        if (VL_A4213CUPON.length === 0) {
+            global.Msg({msg: "Invalid coupons"});
             return;
         }
-        
+
+        if (VL_A4213FEMIS.length === 0) {
+            global.Msg({msg: "Invalid issue date"});
+            return;
+        }
+
         var idx = VL_A4213CUPON.indexOf(",");
         //console.log(idx);
-        if( idx === -1  && VL_A4213CUPON.length > 1 ){
+        if (idx === -1 && VL_A4213CUPON.length > 1) {
             global.Msg({msg: "Coupon values must be separated by a comma(,)"});
             return;
         }
-        
-        
+
+
         var resp = await me.get_ticket_ancillarie(param);
-        console.log(resp);        
-        if ((resp.success) && resp.total > 0 ){
+        //console.log(resp);        
+        if ((resp.success) && resp.total > 0) {
             var grid01 = Ext.getCmp(prototype.id01 + '-gridData-TKT');
+            //console.log(grid01.getStore().data.items);
+            if (grid01.getStore().data.items.length > 0) {
+                var itemsfiltered = await grid01.getStore().data.items.filter(function (element) {
+                    //console.log(element);
+                    return element.data.A4213TICKET === VL_A4213TICKET_CIA + '' + VL_A4213TICKET;
+                });
+                //console.log(itemsfiltered.length);
+                if (itemsfiltered.length > 0) {
+                    global.Msg({msg: 'Ticket number has been added to grid!'});
+                    return;
+                }
+            }
             var beanGrid = {};
-            beanGrid.A4213TICKET = VL_A4213TICKET_CIA +''+ VL_A4213TICKET;
+            beanGrid.A4213TICKET = VL_A4213TICKET_CIA + '' + VL_A4213TICKET;
             beanGrid.A4213CUPON = VL_A4213CUPON;
             beanGrid.A4213FEMIS = resp.data[0].A720FECVTA;
             beanGrid.A4213SEQV = resp.data[0].A720SEQ;
@@ -494,16 +565,22 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
             beanGrid.A4213TDOC = resp.data[0].A720TDOC;
             beanGrid.A4213FLG = resp.data[0].A720FLAG;
             beanGrid.A4213ITEMC = resp.data[0].A4213ITEMC;
+            beanGrid.A720USOS = resp.data[0].A720USOS;
             grid01.getStore().add(beanGrid);
-        }else{
-            if(resp.total===0){
-                global.Msg({msg:'Ticket number not found' });
-            }else{
+
+            //aviso
+            if (resp.data[0].A720USOS.length > 0)
+                global.Msg({msg: 'Coupons have already been used'});
+
+        } else {
+            if (resp.total === 0) {
+                global.Msg({msg: 'Ticket number not found'});
+            } else {
                 global.Msg({msg: resp.sesion});
             }
-            
+
         }
-        
+
 
     },
     onClickRemove: function (grid, rowIndex, colIndex) {
