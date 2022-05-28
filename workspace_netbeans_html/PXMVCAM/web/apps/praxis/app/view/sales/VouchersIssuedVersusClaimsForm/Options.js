@@ -1,4 +1,4 @@
-Ext.define('Ext.Praxis.view.flown.BaseOdForm.Options', {
+Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Options', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-options',
     border: false,
@@ -9,48 +9,58 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.Options', {
     items: [
         {
             xtype: 'panel',
-            width: 100,
-            border: false,
+            id: prototype.id+'-boxPaginacion__',
+            hidden: true,
+            width: 100,            
+            border: false,                        
             items: [
                 {
                     xtype: 'toolbar',
                     cls: 'x-toolbar-pag',
-                    items:[
+                    items: [
                         {
                             xtype: 'button',
                             id: prototype.id + '-btn-pag-first',
                             iconCls: 'prx-icon-pagination-first',
-                            tooltip: 'First Page'
-
+                            tooltip: 'First Page',
+                            listeners: {
+                                click: 'pagFirst'
+                            }
                         },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btn-pag-previous',
                             iconCls: 'prx-icon-pagination-previous',
-                            tooltip: 'Previous Page'
-
+                            tooltip: 'Previous Page',
+                            listeners: {
+                                click: 'pagPrevious'
+                            }
                         },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btn-pag-next',
                             iconCls: 'prx-icon-pagination-next',
-                            tooltip: 'Next Page'
-
+                            tooltip: 'Next Page',
+                            listeners: {
+                                click: 'pagNext'
+                            }
                         },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btn-pag-last',
                             iconCls: 'prx-icon-pagination-last',
-                            tooltip: 'Last Page'
-
-                        }
-                        , {
+                            tooltip: 'Last Page',
+                            listeners: {
+                                click: 'pagLast'
+                            }
+                        },
+                        {
                             xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin',
+                            id: prototype.id + '-paggin__',                            
                             pageSize: 10,
                             border: false,
                             displayInfo: false,
-                            hidden: true
+                            hidden:true
                         }
                     ]
                 }
@@ -68,27 +78,37 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.Options', {
                             xtype: 'button',
                             id: prototype.id + '-btnSearch',
                             iconCls: 'prx-icon-search',
-                            tooltip: 'Search'
+                            tooltip: 'Search',
+                            listeners: {
+                                click: 'btnSearch_click'
+                            }
                         },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnFilter',
                             iconCls: 'prx-icon-filter',
-                            tooltip: 'Display filter'
+                            tooltip: 'Display filter',
+                            listeners: {
+                                click: 'btnFilter_click'
+                            }
                         },
-//                        {
-//                            xtype:'button',
-//                            id: prototype.id + '-btnDisplay',
-//                            icon: 'resources/img/botones/FalseChart.png',
-//                            tooltip: 'Display Charts'
-//                        },
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
+                            hidden:true,
                             listeners: {
                                 click: 'btnExcel_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnAdd',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'New',
+                            listeners:{
+                                click: 'btnAdd_click'
                             }
                         },
                         {
@@ -98,15 +118,6 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.Options', {
                             tooltip: 'Clear Options',
                             listeners: {
                                 click: 'btnClear_click'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btnAdd',
-                            iconCls: 'prx-icon-add',
-                            tooltip: 'New',
-                            listeners: {
-                                click: 'btnAdd_click'
                             }
                         },
                         {
@@ -124,4 +135,3 @@ Ext.define('Ext.Praxis.view.flown.BaseOdForm.Options', {
         }
     ]
 });
-
