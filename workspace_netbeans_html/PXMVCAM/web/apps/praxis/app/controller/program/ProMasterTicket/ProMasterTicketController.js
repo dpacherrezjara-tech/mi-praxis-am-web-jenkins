@@ -236,7 +236,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     A713AIRLIN: '139',
                     A713CIA:data.CIA,
                     DOCUMENTO:data.FOR + data.SER,
-                    A713SEQ:'00'
+                    A713SEQ:data.SEQ
                 }
             };
             
