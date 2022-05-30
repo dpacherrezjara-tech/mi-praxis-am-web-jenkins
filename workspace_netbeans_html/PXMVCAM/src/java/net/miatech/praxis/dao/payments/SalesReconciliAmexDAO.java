@@ -2735,7 +2735,7 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(7, filter.IN_COMPLEMENT);
             cstmt.setString(8, filter.IN_PNRError);
             cstmt.setString(9, filter.IN_TDOCError);
-            cstmt.setString(10, filter.IN_SCARDN);
+            cstmt.setString(10, filter.IN_SCARDN1.trim() + '%' + filter.IN_SCARDN2.trim() + '%');
             cstmt.setInt(11, filter.page.PAGNUM);
             cstmt.setInt(12, filter.page.PAGROW);
             cstmt.setInt(13, filter.page.TOTPAG);
