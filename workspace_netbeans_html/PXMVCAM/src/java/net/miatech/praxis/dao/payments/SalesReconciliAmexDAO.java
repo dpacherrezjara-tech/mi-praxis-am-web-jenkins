@@ -3450,9 +3450,9 @@ public class SalesReconciliAmexDAO {
         String SQLCLL01 = "";
 
         if (filter.TDOC.trim().equals("R")) {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04456(?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04456(?,?,?,?,?,?,?,?,?)}";
         } else {
-            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?,?)}";
+            SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04395(?,?,?,?,?,?,?,?,?)}";
         }
 
         Connection cnx = null;
@@ -3473,6 +3473,8 @@ public class SalesReconciliAmexDAO {
             cstmt.setString(5, Functions.restXDaystoDate(fecha_a_validar, -1));
             cstmt.setString(6, Functions.restXDaystoDate(fecha_a_validar, 1));
             cstmt.setString(7, filter.ISREFNBR.trim());
+            cstmt.setString(8, filter.SMERCHID.trim());
+            cstmt.setString(9, filter.SPNR.trim());
             cstmt.execute();
 
             rst = cstmt.getResultSet();

@@ -620,8 +620,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.helpByCreditCard();
             } else {
                 this.lstSendManual = [];
-
-                var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
+                this.lstBlocked = [];
 
                 Ext.Ajax.request({
                     url: prototype.url + '/searchDetTktSettlement',
