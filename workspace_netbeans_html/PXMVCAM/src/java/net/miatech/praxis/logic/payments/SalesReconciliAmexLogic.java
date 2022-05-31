@@ -126,5 +126,6 @@ public class SalesReconciliAmexLogic {
         return SalesReconciliAmexDAO.loadPX570SQP04463(filter);
     }
 
+    
     //-----------------------------------------------------------------------------------------
 }

@@ -32,6 +32,8 @@ public class A4116Filter extends A4116 {
     public String IN_AXPRODAT = "";
     public String IN_FREGLA = "";
     public String IN_SCARDN = "";
+    public String IN_SCARDN1 = "";
+    public String IN_SCARDN2 = "";
     public String IN_SAUTHOC = "";
     public String IN_WARNING = "";
     public String IN_CERROR = "";
