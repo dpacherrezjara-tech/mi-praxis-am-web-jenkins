@@ -144,7 +144,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
         this.setValue('txtHOUP', this.formato(this.beanResult.HOUP));
         this.getBreakdownDataGrid();
     },
-
     formato: function (numero) {
         var d, e;
         d = String(numero);
@@ -155,7 +154,6 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             return e;
         }
     },
-
     obtainData: function () {
 //        console.log('obtainData');
 
@@ -626,7 +624,8 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                 this.helpByCreditCard();
             } else {
                 this.lstSendManual = [];
-                var store_gridInfoScan = Ext.getCmp(prototype.id + '-gridDataInfoScan').getStore();
+                this.lstBlocked = [];
+
                 Ext.Ajax.request({
                     url: prototype.url + '/searchDetTktSettlement',
                     method: 'POST',
@@ -686,6 +685,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
             success: function (response, options) {
                 Ext.getCmp(prototype.id + '-gridDataInfoScan').unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
+                var flag_blocked = false;
                 meDE.beanInfo = res.lstInfo;
                 console.log(meDE.beanInfo);
                 if (res.lstInfo.length > 0) {
@@ -699,8 +699,13 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.DataEntryErrorTran
                                 //Guardar aquí tkts usados
                                 meDE.lstBlocked.push(res.lstInfo[i]);
                             } else {
+                                flag_blocked = true;
                                 meDE.lstSendManual.push(res.lstInfo[i]);
                             }
+                        }
+                        console.log(flag_blocked);
+                        if (flag_blocked) {
+                            global.Msg({msg: 'There are some blocked tickets'});
                         }
                     }
                 } else {
