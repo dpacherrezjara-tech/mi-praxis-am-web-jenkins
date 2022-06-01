@@ -67,6 +67,14 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 text: 'Plusgrade ID', dataIndex: 'PLUSGRAID', width: 90
                                             },
                                             {
+                                                text: 'Token', dataIndex: 'PAYTOKEN', width: 120,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    value = '<b>' + value + '</b>';
+                                                    metaData.style = "text-align:center;";
+                                                    return value;
+                                                }
+                                            },
+                                            {
                                                 text: 'Error',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -197,6 +205,14 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Qy Pax', dataIndex: 'NBROFPAX', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:center;background-color:#8ac6eb";
+                                                   
+                                                    return Ext.util.Format.number(value, '0,000');
+                                                },
+                                            },
+                                            {
                                                 text: 'Currency',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -229,6 +245,13 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         },
                                                     },
                                                 ]
+                                            },
+                                            {
+                                                text: 'Total <br> Amount Off', dataIndex: 'AMOUNTOFF', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:right;background-color:#8ac6eb";
+                                                    return Ext.util.Format.number(value, '0,000.00');
+                                                },
                                             },
                                             {text: 'Qty<br>Tkts', dataIndex: 'QTYTKT', width: 40,
                                                 listeners: {

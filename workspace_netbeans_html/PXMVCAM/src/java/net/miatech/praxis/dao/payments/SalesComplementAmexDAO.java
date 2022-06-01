@@ -109,6 +109,9 @@ public class SalesComplementAmexDAO {
                 bean.ADDPAXEMD = rst.getString("ADDPAXEMD").trim();
                 bean.ADDPAXTKT = rst.getString("ADDPAXTKT").trim();
                 bean.FAMEX = rst.getString("FAMEX").trim();
+                bean.AMOUNTOFF = rst.getDouble("AMOUNTOFF");
+                bean.PAYTOKEN = rst.getString("PAYTOKEN").trim();
+                bean.NBROFPAX = rst.getInt("NBROFPAX");
                 
                 bean.STCON = rst.getString("STCON").trim();
                 if (bean.STCON.equals("")) {
