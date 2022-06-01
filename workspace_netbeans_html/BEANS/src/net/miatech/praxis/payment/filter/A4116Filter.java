@@ -36,6 +36,8 @@ public class A4116Filter extends A4116 {
     public String IN_SCARDN2 = "";
     public String IN_SCARDN11 = "";
     public String IN_SCARDN22 = "";
+    public String IN_AUTHS = "";
+    public String IN_AUTHE = "";
     public String IN_SAUTHOC = "";
     public String IN_WARNING = "";
     public String IN_CERROR = "";
@@ -168,8 +170,8 @@ public class A4116Filter extends A4116 {
     public List<A4116Filter> lstSendManual = new ArrayList<A4116Filter>(0);
 
     public Pagination page = new Pagination();
-
     
+
     
     
 }

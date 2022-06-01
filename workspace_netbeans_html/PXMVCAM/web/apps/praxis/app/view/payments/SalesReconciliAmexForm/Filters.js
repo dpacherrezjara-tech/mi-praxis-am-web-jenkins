@@ -350,6 +350,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'filterPNRSettlement'
                             }
                         },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            text: 'Auth:',
+                            padding: '8px 1px 2px 1px',
+                            width: 50,
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtAuthS',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            maxLength: 6,
+                            width: 100,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'filterPNRSettlement'
+                            }
+                        },
                         {
                             xtype: 'combo',
                             fieldLabel: 'Document:',
@@ -392,7 +412,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                         hidden: false
                     },
                     items: [
-                        {xtype: 'tbspacer', width: 170},
+                        {xtype: 'tbspacer', width: 100},
                         {
                              xtype: 'checkboxfield',
                              id: prototype.id + '-chkWarnings',
@@ -496,6 +516,26 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             maskRe: /[0-9]/,
                             maxLength: 4,
                             width: 60,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            text: 'Auth:',
+                            padding: '8px 1px 2px 1px',
+                            width: 50,
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtAuthE',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            maxLength: 6,
+                            width: 100,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'txtPNR_keyDownHandler'
