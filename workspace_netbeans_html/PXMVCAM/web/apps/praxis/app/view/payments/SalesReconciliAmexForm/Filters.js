@@ -311,6 +311,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                                 keypress: 'filterPNRSettlement'
                             }
                         },
+                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'label',
                             text: 'Credit Card:',
@@ -327,7 +328,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             width: 80,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'filterPNRSettlement'
                             }
                         },
                         {
@@ -346,7 +347,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             width: 60,
                             enableKeyEvents: true,
                             listeners: {
-                                keypress: 'txtPNR_keyDownHandler'
+                                keypress: 'filterPNRSettlement'
                             }
                         },
                         {
