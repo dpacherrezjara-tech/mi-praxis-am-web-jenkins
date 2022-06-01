@@ -25,9 +25,12 @@ public class SQP04491Filter {
     public String A720TDOC = "";
     public String A720PAX = "";
     public String A720FECVTA= "";
+    public String A720GRUPO= "";
     public String A720FLAG = "";
     public String A720MONEDA = "";
     public Double A720TARIFA = 0.0;
+    public Double A720TFOP = 0.0;
+    public Double A720TFOPRV = 0.0;
     //VALIDAR USOS
     public String A720CPUI = "";
     public String A720USOS = "";

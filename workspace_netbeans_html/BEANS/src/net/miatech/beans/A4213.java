@@ -32,7 +32,7 @@ public class A4213 {
     public String A4213MDATK = "";
     public Double A4213TARIF = 0.00;
     public String A4213PAX = "";
-    public String A4213TDOC= "";
+    public String A4213TDOC = "";
     public String A4213FLG = "";
     public String A4213STAF = "";
     public String A4213DATF = "";
@@ -43,5 +43,10 @@ public class A4213 {
     public String A4213USRAC = "";
     public String A4213FECAC = "";
     public String A4213HORAC = "";
-    
+
+    public Double A4213TFOP = 0.00;
+    public Double A4213TFOPR = 0.00;
+    public String A4213GRUPO = "";
+    public String A4213CPUI = "";
+
 }
