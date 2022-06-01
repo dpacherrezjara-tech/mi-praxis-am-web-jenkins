@@ -323,7 +323,9 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         me.bean.IN_SCARDN2 = Ext.getCmp(prototype.id + '-txtCC2').getValue();
         me.bean.IN_SCARDN11 = Ext.getCmp(prototype.id + '-txtCC11').getValue();
         me.bean.IN_SCARDN22 = Ext.getCmp(prototype.id + '-txtCC22').getValue();
-
+        me.bean.IN_AUTHS = Ext.getCmp(prototype.id + '-txtAuthS').getValue();
+        me.bean.IN_AUTHE = Ext.getCmp(prototype.id + '-txtAuthE').getValue();
+        
 
         //me.bean.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSumm').getValue();
 
@@ -398,7 +400,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
                 this.setGridDataMainSummary();
                 break;
             case 'SE':
-                if ((Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '')) {
+                if ((Ext.getCmp(prototype.id + '-cmbSTVAL').getValue() !== '' || Ext.getCmp(prototype.id + '-txtPNR').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbTDOC').getValue() !== '' || Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC11').getValue() !== '' || Ext.getCmp(prototype.id + '-txtCC22').getValue() !== '' || Ext.getCmp(prototype.id + '-txtAuthS').getValue() !== '')) {
                     this.filterSettlement();
                 } else {
                     this.setGridDataMainSettlement();
@@ -597,6 +599,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliAmex.SalesReconciliAmex
         this.beanFilterSettlement.IN_CERROIN = Ext.getCmp(prototype.id + '-cmbErrorCodesRecSett').getValue();
         this.beanFilterSettlement.IN_SCARDN11 = Ext.getCmp(prototype.id + '-txtCC11').getValue();
         this.beanFilterSettlement.IN_SCARDN22 = Ext.getCmp(prototype.id + '-txtCC22').getValue();
+        this.beanFilterSettlement.IN_AUTHS = Ext.getCmp(prototype.id + '-txtAuthS').getValue();
         me.paramsDetailDetSettlement.beanString = JSON.stringify(this.beanFilterSettlement);
 
         if (me.panelActual !== '-boxDetSettlement') {
