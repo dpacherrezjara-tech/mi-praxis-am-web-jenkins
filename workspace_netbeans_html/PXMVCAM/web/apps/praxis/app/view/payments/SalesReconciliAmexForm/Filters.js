@@ -312,6 +312,44 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliAmexForm.Filters', {
                             }
                         },
                         {
+                            xtype: 'label',
+                            text: 'Credit Card:',
+                            padding: '8px 1px 2px 1px',
+                            width: 70
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC11',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 80,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {
+                            xtype: 'label',
+                            text: '******',
+                            padding: '8px 1px 2px 1px',
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC22',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 4,
+                            width: 60,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'txtPNR_keyDownHandler'
+                            }
+                        },
+                        {
                             xtype: 'combo',
                             fieldLabel: 'Document:',
                             id: prototype.id + '-cmbTDOC',
