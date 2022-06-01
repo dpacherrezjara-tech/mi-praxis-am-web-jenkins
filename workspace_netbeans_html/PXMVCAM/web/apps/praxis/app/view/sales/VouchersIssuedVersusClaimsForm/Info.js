@@ -80,7 +80,16 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info', {
 //                                            return Ext.util.Format.number(value, '0,000.00');
 //                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            value.style = "background-color:green;";
                                             return Ext.util.Format.number(value, '0,000.00');
+                                        }
+                                    },
+                                    {text: 'Estado', dataIndex: 'A4213STAF', align: 'left', width: 100,
+                                    renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                                                                         
+                                            var vl_estado = 'PENDIENTE';
+                                            if( value === 'F' ) vl_estado = 'FORMATEADO';
+                                            if( value === 'X' ) vl_estado = 'ERROR';
+                                            return vl_estado;
                                         }
                                     },
                                     {text: 'System Date', dataIndex: 'A4213FECIN', align: 'center', width: 100},

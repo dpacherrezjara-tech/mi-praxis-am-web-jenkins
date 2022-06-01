@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                         {
                                             xtype: 'datefield',
                                             fieldLabel: 'Issued Date', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                                            id: prototype.id01 + '-A4213FECVT',fieldStyle: 'text-align:center;font-size:13px;',
+                                            id: prototype.id01 + '-A4213FECVT', fieldStyle: 'text-align:center;font-size:13px;',
                                             width: 220, height: 26,
                                             format: 'Ymd', value: new Date(),
                                             minValue: new Date(1990, 00, 01),
@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4213TKTVO-CIA',
                                             fieldLabel: 'Travel Voucher Nbr.', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                                            width: 165, height: 26, value:'139', fieldStyle: 'text-align:center;font-size:13px;',
+                                            width: 165, height: 26, value: '139', fieldStyle: 'text-align:center;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 3,
@@ -101,20 +101,37 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id01 + '-A4213SEQVO',
-                                            hidden:true
+                                            id: prototype.id01 + '-A4213TKTVO-FORMA',
+                                            fieldLabel: '', labelAlign: 'right', labelSeparator: ' ',
+                                            labelStyle: 'font-weight: bold;',
+                                            fieldStyle: 'text-align:center;font-size:13px;',
+                                            labelWidth: 5, padding: '0 0 0 2',
+                                            width: 45, height: 26,disabled:true,
+                                            enableKeyEvents: true,
+                                            enforceMaxLength: true,
+                                            maxLength: 4, value:'0425',
+                                            maskRe: /[1234567890\+-]/,
+                                            listeners: {
+                                                change: 'onUpperValue',
+                                                //focusleave: 'fn_completar_cia',
+                                                keypress: function (obj, e) {
+                                                    if (e.getKey() === e.ENTER) {
+                                                        Ext.getCmp(prototype.id01 + '-A4213TKTVO').focus();
+                                                    }
+                                                }
+                                            }
                                         },
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4213TKTVO',
                                             fieldLabel: '', labelAlign: 'right', labelSeparator: ' ',
-                                            labelStyle: 'font-weight: bold;',                                            
+                                            labelStyle: 'font-weight: bold;',
                                             fieldStyle: 'text-align:center;font-size:13px;',
                                             labelWidth: 5, padding: '0 0 0 2',
-                                            width: 140, height: 26,
+                                            width: 80, height: 26,
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
-                                            maxLength: 10,
+                                            maxLength: 6,
                                             maskRe: /[1234567890\+-]/,
                                             listeners: {
                                                 change: 'onUpperValue',
@@ -125,7 +142,17 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                                     }
                                                 }
                                             }
-                                        }
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id01 + '-A4213SEQVO',
+                                            hidden: true
+                                        },
+                                        {
+                                            xtype: 'textfield',
+                                            id: prototype.id01 + '-A4213ITEMC',
+                                            hidden: true
+                                        }                                        
                                     ]
 
                                 },
@@ -141,7 +168,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                             width: 200, height: 26,
                                             fieldLabel: 'Amount:', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
                                             value: '0.00',
-                                            fieldStyle: 'text-align:right;font-size:13px;',                                            
+                                            fieldStyle: 'text-align:right;font-size:13px;',
                                             enableKeyEvents: true,
                                             maskRe: /[1234567890\.]/,
                                             listeners: {
@@ -186,7 +213,7 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4213AGENT',
                                             fieldLabel: 'Agent', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                                            width: 250, height: 26,fieldStyle: 'text-align:left;font-size:13px;',
+                                            width: 250, height: 26, fieldStyle: 'text-align:left;font-size:13px;',
                                             enableKeyEvents: true,
                                             enforceMaxLength: true,
                                             maxLength: 6,
@@ -344,9 +371,9 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4213TICKET-CIA',
-                                            fieldLabel: 'Ticket Nbr.:', labelAlign: 'right', labelStyle: 'font-weight: bold;', 
+                                            fieldLabel: 'Ticket Nbr.:', labelAlign: 'right', labelStyle: 'font-weight: bold;',
                                             labelWidth: 90,
-                                            width: 130, height: 26, value:'139', fieldStyle: 'text-align:center;font-size:13px;',
+                                            width: 130, height: 26, value: '139', fieldStyle: 'text-align:center;font-size:13px;',
                                             enableKeyEvents: true, margin: '1 0 0 0',
                                             enforceMaxLength: true,
                                             maxLength: 3,
@@ -362,9 +389,9 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.VouchersIssuedV
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id01 + '-A4213TICKET',
-                                            fieldLabel: '', padding: '0 0 0 2',labelSeparator: ' ',
+                                            fieldLabel: '', padding: '0 0 0 2', labelSeparator: ' ',
                                             labelStyle: 'font-weight: bold;',
-                                            fieldStyle: 'text-align:center;font-size:13px;',                                            
+                                            fieldStyle: 'text-align:center;font-size:13px;',
                                             labelAlign: 'right',
                                             labelTextAlign: 'right',
                                             margin: '1 0 0 0',

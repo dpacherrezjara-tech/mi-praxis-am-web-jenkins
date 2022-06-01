@@ -139,14 +139,21 @@ Ext.define('Ext.Praxis.view.sales.VouchersIssuedVersusClaimsForm.Info01', {
                                             }
                                         },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            metaData.style = 'background:yellow;font-weight:bold;color:green;'; 
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
                                     {
-                                        text: 'Curr.<br>Fare Pay', dataIndex: 'A4213MDATK', width: 50, align: 'left'
+                                        text: 'Curr.<br>Pay', dataIndex: 'A4213MDATK', width: 50, align: 'left'
                                     },
                                     {
-                                        text: 'Fare Pay', dataIndex: 'A4213TARIF', width: 90, align: 'right',
+                                        text: 'FOP', dataIndex: 'A4213TFOP', width: 90, align: 'right',
+                                        renderer: function (value) {
+                                            return Ext.util.Format.number(value, '0,000.00');
+                                        }
+                                    },
+                                     {
+                                        text: 'FOP Rev.', dataIndex: 'A4213TFOPR', width: 90, align: 'right',
                                         renderer: function (value) {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
