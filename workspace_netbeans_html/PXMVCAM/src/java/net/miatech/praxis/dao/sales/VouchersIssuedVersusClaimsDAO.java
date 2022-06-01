@@ -228,7 +228,10 @@ public class VouchersIssuedVersusClaimsDAO {
                 objRtn.A720MONEDA = rs01.getString("A720MONEDA");
                 objRtn.A720TARIFA = rs01.getDouble("A720TARIFA");
                 objRtn.A720CPUI = rs01.getString("A720CPUI");
+                objRtn.A720GRUPO = rs01.getString("A720GRUPO");
                 objRtn.A720USOS = rs01.getString("A720USOS");
+                objRtn.A720TFOP = rs01.getDouble("A720TFOP");
+                objRtn.A720TFOPRV = rs01.getDouble("A720TFOPRV");
                 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
@@ -313,6 +316,11 @@ public class VouchersIssuedVersusClaimsDAO {
                 objRtn.A4213TDOC = rs01.getString("A4213TDOC");
                 objRtn.A4213FLG = rs01.getString("A4213FLG");
                 
+                objRtn.A4213TFOP = rs01.getDouble("A4213TFOP");
+                objRtn.A4213TFOPR = rs01.getDouble("A4213TFOPR");
+                objRtn.A4213GRUPO = rs01.getString("A4213GRUPO");
+                objRtn.A4213CPUI = rs01.getString("A4213CPUI");
+                                
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
 //                objRtn.page.TOTPAG = filter.page.TOTPAG;
