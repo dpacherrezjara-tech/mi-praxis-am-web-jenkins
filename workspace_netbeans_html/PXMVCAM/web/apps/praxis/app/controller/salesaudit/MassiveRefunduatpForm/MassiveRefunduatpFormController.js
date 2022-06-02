@@ -132,6 +132,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
                 {"code": "M", "name": "MODIFIED"},
                 {"code": "I", "name": "INVALID CURRENCY"},
                 {"code": "G", "name": "INVALID IATA"},
+                {"code": "K", "name": "INVALID CPN"},
                 {"code": "R", "name": "REJECT"}
 
             ]
@@ -435,6 +436,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.MassiveRefunduatpForm.MassiveRefund
             case 'G':
                 color = '#e4fff9';
                 value = 'INVALID IATA';
+                break;
+            case 'K':
+                color = '#e4fff9';
+                value = 'INVALID CPN';
                 break;
             case 'J':
                 color = '#D99B25';
