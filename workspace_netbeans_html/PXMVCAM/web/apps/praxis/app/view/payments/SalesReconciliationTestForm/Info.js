@@ -1965,7 +1965,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTicket',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1150,
+                                                    width: 1250,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -2007,6 +2007,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                     var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
                                                                     metaData.style = "text-align:center;color:" + color + ";";
                                                                     metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Complement', dataIndex: 'strFCOMPL', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+                                                                    metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";     
                                                                     return value;
                                                                 }
                                                             },
@@ -3026,7 +3035,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTktByStval',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1280,
+                                                    width: 1380,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -3084,6 +3093,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                     var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
                                                                     metaData.style = "text-align:center;color:" + color + ";";
                                                                     metaData.tdAttr = 'data-qtip="' + data.SDATE + '"';
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Complement', dataIndex: 'strFCOMPL', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+                                                                    metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";     
                                                                     return value;
                                                                 }
                                                             },
@@ -3348,7 +3366,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                     xtype: 'grid',
                                                     id: prototype.id + '-gridDetTktMatch',
                                                     bodyStyle: 'background: transparent;',
-                                                    width: 1260,
+                                                    width: 1360,
                                                     titleAlign: 'center',
                                                     columnLines: true,
                                                     enableColumnMove: false,
@@ -3409,6 +3427,15 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Info', {
                                                                     var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
                                                                     metaData.style = "text-align:center;color:" + color + ";";
                                                                     metaData.tdAttr = 'data-qtip="' + data.STVAL + '"';
+                                                                    return value;
+                                                                }
+                                                            },
+                                                            {
+                                                                text: 'Complement', dataIndex: 'strFCOMPL', width: 90,
+                                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                                    var data = record.data;
+                                                                    var color = data.strPEM === 'SALES' ? '#64418c' : '#244066';
+                                                                    metaData.style = "text-align:center;color:" + color + ";background-color:#b2e1ff;";     
                                                                     return value;
                                                                 }
                                                             },

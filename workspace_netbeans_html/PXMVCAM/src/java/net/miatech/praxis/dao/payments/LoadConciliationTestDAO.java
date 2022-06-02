@@ -327,6 +327,12 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
+        HashMap<String, String> hmDescCompl = new HashMap<String, String>();
+        hmDescCompl.put("", "");
+        hmDescCompl.put("1", "PLUSGRADE");
+        hmDescCompl.put("2", "LIGAS");
+        hmDescCompl.put("3", "TABLET");
+
         HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
         CallableStatement cstmt = null;
@@ -386,6 +392,13 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.strPEM = "SALES";
                         }
+
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
+                        }
+
                         beanTkt.strTicket = rst.getString("CCIA").trim() + " " + rst.getString("FORMA").trim() + rst.getString("SERIE").trim();
                         beanTkt.CCIA = rst.getString("CCIA").trim();
                         beanTkt.FORMA = rst.getString("FORMA").trim();
@@ -566,6 +579,11 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
                         }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
+                        }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
                         } else {
@@ -705,6 +723,11 @@ public class LoadConciliationTestDAO {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
+                        }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                         }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -870,6 +893,12 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
+        HashMap<String, String> hmDescCompl = new HashMap<String, String>();
+        hmDescCompl.put("", "");
+        hmDescCompl.put("1", "PLUSGRADE");
+        hmDescCompl.put("2", "LIGAS");
+        hmDescCompl.put("3", "TABLET");
+
         HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
         CallableStatement cstmt = null;
@@ -951,6 +980,11 @@ public class LoadConciliationTestDAO {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
+                        }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                         }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -1092,6 +1126,11 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
                         }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
+                        }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
                         } else {
@@ -1213,6 +1252,11 @@ public class LoadConciliationTestDAO {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
+                        }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                         }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -2070,17 +2114,17 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04344(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04344(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
+            cstmt.registerOutParameter(20, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim()); //ADATE
@@ -2097,19 +2141,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(13, filter.IN_MERCHN.trim()); //
             cstmt.setString(14, filter.IN_AUTHNBR.trim()); //
             cstmt.setString(15, filter.IN_ADYEN.trim()); //
+            cstmt.setString(16, filter.IN_FCOMPL.trim()); //
 
-            cstmt.setInt(16, filter.page.PAGNUM);
-            cstmt.setInt(17, filter.page.PAGROW);
-            cstmt.setInt(18, filter.page.TOTPAG);
-            cstmt.setInt(19, filter.page.TOTROW);
+            cstmt.setInt(17, filter.page.PAGNUM);
+            cstmt.setInt(18, filter.page.PAGROW);
+            cstmt.setInt(19, filter.page.TOTPAG);
+            cstmt.setInt(20, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(16);
-            filter.page.PAGROW = cstmt.getInt(17);
-            filter.page.TOTPAG = cstmt.getInt(18);
-            filter.page.TOTROW = cstmt.getInt(19);
+            filter.page.PAGNUM = cstmt.getInt(17);
+            filter.page.PAGROW = cstmt.getInt(18);
+            filter.page.TOTPAG = cstmt.getInt(19);
+            filter.page.TOTROW = cstmt.getInt(20);
 
             while (rst.next()) {
                 lngTotQMATCH = rst.getLong("QMATCH");
@@ -2233,17 +2278,17 @@ public class LoadConciliationTestDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04345(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04345(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
+            cstmt.registerOutParameter(20, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -2260,19 +2305,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(13, filter.IN_MERCHN.trim());
             cstmt.setString(14, filter.IN_AUTHNBR.trim());
             cstmt.setString(15, filter.IN_ADYEN.trim());
+            cstmt.setString(16, filter.IN_FCOMPL.trim());
 
-            cstmt.setInt(16, filter.page.PAGNUM);
-            cstmt.setInt(17, filter.page.PAGROW);
-            cstmt.setInt(18, filter.page.TOTPAG);
-            cstmt.setInt(19, filter.page.TOTROW);
+            cstmt.setInt(17, filter.page.PAGNUM);
+            cstmt.setInt(18, filter.page.PAGROW);
+            cstmt.setInt(19, filter.page.TOTPAG);
+            cstmt.setInt(20, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(16);
-            filter.page.PAGROW = cstmt.getInt(17);
-            filter.page.TOTPAG = cstmt.getInt(18);
-            filter.page.TOTROW = cstmt.getInt(19);
+            filter.page.PAGNUM = cstmt.getInt(17);
+            filter.page.PAGROW = cstmt.getInt(18);
+            filter.page.TOTPAG = cstmt.getInt(19);
+            filter.page.TOTROW = cstmt.getInt(20);
 
             while (rst.next()) {
                 lngTotQMATCH = rst.getLong("QMATCH");
@@ -2403,20 +2449,26 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
+        HashMap<String, String> hmDescCompl = new HashMap<String, String>();
+        hmDescCompl.put("", "");
+        hmDescCompl.put("1", "PLUSGRADE");
+        hmDescCompl.put("2", "LIGAS");
+        hmDescCompl.put("3", "TABLET");
+
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04346(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04346(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(16, Types.INTEGER);
             cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
+            cstmt.registerOutParameter(20, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -2433,19 +2485,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(13, filter.IN_MERCHN.trim());
             cstmt.setString(14, filter.IN_AUTHNBR.trim());
             cstmt.setString(15, filter.IN_ADYEN.trim());
+            cstmt.setString(16, filter.IN_FCOMPL.trim());
 
-            cstmt.setInt(16, filter.page.PAGNUM);
-            cstmt.setInt(17, filter.page.PAGROW);
-            cstmt.setInt(18, filter.page.TOTPAG);
-            cstmt.setInt(19, filter.page.TOTROW);
+            cstmt.setInt(17, filter.page.PAGNUM);
+            cstmt.setInt(18, filter.page.PAGROW);
+            cstmt.setInt(19, filter.page.TOTPAG);
+            cstmt.setInt(20, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(16);
-            filter.page.PAGROW = cstmt.getInt(17);
-            filter.page.TOTPAG = cstmt.getInt(18);
-            filter.page.TOTROW = cstmt.getInt(19);
+            filter.page.PAGNUM = cstmt.getInt(17);
+            filter.page.PAGROW = cstmt.getInt(18);
+            filter.page.TOTPAG = cstmt.getInt(19);
+            filter.page.TOTROW = cstmt.getInt(20);
 
             while (rst.next()) {
                 dblTotSVFOP = rst.getDouble("SVFOP");
@@ -2490,6 +2543,11 @@ public class LoadConciliationTestDAO {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
+                        }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                         }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -2629,12 +2687,10 @@ public class LoadConciliationTestDAO {
 
                         if (beanTkt.strFecFiltro.equals("DATEC")) {
                             beanTkt.strTitulo = "Conciliation Date : ";
+                        } else if (beanTkt.IN_TDOC.equals("R")) {
+                            beanTkt.strTitulo = "Refund Date : ";
                         } else {
-                            if (beanTkt.IN_TDOC.equals("R")) {
-                                beanTkt.strTitulo = "Refund Date : ";
-                            } else {
-                                beanTkt.strTitulo = "Sales Date : ";
-                            }
+                            beanTkt.strTitulo = "Sales Date : ";
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + beanTkt.strDescCountry + " - Card : " + beanTkt.SCARCOD + " : " + beanTkt.strDescCard;
 
@@ -2688,6 +2744,11 @@ public class LoadConciliationTestDAO {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
+                        }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                         }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -2785,12 +2846,10 @@ public class LoadConciliationTestDAO {
 
                         if (beanTkt.strFecFiltro.equals("DATEC")) {
                             beanTkt.strTitulo = "Conciliation Date : ";
+                        } else if (beanTkt.IN_TDOC.equals("R")) {
+                            beanTkt.strTitulo = "Refund Date : ";
                         } else {
-                            if (beanTkt.IN_TDOC.equals("R")) {
-                                beanTkt.strTitulo = "Refund Date : ";
-                            } else {
-                                beanTkt.strTitulo = "Sales Date : ";
-                            }
+                            beanTkt.strTitulo = "Sales Date : ";
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + beanTkt.strDescCountry + " - Card : " + beanTkt.SCARCOD + " : " + beanTkt.strDescCard;
 
@@ -2842,6 +2901,11 @@ public class LoadConciliationTestDAO {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
+                        }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                         }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -2940,12 +3004,10 @@ public class LoadConciliationTestDAO {
 
                         if (beanTkt.strFecFiltro.equals("DATEC")) {
                             beanTkt.strTitulo = "Conciliation Date : ";
+                        } else if (beanTkt.IN_TDOC.equals("R")) {
+                            beanTkt.strTitulo = "Refund Date : ";
                         } else {
-                            if (beanTkt.IN_TDOC.equals("R")) {
-                                beanTkt.strTitulo = "Refund Date : ";
-                            } else {
-                                beanTkt.strTitulo = "Sales Date : ";
-                            }
+                            beanTkt.strTitulo = "Sales Date : ";
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + beanTkt.strDescCountry + " - Card : " + beanTkt.SCARCOD + " : " + beanTkt.strDescCard;
 
@@ -3679,17 +3741,17 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04339(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04339(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(17, Types.INTEGER);
             cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
+            cstmt.registerOutParameter(21, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim()); //ADATE
@@ -3707,19 +3769,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(14, filter.CERROR.trim());
             cstmt.setString(15, filter.IN_AUTHNBR.trim());
             cstmt.setString(16, filter.IN_ADYEN.trim());
+            cstmt.setString(17, filter.IN_FCOMPL.trim());
 
-            cstmt.setInt(17, filter.page.PAGNUM);
-            cstmt.setInt(18, filter.page.PAGROW);
-            cstmt.setInt(19, filter.page.TOTPAG);
-            cstmt.setInt(20, filter.page.TOTROW);
+            cstmt.setInt(18, filter.page.PAGNUM);
+            cstmt.setInt(19, filter.page.PAGROW);
+            cstmt.setInt(20, filter.page.TOTPAG);
+            cstmt.setInt(21, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(17);
-            filter.page.PAGROW = cstmt.getInt(18);
-            filter.page.TOTPAG = cstmt.getInt(19);
-            filter.page.TOTROW = cstmt.getInt(20);
+            filter.page.PAGNUM = cstmt.getInt(18);
+            filter.page.PAGROW = cstmt.getInt(19);
+            filter.page.TOTPAG = cstmt.getInt(20);
+            filter.page.TOTROW = cstmt.getInt(21);
 
             while (rst.next()) {
                 lngTotCant += rst.getLong("CANT");
@@ -3778,12 +3841,10 @@ public class LoadConciliationTestDAO {
 
                     if (beanTkt.strFecFiltro.equals("DATEC")) {
                         beanTkt.strTitulo = "Conciliation Date : ";
+                    } else if (beanTkt.IN_TDOC.equals("R")) {
+                        beanTkt.strTitulo = "Refund Date : ";
                     } else {
-                        if (beanTkt.IN_TDOC.equals("R")) {
-                            beanTkt.strTitulo = "Refund Date : ";
-                        } else {
-                            beanTkt.strTitulo = "Sales Date : ";
-                        }
+                        beanTkt.strTitulo = "Sales Date : ";
                     }
                     beanTkt.strTitulo += beanTkt.strFormatDate + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";
 
@@ -3936,17 +3997,17 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04341(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04341(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
             cstmt.registerOutParameter(21, Types.INTEGER);
+            cstmt.registerOutParameter(22, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim()); //ADATE
@@ -3965,18 +4026,19 @@ public class LoadConciliationTestDAO {
             cstmt.setString(15, filter.IN_AUTHNBR.trim());
             cstmt.setString(16, filter.CERROR.trim());
             cstmt.setString(17, filter.IN_ADYEN.trim());
-            cstmt.setInt(18, filter.page.PAGNUM);
-            cstmt.setInt(19, filter.page.PAGROW);
-            cstmt.setInt(20, filter.page.TOTPAG);
-            cstmt.setInt(21, filter.page.TOTROW);
+            cstmt.setString(18, filter.IN_FCOMPL.trim());
+            cstmt.setInt(19, filter.page.PAGNUM);
+            cstmt.setInt(20, filter.page.PAGROW);
+            cstmt.setInt(21, filter.page.TOTPAG);
+            cstmt.setInt(22, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(18);
-            filter.page.PAGROW = cstmt.getInt(19);
-            filter.page.TOTPAG = cstmt.getInt(20);
-            filter.page.TOTROW = cstmt.getInt(21);
+            filter.page.PAGNUM = cstmt.getInt(19);
+            filter.page.PAGROW = cstmt.getInt(20);
+            filter.page.TOTPAG = cstmt.getInt(21);
+            filter.page.TOTROW = cstmt.getInt(22);
 
             while (rst.next()) {
                 lngTotCant += rst.getLong("CANT");
@@ -4026,23 +4088,21 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQACCB = rst.getLong("CANT");
                     beanTkt.SVFOP = rst.getDouble("SVFOP");
                     beanTkt.AVFOP = rst.getDouble("AVFOP");
-                    if(beanTkt.SVFOP == beanTkt.AVFOP){
-                            beanTkt.valVFOP = 1;
-                        } else {
-                            beanTkt.valVFOP = 2;
-                        }
+                    if (beanTkt.SVFOP == beanTkt.AVFOP) {
+                        beanTkt.valVFOP = 1;
+                    } else {
+                        beanTkt.valVFOP = 2;
+                    }
                     beanTkt.lngTotQACCB = lngTotCant;
                     beanTkt.dblTotSVFOP = dblSVFOP;
                     beanTkt.dblTotAVFOP = dblAVFOP;
 
                     if (beanTkt.strFecFiltro.equals("DATEC")) {
                         beanTkt.strTitulo = "Conciliation Date : ";
+                    } else if (beanTkt.IN_TDOC.equals("R")) {
+                        beanTkt.strTitulo = "Refund Date : ";
                     } else {
-                        if (beanTkt.IN_TDOC.equals("R")) {
-                            beanTkt.strTitulo = "Refund Date : ";
-                        } else {
-                            beanTkt.strTitulo = "Sales Date : ";
-                        }
+                        beanTkt.strTitulo = "Sales Date : ";
                     }
                     if (beanTkt.IN_SDATE.trim().length() == 8) {
                         beanTkt.strTitulo += beanTkt.IN_SDATE + " - Country : " + beanTkt.strDescCountry + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";
@@ -4103,17 +4163,17 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04342(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04342(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
             cstmt.registerOutParameter(21, Types.INTEGER);
+            cstmt.registerOutParameter(22, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -4132,18 +4192,19 @@ public class LoadConciliationTestDAO {
             cstmt.setString(15, filter.IN_AUTHNBR.trim());
             cstmt.setString(16, filter.CERROR.trim());
             cstmt.setString(17, filter.IN_ADYEN.trim());
-            cstmt.setInt(18, filter.page.PAGNUM);
-            cstmt.setInt(19, filter.page.PAGROW);
-            cstmt.setInt(20, filter.page.TOTPAG);
-            cstmt.setInt(21, filter.page.TOTROW);
+            cstmt.setString(18, filter.IN_FCOMPL.trim());
+            cstmt.setInt(19, filter.page.PAGNUM);
+            cstmt.setInt(20, filter.page.PAGROW);
+            cstmt.setInt(21, filter.page.TOTPAG);
+            cstmt.setInt(22, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(18);
-            filter.page.PAGROW = cstmt.getInt(19);
-            filter.page.TOTPAG = cstmt.getInt(20);
-            filter.page.TOTROW = cstmt.getInt(21);
+            filter.page.PAGNUM = cstmt.getInt(19);
+            filter.page.PAGROW = cstmt.getInt(20);
+            filter.page.TOTPAG = cstmt.getInt(21);
+            filter.page.TOTROW = cstmt.getInt(22);
 
             if (rst.next()) {
                 lngTotCant = rst.getLong("CANT");
@@ -4186,23 +4247,21 @@ public class LoadConciliationTestDAO {
                     beanTkt.lngQACCB = rst.getLong("CANT");
                     beanTkt.SVFOP = rst.getDouble("SVFOP");
                     beanTkt.AVFOP = rst.getDouble("AVFOP");
-                    if(beanTkt.SVFOP == beanTkt.AVFOP){
-                            beanTkt.valVFOP = 1;
-                        } else {
-                            beanTkt.valVFOP = 2;
-                        }
+                    if (beanTkt.SVFOP == beanTkt.AVFOP) {
+                        beanTkt.valVFOP = 1;
+                    } else {
+                        beanTkt.valVFOP = 2;
+                    }
                     beanTkt.lngTotQACCB = lngTotCant;
                     beanTkt.dblTotSVFOP = dblTotSVFOP;
                     beanTkt.dblTotAVFOP = dblTotAVFOP;
 
                     if (beanTkt.strFecFiltro.equals("DATEC")) {
                         beanTkt.strTitulo = "Conciliation Date : ";
+                    } else if (beanTkt.IN_TDOC.equals("R")) {
+                        beanTkt.strTitulo = "Refund Date : ";
                     } else {
-                        if (beanTkt.IN_TDOC.equals("R")) {
-                            beanTkt.strTitulo = "Refund Date : ";
-                        } else {
-                            beanTkt.strTitulo = "Sales Date : ";
-                        }
+                        beanTkt.strTitulo = "Sales Date : ";
                     }
                     if (!beanTkt.SCARCOD.trim().isEmpty()) {
                         beanTkt.strTitulo += beanTkt.strFormatDate + " - Country : " + beanTkt.strDescCountry + " - Card : "
@@ -4263,6 +4322,12 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
+        HashMap<String, String> hmDescCompl = new HashMap<String, String>();
+        hmDescCompl.put("", "");
+        hmDescCompl.put("1", "PLUSGRADE");
+        hmDescCompl.put("2", "LIGAS");
+        hmDescCompl.put("3", "TABLET");
+
         String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04350(?,?)}";
 
         Connection cnx = null;
@@ -4300,6 +4365,11 @@ public class LoadConciliationTestDAO {
                     beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                 } else {
                     beanTkt.STVAL = rst.getString("STVAL").trim();
+                }
+                if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                    beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                } else {
+                    beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                 }
                 beanTkt.FTE = rst.getString("FTE").trim();
                 if (rst.getString("FTE").trim().equals("A")) {
@@ -4366,22 +4436,28 @@ public class LoadConciliationTestDAO {
         hmDescEstados.put("4", "Match with Differences");
         hmDescEstados.put("5", "Match Manual");
 
+        HashMap<String, String> hmDescCompl = new HashMap<String, String>();
+        hmDescCompl.put("", "");
+        hmDescCompl.put("1", "PLUSGRADE");
+        hmDescCompl.put("2", "LIGAS");
+        hmDescCompl.put("3", "TABLET");
+
         HashMap<String, List<A4164Filter>> hmResultado = new HashMap<String, List<A4164Filter>>();
 
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04343(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04343(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
-            cstmt.registerOutParameter(18, Types.INTEGER);
             cstmt.registerOutParameter(19, Types.INTEGER);
             cstmt.registerOutParameter(20, Types.INTEGER);
             cstmt.registerOutParameter(21, Types.INTEGER);
+            cstmt.registerOutParameter(22, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.strFecFiltro.trim());
@@ -4400,19 +4476,20 @@ public class LoadConciliationTestDAO {
             cstmt.setString(15, filter.IN_CERROR.trim());
             cstmt.setString(16, filter.IN_AUTHNBR.trim());
             cstmt.setString(17, filter.IN_DIFF.trim());
+            cstmt.setString(18, filter.IN_FCOMPL.trim());
 
-            cstmt.setInt(18, filter.page.PAGNUM);
-            cstmt.setInt(19, filter.page.PAGROW);
-            cstmt.setInt(20, filter.page.TOTPAG);
-            cstmt.setInt(21, filter.page.TOTROW);
+            cstmt.setInt(19, filter.page.PAGNUM);
+            cstmt.setInt(20, filter.page.PAGROW);
+            cstmt.setInt(21, filter.page.TOTPAG);
+            cstmt.setInt(22, filter.page.TOTROW);
             cstmt.execute();
 
             rst = cstmt.getResultSet();
 
-            filter.page.PAGNUM = cstmt.getInt(18);
-            filter.page.PAGROW = cstmt.getInt(19);
-            filter.page.TOTPAG = cstmt.getInt(20);
-            filter.page.TOTROW = cstmt.getInt(21);
+            filter.page.PAGNUM = cstmt.getInt(19);
+            filter.page.PAGROW = cstmt.getInt(20);
+            filter.page.TOTPAG = cstmt.getInt(21);
+            filter.page.TOTROW = cstmt.getInt(22);
 
             while (rst.next()) {
                 lngTotCant += rst.getLong("CANT");
@@ -4462,6 +4539,11 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
                         }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
+                        }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
                         } else {
@@ -4499,8 +4581,8 @@ public class LoadConciliationTestDAO {
                             beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
                             beanTkt.AVFOP = rst.getDouble("AVFOP");
-                            if(beanTkt.SVFOP == beanTkt.AVFOP){
-                            beanTkt.valVFOP = 1;
+                            if (beanTkt.SVFOP == beanTkt.AVFOP) {
+                                beanTkt.valVFOP = 1;
                             } else {
                                 beanTkt.valVFOP = 2;
                             }
@@ -4535,8 +4617,8 @@ public class LoadConciliationTestDAO {
                             beanTkt.SCURRENCY = rst.getString("ACURRENCY").trim();
                             beanTkt.SVFOP = rst.getDouble("SVFOP");
                             beanTkt.AVFOP = rst.getDouble("AVFOP");
-                            if(beanTkt.SVFOP == beanTkt.AVFOP){
-                            beanTkt.valVFOP = 1;
+                            if (beanTkt.SVFOP == beanTkt.AVFOP) {
+                                beanTkt.valVFOP = 1;
                             } else {
                                 beanTkt.valVFOP = 2;
                             }
@@ -4593,12 +4675,10 @@ public class LoadConciliationTestDAO {
                         //Armando Título del Detalle
                         if (beanTkt.strFecFiltro.equals("DATEC")) {
                             beanTkt.strTitulo = "Conciliation Date : ";
+                        } else if (beanTkt.IN_TDOC.equals("R")) {
+                            beanTkt.strTitulo = "Refund Date : ";
                         } else {
-                            if (beanTkt.IN_TDOC.equals("R")) {
-                                beanTkt.strTitulo = "Refund Date : ";
-                            } else {
-                                beanTkt.strTitulo = "Sales Date : ";
-                            }
+                            beanTkt.strTitulo = "Sales Date : ";
                         }
                         try {
                             beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
@@ -4659,6 +4739,11 @@ public class LoadConciliationTestDAO {
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
                         }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
+                        }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
                         } else {
@@ -4695,12 +4780,12 @@ public class LoadConciliationTestDAO {
                         beanTkt.SCURRENCY = rst.getString("SCURRENCY").trim();
                         beanTkt.SVFOP = rst.getDouble("SVFOP");
                         beanTkt.AVFOP = rst.getDouble("AVFOP");
-                        if(beanTkt.SVFOP == beanTkt.AVFOP){
+                        if (beanTkt.SVFOP == beanTkt.AVFOP) {
                             beanTkt.valVFOP = 1;
                         } else {
                             beanTkt.valVFOP = 2;
                         }
-;
+                        ;
                         beanTkt.SCARDN = rst.getString("SCARDN").trim();
                         beanTkt.strSCARDN = Functions.enmascararNumTarjeta(rst.getString("SCARDN").trim(), rst.getString("ACARDN").trim());
                         //beanTkt.SDATEXP = Functions.FormatFecha(rst.getString("SDATEXP").trim(), "MMyy", "yyyyMM");
@@ -4752,12 +4837,10 @@ public class LoadConciliationTestDAO {
                         //Armando Título del Detalle
                         if (beanTkt.strFecFiltro.equals("DATEC")) {
                             beanTkt.strTitulo = "Conciliation Date : ";
+                        } else if (beanTkt.IN_TDOC.equals("R")) {
+                            beanTkt.strTitulo = "Refund Date : ";
                         } else {
-                            if (beanTkt.IN_TDOC.equals("R")) {
-                                beanTkt.strTitulo = "Refund Date : ";
-                            } else {
-                                beanTkt.strTitulo = "Sales Date : ";
-                            }
+                            beanTkt.strTitulo = "Sales Date : ";
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";
@@ -4819,6 +4902,11 @@ public class LoadConciliationTestDAO {
                             beanTkt.STVAL = hmDescEstados.get(rst.getString("STVAL").trim()).toString();
                         } else {
                             beanTkt.STVAL = rst.getString("STVAL").trim();
+                        }
+                        if (hmDescCompl.containsKey(rst.getString("FCOMPL").trim().toUpperCase())) {
+                            beanTkt.strFCOMPL = hmDescCompl.get(rst.getString("FCOMPL").trim()).toString();
+                        } else {
+                            beanTkt.strFCOMPL = rst.getString("FCOMPL").trim();
                         }
                         if (!rst.getString("ERROR").trim().isEmpty()) {
                             beanTkt.CERROR = rst.getString("CERROR").trim() + " : " + rst.getString("ERROR").trim();
@@ -4906,12 +4994,10 @@ public class LoadConciliationTestDAO {
                         //Armando Título del Detalle
                         if (beanTkt.strFecFiltro.equals("DATEC")) {
                             beanTkt.strTitulo = "Conciliation Date : ";
+                        } else if (beanTkt.IN_TDOC.equals("R")) {
+                            beanTkt.strTitulo = "Refund Date : ";
                         } else {
-                            if (beanTkt.IN_TDOC.equals("R")) {
-                                beanTkt.strTitulo = "Refund Date : ";
-                            } else {
-                                beanTkt.strTitulo = "Sales Date : ";
-                            }
+                            beanTkt.strTitulo = "Sales Date : ";
                         }
                         beanTkt.strTitulo += beanTkt.SDATE + " - Country : " + filter.strDescCountry.trim() + " - Card : "
                                 + beanTkt.SCARCOD + " : " + beanTkt.strDescCard + " **" + hmDescEstados.get(beanTkt.IN_STVAL).toString() + "** ";

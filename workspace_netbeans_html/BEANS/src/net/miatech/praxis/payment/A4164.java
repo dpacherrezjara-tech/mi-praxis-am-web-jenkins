@@ -17,6 +17,7 @@ public class A4164 {
     public String TDOC = "";
     public String SEQ = "";
     public String STVAL = "";
+    public String FCOMPL = "";
     public String FTE = "";
     public String TRNCU = "";
     public String NUMREF = "";
