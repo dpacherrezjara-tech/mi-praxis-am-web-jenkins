@@ -43,6 +43,7 @@ public class A4164Filter extends A4164 {
     public String IN_FTE = "";
     public String IN_PAYMENT = "";
     public String IN_TDOC = "";
+    public String IN_FCOMPL = "";
     public String IN_CARDC = "";
     public String IN_STVAL = "";
     public String IN_BSTVAL = "";
@@ -96,6 +97,7 @@ public class A4164Filter extends A4164 {
     public String strFLOAD = "";
     public String strSORIG = "";
     public String strTRNXCODE = "";
+    public String strFCOMPL = "";
     public String CBANK = "";
     public String MERCHNR = "";
     public String DATEC = "";

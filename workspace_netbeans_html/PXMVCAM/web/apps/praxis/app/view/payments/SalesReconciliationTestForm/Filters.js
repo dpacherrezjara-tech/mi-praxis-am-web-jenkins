@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
             id: prototype.id+'-boxSearchFilter',
             margin: '0 7',
             border: false,
-            width: 1200,
+            width: 1300,
             bodyStyle: 'background: transparent',
             layout: 'vbox',
             defaults: {
@@ -501,7 +501,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             ],
                             listeners: {change: 'cmbTranType_changeHandler' }
                         },
-                        {xtype: 'tbspacer', width: 20},
+                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id+'-chkDIFF',
@@ -512,7 +512,39 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliationTestForm.Filters', {
                             listeners:{
                                 change: 'searchDifferences'
                             }
-                        }, 
+                        },
+                        {xtype: 'tbspacer', width: 12},
+                        {
+                            xtype: 'label',
+                            text: 'Complement:',
+                            padding: '3 0',
+                            width: 75
+                        },
+                        {
+                            xtype:'combo',
+                            id: prototype.id+'-cmbFCOMPL',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "All"], ["1", "PLUSGRADE"], ["2", "LIGAS"], ["3", "TABLET"]
+                                ]
+                            }),
+                            queryMode: 'local',
+                            allowBlank: false,
+                            forceSelection: true,
+                            selectOnFocus: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            editable: true,
+                            width: 100,
+                            value: "",
+                            typeAhead: true,
+                            valueField: 'code', displayField: 'name',
+                            enableKeyEvents: true,
+                            triggerAction: 'all',
+                            listeners:{
+                            }
+                        },
                     ]
                 }
             ]
