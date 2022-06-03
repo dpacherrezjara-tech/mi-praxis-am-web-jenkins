@@ -126,6 +126,7 @@ public class BwrQueryRefundDAO {
                 objRtn.A3389PORPE = rs01.getDouble("A3389PORPE");
                 objRtn.A3389TOTAL = rs01.getDouble("A3389TOTAL");
                 objRtn.A3389FREGI = rs01.getString("A3389FREGI");
+                objRtn.A3389CHANEL = rs01.getString("A3389CHANEL");
 
                 objRtn.A3389PAIS = rs01.getString("A3389PAIS");
                 objRtn.A3389NUMER = rs01.getString("A3389NUMER");

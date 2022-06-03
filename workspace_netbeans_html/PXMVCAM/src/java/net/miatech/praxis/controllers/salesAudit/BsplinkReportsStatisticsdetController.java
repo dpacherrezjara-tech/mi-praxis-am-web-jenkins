@@ -142,10 +142,10 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
             bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
 
             Integer vi = 0, vj = 0;
-            Iterator iter = lst.iterator(); 
+            Iterator iter = lst.iterator();
 
             Row row;
-            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22,CH_23,CH_24;
+            Cell CH_00, CH_01, CH_02, CH_03, CH_04, CH_05, CH_06, CH_07, CH_08, CH_09, CH_10, CH_11, CH_12, CH_13, CH_14, CH_15, CH_16, CH_17, CH_18, CH_19, CH_20, CH_21, CH_22, CH_23, CH_24, CH_25;
 
             row = sheet.createRow(vj);
 
@@ -172,8 +172,9 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
             CH_20 = row.createCell(20);
             CH_21 = row.createCell(21);
             CH_22 = row.createCell(22);
-             CH_23 = row.createCell(23);
-             CH_24 = row.createCell(24);
+            CH_23 = row.createCell(23);
+            CH_24 = row.createCell(24);
+            CH_25 = row.createCell(25);
 
             CH_00.setCellValue("Country");
             CH_01.setCellValue("IATA");
@@ -200,6 +201,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
             CH_22.setCellValue("SALE DATE");
             CH_23.setCellValue("Applicable");
             CH_24.setCellValue("Reason");
+            CH_25.setCellValue("Channel");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -226,6 +228,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 22, 22));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 23));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 24, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 25, 25));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -252,6 +255,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
             CH_22.setCellStyle(headerStyle);
             CH_23.setCellStyle(headerStyle);
             CH_24.setCellStyle(headerStyle);
+            CH_25.setCellStyle(headerStyle);
 
             ++vj;
 
@@ -283,6 +287,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
                 CH_22 = row.createCell(22);
                 CH_23 = row.createCell(23);
                 CH_24 = row.createCell(24);
+                CH_25 = row.createCell(25);
 
                 CH_00.setCellValue(lst.get(vi).A3389PAIS);
                 CH_01.setCellValue(lst.get(vi).A3389IATA);
@@ -309,6 +314,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
                 CH_22.setCellValue(lst.get(vi).A3389FECOR);
                 CH_23.setCellValue(lst.get(vi).A3401STATU);
                 CH_24.setCellValue(lst.get(vi).A3401RAAG);
+                CH_25.setCellValue(lst.get(vi).A3389CHANEL);
 
                 CH_00.setCellStyle(bodyStyle);
                 CH_01.setCellStyle(bodyStyle);
@@ -335,6 +341,7 @@ public class BsplinkReportsStatisticsdetController extends BaseController {
                 CH_22.setCellStyle(bodyStyle);
                 CH_23.setCellStyle(bodyStyle);
                 CH_24.setCellStyle(bodyStyle);
+                CH_25.setCellStyle(bodyStyle);
 
                 iter.next();
                 ++vi;
