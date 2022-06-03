@@ -79,6 +79,7 @@ public class A3389 {
     public String A3389TKTDUPLI2;
     public String A3401STATU;
     public String A3401RAAG;
+    public String A3389CHANEL;
 
     public double A3389VCASH;
     public double A3389VCRED;
@@ -129,8 +130,32 @@ public class A3389 {
     public double A3389RCHASUM;
     public double A3389RCHAPJESUM;
     public double A3389TOTALSUM;
-    
+
     public double A3389CANT;
+
+    public String getA3401STATU() {
+        return A3401STATU;
+    }
+
+    public void setA3401STATU(String A3401STATU) {
+        this.A3401STATU = A3401STATU;
+    }
+
+    public String getA3401RAAG() {
+        return A3401RAAG;
+    }
+
+    public void setA3401RAAG(String A3401RAAG) {
+        this.A3401RAAG = A3401RAAG;
+    }
+
+    public String getA3389CHANEL() {
+        return A3389CHANEL;
+    }
+
+    public void setA3389CHANEL(String A3389CHANEL) {
+        this.A3389CHANEL = A3389CHANEL;
+    }
 
     public String getA3389TKTDUPLI2() {
         return A3389TKTDUPLI2;
@@ -147,7 +172,7 @@ public class A3389 {
     public void setA3389CANT(double A3389CANT) {
         this.A3389CANT = A3389CANT;
     }
-    
+
     public String getA3389HAUTO() {
         return A3389HAUTO;
     }
@@ -275,7 +300,7 @@ public class A3389 {
     public void setA3389TOTALSUM(double A3389TOTALSUM) {
         this.A3389TOTALSUM = A3389TOTALSUM;
     }
-    
+
     public String getA3389CANTPEDI() {
         return A3389CANTPEDI;
     }
