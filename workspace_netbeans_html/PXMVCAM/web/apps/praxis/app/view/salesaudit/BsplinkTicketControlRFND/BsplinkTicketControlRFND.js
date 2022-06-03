@@ -220,21 +220,10 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkTicketControlRFND.BsplinkTicketCon
                             height: 480,
                             columns:{
                                 items:[
-                                    {
-                                        text: 'System</br>date',
-                                        dataIndex: 'A3389FREGI',
-                                        width: 80
-                                    },
-                                    {
-                                        text: 'Ticket',
-                                        dataIndex: 'A3389TKT',
-                                        width: 100
-                                    },
-                                    {
-                                        text: 'Country',
-                                        dataIndex: 'A3389PAIS',
-                                        width: 70
-                                    },
+                                    {text: 'System</br>date',dataIndex: 'A3389FREGI',width: 80},
+                                    {text: 'Channel', dataIndex: 'A3389CHANEL', width: 60, sortable: false, align: 'center'},
+                                    {text: 'Ticket',dataIndex: 'A3389TKT',width: 100},
+                                    {text: 'Country',dataIndex: 'A3389PAIS',width: 70},
                                     {
                                         text: 'Status',
                                         flex: 1,

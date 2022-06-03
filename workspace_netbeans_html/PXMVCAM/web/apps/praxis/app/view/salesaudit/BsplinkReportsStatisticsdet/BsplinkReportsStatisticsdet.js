@@ -406,7 +406,8 @@ Ext.define('Ext.Praxis.view.salesaudit.BsplinkReportsStatisticsdet.BsplinkReport
                                             height: 480,
                                             columns: {
                                                 items: [
-                                                    {
+                                                     {text: 'Channel', dataIndex: 'A3389CHANEL', width: 60, sortable: false, align: 'center'},
+                                                     {
                                                         text: 'Country',
                                                         dataIndex: 'A3389PAIS',
                                                         width: 60
