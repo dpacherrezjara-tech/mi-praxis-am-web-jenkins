@@ -499,7 +499,7 @@ public class MerchantNumberDAO {
         CallableStatement cstmt = null;
         ResultSet rst = null;
 
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00933_GG(?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00933(?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
@@ -543,6 +543,12 @@ public class MerchantNumberDAO {
                 bean.CODCLIT2 = rst.getString("CODCLIT2").trim();
                 bean.DIRCLIT2 = rst.getString("DIRCLIT2").trim();
                 bean.strDescrip = rst.getString("DES_IATA").trim();
+                bean.STATUS = rst.getString("STATUS").trim();
+                if(bean.STATUS.equals("1")){
+                    bean.desSTATUS = "Enabled";
+                }else if(bean.STATUS.equals("0")){
+                    bean.desSTATUS = "Disabled";
+                }
                 bean.UNIOPE = rst.getString("UNIOPE").trim();
                 if (hmDescUNIOPE.containsKey(rst.getString("UNIOPE").trim().toUpperCase())) {
                     bean.strDescripUNIOPE = hmDescUNIOPE.get(rst.getString("UNIOPE").trim()).toString();

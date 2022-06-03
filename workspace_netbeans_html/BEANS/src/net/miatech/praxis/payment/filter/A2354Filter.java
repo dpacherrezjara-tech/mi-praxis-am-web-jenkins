@@ -28,6 +28,8 @@ public String A003IATA = "";
 public long RN = 0;
 public String strDescripCtry = "";
 public String strDescripUNIOPE = "";
+public String STATUS = "";
+public String desSTATUS = "";
 
 public List<A4202> lstDetalle = new ArrayList<A4202>(0);
 
