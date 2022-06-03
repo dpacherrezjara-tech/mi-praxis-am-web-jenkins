@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
         Ext.getCmp(prototype.id + '-cmbDateMonthTo_Chart').bindStore(storeComboDataMonth);
     },
     inicio: function () {
-        console.clear();
+//        console.clear();
         this.setFormatParameter();
         var valueRadio = Ext.getCmp(prototype.id + '-Box_Chart_Sales').getValue().rb;
 
@@ -203,7 +203,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                     if (res.success) {
                         if (obj.data.length > 0) {
                             var obj = obj.data.items[0].data;
-//                            var lstTotales = res.lstTotales;
+                            var lstTot_Temp = [];
+                            var lstTot_pie = [];
+                            var item_t = {};
+                            var item_pie = {};
+                            var amount = 0;
+                            
                             me.lstTotales = res.lstTotales;
                             for (var i = 0; i < me.lstTotales.length; i++) {
                                 me.lstTotales[i].totQKMS = 100;
@@ -211,10 +216,44 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                                 if (label === 'SALE') {
                                     label = 'SALES';
                                 }
-//                                me.lstTotales[i].VENDOR = label + ' , ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
-                                me.lstTotales[i].VENDOR = Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
+                                me.lstTotales[i].VENDOR = label + ', ' + Ext.util.Format.number(me.lstTotales[i].Perc2, '0,000.00') + '%';
+                                
+                                
+                                // ------------------------------------------------------------------------------------------------------
+                                item_t = me.lstTotales[i];
+                                
+                                var value = parseFloat(Ext.util.Format.number(item_t.Perc2, '0,000.00'));
+                                if( value > 5 ){
+                                    lstTot_Temp.push(item_t);
+                                }else{
+                                    item_t.TYPE = 'OTHERS';
+                                    lstTot_Temp.push(item_t);
+                                }
+                                item_t = {};
                             }
+                            
+                            for (var j = 0; j < lstTot_Temp.length; j++) {
 
+                                item_pie = lstTot_Temp[j];
+                                lstTot_Temp[j].totQKMS = 100;
+                                
+                                if(lstTot_Temp[j].TYPE === 'OTHERS'){
+                                    amount = amount + lstTot_Temp[j].Perc2;
+                                    
+                                    if(j == lstTot_Temp.length - 1){
+                                        item_pie.Perc2 = amount;
+                                        item_pie.VENDOR = lstTot_Temp[j].TYPE + ', ' + Ext.util.Format.number(amount, '0,000.00') + '%';
+                                        lstTot_pie.push(item_pie);
+                                    }
+                                }else{
+                                    item_pie.VENDOR = item_pie.TYPE + ', ' + Ext.util.Format.number(item_pie.Perc2, '0,000.00') + '%';
+                                    lstTot_pie.push(item_pie);
+                                }
+                            
+                            }
+//                            console.log(lstTot_pie);
+                        
+                            //<editor-fold defaultstate="collapsed" desc=" ---------- Grafic ----------">
                             me.lstTotalesGraf = res.data;
                             console.log(me.lstTotalesGraf);
                             var pivot = [];
@@ -272,8 +311,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                                 }
 
                             }
-                            console.log(pivot);
-                            console.log(me.lstTotales);
+                        //</editor-fold>    
+                            
+                            var storeDataTotales_pie = Ext.create('Ext.data.Store', {
+                                data: lstTot_pie,
+                                autoLoad: true
+                            });
 
                             var storeDataTotales = Ext.create('Ext.data.Store', {
                                 data: me.lstTotales,
@@ -285,7 +328,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
                             });
 
                             Ext.getCmp(prototype.id + '-gridData_boxChart6_Tot').bindStore(storeDataTotales);
-                            Ext.getCmp(prototype.id + '-displaySAChart33').bindStore(storeDataTotales);
+                            Ext.getCmp(prototype.id + '-displaySAChart33').bindStore(storeDataTotales_pie);
                             Ext.getCmp(prototype.id + '-displaySAChart40').bindStore(storeDataTotales);
                             Ext.getCmp(prototype.id + '-displaySAChart32').bindStore(storeDataPivot);
                         } else {
@@ -332,8 +375,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.charts.ChartSalesControlle
 
                             var lstDataEdit = res.data;
                             for (var i = 0; i < lstDataEdit.length; i++) {
-                                lstDataEdit[i].LABEL = lstDataEdit[i].strDescription + ' ,  ' + Ext.util.Format.number(lstDataEdit[i].CUPONS_PERCENT, '0,000.00') + '%';
-                                lstDataEdit[i].LABEL2 = lstDataEdit[i].strDescription + ' ,  ' + Ext.util.Format.number(lstDataEdit[i].AMOUNT_PERCENT, '0,000.00') + '%';
+                                lstDataEdit[i].LABEL = lstDataEdit[i].strDescription + ',  ' + Ext.util.Format.number(lstDataEdit[i].CUPONS_PERCENT, '0,000.00') + '%';
+                                lstDataEdit[i].LABEL2 = lstDataEdit[i].strDescription + ',  ' + Ext.util.Format.number(lstDataEdit[i].AMOUNT_PERCENT, '0,000.00') + '%';
                             }
 
                             var storeChannelChart15 = Ext.create('Ext.data.Store', {
