@@ -281,9 +281,37 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.DataEntry', {
                                     triggerAction: 'all'
                                 },
                                 {xtype: 'tbspacer', width: 30},
-                                {xtype: 'tbspacer', width: 50},
+                                {
+                                    xtype: 'label',
+                                    text: 'Status',
+                                    fontSize: 15,
+                                    textAlign: 'center',
+                                    paddingLeft: 3,
+                                    style: 'font-weight:bold;color:#0B333C;',
+                                    width: 50
+                                },
                                 {xtype: 'tbspacer', width: 4},
-                                {xtype: 'tbspacer', width: 286},
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-de-cmbSTATUS',
+                                    queryMode: 'local',
+                                    width: 150,
+                                    fieldStyle: 'color:#074066;',
+                                    queryMode: 'local',
+                                    forceSelection: true,
+                                    selectOnFocus: false,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    editable: false,
+                                    disabled: false,
+                                    typeAhead: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all'
+                                },
+                                {xtype: 'tbspacer', width: 50},
+                                {xtype: 'tbspacer', width: 136},
                                 {xtype: 'tbspacer', width: 5}
                             ]
                         },

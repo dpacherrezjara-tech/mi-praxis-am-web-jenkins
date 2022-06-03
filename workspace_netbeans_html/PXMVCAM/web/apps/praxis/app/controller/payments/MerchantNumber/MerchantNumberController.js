@@ -128,6 +128,18 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         }));
         cmbUNIOPE.setValue("");
         
+        var cmbSTATUS = Ext.getCmp(prototype.id + '-cmbSTATUS');
+        cmbSTATUS.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "All"],
+                ["0", "Disabled"],
+                ["1", "Enabled"]
+            ]
+        }));
+        cmbSTATUS.setValue("");
+        
     },
     
     cmbFind_changeHandler: function() {      
@@ -152,6 +164,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         me.bean.IN_RSOCIAL = Ext.getCmp(prototype.id + '-txtRSOCIAL').getValue();
         
         me.bean.IN_UNIOPE = Ext.getCmp(prototype.id + '-cmbUNIOPE').getValue();
+        me.bean.IN_STATUS = Ext.getCmp(prototype.id + '-cmbSTATUS').getValue();
         me.bean.IN_CANAL = Ext.getCmp(prototype.id + '-txtCANAL').getValue();
         
         var beanString = JSON.stringify(me.bean);
@@ -256,6 +269,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberControll
         Ext.getCmp(prototype.id + '-txtMERCHN').setValue('');
         Ext.getCmp(prototype.id + '-txtRSOCIAL').setValue('');
         Ext.getCmp(prototype.id + '-cmbUNIOPE').setValue('');
+        Ext.getCmp(prototype.id + '-cmbSTATUS').setValue('');
         Ext.getCmp(prototype.id + '-txtCANAL').setValue('');
 
     },

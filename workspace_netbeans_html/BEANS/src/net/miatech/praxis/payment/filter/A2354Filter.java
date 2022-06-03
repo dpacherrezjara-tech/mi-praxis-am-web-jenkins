@@ -30,10 +30,11 @@ public String strDescripCtry = "";
 public String strDescripUNIOPE = "";
 public String STATUS = "";
 public String desSTATUS = "";
+public String IN_STATUS = "";
 
 public List<A4202> lstDetalle = new ArrayList<A4202>(0);
 
 //A003
 public String A003KEY1 = "";
 public Pagination page = new Pagination();
-}
+        }

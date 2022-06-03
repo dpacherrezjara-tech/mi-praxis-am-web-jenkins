@@ -77,7 +77,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                 }
                                             },
                                             {text: 'Operative<br>Unit', dataIndex: 'strDescripUNIOPE', width: 120},
-                                            {text: 'Channel', dataIndex: 'CANAL', width: 55},
+                                            {text: 'Channel', dataIndex: 'CANAL', width: 65},
                                             {text: 'Social',
                                                 defaults: {
                                                     menuDisabled: true,

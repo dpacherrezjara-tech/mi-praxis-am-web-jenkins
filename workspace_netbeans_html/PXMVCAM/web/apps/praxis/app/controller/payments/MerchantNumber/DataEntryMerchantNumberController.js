@@ -31,13 +31,24 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                     autoLoad: false,
                     fields: ['code', 'name'],
                     data: [
-                        ["", ""],
+                        ["", "None"],
                         ["1", "Aerovias MX"],
                         ["2", "Aeromexico Cargo"],
                         ["3", "PLM"]
                     ]
                 }));
                 cmbUNIOPE.setValue('');
+                var cmbSTATUS = Ext.getCmp(prototype.id + '-de-cmbSTATUS');
+                cmbSTATUS.bindStore(Ext.create('Ext.data.ArrayStore', {
+                    autoLoad: false,
+                    fields: ['code', 'name'],
+                    data: [
+                        ["", "None"],
+                        ["0", "Disabled"],
+                        ["1", "Enabled"],
+                    ]
+                }));
+                cmbSTATUS.setValue('');
                 Ext.getCmp(prototype.id + '-btn-save').show();
                 Ext.getCmp(prototype.id + '-btn-update').hide();
                 Ext.getCmp(prototype.id + '-btn-delete').hide();
@@ -64,6 +75,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('de-txtSCOUNTRY', this.beanResult.SCOUNTRY);
         this.setValue('de-txtNameCTRY', this.beanResult.strDescripCtry);
         this.setValue('de-cmbUNIOPE', this.beanResult.UNIOPE);
+        this.setValue('de-cmbSTATUS', this.beanResult.STATUS);
 
         this.setValue('de-txtCODCLIT1', this.beanResult.CODCLIT1);
         this.setValue('de-txtDIRCLIT1', this.beanResult.DIRCLIT1);
@@ -76,7 +88,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         this.setValue('txtUSUP', this.beanResult.USUP);
         this.setValue('txtFEUP', this.beanResult.FEUP);
         this.setValue('txtHOUP', this.beanResult.HOUP);
-        
+
         this.setGridIATA(this.beanResult.MERCHN);
     },
     //<editor-fold defaultstate="collapsed" desc="llenarData">
@@ -90,6 +102,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
         beanTemp.CANAL = this.getValue("de-txtCANAL");
         beanTemp.SCOUNTRY = this.getValue("de-txtSCOUNTRY");
         beanTemp.UNIOPE = this.getValue("de-cmbUNIOPE");
+        beanTemp.STATUS = this.getValue("de-cmbSTATUS");
 
         beanTemp.CODCLIT1 = this.getValue("de-txtCODCLIT1");
         beanTemp.DIRCLIT1 = this.getValue("de-txtDIRCLIT1");
@@ -130,13 +143,24 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
             autoLoad: false,
             fields: ['code', 'name'],
             data: [
-                ["", ""],
+                ["", "None"],
                 ["1", "Aerovias MX"],
                 ["2", "Aeromexico Cargo"],
                 ["3", "PLM"]
             ]
         }));
         cmbUNIOPE.setValue('');
+        var cmbSTATUS = Ext.getCmp(prototype.id + '-de-cmbSTATUS');
+        cmbSTATUS.bindStore(Ext.create('Ext.data.ArrayStore', {
+            autoLoad: false,
+            fields: ['code', 'name'],
+            data: [
+                ["", "None"],
+                ["0", "Disabled"],
+                ["1", "Enabled"],
+            ]
+        }));
+        cmbSTATUS.setValue('');
 
         var beanString = JSON.stringify(meDE.bean.data);
 
@@ -439,7 +463,7 @@ Ext.define('Ext.Praxis.controller.payments.MerchantNumber.DataEntryMerchantNumbe
                 Ext.getCmp(prototype.id + '-gridIATA').bindStore(storeData);
 
             }
-        });        
+        });
     },
     // <editor-fold defaultstate="collapsed" desc="Utilitarios">
     getValue: function (id) {
