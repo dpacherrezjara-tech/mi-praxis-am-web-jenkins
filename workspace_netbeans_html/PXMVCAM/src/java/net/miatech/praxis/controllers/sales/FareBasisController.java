@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -17,8 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.PX019S01A025Filter;
 import net.miatech.beans.PX019S01A721Filter;
+import net.miatech.praxis.A003;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
+import net.miatech.praxis.logic.sales.AgentsMasterFileLogic;
 import net.miatech.praxis.logic.sales.FareBasisLogic;
 import net.miatech.praxis.logic.sales.MinimunRuleLogic;
 import net.miatech.utils.Functions;
@@ -307,5 +310,45 @@ public class FareBasisController extends BaseController {
         }
 
     }
+    
+    @RequestMapping(value = "ValidationDownload")
+    public @ResponseBody
+    String ValidationDownload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+
+        
+
+        List<PX019S01A721Filter> lst = new ArrayList<>(0);
+        PX019S01A721Filter filter = new PX019S01A721Filter();
+
+        filter.page.TOTROW = -1;
+        filter.page.START = 0;
+        filter.page.LIMIT = 0;
+
+        try {
+            logic = new FareBasisLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            filter.IN_OPCION = Integer.parseInt(request.getParameter("IN_OPCION"));
+            filter.IN_AIRLIN = request.getParameter("IN_AIRLIN");
+            filter.IN_FBASIS = request.getParameter("IN_FBASIS");
+           
+            System.out.println("----------------- Parametros --------------------- ");
+            System.out.println(" limit : " + request.getParameter("limit"));
+            System.out.println(" start : " + request.getParameter("start"));
+
+            System.out.println("-------------------------------------------------- ");
+
+            int int_result = logic.ValidationDownload(filter);
+            HashMap m = new HashMap();
+            m.put("success", true);
+            m.put("int_result", int_result);
+            return new Gson().toJson(m);
+
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+    }
+    
 
 }
