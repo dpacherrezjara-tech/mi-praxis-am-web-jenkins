@@ -138,7 +138,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
-                                    ["X", "All"], ["", "Pending"], ["1", "Processed"]
+                                    ["X", "All"], ["", "Pending"], ["1", "Match"]
                                 ]
                             }),
                             queryMode: 'local',
@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
-                                    ["X", "All"], ["", "Pending"], ["1", "Found"], ["2", "Accounted"]
+                                    ["X", "All"], ["", "Pending"], ["1", "Match"], ["2", "Accounted"]
                                 ]
                             }),
                             queryMode: 'local',
