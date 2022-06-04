@@ -112,7 +112,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Passed',
+                                                text: 'Diff.',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -551,7 +551,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Passed',
+                                                text: 'Diff.',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -784,7 +784,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
-                                                text: 'Passed',
+                                                text: 'Diff.',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,

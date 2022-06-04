@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
 
                                         },
                                         items: [
-                                            {text: 'Nbr', dataIndex: 'RN', width: 40},
+                                            {text: 'Nbr', dataIndex: 'RN', width: 40, hidden:true},
                                             {text: 'Merchant<br>Nbr.', dataIndex: 'MERCHN', width: 75},
                                             {text: 'Merchant Name', dataIndex: 'DESCR', width: 220,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -74,6 +74,12 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                     metaData.style = "text-align:left;";
                                                     metaData.tdAttr = 'data-qtip="' + data.DESCR + '"';
                                                     return  value;
+                                                }
+                                            },
+                                            {text: 'Status', dataIndex: 'desSTATUS', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
                                                 }
                                             },
                                             {text: 'Operative<br>Unit', dataIndex: 'strDescripUNIOPE', width: 120},
@@ -122,13 +128,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                         }
                                                     }
                                                 ]
-                                            },
-                                            {text: 'Status', dataIndex: 'desSTATUS', width: 70,
-                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:left;";
-                                                    return value;
-                                                }
-                                            },
+                                            },                                            
                                             {
                                                 text: 'Commission Policy Information',
                                                 defaults: {
@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: 'Client Address', dataIndex: 'DIRCLIT1', width: 190,
+                                                    {text: 'Client Address', dataIndex: 'DIRCLIT1', width: 165,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#e5ecef;";
                                                             return  value;
@@ -165,7 +165,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: 'Client Address', dataIndex: 'DIRCLIT2', width: 190,
+                                                    {text: 'Client Address', dataIndex: 'DIRCLIT2', width: 165,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#e5ecef;";
                                                             return  value;
