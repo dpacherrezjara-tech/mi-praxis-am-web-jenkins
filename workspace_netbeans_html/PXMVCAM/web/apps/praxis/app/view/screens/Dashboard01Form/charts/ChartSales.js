@@ -3880,7 +3880,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     border: true,
                                                     margin: '0 0 0 5',
                                                     innerPadding: 60,
-                                                    height: 340,
+                                                    height: 380,
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
@@ -3893,16 +3893,20 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'Perc1',
                                                             colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                             label: {
-                                                                field: 'CLASS'
+                                                                field: 'CLASS',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -3935,7 +3939,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     border: true,
                                                     margin: '0 0 0 5',
                                                     innerPadding: 60,
-                                                    height: 340,
+                                                    height: 380,
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
@@ -3948,16 +3952,20 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'Perc2',
                                                             colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                             label: {
-                                                                field: 'COMENTARIO'
+                                                                field: 'COMENTARIO',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -4380,7 +4388,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                 {xtype: 'tbspacer', width: 15},
                                 {
                                     xtype: 'panel',
-                                    width: 600,
+                                    width: 660,
                                     height: 700,
                                     layout: {
                                         type: 'hbox',
@@ -4422,7 +4430,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     angleField: 'AMOUNT',
                                                     colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                     label: {
-                                                        field: 'strDescription'
+                                                        field: 'strDescription',
+                                                        renderer: function (value, b, callout) {
+                                                            callout.calloutWidth = 1;
+                                                            return value.substring(0,7);
+                                                        }
                                                     },
                                                     highlight: true,
                                                     tooltip: {
