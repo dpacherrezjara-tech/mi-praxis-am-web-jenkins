@@ -561,7 +561,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Number',
+                                                text: 'Operation',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -569,7 +569,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Operation', dataIndex: 'OPERATNBR', width: 100
+                                                        text: 'Number', dataIndex: 'OPERATNBR', width: 100
                                                     },
                                                 ]
                                             },
@@ -794,7 +794,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                         },
                                         items: [
                                             {
-                                                text: 'Number',
+                                                text: 'Operation',
                                                 defaults: {
                                                     menuDisabled: true,
                                                     sortable: false,
@@ -802,7 +802,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 },
                                                 columns: [
                                                     {
-                                                        text: 'Operation', dataIndex: 'OPERATNBR', width: 100
+                                                        text: 'Number', dataIndex: 'OPERATNBR', width: 100
                                                     },
                                                 ]
                                             },
