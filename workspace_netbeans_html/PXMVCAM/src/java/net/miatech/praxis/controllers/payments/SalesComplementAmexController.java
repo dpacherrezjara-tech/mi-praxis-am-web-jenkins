@@ -562,7 +562,7 @@ public class SalesComplementAmexController extends BaseController {
                 ++vi;
                 ++vj;
             }
-            
+
             sheet.autoSizeColumn(0, true);
             sheet.autoSizeColumn(1, true);
             sheet.autoSizeColumn(2, true);

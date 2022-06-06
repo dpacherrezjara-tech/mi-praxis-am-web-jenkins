@@ -28,6 +28,7 @@ public class A4124Filter extends A4124 {
     public String PASSED_DAYS = "";    
     public String INVORNBR = "";    
     public String ISREFNBR = "";    
+    public double DIFF_AMOUNT = 0;    
     
     public String IN_PRDA = "";    
     public String IN_MERCHID = "";    
