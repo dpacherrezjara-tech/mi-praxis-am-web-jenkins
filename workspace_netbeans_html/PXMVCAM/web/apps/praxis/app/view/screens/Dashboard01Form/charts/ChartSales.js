@@ -505,26 +505,42 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF',
+                                                    },
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'Perc2',
                                                             colors: ['#339933', '#EC3838', '#ff9900', '#0066ff', '#ffff99'],
+//                                                            colors: ['#339933', '#EC3838'],
+                                                            stacked: false,
+                                                            title: ['ARC', 'ASR', 'BSP(Mexico)', 'BSP(Others)' , 'WA'],
                                                             label: {
                                                                 field: 'VENDOR',
-//                                                            field: 'TYPE',
+                                                                calloutLine: false,
+//                                                                display: 'inside',
 //                                                                display: 'rotate',
-//                                                                contrast: true,
+//                                                                ontrast: true,
 //                                                                font: '12px Arial'
+//                                                                calloutLine: {
+//                                                                    length: 30,
+//                                                                    width: 5,
+                //                                                                color: '#FFFFFF',
+//                                                                },
+//                                                                rotate: {
+//                                                                    degrees: 45
+//                                                                },
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
                                                             },
-//                                                        style: {
-//                                                            miterLimit: 100,
-//                                                            lineCap: 'miter',
-//                                                            lineWidth: 50
-//                                                        },
+//                                                            style: {
+//                                                                miterLimit: 5,
+//                                                                lineCap: 'miter',
+//                                                                lineWidth: 1
+//                                                            },
                                                             highlight: true,
                                                             tooltip: {
                                                                 trackMouse: true,
@@ -913,7 +929,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     border: true,
                                                     margin: '0 0 0 5',
                                                     innerPadding: 60,
-                                                    height: 340,
+                                                    height: 410,
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
@@ -926,17 +942,21 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'CUPONS_PERCENT',
                                                             colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                             label: {
 //                                                            field: 'strDescription'
-                                                                field: 'LABEL'
+                                                                field: 'LABEL',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -980,7 +1000,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     border: true,
                                                     margin: '0 0 0 5',
                                                     innerPadding: 48,
-                                                    height: 340,
+                                                    height: 410,
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
@@ -993,17 +1013,21 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'AMOUNT_PERCENT',
                                                             colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                             label: {
 //                                                            field: 'strDescription'
-                                                                field: 'LABEL2'
+                                                                field: 'LABEL2',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -1521,7 +1545,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             angleField: 'CUPONS_ON_PERCENT',
                                                             colors: ['#009933', '#FFCC00'],
                                                             label: {
-                                                                field: 'LABEL'
+                                                                field: 'LABEL',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value;
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -1790,7 +1818,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                             angleField: 'AMOUNT_ON_PERCENT',
                                                             colors: ['#009933', '#FFCC00'],
                                                             label: {
-                                                                field: 'LABEL_AMOUNT'
+                                                                field: 'LABEL_AMOUNT',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value;
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -2326,7 +2358,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataCabin_boxChart1',
                                     width: 450,
-                                    height: 345,
+                                    height: 355,
                                     columnLines: true,
                                     border: false,
                                     margin: "5 0 0 0",
@@ -2456,7 +2488,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             angleField: 'CUPON',
                                             colors: ['#EC3838', '#FFBF00', '#52df00'],
                                             label: {
-                                                field: 'LABEL_C_PER'
+                                                field: 'LABEL_C_PER',
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutWidth = 1;
+                                                    return value;
+                                                }
                                             },
                                             highlight: true,
                                             tooltip: {
@@ -2502,7 +2538,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             angleField: 'AMOUNT',
                                             colors: ['#EC3838', '#FFBF00', '#52df00'],
                                             label: {
-                                                field: 'LABEL_A_PER'
+                                                field: 'LABEL_A_PER',
+                                                renderer: function (value, b, callout) {
+                                                    callout.calloutWidth = 1;
+                                                    return value;
+                                                }
                                             },
                                             highlight: true,
                                             tooltip: {
@@ -2523,7 +2563,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataCabin_boxChart2',
                                     width: 450,
-                                    height: 345,
+                                    height: 355,
                                     columnLines: true,
                                     border: false,
                                     margin: "5 0 0 0",
@@ -3003,8 +3043,8 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataCabin_boxChart3',
-                                    width: 1194,
-                                    height: 345,
+                                    width: 1170,
+                                    height: 368,
                                     columnLines: true,
                                     border: false,
                                     margin: "5 0 0 0",
@@ -3840,7 +3880,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     border: true,
                                                     margin: '0 0 0 5',
                                                     innerPadding: 60,
-                                                    height: 340,
+                                                    height: 380,
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
@@ -3853,16 +3893,20 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'Perc1',
                                                             colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                             label: {
-                                                                field: 'CLASS'
+                                                                field: 'CLASS',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -3895,11 +3939,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     border: true,
                                                     margin: '0 0 0 5',
                                                     innerPadding: 60,
-                                                    height: 340,
+                                                    height: 380,
                                                     background: '#E0F8F7',
                                                     captions: {
                                                         title: {
-                                                            text: 'Sales per Channels - Coupons',
+                                                            text: 'Sales per Channels - Amount',
 //                                                            fieldStyle: 'font-size:5px',
                                                             alignTo: 'chart'
                                                         }
@@ -3908,16 +3952,20 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                         duration: 200
                                                     },
                                                     interactions: ['rotate', 'itemhighlight'],
-//                                                    legend: {
-//                                                        docked: 'bottom',
-//                                                        background: '#E3EAEF'
-//                                                    },
+                                                    legend: {
+                                                        docked: 'bottom',
+                                                        background: '#E3EAEF'
+                                                    },
                                                     series: [{
                                                             type: 'pie3d',
                                                             angleField: 'Perc2',
                                                             colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                             label: {
-                                                                field: 'COMENTARIO'
+                                                                field: 'COMENTARIO',
+                                                                renderer: function (value, b, callout) {
+                                                                    callout.calloutWidth = 1;
+                                                                    return value.substring(value.indexOf(',') + 1);
+                                                                }
                                                             },
                                                             highlight: true,
                                                             tooltip: {
@@ -3967,7 +4015,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                             background: '#E0F8F7',
                                             captions: {
                                                 title: {
-                                                    text: 'Sales per Countries - Amount \n\ (USD)',
+                                                    text: 'Sales per Countries - Amount \n\ USD',
                                                     alignTo: 'chart'
                                                 }
                                             },
@@ -4340,7 +4388,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                 {xtype: 'tbspacer', width: 15},
                                 {
                                     xtype: 'panel',
-                                    width: 600,
+                                    width: 660,
                                     height: 700,
                                     layout: {
                                         type: 'hbox',
@@ -4382,7 +4430,11 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.charts.ChartSales', {
                                                     angleField: 'AMOUNT',
                                                     colors: ['#EC3838', '#FFBF00', '#A5DF00', '#F7BE81', '#01A9DB'],
                                                     label: {
-                                                        field: 'strDescription'
+                                                        field: 'strDescription',
+                                                        renderer: function (value, b, callout) {
+                                                            callout.calloutWidth = 1;
+                                                            return value.substring(0,7);
+                                                        }
                                                     },
                                                     highlight: true,
                                                     tooltip: {
