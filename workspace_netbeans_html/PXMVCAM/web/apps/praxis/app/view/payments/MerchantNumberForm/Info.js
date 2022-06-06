@@ -66,18 +66,24 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
 
                                         },
                                         items: [
-                                            {text: 'Nbr', dataIndex: 'RN', width: 40},
+                                            {text: 'Nbr', dataIndex: 'RN', width: 40, hidden:true},
                                             {text: 'Merchant<br>Nbr.', dataIndex: 'MERCHN', width: 75},
                                             {text: 'Merchant Name', dataIndex: 'DESCR', width: 220,
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = record.data;
                                                     metaData.style = "text-align:left;";
                                                     metaData.tdAttr = 'data-qtip="' + data.DESCR + '"';
                                                     return  value;
                                                 }
                                             },
+                                            {text: 'Status', dataIndex: 'desSTATUS', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "text-align:left;";
+                                                    return value;
+                                                }
+                                            },
                                             {text: 'Operative<br>Unit', dataIndex: 'strDescripUNIOPE', width: 120},
-                                            {text: 'Channel', dataIndex: 'CANAL', width: 55},
+                                            {text: 'Channel', dataIndex: 'CANAL', width: 65},
                                             {text: 'Social',
                                                 defaults: {
                                                     menuDisabled: true,
@@ -86,7 +92,7 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Reason', dataIndex: 'RSOCIAL', width: 230,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:left;";
                                                             metaData.tdAttr = 'data-qtip="' + data.RSOCIAL + '"';
@@ -116,13 +122,13 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                 columns: [
                                                     {text: 'Code', dataIndex: 'CIATA', width: 75},
                                                     {text: 'Name', dataIndex: 'strDescrip', width: 200,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;";
                                                             return value;
                                                         }
                                                     }
                                                 ]
-                                            },
+                                            },                                            
                                             {
                                                 text: 'Commission Policy Information',
                                                 defaults: {
@@ -132,13 +138,13 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Client Code', dataIndex: 'CODCLIT1', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#e5ecef;";
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: 'Client Address', dataIndex: 'DIRCLIT1', width: 190,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: 'Client Address', dataIndex: 'DIRCLIT1', width: 165,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#e5ecef;";
                                                             return  value;
                                                         }
@@ -154,13 +160,13 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Info', {
                                                 },
                                                 columns: [
                                                     {text: 'Client Code', dataIndex: 'CODCLIT2', width: 80,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;background-color:#e5ecef;";
                                                             return  value;
                                                         }
                                                     },
-                                                    {text: 'Client Address', dataIndex: 'DIRCLIT2', width: 190,
-                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    {text: 'Client Address', dataIndex: 'DIRCLIT2', width: 165,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:left;background-color:#e5ecef;";
                                                             return  value;
                                                         }

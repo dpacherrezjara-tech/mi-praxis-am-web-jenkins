@@ -136,7 +136,27 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.Filters', {
                         change: 'onUpperValue',
                         keypress: 'eventKey'
                     }
-                }
+                },
+                {
+                    xtype: 'combo',
+                    fieldLabel: 'Status:',
+                    id: prototype.id + '-cmbSTATUS',
+                    queryMode: 'local',
+                    width: 200,
+                    fieldStyle: 'color:#074066;',
+                    forceSelection: true,
+                    selectOnFocus: false,
+                    caseSensitive: false,
+                    hidden: false,
+                    autoSelect: true,
+                    editable: false,
+                    disabled: false,
+                    typeAhead: true,
+                    valueField: 'code',
+                    displayField: 'name',
+                    enableKeyEvents: true,
+                    triggerAction: 'all'
+                },
                
             ]
             
