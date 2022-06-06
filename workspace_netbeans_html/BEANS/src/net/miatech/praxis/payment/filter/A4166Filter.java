@@ -28,6 +28,7 @@ public class A4166Filter extends A4166 {
     public String strDayTo = "";
     public String descFAMEX = "";
     public String descSTCON = "";
+    public String descSTVAL = "";
     public String IN_FAMEX = "";
     public String PASSED_DAYS = "";
     
