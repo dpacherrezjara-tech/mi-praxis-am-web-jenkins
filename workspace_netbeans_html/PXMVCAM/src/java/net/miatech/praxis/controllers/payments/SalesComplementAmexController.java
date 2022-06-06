@@ -546,7 +546,7 @@ public class SalesComplementAmexController extends BaseController {
                 rcell5.setCellValue(listaData.get(vi).PRDA);
                 rcell6.setCellValue(listaData.get(vi).PASSED_DAYS);
                 rcell7.setCellValue(listaData.get(vi).descFAMEX);
-                rcell8.setCellValue(listaData.get(vi).descSTCON);
+                rcell8.setCellValue(listaData.get(vi).descSTVAL);
                 rcell9.setCellValue(listaData.get(vi).SCOUNTRY);
                 rcell10.setCellValue(listaData.get(vi).SDATE);
                 rcell11.setCellValue(listaData.get(vi).SCARCOD);

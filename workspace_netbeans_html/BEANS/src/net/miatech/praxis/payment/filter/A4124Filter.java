@@ -21,8 +21,10 @@ public class A4124Filter extends A4124 {
     public String DATE = "";
     public String IN_FAMEX = "";
     public String IN_STCON = "";
+    public String IN_STVAL = "";
     public String descFAMEX = "";
     public String descSTCON = "";
+    public String descSTVAL = "";
     public String PASSED_DAYS = "";    
     public String INVORNBR = "";    
     public String ISREFNBR = "";    

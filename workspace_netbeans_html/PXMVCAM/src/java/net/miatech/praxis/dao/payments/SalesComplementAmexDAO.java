@@ -74,7 +74,7 @@ public class SalesComplementAmexDAO {
             cstmt.setString(3, filter.IN_DATEFROM);
             cstmt.setString(4, filter.IN_DATETO);
             cstmt.setString(5, filter.IN_FAMEX);
-            cstmt.setString(6, filter.IN_STCON);
+            cstmt.setString(6, filter.IN_STVAL);
             cstmt.setString(7, filter.IN_TKT);
             cstmt.setString(8, filter.IN_PNR);
 
@@ -99,12 +99,14 @@ public class SalesComplementAmexDAO {
                 bean.PLUSGRAID = rst.getString("PLUSGRAID").trim();
                 bean.SCOUNTRY = rst.getString("SCOUNTRY").trim();
                 bean.SDATE = rst.getString("SDATE").trim();
+                bean.SDATES = rst.getString("SDATES").trim();
                 bean.SCARCOD = rst.getString("SCARCOD").trim();
                 bean.SCARDBIN = rst.getString("SCARDBIN").trim();
                 bean.PNR = rst.getString("PNR").trim();
                 bean.MERCHID = rst.getString("MERCHID").trim();
                 bean.CURRPARTN = rst.getString("CURRPARTN").trim();
                 bean.SVFOP = rst.getDouble("SVFOP");
+                bean.SVFOPS = rst.getDouble("SVFOPS");
                 bean.EMDNUMBER = rst.getString("EMDNUMBER").trim();
                 bean.ADDPAXEMD = rst.getString("ADDPAXEMD").trim();
                 bean.ADDPAXTKT = rst.getString("ADDPAXTKT").trim();
@@ -113,13 +115,13 @@ public class SalesComplementAmexDAO {
                 bean.PAYTOKEN = rst.getString("PAYTOKEN").trim();
                 bean.NBROFPAX = rst.getInt("NBROFPAX");
                 
-                bean.STCON = rst.getString("STCON").trim();
-                if (bean.STCON.equals("")) {
-                    bean.descSTCON = "Pending";
-                } else if (bean.STCON.equals("1")) {
-                    bean.descSTCON = "Found";
-                } else if (bean.STCON.equals("2")) {
-                    bean.descSTCON = "Accounted";
+                bean.STVAL = rst.getString("STVAL").trim();
+                if (bean.STVAL.equals("")) {
+                    bean.descSTVAL = "Pending";
+                } else if (bean.STVAL.equals("1")) {
+                    bean.descSTVAL = "Match";
+                } else if (bean.STVAL.equals("2")) {
+                    bean.descSTVAL = "Accounted";
                 }
 
                 bean.FCONT = rst.getString("FCONT").trim();
@@ -129,7 +131,7 @@ public class SalesComplementAmexDAO {
                 if (bean.FAMEX.equals("")) {
                     bean.descFAMEX = "Pending";
                 } else if (bean.FAMEX.equals("1")) {
-                    bean.descFAMEX = "Processed";
+                    bean.descFAMEX = "Match";
                     bean.PASSED_DAYS = "00";
                 }
                 bean.CERROR = rst.getString("CERROR").trim();
@@ -190,7 +192,7 @@ public class SalesComplementAmexDAO {
             cstmt.registerOutParameter(7, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
-            cstmt.setString(2, filter.IN_SDATE);
+            cstmt.setString(2, filter.IN_SDATES);
             cstmt.setString(3, filter.IN_SPNR);
             cstmt.setInt(4, filter.page.PAGNUM);
             cstmt.setInt(5, filter.page.PAGROW);
@@ -295,7 +297,7 @@ public class SalesComplementAmexDAO {
             cstmt.setString(3, filter.IN_DATEFROM);
             cstmt.setString(4, filter.IN_DATETO);
             cstmt.setString(5, filter.IN_FAMEX);
-            cstmt.setString(6, filter.IN_STCON);
+            cstmt.setString(6, ""); //filter.IN_STVAL
             cstmt.setString(7, filter.IN_PNR);
             
             cstmt.setInt(8, filter.page.PAGNUM);
@@ -340,16 +342,16 @@ public class SalesComplementAmexDAO {
                 bean.FAMEX = rst.getString("FAMEX").trim();
                 if (bean.FAMEX.equals("")) {
                     bean.descFAMEX = "Pending";
-                } else if (bean.FAMEX.equals("1")) {
-                    bean.descFAMEX = "Processed";
+                } else if (bean.FAMEX.equals("2")) {
+                    bean.descFAMEX = "Match";
                 }
 
-                bean.STCON = rst.getString("STCON").trim();
-                if (bean.STCON.equals("")) {
+                bean.STVAL = rst.getString("STVAL").trim();
+                if (bean.STVAL.equals("")) {
                     bean.descSTCON = "Pending";
-                } else if (bean.STCON.equals("1")) {
-                    bean.descSTCON = "Found";
-                } else if (bean.STCON.equals("2")) {
+                } else if (bean.STVAL.equals("1")) {
+                    bean.descSTCON = "Match";
+                } else if (bean.STVAL.equals("2")) {
                     bean.descSTCON = "Accounted";
                 }
 
@@ -415,7 +417,7 @@ public class SalesComplementAmexDAO {
             cstmt.setString(3, filter.IN_DATEFROM);
             cstmt.setString(4, filter.IN_DATETO);
             cstmt.setString(5, filter.IN_FAMEX);
-            cstmt.setString(6, filter.IN_STCON);
+            cstmt.setString(6, ""); //filter.IN_STVAL
             cstmt.setString(7, filter.IN_PNR);
             
             cstmt.setInt(8, filter.page.PAGNUM);
@@ -460,16 +462,16 @@ public class SalesComplementAmexDAO {
                 bean.FAMEX = rst.getString("FAMEX").trim();
                 if (bean.FAMEX.equals("")) {
                     bean.descFAMEX = "Pending";
-                } else if (bean.FAMEX.equals("1")) {
-                    bean.descFAMEX = "Processed";
+                } else if (bean.FAMEX.equals("3")) {
+                    bean.descFAMEX = "Match";
                 }
 
-                bean.STCON = rst.getString("STCON").trim();
-                if (bean.STCON.equals("")) {
+                bean.STVAL = rst.getString("STVAL").trim();
+                if (bean.STVAL.equals("")) {
                     bean.descSTCON = "Pending";
-                } else if (bean.STCON.equals("1")) {
-                    bean.descSTCON = "Found";
-                } else if (bean.STCON.equals("2")) {
+                } else if (bean.STVAL.equals("1")) {
+                    bean.descSTCON = "Match";
+                } else if (bean.STVAL.equals("2")) {
                     bean.descSTCON = "Accounted";
                 }
 

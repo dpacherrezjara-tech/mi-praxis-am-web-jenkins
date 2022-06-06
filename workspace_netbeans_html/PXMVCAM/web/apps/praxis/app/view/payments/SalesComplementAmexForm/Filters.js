@@ -161,7 +161,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Filters', {
                         },
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbFindBySTCON',
+                            id: prototype.id + '-cmbFindBySTVAL',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [

@@ -46,6 +46,7 @@ public class A4166 {
     public String FAMEX = "";
     public String CERROR = "";
     public String STCON = "";
+    public String STVAL = "";
     public String FCONT = "";
     public String IDCON = "";      
     

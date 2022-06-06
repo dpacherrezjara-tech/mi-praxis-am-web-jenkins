@@ -73,25 +73,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     metaData.style = "text-align:center;";
                                                     return value;
                                                 }
-                                            },
-                                            {
-                                                text: 'Error',
-                                                defaults: {
-                                                    menuDisabled: true,
-                                                    sortable: false,
-                                                    align: 'center'
-                                                },
-                                                columns: [
-                                                    {text: 'Code', dataIndex: 'CERROR', width: 70},
-                                                    {
-                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 270,
-                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
-                                                            metaData.style = "text-align:left";
-                                                            return value;
-                                                        }
-                                                    }
-                                                ]
-                                            },
+                                            },                                            
                                             {
                                                 text: 'Merchant', dataIndex: 'MERCHID', width: 90
                                             },
@@ -142,7 +124,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
                                                     },
                                                     {
-                                                        text: 'VS Sales', dataIndex: 'descSTCON', width: 80
+                                                        text: 'VS Sales', dataIndex: 'descSTVAL', width: 80
                                                     },
                                                 ]
                                             },
@@ -159,6 +141,23 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     },
                                                     {
                                                         text: 'Date', dataIndex: 'SDATE', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "background-color:#8ac6eb";
+                                                            return value;
+                                                        },
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                text: 'Praxis Sales',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Date', dataIndex: 'SDATES', width: 90,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "background-color:#8ac6eb";
                                                             return value;
@@ -247,6 +246,23 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                 ]
                                             },
                                             {
+                                                text: 'Praxis',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Amount', dataIndex: 'SVFOPS', width: 80,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:right;background-color:#8ac6eb";
+                                                            return Ext.util.Format.number(value, '0,000.00');
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
                                                 text: 'Total <br> Amount Off', dataIndex: 'AMOUNTOFF', width: 80,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     metaData.style = "text-align:right;background-color:#8ac6eb";
@@ -311,6 +327,24 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                     {
                                                         text: 'ID', dataIndex: 'IDCON', width: 100
                                                     },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Error',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center'
+                                                },
+                                                columns: [
+                                                    {text: 'Code', dataIndex: 'CERROR', width: 70},
+                                                    {
+                                                        text: 'Description', dataIndex: 'DES_CERROR', width: 270,
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:left";
+                                                            return value;
+                                                        }
+                                                    }
                                                 ]
                                             },
                                             {
@@ -581,7 +615,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
                                                     },
                                                     {
-                                                        text: 'VS Sales', dataIndex: 'descSTCON', width: 80
+                                                        text: 'VS Sales', dataIndex: 'descSTVAL', width: 80, hidden: true
                                                     },
                                                 ]
                                             },
@@ -814,7 +848,7 @@ Ext.define('Ext.Praxis.view.payments.SalesComplementAmexForm.Info', {
                                                         text: 'VS AMEX', dataIndex: 'descFAMEX', width: 80
                                                     },
                                                     {
-                                                        text: 'VS Sales', dataIndex: 'descSTCON', width: 80
+                                                        text: 'VS Sales', dataIndex: 'descSTVAL', width: 80, hidden: true
                                                     },
                                                 ]
                                             },

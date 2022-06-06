@@ -42,6 +42,7 @@ public class A4124 {
     public double COMMIPORC = 0;
     public double FXRATE = 0;
     public double SVFOP = 0;
+    public double SVFOPS = 0;
     public String SCARCOD = "";
     public String NEWTKTNBR = "";
     public String OLDTKTNBR = "";
@@ -56,6 +57,7 @@ public class A4124 {
     public String TIMEUPUTC = "";
     public String USERTICKE = "";
     public String SDATE = "";
+    public String SDATES = "";
     public String TIMETKUTC = "";
     public String DATETKUTC = "";
     public String CARIDENT = "";
@@ -66,6 +68,7 @@ public class A4124 {
     public String FSELEC = "";
     public String FAMEX = "";
     public String STCON = "";
+    public String STVAL = "";
     public String FCONT = "";
     public String IDCON = "";
     public int QTYTKT = 0;
