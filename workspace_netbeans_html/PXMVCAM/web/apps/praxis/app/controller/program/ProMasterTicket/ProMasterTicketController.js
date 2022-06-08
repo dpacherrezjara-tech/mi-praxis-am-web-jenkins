@@ -3258,7 +3258,18 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.ProMasterTicketControl
                     //win.setValue('txtFilterTicketSeq', '');
                     console.log(res.filterTKTSeq);
                     me01.filterTKTSeq = res.filterTKTSeq;
-                        if(me01.filterTKTSeq.length == 1){
+                        if(me01.filterTKTSeq.length === 0 && win.getValue('txtFilterTicketCia').trim().length === 3 && win.getValue('txtFilterTicketFormSer').trim().length ===10)
+                        {
+                            me01.bean.IN_CIA = win.getValue('txtFilterTicketCia').trim();
+                            me01.bean.IN_FORMA  = win.getValue('txtFilterTicketFormSer').trim().substr(0, 4);
+                            me01.bean.IN_SERIE = win.getValue('txtFilterTicketFormSer').trim().substr(4, 6);
+                            me01.bean.IN_SEQ = "00";
+                            console.log(me01.bean);
+                            me01.loadTicket(me01.bean);
+                            Ext.getCmp(prototype.id+'-lblCupon').hide();
+                            me01.controlLight();
+                        }
+                        else if(me01.filterTKTSeq.length === 1){
                             //this.execSearch();
                             console.log(me01.filterTKTSeq[0]);
                             me01.bean.IN_CIA = me01.filterTKTSeq[0].IN_CIA;
