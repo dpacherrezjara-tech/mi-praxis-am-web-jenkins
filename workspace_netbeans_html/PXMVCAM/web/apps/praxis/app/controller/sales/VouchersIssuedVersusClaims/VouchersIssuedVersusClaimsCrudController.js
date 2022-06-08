@@ -415,15 +415,17 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
         var ModifiedRecords = this.getModifiedRecords(prototype.id01 + '-gridData-TKT');
         var AllRecords = this.getAllRecords(prototype.id01 + '-gridData-TKT');
 
+//        console.log('AllRecords');
+//        console.log(AllRecords);
 //        console.log('RemovedRecords');
 //        console.log(RemovedRecords);
 //        console.log('NewRecords');
 //        console.log(NewRecords);
 //        console.log('ModifiedRecords');
 //        console.log(ModifiedRecords);
-
+        
         if (RemovedRecords.length === 0 && NewRecords.length === 0 && ModifiedRecords.length === 0) {
-            if (AllRecords.length === 0) {
+            if (AllRecords.data.length === 0) {
                 mensaje = 'ADD TICKET/ANCILLARIES';
                 Ext.getCmp(prototype.id01 + '-A4213TICKET').focus();
                 return mensaje;
@@ -441,17 +443,26 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
                 mensaje = 'Coupons have already been used';
                 return mensaje;
             }
+            var itemsfiltered_1 = await grid01.getStore().data.items.filter(function (element) {
+                //console.log(element);
+                return element.data.A720CUPON_NF.trim() !== '';
+            });
+            //console.log(itemsfiltered_1);
+            if (itemsfiltered_1.length > 0) {                
+                mensaje = 'Coupon number ' + itemsfiltered_1[0].data.A720CUPON_NF + ' to exchange not found';
+                //mensaje = 'Coupon number to exchange not found';
+                return mensaje;
+            }
+            
         }
 
         return mensaje;
     },
     get_ClearField: function () {
         //Initialize data INPUTS
-//        Ext.getCmp(prototype.id01 + '-A3953CDCLI').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953RSOCI').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953NCOME').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953RFC').setValue('');
-//        Ext.getCmp(prototype.id01 + '-A3953DIRE1').setValue('');      
+        Ext.getCmp(prototype.id01 + '-A4213TICKET').setValue('');
+        Ext.getCmp(prototype.id01 + '-A4213CUPON').setValue('');
+        Ext.getCmp(prototype.id01 + '-A4213TICKET').focus();
     },
 
     /*
@@ -599,11 +610,23 @@ Ext.define('Ext.Praxis.controller.sales.VouchersIssuedVersusClaims.VouchersIssue
             beanGrid.A720USOS = resp.data[0].A720USOS;
             beanGrid.A4213CPUI = resp.data[0].A720CPUI;
             beanGrid.A4213GRUPO = resp.data[0].A720GRUPO;
+            beanGrid.A720CUPON_NF = resp.data[0].A720CUPON_NF;
             grid01.getStore().add(beanGrid);
-
-            //aviso
-            if (resp.data[0].A720USOS.length > 0)
+            
+            //console.log(resp.data[0]);
+            //console.log(resp.data[0].A720USOS.length);
+            //AVISO
+            if (resp.data[0].A720USOS.length > 0){
+                //console.log('mensaje');
                 global.Msg({msg: 'Coupons have already been used'});
+                return;
+            }
+            if (resp.data[0].A720CUPON_NF.length > 0){
+                global.Msg({msg: 'Coupon number ' + resp.data[0].A720CUPON_NF + ' to exchange not found'});
+                return;
+            }
+            //limpiar campos de tkt y cupons 
+            me.get_ClearField()
 
         } else {
             if (resp.total === 0) {
