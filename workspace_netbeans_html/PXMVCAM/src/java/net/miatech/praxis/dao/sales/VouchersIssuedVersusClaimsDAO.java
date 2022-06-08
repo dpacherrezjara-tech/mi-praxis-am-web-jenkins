@@ -232,6 +232,7 @@ public class VouchersIssuedVersusClaimsDAO {
                 objRtn.A720USOS = rs01.getString("A720USOS");
                 objRtn.A720TFOP = rs01.getDouble("A720TFOP");
                 objRtn.A720TFOPRV = rs01.getDouble("A720TFOPRV");
+                objRtn.A720CUPON_NF = rs01.getString("A720CUPON_NF").trim();
                 
 //                objRtn.page.PAGNUM = filter.page.PAGNUM;
 //                objRtn.page.PAGROW = filter.page.PAGROW;
