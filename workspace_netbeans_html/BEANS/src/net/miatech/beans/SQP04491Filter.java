@@ -34,5 +34,6 @@ public class SQP04491Filter {
     //VALIDAR USOS
     public String A720CPUI = "";
     public String A720USOS = "";
+    public String A720CUPON_NF= "";
 
 }
